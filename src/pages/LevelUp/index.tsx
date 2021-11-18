@@ -9,9 +9,7 @@ const LevelUpContent = styled.div`
 
 const LevelUp:React.FC = () => {
   return (
-    <LevelUpContent>
-      1
-    </LevelUpContent>
+    <LevelUpContent />
   )
 }
 
