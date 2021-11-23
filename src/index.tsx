@@ -10,15 +10,21 @@ import { DAppProvider } from '@usedapp/core'
 import { HashRouter as Router } from 'react-router-dom'
 import { Web3ReactProvider } from '@web3-react/core'
 import { WalletSelectionModalProvider } from './hooks/wallet-selection-modal'
+import { QueryClient , QueryClientProvider } from 'react-query'
+
+const queryClient = new QueryClient()
 
 ReactDOM.render(
   <Web3ReactProvider getLibrary={getLibrary}>
     <WalletSelectionModalProvider>
-      <Router>
-        <DAppProvider config={{}}>
-          <App />
-        </DAppProvider>
-      </Router>
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <DAppProvider config={{}}>
+            <App />
+          </DAppProvider>
+        </Router>
+      </QueryClientProvider>
+
     </WalletSelectionModalProvider>
   </Web3ReactProvider>,
 

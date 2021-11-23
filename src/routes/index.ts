@@ -1,5 +1,7 @@
 import LevelUp from '../pages/LevelUp'
 import NFTCreate from '../pages/nftCreate'
+import Marketplace from '../pages/marketplace'
+import NFTDetail from '../pages/marketplace/nftDetail'
 
 export type Route = {
   path: string
@@ -24,7 +26,19 @@ const routes: Route[] = [
     title: 'NFT Create',
     component: NFTCreate,
     disable: false
-  }
+  },
+  {
+    path: '/marketplace',
+    title: 'Marketplace',
+    component: Marketplace,
+    disable: false
+  },
+  {
+    path: '/marketplace/:id',
+    title: 'Collectible',
+    component: NFTDetail,
+    hidden: true
+  },
 ]
 
 export default routes

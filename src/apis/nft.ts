@@ -2,6 +2,20 @@
 
 export type ChainType = 'Ethereum' | 'Solana' | ''
 
+export type ForartNftTransactionStatus = 0 | 1
+
+
+export type ForartNftListQueryParams = {
+    current?: number,
+    size?: number,
+    searchKey?: string,
+    sortType?: 'time_stamp',
+    addressContract?: string
+    group?: string
+    transactionStatus?: ForartNftTransactionStatus
+    typeChain: ChainType
+}
+
 
 export type NftCreateForm = {
     uri: string

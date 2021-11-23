@@ -286,9 +286,10 @@ const AssetUpload: React.FC<AssetUploadProps> = ({ onUploadSuccess }) => {
 
     pinFileToIPFS(fileList[0])
       .then(r => {
-        setUploading(false)
         setPinnedFileHash(r.data.IpfsHash)
         onUploadSuccess(r.data.IpfsHash)
+        setUploading(false)
+
       }).catch(e => {
         setUploading(false)
         message.warn(`Upload failed. [${e}]`)
@@ -336,9 +337,7 @@ const AssetUpload: React.FC<AssetUploadProps> = ({ onUploadSuccess }) => {
           </div>
         )}
       </Upload>
-      {/*<Button className="upload-btn" onClick={handleUpload}>
-        Start Upload
-      </Button>*/}
+
     </AssetUploadContainer>
   )
 }

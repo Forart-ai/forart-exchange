@@ -1,0 +1,35 @@
+export interface NftListItem {
+  id: string;
+  tokenId: number;
+  valueUri: string;
+  addressContract: string;
+  addressCreate: string;
+  addressOwner: string;
+  nameArtist?: string;
+  price: number;
+  group?: string;
+  name: string;
+  description: string;
+  animationUrl?: string;
+  image: string;
+  thumbnail: string;
+  externalUrl: string;
+  attributes: string;
+  fee?: any;
+  feeRecipient?: any;
+  onSale: boolean;
+  view?: number;
+  favorite?: number;
+  makerPriceUnit: string;
+  typeChain: string;
+  supply: number;
+  evaluate: string;
+  mortgaged: boolean;
+  mortgageRate?: any;
+  preorder: boolean;
+  preorderPrice: string;
+  addressPreorder?: string;
+  nftPubKey?: string;
+  accountCreate?: string;
+  accountOwner?: string;
+}

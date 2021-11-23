@@ -55,7 +55,7 @@ function App() {
           </Sider>
           <Content style={{ display: 'flex', width:'calc(100vw - 220px)', backgroundColor:'black' }}>
             {
-              routes.map(router => (
+              routes.map((router:any) => (
                 <Route
                   path={router.path}
                   exact
