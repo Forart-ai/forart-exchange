@@ -11,3 +11,8 @@ export function generateNftMetadata(form: NFTCreateForm): NFTMetadata {
     image: getUriByIpfsHash(assetIpfsHash)
   }
 }
+
+
+export const shortenAddress = (address?: string, length = 6) => {
+  return address ? `${address.substring(0, length)}...${address.slice(-length)}` : '-'
+}

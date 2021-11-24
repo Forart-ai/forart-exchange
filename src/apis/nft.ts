@@ -16,6 +16,11 @@ export type ForartNftListQueryParams = {
     typeChain: ChainType
 }
 
+export type NFTDetailQueryRequest = {
+    uri: string
+    addressContract: string | undefined
+}
+
 
 export type NftCreateForm = {
     uri: string

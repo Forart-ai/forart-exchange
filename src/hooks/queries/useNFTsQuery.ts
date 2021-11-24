@@ -7,7 +7,7 @@ export function useNFTsQuery(params:ForartNftListQueryParams ): UseQueryResult<F
   return useQuery(
     ['ALL',params],
     async () => {
-      return await require('../../public/mock/mock.json')
+      return await require('../../public/mock/nftList.json')
     }
   )
 }

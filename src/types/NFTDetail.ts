@@ -33,3 +33,42 @@ export interface NftListItem {
   accountCreate?: string;
   accountOwner?: string;
 }
+
+export interface NFTDetail {
+  id: string;
+  tokenId: number;
+  valueUri: string;
+  addressContract: string;
+  addressCreate: string;
+  addressOwner: string;
+  nameArtist: string;
+  onSale: boolean;
+  price: number;
+  makerPriceUnit: string;
+  typeGroup: string;
+  name: string;
+  description: string;
+  animationUrl: null;
+  image: string;
+  thumbnail: string;
+  externalUrl: null;
+  royalties: null;
+  numberCopies: null;
+  unlock: null;
+  fee: string;
+  feeRecipient: string;
+  attributesJsonObject: null;
+  logTransferSingleVos: any[];
+  typeChain: string;
+  supply: number;
+  evaluate: string;
+  mortgaged: boolean;
+  mortgageRate: null;
+  preorder: boolean;
+  preorderPrice: string;
+  addressPreorder: null;
+  nftPubKey: string;
+  accountCreate: string;
+  accountOwner: string;
+}
+
