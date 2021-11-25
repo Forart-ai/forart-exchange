@@ -133,7 +133,7 @@ const WalletModalContent: React.FC<CurrentAccountProps> =({
   return (
     <BalanceContainer>
       <div className="balance">{account}</div>
-      <span>{balance !== undefined ? `${formatEther(balance)}` : ''}</span>
+      {/*<div>{balance !== undefined ? `${formatEther(balance)}` : ''}</div>*/}
     </BalanceContainer>
   )
 }

@@ -1,14 +1,22 @@
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import MetaMaskIcon from '../images/wallet/metamask.png'
+import CeloIcon from '../images/wallet/celo.svg'
+
 import { Web3Provider } from '@ethersproject/providers'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import { InjectedConnector as celoInjectedConnector } from 'web3-react-injected-connector-celo'
 
 const RPC_URLS: {[chainId: number]:string} = {
   1: process.env.RPC_URL_1 as string,
   4: process.env.RPC_URL_1 as string,
 }
+
 export const injected = new InjectedConnector({})
+
+export const celoInjected = new celoInjectedConnector({})
+
+
 
 const walletConnect = new WalletConnectConnector( {})
 
@@ -16,6 +24,7 @@ export enum WalletKeys {
   MetaMask = 'MetaMask',
   BSC = 'BSC',
   WalletConnect = 'WalletConnect',
+  Celo = 'Celo'
 }
 
 export type Wallet = {
@@ -31,6 +40,12 @@ export const supportWallets: Wallet[] = [
     key:WalletKeys.MetaMask,
     icon:MetaMaskIcon,
     connector: injected
+  },
+  {
+    name:'Celo',
+    key:WalletKeys.Celo,
+    icon:CeloIcon,
+    connector: celoInjected
   },
 
 ]

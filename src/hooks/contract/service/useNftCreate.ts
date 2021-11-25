@@ -42,6 +42,14 @@ const useCreateNft = () => {
         return
       }
 
+      if (!formInstance.getFieldsValue().assetIpfsHash) {
+        setHintMessage({
+          message: 'Please upload an artwork',
+          type:'error'
+        })
+        return
+      }
+
       const form = await formInstance.validateFields()
 
       const nftMetadata = generateNftMetadata(form)
@@ -50,9 +58,19 @@ const useCreateNft = () => {
 
       if (!pinResult) { return }
 
+      setHintMessage({
+        message: 'Pinned successful! Please confirm in your wallet...',
+        type: 'hint'
+      })
+
       const tokenUri = getUriByIpfsHash(pinResult.IpfsHash)
 
-      await awardItem(tokenUri)
+      await awardItem(tokenUri).then(res=> {
+        setHintMessage({
+          message: 'success',
+          type: 'success'
+        })
+      })
 
       const createForm: NftCreateForm ={
         uri: pinResult.IpfsHash,

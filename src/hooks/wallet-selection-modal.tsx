@@ -82,7 +82,9 @@ const WalletCard: React.FC<{wallet: Wallet}> = ({ wallet }) => {
   const { activate } = useWeb3React()
   const { name, icon, connector } = wallet
 
-  const prepareToConnect = () => { activate(connector) }
+  const  prepareToConnect = () =>  { activate(connector) }
+
+
 
   return (
     <StyledWalletCard>
