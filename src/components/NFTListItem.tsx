@@ -14,9 +14,9 @@ import styled from 'styled-components'
 
 const NFTCardContainer = styled.div<{$empty?:boolean}>`
   color: #7c6deb;
-  width: 200px;
+  width: 210px;
   height: ${(props: { $empty: any }) => props.$empty ? '0' : '320px'};
-  background-color: #111C3A;
+  background-color: rgb(53,57,89);
   border-radius: 10px;
   margin-bottom: ${(props: { $empty: any }) => props.$empty ? '0' : '30px'};;
   font-weight: bold;
@@ -27,14 +27,13 @@ const NFTCardContainer = styled.div<{$empty?:boolean}>`
   .nft-container {
     width: 100%;
     height: 240px;
-    border: #61dafb 1px solid;
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
   }
   
   img {
-    width: 180px;
+    width: 100%;
     object-fit: cover;
     border-radius: 10px;
   }
@@ -43,7 +42,6 @@ const NFTCardContainer = styled.div<{$empty?:boolean}>`
     display: flex;
     color: #F7F7F7;
     height: 60px;
-    border: 1px red solid;
     font-weight: 500;
     padding: 0 10px;
     flex-direction: column;
@@ -90,15 +88,15 @@ const ChainFlag = styled.span`
   display: flex;
   align-items: center;
   width:fit-content ;
-  color: #7c6deb;
-  border: 2px #7c6deb solid; 
+  color: #00EBA4;
+  border: 2px #00EBA4 solid; 
   height: 20px;
   padding:  5px;
   border-radius: 5px;
 `
 const TypeChainThumbnailMapper: { [key in ChainType]?: string } = {
-  'Ethereum': 'Eth',
-  'Solana': 'Sol'
+  'Ethereum': 'Celo',
+  'Solana': 'Celo'
 }
 
 const NFTListItem: React.FC<{ data?: NftListItem, type?: 'nftList' | 'own', empty?:boolean}> = ({ data, type, empty }) => {

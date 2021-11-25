@@ -24,7 +24,7 @@ const Wrapper = styled.div`
     font-weight: 550;
     font-size: 46px;
 
-    background-image: -webkit-linear-gradient(left, #aef9ff, #571eef);
+    background-image: -webkit-linear-gradient(left, #00EBA4, #02A6F5);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     padding-bottom: 20px;
@@ -46,7 +46,7 @@ const NFTForm = styled(Form)`
   align-items: center;
   width: 800px;
   height: fit-content;
-  background: #111C3A;
+  background: rgb(53,57,89);
   border-radius: 20px;
   padding: 0 20px;
 
@@ -54,7 +54,7 @@ const NFTForm = styled(Form)`
     text-align: center;
     font-size: 18px;
     font-weight: 500;
-    color: white;
+    color: #00EBA4;
     line-height: 2.8rem;
   }
 
@@ -95,7 +95,7 @@ const NFTFormItem = styled(Form.Item)`
   .ant-form-item-label > label {
     font-size: 18px;
     font-weight: 500;
-    color: #98BDF9;
+    color: #fff;
   }
 
   .ant-input {

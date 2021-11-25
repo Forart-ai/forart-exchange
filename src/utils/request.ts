@@ -20,7 +20,7 @@ request.interceptors.response.use(
       return responseBody.data
     }
 
-    return config.data
+    return config
   },
   function onRejected(error: any) {
     return error

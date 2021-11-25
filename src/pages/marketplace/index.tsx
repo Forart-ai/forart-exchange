@@ -26,10 +26,11 @@ const Wrapper = styled.div`
 const Title = styled.div`
   font-size: 34px;
   font-weight: 550;
-  background-image: -webkit-linear-gradient(left, #aef9ff, #571eef);
+  background-image: -webkit-linear-gradient(left, #00EBA4, #02A6F5);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 50px;
 `
 
 const NFTListContainer = styled.div`
@@ -37,7 +38,6 @@ const NFTListContainer = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  border: 1px solid red;
 
   @media screen and (min-width: 300px) and (max-width: 1000px) {
     width: fit-content;

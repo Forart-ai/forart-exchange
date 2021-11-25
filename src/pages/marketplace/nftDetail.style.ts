@@ -12,7 +12,6 @@ export const Wrapper = styled.div`
 
 export const NFTDetailContainer = styled.div`
   width: 1000px;
-  border: #61dafb 1px solid;
 `
 
 export const TopRow = styled.div`
@@ -27,7 +26,6 @@ export const ImageContainer = styled.div`
   align-items: center;
   width: 375px;
   height: 450px;
-  border: 1px salmon solid;
   border-radius: 2rem;
   justify-content: center;
   position: relative;
@@ -50,7 +48,6 @@ export const ImageContainer = styled.div`
       height: 50vh;
       width: 80vw;
       object-fit: cover;
-      border: 1px solid #98BDF9;
     }
   }
 `
@@ -65,14 +62,13 @@ export const InfoContainer = styled.div`
 export const ItemsContainer = styled.div`
  width: 100%;
  height: 100%;
- border: 1px green solid;
  display: flex;
  justify-content: space-between;
 
  .border {
   width: 45%;
   height: 100%;
-  background: #305099;
+  background: #0F4C75;
   border-radius: 10px;
 
 
@@ -105,12 +101,11 @@ export const ItemsContainer = styled.div`
 export const NFTBaseInfoContainer = styled.div`
   height: fit-content;
   width:100% ;
-  border: 1px green solid;
   
   .nft-name {
     font-size: 42px;
     font-weight: 550;
-    color: #98BDF9;
+    color: #94DAFF;
   }
 
 
@@ -126,8 +121,7 @@ export const NFTBaseInfoContainer = styled.div`
   .nft-info-container {
    display: flex;
    flex-direction: column;
-   border: 1px #98BDF9 solid;
-   color: #98BDF9;
+   color: #94DAFF;
 
     .nft-info-container-item {
      display: flex;
@@ -147,13 +141,13 @@ export const NFTBaseInfoContainer = styled.div`
 
       .nft-info-container-value {
         font-weight: 500;
-        color: #98BDF9;
+        color: #94DAFF;
         user-select: none;
       }
 
       .icon-copy {
         margin-left: 0.5rem;
-        color: #98BDF9;
+        color: #94DAFF;
         cursor: pointer;
       }
 
@@ -177,7 +171,7 @@ export const NFTBaseInfoContainer = styled.div`
       width: fit-content;
       font-size: 4.5rem;
       font-weight: 550;
-      color: #98BDF9;
+      color: #94DAFF;
       padding: 5vh 0;
     }
 
@@ -193,7 +187,7 @@ export const StyledButton = styled(Button)`
  margin: 10px 0; 
  width: 220px;
  height: 40px;
- background: #305099;
+ background: #0F4C75;
  color: #FFFFFF;
  border-radius: 10px;
  font-size: 18px;
@@ -214,13 +208,12 @@ export const CenterRow = styled.div`
 export const Title = styled.div`
  font-size: 26px;
  font-weight: 550;
- color: #98BDF9;
+ color: #94DAFF;
  margin-bottom: 20px;
 `
 
 export const PropertiesContainer = styled.div `
  width: 375px;
- border: 1px sandybrown solid ;
  display: flex;
  justify-content: space-between;
  flex-wrap: wrap;
@@ -234,7 +227,7 @@ export const PropertiesItem = styled.div`
  align-items: center;
  flex-direction: column;
  justify-content: center;
- background: #305099;
+ background: #0F4C75;
  border-radius: 10px;
 
  color: white;
@@ -246,12 +239,11 @@ export const PropertiesItem = styled.div`
  .value ,.percent {
   font-size: 15px;
   font-weight: 500;
-  color: #98BDF9;
+  color: #94DAFF;
  }
 `
 
 export const HistoryTradeTable = styled.div`
-  border: 1px red solid;
   width: 600px;
 `
 
