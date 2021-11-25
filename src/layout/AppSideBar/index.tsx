@@ -9,15 +9,17 @@ import routes, { Route } from '../../routes'
 const AppSideBarContent = styled.div`
   height: 100%;
   min-height: 100vh;
+  padding-left: 20px;
   background: black;
   position: relative;
+  border-right: 1px solid #262531;
   z-index: 11;
 
   .ant-menu-root.ant-menu-vertical,
   .ant-menu-root.ant-menu-vertical-left,
   .ant-menu-root.ant-menu-vertical-right,
   .ant-menu-root.ant-menu-inline {
-    background: #101A2D !important;
+    background: black !important;
     box-shadow: none;
   }
 `
@@ -26,6 +28,8 @@ const CustomizedMenu = styled(Menu)`
   .ant-menu-item {
     display: flex;
     align-items: center;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
 
     svg {
       width: 1.7rem;
@@ -38,7 +42,7 @@ const CustomizedMenu = styled(Menu)`
 
 
   .ant-menu-item-selected {
-    background-color: rgb(25, 45, 79) !important;
+    background-color: #1F252B !important;
 
     a {
       color: white !important;
@@ -50,7 +54,7 @@ const CustomizedMenu = styled(Menu)`
   }
 
   .ant-menu-item-active:not(.ant-menu-item-selected) {
-    background-color: rgb(25, 45, 79) !important;
+    background-color: #161A1F !important;
   }
 `
 

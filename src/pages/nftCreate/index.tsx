@@ -14,7 +14,7 @@ import useCreateNft from '../../hooks/contract/service/useNftCreate'
 const Wrapper = styled.div`
   width: 100%;
   height: fit-content;
-  padding-top: 60px;
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,24 +43,17 @@ const Wrapper = styled.div`
 const NFTForm = styled(Form)`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 800px;
+  width: 1200px;
   height: fit-content;
-  background: rgb(53,57,89);
+  background: #1D222D;
+  border: 2px solid #02A6F5;
   border-radius: 20px;
   padding: 0 20px;
-
-  h1 {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 500;
-    color: #00EBA4;
-    line-height: 2.8rem;
-  }
+  
 
   .text-area {
     &::placeholder {
-      color: #4779B5 !important;
+      color: #ccc !important;
     }
 
     height: 10rem !important;
@@ -83,12 +76,34 @@ const NFTForm = styled(Form)`
     }
 
   }
+`
 
+const CreatForm = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
 
+const LeftAreaForm = styled.div`
+  h1 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #00EBA4;
+    line-height: 2.8rem;
+  }
+`
+
+const RightAreaForm = styled.div`
+  h1 {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    color: #00EBA4;
+    line-height: 2.8rem
+  }
 `
 
 const NFTFormItem = styled(Form.Item)`
-  width: 100%;
+  width: 600px;
   margin-top: 20px;
   display: flex; 
 
@@ -100,11 +115,11 @@ const NFTFormItem = styled(Form.Item)`
 
   .ant-input {
     &::placeholder {
-      color: #4779B5;
+      color: #ccc;
     }
 
     height: 36px ;
-    background: #305099 !important;
+    background: #2A2E35 !important;
     border-radius: 10px !important;
     border: none;
 
@@ -122,7 +137,7 @@ const Selector = styled(Select)`
   .ant-select-selector {
     width: 200px !important;
     height: 35px !important;
-    background: #305099 !important;
+    background: #2A2E35  !important;
     border-radius: 10px !important;
     border: none;
   }
@@ -158,7 +173,7 @@ export const Announcement = styled.div`
     height: 70px;
     font-size: 16px;
     font-weight: 500;
-    color: #4779B5;
+    color: #ccc;
   }
 
   @media screen and ( max-width: 1000px ) {
@@ -179,7 +194,8 @@ const AssetUploadContainer = styled.div`
 
   .upload-border {
     width: 400px;
-    background: #305099;
+    height: 540px;
+    background: #2A2E35 ;
     border-radius: 1rem;
     border: none;
     display: flex;
@@ -198,7 +214,7 @@ const AssetUploadContainer = styled.div`
       width: 100%;
       font-size: 16px;
       font-weight: 500;
-      color: black;
+      color: #ccc;
       opacity: 0.5;
       filter: alpha(opacity=50); /* IE8 及其更早版本 */
     }
@@ -235,6 +251,17 @@ const AssetUploadContainer = styled.div`
     font-weight: 500;
     color: #ffffff;
   }
+`
+
+const CreatButton = styled.button`
+  width: 200px;
+  height: 40px;
+  border-radius: 8px;
+  margin-left: calc((100% - 200px) / 2);
+  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+  border: none;
+  color: white;
+  font-weight: bolder;
 `
 
 export type NFTCreateForm = {
@@ -377,67 +404,72 @@ const NFTCreate: React.FC<{ wallet: Wallet }> = ({ wallet }) => {
     <Wrapper >
       <div className="title">NFT Create </div>
       <NFTForm form={form} colon={false} layout="vertical" initialValues={formInitialValues} >
-        <h1>1. Artwork Information</h1>
-        <NFTFormItem
-          name="artworkType"
-          label="Artwork Type"
-          rules={[{ required: true, message: 'Artwork Type is Required!' }]}
-        >
-          <Selector
-            onChange={(value: any) => {
-              form.setFieldsValue({ artworkType: value })
-            }}
-          >
-            <Select.Option value="pictures">
-              Pictures
-            </Select.Option>
-            <Select.Option value="gif">GIF</Select.Option>
-            <Select.Option value="video">Video</Select.Option>
-            <Select.Option value="audio">Audio</Select.Option>
-          </Selector>
-        </NFTFormItem>
+        <CreatForm>
+          <LeftAreaForm>
+            <h1>1. Artwork Information</h1>
+            <NFTFormItem
+              name="artworkType"
+              label="Artwork Type"
+              rules={[{ required: true, message: 'Artwork Type is Required!' }]}
+            >
+              <Selector
+                onChange={(value: any) => {
+                  form.setFieldsValue({ artworkType: value })
+                }}
+              >
+                <Select.Option value="pictures">
+                  Pictures
+                </Select.Option>
+                <Select.Option value="gif">GIF</Select.Option>
+                <Select.Option value="video">Video</Select.Option>
+                <Select.Option value="audio">Audio</Select.Option>
+              </Selector>
+            </NFTFormItem>
 
-        <NFTFormItem
-          name="artworkName"
-          label="Artwork Name"
-          rules={[{ required: true, message: 'Artwork Name is Required!' }]}
-        >
-          <Input placeholder="Enter the artwork name" />
-        </NFTFormItem>
+            <NFTFormItem
+              name="artworkName"
+              label="Artwork Name"
+              rules={[{ required: true, message: 'Artwork Name is Required!' }]}
+            >
+              <Input placeholder="Enter the artwork name" />
+            </NFTFormItem>
 
-        <NFTFormItem
-          name="artistName"
-          label="Artist Name"
-          rules={[{ required: true, message: 'Artist Name is Required!' }]}
-        >
-          <Input placeholder="Enter the artist name" />
-        </NFTFormItem>
+            <NFTFormItem
+              name="artistName"
+              label="Artist Name"
+              rules={[{ required: true, message: 'Artist Name is Required!' }]}
+            >
+              <Input placeholder="Enter the artist name" />
+            </NFTFormItem>
 
-        <NFTFormItem
-          name="socialMedia"
-          label="Social Media/Portfolio link"
-          rules={[{ required: true, message: 'Social Media/Portfolio link is Required!' }]}
-        >
-          <Input placeholder="Personal website" />
-        </NFTFormItem>
+            <NFTFormItem
+              name="socialMedia"
+              label="Social Media/Portfolio link"
+              rules={[{ required: true, message: 'Social Media/Portfolio link is Required!' }]}
+            >
+              <Input placeholder="Personal website" />
+            </NFTFormItem>
 
-        <NFTFormItem
-          name="briefIntroduction"
-          label="Brief Introduction"
-          rules={[{ required: true, message: 'Brief Introduction is Required!' }]}
-        >
-          <Input.TextArea rows={4} placeholder="Enter the Brief introduction" className="text-area" />
-        </NFTFormItem>
+            <NFTFormItem
+              name="briefIntroduction"
+              label="Brief Introduction"
+              rules={[{ required: true, message: 'Brief Introduction is Required!' }]}
+            >
+              <Input.TextArea rows={4} placeholder="Enter the Brief introduction" className="text-area" />
+            </NFTFormItem>
+          </LeftAreaForm>
 
-        <h1>2. Upload Artwork Image</h1>
+          <RightAreaForm>
+            <h1>2. Upload Artwork Image</h1>
 
-        <NFTFormItem
-          name="assetIpfsHash"
-          rules={[{ required: true }]}
-        >
-          <AssetUpload onUploadSuccess={onAssetUploadSuccess} />
-        </NFTFormItem>
-
+            <NFTFormItem
+              name="assetIpfsHash"
+              rules={[{ required: true }]}
+            >
+              <AssetUpload onUploadSuccess={onAssetUploadSuccess} />
+            </NFTFormItem>
+          </RightAreaForm>
+        </CreatForm>
         <Announcement>
           <Checkbox checked={promised} onChange={ e => setPromised(e.target.checked)}>
             <div className="text">
@@ -446,20 +478,17 @@ const NFTCreate: React.FC<{ wallet: Wallet }> = ({ wallet }) => {
             </div>
           </Checkbox>
         </Announcement>
-
         {
           account === undefined ? (
-            <Button onClick={open}>
+            <CreatButton onClick={open}>
               Connect
-            </Button>
+            </CreatButton>
           ) : (
-            <Button onClick={ ()=> createNft(form, promised)} disabled={creating}>
-              {
-                creating
-                  ? 'Creating...'
-                  : 'Create'
-              }
-            </Button>
+            <CreatButton onClick={ ()=>
+              createNft(form, promised)}
+            >
+              Create
+            </CreatButton>
           )
         }
 
