@@ -41,7 +41,7 @@ const StyledCurrentModal = styled(Modal)`
 `
 
 const StyledWallet = styled.div`
-  height: 50px;
+  height: 40px;
   background-color: #201b1e;
   color: #fff;
   font-size: 16px;
@@ -49,7 +49,7 @@ const StyledWallet = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 2rem;
-  border: 1px solid #DDC9BD;
+  border: 2px solid #02A6F5;
   box-sizing: border-box;
   padding-left: 1rem;
   padding-right: 1rem;

@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import ForartLogo from '../../assets/images/header/logo.png'
-import ConnectButton from '../../components/wallet/ConnectButton'
 import Wallet from '../../components/wallet'
 
 
 const AppHeaderContent = styled.div`
   width: 100%;
   height: 68px;
-  background: #000;
+  padding: 0 20px;
+  background: #282B2F;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,11 +16,10 @@ const AppHeaderContent = styled.div`
   
 `
 const Logo = styled.div`
-  width: 140px;
-  
+  width: 130px;
+  height: 68px;
   img {
     width: 100%;
-    margin-left: 20px;
   }
 `
 

@@ -17,12 +17,6 @@ export type Route = {
 const routes: Route[] = [
   {
     path: '/',
-    title: 'Level Up',
-    component: LevelUp,
-    disable: false
-  },
-  {
-    path: '/create',
     title: 'NFT Create',
     component: NFTCreate,
     disable: false
@@ -38,6 +32,12 @@ const routes: Route[] = [
     title: 'Collectible',
     component: NFTDetailPage,
     hidden: true
+  },
+  {
+    path: '/levelUp',
+    title: 'Level Up',
+    component: LevelUp,
+    disable: true
   },
 ]
 
