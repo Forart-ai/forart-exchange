@@ -73,6 +73,17 @@ const BalanceContainer = styled.div`
   user-select: none;
 `
 
+const StyledButton = styled(Button)`
+  width: 100px;
+  height: 40px;
+  border-radius: 8px;
+  margin-top: 50px;
+  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+  border: none;
+  color: white;
+  font-weight: bolder;
+`
+
 type CurrentAccountProps = {
   account: string
 }
@@ -140,7 +151,14 @@ const WalletModalContent: React.FC<CurrentAccountProps> =({
 
 
 const CurrentAccount: React.FC<CurrentAccountProps> = ({ account }) => {
+
+  const { deactivate } = useWeb3React()
   const [isModalVisible, setIsModalVisible] = useState(false)
+
+  const disconnect =() => {
+    deactivate()
+
+  }
 
 
   const closeModal = () => {
@@ -155,16 +173,15 @@ const CurrentAccount: React.FC<CurrentAccountProps> = ({ account }) => {
       <StyledCurrentModal
         style={{ top: 20 }}
         wrapClassName="wallet-modal-wrapper"
-        closable={ false }
-        maskClosable={ false }
         title="Your Wallet"
+        onCancel={closeModal}
         visible={ isModalVisible }
         footer= { null }
       >
         <WalletModalContent account={account}  />
-        <Button className="walletModalClose" onClick={closeModal}>
-          Close
-        </Button>
+        <StyledButton className="walletModalClose" onClick={disconnect}>
+          Disconnect
+        </StyledButton>
       </StyledCurrentModal>
     </CurrentAccountContainer>
   )

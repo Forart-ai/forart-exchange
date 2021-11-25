@@ -56,6 +56,11 @@ const useCreateNft = () => {
 
       const pinResult = await pinJsonToIPFS(nftMetadata)
 
+      setHintMessage({
+        message: 'pinning JSON to IPFS, please wait',
+        type: 'hint'
+      })
+
       if (!pinResult) { return }
 
       setHintMessage({

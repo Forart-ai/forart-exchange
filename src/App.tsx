@@ -9,9 +9,11 @@ import Sider from 'antd/es/layout/Sider'
 // @ts-ignore
 import { Route } from 'react-router-dom'
 import routes from './routes'
+import { useEagerConnect } from './web3/hooks'
 
 
 function App() {
+  useEagerConnect()
   return (
     <Layout className="app">
       <Header style={{ padding:'0' }}>
