@@ -34,8 +34,8 @@ const routes: Route[] = [
     hidden: true
   },
   {
-    path: '/levelUp',
-    title: 'Level Up',
+    path: '/gamingPools',
+    title: 'Gaming Pools',
     component: LevelUp,
     disable: true
   },
