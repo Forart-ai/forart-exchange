@@ -25,7 +25,7 @@ const routes: Route[] = [
     path: '/marketplace',
     title: 'Marketplace',
     component: Marketplace,
-    disable: false
+    disable: true
   },
   {
     path: '/marketplace/:id',
