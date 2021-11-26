@@ -1,5 +1,5 @@
-import React, { FC, useCallback, useContext, useState } from 'react'
-import { Modal  } from 'antd'
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react'
+import { message, Modal } from 'antd'
 import { supportWallets, Wallet } from '../web3/connectors'
 import { useWeb3React } from '@web3-react/core'
 import styled from '@emotion/styled'
@@ -81,14 +81,20 @@ type WalletSelectionModalProps = {
 const WalletCard: React.FC<{wallet: Wallet}> = ({ wallet }) => {
   const { activate } = useWeb3React()
   const { name, icon, connector } = wallet
-
   const  prepareToConnect = () =>  { activate(connector) }
 
-
+  const connectToWallet =  useCallback(async () => {
+    const provider = await connector.getProvider()
+    if (!provider) {
+      message.warn(`Please install ${name} wallet first.`)
+      return
+    }
+    prepareToConnect()
+  }, [activate, connector])
 
   return (
     <StyledWalletCard>
-      <div className="wallet-item" onClick={ prepareToConnect } >
+      <div className="wallet-item" onClick={ connectToWallet } >
         <span>{name}</span>
         <img className="wallet-icon" src={icon} alt="" />
       </div>
