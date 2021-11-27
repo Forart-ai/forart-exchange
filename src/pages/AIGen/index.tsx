@@ -5,6 +5,7 @@ import ai2 from '../../assets/images/AIGen/ai2.png'
 import ai3 from '../../assets/images/AIGen/ai3.png'
 import ai4 from '../../assets/images/AIGen/ai4.png'
 import ai5 from '../../assets/images/AIGen/ai5.png'
+import BannerImage from '../../assets/images/aiGenerator/banner.jpg'
 
 const Wrapper = styled.div`
   width: 1200px;
@@ -41,8 +42,35 @@ const Title = styled.div`
 const Banner = styled.div`
   width: 100%;
   height: 250px;
-  background: red;
-  border-radius: 8px;
+  border-radius: 10px;
+  background: url(${BannerImage}) no-repeat center;
+  margin-bottom: 20px;
+`
+
+const Introduction = styled.div`
+  width: 100%;
+  height: 200px;
+  
+  .title {
+    width: fit-content;
+    font-size: 38px;
+    background-image: -webkit-linear-gradient(left, #00EBA4, #02A6F5);
+    font-weight: 550;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 30px;
+  }
+  
+  .sub-title {
+    font-size: 24px;
+    font-weight: 550;
+    color: #02A6F5;
+  }
+  
+  .description {
+    color: #02A6F5;
+    font-size: 16px;
+  }
 `
 
 const SampleContent = styled.div`
@@ -111,13 +139,15 @@ const AIGen:React.FC = () => {
 
   return (
     <Wrapper >
-      <Banner>
-        1
-      </Banner>
-      <Title>AI-Gen</Title>
-      <div className="text">wewddsadasd</div>
+      <Banner />
+      <Introduction>
+        <div className="title">AI-Driven Generating NFTs by Topic seed</div>
+        <div className="sub-title">Description</div>
+        <div className="description">
+          Training is used to generate images from text descriptions using a text-image pair dataset
+        </div>
+      </Introduction>
       <SampleContent>
-        <Title>Sample</Title>
         <SampleMain>
           <EnterContent>
             <div className="enter">TEXT PROMPT</div>

@@ -5,6 +5,8 @@ import solana from '../../assets/images/home/solana.svg'
 import polygon from '../../assets/images/home/polygon.svg'
 import eth from '../../assets/images/home/eth.png'
 import celo from '../../assets/images/home/celo.png'
+import { useHistory } from 'react-router-dom'
+
 
 const HomePage = styled.div`
   width: 100%;
@@ -91,12 +93,14 @@ const GamingPools = styled.div`
   flex-wrap: wrap;  
 `
 
-const PoolsItem1 = styled.div`
+const PoolsItem = styled.div`
   width: 500px;
   height: 300px;
   position: relative;
   text-align: center;
   margin-top: 30px;
+  cursor: pointer;
+  border-radius: 10px;
   
   &:before {
     content: '';
@@ -104,8 +108,7 @@ const PoolsItem1 = styled.div`
     height: 100%;
     position: absolute;
     //background: linear-gradient(90deg,#02A6F5,#00EBA4,#000000);
-    background: linear-gradient(90deg,#4D3AE9,#8BD2ED);
-    border-radius: 10px;
+    //background: linear-gradient(90deg,#4D3AE9,#8BD2ED);
     opacity: 1;
     left: 0;
     top: 0;
@@ -119,79 +122,43 @@ const PoolsTitle = styled.div`
   position: relative;
 `
 
-const PoolsText = styled.div`
-  padding: 0 20px;
-  color: white;
-  position: absolute;
-  bottom: 0;
-  font-size: 25px;
-`
 
-const PoolsItem2 = styled.div`
-  width: 500px;
-  height: 300px;
-  position: relative;
-  text-align: center;
-  margin-top: 30px;
-  
-  &:before {
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    //background: linear-gradient(90deg,#02A6F5,#00EBA4,#000000);
-    background: linear-gradient(90deg,#E45341,#F5B1A6);
-    border-radius: 10px;
-    opacity: 1;
-    left: 0;
-    top: 0;
+type pools = {
+  title: string
+  background: any
+  path?: string
+}
+
+const gamingPools:pools[] = [
+  {
+    title: 'NFT+Defi+AI',
+    background: 'linear-gradient(90deg,#4D3AE9,#8BD2ED)'
+  },
+  {
+    title: 'AI-Driven NFT Breeding',
+    background: 'linear-gradient(90deg,#E45341,#F5B1A6)'
+  },
+  {
+    title: 'AI-Driven Generating NFTs by Topic seed',
+    background: 'linear-gradient(90deg,#E64C29,#F4BA76)',
+    path: '/AI-Gen'
+  },
+  {
+    title: 'AI-Driven Tool Kit to mint NFTs',
+    background: 'linear-gradient(90deg,#66A7B8,#A1CAE6)'
   }
-`
-
-const PoolsItem3 = styled.div`
-  width: 500px;
-  height: 300px;
-  position: relative;
-  text-align: center;
-  margin-top: 30px;
-  
-  &:before {
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    //background: linear-gradient(90deg,#02A6F5,#00EBA4,#000000);
-    background: linear-gradient(90deg,#E64C29,#F4BA76);
-    border-radius: 10px;
-    opacity: 1;
-    left: 0;
-    top: 0;
-  }
-`
-
-const PoolsItem4 = styled.div`
-  width: 500px;
-  height: 300px;
-  position: relative;
-  text-align: center;
-  margin-top: 30px;
-  
-  &:before {
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    //background: linear-gradient(90deg,#02A6F5,#00EBA4,#000000);
-    background: linear-gradient(90deg,#66A7B8,#A1CAE6);
-    border-radius: 10px;
-    opacity: 1;
-    left: 0;
-    top: 0;
-  }
-`
-
+]
 
 const Home:React.FC = () => {
+
+
+  const history = useHistory()
+
+  const word = 'Coming soon ...'
+
+  const toPath = (pathName: string | undefined) => {
+    history.push(`${pathName}`)
+  }
 
   return (
     <HomePage>
@@ -210,26 +177,19 @@ const Home:React.FC = () => {
           Gaming Pools
         </Title>
         <GamingPools>
-          <PoolsItem1>
-            <PoolsTitle>
-              NFT+Defi+AI
-            </PoolsTitle>
-          </PoolsItem1>
-          <PoolsItem2>
-            <PoolsTitle>
-              AI-Driven NFT Breeding
-            </PoolsTitle>
-          </PoolsItem2>
-          <PoolsItem3>
-            <PoolsTitle>
-              AI-Driven Generating NFTs by Topic seed
-            </PoolsTitle>
-          </PoolsItem3>
-          <PoolsItem4>
-            <PoolsTitle>
-              AI-Driven Tool Kit to mint NFTs
-            </PoolsTitle>
-          </PoolsItem4>
+          {
+            gamingPools.map((item, index) => (
+              <PoolsItem
+                key={index}
+                style={{ background: item.background }}
+                onClick={() => toPath(item?.path)}
+              >
+                <PoolsTitle>
+                  {item.title}
+                </PoolsTitle>
+              </PoolsItem>
+            ))
+          }
         </GamingPools>
       </Content>
     </HomePage>
