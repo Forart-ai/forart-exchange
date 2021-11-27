@@ -14,7 +14,8 @@ import RightArrow from '../../assets/images/aiGenerator/arrow-right-fill.png'
 import StyleEx from '../../assets/images/aiGenerator/styleEx.jpg'
 import ContentEx from '../../assets/images/aiGenerator/contentEx.jpg'
 import ResultEx from '../../assets/images/aiGenerator/resultEx.jpg'
-
+import { aiGeneratorStyle } from '../../apis/ai'
+import { base64ToFormdata } from '../../utils'
 
 
 SwiperCore.use([Navigation, EffectCoverflow, Pagination])
@@ -277,10 +278,8 @@ const CreateButton: React.FC<{ onClick:() => void }> = ({ onClick }) => {
 
   return (
     <div>
-      <Popover placement={'bottom'} content={'Coming Soon!'}>
-        <MergeIcon />
-        <StyledButton onClick={ onClick } disabled={true}> Generate Now! </StyledButton>
-      </Popover>
+      <MergeIcon />
+      <StyledButton onClick={ onClick } > Generate Now! </StyledButton>
     </div>
   )
 }
@@ -323,6 +322,9 @@ const AIGeneration:React.FC = () => {
 
   const generate = async () => {
     setGenerating(true)
+    const result = await aiGeneratorStyle(style, content)
+    console.log(result.data)
+    const v = await base64ToFormdata(result.data)
   }
 
   useEffect(() => {

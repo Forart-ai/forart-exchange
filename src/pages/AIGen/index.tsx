@@ -78,6 +78,7 @@ const SampleContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  border: 1px red solid;
 `
 
 const SampleMain = styled.div`
