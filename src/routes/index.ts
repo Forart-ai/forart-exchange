@@ -48,10 +48,10 @@ const routes: Route[] = [
     hidden: true
   },
   {
-    path: '/aiGenerator',
-    title: 'AI-Gen',
+    path: '/nftBreeding',
+    title: 'NFT Breeding',
     component: LevelUp,
-    disable: true
+    disable: false
   },
 ]
 
