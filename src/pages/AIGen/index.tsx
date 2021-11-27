@@ -8,7 +8,7 @@ import ai5 from '../../assets/images/AIGen/ai5.png'
 import BannerImage from '../../assets/images/aiGenerator/banner.jpg'
 
 const Wrapper = styled.div`
-  width: 1200px;
+  width: 1100px;
   margin: 0 auto;
   height: fit-content;
   padding-top: 20px;
