@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import banner from '../../assets/images/home/banner.png'
+import solana from '../../assets/images/home/solana.svg'
+import polygon from '../../assets/images/home/polygon.svg'
+import eth from '../../assets/images/home/eth.png'
+import celo from '../../assets/images/home/celo.png'
 
 const HomePage = styled.div`
   width: 100%;
@@ -17,9 +21,58 @@ const BannerContent = styled.div`
   }
 `
 
+const Built = styled.div`
+  color: white;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  
+  span {
+    color: #47E19D;
+  }
+  
+  img {
+    margin-left: 50px;
+  }
+
+  img:nth-of-type(1) {
+    height: 30px;
+  }
+  
+  img:nth-of-type(2) {
+    height: 20px;
+  }
+  .celo {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bolder;
+
+    img {
+      margin-right: 10px;
+    }
+  }
+  .eth {
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+    font-weight: bolder;
+    
+    img {
+      margin-right: 10px;
+    }
+  }
+`
+
 const Content = styled.div`
   width: 1200px;
   margin-left: calc((100% - 1200px) / 2);
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `
 
 const Title = styled.div`
@@ -145,6 +198,13 @@ const Home:React.FC = () => {
       <BannerContent>
         <img src={banner} />
       </BannerContent>
+      <Built>
+        <span>Built on</span>
+        <div className="celo"><img src={celo} />Celo</div>
+        <img src={polygon} />
+        <img src={solana} />
+        <div className="eth"><img src={eth} />Ethereum</div>
+      </Built>
       <Content>
         <Title>
           Gaming Pools
@@ -154,9 +214,6 @@ const Home:React.FC = () => {
             <PoolsTitle>
               NFT+Defi+AI
             </PoolsTitle>
-            <PoolsText>
-              The most interesting NFT Generating Game is coming soon.
-            </PoolsText>
           </PoolsItem1>
           <PoolsItem2>
             <PoolsTitle>

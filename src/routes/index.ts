@@ -3,6 +3,7 @@ import NFTCreate from '../pages/nftCreate'
 import Marketplace from '../pages/marketplace'
 import NFTDetailPage from '../pages/marketplace/nftDetail'
 import Home from '../pages/Home'
+import AIGen from '../pages/AIGen'
 
 export type Route = {
   path: string
@@ -20,6 +21,12 @@ const routes: Route[] = [
     path: '/',
     title: 'Home',
     component: Home,
+    disable: false
+  },
+  {
+    path: '/AI-Gen',
+    title: 'AI-Gen',
+    component: AIGen,
     disable: false
   },
   {
