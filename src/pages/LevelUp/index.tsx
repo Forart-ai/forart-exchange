@@ -130,7 +130,8 @@ const StyledButton = styled(Button)`
   border: none;
   color: white;
   font-weight: bolder;
-  
+  border-radius: 10px;
+
 `
 
 const ResultNFTColumn = styled.div`
