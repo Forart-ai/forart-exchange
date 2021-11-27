@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useStyledNFTsQuery } from '../../hooks/queries/useStyledNFTsQuery'
 import { useNFTsQuery } from '../../hooks/queries/useNFTsQuery'
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
-import { Button, Checkbox, Image as AntdImage } from 'antd'
+import { Button, Checkbox, Image as AntdImage, Popover } from 'antd'
 import SwiperCore, { EffectCoverflow, Navigation, Pagination } from 'swiper'
 import 'swiper/swiper.scss'
 import 'swiper/modules/navigation/navigation.scss'
@@ -274,10 +274,13 @@ const SelectedNFT: React.FC< {style: string, content: string} >= ({ style, conte
 }
 
 const CreateButton: React.FC<{ onClick:() => void }> = ({ onClick }) => {
+
   return (
     <div>
-      <MergeIcon />
-      <StyledButton onClick={ onClick }> Generate Now! </StyledButton>
+      <Popover placement={'bottom'} content={'Coming Soon!'}>
+        <MergeIcon />
+        <StyledButton onClick={ onClick } disabled={true}> Generate Now! </StyledButton>
+      </Popover>
     </div>
   )
 }
