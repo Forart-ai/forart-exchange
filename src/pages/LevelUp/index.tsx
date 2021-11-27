@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import { useStyledNFTsQuery } from '../../hooks/queries/useStyledNFTsQuery'
 import { useNFTsQuery } from '../../hooks/queries/useNFTsQuery'
@@ -14,8 +14,9 @@ import RightArrow from '../../assets/images/aiGenerator/arrow-right-fill.png'
 import StyleEx from '../../assets/images/aiGenerator/styleEx.jpg'
 import ContentEx from '../../assets/images/aiGenerator/contentEx.jpg'
 import ResultEx from '../../assets/images/aiGenerator/resultEx.jpg'
+import { LoadingOutlined } from '@ant-design/icons'
 import { aiGeneratorStyle } from '../../apis/ai'
-import { base64ToFormdata } from '../../utils'
+import {  base64ToIPfsUri } from '../../utils'
 
 
 SwiperCore.use([Navigation, EffectCoverflow, Pagination])
@@ -139,10 +140,13 @@ const ResultNFTColumn = styled.div`
   justify-content: center;
   align-items: center;
   
-  .nft-border {
-    width: 80%;
-    height: 80%;
-    border: 1px blue solid; 
+  .loading {
+    position: relative;
+    bottom: 180px;
+    left: 220px;
+    font-size: 40px;
+    color: #4779B5;
+    z-index: 2;
   }
 `
 
@@ -284,10 +288,15 @@ const CreateButton: React.FC<{ onClick:() => void }> = ({ onClick }) => {
   )
 }
 
-const NewNFTContainer:React.FC<{ newNFTSrc: string }> = ({ newNFTSrc }) =>{
+const NewNFTContainer:React.FC<{ newNFTSrc: string, generating: boolean }> = ({ newNFTSrc,generating }) =>{
   return (
     <ResultNFTColumn >
-      <SelectedImage src={newNFTSrc} width={400} height={400} style={{ objectFit:'cover', borderRadius: '10px' }} />
+      <div className="nft-border">
+        {
+          generating && ( <LoadingOutlined className="loading" />)
+        }
+        <SelectedImage src={newNFTSrc} width={400} height={400} style={{ objectFit:'cover', borderRadius: '10px' }} />
+      </div>
     </ResultNFTColumn>
   )
 }
@@ -320,12 +329,23 @@ const AIGeneration:React.FC = () => {
     ))
   },[nftList])
 
-  const generate = async () => {
+  // const generate = async () => {
+  //   setGenerating(true)
+  //   const result = await aiGeneratorStyle(style, content)
+  //   const uri = await base64ToIPfsUri(result.data)
+  //   setNewNFT(uri)
+  //   console.log(newNFT)
+  // }
+
+  const generate = useCallback(async ()=> {
+    console.log(style, content)
     setGenerating(true)
-    const result = await aiGeneratorStyle(style, content)
-    console.log(result.data)
-    const v = await base64ToFormdata(result.data)
-  }
+    const result = await aiGeneratorStyle(style,content)
+    const uri = await base64ToIPfsUri(result.data)
+    setNewNFT(uri)
+    setGenerating(false)
+    return uri
+  },[style,content])
 
   useEffect(() => {
     setStyleList(styledNFTs)
@@ -365,7 +385,7 @@ const AIGeneration:React.FC = () => {
         <GenerateResultContainer >
           <SelectedNFT style={style} content={content} />
           <CreateButton onClick={ generate } />
-          <NewNFTContainer newNFTSrc={newNFT} />
+          <NewNFTContainer newNFTSrc={newNFT} generating={generating} />
         </GenerateResultContainer>
       </GenContainer>
 

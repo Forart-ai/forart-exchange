@@ -20,15 +20,9 @@ export const shortenAddress = (address?: string, length = 6) => {
   return address ? `${address.substring(0, length)}...${address.slice(-length)}` : '-'
 }
 
-export function base64ToFormdata (blob: Blob) {
-  // const data = new FormData()
-  // data.append('file', blob, Date.now()+ 'jpg')
-  pinFileToIPFS(blob).then(res =>
-    console.log(res))
-
-
-
-
-
+export function base64ToIPfsUri (blob: Blob) {
+  return pinFileToIPFS(blob).then(res => {
+    return  getUriByIpfsHash(res.data.IpfsHash)
+  })
 
 }
