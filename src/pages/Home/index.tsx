@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom'
 
 const HomePage = styled.div`
   width: 100%;
+  padding-bottom: 50px;
 `
 
 const BannerContent = styled.div`
@@ -122,9 +123,18 @@ const PoolsTitle = styled.div`
   position: relative;
 `
 
+const PoolsText = styled.div`
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  font-weight: bolder;
+  font-size: 22px;
+  color: #00EBA4;
+`
 
 type pools = {
   title: string
+  text?: string
   background: any
   path?: string
 }
@@ -132,11 +142,14 @@ type pools = {
 const gamingPools:pools[] = [
   {
     title: 'NFT+Defi+AI',
-    background: 'linear-gradient(90deg,#4D3AE9,#8BD2ED)'
+    text: 'Coming Soon!',
+    background: 'linear-gradient(90deg,#4D3AE9,#8BD2ED)',
+    path: ''
   },
   {
     title: 'AI-Driven NFT Breeding',
-    background: 'linear-gradient(90deg,#E45341,#F5B1A6)'
+    background: 'linear-gradient(90deg,#E45341,#F5B1A6)',
+    path: ''
   },
   {
     title: 'AI-Driven Generating NFTs by Topic seed',
@@ -145,7 +158,9 @@ const gamingPools:pools[] = [
   },
   {
     title: 'AI-Driven Tool Kit to mint NFTs',
-    background: 'linear-gradient(90deg,#66A7B8,#A1CAE6)'
+    text: 'Coming Soon!',
+    background: 'linear-gradient(90deg,#66A7B8,#A1CAE6)',
+    path: ''
   }
 ]
 
@@ -187,6 +202,9 @@ const Home:React.FC = () => {
                 <PoolsTitle>
                   {item.title}
                 </PoolsTitle>
+                <PoolsText>
+                  {item.text}
+                </PoolsText>
               </PoolsItem>
             ))
           }

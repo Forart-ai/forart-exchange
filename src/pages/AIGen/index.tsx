@@ -168,7 +168,7 @@ const AIGen:React.FC = () => {
         </SampleMain>
       </SampleContent>
       <AIGenContent>
-        Coming soon ...
+        Coming Soon !
       </AIGenContent>
     </Wrapper>
   )
