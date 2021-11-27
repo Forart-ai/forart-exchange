@@ -43,6 +43,14 @@ App {
   overflow-x: hidden;
 }
 
+.ant-image.ant-image-error {
+  background-color: #2A2E35 !important;
+  border-radius: 10px !important;
+}
+
+.ant-image.ant-image-error > img {
+  display: none !important;
+}
 
 ::-webkit-scrollbar {
   display: none;

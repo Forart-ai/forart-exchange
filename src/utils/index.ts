@@ -4,6 +4,7 @@ import { getUriByIpfsHash } from './ipfs'
 
 export function generateNftMetadata(form: NFTCreateForm): NFTMetadata {
   const { artworkName, briefIntroduction, assetIpfsHash } = form
+  console.log(assetIpfsHash)
 
   return {
     name: artworkName,

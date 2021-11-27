@@ -54,6 +54,7 @@ const useCreateNft = () => {
 
       const nftMetadata = generateNftMetadata(form)
 
+
       const pinResult = await pinJsonToIPFS(nftMetadata)
 
       setHintMessage({

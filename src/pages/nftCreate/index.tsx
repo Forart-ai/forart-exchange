@@ -315,6 +315,7 @@ const AssetUpload: React.FC<AssetUploadProps> = ({ onUploadSuccess }) => {
       .then(r => {
         setPinnedFileHash(r.data.IpfsHash)
         onUploadSuccess(r.data.IpfsHash)
+        console.log(`https://gateway.pinata.cloud/ipfs/${r.data.IpfsHash}`)
         setUploading(false)
 
       }).catch(e => {

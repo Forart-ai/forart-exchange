@@ -41,8 +41,8 @@ const routes: Route[] = [
     hidden: true
   },
   {
-    path: '/gamingPools',
-    title: 'Gaming Pools',
+    path: '/aiGenerator',
+    title: 'AI-Gen',
     component: LevelUp,
     disable: true
   },
