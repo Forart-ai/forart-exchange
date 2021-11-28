@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { useNFTDetailQuery } from '../../hooks/queries/useNFTDetailQuery'
-import { Wrapper, NFTDetailContainer, TopRow, Title, OtherArtworksContainer, OtherArtworksArea, CenterRow, FootRow, HistoryTradeTable, PropertiesItem, PropertiesContainer,  ImageContainer, InfoContainer, ItemsContainer, NFTBaseInfoContainer, StyledButton } from './nftDetail.style'
+import { Wrapper, NFTDetailContainer, TopRow, Title, OtherArtworksContainer, OtherArtworksArea, CenterRow, FootRow, CodingFlag, HistoryTradeTable, PropertiesItem, PropertiesContainer,  ImageContainer, InfoContainer, ItemsContainer, NFTBaseInfoContainer, StyledButton } from './nftDetail.style'
 import { Image, message, Popover } from 'antd'
 import { NFTDetail } from '../../types/NFTDetail'
 import { shortenAddress } from '../../utils'
@@ -12,9 +12,9 @@ import { CopyOutlined } from '@ant-design/icons'
 import Heart from '../../assets/images/marketplace/like.png'
 import Show from '../../assets/images/marketplace/show.png'
 import more1 from '../../assets/images/marketplace/more1.jpg'
-import more2 from '../../assets/images/marketplace/more2.png'
+import more2 from '../../assets/images/marketplace/more2.jpg'
 import more3 from '../../assets/images/marketplace/more3.jpg'
-import more4 from '../../assets/images/marketplace/more4.png'
+import more4 from '../../assets/images/marketplace/more4.jpg'
 
 import { useWeb3React } from '@web3-react/core'
 import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
@@ -22,6 +22,7 @@ import moment from 'moment'
 import ThemeTable from '../../styles/ThemeTable'
 import { getNftFavoriteCount } from '../../apis/nft'
 import { useNFTLikeQuery } from '../../hooks/queries/useNFTLikeQuery'
+import CodingFlagIcon from '../../assets/images/marketplace/coding-flag.png'
 
 
 
@@ -138,7 +139,10 @@ const Properties: React.FC = () => {
   return (
     <div>
       <Title>Properties</Title>
+
       <PropertiesContainer >
+        <CodingFlag src={CodingFlagIcon} />
+
         <PropertiesItem>
           <div className="key">CHARACTER</div>
           <div className="value">Cats</div>
@@ -260,7 +264,7 @@ const MoreArtworks: React.FC = () => {
         <div className="artwork-group">
           <div className="artwork-info">
             <div className="artwork-img">
-              <img src={more1} style={{ objectFit:'cover' }} alt="" />
+              <img src={more2} style={{ objectFit:'cover' }} alt="" />
             </div>
             <div className="artwork-describe">Face #001</div>
 
@@ -288,7 +292,7 @@ const MoreArtworks: React.FC = () => {
         <div className="artwork-group">
           <div className="artwork-info">
             <div className="artwork-img">
-              <img src={more1} style={{ objectFit:'cover' }} alt="" />
+              <img src={more3} style={{ objectFit:'cover' }} alt="" />
             </div>
             <div className="artwork-describe">Face #001</div>
 
@@ -316,7 +320,7 @@ const MoreArtworks: React.FC = () => {
         <div className="artwork-group">
           <div className="artwork-info">
             <div className="artwork-img">
-              <img src={more1} style={{ objectFit:'cover' }} alt="" />
+              <img src={more4} style={{ objectFit:'cover' }} alt="" />
             </div>
             <div className="artwork-describe">Face #001</div>
 

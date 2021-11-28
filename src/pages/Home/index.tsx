@@ -1,12 +1,10 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import banner from '../../assets/images/home/banner.png'
+import banner from '../../assets/images/home/banner-new.png'
 import solana from '../../assets/images/home/solana.svg'
-import polygon from '../../assets/images/home/polygon.svg'
 import eth from '../../assets/images/home/eth.png'
 import celo from '../../assets/images/home/celo.png'
 import { useHistory } from 'react-router-dom'
-import Back1 from '../../assets/images/home/intelligence.png'
 
 
 const HomePage = styled.div`
@@ -19,11 +17,11 @@ const BannerContent = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  background: #2A41C3;
+  background: url(${banner}) no-repeat center;
+  height: 300px;
+  background-size: 100%;
   
-  img {
-    height: 300px;
-  }
+ 
 `
 
 const Built = styled.div`
@@ -102,6 +100,9 @@ const PoolsItem = styled.div`
   height: 170px;
   margin-top: 30px;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   border-radius: 10px;
   border: 2px #00EBA4 solid;
   //background: #282c34;
@@ -136,7 +137,7 @@ const PoolsItem = styled.div`
 
 const PoolsTitle = styled.div`
   width: 100%;
-  padding: 20px 15px;
+  padding: 10px 15px;
   font-size: 30px;
   color: white;
   font-weight: bold;
@@ -211,9 +212,7 @@ const Home:React.FC = () => {
 
   return (
     <HomePage>
-      <BannerContent>
-        <img src={banner} />
-      </BannerContent>
+      <BannerContent />
       <Built>
         <span>Built on</span>
         <div className="celo"><img src={celo} />Celo</div>
@@ -242,8 +241,9 @@ const Home:React.FC = () => {
           {/*  ))*/}
           {/*}*/}
 
-          <PoolsItem>
+          <PoolsItem >
             <PoolsTitle>NFT+Defi+AI</PoolsTitle>
+            <PoolsTitle>Coming Soon!</PoolsTitle>
           </PoolsItem>
 
           <PoolsItem>
@@ -256,6 +256,7 @@ const Home:React.FC = () => {
 
           <PoolsItem>
             <PoolsTitle>AI-Driven Tool Kit to mint NFTs</PoolsTitle>
+            <PoolsTitle>Coming Soon!</PoolsTitle>
           </PoolsItem>
 
 

@@ -2,6 +2,8 @@ import React, { useCallback, useState } from 'react'
 import { useNFTsQuery } from '../../hooks/queries/useNFTsQuery'
 // @ts-ignore
 import styled from 'styled-components'
+import banner from '../../assets/images/home/banner-new.png'
+
 import { NftListItem } from '../../types/NFTDetail'
 import NFTListItem from '../../components/NFTListItem'
 import { Button, Menu } from 'antd'
@@ -28,8 +30,10 @@ const Wrapper = styled.div`
 const Banner = styled.div`
   width: 1200px;
   height: 200px;
-  border: 1px dodgerblue solid;
   margin: 10px 0;
+  background: url(${banner}) no-repeat center;
+  height: 300px;
+  background-size: 100%;
 `
 
 const Title = styled.div`

@@ -1,6 +1,7 @@
 // @ts-ignore
 import styled from 'styled-components'
 import { Button } from 'antd'
+import CodingFlagIcon from '../../assets/images/marketplace/coding-flag.png'
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -217,11 +218,24 @@ export const Title = styled.div`
 `
 
 export const PropertiesContainer = styled.div `
+  position: relative;
  width: 375px;
  display: flex;
  justify-content: space-between;
  flex-wrap: wrap;
  height: 300px;
+ 
+
+
+`
+
+export const CodingFlag = styled.img`
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  z-index: 55;
+  height: 100px;
 `
 
 export const PropertiesItem = styled.div`

@@ -2,7 +2,9 @@ import axios from 'axios'
 
 const aiDriverRequest = axios.create({
   // baseURL: 'http://175.27.190.185:8898/',
-  baseURL: 'http://52.221.228.254:8898',
+  // baseURL: 'http://52.221.228.254:8898',
+  baseURL: 'https://ai.forart.co/',
+
   timeout: 30000
 })
 
