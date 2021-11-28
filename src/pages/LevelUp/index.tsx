@@ -383,7 +383,7 @@ const AIGeneration:React.FC = () => {
       <GenContainer>
         <Banner />
         <Introduction>
-          <div className="title">AI Driven NFT-Breeding</div>
+          <div className="title">Style Transferred NFT</div>
           <div className="sub-title">Description</div>
           <div className="description">Al Generation uses artificial intelligence algorithms
             to extract the image style of Style Gene NFT and integrate it with the image of My

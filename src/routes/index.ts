@@ -25,13 +25,13 @@ const routes: Route[] = [
   },
   {
     path: '/AI-Gen',
-    title: 'AI-Gen',
+    title: 'GAN-NFT',
     component: AIGen,
     disable: false
   },
   {
     path: '/nftBreed',
-    title: 'NFT-Breed',
+    title: 'Al Generation',
     component: LevelUp,
     disable: false
   },
@@ -52,7 +52,7 @@ const routes: Route[] = [
     path: '/NFTCreate',
     title: 'NFT Create',
     component: NFTCreate,
-    disable: false
+    hidden: true
   },
 
 ]

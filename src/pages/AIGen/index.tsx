@@ -380,7 +380,7 @@ const AIGen:React.FC = () => {
     <Wrapper >
       <Banner />
       <Introduction>
-        <div className="title">AI-Driven Generating NFTs by Topic seed</div>
+        <div className="title">GAN-Driven NFT Generation</div>
         <div className="sub-title">Description</div>
         <div className="description">
           Training is used to generate images from text descriptions using a text-image pair dataset
