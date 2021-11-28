@@ -102,18 +102,19 @@ const PoolsItem = styled.div`
   margin-top: 30px;
   cursor: pointer;
   border-radius: 10px;
+  border: 2px solid #00EBA4;
   
-  &:before {
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    //background: linear-gradient(90deg,#02A6F5,#00EBA4,#000000);
-    //background: linear-gradient(90deg,#4D3AE9,#8BD2ED);
-    opacity: 1;
-    left: 0;
-    top: 0;
-  }
+  //&:before {
+  //  content: '';
+  //  width: 100%;
+  //  height: 100%;
+  //  position: absolute;
+  //  //background: linear-gradient(90deg,#02A6F5,#00EBA4,#000000);
+  //  //background: linear-gradient(90deg,#4D3AE9,#8BD2ED);
+  //  opacity: 1;
+  //  left: 0;
+  //  top: 0;
+  //}
 `
 
 const PoolsTitle = styled.div`

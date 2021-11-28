@@ -7,7 +7,7 @@ import { Menu } from 'antd'
 import routes, { Route } from '../../routes'
 import TwitterIcon from '../../assets/images/contactLink/twitter.png'
 import TelegramIcon from '../../assets/images/contactLink/telegram.png'
-import WebsiteIcon from '../../assets/images/contactLink/Website.png'
+import WebsiteIcon from '../../assets/images/contactLink/website.png'
 
 const AppSideBarContent = styled.div`
   height: 100%;
