@@ -142,7 +142,7 @@ type pools = {
 const gamingPools:pools[] = [
   {
     title: 'NFT+Defi+AI',
-    text: 'Coming Soon!',
+    text: '',
     background: 'linear-gradient(90deg,#4D3AE9,#8BD2ED)',
     path: ''
   },
@@ -158,7 +158,7 @@ const gamingPools:pools[] = [
   },
   {
     title: 'AI-Driven Tool Kit to mint NFTs',
-    text: 'Coming Soon!',
+    text: '',
     background: 'linear-gradient(90deg,#66A7B8,#A1CAE6)',
     path: ''
   }
