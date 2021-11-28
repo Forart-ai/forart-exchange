@@ -7,7 +7,7 @@ import { Button, Checkbox, Image as AntdImage, Popover } from 'antd'
 import SwiperCore, { EffectCoverflow, Navigation, Pagination } from 'swiper'
 import 'swiper/swiper.scss'
 import 'swiper/modules/navigation/navigation.scss'
-import BannerImage from '../../assets/images/aiGenerator/banner.jpg'
+import BannerImage from '../../assets/images/AIGen/ai-gen-banner.jpg'
 import Merge from '../../assets/images/aiGenerator/merge.png'
 import Add from '../../assets/images/aiGenerator/add.png'
 import RightArrow from '../../assets/images/aiGenerator/arrow-right-fill.png'
@@ -71,6 +71,7 @@ const Banner = styled.div`
   height: 250px;
   border-radius: 10px;
   background: url(${BannerImage}) no-repeat center;
+  background-size: 100%;
   margin-bottom: 20px;
 `
 
