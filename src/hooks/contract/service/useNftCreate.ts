@@ -7,6 +7,8 @@ import { getUriByIpfsHash, pinJsonToIPFS } from '../../../utils/ipfs'
 import { NftCreateForm } from '../../../apis/nft'
 import useNFTContract from './useNFTContract'
 import useSigner from '../../useSigner'
+import { createNFT as APICreateNFT } from '../../../apis/nft'
+import { useHistory } from 'react-router-dom'
 
 type Hint = {
     message?: string,
@@ -25,6 +27,7 @@ const useCreateNft = () => {
   const { account } = useWeb3React()
   const [hint, setHintMessage] = useState<Hint>({})
   const { awardItem } =  useNFTContract()
+  const history = useHistory()
 
   const signer = useSigner()
 
@@ -54,7 +57,6 @@ const useCreateNft = () => {
 
       const nftMetadata = generateNftMetadata(form)
 
-
       const pinResult = await pinJsonToIPFS(nftMetadata)
 
       setHintMessage({
@@ -73,23 +75,30 @@ const useCreateNft = () => {
 
       await awardItem(tokenUri).then(res=> {
         setHintMessage({
-          message: 'success',
-          type: 'success'
+          message: 'Your creation request has been submitted! Waiting the transaction on chain confirmed. Please DO NOT close this page now!',
+          type: 'hint'
         })
       })
 
       const createForm: NftCreateForm ={
         uri: pinResult.IpfsHash,
         addressCreate: account!,
-        tokenId: '',
-        group: '',
-        nameArtist: form.artistName,
-        fee: '',
-        feeRecipient: '',
-        typeChain: 'Ethereum'
+        tokenId:'',
+        typeChain: 'Ethereum',
+        nameArtist:form.artistName
       }
 
-      // TODO: call api
+      console.log(createForm)
+
+      const res = await APICreateNFT(createForm).then(res=> {
+        setHintMessage({
+          message: 'Create successfully!',
+          type: 'hint'
+        })
+        history.push('/marketplace')
+      })
+      console.log(res)
+
     },[account, signer]
   )
 

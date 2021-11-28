@@ -131,6 +131,10 @@ export const NFTBaseInfoContainer = styled.div`
      
      .info-favorite {
       display: flex;
+       
+       img {
+         width: 20px;
+       }
      }
 
 

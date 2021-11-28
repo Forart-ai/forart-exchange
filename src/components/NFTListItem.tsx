@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Spin } from 'antd'
 import { ChainType } from '../apis/nft'
 import { HeartFilled, HeartOutlined } from '@ant-design/icons'
-import  PriceIcon  from '../assets/images/marketplace/price-icon.svg'
+import  PriceIcon  from '../images/wallet/celo.svg'
 
 
 
@@ -79,7 +79,7 @@ const BottomDetail = styled.div`
     display: flex;
   }
   img {
-    width: 12px;
+    width: 14px;
     margin-right: 5px;
   }
 `
@@ -104,8 +104,6 @@ const NFTListItem: React.FC<{ data?: NftListItem, type?: 'nftList' | 'own', empt
 
   const [isHeart, setHeart] = useState<boolean>(false)
   const [favorite, setFavorite] = useState<number>(data?.favorite ?? 0)
-
-  console.log(data?.onSale)
 
 
   const getImageUrl = useCallback(() => {

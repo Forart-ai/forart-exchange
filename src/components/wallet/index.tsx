@@ -192,7 +192,7 @@ export const ConnectToWallet = () => {
   const { open } = useWalletSelectionModal()
 
   return (
-    <div className="toAmount"  onClick={open}>
+    <div className="toAmount" onClick={open}>
       <span>Connect To A Wallet</span>
     </div>
   )

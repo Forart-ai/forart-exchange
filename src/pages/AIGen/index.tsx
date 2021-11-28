@@ -237,7 +237,7 @@ const ObjectItems: React.FC<{objectItems: objectItem[], onSelect:(_:string) => v
   return (
     <AIContentContainer>
       <SubTitle> Choose an object </SubTitle>
-      <StyledRadioGroup value={objectItems[0].object} >
+      <StyledRadioGroup  >
         {
           objectItems?.map(item => (
             <div key={item.object} onClick={() => onSelect(item.object)}>
@@ -259,7 +259,7 @@ const AccessoriesItems: React.FC<{ accessoriesItems: accessoriesItem[], onSelect
   return (
     <AIContentContainer>
       <SubTitle> Choose an accessories </SubTitle>
-      <StyledRadioGroup value={accessoriesItems[0].accessories} >
+      <StyledRadioGroup >
         {
           accessoriesItems?.map(item => (
             <div key={item.accessories} onClick={() => onSelect(item.accessories)}>
@@ -281,7 +281,7 @@ const BehaviorItems: React.FC<{ behaviorItems: behaviorItem[], onSelect:(_:strin
   return (
     <AIContentContainer>
       <SubTitle> Choose an behavior </SubTitle>
-      <StyledRadioGroup  value={behaviorItems[0].behavior}   >
+      <StyledRadioGroup     >
         {
           behaviorItems?.map(item => (
             <div key={item.behavior} onClick={() => onSelect(item.behavior)}>
@@ -353,13 +353,22 @@ const AIGen:React.FC = () => {
     console.log(object, accessories, behavior)
     setGenerating(true)
     const result = await aiGeneratorImage(object, accessories, behavior)
-    const uris = await dictionaryToBase64(result.data)
+    // const result = await fetch('http://175.27.190.185:8898/genImage', {
+    //   method: 'post',
+    //   body: JSON.stringify({
+    //     object,
+    //     accessories,
+    //     behavior
+    //   })
+    // })
+    const uris = dictionaryToBase64(result.data)
     setResultImageSrc(uris)
     setGenerating(false)
     return uris
     // const uri = await base64ToIPfsUri(result.data.value)
   },
-  [object, accessories, behavior])
+  [object, accessories, behavior]
+  )
 
 
 

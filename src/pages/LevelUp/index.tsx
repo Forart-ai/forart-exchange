@@ -17,6 +17,9 @@ import ResultEx from '../../assets/images/aiGenerator/resultEx.jpg'
 import { LoadingOutlined } from '@ant-design/icons'
 import { aiGeneratorStyle } from '../../apis/ai'
 import {  base64ToIPfsUri } from '../../utils'
+import useCreateNft from '../../hooks/contract/service/useNftCreate'
+import { useWeb3React } from '@web3-react/core'
+import { useHistory } from 'react-router-dom'
 
 
 SwiperCore.use([Navigation, EffectCoverflow, Pagination])
@@ -25,7 +28,7 @@ SwiperCore.use([Navigation, EffectCoverflow, Pagination])
 
 const Wrapper = styled.div`
   width: 100%;
-  height: fit-content;
+  height: 1800px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,7 +134,7 @@ const StyledButton = styled(Button)`
   color: white;
   font-weight: bolder;
   border-radius: 10px;
-
+  margin-top: 25px;
 `
 
 const ResultNFTColumn = styled.div`
@@ -141,10 +144,16 @@ const ResultNFTColumn = styled.div`
   justify-content: center;
   align-items: center;
   
+  .nft-border {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
   .loading {
     position: relative;
-    bottom: 180px;
-    left: 220px;
+    top:240px;
+    left: 180px;
     font-size: 40px;
     color: #4779B5;
     z-index: 2;
@@ -290,13 +299,30 @@ const CreateButton: React.FC<{ onClick:() => void }> = ({ onClick }) => {
 }
 
 const NewNFTContainer:React.FC<{ newNFTSrc: string, generating: boolean }> = ({ newNFTSrc,generating }) =>{
+
+  const history = useHistory()
+
+  const toCreateNFT = useCallback(async () => {
+    history.push(`/NFTCreate?img=${newNFTSrc}`)
+  },[newNFTSrc])
+
   return (
     <ResultNFTColumn >
       <div className="nft-border">
         {
-          generating && ( <LoadingOutlined className="loading" />)
+          generating && (
+            <div>
+              <LoadingOutlined className="loading" />
+              <div style={{ color:'white' }}>This will take about 10~13sec</div>
+
+            </div>
+
+          )
         }
         <SelectedImage src={newNFTSrc} width={400} height={400} style={{ objectFit:'cover', borderRadius: '10px' }} />
+
+        <StyledButton onClick={ toCreateNFT }>Create NFT!</StyledButton>
+
       </div>
     </ResultNFTColumn>
   )

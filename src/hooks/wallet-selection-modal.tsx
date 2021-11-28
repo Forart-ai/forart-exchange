@@ -129,6 +129,8 @@ const WalletSelectionModalContext = React.createContext({
 })
 
 const WalletSelectionModalProvider: FC = ({ children }) => {
+  const { account } = useWeb3React()
+
   const [visible, setVisible] = useState(false)
 
   const open = useCallback(() => {
@@ -138,6 +140,10 @@ const WalletSelectionModalProvider: FC = ({ children }) => {
   const close = useCallback(() => {
     setVisible(false)
   }, [])
+
+  useEffect(() => {
+    account && close()
+  }, [close, account])
 
   return (
     <WalletSelectionModalContext.Provider

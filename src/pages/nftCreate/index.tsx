@@ -10,6 +10,7 @@ import { useWeb3React } from '@web3-react/core'
 import { Wallet } from '../../web3/connectors'
 import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import useCreateNft from '../../hooks/contract/service/useNftCreate'
+import { useLocationQuery } from '../../hooks/useLocationQuery'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -297,6 +298,10 @@ const MessageHint: React.FC<MessageHintProps> = ({ message, type }) => {
 }
 
 const AssetUpload: React.FC<AssetUploadProps> = ({ onUploadSuccess }) => {
+  const aiUri = useLocationQuery('img')
+
+  console.log(aiUri)
+
   const [fileList, setFileList] = useState<RcFile[]>([])
 
   const [pinnedFileHash, setPinnedFileHash] = useState<any>()
@@ -315,7 +320,6 @@ const AssetUpload: React.FC<AssetUploadProps> = ({ onUploadSuccess }) => {
       .then(r => {
         setPinnedFileHash(r.data.IpfsHash)
         onUploadSuccess(r.data.IpfsHash)
-        console.log(`https://gateway.pinata.cloud/ipfs/${r.data.IpfsHash}`)
         setUploading(false)
 
       }).catch(e => {
@@ -349,21 +353,37 @@ const AssetUpload: React.FC<AssetUploadProps> = ({ onUploadSuccess }) => {
   return (
     <AssetUploadContainer>
       <Upload {...uploadProps}>
-        {pinnedFileHash ? (
-          <div className="upload-border">
-            <img className="pinned" src={`https://gateway.pinata.cloud/ipfs/${pinnedFileHash}`} alt="" />
-          </div>
-        ) : uploading ? (
-          <div className="upload-border">
-            <LoadingOutlined className="loading" />
-          </div>
-        ) : (
-          <div className="upload-border">
-            {/* <img src={UploadBtn} alt="upload-btn" />*/}
-            <div className="tip">Support: png / jpg /</div>
-            <div className="tip">Size: 10M/</div>
-          </div>
-        )}
+        {
+          pinnedFileHash ? (
+            <div className="upload-border">
+              <img className="pinned" src={`https://gateway.pinata.cloud/ipfs/${pinnedFileHash}`} alt="" />
+            </div>
+          ) : uploading ? (
+            <div className="upload-border">
+              <LoadingOutlined className="loading" />
+            </div>
+          ) : (
+            <div className="upload-border">
+              {/* <img src={UploadBtn} alt="upload-btn" />*/}
+              <div className="tip">Support: png / jpg /</div>
+              <div className="tip">Size: 10M/</div>
+            </div>
+          ) ?
+            aiUri ? (
+              <div className="upload-border">
+                <img className="pinned" src={`${aiUri}`} alt="" />
+              </div>
+            ): (
+              <div className="upload-border">
+                {/* <img src={UploadBtn} alt="upload-btn" />*/}
+                <div className="tip">Support: png / jpg /</div>
+                <div className="tip">Size: 10M/</div>
+              </div>
+            ) :
+            (
+              <div />
+            )
+        }
       </Upload>
 
     </AssetUploadContainer>
@@ -376,14 +396,13 @@ const NFTCreate: React.FC<{ wallet: Wallet }> = ({ wallet }) => {
 
   const { createNft, hint } = useCreateNft()
 
+  const aiUri = useLocationQuery('img')
 
   const creating = useMemo(() => !!hint.message && hint.type === 'hint',[hint])
-
 
   const [promised, setPromised] = useState(false)
 
   const [form] = Form.useForm<NFTCreateForm>()
-
 
   const formInitialValues: NFTCreateForm = {
     artistName: '',
@@ -398,8 +417,13 @@ const NFTCreate: React.FC<{ wallet: Wallet }> = ({ wallet }) => {
     form.setFieldsValue({ assetIpfsHash })
   }
 
-  const { open } = useWalletSelectionModal()
+  useEffect(() => {
+    if (aiUri) {
+      onAssetUploadSuccess(aiUri.substring(aiUri.lastIndexOf('/') + 1))
+    }
+  }, [aiUri])
 
+  const { open } = useWalletSelectionModal()
 
   return (
     <Wrapper >

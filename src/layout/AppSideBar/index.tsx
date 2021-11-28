@@ -5,6 +5,9 @@ import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu } from 'antd'
 import routes, { Route } from '../../routes'
+import TwitterIcon from '../../assets/images/contactLink/twitter.png'
+import TelegramIcon from '../../assets/images/contactLink/telegram.png'
+import WebsiteIcon from '../../assets/images/contactLink/Website.png'
 
 const AppSideBarContent = styled.div`
   height: 100%;
@@ -58,12 +61,33 @@ const CustomizedMenu = styled(Menu)`
   }
 `
 
+const LinkContainer = styled.div`
+  position: fixed;
+  width: 200px;
+  height: 50px;
+  bottom: 150px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`
+const SCExternalLink = styled.a`
+  img {
+    width: 35px;
+  }
+  `
+
 const AppSideBar:React.FC = () => {
   const { pathname } = useLocation()
 
   const selectedKey: string = (() => {
     return routes.filter(route => route.path === pathname || route.match?.test(pathname))[0]?.path
   })()
+
+  const EXTERNAL_LINKS: Array<{ icon: string, link: string }> = [
+    { icon: TwitterIcon, link: 'https://twitter.com/forart_ai' },
+    { icon: TelegramIcon, link: 'https://t.me/forart_co' },
+    { icon: WebsiteIcon, link:'https://forart.co/' }
+  ]
 
 
   return (
@@ -87,6 +111,16 @@ const AppSideBar:React.FC = () => {
           })
         }
       </CustomizedMenu>
+
+      <LinkContainer >
+        {
+          EXTERNAL_LINKS.map(({ icon,link }) => (
+            <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
+              <img src={icon} alt={link} />
+            </SCExternalLink>
+          ))
+        }
+      </LinkContainer>
     </AppSideBarContent>
   )
 }

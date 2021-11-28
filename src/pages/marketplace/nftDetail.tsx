@@ -20,6 +20,8 @@ import { useWeb3React } from '@web3-react/core'
 import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import moment from 'moment'
 import ThemeTable from '../../styles/ThemeTable'
+import { getNftFavoriteCount } from '../../apis/nft'
+import { useNFTLikeQuery } from '../../hooks/queries/useNFTLikeQuery'
 
 
 
@@ -29,11 +31,12 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
   const uri = useLocationQuery('uri')
 
-  const [likeNum, setLikeNum] = useState<any>()
-
   const handleCopy = (content: any) => {
     copy(content) && message.success('Copied successfully.', 1)
   }
+
+  const { data: nftViewAndFavorite } = useNFTLikeQuery(uri)
+
 
   return (
     <NFTBaseInfoContainer>
@@ -61,12 +64,12 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
           <div style={{ display:'flex', justifyContent:'space-between', width:'100%' }}>
             <div className="info-favorite" >
               <img
-                src={Show}
+                src={Heart}
                 alt=""
                 className="icon-favorite"
               />
               <div className="nft-info-container-value">
-                {likeNum?.favorite ? likeNum?.favorite : 0}
+                {nftViewAndFavorite?.favorite ?? 0}
               </div>
             </div>
 
@@ -77,7 +80,7 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
                 className="icon-favorite"
               />
               <div className="nft-info-container-value">
-                {likeNum?.view ? likeNum?.view : 0}
+                {nftViewAndFavorite?.view ?? 0}
               </div>
             </div>
           </div>
@@ -358,8 +361,6 @@ const NFTDetailPage: React.FC = () => {
   const addressContract = useLocationQuery('addressContract')
 
   const { data: nftDetail } = useNFTDetailQuery({ uri, addressContract })
-
-  console.log(nftDetail)
 
   useEffect(() => {
     if (!(nftDetail?.onSale && nftDetail.price)) {
