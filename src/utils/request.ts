@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const forartRequest = axios.create({
-  baseURL:'https://api.forart.co/api/forart/web/v1'
+  baseURL:'https://api.forart.co/api/forart/web/v1/'
 })
 
 export type ForartApiResponseBody<T> = {

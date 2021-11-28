@@ -256,7 +256,7 @@ const MoreArtworks: React.FC = () => {
                 0
               </div>
 
-              <div className="liked">5 KSE</div>
+              <div className="liked">5 CELO</div>
             </div>
           </div>
 
@@ -284,7 +284,7 @@ const MoreArtworks: React.FC = () => {
                 0
               </div>
 
-              <div className="liked">5 KSE</div>
+              <div className="liked">5 CELO</div>
             </div>
           </div>
 
@@ -312,7 +312,7 @@ const MoreArtworks: React.FC = () => {
                 0
               </div>
 
-              <div className="liked">5 KSE</div>
+              <div className="liked">5 CELO</div>
             </div>
           </div>
 
@@ -340,7 +340,7 @@ const MoreArtworks: React.FC = () => {
                 0
               </div>
 
-              <div className="liked">5 KSE</div>
+              <div className="liked">5 CELO</div>
             </div>
           </div>
 
