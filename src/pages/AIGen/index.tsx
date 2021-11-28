@@ -6,7 +6,7 @@ import ai2 from '../../assets/images/AIGen/ai2.png'
 import ai3 from '../../assets/images/AIGen/ai3.png'
 import ai4 from '../../assets/images/AIGen/ai4.png'
 import ai5 from '../../assets/images/AIGen/ai5.png'
-import BannerImage from '../../assets/images/aiGenerator/banner.jpg'
+import BannerImage from '../../assets/images/AIGen/ai-gen-banner.jpg'
 import { LoadingOutlined } from '@ant-design/icons'
 import { aiGeneratorImage } from '../../apis/ai'
 import { base64ToIPfsUri, dictionaryToBase64 } from '../../utils'
@@ -50,6 +50,7 @@ const Banner = styled.div`
   height: 250px;
   border-radius: 10px;
   background: url(${BannerImage}) no-repeat center;
+  background-size: 100%;
   margin-bottom: 20px;
 `
 
