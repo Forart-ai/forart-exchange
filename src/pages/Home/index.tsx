@@ -6,11 +6,13 @@ import polygon from '../../assets/images/home/polygon.svg'
 import eth from '../../assets/images/home/eth.png'
 import celo from '../../assets/images/home/celo.png'
 import { useHistory } from 'react-router-dom'
+import Back1 from '../../assets/images/home/intelligence.png'
 
 
 const HomePage = styled.div`
   width: 100%;
   padding-bottom: 50px;
+  font-family: 'campton';
 `
 
 const BannerContent = styled.div`
@@ -62,6 +64,7 @@ const Built = styled.div`
     align-items: center;
     font-size: 25px;
     font-weight: bolder;
+    user-select: none;
     
     img {
       margin-right: 10px;
@@ -95,15 +98,29 @@ const GamingPools = styled.div`
 `
 
 const PoolsItem = styled.div`
-  width: 500px;
-  height: 300px;
-  position: relative;
-  text-align: center;
+  width: 400px;
+  height: 170px;
   margin-top: 30px;
   cursor: pointer;
   border-radius: 10px;
-  border: 2px solid #00EBA4;
-  
+  border: 2px #00EBA4 solid;
+  //background: #282c34;
+ background: linear-gradient(300deg, #67ebba, #67eaba .34%, #69c2ce 15.61%, #6ba1de 31.22%, #6c87ea 47.25%, #6d75f3 63.72%, #6e6af8 80.92%, #6e66fa);
+  //background: linear-gradient(to right, #00EBA4 ,#02A6F5);
+  transition: all 0.4s ease-in-out 0.4s;
+
+  :hover {
+    background-color: #434957;
+    color: #000;
+    /* 加个发光效果和下面的倒影 */
+    /* 模糊度加到了50px */
+    box-shadow: 0 0 30px #02A6F5;
+    /* below 是下倒影 1px是倒影的元素相隔的距离 最后是个渐变的颜色 */
+    //-webkit-box-reflect: below 1px linear-gradient(transparent, rgba(0, 0, 0, 0.3));
+    /* 设置一下以上属性的延迟时间 */
+    transition-delay: 0.1s;
+  }
+
   //&:before {
   //  content: '';
   //  width: 100%;
@@ -118,19 +135,35 @@ const PoolsItem = styled.div`
 `
 
 const PoolsTitle = styled.div`
-  margin-top: 100px;
-  font-size: 50px;
+  width: 100%;
+  padding: 20px 15px;
+  font-size: 30px;
   color: white;
-  position: relative;
+  font-weight: bold;
+  text-shadow: 2px 3px 5px #282c34;
 `
 
 const PoolsText = styled.div`
-  position: absolute;
   bottom: 10px;
   left: 20px;
   font-weight: bolder;
   font-size: 22px;
   color: #00EBA4;
+`
+
+const PoolsIcon = styled.div`
+
+  width: inherit;
+  height:inherit;
+  position: absolute;
+
+
+  img {
+    position: relative;
+    top: 50px;
+    left: 250px;
+    width: 100px;
+  }
 `
 
 type pools = {
@@ -184,8 +217,7 @@ const Home:React.FC = () => {
       <Built>
         <span>Built on</span>
         <div className="celo"><img src={celo} />Celo</div>
-        <img src={polygon} />
-        <img src={solana} />
+        <img src={solana} style={{ width:'145px' }} />
         <div className="eth"><img src={eth} />Ethereum</div>
       </Built>
       <Content>
@@ -193,22 +225,40 @@ const Home:React.FC = () => {
           Gaming Pools
         </Title>
         <GamingPools>
-          {
-            gamingPools.map((item, index) => (
-              <PoolsItem
-                key={index}
-                style={{ background: item.background }}
-                onClick={() => toPath(item?.path)}
-              >
-                <PoolsTitle>
-                  {item.title}
-                </PoolsTitle>
-                <PoolsText>
-                  {item.text}
-                </PoolsText>
-              </PoolsItem>
-            ))
-          }
+          {/*{*/}
+          {/*  gamingPools.map((item, index) => (*/}
+          {/*    <PoolsItem*/}
+          {/*      key={index}*/}
+          {/*      style={{ background: item.background }}*/}
+          {/*      onClick={() => toPath(item?.path)}*/}
+          {/*    >*/}
+          {/*      <PoolsTitle>*/}
+          {/*        {item.title}*/}
+          {/*      </PoolsTitle>*/}
+          {/*      <PoolsText>*/}
+          {/*        {item.text}*/}
+          {/*      </PoolsText>*/}
+          {/*    </PoolsItem>*/}
+          {/*  ))*/}
+          {/*}*/}
+
+          <PoolsItem>
+            <PoolsTitle>NFT+Defi+AI</PoolsTitle>
+          </PoolsItem>
+
+          <PoolsItem>
+            <PoolsTitle>AI-Driven NFT Breeding</PoolsTitle>
+          </PoolsItem>
+
+          <PoolsItem>
+            <PoolsTitle>AI-Driven Generating NFTs by Topic seed</PoolsTitle>
+          </PoolsItem>
+
+          <PoolsItem>
+            <PoolsTitle>AI-Driven Tool Kit to mint NFTs</PoolsTitle>
+          </PoolsItem>
+
+
         </GamingPools>
       </Content>
     </HomePage>

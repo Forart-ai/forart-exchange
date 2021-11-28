@@ -8,15 +8,17 @@ import routes, { Route } from '../../routes'
 import TwitterIcon from '../../assets/images/contactLink/twitter.png'
 import TelegramIcon from '../../assets/images/contactLink/telegram.png'
 import WebsiteIcon from '../../assets/images/contactLink/website.png'
+import DiscordIcon from '../../assets/images/contactLink/discord.png'
 
 const AppSideBarContent = styled.div`
   height: 100%;
   min-height: 100vh;
   padding-left: 20px;
   background: black;
+  font-weight: bold;
   position: relative;
   border-right: 1px solid #262531;
-  z-index: 11;
+  z-index: 99;
 
   .ant-menu-root.ant-menu-vertical,
   .ant-menu-root.ant-menu-vertical-left,
@@ -65,14 +67,14 @@ const LinkContainer = styled.div`
   position: fixed;
   width: 200px;
   height: 50px;
-  bottom: 150px;
+  bottom: 50px;
   display: flex;
   justify-content: space-around;
   align-items: center;
 `
 const SCExternalLink = styled.a`
   img {
-    width: 35px;
+    width: 30px;
   }
   `
 
@@ -86,6 +88,7 @@ const AppSideBar:React.FC = () => {
   const EXTERNAL_LINKS: Array<{ icon: string, link: string }> = [
     { icon: TwitterIcon, link: 'https://twitter.com/forart_ai' },
     { icon: TelegramIcon, link: 'https://t.me/forart_co' },
+    { icon: DiscordIcon, link: 'https://discord.gg/RDaUkaW39S' },
     { icon: WebsiteIcon, link:'https://forart.co/' }
   ]
 

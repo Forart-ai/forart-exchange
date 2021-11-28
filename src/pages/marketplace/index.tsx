@@ -123,7 +123,7 @@ const marketplace:React.FC = () => {
   return (
     <Wrapper>
       <Banner />
-      <Title>NFT Market Place</Title>
+      <Title>NFT Marketplace</Title>
       <NFTCreateContainer>
         <StyledButton onClick={ () => history.push('/NFTCreate') }>NFT Create</StyledButton>
       </NFTCreateContainer>

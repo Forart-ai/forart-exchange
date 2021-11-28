@@ -10,6 +10,8 @@ import BannerImage from '../../assets/images/aiGenerator/banner.jpg'
 import { LoadingOutlined } from '@ant-design/icons'
 import { aiGeneratorImage } from '../../apis/ai'
 import { base64ToIPfsUri, dictionaryToBase64 } from '../../utils'
+import '../../font/font.css'
+
 
 const Wrapper = styled.div`
   width: 1100px;

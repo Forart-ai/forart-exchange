@@ -12,6 +12,7 @@ import { Web3ReactProvider } from '@web3-react/core'
 import { WalletSelectionModalProvider } from './hooks/wallet-selection-modal'
 import { QueryClient , QueryClientProvider } from 'react-query'
 
+
 const queryClient = new QueryClient()
 
 ReactDOM.render(

@@ -30,11 +30,12 @@ const routes: Route[] = [
     disable: false
   },
   {
-    path: '/NFTCreate',
-    title: 'NFT Create',
-    component: NFTCreate,
+    path: '/nftBreed',
+    title: 'NFT-Breed',
+    component: LevelUp,
     disable: false
   },
+
   {
     path: '/marketplace',
     title: 'Marketplace',
@@ -48,11 +49,12 @@ const routes: Route[] = [
     hidden: true
   },
   {
-    path: '/nftBreed',
-    title: 'NFT-Breed',
-    component: LevelUp,
+    path: '/NFTCreate',
+    title: 'NFT Create',
+    component: NFTCreate,
     disable: false
   },
+
 ]
 
 export default routes
