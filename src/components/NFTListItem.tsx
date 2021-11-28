@@ -16,7 +16,7 @@ const NFTCardContainer = styled.div<{$empty?:boolean}>`
   color: #7c6deb;
   width: 210px;
   height: ${(props: { $empty: any }) => props.$empty ? '0' : '320px'};
-  background-color: rgb(53,57,89);
+  background-color: #282c34;
   border-radius: 10px;
   margin-bottom: ${(props: { $empty: any }) => props.$empty ? '0' : '30px'};;
   font-weight: bold;

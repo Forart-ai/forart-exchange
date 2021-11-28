@@ -68,7 +68,7 @@ export const ItemsContainer = styled.div`
  .border {
   width: 45%;
   height: 100%;
-  background: #0F4C75;
+  background: #282c34;
   border-radius: 10px;
 
 
@@ -187,7 +187,7 @@ export const StyledButton = styled(Button)`
  margin: 10px 0; 
  width: 220px;
  height: 40px;
- background: #0F4C75;
+ background: #282c34;
  color: #FFFFFF;
  border-radius: 10px;
  font-size: 18px;
@@ -227,7 +227,7 @@ export const PropertiesItem = styled.div`
  align-items: center;
  flex-direction: column;
  justify-content: center;
- background: #0F4C75;
+ background: #282c34;
  border-radius: 10px;
 
  color: white;
@@ -252,7 +252,6 @@ export const OtherArtworksArea = styled.div`
   flex-direction: column;
   width: 100%;
   margin-top: 40px;
-  border: 1px red solid;
 
   @media screen and (max-width: 1000px) {
     width: 100vw;
@@ -272,7 +271,7 @@ export const OtherArtworksContainer = styled.div`
   .artwork-group {
     height: 300px;
     width: 200px;
-    background-color: #111C3A;
+    background-color: #282c34;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -286,7 +285,6 @@ export const OtherArtworksContainer = styled.div`
       flex-direction: column;
       align-items: center;
       position: relative;
-      border: 1px green solid;
 
 
       .artwork-img {
@@ -306,6 +304,8 @@ export const OtherArtworksContainer = styled.div`
       
 
       .artwork-describe {
+        padding: 0 15px;
+
         width: 100%;
         font-size: 14px;
         font-weight: 550;
@@ -320,6 +320,8 @@ export const OtherArtworksContainer = styled.div`
     }
 
     .artwork-like {
+      padding: 0 15px;
+
       display: flex;
       justify-content: space-between;
       width: 100%;

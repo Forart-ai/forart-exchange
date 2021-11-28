@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const request = axios.create({
-  baseURL:'/api'
+const forartRequest = axios.create({
+  baseURL:'http://52.221.228.254:25580/forart/web/v1'
 })
 
 export type ForartApiResponseBody<T> = {
@@ -12,7 +12,7 @@ export type ForartApiResponseBody<T> = {
 }
 
 
-request.interceptors.response.use(
+forartRequest.interceptors.response.use(
   function onFulfilled(config) {
     const { data: responseBody } = config
 
@@ -39,4 +39,4 @@ export type ForartApiPagingData<T> = {
   total: number
 }
 
-export default request
+export default forartRequest

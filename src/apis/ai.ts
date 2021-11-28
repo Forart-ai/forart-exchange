@@ -11,3 +11,16 @@ export function aiGeneratorStyle(style: string, content:string) {
   })
 
 }
+
+export function aiGeneratorImage(object: string, accessories: string, behavior: string) {
+  const  data = {
+    object:object,
+    accessories: accessories,
+    behavior: behavior
+  }
+
+  return aiDriverRequest.post('genImage',data, {
+    responseType: 'json'
+  })
+
+}

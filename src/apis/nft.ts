@@ -1,3 +1,4 @@
+import forartRequest, { ForartApiResponseBody } from '../utils/request'
 
 
 export type ChainType = 'Ethereum' | 'Solana' | ''
@@ -37,5 +38,11 @@ export type NftCreateForm = {
     accountOwner?: string
     nftPubKey?: string
 }
+
+export function createNFT(data: NftCreateForm) {
+  return forartRequest.post<ForartApiResponseBody<any>>('/create/uri', data)
+}
+
+
 
 

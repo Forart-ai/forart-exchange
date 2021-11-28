@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from '@emotion/styled'
 import { Button, Image as AntdImage, Radio } from 'antd'
 import ai1 from '../../assets/images/AIGen/ai1.png'
@@ -8,11 +8,13 @@ import ai4 from '../../assets/images/AIGen/ai4.png'
 import ai5 from '../../assets/images/AIGen/ai5.png'
 import BannerImage from '../../assets/images/aiGenerator/banner.jpg'
 import { LoadingOutlined } from '@ant-design/icons'
+import { aiGeneratorImage } from '../../apis/ai'
+import { base64ToIPfsUri, dictionaryToBase64 } from '../../utils'
 
 const Wrapper = styled.div`
   width: 1100px;
   margin: 0 auto;
-  height: fit-content;
+  height: 2000px;
   padding-top: 20px;
   display: flex;
   flex-direction: column;
@@ -80,7 +82,7 @@ const SampleContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  border: 1px red solid;
+  border: 1px  solid;
 `
 
 const SampleMain = styled.div`
@@ -92,16 +94,16 @@ const EnterContent = styled.div`
 
   .enter {
     width: 150px;
-    color: #ccc;
+    color: #02A6F5;
     font-size: 18px;
     font-weight: bolder;
-    text-align: right;
+    red: left;
   }
-  
+
   .enterData {
-    color: white;
+    color: #EADEDE;
     font-size: 18px;
-    font-weight: bolder;
+    font-weight: bold;
     margin-left: 30px;
   }
 `
@@ -120,10 +122,10 @@ const SampleImg = styled.div`
 
   .enter {
     width: 150px;
-    color: #ccc;
+    color: #02A6F5;
     font-size: 18px;
     font-weight: bolder;
-    text-align: right;
+    text-align: left;
     margin-right: 30px;
   }
 `
@@ -133,13 +135,13 @@ const SampleImgItem = styled.div`
   
   .item {
     width: 150px;
+    border-radius: 10px;
   }
 `
 
 const AIContentContainer = styled.div`
   margin-top: 40px;
   width: 100%;
-  border: 1px red solid;
   display: flex;
   flex-direction: column;
 `
@@ -182,42 +184,64 @@ const SelectedImage = styled(AntdImage)`
 `
 
 const ResultContainer = styled.div`
-  height: 250px;
-  border: 1px green solid;
-
+  margin-top: 25px;
+  background-color: #282c34;
+  height: 525px;
   display: flex;
   width: 100%;
-  height: 200px;
   justify-content: center;
   align-items: center;
+  border-radius: 10px;
+  align-items: center;
+  
+  .nft-border {
+    padding: 20px 30px;
+    width: inherit;
+    height: inherit;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    
+  }
+  
+  img {
+    width: 110px;
+    border-radius: 10px;
+  }
 
   .loading {
-    position: relative;
-    bottom: 180px;
-    left: 220px;
+    position: absolute;
     font-size: 40px;
     color: #4779B5;
-    z-index: 2;
+    z-index: 44;
   }
 `
 
-type mapItem = {
-  contentText: string
+type objectItem = {
+  object: string,
 }
 
-const ContentItems: React.FC<{contentItems: mapItem[], onSelect:(_:string) => void}> = ({
+type accessoriesItem = {
+  accessories: string
+}
+
+type behaviorItem = {
+  behavior: string
+}
+
+const ObjectItems: React.FC<{objectItems: objectItem[], onSelect:(_:string) => void}> = ({
   onSelect,
-  contentItems,
+  objectItems,
 }) => {
 
   return (
     <AIContentContainer>
-      <SubTitle> Choose a sentence </SubTitle>
-      <StyledRadioGroup >
+      <SubTitle> Choose an object </SubTitle>
+      <StyledRadioGroup value={objectItems[0].object} >
         {
-          contentItems?.map(item => (
-            <div key={item.contentText} onClick={() => onSelect(item.contentText)}>
-              <StyledRadio value={item.contentText}>{item.contentText}</StyledRadio>
+          objectItems?.map(item => (
+            <div key={item.object} onClick={() => onSelect(item.object)}>
+              <StyledRadio value={item.object}>{item.object}</StyledRadio>
             </div>
           ))
         }
@@ -227,11 +251,67 @@ const ContentItems: React.FC<{contentItems: mapItem[], onSelect:(_:string) => vo
   )
 }
 
-const AIGeneratorResultContainer: React.FC<{ resultImageSrc:string }> = ({ resultImageSrc }) => {
+const AccessoriesItems: React.FC<{ accessoriesItems: accessoriesItem[], onSelect:(_:string) => void}> = ({
+  onSelect,
+  accessoriesItems,
+}) => {
+
+  return (
+    <AIContentContainer>
+      <SubTitle> Choose an accessories </SubTitle>
+      <StyledRadioGroup value={accessoriesItems[0].accessories} >
+        {
+          accessoriesItems?.map(item => (
+            <div key={item.accessories} onClick={() => onSelect(item.accessories)}>
+              <StyledRadio value={item.accessories}>{item.accessories}</StyledRadio>
+            </div>
+          ))
+        }
+      </StyledRadioGroup>
+    </AIContentContainer>
+
+  )
+}
+
+const BehaviorItems: React.FC<{ behaviorItems: behaviorItem[], onSelect:(_:string) => void}> = ({
+  onSelect,
+  behaviorItems,
+}) => {
+
+  return (
+    <AIContentContainer>
+      <SubTitle> Choose an behavior </SubTitle>
+      <StyledRadioGroup  value={behaviorItems[0].behavior}   >
+        {
+          behaviorItems?.map(item => (
+            <div key={item.behavior} onClick={() => onSelect(item.behavior)}>
+              <StyledRadio value={item.behavior}>{item.behavior}</StyledRadio>
+            </div>
+          ))
+        }
+      </StyledRadioGroup>
+    </AIContentContainer>
+
+  )
+}
+
+const AIGeneratorResultContainer: React.FC<{ resultImageSrc: any[], generating: boolean }> = ({ resultImageSrc,
+  generating }) => {
   return (
     <ResultContainer>
+      {
+        generating && ( <LoadingOutlined className="loading" />)
+      }
       <div className="nft-border">
-        <SelectedImage src={resultImageSrc} width={1100} height={180} style={{ objectFit:'cover', borderRadius: '10px' }} />
+
+        {
+          resultImageSrc?.map((item,index) => (
+            <div key={index}>
+              <img src={resultImageSrc[index]} />
+            </div>
+          ))
+        }
+        {/*<SelectedImage src={resultImageSrc} width={1100} height={180} style={{ objectFit:'cover', borderRadius: '10px' }} />*/}
       </div>
     </ResultContainer>
   )
@@ -239,25 +319,50 @@ const AIGeneratorResultContainer: React.FC<{ resultImageSrc:string }> = ({ resul
 
 
 const AIGen:React.FC = () => {
-  const items: mapItem[] = [
-    {
-      contentText: 'an illustration of a baby daikon radish in a tutu walking a dog'
-    },
-    {
-      contentText: 'an armchair in the shape of an avocado. . . .'
-    },
-    {
-      contentText:'a store front that has the word ‘openai’ written on it. . . .'
-    },
-    {
-      contentText: 'the exact same cat on the top as a sketch on the bottom'
-    }
+  const objectMap: objectItem[] = [
+    { object: 'an avocado' },
+
+    { object: 'an baby fox' }
   ]
+
+  const accessoriesMap: accessoriesItem[] = [
+    { accessories: 'in a christmas sweater' },
+
+    { accessories: 'with sunglasses' }
+  ]
+
+  const behaviorMap: behaviorItem[] = [
+    { behavior: 'playing chess' },
+
+    { behavior: 'flying a kite' }
+  ]
+
   const SampleImgs = [ai1, ai2, ai3, ai4, ai5]
 
-  const [content,setContent] = useState('')
+  const [object, setObject] = useState('')
 
-  const [resultImageSrc, setResultImageSrc] = useState('')
+  const [accessories, setAccessories] = useState('')
+
+  const [behavior, setBehavior] = useState('')
+
+  const [generating, setGenerating] = useState(false)
+
+  const [resultImageSrc, setResultImageSrc] = useState(Array<any>())
+
+  const generate = useCallback(async () => {
+    console.log(object, accessories, behavior)
+    setGenerating(true)
+    const result = await aiGeneratorImage(object, accessories, behavior)
+    const uris = await dictionaryToBase64(result.data)
+    setResultImageSrc(uris)
+    setGenerating(false)
+    return uris
+    // const uri = await base64ToIPfsUri(result.data.value)
+  },
+  [object, accessories, behavior])
+
+
+
 
   return (
     <Wrapper >
@@ -289,10 +394,20 @@ const AIGen:React.FC = () => {
           </SampleImg>
         </SampleMain>
       </SampleContent>
-      <ContentItems contentItems={items} onSelect={v => setContent(v)} />
+      <ObjectItems objectItems={objectMap} onSelect={v => setObject(v)} />
 
-      <StyledButton >Generate Now! {content}</StyledButton>
-      <AIGeneratorResultContainer resultImageSrc={resultImageSrc} />
+      <AccessoriesItems accessoriesItems={accessoriesMap} onSelect={ v => setAccessories(v) } />
+
+      <BehaviorItems behaviorItems={behaviorMap} onSelect={ v => setBehavior(v) } />
+
+      <StyledButton onClick={ generate } >
+        {
+          !generating ? 'Generate Now!' :
+            'Generating...'
+        }
+      </StyledButton>
+
+      <AIGeneratorResultContainer resultImageSrc={resultImageSrc} generating={generating} />
     </Wrapper>
   )
 }

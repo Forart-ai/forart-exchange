@@ -1,7 +1,6 @@
 import { NFTCreateForm } from '../pages/nftCreate'
 import { NFTMetadata } from '../types/NFTMetadatas'
 import { getUriByIpfsHash, pinFileToIPFS } from './ipfs'
-import { log } from 'util'
 
 
 export function generateNftMetadata(form: NFTCreateForm): NFTMetadata {
@@ -24,5 +23,15 @@ export function base64ToIPfsUri (blob: Blob) {
   return pinFileToIPFS(blob).then(res => {
     return  getUriByIpfsHash(res.data.IpfsHash)
   })
+
+}
+
+export function dictionaryToBase64 (dic: any) {
+  const base64Array = []
+
+  for (const key in dic) {
+    base64Array.push('data:image/png;base64,' + dic[key] )
+  }
+  return base64Array
 
 }

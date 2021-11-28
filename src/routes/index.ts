@@ -39,7 +39,7 @@ const routes: Route[] = [
     path: '/marketplace',
     title: 'Marketplace',
     component: Marketplace,
-    disable: true
+    disable: false
   },
   {
     path: '/marketplace/:id',

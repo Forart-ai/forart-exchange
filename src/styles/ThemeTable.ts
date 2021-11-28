@@ -50,19 +50,19 @@ const ThemeTable = styled(Table)<ThemeTableProps>`
     }
 
     .ant-table-column-sort {
-      background-color: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#18284C'};
+      background-color: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#282c34'};
       filter: brightness(85%);
     }
 
     .ant-table-column-has-sorters:hover {
-      background: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#18284C'};
+      background: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#282c34'};
       filter: brightness(100%);
     }
   }
 
   .ant-table-tbody {
     .ant-table-row {
-      background-color: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#18284C'};
+      background-color: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#282c34'};
       cursor: ${(props: { rowCursor: any }) => props.rowCursor} !important;
       margin-bottom: 4px !important;
       transition: all 0.7s;
@@ -82,7 +82,7 @@ const ThemeTable = styled(Table)<ThemeTableProps>`
         transform: scale(1.006);
 
         td {
-          background-color: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#18284C'};
+          background-color: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#282c34'};
         }
       }
 
@@ -97,7 +97,7 @@ const ThemeTable = styled(Table)<ThemeTableProps>`
       }
 
       .ant-table-column-sort {
-        background: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#18284C'};
+        background: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#282c34'};
       }
 
       &:hover {

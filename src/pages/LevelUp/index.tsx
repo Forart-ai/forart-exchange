@@ -339,7 +339,6 @@ const AIGeneration:React.FC = () => {
   // }
 
   const generate = useCallback(async ()=> {
-    console.log(style, content)
     setGenerating(true)
     const result = await aiGeneratorStyle(style,content)
     const uri = await base64ToIPfsUri(result.data)
