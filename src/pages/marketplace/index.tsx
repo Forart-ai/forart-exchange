@@ -111,7 +111,7 @@ const marketplace:React.FC = () => {
 
   const { data:pagingData } =  useNFTsQuery({
     current: 1,
-    size: 10,
+    size: 99,
     searchKey:'',
     transactionStatus: 0,
     typeChain:'Ethereum'
@@ -124,9 +124,9 @@ const marketplace:React.FC = () => {
     <Wrapper>
       <Banner />
       <Title>NFT Market Place</Title>
-      {/*<NFTCreateContainer>*/}
-      {/*  <StyledButton onClick={ history.push('/NFTCreate') }>NFT Create</StyledButton>*/}
-      {/*</NFTCreateContainer>*/}
+      <NFTCreateContainer>
+        <StyledButton onClick={ () => history.push('/NFTCreate') }>NFT Create</StyledButton>
+      </NFTCreateContainer>
       <NFTList list={ pagingData?.records } />
     </Wrapper>
   )
