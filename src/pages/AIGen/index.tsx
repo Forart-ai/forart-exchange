@@ -57,6 +57,7 @@ const Banner = styled.div`
 const Introduction = styled.div`
   width: 100%;
   height: 200px;
+  margin-bottom: 30px;
   
   .title {
     width: fit-content;
@@ -383,7 +384,13 @@ const AIGen:React.FC = () => {
         <div className="title">GAN-Driven NFT Generation</div>
         <div className="sub-title">Description</div>
         <div className="description">
-          Training is used to generate images from text descriptions using a text-image pair dataset
+          Different from traditional NFT creation, GAN-Driven NFT
+          Generator can directly transform it into art according to
+          the needs and description of the artist, simple and straightforward.
+          You only need to simply describe what you want to see and AI-Driven NFT
+          Generator transforms your words into art. The result may exceed your imagination,
+          or even your cognition. It may be abstract art or a representation of reality. It
+          may also be the fusion of imagination and reality.
         </div>
       </Introduction>
       <SampleContent>

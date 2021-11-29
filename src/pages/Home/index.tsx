@@ -182,12 +182,12 @@ const gamingPools:pools[] = [
     path: ''
   },
   {
-    title: 'AI-Driven NFT Breeding',
+    title: 'Style Transferred NFT',
     background: 'linear-gradient(90deg,#E45341,#F5B1A6)',
     path: ''
   },
   {
-    title: 'AI-Driven Generating NFTs by Topic seed',
+    title: 'GAN-Driven NFT Generation',
     background: 'linear-gradient(90deg,#E64C29,#F4BA76)',
     path: '/AI-Gen'
   },
@@ -247,11 +247,11 @@ const Home:React.FC = () => {
           </PoolsItem>
 
           <PoolsItem>
-            <PoolsTitle>AI-Driven NFT Breeding</PoolsTitle>
+            <PoolsTitle>Style Transferred NFT</PoolsTitle>
           </PoolsItem>
 
           <PoolsItem>
-            <PoolsTitle>AI-Driven Generating NFTs by Topic seed</PoolsTitle>
+            <PoolsTitle>GAN-Driven NFT Generation</PoolsTitle>
           </PoolsItem>
 
           <PoolsItem>
