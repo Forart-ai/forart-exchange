@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { useNFTDetailQuery } from '../../hooks/queries/useNFTDetailQuery'
-import { Wrapper, NFTDetailContainer, TopRow, Title, OtherArtworksContainer, OtherArtworksArea, CenterRow, FootRow, CodingFlag, HistoryTradeTable, PropertiesItem, PropertiesContainer,  ImageContainer, InfoContainer, ItemsContainer, NFTBaseInfoContainer, StyledButton } from './nftDetail.style'
+import { Wrapper, NFTDetailContainer, TopRow, Title, OtherArtworksContainer, Operating, OtherArtworksArea, CenterRow, FootRow, CodingFlag, HistoryTradeTable, PropertiesItem, PropertiesContainer,  ImageContainer, InfoContainer, ItemsContainer, NFTBaseInfoContainer, StyledButton } from './nftDetail.style'
 import { Image, message, Popover } from 'antd'
 import { NFTDetail } from '../../types/NFTDetail'
 import { shortenAddress } from '../../utils'
@@ -373,23 +373,24 @@ const NFTDetailPage: React.FC = () => {
     }
   }, [account, nftDetail])
 
-
-  // const allowToSell = useMemo(() => {
-  //   if (nftDetail?.typeChain === 'Solana') {
-  //     return nftDetail?.nftPubKey?.length > 0 && account?.toBase58() === nftDetail?.addressOwner
-  //   }
-  //
-  //   return false
-  // }, [nftDetail, account])
-  //
-  // const allowToSoldOut = useMemo(() => {
-  //   return nftDetail?.onSale && allowToSell
-  // },[nftDetail, allowToSell])
+  const isAllowToSell = useMemo(() => {
+    if (nftDetail) {
+      return  account === nftDetail?.addressOwner
+    }
+    return false
+  },[nftDetail, account])
 
 
   return (
     <Wrapper>
       <NFTDetailContainer>
+        <Operating>
+          {
+            isAllowToSell && (
+              <StyledButton > Sell </StyledButton>
+            )
+          }
+        </Operating>
         <TopRow>
           <ImageContainer>
             <Image src={nftDetail?.image} width="250px" />
@@ -406,7 +407,7 @@ const NFTDetailPage: React.FC = () => {
                   ) :
                     (
                       <div style={{ width:'200px' }}>
-                        <Popover content={reasonOfUnableToBuy} >
+                        <Popover content={ reasonOfUnableToBuy } >
                           <StyledButton  disabled={true}>
                             Buy Now
                           </StyledButton>

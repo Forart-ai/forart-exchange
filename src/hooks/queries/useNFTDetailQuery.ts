@@ -8,7 +8,7 @@ export const useNFTDetailQuery = (params: NFTDetailQueryRequest): UseQueryResult
     ['NFT_DETAIL', params],
     async () => {
       return await forartNftDetail(params)
-        .then(res => res)
+        .then(res => res.data.data)
     }
   )
 }

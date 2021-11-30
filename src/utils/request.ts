@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const forartRequest = axios.create({
-  baseURL:'https://api.forart.co/api/forart/web/v1'
+  baseURL:'https://api.forart.ai/api/forart/web/v1'
 })
 
 export type ForartApiResponseBody<T> = {
@@ -12,20 +12,25 @@ export type ForartApiResponseBody<T> = {
 }
 
 
-forartRequest.interceptors.response.use(
-  function onFulfilled(config) {
-    const { data: responseBody } = config
+// forartRequest.interceptors.response.use(
+//   function onFulfilled(config) {
+//     const { data: responseBody } = config
+//
+//     if (+(responseBody as ForartApiResponseBody<any>).code === 200) {
+//       return responseBody.data
+//     }
+//
+//     return config
+//   },
+//   function onRejected(error: any) {
+//     return error
+//   }
+// )
 
-    if (+(responseBody as ForartApiResponseBody<any>).code === 200) {
-      return responseBody.data
-    }
 
-    return config
-  },
-  function onRejected(error: any) {
-    return error
-  }
-)
+forartRequest.interceptors.request.use(config => {
+  return config
+})
 
 export type ForartApiPagingData<T> = {
   current: number

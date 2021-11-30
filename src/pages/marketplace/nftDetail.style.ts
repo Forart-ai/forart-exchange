@@ -5,7 +5,7 @@ import CodingFlagIcon from '../../assets/images/marketplace/coding-flag.png'
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 1300px;
+  height: 1350px;
   display: flex;
   justify-content: center;
 
@@ -189,20 +189,13 @@ export const NFTBaseInfoContainer = styled.div`
 `
 
 export const StyledButton = styled(Button)`
- margin: 10px 0; 
- width: 220px;
- height: 40px;
- background: #282c34;
- color: #FFFFFF;
- border-radius: 10px;
- font-size: 18px;
- font-weight: 500;
- 
-
- &[disabled] {
-  background: rgba(48, 80, 153, 0.55) !important;
-  color: #999;
- }
+  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+  height: 40px;
+  border: none;
+  color: white;
+  font-weight: bolder;
+  border-radius: 10px;
+  margin-top: 25px;
 `
 
 export const CenterRow = styled.div`
@@ -362,6 +355,26 @@ export const OtherArtworksContainer = styled.div`
     .artwork-group {
       margin-left: calc((100vw - 22rem) / 2);
       margin-bottom: 5vh;
+    }
+  }
+`
+
+export const Operating = styled.div`
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+
+ 
+  @media screen and (max-width: 1000px) {
+    display: flex;
+    justify-content: center;
+
+    .ant-btn {
+      width: 40vw;
+      height: 10vw;
+      border-radius: 2vw;
+      font-size: 5vw;
     }
   }
 `
