@@ -154,12 +154,15 @@ const StyledRadioGroup = styled(Radio.Group)`
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  
 `
 const StyledRadio = styled(Radio)`
   background-color: #282c34;
   padding: 5px;
   border-radius: 10px;
   margin-top: 10px;
+  
   
 span {
   font-size: 18px;
@@ -205,6 +208,12 @@ const ResultContainer = styled.div`
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+
+    .empty {
+      padding: 0;
+      height: 0;
+      width: 110px;
+    }
     
   }
   
@@ -307,12 +316,16 @@ const AIGeneratorResultContainer: React.FC<{ resultImageSrc: any[], generating: 
         generating && ( <LoadingOutlined className="loading" />)
       }
       <div className="nft-border">
-
         {
           resultImageSrc?.map((item,index) => (
             <div key={index}>
               <img src={resultImageSrc[index]} />
             </div>
+          ))
+        }
+        {
+          new Array(9).fill({}).map((_, index) => (
+            <div className="empty" key={index} />
           ))
         }
         {/*<SelectedImage src={resultImageSrc} width={1100} height={180} style={{ objectFit:'cover', borderRadius: '10px' }} />*/}
