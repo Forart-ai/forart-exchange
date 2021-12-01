@@ -1,0 +1,26 @@
+.ant-select-dropdown {
+  background-color: #305099;
+  border-radius: 10px;
+
+  .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    border-radius: 10px;
+    background-color: #305099!important;
+    filter: brightness(85%);
+
+    .ant-select-item-option-content {
+      color: white;
+      font-weight: 500;
+    }
+  }
+
+  .ant-select-item-option-content {
+    color: #97BCF6;
+    font-weight: 500;
+  }
+
+  .ant-select-item-option-active:not(.ant-select-item-option-selected) {
+    background-color: #305099;
+    color: #97BCF6;
+    opacity: 0.8;
+  }
+}

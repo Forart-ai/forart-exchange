@@ -1,0 +1,66 @@
+.ant-pagination {
+  li .ant-select-selector,
+  li, li > button,
+  li > a,
+  li svg {
+    background: #354d86 !important;
+    color: white !important;
+  }
+
+  .ant-pagination-jump-prev, .ant-pagination-jump-next {
+    border: 1px #b2b2b2 solid;
+
+    a div span.anticon {
+      position: relative;
+      bottom: 5px;
+    }
+
+    a div span {
+      color: #ddd !important;
+    }
+
+    &:hover {
+      border-color: #1890ff;
+      transition: all 0.3s;
+    }
+  }
+
+  li button span svg {
+    position: relative;
+    bottom: 2.5px !important;
+  }
+
+  .ant-pagination-prev, .ant-pagination-next {
+    background-color: transparent !important;
+
+    button {
+      height: 100% !important;
+      border-radius: 4px !important;
+
+      &:hover {
+        border-color: #1890ff !important;
+        transition: all 0.3s !important;
+      }
+    }
+  }
+
+  .ant-pagination-options {
+    background-color: transparent !important;
+    margin-left: 5px;
+
+    .ant-pagination-options-quick-jumper {
+      margin-left: 0;
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      min-width: 102px;
+
+      input {
+        background-color: rgba(53, 77, 134, 1.5);
+        border-color: transparent;
+        border-radius: 10px;
+        color: white;
+      }
+    }
+  }
+}
