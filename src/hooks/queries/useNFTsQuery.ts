@@ -13,7 +13,8 @@ export function useNFTsQuery(params:ForartNftListQueryParams ): UseQueryResult<F
           ...pagingData,
           records: pagingData.records.map((item: any) => ({
             ...item,
-            name: item?.name.substring(0,14) + '..'
+            name: item?.name.substring(0,13) + '..',
+            image: item?.image?.slice(6) === 'ipfs:/' ? `https://forart.mypinata.cloud${item?.image?.slice(6)}` : `https://forart.mypinata.cloud${item?.image?.slice(-52)}`
           }))
         }))
     }

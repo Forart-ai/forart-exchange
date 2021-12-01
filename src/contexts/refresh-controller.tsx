@@ -7,6 +7,7 @@ const RefreshControllerContext = React.createContext({
   fast: 0,
   slow: 0,
   quiet: 0,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   refresh: () => {}
 })
 

@@ -2,259 +2,165 @@ import React, { useState } from 'react'
 import { useModal } from './useModal'
 // @ts-ignore
 import styled from 'styled-components'
-import { Modal } from 'antd'
-
+import { Button, Checkbox, Form, Input, Modal, Select } from 'antd'
+import clsx from 'clsx'
 
 
 const SellingModal = styled(Modal)`
+  display: flex;
+  justify-content: center;
   .ant-modal-close-icon {
     color: white;
   }
 
   .ant-modal-content {
-    border-radius: 1rem;
-    width: 58.3rem;
+    border-radius: 10px;
+    width: 600px;
+    height: 350px;
+    background-color: #1D222D; !important;
   }
 
   .ant-modal-body,
   .ant-modal-header {
-    background-color: #111C3A;
-  !important;
+    background-color: #1D222D; !important;
+
   }
 
   .ant-modal-header {
-    border-top-right-radius: 1rem;
-    border-top-left-radius: 1rem;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
     border-bottom: none;
   }
 
-  .ant-modal-header .ant-modal-title {
+  .ant-modal-header .ant-modal-title { 
     display: flex;
-    justify-content: center;
+    justify-content: center; 
     color: white;
     font-weight: 550;
-    font-size: 1.8rem;
+    font-size: 28px;
   }
+`
 
-  .checkout-list {
-
-    .checkout-list-title {
-      color: white;
-      line-height: 25px;
-      font-size: 1.6rem;
-
-    }
-
-    .sellMethodButton {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 0.5rem;
-      margin-bottom: 3.6rem;
-
-      Button {
-        width: 11.6rem;
-        height: 4.2rem;
-        background: #554BFF;
-        border: none;
-        border-radius: 1rem;
-        color: white;
-        font-size: 1.6rem;
-        font-weight: 550;
-      }
-
-      .tabs__link {
-        background-color: #6974FF;
-        color: #ffffff;
-      }
-    }
-  }
-
-  .sellContent {
+const SellMethodContainer = styled.div`
+  width: 100%;
+  height: 60px;
+  
+  .border {
     width: 100%;
-    display: none;
-    margin-top: -1rem;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    .hightest {
-      color: white;
-      line-height: 25px;
-      font-size: 1.6rem;
+    .ant-btn:hover, .ant-btn:focus, .ant-btn:active {
+      background-color: #00EBA4; !important;
+      color: #ffffff;
+    }
+  }
+`
 
 
+const Line = styled.div`
+  position: absolute;
+  right: 0;
+  top: 50px;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, #00EBA4, #02A6F5);
+`
+
+const Title = styled.div`
+  color: #00EBA4;
+  font-size: 20px;
+  font-weight: bolder;
+  margin-bottom: 10px;
+`
+
+const MethodButton = styled(Button)`
+  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+  border: none;
+  color: white;
+  font-weight: bolder;
+  border-radius: 10px;
+
+  
+
+  .tabs__link {
+    background-color: #6974FF; !important;
+    color: #ffffff;
+  }
+`
+
+const StyledForm = styled(Form)`
+  width: 100%;
+
+  .price-container {
+    width: 100%;
+
+    .ant-input-group {
+      width: 100%;
     }
 
-    .fixedPrice {
-      width: 100%;
+    .ant-select-selector {
+      width: 100px;
       display: flex;
       align-items: center;
-
-      .ant-input-group {
-        width: 60%;
-      }
-
-      .ant-select-selector {
-
-        height: 5rem;
-        display: flex;
-        align-items: center;
-        color: white;
-        background: #554BFF !important;
-        border: none;
-
-      }
-
-      .ant-select-selection-item {
-        color: white;
-        font-weight: 550;
-      }
-
-      .ant-input-group.ant-input-group-compact > *:first-child, .ant-input-group.ant-input-group-compact > .ant-select:first-child > .ant-select-selector, .ant-input-group.ant-input-group-compact > .ant-select-auto-complete:first-child .ant-input, .ant-input-group.ant-input-group-compact > .ant-cascader-picker:first-child .ant-input {
-        border-top-left-radius: 1rem;
-        border-bottom-left-radius: 1rem;
-      }
-
-      .ant-input {
-
-        width: 130% !important;
-        height: 5rem;
-        color: white;
-        font-size: 1.6rem;
-        font-weight: 550;
-        background: #305099 !important;
-        border-top-right-radius: 1rem;
-        border-bottom-right-radius: 1rem;
-        border: none;
-      }
-
-      span {
-        color: white;
-      }
+      color: white;
+      background: #2A2E35 !important;
+      border: 1px #00EBA4 solid;
+      
     }
 
-    .listing {
-      width: 100%;
-      height: 5rem;
-
-      background: #554BFF;
-      border: none;
-      color: #ffffff;
-      font-weight: 550;
-      border-radius: 1rem;
-      font-size: 2.4rem;
-    }
-  }
-
-  .sellContent.active {
-    display: block;
-  }
-
-  .checkout-detail {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-
-    .ntf-info {
-      display: flex;
-
-      .nft-image {
-        width: 7.1rem;
-        height: 7.1rem;
-        background: #D8D8D8;
-      }
-
-      .nft-detail {
-        margin-left: 2.4rem;
-        align-self: center;
-
-        .artist-name {
-          font-size: 1.8rem;
-          font-weight: 500;
-          color: #7C6DEB;
-          line-height: 2.5rem;
-        }
-
-        .nft-name {
-          font-size: 1.8rem;
-          font-weight: 550;
-          line-height: 2.5rem;
-        }
-      }
+  
+    
+    .ant-select-arrow > span {
+      color: #00EBA4
     }
 
-    .nft-value {
-      display: flex;
-      flex-direction: column;
-      align-self: center;
-      text-align: right;
-
-      .nft-price {
-        font-size: 1.8rem;
-        font-weight: 500;
-        line-height: 2.5rem;
-        width: 7.1rem;
-      }
-
-      .nft-price-dollar {
-        font-size: 1.4rem;
-        font-weight: 500;
-        color: #999999;
-        line-height: 20px;
-        width: 7.1rem;
-      }
-    }
-  }
-
-  .total-price {
-    display: flex;
-    justify-content: space-between;
-
-    .total {
-      line-height: 25px;
-      font-size: 1.8rem;
+    .ant-select-selection-item {
+      color: white;
       font-weight: 550;
     }
 
-    .nft-value {
-      display: flex;
-      flex-direction: column;
-      align-self: center;
-      text-align: right;
-
-      .nft-price {
-        font-size: 2.2rem;
-        font-weight: 500;
-        color: #7C6DEB;
-        line-height: 3rem;
-        width: 9.1rem;
-      }
-
-      .nft-price-dollar {
-        font-size: 1.8rem;
-        font-weight: 500;
-        color: #999999;
-        line-height: 2.5rem;
-        width: 9.1rem;
-      }
+    .ant-input-group.ant-input-group-compact > *:first-child, .ant-input-group.ant-input-group-compact > .ant-select:first-child > .ant-select-selector, .ant-input-group.ant-input-group-compact > .ant-select-auto-complete:first-child .ant-input, .ant-input-group.ant-input-group-compact > .ant-cascader-picker:first-child .ant-input {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
     }
-  }
-
-  .footer {
-    display: flex;
-    justify-content: center;
-    margin-top: 3.3rem;
-
-    .ant-btn {
-      width: 16.1rem;
-      height: 5rem;
-      background: #7C6DEB;
-      border-radius: 1rem;
-    }
-
-    .ant-btn > span {
-      font-size: 1.8rem;
+    .ant-input {
+      width: 170px !important;
+      color: white;
       font-weight: 550;
-      color: #FFFFFF;
+      background: #2A2E35 !important;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      border: 1px #00EBA4 solid;
     }
   }
+`
+
+const Announcement = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+
+
+  .text {
+    width: 100%;
+    font-size: 15px;
+    color: #ffffff;
+  }
+`
+
+export const StyledButton = styled(Button)`
+  margin-top: 30px;
+  width: 100%;
+  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+  border: none;
+  color: white;
+  font-weight: bolder;
+  border-radius: 10px;
 `
 
 type SellingModalProps = {
@@ -286,6 +192,12 @@ const MessageHint: React.FC<MessageHintProps> = ({ message, type }) => {
 
 export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :SellingModalProps) => {
 
+  const formInitialValues = {
+    price:''
+  }
+
+  const [form] = Form.useForm<typeof formInitialValues>()
+
   const [ checked, setChecked] = useState(false)
 
   const [ current, setCurrent ] = useState(0)
@@ -295,6 +207,8 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
     type:'hint'
   })
 
+  const AVAILABLE_SELLING_METHODS = ['Fixed price', 'Auction', 'Splitting', 'Mortgage']
+
 
   const { modal, open, close } = useModal((_open, close, visible) => (
     <SellingModal
@@ -302,7 +216,54 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
       visible={visible}
       onCancel={close}
       footer={null}
-    />
+    >
+      <Line />
+
+      <SellMethodContainer>
+        {/*<Title>Sell Method</Title>*/}
+        {/*<div className="border" >*/}
+        {/*  {*/}
+        {/*    AVAILABLE_SELLING_METHODS.map((item:string, index: number) => (*/}
+        {/*      <MethodButton*/}
+        {/*        className={clsx(index === current && 'tabs__link')}*/}
+        {/*        onClick={() => setCurrent(index)}*/}
+        {/*        key={index}*/}
+        {/*      >*/}
+        {/*        {item}*/}
+        {/*      </MethodButton>*/}
+        {/*    ))*/}
+        {/*  }*/}
+        {/*</div>*/}
+        <Title>Set Price</Title>
+        <StyledForm form= {form} initialValues= {formInitialValues}>
+          <div className="price-container">
+            <Input.Group compact>
+              <Select defaultValue="Celo">
+                <Select.Option value= "Celo"> Celo </Select.Option>
+              </Select>
+              <Form.Item name="price">
+                <Input />
+              </Form.Item>
+            </Input.Group>
+          </div>
+        </StyledForm>
+        <Announcement>
+          <Checkbox
+            checked={checked}
+            onChange={e => setChecked(e.target.checked)}
+          >
+            <div className="text">
+              Listing is free! At the time of the sale, the following fees will be decucted.
+            </div>
+            <div className="text">Total fees -------------------------------------------------------- 2%</div>
+          </Checkbox>
+          <StyledButton>Listing</StyledButton>
+        </Announcement>
+
+      </SellMethodContainer>
+
+
+    </SellingModal>
   ))
 
 

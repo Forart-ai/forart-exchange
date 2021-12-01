@@ -47,7 +47,7 @@ async function pinJsonToIPFS(data: any): Promise<PinataResult> {
 
 
 function getUriByIpfsHash(ipfsHash: string) {
-  const gateway = 'https://gateway.pinata.cloud'
+  const gateway = 'https://forart.mypinata.cloud'
 
   return `${gateway}/ipfs/${ipfsHash}`
 

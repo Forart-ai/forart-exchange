@@ -11,6 +11,7 @@ import { HashRouter as Router } from 'react-router-dom'
 import { Web3ReactProvider } from '@web3-react/core'
 import { WalletSelectionModalProvider } from './hooks/wallet-selection-modal'
 import { QueryClient , QueryClientProvider } from 'react-query'
+import { RefreshControllerProvider } from './contexts/refresh-controller'
 
 
 const queryClient = new QueryClient()
@@ -19,11 +20,13 @@ ReactDOM.render(
   <Web3ReactProvider getLibrary={getLibrary}>
     <WalletSelectionModalProvider>
       <QueryClientProvider client={queryClient}>
-        <Router>
-          <DAppProvider config={{}}>
-            <App />
-          </DAppProvider>
-        </Router>
+        <RefreshControllerProvider>
+          <Router>
+            <DAppProvider config={{}}>
+              <App />
+            </DAppProvider>
+          </Router>
+        </RefreshControllerProvider>
       </QueryClientProvider>
 
     </WalletSelectionModalProvider>

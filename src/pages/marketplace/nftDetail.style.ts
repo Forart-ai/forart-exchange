@@ -1,42 +1,46 @@
 // @ts-ignore
 import styled from 'styled-components'
-import { Button } from 'antd'
+import { Button, Tabs } from 'antd'
 import CodingFlagIcon from '../../assets/images/marketplace/coding-flag.png'
+const { TabPane } = Tabs
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 1350px;
+  height: fit-content;
   display: flex;
   justify-content: center;
+  overflow-y: hidden;
 
 `
 
 export const NFTDetailContainer = styled.div`
-  width: 1000px;
+  margin-top: 30px;
+  width: 1200px;
 `
 
 export const TopRow = styled.div`
   display: flex;
   justify-content: space-between;
- margin-bottom: 45px;
+  width: 100%;
+  border: #00EBA4 1px solid;
+  border-radius: 10px;
+  background: #121213;
 `
 
 export const ImageContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 375px;
-  height: 450px;
-  border-radius: 2rem;
   justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 570px;
   position: relative;
   object-fit: cover;
+  
 
   img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 2rem;
+    max-width: 350px;
+    object-fit: contain;
+    border-radius:10px;
   }
 
   @media screen and (max-width: 600px) {
@@ -101,12 +105,14 @@ export const ItemsContainer = styled.div`
 
 export const NFTBaseInfoContainer = styled.div`
   height: fit-content;
-  width:100% ;
+  width: 100% ;
+  padding: 0 0 0 50px;
   
   .nft-name {
-    font-size: 42px;
-    font-weight: 550;
+    font-size: 30px;
+    font-weight: bolder;
     color: #94DAFF;
+    margin-bottom: 30px;
   }
 
 
@@ -125,8 +131,6 @@ export const NFTBaseInfoContainer = styled.div`
    color: #94DAFF;
 
     .nft-info-container-item {
-     display: flex;
-     flex-direction: row;
      align-items: center;
      font-size: 18px;
      
@@ -140,7 +144,7 @@ export const NFTBaseInfoContainer = styled.div`
 
 
      .nft-info-container-label {
-        font-weight: 550;
+        font-weight: bolder;
         padding-right: 14px;
       }
 
@@ -148,6 +152,10 @@ export const NFTBaseInfoContainer = styled.div`
         font-weight: 500;
         color: #94DAFF;
         user-select: none;
+        font-size: 14px;
+        margin-bottom: 20px;
+        max-height: 100px;
+
       }
 
       .icon-copy {
@@ -163,6 +171,31 @@ export const NFTBaseInfoContainer = styled.div`
       align-self: center;
       margin-right: 5px;
      }
+      
+      .tabs-container {
+        display: flex;
+        flex-direction: column;
+        
+        .label {
+          color: #94DAFF;
+          font-size: 14px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+        .value {
+          color: #94DAFF;
+          font-size: 16px;
+          font-weight: bolder;
+          margin-bottom: 30px;
+          
+          img {
+            width: 40px;
+            border-radius: 30px;
+            background: #282c34;
+            margin-right: 15px;
+          }
+        }
+      }
     }
   }
 
@@ -188,14 +221,30 @@ export const NFTBaseInfoContainer = styled.div`
   }
 `
 
+export const StyledTab  = styled(Tabs)`
+  user-select: none;
+  .ant-tabs-tab {
+    color: #608599 !important;
+    font-weight: bolder;
+  }
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #94DAFF !important;
+
+  }
+`
+
+export const StyledTabPane  = styled(TabPane)`
+  height: 220px;
+  
+`
+
 export const StyledButton = styled(Button)`
   background-image: linear-gradient(to right, #00EBA4, #02A6F5);
-  height: 40px;
   border: none;
   color: white;
   font-weight: bolder;
   border-radius: 10px;
-  margin-top: 25px;
+  margin-bottom: 5px;
 `
 
 export const CenterRow = styled.div`
@@ -255,7 +304,7 @@ export const PropertiesItem = styled.div`
 `
 
 export const HistoryTradeTable = styled.div`
-  width: 600px;
+  width: 100%;
 `
 
 export const OtherArtworksArea = styled.div`
@@ -361,20 +410,16 @@ export const OtherArtworksContainer = styled.div`
 
 export const Operating = styled.div`
   width: 100%;
-  position: relative;
   display: flex;
-  justify-content: flex-end;
+  height: fit-content;
 
  
   @media screen and (max-width: 1000px) {
     display: flex;
     justify-content: center;
-
-    .ant-btn {
-      width: 40vw;
-      height: 10vw;
-      border-radius: 2vw;
-      font-size: 5vw;
-    }
   }
+`
+
+export const TradingContainer = styled.div`
+  width: 100%;
 `

@@ -1,8 +1,9 @@
 import React from 'react'
-import Authorizing from '@/assets/images/allModalImg/authorizing.svg'
+import Authorizing from '../../assets/images/modalImages/authorizing.svg'
+// @ts-ignore
 import styled from 'styled-components'
 import { Modal } from 'antd'
-import { useModal } from '@/hooks/useModal'
+import { useModal } from '../useModal'
 
 const AuthorizingModal = styled(Modal)`
   .ant-modal-close-icon {
@@ -53,9 +54,9 @@ const AuthorizingModal = styled(Modal)`
 export const useAuthorizingModal = () => {
   const { modal, open, close } = useModal((_open, close, visible) => (
     <AuthorizingModal
-      visible={visible}
-      onCancel={close}
-      footer={null}
+      visible = {visible}
+      onCancel= {close}
+      footer= {null}
     >
       <div className="author-body">
         <div className="author-title">

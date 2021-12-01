@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useWeb3React } from '@web3-react/core'
-import { injected } from './connectors'
+import { injected, celoInjected } from './connectors'
 
 export function useEagerConnect() {
   const { activate, active } = useWeb3React()
@@ -16,6 +16,17 @@ export function useEagerConnect() {
         setTried(true)
       }
     })
+
+    celoInjected.isAuthorized().then((isAuthorized:boolean) => {
+      if (isAuthorized) {
+        activate(celoInjected,undefined,true).catch(() => {
+          setTried(true)
+        })
+      } else {
+        setTried(true)
+      }
+    })
+
   },[])
 
   useEffect(() => {

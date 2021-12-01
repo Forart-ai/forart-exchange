@@ -1,5 +1,6 @@
 import React from 'react'
 import './App.css'
+import './app.scss'
 import { Layout } from 'antd'
 import { Header } from 'antd/es/layout/layout'
 import AppHeader from './layout/AppHeader'
