@@ -8,7 +8,7 @@ export const useNFTLikeQuery = (params: any): UseQueryResult<{ favorite: number,
     ['NFT_LIKE', params],
     async () => {
       return await getNftFavoriteCount(params)
-        .then(res => res)
+        .then(res => res.data)
     }
   )
 }

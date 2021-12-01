@@ -7,7 +7,15 @@ export function useNFTsQuery(params:ForartNftListQueryParams ): UseQueryResult<F
   return useQuery(
     ['ALL_NFTS',params],
     async () => {
-      return await forartNftList(params).then(res => res)
+      return await forartNftList(params)
+        .then(res => res.data.data)
+        .then(pagingData => ({
+          ...pagingData,
+          records: pagingData.records.map((item: any) => ({
+            ...item,
+            name: item?.name.substring(0,14) + '..'
+          }))
+        }))
     }
   )
 }

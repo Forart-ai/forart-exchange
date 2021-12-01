@@ -95,7 +95,7 @@ const useCreateNft = () => {
           message: 'Create successfully!',
           type: 'hint'
         })
-        history.push('/marketplace')
+        // history.push('/marketplace')
       })
       console.log(res)
 

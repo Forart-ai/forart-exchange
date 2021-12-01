@@ -30,6 +30,12 @@ const NFTCardContainer = styled.div<{$empty?:boolean}>`
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
+    position: relative;
+    
+    .spin {
+      position: absolute;
+      top: 50%;
+    }
   }
   
   img {
