@@ -9,7 +9,6 @@ export const Wrapper = styled.div`
   height: fit-content;
   display: flex;
   justify-content: center;
-  overflow-y: hidden;
 
 `
 

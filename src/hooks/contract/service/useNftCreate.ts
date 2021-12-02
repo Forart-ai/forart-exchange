@@ -5,7 +5,7 @@ import { NFTCreateForm } from '../../../pages/nftCreate/index'
 import { generateNftMetadata } from '../../../utils'
 import { getUriByIpfsHash, pinJsonToIPFS } from '../../../utils/ipfs'
 import { NftCreateForm } from '../../../apis/nft'
-import useNFTContract from './useNFTContract'
+import usePlanetItemContract from '../usePlanetItemContract'
 import useSigner from '../../useSigner'
 import { createNFT as APICreateNFT } from '../../../apis/nft'
 import { useHistory } from 'react-router-dom'
@@ -26,7 +26,7 @@ type CreateNftAccountResult = {
 const useCreateNft = () => {
   const { account } = useWeb3React()
   const [hint, setHintMessage] = useState<Hint>({})
-  const { awardItem } =  useNFTContract()
+  const { awardItem } =  usePlanetItemContract()
   const history = useHistory()
 
   const signer = useSigner()
@@ -95,7 +95,7 @@ const useCreateNft = () => {
           message: 'Create successfully!',
           type: 'hint'
         })
-        // history.push('/marketplace')
+        history.push('/marketplace')
       })
       console.log(res)
 

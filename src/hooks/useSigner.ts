@@ -15,7 +15,6 @@ const useSigner = (): Signer | undefined => {
       }
 
       setSigner(await library.getSigner(account))
-      console.log(signer)
     })()
   }, [account, library])
 

@@ -102,15 +102,23 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
   const uri = useLocationQuery('uri')
 
+  const { open } = useWalletSelectionModal()
+
+
   const handleCopy = (content: any) => {
     copy(content) && message.success('Copied successfully.', 1)
   }
 
   useEffect(() => {
     if (!(nftDetail?.onSale && nftDetail.price)) {
+
       setReasonOfUnableToBuy('Not on Sale')
-      return
     }
+
+    if (nftDetail?.addressOwner === account) {
+      setReasonOfUnableToBuy(' Cannot buy your own NFT')
+    }
+    return
   }, [account, nftDetail])
 
 
@@ -156,7 +164,7 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
           <TradingContainer>
             {
               account === undefined ? (
-                <StyledButton onClick={open}>Connect To A Wallet</StyledButton>
+                <StyledButton onClick={ open }>Connect To A Wallet</StyledButton>
               ) :
                 (
                   !reasonOfUnableToBuy ? (
@@ -421,7 +429,6 @@ const MoreArtworks: React.FC = () => {
 const NFTDetailPage: React.FC = () => {
   const { active,account } =useWeb3React()
 
-  const { open } = useWalletSelectionModal()
 
 
 

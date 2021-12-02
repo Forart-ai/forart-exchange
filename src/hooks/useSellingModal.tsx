@@ -4,6 +4,7 @@ import { useModal } from './useModal'
 import styled from 'styled-components'
 import { Button, Checkbox, Form, Input, Modal, Select } from 'antd'
 import clsx from 'clsx'
+import useNFTSell from './contract/service/useNFTSell'
 
 
 const SellingModal = styled(Modal)`
@@ -170,16 +171,16 @@ type SellingModalProps = {
 }
 
 type MessageHintProps = {
-  message: string,
+  message?: string,
   type?: 'error' | 'hint' | 'success'
 }
 
 
 const MessageHint: React.FC<MessageHintProps> = ({ message, type }) => {
   const color = type ? {
-    'error': 'red',
-    'success': 'rgb(82,196,26)',
-    'hint': '#7c6deb'
+    'error': '#CD1818',
+    'success': '#B4FE98',
+    'hint': '#94B3FD'
   }[type] : ''
 
   return (
@@ -189,25 +190,32 @@ const MessageHint: React.FC<MessageHintProps> = ({ message, type }) => {
   )
 }
 
+export type NFTSellForm = {
+  price: string
+}
+
 
 export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :SellingModalProps) => {
 
-  const formInitialValues = {
-    price:''
+  const formInitialValues: NFTSellForm = {
+    price: ''
   }
 
-  const [form] = Form.useForm<typeof formInitialValues>()
+  const { sellNFT, hint } = useNFTSell()
+
+  const [form] = Form.useForm<NFTSellForm>()
 
   const [ checked, setChecked] = useState(false)
 
   const [ current, setCurrent ] = useState(0)
 
-  const [ hintMessage, setHintMessage ] = useState<MessageHintProps>({
-    message:'',
-    type:'hint'
-  })
-
   const AVAILABLE_SELLING_METHODS = ['Fixed price', 'Auction', 'Splitting', 'Mortgage']
+
+  const handleListing = async (values: typeof formInitialValues) => {
+    onStart()
+    await sellNFT(form, checked)
+    onSellingConfirmed()
+  }
 
 
   const { modal, open, close } = useModal((_open, close, visible) => (
@@ -257,9 +265,10 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
             </div>
             <div className="text">Total fees -------------------------------------------------------- 2%</div>
           </Checkbox>
-          <StyledButton>Listing</StyledButton>
+          <StyledButton onClick={ handleListing}>Listing</StyledButton>
         </Announcement>
 
+        <MessageHint {...hint} />
       </SellMethodContainer>
 
 
