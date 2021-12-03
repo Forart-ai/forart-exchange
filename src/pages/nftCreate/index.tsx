@@ -300,7 +300,6 @@ const MessageHint: React.FC<MessageHintProps> = ({ message, type }) => {
 const AssetUpload: React.FC<AssetUploadProps> = ({ onUploadSuccess }) => {
   const aiUri = useLocationQuery('img')
 
-  console.log(aiUri)
 
   const [fileList, setFileList] = useState<RcFile[]>([])
 

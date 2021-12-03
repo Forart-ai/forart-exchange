@@ -12,6 +12,9 @@ import { useHistory } from 'react-router-dom'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { LoadingOutlined, SearchOutlined } from '@ant-design/icons'
 import { ThemeInput } from '../../styles/ThemeInput'
+import { ForartNftTransactionStatus } from '../../apis/nft'
+import {  StatusSelector } from '../../components/NFTListSelectors/index'
+
 
 
 const Wrapper = styled.div`
@@ -91,7 +94,8 @@ const NFTCreateContainer = styled.div`
   margin: 25px 0;
 
   .filter {
-    width: 200px;
+    display: flex;
+    width: fit-content;
   }
 `
 
@@ -163,13 +167,16 @@ const marketplace: React.FC = () => {
 
   const [searchKey, setSearchKey] = useState<any>()
 
+  const [selectedStatus, setSelectedStatus] = useState<ForartNftTransactionStatus | undefined>()
+
+
   const [size, setSize] = useState(20)
 
   const { data: pagingData, isLoading } = useNFTsQuery({
     current,
     size,
     searchKey,
-    transactionStatus: 0,
+    transactionStatus: selectedStatus,
     typeChain: 'Ethereum'
   })
 
@@ -202,9 +209,10 @@ const marketplace: React.FC = () => {
         <div className="filter">
           <ThemeInput
             onPressEnter={onPressEnter}
-            prefix={<SearchOutlined style={{ color: 'white', width: '1.5rem' }} />}
-            style={{ marginRight: '2.5rem' }}
+            prefix={<SearchOutlined style={{ color: 'white', width: '15px' }} />}
+            style={{ marginRight: '20px' }}
           />
+          <StatusSelector onChange={setSelectedStatus} />
         </div>
       </NFTCreateContainer>
 

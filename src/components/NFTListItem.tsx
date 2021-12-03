@@ -5,6 +5,7 @@ import { Spin } from 'antd'
 import { ChainType } from '../apis/nft'
 import { HeartFilled, HeartOutlined } from '@ant-design/icons'
 import  PriceIcon  from '../images/wallet/celo.svg'
+import FlagIcon from '../assets/images/marketplace/flag.png'
 
 
 
@@ -100,9 +101,42 @@ const ChainFlag = styled.span`
   padding:  5px;
   border-radius: 5px;
 `
+
+const StyledFlag = styled.div`
+  position: absolute;
+  color: #ffffff;
+  font-weight: bolder;
+  text-align: center;
+  z-index: 99;
+  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+  padding: 3px;
+  border-radius: 10px;
+  top: -10px;
+  left: -15px;
+  width: 70px;
+  height: 30px;
+  
+  .status {
+    background: #2A2E35;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+  }
+`
+
+
 const TypeChainThumbnailMapper: { [key in ChainType]?: string } = {
   'Ethereum': 'Celo',
   'Solana': 'Celo'
+}
+
+const CornerFlag: React.FC<{status: 'On Sale' | 'On Auction'}> = ({ status }) => {
+
+  return (
+    <StyledFlag>
+      <div className="status">{status}</div>
+    </StyledFlag>
+  )
 }
 
 const NFTListItem: React.FC<{ data?: NftListItem, type?: 'nftList' | 'own', empty?:boolean}> = ({ data, type, empty }) => {
@@ -139,55 +173,60 @@ const NFTListItem: React.FC<{ data?: NftListItem, type?: 'nftList' | 'own', empt
 
 
   return (
-    <NFTCardContainer $empty={empty} >
-      <Link to={toDetailUrl}>
-        <div className="nft-container" >
-          <img
-            onLoad={()=>{
-              setLoading(false)
-            }}
-            alt={data?.name}
-            src={getImageUrl()}
-          />
-          {
-            loading && data && <Spin className="spin" />
-          }
-        </div>
-        <div className="nft-detail">
-          <TopDetail>
-            <div style={{ display:'flex', alignItems:'center' }}>
-              <div className="chain-flag">
-                { data && <ChainFlag >{TypeChainThumbnailMapper[data.typeChain as ChainType]}</ChainFlag> }
+    <div style={{ position: 'relative', height: 'fit-content' }}>
+      {
+        data?.onSale && <CornerFlag status="On Sale" />
+      }
+      <NFTCardContainer $empty={empty} >
+        <Link to={toDetailUrl}>
+          <div className="nft-container" >
+            <img
+              onLoad={()=>{
+                setLoading(false)
+              }}
+              alt={data?.name}
+              src={getImageUrl()}
+            />
+            {
+              loading && data && <Spin className="spin" />
+            }
+          </div>
+          <div className="nft-detail">
+            <TopDetail>
+              <div style={{ display:'flex', alignItems:'center' }}>
+                <div className="chain-flag">
+                  { data && <ChainFlag >{TypeChainThumbnailMapper[data.typeChain as ChainType]}</ChainFlag> }
+                </div>
+                <div className="nft-name">{data?.name}</div>
               </div>
-              <div className="nft-name">{data?.name}</div>
-            </div>
-            <div className="like">
-              {
-                data && (
-                  isHeart ?
-                    <HeartFilled className="heart" />
-                    :
-                    <HeartOutlined className="heart" />
-                )
-              }
-              {data && (favorite? favorite : 0)}
-            </div>
-          </TopDetail>
-          <BottomDetail>
-            <div className="artist-name"> { data?.nameArtist } </div>
-            <div className="price">
-              {
-                data && (
-                  <img src={PriceIcon} />
-                )
-              }
-              <div className="price-value">{ data?.price }</div>
-            </div>
-          </BottomDetail>
+              <div className="like">
+                {
+                  data && (
+                    isHeart ?
+                      <HeartFilled className="heart" />
+                      :
+                      <HeartOutlined className="heart" />
+                  )
+                }
+                {data && (favorite? favorite : 0)}
+              </div>
+            </TopDetail>
+            <BottomDetail>
+              <div className="artist-name"> { data?.nameArtist } </div>
+              <div className="price">
+                {
+                  data && (
+                    <img src={PriceIcon} />
+                  )
+                }
+                <div className="price-value">{ data?.price }</div>
+              </div>
+            </BottomDetail>
 
-        </div>
-      </Link>
-    </NFTCardContainer>
+          </div>
+        </Link>
+      </NFTCardContainer>
+    </div>
   )
 }
 

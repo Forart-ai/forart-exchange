@@ -27,9 +27,10 @@ export type NFTDetailQueryRequest = {
 export type NftCreateForm = {
     uri: string
     addressCreate: string
-    tokenId: string
+    tokenId?: string
     typeChain: ChainType
     nameArtist:string
+    hash: string
 
     // Below 3 is Solana-specific fields
     supply?: number

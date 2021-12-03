@@ -27,6 +27,8 @@ import CodingFlagIcon from '../../assets/images/marketplace/coding-flag.png'
 import { useSellingModal } from '../../hooks/useSellingModal'
 import { useRefreshController } from '../../contexts/refresh-controller'
 import { useAuthorizingModal } from '../../hooks/modals/useAuthorizingModal'
+import { usePurchaseCheckoutModal } from '../../hooks/modals/usePurchaseCheckoutModal'
+import { usePurchaseBlockedModal } from '../../hooks/modals/usePurchaseBlockedModal'
 
 
 
@@ -111,18 +113,47 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
   useEffect(() => {
     if (!(nftDetail?.onSale && nftDetail.price)) {
-
       setReasonOfUnableToBuy('Not on Sale')
+      return
     }
+
+    console.log(account, nftDetail?.addressOwner)
 
     if (nftDetail?.addressOwner === account) {
       setReasonOfUnableToBuy(' Cannot buy your own NFT')
+      return
     }
-    return
+
+    setReasonOfUnableToBuy(undefined)
   }, [account, nftDetail])
 
 
   const { data: nftViewAndFavorite } = useNFTLikeQuery(uri)
+
+  const { purchaseBlockedModal, openPurchaseBlockedModal } = usePurchaseBlockedModal()
+  const { authorizingModal, openAuthorizingModal, closeAuthorizingModal } = useAuthorizingModal()
+
+
+
+  const checkoutFailed = () => {
+    openPurchaseBlockedModal()
+  }
+
+  const checkoutPassed = () => {
+    openAuthorizingModal()
+
+  }
+
+  const {
+    purchaseCheckoutModal,
+    openPurchaseCheckoutModal,
+    closePurchaseCheckoutModal
+  } = usePurchaseCheckoutModal(nftDetail, checkoutPassed, checkoutFailed)
+
+  const handleBuyNow = () => {
+    console.log('2')
+    openPurchaseCheckoutModal()
+  }
 
 
   return (
@@ -130,7 +161,12 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
       <div className="nft-name"> { nftDetail?.name }</div>
       <div className="nft-info-container">
         <div className="nft-info-container-item">
+
           <div className="nft-info-container-value"> { nftDetail?.description }</div>
+          <div className="text">On sale for:
+            <div className="price">{nftDetail?.price} Celo</div>
+          </div>
+
           <div className="nft-info-container-label">Creator </div>
           <div className="nft-info-container-value"> { nftDetail?.nameArtist || shortenAddress(nftDetail?.addressCreate) }
             <CopyOutlined
@@ -163,12 +199,12 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
           </div>
           <TradingContainer>
             {
-              account === undefined ? (
+              !account ? (
                 <StyledButton onClick={ open }>Connect To A Wallet</StyledButton>
               ) :
                 (
                   !reasonOfUnableToBuy ? (
-                    <StyledButton >Buy Now!</StyledButton>
+                    <StyledButton onClick={ handleBuyNow } >Buy Now!</StyledButton>
                   ) :
                     (
                       <div>
@@ -183,6 +219,7 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
                 )
             }
           </TradingContainer>
+          { purchaseCheckoutModal }
         </div>
 
         {/*<div className="nft-info-container-item">*/}
@@ -430,8 +467,6 @@ const NFTDetailPage: React.FC = () => {
   const { active,account } =useWeb3React()
 
 
-
-
   const { forceRefresh } = useRefreshController()
 
   const uri = useLocationQuery('uri') ?? ''
@@ -439,6 +474,12 @@ const NFTDetailPage: React.FC = () => {
   const addressContract = useLocationQuery('addressContract')
 
   const { data: nftDetail } = useNFTDetailQuery({ uri, addressContract })
+
+  const coverImageUrl = useCallback(() => {
+    return nftDetail?.image?.startsWith('ipfs:/')
+      ? `https://forart.mypinata.cloud${nftDetail?.image?.slice(6)}`
+      : `https://forart.mypinata.cloud${nftDetail?.image?.slice(-52)}`
+  }, [nftDetail])
 
 
 
@@ -474,7 +515,7 @@ const NFTDetailPage: React.FC = () => {
         </Operating>
         <TopRow>
           <ImageContainer>
-            <Image src={nftDetail?.image} />
+            <Image src={coverImageUrl()} />
           </ImageContainer>
           <InfoContainer >
             <NFTBaseInfo nftDetail={nftDetail} />
@@ -494,6 +535,7 @@ const NFTDetailPage: React.FC = () => {
         {/*</FootRow>*/}
 
       </NFTDetailContainer>
+
       { authorizingModal }
       { sellingModal }
     </Wrapper>

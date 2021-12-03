@@ -6,24 +6,26 @@ const { TabPane } = Tabs
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: fit-content;
+  height: 100vh;
   display: flex;
   justify-content: center;
 
 `
 
 export const NFTDetailContainer = styled.div`
-  margin-top: 30px;
-  width: 1200px;
+  width: 100%;
+  height: 100%;
+  padding: 50px;
 `
 
 export const TopRow = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  border: #00EBA4 1px solid;
+  height: 100%;
   border-radius: 10px;
-  background: #121213;
+  border: 1px orange solid;
+
 `
 
 export const ImageContainer = styled.div`
@@ -31,13 +33,15 @@ export const ImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 60%;
-  height: 570px;
+  height: 100%;
   position: relative;
   object-fit: cover;
+  border: 1px green solid;
   
 
   img {
-    max-width: 350px;
+    width: 100%;
+    height: 80vh;
     object-fit: contain;
     border-radius:10px;
   }
@@ -59,8 +63,8 @@ export const ImageContainer = styled.div`
 export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 600px;
-
+  width: 40%;
+  border: 1px red solid;
 `
 
 export const ItemsContainer = styled.div`
@@ -111,7 +115,19 @@ export const NFTBaseInfoContainer = styled.div`
     font-size: 30px;
     font-weight: bolder;
     color: #94DAFF;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
+  }
+  
+  .text {
+    font-size: 14px;
+    display: flex;
+    margin: 10px 0;
+    color: #00EBA4;
+    font-weight: bolder;
+    
+    .price {
+      margin-left: 10px;
+    }
   }
 
 

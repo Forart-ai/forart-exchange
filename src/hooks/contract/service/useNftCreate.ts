@@ -26,6 +26,7 @@ type CreateNftAccountResult = {
 const useCreateNft = () => {
   const { account } = useWeb3React()
   const [hint, setHintMessage] = useState<Hint>({})
+  const [hash, setHash] = useState('')
   const { awardItem } =  usePlanetItemContract()
   const history = useHistory()
 
@@ -73,31 +74,40 @@ const useCreateNft = () => {
 
       const tokenUri = getUriByIpfsHash(pinResult.IpfsHash)
 
-      await awardItem(tokenUri).then(res=> {
+      await awardItem(tokenUri).then(res => {
+        setHash(res.hash)
         setHintMessage({
           message: 'Your creation request has been submitted! Waiting the transaction on chain confirmed. Please DO NOT close this page now!',
           type: 'hint'
         })
-      })
+        const  createForm: NftCreateForm = {
+          hash: res.hash,
+          uri: pinResult.IpfsHash,
+          addressCreate: account!,
+          typeChain: 'Ethereum',
+          nameArtist: form.artistName
+        }
 
-      const createForm: NftCreateForm ={
-        uri: pinResult.IpfsHash,
-        addressCreate: account!,
-        tokenId:'',
-        typeChain: 'Ethereum',
-        nameArtist:form.artistName
-      }
-
-      console.log(createForm)
-
-      const res = await APICreateNFT(createForm).then(res=> {
-        setHintMessage({
-          message: 'Create successfully!',
-          type: 'hint'
+        APICreateNFT(createForm).then(res1=> {
+          setHintMessage({
+            message: 'Create successfully!',
+            type: 'hint'
+          })
+          history.push('/marketplace')
         })
-        history.push('/marketplace')
+        console.log(createForm)
+
       })
-      console.log(res)
+
+
+      // const res = await APICreateNFT(createForm).then(res=> {
+      //   setHintMessage({
+      //     message: 'Create successfully!',
+      //     type: 'hint'
+      //   })
+      //   // history.push('/marketplace')
+      // })
+      // console.log(res)
 
     },[account, signer]
   )

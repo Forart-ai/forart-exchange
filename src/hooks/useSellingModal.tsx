@@ -213,7 +213,7 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
 
   const handleListing = async (values: typeof formInitialValues) => {
     onStart()
-    await sellNFT(form, checked)
+    await sellNFT(nftDetail, form, checked)
     onSellingConfirmed()
   }
 
