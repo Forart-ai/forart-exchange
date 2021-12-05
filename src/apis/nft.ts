@@ -52,6 +52,6 @@ export function forartNftDetail(data: NFTDetailQueryRequest) {
 
 
 export function getNftFavoriteCount(uri: any) {
-  return forartRequest.get<{ favorite: number, id: string, view: number }>(`/view/info/${uri}`)
+  return forartRequest.get< ForartApiResponseBody<any>>(`/view/info/${uri}`)
 }
 

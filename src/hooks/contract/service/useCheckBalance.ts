@@ -4,19 +4,19 @@ import { useCallback } from 'react'
 import nftDetail from '../../../pages/marketplace/nftDetail'
 import useNftCreate from './useNftCreate'
 import { NFTDetail } from '../../../types/NFTDetail'
+import { toBigNumber, weiToBigNumber } from '../../../web3/utils'
 
 
 const useCheckBalance = () => {
   const { account } = useWeb3React()
   const sign = useSigner()
 
-  console.log(sign)
-
   const checkBalance = useCallback(
     async (nftDetail: NFTDetail) => {
-      const balance = await sign?.getBalance()
-      console.log(balance)
-      return balance
+      // @ts-ignore
+      const balance = weiToBigNumber((await sign?.getBalance())?.toString())
+
+      return  balance.gte(toBigNumber(nftDetail?.price))
 
     }, [account, sign]
   )

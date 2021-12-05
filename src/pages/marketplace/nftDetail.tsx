@@ -29,6 +29,9 @@ import { useRefreshController } from '../../contexts/refresh-controller'
 import { useAuthorizingModal } from '../../hooks/modals/useAuthorizingModal'
 import { usePurchaseCheckoutModal } from '../../hooks/modals/usePurchaseCheckoutModal'
 import { usePurchaseBlockedModal } from '../../hooks/modals/usePurchaseBlockedModal'
+import usePurchaseByFixedPrice from '../../hooks/contract/service/usePurchaseByFixedPrice'
+import { usePurchaseTransactionSentModal } from '../../hooks/modals/usePurchaseTransactionSentModal'
+import { usePurchaseWaitingConfirmationModal } from '../../hooks/modals/usePurchaseWaitingConfirmationModal'
 
 
 
@@ -130,28 +133,47 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
   const { data: nftViewAndFavorite } = useNFTLikeQuery(uri)
 
+
   const { purchaseBlockedModal, openPurchaseBlockedModal } = usePurchaseBlockedModal()
   const { authorizingModal, openAuthorizingModal, closeAuthorizingModal } = useAuthorizingModal()
+  const { purchaseTransactionSentModal, openPurchaseTransactionSentModal } = usePurchaseTransactionSentModal()
+  const { purchaseWaitingConfirmationModal, openPurchaseWaitingConfirmationModal, closePurchaseWaitingConfirmationModal } = usePurchaseWaitingConfirmationModal()
 
 
+  const { purchaseByFixedPrice } = usePurchaseByFixedPrice()
 
   const checkoutFailed = () => {
     openPurchaseBlockedModal()
   }
 
+
+
   const checkoutPassed = () => {
     openAuthorizingModal()
 
+    purchaseByFixedPrice({
+      nftDetail,
+      account: account!,
+      onAuthorized: () => {
+        closeAuthorizingModal()
+        openPurchaseWaitingConfirmationModal()
+      },
+      onSuccess: () => {
+        openPurchaseTransactionSentModal()
+        // closePurchaseCheckoutModal()
+        closePurchaseWaitingConfirmationModal()
+      }
+    }).then(r  => {
+      console.log(r)
+    })
+
   }
 
-  const {
-    purchaseCheckoutModal,
-    openPurchaseCheckoutModal,
-    closePurchaseCheckoutModal
-  } = usePurchaseCheckoutModal(nftDetail, checkoutPassed, checkoutFailed)
+
+  const { purchaseCheckoutModal, openPurchaseCheckoutModal, closePurchaseCheckoutModal } = usePurchaseCheckoutModal(nftDetail, checkoutPassed, checkoutFailed)
+
 
   const handleBuyNow = () => {
-    console.log('2')
     openPurchaseCheckoutModal()
   }
 
@@ -162,10 +184,14 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
       <div className="nft-info-container">
         <div className="nft-info-container-item">
 
-          <div className="nft-info-container-value"> { nftDetail?.description }</div>
-          <div className="text">On sale for:
-            <div className="price">{nftDetail?.price} Celo</div>
+          <div className="description"> { nftDetail?.description }</div>
+
+
+          <div className="text">
+            <div className="price">  On sale for: {nftDetail?.price} Celo</div>
           </div>
+
+
 
           <div className="nft-info-container-label">Creator </div>
           <div className="nft-info-container-value"> { nftDetail?.nameArtist || shortenAddress(nftDetail?.addressCreate) }
@@ -173,6 +199,30 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
               className="icon-copy"
               onClick={() => handleCopy(nftDetail?.addressCreate)}
             />
+          </div>
+
+          <div style={{ marginTop:'20px' ,display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%' }}>
+            <div className="info-favorite" >
+              <img
+                src={Heart}
+                alt=""
+                className="icon-favorite"
+              />
+              <div className="nft-info-container-value">
+                {nftViewAndFavorite?.favorite ?? 0}
+              </div>
+            </div>
+
+            <div className="info-favorite" >
+              <img
+                src={Show}
+                alt=""
+                className="icon-favorite"
+              />
+              <div className="nft-info-container-value">
+                {nftViewAndFavorite?.view ?? 0}
+              </div>
+            </div>
           </div>
 
           <div className="tabs-container" >
@@ -220,6 +270,7 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
             }
           </TradingContainer>
           { purchaseCheckoutModal }
+          {purchaseTransactionSentModal}
         </div>
 
         {/*<div className="nft-info-container-item">*/}
@@ -231,31 +282,7 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
         {/*  />*/}
         {/*</div>*/}
 
-        {/*<div className="nft-info-container-item" style={{ marginTop: '120px' }}>*/}
-        {/*  <div style={{ display:'flex', justifyContent:'space-between', width:'100%' }}>*/}
-        {/*    <div className="info-favorite" >*/}
-        {/*      <img*/}
-        {/*        src={Heart}*/}
-        {/*        alt=""*/}
-        {/*        className="icon-favorite"*/}
-        {/*      />*/}
-        {/*      <div className="nft-info-container-value">*/}
-        {/*        {nftViewAndFavorite?.favorite ?? 0}*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
 
-        {/*    <div className="info-favorite" >*/}
-        {/*      <img*/}
-        {/*        src={Show}*/}
-        {/*        alt=""*/}
-        {/*        className="icon-favorite"*/}
-        {/*      />*/}
-        {/*      <div className="nft-info-container-value">*/}
-        {/*        {nftViewAndFavorite?.view ?? 0}*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
 
       </div>
     </NFTBaseInfoContainer>

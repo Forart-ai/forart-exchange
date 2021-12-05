@@ -213,8 +213,11 @@ export const usePurchaseCheckoutModal = (nftDetail: any, checkoutPassed: () => v
 
   const handleCheckout = async () => {
     setChecking(true)
-    await checkBalance(nftDetail)
-
+    const  res =  await checkBalance(nftDetail)
+    if (res) {
+      console.log(res)
+      checkoutPassed()
+    }
   }
 
 

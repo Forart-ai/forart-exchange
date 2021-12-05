@@ -24,7 +24,6 @@ export const TopRow = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  border: 1px orange solid;
 
 `
 
@@ -36,7 +35,6 @@ export const ImageContainer = styled.div`
   height: 100%;
   position: relative;
   object-fit: cover;
-  border: 1px green solid;
   
 
   img {
@@ -64,7 +62,6 @@ export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 40%;
-  border: 1px red solid;
 `
 
 export const ItemsContainer = styled.div`
@@ -126,19 +123,11 @@ export const NFTBaseInfoContainer = styled.div`
     font-weight: bolder;
     
     .price {
-      margin-left: 10px;
-    }
+      }
   }
 
 
-  .description {
-    height: 120px;
-    overflow-y: scroll;
-    font-size: 16px;
-    font-weight: 400;
-    color: #7C6DEB;
-    line-height: 22px;
-  }
+
 
   .nft-info-container {
    display: flex;
@@ -148,6 +137,14 @@ export const NFTBaseInfoContainer = styled.div`
     .nft-info-container-item {
      align-items: center;
      font-size: 18px;
+
+      .description {
+        height: 120px;
+        overflow-y: scroll;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 18px;
+      }
      
      .info-favorite {
       display: flex;
@@ -168,7 +165,6 @@ export const NFTBaseInfoContainer = styled.div`
         color: #94DAFF;
         user-select: none;
         font-size: 14px;
-        margin-bottom: 20px;
         max-height: 100px;
 
       }

@@ -11,15 +11,15 @@ const PurchaseTransactionSentModal = styled(Modal)`
   }
 
   .ant-modal-content {
-    width: 62.3rem;
-    height: 49.4rem;
-    background-color: #111C3A;!important;
-    border-radius: 1rem;
+    width: 660px;
+    height: 450px;
+    background-color: #282c34;!important;
+    border-radius: 10px;
   }
 
   .ant-modal-header {
-    border-top-right-radius: 1rem;
-    border-top-left-radius: 1rem;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
   }
 
   .body {
@@ -28,19 +28,17 @@ const PurchaseTransactionSentModal = styled(Modal)`
     align-items: center;
 
     .title {
-      font-size: 2.2rem;
+      font-size: 26px;
       font-weight: 550;
       color: white;
-      line-height: 3rem;
-      margin-top: 7.1rem;
-      margin-bottom: 2.5rem;
+      margin-top: 120px;
+      margin-bottom: 30px;
     }
 
     .tip {
-      font-size: 1.6rem;
+      font-size: 18px;
       font-weight: 500;
-      color: #97BCF8;
-      line-height: 2rem;
+      color: #00EBA4;
     }
   }
 

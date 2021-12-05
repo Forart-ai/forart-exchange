@@ -40,6 +40,10 @@ const useNFTSell = () => {
         return
       }
 
+      if (!sign) {
+        return
+      }
+
       const form = await formInstance.validateFields()
 
       if (!form.price) {
@@ -53,10 +57,6 @@ const useNFTSell = () => {
       if (!(await isApprovedForAll(<string>account, contractAddress))) {
         await setApprovalForAll(contractAddress, true)
       }
-
-      console.log('approved')
-
-      console.log(nftDetail)
 
 
       const salt = (Date.parse(new Date().toString())) / 1000
@@ -74,7 +74,6 @@ const useNFTSell = () => {
         extraValue: 0
       }
 
-      console.log('markerAsset', markerAsset)
 
       const takerAsset: ExchangeOrderAsset = {
         settleType: 0,
@@ -89,7 +88,6 @@ const useNFTSell = () => {
         extraValue: 0
       }
 
-      console.log('takerAsset', takerAsset)
 
       const order: ExchangeOrder = {
         dir: 0,
@@ -104,12 +102,9 @@ const useNFTSell = () => {
         salt
       }
 
-      console.log('order', order)
 
-      // @ts-ignore
       const signature = await sign.signMessage(ethers.utils.arrayify(hashExchangeOrder(order)))
 
-      console.log(signature)
 
       const sellingOrder: SellingOrder = {
         dir: 'sell',
@@ -129,7 +124,6 @@ const useNFTSell = () => {
         salt
       }
 
-      console.log('sellingOrder', sellingOrder)
 
       await sellOrder(sellingOrder).then(res => {
         console.log(res)
