@@ -177,6 +177,27 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
     openPurchaseCheckoutModal()
   }
 
+  const isAllowToSell = useMemo(() => {
+    if (nftDetail) {
+      return  account === nftDetail?.addressOwner
+    }
+    return false
+  },[nftDetail, account])
+
+  const isAllowToSoldOut = useMemo(()=> {
+    return nftDetail?.onSale && isAllowToSell
+  }, [nftDetail, account])
+
+
+  const { forceRefresh } = useRefreshController()
+
+
+  const { sellingModal, openSellingModal, closeSellingModal } = useSellingModal({
+    nftDetail,
+    onSellingConfirmed: forceRefresh,
+    onStart: openAuthorizingModal
+  })
+
 
   return (
     <NFTBaseInfoContainer>
@@ -248,29 +269,46 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
           </div>
           <TradingContainer>
-            {
-              !account ? (
-                <StyledButton onClick={ open }>Connect To A Wallet</StyledButton>
-              ) :
-                (
-                  !reasonOfUnableToBuy ? (
-                    <StyledButton onClick={ handleBuyNow } >Buy Now!</StyledButton>
-                  ) :
-                    (
-                      <div>
-                        <Popover content={ reasonOfUnableToBuy } >
-                          <StyledButton  disabled={true}>
-                            Buy Now
-                          </StyledButton>
-                        </Popover>
-                      </div>
+            <div className="operation">
+              {
+                !account ? (
+                  <StyledButton onClick={ open }>Connect To A Wallet</StyledButton>
+                ) :
+                  (
+                    !reasonOfUnableToBuy ? (
+                      <StyledButton onClick={ handleBuyNow } >Buy Now!</StyledButton>
+                    ) :
+                      (
+                        <div>
+                          <Popover content={ reasonOfUnableToBuy } >
+                            <StyledButton  disabled={true}>
+                              Buy Now
+                            </StyledButton>
+                          </Popover>
+                        </div>
 
-                    )
+                      )
+                  )
+              }
+            </div>
+            <div className="owner-operation">
+
+              {
+                isAllowToSell && (
+                  <StyledButton onClick={openSellingModal} > Sell </StyledButton>
                 )
-            }
+              }
+              {
+                isAllowToSoldOut && (
+                  <StyledButton> Sold out</StyledButton>
+                )
+              }
+            </div>
           </TradingContainer>
           { purchaseCheckoutModal }
-          {purchaseTransactionSentModal}
+          { purchaseTransactionSentModal}
+          { authorizingModal }
+          { sellingModal }
         </div>
 
         {/*<div className="nft-info-container-item">*/}
@@ -494,7 +532,7 @@ const NFTDetailPage: React.FC = () => {
   const { active,account } =useWeb3React()
 
 
-  const { forceRefresh } = useRefreshController()
+  // const { forceRefresh } = useRefreshController()
 
   const uri = useLocationQuery('uri') ?? ''
 
@@ -510,36 +548,36 @@ const NFTDetailPage: React.FC = () => {
 
 
 
-  const isAllowToSell = useMemo(() => {
-    if (nftDetail) {
-      return  account === nftDetail?.addressOwner
-    }
-    return false
-  },[nftDetail, account])
-
-  const { authorizingModal, openAuthorizingModal, closeAuthorizingModal } = useAuthorizingModal()
-
-
-
-
-  const { sellingModal, openSellingModal, closeSellingModal } = useSellingModal({
-    nftDetail,
-    onSellingConfirmed: forceRefresh,
-    onStart: openAuthorizingModal
-  })
+  // const isAllowToSell = useMemo(() => {
+  //   if (nftDetail) {
+  //     return  account === nftDetail?.addressOwner
+  //   }
+  //   return false
+  // },[nftDetail, account])
+  //
+  // const { authorizingModal, openAuthorizingModal, closeAuthorizingModal } = useAuthorizingModal()
+  //
+  //
+  //
+  //
+  // const { sellingModal, openSellingModal, closeSellingModal } = useSellingModal({
+  //   nftDetail,
+  //   onSellingConfirmed: forceRefresh,
+  //   onStart: openAuthorizingModal
+  // })
 
 
   return (
     <Wrapper>
       <NFTDetailContainer>
-        <Operating>
-          {
-            isAllowToSell && (
-              <StyledButton onClick={openSellingModal} > Sell </StyledButton>
-            )
-          }
+        {/*<Operating>*/}
+        {/*  {*/}
+        {/*    isAllowToSell && (*/}
+        {/*      <StyledButton onClick={openSellingModal} > Sell </StyledButton>*/}
+        {/*    )*/}
+        {/*  }*/}
 
-        </Operating>
+        {/*</Operating>*/}
         <TopRow>
           <ImageContainer>
             <Image src={coverImageUrl()} />
@@ -563,8 +601,8 @@ const NFTDetailPage: React.FC = () => {
 
       </NFTDetailContainer>
 
-      { authorizingModal }
-      { sellingModal }
+      {/*{ authorizingModal }*/}
+      {/*{ sellingModal }*/}
     </Wrapper>
   )
 

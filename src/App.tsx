@@ -58,7 +58,7 @@ function App() {
           <Sider width="220px">
             <AppSideBar />
           </Sider>
-          <Content style={{ display: 'flex', width:'calc(100vw - 220px)', backgroundColor:'black' }}>
+          <Content style={{ display: 'flex', width:'calc(100vw - 220px)', backgroundColor:'#1c1c1d' }}>
             {
               routes.map((router:any) => (
                 <Route

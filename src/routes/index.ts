@@ -4,6 +4,13 @@ import Marketplace from '../pages/marketplace'
 import NFTDetailPage from '../pages/marketplace/nftDetail'
 import Home from '../pages/Home'
 import AIGen from '../pages/AIGen'
+import PersonalCenterPage from '../pages/personal'
+
+import  HomeIcon  from '../assets/images/siderIcon/homepage_fill.svg'
+import  GanIcon  from '../assets/images/siderIcon/f-idea.svg'
+import GeneratorIcon from '../assets/images/siderIcon/generator.svg'
+import MarketplaceIcon from '../assets/images/siderIcon/marketplace.svg'
+
 
 export type Route = {
   path: string
@@ -20,18 +27,21 @@ const routes: Route[] = [
   {
     path: '/',
     title: 'Home',
+    icon: HomeIcon,
     component: Home,
     disable: false
   },
   {
     path: '/AI-Gen',
     title: 'GAN-NFT',
+    icon: GanIcon,
     component: AIGen,
     disable: false
   },
   {
     path: '/nftBreed',
     title: 'Al Generation',
+    icon: GeneratorIcon,
     component: LevelUp,
     disable: false
   },
@@ -40,6 +50,7 @@ const routes: Route[] = [
     path: '/marketplace',
     title: 'Marketplace',
     component: Marketplace,
+    icon: MarketplaceIcon,
     disable: false
   },
   {
@@ -54,6 +65,12 @@ const routes: Route[] = [
     component: NFTCreate,
     hidden: true
   },
+  {
+    path:'/personal/home',
+    title:'Personal HomePage',
+    component: PersonalCenterPage,
+    hidden: true
+  }
 
 ]
 

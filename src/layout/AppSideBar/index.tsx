@@ -1,7 +1,6 @@
 import React from 'react'
 // @ts-ignore
 import styled from 'styled-components'
-// @ts-ignore
 import { Link, useLocation } from 'react-router-dom'
 import { Menu } from 'antd'
 import routes, { Route } from '../../routes'
@@ -14,7 +13,7 @@ const AppSideBarContent = styled.div`
   height: 100%;
   min-height: 100vh;
   padding-left: 20px;
-  background: black;
+  background: #04111D;
   font-weight: bold;
   position: relative;
   border-right: 1px solid #262531;
@@ -24,12 +23,15 @@ const AppSideBarContent = styled.div`
   .ant-menu-root.ant-menu-vertical-left,
   .ant-menu-root.ant-menu-vertical-right,
   .ant-menu-root.ant-menu-inline {
-    background: black !important;
+    background: #04111D !important;
     box-shadow: none;
   }
 `
 
 const CustomizedMenu = styled(Menu)`
+  
+  
+  
   .ant-menu-item {
     display: flex;
     align-items: center;
@@ -61,6 +63,16 @@ const CustomizedMenu = styled(Menu)`
   .ant-menu-item-active:not(.ant-menu-item-selected) {
     background-color: #161A1F !important;
   }
+  
+  .ant-menu-title-content {
+    display: flex;
+    align-items: center;
+    img {
+      width: 18px;
+      margin-right: 10px;
+    }
+  }
+  
 `
 
 const LinkContainer = styled.div`
@@ -102,10 +114,11 @@ const AppSideBar:React.FC = () => {
       >
         {
           routes.filter(route => !route.hidden).map((route: Route) => {
-            // const fillColor = (route.path === pathname || route.match?.test(pathname)) ? 'white' : '#fff'
+            const fillColor = (route.path === pathname || route.match?.test(pathname)) ? 'white' : '#fff'
 
             return (
-              <Menu.Item key={route.path} disabled={route.disable}>
+              <Menu.Item key={route.path} disabled={route.disable} >
+                <img src={route.icon} className="menu-icon" />
                 <Link to={route.path}>
                   {route.title}
                 </Link>

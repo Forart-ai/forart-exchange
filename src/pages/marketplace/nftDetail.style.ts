@@ -242,6 +242,20 @@ export const StyledTab  = styled(Tabs)`
     color: #94DAFF !important;
 
   }
+
+  .ant-tabs-nav::before {
+    //display: none; !important;
+    border-bottom: 1px #65727b solid;
+
+  }
+
+  .ant-tabs-ink-bar {
+    line-height: 20px;
+    background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+    padding: 2px;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
 `
 
 export const StyledTabPane  = styled(TabPane)`
@@ -432,5 +446,14 @@ export const Operating = styled.div`
 `
 
 export const TradingContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
   width: 100%;
+  
+  .owner-operation {
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+  }
+  
 `

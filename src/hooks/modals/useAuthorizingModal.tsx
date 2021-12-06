@@ -45,7 +45,6 @@ const AuthorizingModal = styled(Modal)`
   }
 
   .author-img {
-    border: 1px red solid;
     display: flex;
     justify-content: center;
     width: 100%;

@@ -201,11 +201,19 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
     price: ''
   }
 
+
   const { sellNFT, hint } = useNFTSell()
 
   const [form] = Form.useForm<NFTSellForm>()
 
   const [ checked, setChecked] = useState(false)
+
+  const checkCheckbox = () => new Promise<void>((resolve, reject) => {
+    if (!checked) {
+      reject()
+    }
+    resolve()
+  })
 
   const [ current, setCurrent ] = useState(0)
 
@@ -215,6 +223,12 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
     onStart()
     await sellNFT(nftDetail, form, checked)
     onSellingConfirmed()
+  }
+
+  const onListingButtonClicked = async () => {
+    checkCheckbox()
+      .then(() => form.validateFields())
+      .then(handleListing)
   }
 
 
