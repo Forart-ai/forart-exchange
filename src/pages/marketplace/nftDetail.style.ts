@@ -429,6 +429,10 @@ export const TradingContainer = styled.div`
     border-top: 1px #555151 solid;
     margin-bottom: 20px;
   }
+  
+  .operation {
+     width: 100%;
+  }
 
 
   .owner-operation {

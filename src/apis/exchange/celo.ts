@@ -8,12 +8,12 @@ export function sellOrder(data: SellingOrder) {
 
 
 export function chooseOrder(data: any) {
-  return forartRequest.post<ForartApiResponseBody<any>>('/transfer/order/select', data)
+  return forartRequest.post<ForartApiResponseBody<any>>('/marketplace/order/select', data)
 }
 
 
 export function completeOrder(data: any) {
-  return forartRequest.post<ForartApiResponseBody<any>>('/transfer/order/complete', data)
+  return forartRequest.post<ForartApiResponseBody<any>>('/marketplace/order/complete', data)
 }
 
 export function cancelExchange(nftPubKey: string) {

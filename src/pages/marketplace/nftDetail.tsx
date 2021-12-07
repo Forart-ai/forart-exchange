@@ -287,29 +287,32 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
       <div className="bottom">
         <TradingContainer>
-          <div className="operation">
-            {
-              !account ? (
-                <StyledButton onClick={ open }>Connect To A Wallet</StyledButton>
-              ) :
-                (
-                  !reasonOfUnableToBuy && (
-                    <StyledButton onClick={ handleBuyNow } >Buy Now!</StyledButton>
-                  )
-                )
-            }
-          </div>
+          {/*<div className="operation">*/}
+          {/* */}
+          {/*</div>*/}
           <div className="owner-operation">
-
             {
               isAllowToSell && (
                 <StyledButton onClick={openSellingModal} > Sell </StyledButton>
               )
             }
+            {/*{*/}
+            {/*  isAllowToSoldOut && (*/}
+            {/*    <StyledButton onClick= { handleSoldOut}> Sold out</StyledButton>*/}
+            {/*  )*/}
+            {/*}*/}
             {
-              isAllowToSoldOut && (
-                <StyledButton onClick= { handleSoldOut}> Sold out</StyledButton>
-              )
+              !account ? (
+                <StyledButton onClick={ open }>Connect To A Wallet</StyledButton>
+              ) :
+                (
+                  !reasonOfUnableToBuy ? (
+                    <StyledButton onClick={ handleBuyNow } >Buy Now!</StyledButton>
+                  ) :
+                    (
+                      <div />
+                    )
+                )
             }
           </div>
         </TradingContainer>

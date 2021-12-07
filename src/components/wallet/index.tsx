@@ -59,9 +59,7 @@ const StyledWallet = styled.div`
 
 const CurrentAccountContainer = styled.div`
   display: flex;
-  height: 2.8rem;
-  line-height: 2.8rem;
-  font-size: 1.3rem;
+  font-size: 18px;
   user-select: none;
   align-items: center;
   justify-content: center;
@@ -168,7 +166,7 @@ const CurrentAccount: React.FC<CurrentAccountProps> = ({ account }) => {
   return (
     <CurrentAccountContainer>
       <MetamaskIcon />
-      <div onClick={() => setIsModalVisible(true)}> {`${account.substr(0, 5)}...${account.substr(-4, 4)}`}</div>
+      <div className="wallet-add" onClick={() => setIsModalVisible(true)}> {`${account.substr(0, 5)}...${account.substr(-4, 4)}`}</div>
 
       <StyledCurrentModal
         style={{ top: 20 }}
@@ -201,7 +199,6 @@ export const ConnectToWallet = () => {
 
 const Wallet: React.FC = () => {
   const { account } = useWeb3React()
-  console.log(account)
 
   return (
     <StyledWallet>
