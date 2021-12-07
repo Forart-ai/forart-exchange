@@ -7,12 +7,15 @@ import { useHistory } from 'react-router-dom'
 
 const AppHeaderContent = styled.div`
   width: 100%;
-  height: 68px;
+  height: 60px;
+  margin-bottom: -60px;
   padding: 0 20px;
   background: #04111D;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  z-index: 999;
   
   
 `

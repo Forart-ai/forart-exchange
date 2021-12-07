@@ -19,8 +19,7 @@ import {  StatusSelector } from '../../components/NFTListSelectors/index'
 
 const Wrapper = styled.div`
   width: 100%;
-  min-height: 100vh;
-  height: fit-content;
+  height: calc(100% - 68px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,7 +35,6 @@ const Wrapper = styled.div`
 
 const Banner = styled.div`
   width: 1200px;
-  height: 200px;
   margin: 10px 0;
   background: url(${banner}) no-repeat center;
   height: 300px;
@@ -45,12 +43,12 @@ const Banner = styled.div`
 
 const Title = styled.div`
   font-size: 34px;
-  font-weight: 550;
+  font-weight: bolder;
   background-image: -webkit-linear-gradient(left, #00EBA4, #02A6F5);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-top: 10px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `
 
 const NFTListContainer = styled.div`

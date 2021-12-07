@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { Button, Checkbox, Form, Input, Modal, Select } from 'antd'
 import clsx from 'clsx'
 import useNFTSell from './contract/service/useNFTSell'
+import { useAuthorizingModal } from './modals/useAuthorizingModal'
 
 
 const SellingModal = styled(Modal)`
@@ -208,6 +209,9 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
 
   const [ checked, setChecked] = useState(false)
 
+  const { authorizingModal, openAuthorizingModal, closeAuthorizingModal } = useAuthorizingModal()
+
+
   const checkCheckbox = () => new Promise<void>((resolve, reject) => {
     if (!checked) {
       reject()
@@ -279,7 +283,7 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
             </div>
             <div className="text">Total fees -------------------------------------------------------- 2%</div>
           </Checkbox>
-          <StyledButton onClick={ handleListing}>Listing</StyledButton>
+          <StyledButton onClick={ onListingButtonClicked }>Listing</StyledButton>
         </Announcement>
 
         <MessageHint {...hint} />

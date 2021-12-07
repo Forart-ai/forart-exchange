@@ -16,7 +16,8 @@ const { TabPane } = Tabs
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 68px);
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -213,7 +214,7 @@ const PersonalCenterPage: React.FC = () => {
           </UserAvatar>
         </BackgroundContainer>
         <UserInfo>
-          <div className="username">Momosama</div>
+          <div className="username">Hello World</div>
           <div className="address">{ shortenAddress(account?.toString())}</div>
         </UserInfo>
 

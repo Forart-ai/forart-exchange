@@ -3,14 +3,39 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { useNFTDetailQuery } from '../../hooks/queries/useNFTDetailQuery'
-import { Wrapper, NFTDetailContainer, TopRow, Title, StyledTab, StyledTabPane,TradingContainer, OtherArtworksContainer, Operating, OtherArtworksArea, CenterRow, FootRow, CodingFlag, HistoryTradeTable, PropertiesItem, PropertiesContainer,  ImageContainer, InfoContainer, ItemsContainer, NFTBaseInfoContainer, StyledButton } from './nftDetail.style'
+import {
+  Wrapper,
+  NFTDetailContainer,
+  TopRow,
+  Title,
+  StyledTab,
+  StyledTabPane,
+  TopBaseInfo,
+  TradingContainer,
+  OtherArtworksContainer,
+  Operating,
+  OtherArtworksArea,
+  CenterRow,
+  FootRow,
+  CodingFlag,
+  HistoryTradeTable,
+  PropertiesItem,
+  PropertiesContainer,
+  ImageContainer,
+  InfoContainer,
+  ItemsContainer,
+  NFTBaseInfoContainer,
+  StyledButton,
+  CenterInfo,
+  BottomInfo
+} from './nftDetail.style'
 import { Image, message, Popover, Tabs } from 'antd'
 import { NFTDetail } from '../../types/NFTDetail'
 import { shortenAddress } from '../../utils'
 import copy from 'copy-to-clipboard'
 import { CopyOutlined } from '@ant-design/icons'
 import Heart from '../../assets/images/marketplace/like.png'
-import Show from '../../assets/images/marketplace/show.png'
+import Show from '../../assets/images/marketplace/view.svg'
 import more1 from '../../assets/images/marketplace/more1.jpg'
 import more2 from '../../assets/images/marketplace/more2.jpg'
 import more3 from '../../assets/images/marketplace/more3.jpg'
@@ -32,6 +57,7 @@ import { usePurchaseBlockedModal } from '../../hooks/modals/usePurchaseBlockedMo
 import usePurchaseByFixedPrice from '../../hooks/contract/service/usePurchaseByFixedPrice'
 import { usePurchaseTransactionSentModal } from '../../hooks/modals/usePurchaseTransactionSentModal'
 import { usePurchaseWaitingConfirmationModal } from '../../hooks/modals/usePurchaseWaitingConfirmationModal'
+import { cancelExchange } from '../../apis/exchange/celo'
 
 
 
@@ -163,8 +189,6 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
         // closePurchaseCheckoutModal()
         closePurchaseWaitingConfirmationModal()
       }
-    }).then(r  => {
-      console.log(r)
     })
 
   }
@@ -191,61 +215,52 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
   const { forceRefresh } = useRefreshController()
 
+  const handleSoldOut = async () => {
+    await cancelExchange(nftDetail!.nftPubKey)
+  }
+
 
   const { sellingModal, openSellingModal, closeSellingModal } = useSellingModal({
     nftDetail,
-    onSellingConfirmed: forceRefresh,
+    onSellingConfirmed() {
+      closeSellingModal()
+      closeAuthorizingModal()
+      forceRefresh()
+    },
     onStart: openAuthorizingModal
   })
 
 
   return (
     <NFTBaseInfoContainer>
-      <div className="nft-name"> { nftDetail?.name }</div>
-      <div className="nft-info-container">
-        <div className="nft-info-container-item">
+      <div className="top">
+        <TopBaseInfo>
+          <div className="nft-name"> { nftDetail?.name }</div>
+          <div className="nft-view">
+            <img src={Show} /> {nftViewAndFavorite?.view}
+          </div>
+        </TopBaseInfo>
 
+        <CenterInfo>
           <div className="description"> { nftDetail?.description }</div>
 
 
-          <div className="text">
-            <div className="price">  On sale for: {nftDetail?.price} Celo</div>
+          <div className="text">On sale for
+            <div className="price"> {nftDetail?.price} Celo</div>
           </div>
 
 
-
-          <div className="nft-info-container-label">Creator </div>
-          <div className="nft-info-container-value"> { nftDetail?.nameArtist || shortenAddress(nftDetail?.addressCreate) }
+          <div className="info-label">Creator </div>
+          <div className="info-value"> { nftDetail?.nameArtist || shortenAddress(nftDetail?.addressCreate) }
             <CopyOutlined
               className="icon-copy"
               onClick={() => handleCopy(nftDetail?.addressCreate)}
             />
           </div>
 
-          <div style={{ marginTop:'20px' ,display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%' }}>
-            <div className="info-favorite" >
-              <img
-                src={Heart}
-                alt=""
-                className="icon-favorite"
-              />
-              <div className="nft-info-container-value">
-                {nftViewAndFavorite?.favorite ?? 0}
-              </div>
-            </div>
+        </CenterInfo>
 
-            <div className="info-favorite" >
-              <img
-                src={Show}
-                alt=""
-                className="icon-favorite"
-              />
-              <div className="nft-info-container-value">
-                {nftViewAndFavorite?.view ?? 0}
-              </div>
-            </div>
-          </div>
-
+        <BottomInfo>
           <div className="tabs-container" >
             <StyledTab defaultActiveKey= "details">
               <StyledTabPane  tab="Details" key="details">
@@ -266,63 +281,56 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
                 <HistoryTrade nftDetail={nftDetail} />
               </StyledTabPane>
             </StyledTab>
-
           </div>
-          <TradingContainer>
-            <div className="operation">
-              {
-                !account ? (
-                  <StyledButton onClick={ open }>Connect To A Wallet</StyledButton>
-                ) :
-                  (
-                    !reasonOfUnableToBuy ? (
-                      <StyledButton onClick={ handleBuyNow } >Buy Now!</StyledButton>
-                    ) :
-                      (
-                        <div>
-                          <Popover content={ reasonOfUnableToBuy } >
-                            <StyledButton  disabled={true}>
-                              Buy Now
-                            </StyledButton>
-                          </Popover>
-                        </div>
+        </BottomInfo>
+      </div>
 
-                      )
+      <div className="bottom">
+        <TradingContainer>
+          <div className="operation">
+            {
+              !account ? (
+                <StyledButton onClick={ open }>Connect To A Wallet</StyledButton>
+              ) :
+                (
+                  !reasonOfUnableToBuy && (
+                    <StyledButton onClick={ handleBuyNow } >Buy Now!</StyledButton>
                   )
-              }
-            </div>
-            <div className="owner-operation">
-
-              {
-                isAllowToSell && (
-                  <StyledButton onClick={openSellingModal} > Sell </StyledButton>
                 )
-              }
-              {
-                isAllowToSoldOut && (
-                  <StyledButton> Sold out</StyledButton>
-                )
-              }
-            </div>
-          </TradingContainer>
-          { purchaseCheckoutModal }
-          { purchaseTransactionSentModal}
-          { authorizingModal }
-          { sellingModal }
-        </div>
+            }
+          </div>
+          <div className="owner-operation">
 
-        {/*<div className="nft-info-container-item">*/}
-        {/*  <div className="nft-info-container-label">Owner: </div>*/}
-        {/*  <div className="nft-info-container-value"> { shortenAddress(nftDetail?.addressOwner) } </div>*/}
-        {/*  <CopyOutlined*/}
-        {/*    className="icon-copy"*/}
-        {/*    onClick={() => handleCopy(nftDetail?.addressOwner)}*/}
-        {/*  />*/}
-        {/*</div>*/}
-
-
+            {
+              isAllowToSell && (
+                <StyledButton onClick={openSellingModal} > Sell </StyledButton>
+              )
+            }
+            {
+              isAllowToSoldOut && (
+                <StyledButton onClick= { handleSoldOut}> Sold out</StyledButton>
+              )
+            }
+          </div>
+        </TradingContainer>
 
       </div>
+
+      {/*<div className="nft-info-container-item">*/}
+      {/*  <div className="nft-info-container-label">Owner: </div>*/}
+      {/*  <div className="nft-info-container-value"> { shortenAddress(nftDetail?.addressOwner) } </div>*/}
+      {/*  <CopyOutlined*/}
+      {/*    className="icon-copy"*/}
+      {/*    onClick={() => handleCopy(nftDetail?.addressOwner)}*/}
+      {/*  />*/}
+      {/*</div>*/}
+
+
+
+      { purchaseCheckoutModal }
+      { purchaseTransactionSentModal}
+      { authorizingModal }
+      { sellingModal }
     </NFTBaseInfoContainer>
   )
 

@@ -18,6 +18,7 @@ const AppSideBarContent = styled.div`
   position: relative;
   border-right: 1px solid #262531;
   z-index: 99;
+  top: 60px;
 
   .ant-menu-root.ant-menu-vertical,
   .ant-menu-root.ant-menu-vertical-left,

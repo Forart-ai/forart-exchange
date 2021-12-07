@@ -19,9 +19,7 @@ function App() {
   useEagerConnect()
   return (
     <Layout className="app">
-      <Header style={{ padding:'0' }}>
-        <AppHeader />
-      </Header>
+      <AppHeader />
       <Layout>
         {/* <Layout.Sider
           style={{
@@ -58,7 +56,7 @@ function App() {
           <Sider width="220px">
             <AppSideBar />
           </Sider>
-          <Content style={{ display: 'flex', width:'calc(100vw - 220px)', backgroundColor:'#1c1c1d' }}>
+          <Content style={{ display: 'flex', width:'calc(100vw - 220px)', backgroundColor:'#1c1c1d', position:'relative',top: '60px' }}>
             {
               routes.map((router:any) => (
                 <Route

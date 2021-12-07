@@ -3,7 +3,7 @@ import forartRequest, { ForartApiResponseBody } from '../../utils/request'
 
 
 export function sellOrder(data: SellingOrder) {
-  return forartRequest.post<ForartApiResponseBody<any>>('/transfer/order/create', data)
+  return forartRequest.post<ForartApiResponseBody<any>>('/marketplace/order/create', data)
 }
 
 
@@ -16,4 +16,7 @@ export function completeOrder(data: any) {
   return forartRequest.post<ForartApiResponseBody<any>>('/transfer/order/complete', data)
 }
 
+export function cancelExchange(nftPubKey: string) {
+  return forartRequest.post('/transfer/exchange/cancel', { nftPubKey })
+}
 

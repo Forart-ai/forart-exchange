@@ -10,7 +10,6 @@ import BannerImage from '../../assets/images/AIGen/ai-gen-banner.jpg'
 import { LoadingOutlined } from '@ant-design/icons'
 import { aiGeneratorImage } from '../../apis/ai'
 import { base64ToIPfsUri, dictionaryToBase64 } from '../../utils'
-import '../../font/font.css'
 
 
 const Wrapper = styled.div`
@@ -86,7 +85,6 @@ const SampleContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  border: 1px  solid;
 `
 
 const SampleMain = styled.div`
@@ -95,19 +93,17 @@ const SampleMain = styled.div`
 
 const EnterContent = styled.div`
   display: flex;
-
+align-items: center;
   .enter {
-    width: 150px;
+    width: 200px;
     color: #02A6F5;
-    font-size: 18px;
-    font-weight: bolder;
+    font-size: 25px;
     red: left;
   }
 
   .enterData {
     color: #EADEDE;
     font-size: 18px;
-    font-weight: bold;
     margin-left: 30px;
   }
 `
@@ -125,10 +121,9 @@ const SampleImg = styled.div`
   display: flex;
 
   .enter {
-    width: 150px;
+    width: 200px;
     color: #02A6F5;
-    font-size: 18px;
-    font-weight: bolder;
+    font-size: 24px;
     text-align: left;
     margin-right: 30px;
   }

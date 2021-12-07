@@ -29,6 +29,7 @@ SwiperCore.use([Navigation, EffectCoverflow, Pagination])
 const Wrapper = styled.div`
   width: 100%;
   height: 1800px;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,7 +37,6 @@ const Wrapper = styled.div`
 
 const GenContainer = styled.div`
   width: 1100px;
-  height: fit-content;
 `
 
 const Introduction = styled.div`
@@ -87,6 +87,7 @@ const GenerateResultContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 60px;
 `
 
 const SubTitle = styled.div`

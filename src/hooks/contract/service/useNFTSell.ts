@@ -11,6 +11,7 @@ import { toWei } from '../../../web3/utils'
 import { hashExchangeOrder, hashExchangeOrderAsset } from './exchange/utils'
 import { ethers } from 'ethers'
 import { sellOrder } from '../../../apis/exchange/celo'
+import { useAuthorizingModal } from '../../modals/useAuthorizingModal'
 
 type Hint = {
   message?: string,
@@ -22,6 +23,7 @@ const useNFTSell = () => {
   const { account } = useWeb3React()
 
   const [hint, setHintMessage] = useState<Hint>({})
+
 
   const sign = useSigner()
 
@@ -127,6 +129,7 @@ const useNFTSell = () => {
 
       await sellOrder(sellingOrder).then(res => {
         console.log(res)
+
       })
 
 

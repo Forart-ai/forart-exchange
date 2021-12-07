@@ -9,8 +9,7 @@ import { useHistory } from 'react-router-dom'
 
 const HomePage = styled.div`
   width: 100%;
-  padding-bottom: 50px;
-  font-family: 'campton';
+  min-height: 1000px;
 `
 
 const BannerContent = styled.div`

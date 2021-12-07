@@ -47,22 +47,22 @@ export type ForartPersonalNftListQueryParams = {
 }
 
 export function createNFT(data: NftCreateForm) {
-  return forartRequest.post<ForartApiResponseBody<any>>('/create/uri', data)
+  return forartRequest.post<ForartApiResponseBody<any>>('/marketplace/nft/create/', data)
 }
 
 export function forartNftList(data: ForartNftListQueryParams) {
-  return forartRequest.post<ForartApiResponseBody<ForartApiPagingData<NftListItem>>>('/query/list', data)
+  return forartRequest.post<ForartApiResponseBody<ForartApiPagingData<NftListItem>>>('/marketplace/nft/query/list', data)
 }
 
 export function forartNftDetail(data: NFTDetailQueryRequest) {
-  return forartRequest.post<ForartApiResponseBody<NFTDetail>>('/query/detail', data)
+  return forartRequest.post<ForartApiResponseBody<NFTDetail>>('/marketplace/nft/detail', data)
 }
 
 
 export function getNftFavoriteCount(uri: any) {
-  return forartRequest.get< ForartApiResponseBody<any>>(`/view/info/${uri}`)
+  return forartRequest.get< ForartApiResponseBody<any>>(`/marketplace/view/info/${uri}`)
 }
 
 export function personalNftList(data: ForartPersonalNftListQueryParams) {
-  return forartRequest.post<ForartApiResponseBody<any>>('/zone/nft/list', data)
+  return forartRequest.post<ForartApiResponseBody<any>>('/marketplace/nft/personal/list', data)
 }

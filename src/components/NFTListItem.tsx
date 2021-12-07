@@ -56,6 +56,10 @@ const NFTCardContainer = styled.div<{$empty?:boolean}>`
 
     .nft-name {
       margin-left: 5px;
+      width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 `

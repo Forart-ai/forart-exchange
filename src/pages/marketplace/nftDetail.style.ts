@@ -6,16 +6,18 @@ const { TabPane } = Tabs
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  height: calc(100% - 68px);
   display: flex;
   justify-content: center;
+  overflow: hidden;
 
 `
 
 export const NFTDetailContainer = styled.div`
   width: 100%;
   height: 100%;
-  padding: 50px;
+  padding: 20px;
+
 `
 
 export const TopRow = styled.div`
@@ -23,7 +25,6 @@ export const TopRow = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  border-radius: 10px;
 
 `
 
@@ -43,25 +44,15 @@ export const ImageContainer = styled.div`
     object-fit: contain;
     border-radius:10px;
   }
-
-  @media screen and (max-width: 600px) {
-    margin-top: 5vw;
-    border: none;
-    height: 100%;
-    width: 100vw;
-
-    img {
-      height: 50vh;
-      width: 80vw;
-      object-fit: cover;
-    }
-  }
+  
 `
 
 export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 40%;
+  height: 100%;
+  overflow-y: scroll;
 `
 
 export const ItemsContainer = styled.div`
@@ -103,143 +94,139 @@ export const ItemsContainer = styled.div`
 }
 `
 
-export const NFTBaseInfoContainer = styled.div`
-  height: fit-content;
-  width: 100% ;
-  padding: 0 0 0 50px;
+export const TopBaseInfo = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   
   .nft-name {
-    font-size: 30px;
+    font-size: 34px;
     font-weight: bolder;
-    color: #94DAFF;
+    color: #F9F9F9;
     margin-bottom: 5px;
   }
   
+  .nft-view {
+    user-select: none;
+    border: 2px #b2b2b2 solid;
+    padding: 2px 6px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #F9F9F9;
+    
+    img {
+      width: 30px;
+    }
+  }
+
+`
+
+export const CenterInfo = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+  .description {
+    color: #F9F9F9;
+    height: 90px;
+    padding: 5px;
+    overflow-y: scroll;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 20px;
+    margin-top: 10px;
+    background-color: #2A2E35;
+    border-radius: 10px;
+  }
+
   .text {
-    font-size: 14px;
+    color: #F9F9F9;
+    font-size: 16px;
     display: flex;
     margin: 10px 0;
-    color: #00EBA4;
-    font-weight: bolder;
-    
+    align-items: center;
+
     .price {
-      }
-  }
-
-
-
-
-  .nft-info-container {
-   display: flex;
-   flex-direction: column;
-   color: #94DAFF;
-
-    .nft-info-container-item {
-     align-items: center;
-     font-size: 18px;
-
-      .description {
-        height: 120px;
-        overflow-y: scroll;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 18px;
-      }
-     
-     .info-favorite {
-      display: flex;
-       
-       img {
-         width: 20px;
-       }
-     }
-
-
-     .nft-info-container-label {
-        font-weight: bolder;
-        padding-right: 14px;
-      }
-
-      .nft-info-container-value {
-        font-weight: 500;
-        color: #94DAFF;
-        user-select: none;
-        font-size: 14px;
-        max-height: 100px;
-
-      }
-
-      .icon-copy {
-        margin-left: 0.5rem;
-        color: #94DAFF;
-        cursor: pointer;
-      }
-
-     .icon-favorite {
-      width: 25px;
-      height: 16px;
-      display: flex;
-      align-self: center;
-      margin-right: 5px;
-     }
-      
-      .tabs-container {
-        display: flex;
-        flex-direction: column;
-        
-        .label {
-          color: #94DAFF;
-          font-size: 14px;
-          font-weight: bold;
-          margin-bottom: 10px;
-        }
-        .value {
-          color: #94DAFF;
-          font-size: 16px;
-          font-weight: bolder;
-          margin-bottom: 30px;
-          
-          img {
-            width: 40px;
-            border-radius: 30px;
-            background: #282c34;
-            margin-right: 15px;
-          }
-        }
-      }
+      margin-left: 5px;
+      font-size: 20px;
+      color: #00EBA4;
     }
   }
 
+  .info-label {
+    font-size: 16px;
+    color: #cecaca;
+  }
+
+  .info-value {
+    color: #F9F9F9;
+    user-select: none;
+    font-size: 18px;
+    max-height: 100px;
+
+  }
+
+  .icon-copy {
+    margin-left: 5px;
+    color: #F9F9F9;
+    cursor: pointer;
+  }
+
+`
+
+export const BottomInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  .tabs-container {
+    
+
+    .label {
+      color: #B3B3B3;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .value {
+      color: #F9F9F9;
+      font-size: 18px;
+      margin-bottom: 30px;
+
+      img {
+        width: 40px;
+        border-radius: 30px;
+        background: #282c34;
+        margin-right: 15px;
+      }
+    }
+  }
+`
+
+export const NFTBaseInfoContainer = styled.div`
+  width: 100% ;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   
+  .top {
+    height: fit-content;
 
-  @media screen and (max-width: 600px) {
-    display: flex;
-    justify-content: center;
-
-    .nft-name {
-      width: fit-content;
-      font-size: 4.5rem;
-      font-weight: 550;
-      color: #94DAFF;
-      padding: 5vh 0;
-    }
-
-    .line {
-      margin-bottom: 5vh;
-      width: 80vw;
-      border-bottom: solid 0.2rem #787A91;
-    }
   }
+  
 `
 
 export const StyledTab  = styled(Tabs)`
   user-select: none;
   .ant-tabs-tab {
+    font-size: 16px;
     color: #608599 !important;
-    font-weight: bolder;
   }
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: #94DAFF !important;
+    color: #00EBA4 !important;
 
   }
 
@@ -270,6 +257,7 @@ export const StyledButton = styled(Button)`
   font-weight: bolder;
   border-radius: 10px;
   margin-bottom: 5px;
+  width: 100%;
 `
 
 export const CenterRow = styled.div`
@@ -280,7 +268,7 @@ export const CenterRow = styled.div`
 export const Title = styled.div`
  font-size: 26px;
  font-weight: 550;
- color: #94DAFF;
+ color: #F9F9F9;
  margin-bottom: 20px;
 `
 
@@ -324,7 +312,7 @@ export const PropertiesItem = styled.div`
  .value ,.percent {
   font-size: 15px;
   font-weight: 500;
-  color: #94DAFF;
+  color: #F9F9F9;
  }
 `
 
@@ -420,40 +408,33 @@ export const OtherArtworksContainer = styled.div`
       }
     }
   }
-
-  @media screen and (max-width: 1000px) {
-    flex-direction: column;
-    justify-content: center;
-    width: 100vw !important;
-
-    .artwork-group {
-      margin-left: calc((100vw - 22rem) / 2);
-      margin-bottom: 5vh;
-    }
-  }
+  
 `
 
 export const Operating = styled.div`
   width: 100%;
   display: flex;
   height: fit-content;
-
- 
-  @media screen and (max-width: 1000px) {
-    display: flex;
-    justify-content: center;
-  }
+  
 `
 
 export const TradingContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  
+
+  .line {
+    width: 100%;
+    height: 2px;
+    border-top: 1px #555151 solid;
+    margin-bottom: 20px;
+  }
+
+
   .owner-operation {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    width: 150px;
   }
-  
+
 `
