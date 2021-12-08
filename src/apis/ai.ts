@@ -19,3 +19,9 @@ export function aiGeneratorImage(object: string, accessories: string, behavior: 
     behavior
   })
 }
+
+export function aiGeneratorImageByContent(content:string) {
+  return aiDriverRequest.post('/genImage', {
+    content,
+  })
+}

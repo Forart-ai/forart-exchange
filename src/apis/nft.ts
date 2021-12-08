@@ -39,12 +39,14 @@ export type NftCreateForm = {
 }
 
 export type ForartPersonalNftListQueryParams = {
-    addressOwner: string,
+    addressOwner: string| null | undefined,
     typeChain?: ChainType
     size?: number
     current?: number
     searchKey?: string
 }
+
+
 
 export function createNFT(data: NftCreateForm) {
   return forartRequest.post<ForartApiResponseBody<any>>('/marketplace/nft/create/', data)
@@ -65,4 +67,8 @@ export function getNftFavoriteCount(uri: any) {
 
 export function personalNftList(data: ForartPersonalNftListQueryParams) {
   return forartRequest.post<ForartApiResponseBody<any>>('/marketplace/nft/personal/list', data)
+}
+
+export function getContentList(type: number) {
+  return forartRequest.get<ForartApiResponseBody<any>>(`/style/list/${type}`)
 }

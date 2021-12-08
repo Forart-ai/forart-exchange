@@ -1,10 +1,12 @@
 import { useQuery, UseQueryResult } from 'react-query'
+import { getContentList } from '../../apis/nft'
 
-export function useStyledNFTsQuery(): UseQueryResult<Array<any>> {
+export const useStyledNFTsQuery= (params: number): UseQueryResult<Array<any>> => {
   return useQuery(
-    [],
+    ['CONTENT_NFT', params],
     async () => {
-      return await require('../../public/mock/nftStyle.json')
+      return await getContentList(params)
+        .then(res => res.data.data)
     }
   )
 }

@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { injected, celoInjected } from './connectors'
+import { useHistory } from 'react-router-dom'
+import { message } from 'antd'
 
 export function useEagerConnect() {
   const { activate, active } = useWeb3React()
@@ -80,3 +82,47 @@ export function useInactiveListener(suppress = false) {
     }
   }, [active, error, suppress, activate])
 }
+
+
+
+export function useChainEffect() {
+  const { account, library } = useWeb3React()
+
+  const SCAN_ADDRESS = {
+    [44787]: 'https://alfajores-forno.celo-testnet.org'
+  }
+
+  const networkConf = {
+    [44787]: {
+      chainId: '0x' + parseInt('44787').toString(16),
+      chainName: 'CELO Alfajores Testnet',
+      nativeCurrency: {
+        name:'',
+        symbol:'',
+        decimals:18,
+      },
+      rpcUrls: [
+        'https://alfajores-forno.celo-testnet.org'
+      ],
+      blockExplorerUrls: [SCAN_ADDRESS[44787]]
+    }
+  }
+
+  useEffect(():any => {
+    const { ethereum } = window as any
+    if (ethereum && ethereum.isMetaMask && networkConf[44787] ) {
+      ethereum.request({
+        method:'wallet_addEthereumChain',
+        params:[
+          {
+            ...networkConf[44787]
+          }
+        ],
+      })
+
+
+    }
+  },[account])
+
+}
+

@@ -109,7 +109,6 @@ const ChainFlag = styled.span`
 const StyledFlag = styled.div`
   position: absolute;
   color: #ffffff;
-  font-weight: bolder;
   text-align: center;
   z-index: 99;
   background-image: linear-gradient(to right, #00EBA4, #02A6F5);

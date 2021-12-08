@@ -1,6 +1,6 @@
 import { useWeb3React } from '@web3-react/core'
 import { useCallback, useState } from 'react'
-import { FormInstance } from 'antd'
+import { FormInstance, message } from 'antd'
 import { NFTSellForm } from '../../useSellingModal'
 import useSigner from '../../useSigner'
 import useNFTContract from '../usePlanetItemContract'
@@ -20,7 +20,7 @@ type Hint = {
 
 
 const useNFTSell = () => {
-  const { account } = useWeb3React()
+  const { account,library } = useWeb3React()
 
   const [hint, setHintMessage] = useState<Hint>({})
 
@@ -39,6 +39,11 @@ const useNFTSell = () => {
           message: 'Please check the checkbox first.',
           type: 'error'
         })
+        return
+      }
+
+      if (library.network.chainId !== 44787) {
+        message.warn('Please manually switch to Alfajores Test Network in Celo')
         return
       }
 

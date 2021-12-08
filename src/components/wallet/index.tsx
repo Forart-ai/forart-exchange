@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import WalletSelectionModal from './WalletSelectionModal'
 import { formatEther } from '@ethersproject/units'
 import styled from '@emotion/styled'
 // @ts-ignore
 import Jazzicon from '@metamask/jazzicon'
-import { Button, Modal } from 'antd'
+import { Button, message, Modal } from 'antd'
 import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 
 const StyledCurrentModal = styled(Modal)`
@@ -198,7 +198,9 @@ export const ConnectToWallet = () => {
 
 
 const Wallet: React.FC = () => {
-  const { account } = useWeb3React()
+  const { account, library } = useWeb3React()
+
+
 
   return (
     <StyledWallet>

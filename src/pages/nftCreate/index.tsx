@@ -11,6 +11,7 @@ import { Wallet } from '../../web3/connectors'
 import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import useCreateNft from '../../hooks/contract/service/useNftCreate'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
+import { uploadToMinio } from '../../utils/minio'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -254,15 +255,12 @@ const AssetUploadContainer = styled.div`
   }
 `
 
-const CreatButton = styled.button`
-  width: 200px;
+const ButtonContainer = styled.div`
+  width: 100%;
   height: 40px;
-  border-radius: 8px;
-  margin-left: calc((100% - 200px) / 2);
-  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
-  border: none;
-  color: white;
-  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+ 
 `
 
 export type NFTCreateForm = {
@@ -305,6 +303,8 @@ const AssetUpload: React.FC<AssetUploadProps> = ({ onUploadSuccess }) => {
 
   const [pinnedFileHash, setPinnedFileHash] = useState<any>()
 
+  const styleFile = new FormData()
+
   const [uploading, setUploading] = useState(false)
 
   const handleUpload = () => {
@@ -314,6 +314,13 @@ const AssetUpload: React.FC<AssetUploadProps> = ({ onUploadSuccess }) => {
 
     setUploading(true)
     setPinnedFileHash(undefined)
+
+    styleFile.append('styleFile', fileList[0])
+
+
+    // upload image to minio, 1 => content | 0 => style
+    uploadToMinio(fileList[0],1)
+
 
     pinFileToIPFS(fileList[0])
       .then(r => {
@@ -502,19 +509,21 @@ const NFTCreate: React.FC<{ wallet: Wallet }> = ({ wallet }) => {
             </div>
           </Checkbox>
         </Announcement>
-        {
-          account === undefined ? (
-            <CreatButton onClick={open}>
-              Connect
-            </CreatButton>
-          ) : (
-            <CreatButton onClick={ ()=>
-              createNft(form, promised)}
-            >
-              Create
-            </CreatButton>
-          )
-        }
+        <ButtonContainer>
+          {
+            account === undefined ? (
+              <Button onClick={open}>
+                Connect
+              </Button>
+            ) : (
+              <Button onClick={ ()=>
+                createNft(form, promised)}
+              >
+                Create
+              </Button>
+            )
+          }
+        </ButtonContainer>
 
         <MessageHint {...hint} />
 

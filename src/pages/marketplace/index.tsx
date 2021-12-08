@@ -34,10 +34,9 @@ const Wrapper = styled.div`
 `
 
 const Banner = styled.div`
-  width: 1200px;
-  margin: 10px 0;
+  width: 100%;
   background: url(${banner}) no-repeat center;
-  height: 300px;
+  height: 400px;
   background-size: 100%;
 `
 

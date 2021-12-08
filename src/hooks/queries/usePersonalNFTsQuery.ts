@@ -16,7 +16,6 @@ export function usePersonalNFTsQuery(params: PersonalNFTsQueryParams): UseQueryR
   return useQuery(
     ['PERSONAL_NFT', params],
     async () => {
-      if (!account) { return [] }
 
       return await personalNftList({
         ...params,

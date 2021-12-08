@@ -187,7 +187,9 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
       onSuccess: () => {
         openPurchaseTransactionSentModal()
         // closePurchaseCheckoutModal()
+        closeAuthorizingModal()
         closePurchaseWaitingConfirmationModal()
+
       }
     })
 

@@ -1,6 +1,6 @@
 import { useWeb3React } from '@web3-react/core'
 import { useCallback, useState } from 'react'
-import { FormInstance } from 'antd'
+import { FormInstance, message } from 'antd'
 import { NFTCreateForm } from '../../../pages/nftCreate/index'
 import { generateNftMetadata } from '../../../utils'
 import { getUriByIpfsHash, pinJsonToIPFS } from '../../../utils/ipfs'
@@ -24,7 +24,7 @@ type CreateNftAccountResult = {
 
 
 const useCreateNft = () => {
-  const { account } = useWeb3React()
+  const { account, library } = useWeb3React()
   const [hint, setHintMessage] = useState<Hint>({})
   const [hash, setHash] = useState('')
   const { awardItem } =  usePlanetItemContract()
@@ -32,9 +32,18 @@ const useCreateNft = () => {
 
   const signer = useSigner()
 
+
   const createNft = useCallback(
     async (formInstance: FormInstance<NFTCreateForm>, promised: boolean) => {
-      if (!signer) {
+
+      console.log(library.network)
+
+      if (library.network.chainId !== 44787) {
+        message.warn('Please manually switch to Alfajores Test Network in Celo')
+        return
+      }
+
+      if (!signer ) {
         return
       }
 
@@ -56,6 +65,11 @@ const useCreateNft = () => {
 
       const form = await formInstance.validateFields()
 
+      setHintMessage({
+        message: 'please wait, it may take a moment...',
+        type: 'hint'
+      })
+
       const nftMetadata = generateNftMetadata(form)
 
       const pinResult = await pinJsonToIPFS(nftMetadata)
@@ -75,6 +89,9 @@ const useCreateNft = () => {
       const tokenUri = getUriByIpfsHash(pinResult.IpfsHash)
 
       await awardItem(tokenUri).then(res => {
+
+        console.log(res)
+
         setHash(res.hash)
         setHintMessage({
           message: 'Your creation request has been submitted! Waiting the transaction on chain confirmed. Please DO NOT close this page now!',

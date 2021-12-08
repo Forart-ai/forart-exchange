@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 // @ts-ignore
 import styled from 'styled-components'
 import { Avatar, Image, Tabs } from 'antd'
@@ -6,7 +6,7 @@ import { useWeb3React } from '@web3-react/core'
 import { shortenAddress } from '../../utils'
 import { SmileOutlined, DollarOutlined, EditOutlined, UserOutlined, LoadingOutlined } from '@ant-design/icons'
 import { usePersonalNFTsQuery } from '../../hooks/queries/usePersonalNFTsQuery'
-import { ChainType, ForartNftTransactionStatus } from '../../apis/nft'
+import { ChainType, ForartNftTransactionStatus, personalNftList } from '../../apis/nft'
 import NFTListItem from '../../components/NFTListItem'
 
 
@@ -139,6 +139,7 @@ const UserNFTList: React.FC<any> = ({ list }) => {
 
 const TabsContainer: React.FC = () => {
 
+  const { account } = useWeb3React()
 
   const [current, setCurrent] = useState<number>(1)
 
@@ -146,9 +147,23 @@ const TabsContainer: React.FC = () => {
 
   const [, setStatus] = useState<ForartNftTransactionStatus>()
 
-  const [typeChain, setTypeChain] = useState<ChainType>('')
+  const [typeChain, setTypeChain] = useState<ChainType>('Ethereum')
 
   const { data: personalNft, isLoading } = usePersonalNFTsQuery({ current, searchKey, typeChain })
+
+  // const [personalNft, setPersonalNft] = useState<any>()
+  //
+  // const getPersonalNft = useCallback(async () => {
+  //   personalNftList({ addressOwner:account, typeChain, size:20, current, searchKey } )
+  //     .then(res=> {
+  //       setPersonalNft(res.data.data.records)
+  //       console.log(personalNft)
+  //     })
+  // }, [account])
+  //
+  // useEffect(() => {
+  //   getPersonalNft()
+  // },[getPersonalNft])
 
   const onTabChange = (key: any) => {
     console.log(key)
@@ -168,12 +183,9 @@ const TabsContainer: React.FC = () => {
           }
           key="owned"
         >
-          {
-            isLoading && <LoadingOutlined />
-          }
-          {
-            !isLoading && <UserNFTList list={personalNft} />
-          }
+
+          <UserNFTList list={personalNft} />
+
         </TabPane>
 
         <TabPane

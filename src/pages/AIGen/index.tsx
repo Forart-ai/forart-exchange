@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import styled from '@emotion/styled'
-import { Button, Image as AntdImage, Radio } from 'antd'
+import { Button, Form, Image as AntdImage, Input, Radio } from 'antd'
 import ai1 from '../../assets/images/AIGen/ai1.png'
 import ai2 from '../../assets/images/AIGen/ai2.png'
 import ai3 from '../../assets/images/AIGen/ai3.png'
@@ -8,8 +8,9 @@ import ai4 from '../../assets/images/AIGen/ai4.png'
 import ai5 from '../../assets/images/AIGen/ai5.png'
 import BannerImage from '../../assets/images/AIGen/ai-gen-banner.jpg'
 import { LoadingOutlined } from '@ant-design/icons'
-import { aiGeneratorImage } from '../../apis/ai'
+import { aiGeneratorImage, aiGeneratorImageByContent } from '../../apis/ai'
 import { base64ToIPfsUri, dictionaryToBase64 } from '../../utils'
+import { NFTCreateForm } from '../nftCreate'
 
 
 const Wrapper = styled.div`
@@ -26,13 +27,36 @@ const Wrapper = styled.div`
     color: white;
   }
 
-  @media screen and ( max-width: 1000px ){
-    padding-top: 2rem;
-    .title {
-      font-weight: 550;
-      font-size: 3rem;
-      margin-bottom: 0;
+  
+`
+
+const AIGenContent = styled(Form)`
+  width: 100%;
+  margin-top: 50px;
+`
+
+const AIGenContentItem = styled(Form.Item)`
+  
+  .ant-form-item-label > label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #02A6F5;
+  }
+
+  .ant-input {
+    &::placeholder {
+      color: #ccc;
     }
+
+    height: 36px ;
+    background: #2A2E35 !important;
+    border-radius: 10px !important;
+    border: none;
+
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    color: white !important;
+    line-height: 20px !important;
   }
 `
 
@@ -237,6 +261,10 @@ type behaviorItem = {
   behavior: string
 }
 
+export type AIGenForm = {
+  content:''
+}
+
 const ObjectItems: React.FC<{objectItems: objectItem[], onSelect:(_:string) => void}> = ({
   onSelect,
   objectItems,
@@ -357,22 +385,22 @@ const AIGen:React.FC = () => {
 
   const [behavior, setBehavior] = useState('')
 
+  const [content, setContent] = useState('')
+
   const [generating, setGenerating] = useState(false)
 
   const [resultImageSrc, setResultImageSrc] = useState(Array<any>())
+
+  const [form] = Form.useForm<AIGenForm>()
+
+  const formInitialValues: AIGenForm = {
+    content: ''
+  }
 
   const generate = useCallback(async () => {
     console.log(object, accessories, behavior)
     setGenerating(true)
     const result = await aiGeneratorImage(object, accessories, behavior)
-    // const result = await fetch('http://175.27.190.185:8898/genImage', {
-    //   method: 'post',
-    //   body: JSON.stringify({
-    //     object,
-    //     accessories,
-    //     behavior
-    //   })
-    // })
     const uris = dictionaryToBase64(result.data)
     setResultImageSrc(uris)
     setGenerating(false)
@@ -382,8 +410,16 @@ const AIGen:React.FC = () => {
   [object, accessories, behavior]
   )
 
+  const generateByContent = useCallback(async form => {
+    const content = form.getFieldsValue().content
+    setGenerating(true)
+    console.log(content)
+    const result = await aiGeneratorImageByContent(content)
 
-
+    return
+  },
+  [form]
+  )
 
   return (
     <Wrapper >
@@ -421,15 +457,32 @@ const AIGen:React.FC = () => {
           </SampleImg>
         </SampleMain>
       </SampleContent>
-      <ObjectItems objectItems={objectMap} onSelect={v => setObject(v)} />
+      {/*<ObjectItems objectItems={objectMap} onSelect={v => setObject(v)} />*/}
 
-      <AccessoriesItems accessoriesItems={accessoriesMap} onSelect={ v => setAccessories(v) } />
+      {/*<AccessoriesItems accessoriesItems={accessoriesMap} onSelect={ v => setAccessories(v) } />*/}
 
-      <BehaviorItems behaviorItems={behaviorMap} onSelect={ v => setBehavior(v) } />
+      {/*<BehaviorItems behaviorItems={behaviorMap} onSelect={ v => setBehavior(v) } />*/}
 
-      <StyledButton onClick={ generate } >
+      <AIGenContent form={form} colon={false} layout="horizontal" initialValues={formInitialValues} >
+        <AIGenContentItem
+          name="content"
+          label="content"
+          rules={[{ required: true, message: 'Content is Required!' }]}
+        >
+          <Input placeholder="Please enter a content" />
+        </AIGenContentItem>
+      </AIGenContent>
+
+      {/*<StyledButton onClick={ generate } >*/}
+      {/*  {*/}
+      {/*    !generating ? 'Generate Now!' :*/}
+      {/*      'Generating...'*/}
+      {/*  }*/}
+      {/*</StyledButton>*/}
+
+      <StyledButton onClick={ () => generateByContent(form) } >
         {
-          !generating ? 'Generate Now!' :
+          !generating ? 'Generate Now-!' :
             'Generating...'
         }
       </StyledButton>

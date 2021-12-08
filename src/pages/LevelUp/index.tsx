@@ -331,7 +331,6 @@ const NewNFTContainer:React.FC<{ newNFTSrc: string, generating: boolean }> = ({ 
 }
 
 const AIGeneration:React.FC = () => {
-  const [styleList, setStyleList] = useState<any>()
 
   const [generating, setGenerating] = useState(false)
 
@@ -341,19 +340,16 @@ const AIGeneration:React.FC = () => {
 
   const [newNFT, setNewNFT] = useState('')
 
-  const { data: styledNFTs } = useStyledNFTsQuery()
+  const { data: nftList } = useStyledNFTsQuery(1)
 
-  const { data: nftList } = useNFTsQuery({
-    current: 1,
-    size: 10,
-    searchKey:'',
-    transactionStatus: 0,
-    typeChain:'Ethereum'
-  })
+  const { data: styleList } = useStyledNFTsQuery(0)
+
+  console.log(style,content)
+
 
   const contentNft = useMemo(() => {
-    return  nftList?.records.map( value => ({
-      image: value.image
+    return  nftList?.map( value => ({
+      image: value.url
     }
     ))
   },[nftList])
@@ -375,9 +371,9 @@ const AIGeneration:React.FC = () => {
     return uri
   },[style,content])
 
-  useEffect(() => {
-    setStyleList(styledNFTs)
-  },[styledNFTs])
+  // useEffect(() => {
+  //   setStyleList(styledNFTs)
+  // },[styledNFTs])
 
 
   return (
@@ -398,7 +394,7 @@ const AIGeneration:React.FC = () => {
           <SelectableNFTList
             selectedValue={style}
             onSelect={v=> setStyle(v)}
-            list={styleList?.map((style: { image: any}) => style?.image)}
+            list={styleList?.map((style: { url: any}) => style?.url)}
           />
 
           <SubTitle>Content</SubTitle>

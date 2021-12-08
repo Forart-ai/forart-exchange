@@ -10,13 +10,14 @@ import Sider from 'antd/es/layout/Sider'
 // @ts-ignore
 import { Route } from 'react-router-dom'
 import routes from './routes'
-import { useEagerConnect } from './web3/hooks'
+import { useChainEffect, useEagerConnect } from './web3/hooks'
 import '../src/font/font.css'
 
 
 
 function App() {
   useEagerConnect()
+  useChainEffect()
   return (
     <Layout className="app">
       <AppHeader />
