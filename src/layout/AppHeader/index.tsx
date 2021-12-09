@@ -4,6 +4,8 @@ import ForartLogo from '../../assets/images/header/logo.png'
 import Wallet from '../../components/wallet'
 import UserIcon from '../../assets/images/header/user.svg'
 import { useHistory } from 'react-router-dom'
+import { MenuFoldOutlined, QuestionCircleFilled } from '@ant-design/icons'
+
 
 const AppHeaderContent = styled.div`
   width: 100%;
@@ -20,10 +22,15 @@ const AppHeaderContent = styled.div`
   
 `
 const Logo = styled.div`
-  width: 130px;
+  width: 200px;
   height: 68px;
-  img {
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img{
+    position: relative;
+    width: 120px;
   }
 `
 
@@ -40,13 +47,22 @@ const Operator = styled.div`
   }
 `
 
-const AppHeader:React.FC = () => {
+const AppHeader:React.FC <{ onCollapseChanged: () => void }> = ({ onCollapseChanged }) => {
   const history = useHistory()
 
   return (
     <AppHeaderContent>
       <Logo>
-        <img src={ForartLogo} />
+        <MenuFoldOutlined
+          onClick={onCollapseChanged}
+          style={{
+            position: 'relative',
+            fontSize: '20px',
+            color: '#B2B2B2',
+            marginRight: '15px'
+          }}
+        />
+        <img src={ForartLogo}  />
       </Logo>
       <Operator>
         <Wallet />

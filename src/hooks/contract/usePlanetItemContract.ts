@@ -14,7 +14,6 @@ const usePlanetItemContract = () => {
   const signer = useSigner()
 
   const contract = useMemo( ()=> {
-    console.log(account, signer)
 
     if (!account || !signer) {
       return undefined

@@ -11,8 +11,8 @@ const PurchaseTransactionSentModal = styled(Modal)`
   }
 
   .ant-modal-content {
-    width: 660px;
-    height: 450px;
+    width: 500px;
+    height: 350px;
     background-color: #282c34;!important;
     border-radius: 10px;
   }
@@ -24,14 +24,15 @@ const PurchaseTransactionSentModal = styled(Modal)`
 
   .body {
     display: flex;
+    height: 100%;
     flex-direction: column;
     align-items: center;
 
     .title {
+      margin-top: 50px;
       font-size: 26px;
       font-weight: 550;
       color: white;
-      margin-top: 120px;
       margin-bottom: 30px;
     }
 
@@ -39,6 +40,8 @@ const PurchaseTransactionSentModal = styled(Modal)`
       font-size: 18px;
       font-weight: 500;
       color: #00EBA4;
+      margin-bottom: 30px;
+
     }
   }
 

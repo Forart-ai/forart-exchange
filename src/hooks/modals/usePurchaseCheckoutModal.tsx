@@ -7,6 +7,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
 import { useModal } from '../useModal'
 import useCheckBalance from '../contract/service/useCheckBalance'
+import CeloIcon from '../../images/wallet/celo.svg'
 
 const PurchaseCheckoutModal = styled(Modal)`
   display: flex;
@@ -22,11 +23,13 @@ const PurchaseCheckoutModal = styled(Modal)`
   }
 
   .ant-modal-body,
-  .ant-modal-header{
-    background-color: #2A2E35; !important;
+  .ant-modal-header {
+    background-color: #2A2E35;
+  !important;
     width: 900px;
 
   }
+
   .ant-modal-header {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -45,6 +48,7 @@ const PurchaseCheckoutModal = styled(Modal)`
     display: flex;
     justify-content: space-between;
     color: #00EBA4;
+
     p {
       font-size: 24px;
       font-weight: 550;
@@ -60,7 +64,6 @@ const PurchaseCheckoutModal = styled(Modal)`
     .ntf-info {
       display: flex;
       width: 100%;
-
 
 
       .nft-image {
@@ -84,12 +87,13 @@ const PurchaseCheckoutModal = styled(Modal)`
           color: #00EBA4;
         }
 
-        .nft-name {
-          font-size: 18px;
-          font-weight: 550;
-          line-height: 2.5rem;
-          color: #00EBA4;
-
+        .description {
+          height: 100px;
+          font-size: 16px;
+          line-height: 18px;
+          color: #dae0de;
+          overflow-y: scroll;
+          padding: 5px 0;
         }
       }
     }
@@ -155,7 +159,7 @@ const PurchaseCheckoutModal = styled(Modal)`
     display: flex;
     justify-content: center;
     margin-top: 20px;
-    
+
 
     .ant-btn > span {
       font-weight: bolder;
@@ -215,7 +219,6 @@ export const usePurchaseCheckoutModal = (nftDetail: any, checkoutPassed: () => v
     setChecking(true)
     const  res =  await checkBalance(nftDetail)
     if (res) {
-      console.log(res)
       checkoutPassed()
     }
   }
@@ -239,12 +242,12 @@ export const usePurchaseCheckoutModal = (nftDetail: any, checkoutPassed: () => v
           <img className="nft-image" src={nftDetail?.image} alt="" />
           <div className="nft-detail">
             <div className="artist-name">{nftDetail?.name}</div>
-            <div className="nft-name">{nftDetail?.description}</div>
+            <div className="description">{nftDetail?.description}</div>
           </div>
         </div>
         <div className="nft-value">
           <div className="nft-price">
-            {/*<ETHIcon />*/}
+            <img src={CeloIcon} width={35} />
             {nftDetail?.price ? nftDetail?.price : '---'}
           </div>
           <div className="nft-price-dollar">( $ - )</div>
@@ -255,7 +258,7 @@ export const usePurchaseCheckoutModal = (nftDetail: any, checkoutPassed: () => v
         <div className="total">Total</div>
         <div className="nft-value">
           <div className="nft-price">
-            {/*<ETHIcon />*/}
+            <img src={CeloIcon} width={35} />
             {nftDetail?.price ? nftDetail?.price : '- - -'}
           </div>
           <div className="nft-price-dollar">( $ - )</div>

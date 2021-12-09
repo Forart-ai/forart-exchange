@@ -84,6 +84,7 @@ const StyledButton = styled(Button)`
   font-weight: bolder;
   border-radius: 10px;
 `
+
 const NFTCreateContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -166,7 +167,6 @@ const marketplace: React.FC = () => {
 
   const [selectedStatus, setSelectedStatus] = useState<ForartNftTransactionStatus | undefined>()
 
-
   const [size, setSize] = useState(20)
 
   const { data: pagingData, isLoading } = useNFTsQuery({
@@ -176,8 +176,6 @@ const marketplace: React.FC = () => {
     transactionStatus: selectedStatus,
     typeChain: 'Ethereum'
   })
-
-  console.log(pagingData)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -191,9 +189,6 @@ const marketplace: React.FC = () => {
   const onPressEnter = (res: any) => {
     setSearchKey(res.target.attributes[2].value)
   }
-
-
-  console.log(pagingData)
 
   return (
     <Wrapper>

@@ -34,7 +34,8 @@ import { NFTDetail } from '../../types/NFTDetail'
 import { shortenAddress } from '../../utils'
 import copy from 'copy-to-clipboard'
 import { CopyOutlined } from '@ant-design/icons'
-import Heart from '../../assets/images/marketplace/like.png'
+import Heart from '../../assets/images/marketplace/heart.svg'
+import Heart_Fill from '../../assets/images/marketplace/heart_fill.svg'
 import Show from '../../assets/images/marketplace/view.svg'
 import more1 from '../../assets/images/marketplace/more1.jpg'
 import more2 from '../../assets/images/marketplace/more2.jpg'
@@ -46,7 +47,7 @@ import { useWeb3React } from '@web3-react/core'
 import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import moment from 'moment'
 import ThemeTable from '../../styles/ThemeTable'
-import { getNftFavoriteCount } from '../../apis/nft'
+import { getNftFavoriteCount, setNftFavorite } from '../../apis/nft'
 import { useNFTLikeQuery } from '../../hooks/queries/useNFTLikeQuery'
 import CodingFlagIcon from '../../assets/images/marketplace/coding-flag.png'
 import { useSellingModal } from '../../hooks/useSellingModal'
@@ -181,15 +182,14 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
       nftDetail,
       account: account!,
       onAuthorized: () => {
-        closeAuthorizingModal()
+        openAuthorizingModal()
         openPurchaseWaitingConfirmationModal()
       },
       onSuccess: () => {
-        openPurchaseTransactionSentModal()
-        // closePurchaseCheckoutModal()
+        //closePurchaseCheckoutModal()
         closeAuthorizingModal()
         closePurchaseWaitingConfirmationModal()
-
+        openPurchaseTransactionSentModal()
       }
     })
 
@@ -232,6 +232,27 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
     onStart: openAuthorizingModal
   })
 
+  const [isHeart, setHeart] = useState<boolean>(false)
+
+  const [favorite, setFavorite] = useState<number>(nftViewAndFavorite?.favorite ?? 0)
+
+  const handleLike = () => {
+    if (!nftDetail){
+      return
+    }
+
+    if (isHeart) {
+      setFavorite(favorite)
+    } else {
+      setNftFavorite(nftDetail?.valueUri)
+      console.log('e')
+      setFavorite(favorite+1)
+      setHeart(true)
+    }
+  }
+
+
+
 
   return (
     <NFTBaseInfoContainer>
@@ -239,8 +260,24 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
         <TopBaseInfo>
           <div className="nft-name"> { nftDetail?.name }</div>
           <div className="nft-view">
-            <img src={Show} /> {nftViewAndFavorite?.view}
+            <div> <img src={Show} /> {nftViewAndFavorite?.view}</div>
+            <div className="like"
+              onClick={ handleLike}
+            >
+              {
+                nftDetail && (
+                  isHeart ?
+                    <img src={Heart_Fill} />
+                    :
+                    <img src={Heart} />
+                )
+              }
+              {favorite}
+            </div>
           </div>
+
+
+
         </TopBaseInfo>
 
         <CenterInfo>
@@ -336,6 +373,8 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
       { purchaseTransactionSentModal}
       { authorizingModal }
       { sellingModal }
+      { purchaseWaitingConfirmationModal}
+      { purchaseBlockedModal}
     </NFTBaseInfoContainer>
   )
 

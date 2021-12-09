@@ -266,8 +266,6 @@ const SelectableNFTList: React.FC<{selectedValue:string, onSelect:(_: string) =>
       slidesPerView={5}
       navigation
       spaceBetween={20}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={swiper => console.log(swiper)}
     >
       {
         list?.map((item,key) => (
@@ -344,7 +342,6 @@ const AIGeneration:React.FC = () => {
 
   const { data: styleList } = useStyledNFTsQuery(0)
 
-  console.log(style,content)
 
 
   const contentNft = useMemo(() => {

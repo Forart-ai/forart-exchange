@@ -114,6 +114,8 @@ const usePurchaseByFixedPrice = () => {
 
       const signature = await sign.signMessage(ethers.utils.arrayify(hashExchangeOrder(buyOrder)))
 
+      onAuthorized()
+
       console.log(signature)
 
       await matchSingle(sellOrder,

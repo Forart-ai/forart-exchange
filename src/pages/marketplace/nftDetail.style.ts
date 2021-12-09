@@ -113,12 +113,22 @@ export const TopBaseInfo = styled.div`
     padding: 2px 6px;
     border-radius: 20px;
     display: flex;
+    height: 100%;
     align-items: center;
+    justify-content: space-between;
     font-size: 16px;
     color: #F9F9F9;
+    width: 130px;
     
     img {
       width: 30px;
+    }
+    
+    .like {
+      cursor: pointer;
+     img{
+       width: 25px;
+     }
     }
   }
 
@@ -132,8 +142,8 @@ export const CenterInfo = styled.div`
 
   .description {
     color: #F9F9F9;
-    height: 90px;
-    padding: 5px;
+    height: 10%;
+    padding: 5px 10px;
     overflow-y: scroll;
     font-size: 16px;
     font-weight: normal;
@@ -141,6 +151,9 @@ export const CenterInfo = styled.div`
     margin-top: 10px;
     background-color: #2A2E35;
     border-radius: 10px;
+    //overflow: hidden;
+    //text-overflow: ellipsis;
+    //white-space: nowrap;
   }
 
   .text {

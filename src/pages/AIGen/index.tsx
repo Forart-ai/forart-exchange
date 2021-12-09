@@ -121,7 +121,7 @@ align-items: center;
   .enter {
     width: 200px;
     color: #02A6F5;
-    font-size: 25px;
+    font-size: 22px;
     red: left;
   }
 
@@ -147,7 +147,7 @@ const SampleImg = styled.div`
   .enter {
     width: 200px;
     color: #02A6F5;
-    font-size: 24px;
+    font-size: 22px;
     text-align: left;
     margin-right: 30px;
   }
@@ -196,10 +196,10 @@ const StyledButton = styled(Button)`
   height: 40px;
   border: none;
   color: white;
-  font-weight: bolder;
   border-radius: 10px;
   margin-left: calc((100% - 150px) / 2) ;
   margin-top: 20px;
+  font-size: 16px;
   
 `
 

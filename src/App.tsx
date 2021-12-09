@@ -12,51 +12,30 @@ import { Route } from 'react-router-dom'
 import routes from './routes'
 import { useChainEffect, useEagerConnect } from './web3/hooks'
 import '../src/font/font.css'
+import { useDispatch } from 'react-redux'
+import { setSideBarCollapsed, useSideBarCollapsed } from './store/app'
 
 
 
-function App() {
+const App: React.FC = () => {
   useEagerConnect()
   useChainEffect()
+
+  const dispatch = useDispatch()
+  const sideBarCollapsed = useSideBarCollapsed()
+
+  const toggleCollapsed = () => {
+    dispatch(setSideBarCollapsed(!sideBarCollapsed))
+  }
+
   return (
     <Layout className="app">
-      <AppHeader />
+      <AppHeader onCollapseChanged={toggleCollapsed} />
       <Layout>
-        {/* <Layout.Sider
-          style={{
-            position: 'fixed',
-            zIndex: 99,
-            top: '64px'
-          }}
-        >
-          <AppSideBar />
-        </Layout.Sider>
-        <Layout.Content
-          style={{
-            backgroundColor: '#0B111E',
-            position: 'relative',
-            left: '200px',
-            width:'fit-content'
-          }}
-        >
-          <div
-            style={{ width: 'calc(100vw - 200px)' }}
-          >
-            {
-              routes.map((route: any) => (
-                <Route path={route.path}
-                  exact
-                  component={route.component}
-                  key={route.path}
-                />
-              ))
-            }
-          </div>
-        </Layout.Content>*/}
         <Layout>
-          <Sider width="220px">
+          <Layout.Sider width="200px" collapsed={sideBarCollapsed}>
             <AppSideBar />
-          </Sider>
+          </Layout.Sider>
           <Content style={{ display: 'flex', width:'calc(100vw - 220px)', backgroundColor:'#1c1c1d', position:'relative',top: '60px' }}>
             {
               routes.map((router:any) => (

@@ -69,6 +69,12 @@ export function personalNftList(data: ForartPersonalNftListQueryParams) {
   return forartRequest.post<ForartApiResponseBody<any>>('/marketplace/nft/personal/list', data)
 }
 
+
+// type: 0 => style; 1 => content
 export function getContentList(type: number) {
   return forartRequest.get<ForartApiResponseBody<any>>(`/style/list/${type}`)
+}
+
+export function setNftFavorite(uri: string | undefined) {
+  return forartRequest.get<ForartApiResponseBody<any>>(`/marketplace/view/favorite/${uri}`)
 }

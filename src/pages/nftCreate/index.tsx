@@ -516,9 +516,7 @@ const NFTCreate: React.FC<{ wallet: Wallet }> = ({ wallet }) => {
                 Connect
               </Button>
             ) : (
-              <Button onClick={ ()=>
-                createNft(form, promised)}
-              >
+              <Button onClick={ ()=> createNft(form, promised)} disabled={creating}>
                 Create
               </Button>
             )

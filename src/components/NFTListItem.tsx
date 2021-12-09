@@ -146,12 +146,12 @@ const NFTListItem: React.FC<{ data?: NftListItem, type?: 'nftList' | 'own', empt
   const [loading, setLoading] = useState(true)
 
   const [isHeart, setHeart] = useState<boolean>(false)
+
   const [favorite, setFavorite] = useState<number>(data?.favorite ?? 0)
 
 
   const getImageUrl = useCallback(() => {
     const url = data?.image ?? data?.thumbnail?? ''
-
     return url
   }, [data])
 

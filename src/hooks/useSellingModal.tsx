@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useModal } from './useModal'
 // @ts-ignore
 import styled from 'styled-components'
-import { Button, Checkbox, Form, Input, Modal, Select } from 'antd'
+import { Button, Checkbox, Form, Input, InputNumber, Modal, Select } from 'antd'
 import clsx from 'clsx'
 import useNFTSell from './contract/service/useNFTSell'
 import { useAuthorizingModal } from './modals/useAuthorizingModal'
@@ -102,7 +102,26 @@ const StyledForm = styled(Form)`
     .ant-input-group {
       width: 100%;
     }
+    
+    .ant-input-number {
+      background-color: #2A2E35;
+      width: 150px;
+      color: white;
+      font-size: 14px;
+      border: 1px #00EBA4 solid;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
 
+    .ant-input-number-handler-up,  .ant-input-number-handler-down {
+      background-color: #2A2E35;
+      border: none;
+      
+      span {
+        color: #fff;
+      }
+    }
+    
     .ant-select-selector {
       width: 100px;
       display: flex;
@@ -152,11 +171,13 @@ const Announcement = styled.div`
     width: 100%;
     font-size: 15px;
     color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
   }
 `
 
 export const StyledButton = styled(Button)`
-  margin-top: 30px;
   width: 100%;
   background-image: linear-gradient(to right, #00EBA4, #02A6F5);
   border: none;
@@ -268,7 +289,10 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
                 <Select.Option value= "Celo"> Celo </Select.Option>
               </Select>
               <Form.Item name="price">
-                <Input />
+                <InputNumber
+                  formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+                />
               </Form.Item>
             </Input.Group>
           </div>
@@ -281,7 +305,11 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
             <div className="text">
               Listing is free! At the time of the sale, the following fees will be decucted.
             </div>
-            <div className="text">Total fees -------------------------------------------------------- 2%</div>
+            <div className="text">
+              <div>Total fees</div>
+              <div> 2%</div>
+
+            </div>
           </Checkbox>
           <StyledButton onClick={ onListingButtonClicked }>Listing</StyledButton>
         </Announcement>

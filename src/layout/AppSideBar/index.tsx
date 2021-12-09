@@ -2,7 +2,7 @@ import React from 'react'
 // @ts-ignore
 import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu } from 'antd'
+import { Affix, Menu } from 'antd'
 import routes, { Route } from '../../routes'
 import TwitterIcon from '../../assets/images/contactLink/twitter.png'
 import TelegramIcon from '../../assets/images/contactLink/telegram.png'
@@ -12,9 +12,8 @@ import DiscordIcon from '../../assets/images/contactLink/discord.png'
 const AppSideBarContent = styled.div`
   height: 100%;
   min-height: 100vh;
-  padding-left: 20px;
+  padding-left: 10px;
   background: #04111D;
-  font-weight: bold;
   position: relative;
   border-right: 1px solid #262531;
   z-index: 99;
@@ -30,8 +29,8 @@ const AppSideBarContent = styled.div`
 `
 
 const CustomizedMenu = styled(Menu)`
-  
-  
+  height: 80vh;
+  position: relative;
   
   .ant-menu-item {
     display: flex;
@@ -40,7 +39,7 @@ const CustomizedMenu = styled(Menu)`
     border-top-left-radius: 20px;
 
     svg {
-      width: 1.7rem;
+      width: 10px;
 
       line {
         shape-rendering: crispEdges;
@@ -70,24 +69,34 @@ const CustomizedMenu = styled(Menu)`
     align-items: center;
     img {
       width: 18px;
-      margin-right: 10px;
+      margin-right: 25px;
     }
   }
   
 `
 
+const StyledMenuItem = styled(Menu.Item)`
+
+
+`
+
 const LinkContainer = styled.div`
   position: fixed;
-  width: 200px;
-  height: 50px;
-  bottom: 50px;
+  width: 69px;
+  height: 150px;
+  bottom: 40px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   align-items: center;
 `
+
+
 const SCExternalLink = styled.a`
+  width: 40px;
   img {
-    width: 30px;
+    width: 25px;
   }
   `
 
@@ -118,12 +127,12 @@ const AppSideBar:React.FC = () => {
             const fillColor = (route.path === pathname || route.match?.test(pathname)) ? 'white' : '#fff'
 
             return (
-              <Menu.Item key={route.path} disabled={route.disable} >
-                <img src={route.icon} className="menu-icon" />
+              <StyledMenuItem key={route.path} disabled={route.disable} >
+                <img src={route.icon} className="menu-icon" width={20} />
                 <Link to={route.path}>
                   {route.title}
                 </Link>
-              </Menu.Item>
+              </StyledMenuItem>
             )
           })
         }
@@ -132,9 +141,12 @@ const AppSideBar:React.FC = () => {
       <LinkContainer >
         {
           EXTERNAL_LINKS.map(({ icon,link }) => (
+
             <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
               <img src={icon} alt={link} />
             </SCExternalLink>
+
+
           ))
         }
       </LinkContainer>
