@@ -14,6 +14,7 @@ import { LoadingOutlined, SearchOutlined } from '@ant-design/icons'
 import { ThemeInput } from '../../styles/ThemeInput'
 import { ForartNftTransactionStatus } from '../../apis/nft'
 import {  StatusSelector } from '../../components/NFTListSelectors/index'
+import { useMediaQuery } from 'react-responsive'
 
 
 
@@ -24,10 +25,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   color: #97BCF6;
+  margin-bottom: 70px;
+  min-height: 100vh;
 
-  @media screen and (min-width: 300px) and (max-width: 600px) {
+  @media screen and  (max-width: 1100px) {
     width: 100vw !important;
-    height: 200vh;
     background-color: #0B111E;
     padding: 0;
   }
@@ -35,9 +37,16 @@ const Wrapper = styled.div`
 
 const Banner = styled.div`
   width: 100%;
-  background: url(${banner}) no-repeat center;
-  height: 400px;
-  background-size: 100%;
+  height: 300px; 
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}  
+  @media screen and (max-width: 1100px) {
+    height: 100px;
+  }
 `
 
 const Title = styled.div`
@@ -48,6 +57,10 @@ const Title = styled.div`
   -webkit-text-fill-color: transparent;
   margin-top: 10px;
   margin-bottom: 30px;
+  
+  @media screen and (max-width: 1100px) {
+    font-size: 26px;
+  }
 `
 
 const NFTListContainer = styled.div`
@@ -78,11 +91,14 @@ const NFTListContainer = styled.div`
 
 const StyledButton = styled(Button)`
   background-image: linear-gradient(to right, #00EBA4, #02A6F5);
-  height: 40px;
   border: none;
   color: white;
-  font-weight: bolder;
   border-radius: 10px;
+
+  @media screen and (max-width: 1100px) {
+    width: 90vw;
+
+  }
 `
 
 const NFTCreateContainer = styled.div`
@@ -94,6 +110,22 @@ const NFTCreateContainer = styled.div`
   .filter {
     display: flex;
     width: fit-content;
+    height: 35px;
+
+  }
+  
+  @media screen and (max-width: 1100px) {
+    width: 90%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    
+    .filter {
+      justify-content: space-between;
+      margin-top: 10px;
+      width: 90vw;
+    }
+    
   }
 `
 
@@ -177,6 +209,8 @@ const marketplace: React.FC = () => {
     typeChain: 'Ethereum'
   })
 
+  const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [pagingData])
@@ -192,8 +226,11 @@ const marketplace: React.FC = () => {
 
   return (
     <Wrapper>
-      <Banner />
+      <Banner>
+        <img src={banner} />
+      </Banner>
       <Title>NFT Marketplace</Title>
+
       <NFTCreateContainer>
         <div className="button">
           <StyledButton onClick={() => history.push('/NFTCreate')}>NFT Create</StyledButton>
@@ -202,7 +239,7 @@ const marketplace: React.FC = () => {
           <ThemeInput
             onPressEnter={onPressEnter}
             prefix={<SearchOutlined style={{ color: 'white', width: '15px' }} />}
-            style={{ marginRight: '20px' }}
+            style={ isMobile? { marginRight:'20px' }: { marginRight: '20px' }}
           />
           <StatusSelector onChange={setSelectedStatus} />
         </div>

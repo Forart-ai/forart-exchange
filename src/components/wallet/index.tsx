@@ -48,13 +48,18 @@ const StyledWallet = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 2rem;
+  border-radius: 30px;
   border: 2px solid #02A6F5;
   box-sizing: border-box;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0 5px;
   margin-right: 20px;
   cursor: pointer;
+  
+  @media screen and (max-width: 1100px) {
+    height: 35px;
+    font-size: 12px;
+    margin-right: 10px;
+  }
 `
 
 const CurrentAccountContainer = styled.div`
@@ -63,6 +68,10 @@ const CurrentAccountContainer = styled.div`
   user-select: none;
   align-items: center;
   justify-content: center;
+  
+  @media screen and (max-width: 1100px) {
+    font-size: 14px;
+  }
 `
 
 const BalanceContainer = styled.div`

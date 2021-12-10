@@ -5,26 +5,44 @@ import solana from '../../assets/images/home/solana.svg'
 import eth from '../../assets/images/home/eth.png'
 import celo from '../../assets/images/home/celo.png'
 import { useHistory } from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
 
 
 const HomePage = styled.div`
   width: 100%;
   min-height: 1000px;
+ 
+
+  @media screen and  (max-width: 1100px) {
+    width: 100vw !important;
+    min-height: 1200px;
+  }
 `
 
 const BannerContent = styled.div`
   width: 100%;
+  height: 300px;
   display: flex;
   justify-content: center;
-  background: url(${banner}) no-repeat center;
-  height: 300px;
-  background-size: 100%;
+
+  
+  @media screen and (max-width: 1100px) {
+    height: 150px;
+   img {
+     width: 100%;
+     height: 100%;
+     object-fit: contain;
+     
+   }
+  }
   
  
 `
 
 const Built = styled.div`
   color: white;
+  width: 100%;
+  flex-wrap: wrap;
   font-size: 30px;
   display: flex;
   justify-content: center;
@@ -67,15 +85,48 @@ const Built = styled.div`
       margin-right: 10px;
     }
   }
+  
+  @media screen and (max-width: 1100px) {
+    
+    .celo, .eth {
+      font-size: 18px;
+    }
+    
+    img {
+      margin: 0 10px;
+    }
+
+    img:nth-of-type(1) {
+      height: 20px;
+    }
+    
+  }
+`
+
+const HomePageContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
 `
 
 const Content = styled.div`
   width: 1200px;
-  margin-left: calc((100% - 1200px) / 2);
   margin-top: 20px;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: flex-start;
+
+  
+  @media screen and (max-width: 1100px) {
+    width: 100vw;
+  }
+
+
+
 `
 
 const Title = styled.div`
@@ -85,13 +136,29 @@ const Title = styled.div`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   padding-bottom: 20px;
+
+  @media screen and (max-width: 1100px) {
+    text-align: center;
+    width: 100%;
+    font-size: 32px;
+  }
 `
 
 const GamingPools = styled.div`
+  width: 100%;
   padding: 0 80px;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;  
+  flex-wrap: wrap;
+
+
+  @media screen and (max-width: 1100px) {
+    padding: 0 20px;
+  }
+
+
+
+
 `
 
 const PoolsItem = styled.div`
@@ -121,17 +188,7 @@ const PoolsItem = styled.div`
     transition-delay: 0.1s;
   }
 
-  //&:before {
-  //  content: '';
-  //  width: 100%;
-  //  height: 100%;
-  //  position: absolute;
-  //  //background: linear-gradient(90deg,#02A6F5,#00EBA4,#000000);
-  //  //background: linear-gradient(90deg,#4D3AE9,#8BD2ED);
-  //  opacity: 1;
-  //  left: 0;
-  //  top: 0;
-  //}
+ 
 `
 
 const PoolsTitle = styled.div`
@@ -139,7 +196,6 @@ const PoolsTitle = styled.div`
   padding: 10px 15px;
   font-size: 30px;
   color: white;
-  font-weight: bold;
   text-shadow: 2px 3px 5px #282c34;
 `
 
@@ -208,59 +264,69 @@ const Home:React.FC = () => {
   const toPath = (pathName: string | undefined) => {
     history.push(`${pathName}`)
   }
+  const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
+
+
 
   return (
     <HomePage>
-      <BannerContent />
-      <Built>
-        <span>Built on</span>
-        <div className="celo"><img src={celo} />Celo</div>
-        <img src={solana} style={{ width:'145px' }} />
-        <div className="eth"><img src={eth} />Ethereum</div>
-      </Built>
-      <Content>
-        <Title>
-          Gaming Pools
-        </Title>
-        <GamingPools>
-          {/*{*/}
-          {/*  gamingPools.map((item, index) => (*/}
-          {/*    <PoolsItem*/}
-          {/*      key={index}*/}
-          {/*      style={{ background: item.background }}*/}
-          {/*      onClick={() => toPath(item?.path)}*/}
-          {/*    >*/}
-          {/*      <PoolsTitle>*/}
-          {/*        {item.title}*/}
-          {/*      </PoolsTitle>*/}
-          {/*      <PoolsText>*/}
-          {/*        {item.text}*/}
-          {/*      </PoolsText>*/}
-          {/*    </PoolsItem>*/}
-          {/*  ))*/}
-          {/*}*/}
+      <BannerContent>
+        <img src={banner} />
+      </BannerContent>
 
-          <PoolsItem >
-            <PoolsTitle>NFT+Defi+AI</PoolsTitle>
-            <PoolsTitle>Coming Soon!</PoolsTitle>
-          </PoolsItem>
+      <HomePageContainer>
+        <Built>
+          { !isMobile && <span>Built on</span> }
 
-          <PoolsItem>
-            <PoolsTitle>Style Transferred NFT</PoolsTitle>
-          </PoolsItem>
+          <div className="celo"><img src={celo} />Celo</div>
+          <img src={solana} style={isMobile ? { width:'100px' }: { width:'140px' } } />
+          <div className="eth"><img src={eth} />Ethereum</div>
+        </Built>
 
-          <PoolsItem>
-            <PoolsTitle>GAN-Driven NFT Generation</PoolsTitle>
-          </PoolsItem>
+        <Content>
+          <Title>
+            Gaming Pools
+          </Title>
+          <GamingPools>
+            {/*{*/}
+            {/*  gamingPools.map((item, index) => (*/}
+            {/*    <PoolsItem*/}
+            {/*      key={index}*/}
+            {/*      style={{ background: item.background }}*/}
+            {/*      onClick={() => toPath(item?.path)}*/}
+            {/*    >*/}
+            {/*      <PoolsTitle>*/}
+            {/*        {item.title}*/}
+            {/*      </PoolsTitle>*/}
+            {/*      <PoolsText>*/}
+            {/*        {item.text}*/}
+            {/*      </PoolsText>*/}
+            {/*    </PoolsItem>*/}
+            {/*  ))*/}
+            {/*}*/}
 
-          <PoolsItem>
-            <PoolsTitle>AI-Driven Tool Kit to mint NFTs</PoolsTitle>
-            <PoolsTitle>Coming Soon!</PoolsTitle>
-          </PoolsItem>
+            <PoolsItem >
+              <PoolsTitle>NFT+Defi+AI</PoolsTitle>
+              <PoolsTitle>Coming Soon!</PoolsTitle>
+            </PoolsItem>
+
+            <PoolsItem>
+              <PoolsTitle>Style Transferred NFT</PoolsTitle>
+            </PoolsItem>
+
+            <PoolsItem>
+              <PoolsTitle>GAN-Driven NFT Generation</PoolsTitle>
+            </PoolsItem>
+
+            <PoolsItem>
+              <PoolsTitle>AI-Driven Tool Kit to mint NFTs</PoolsTitle>
+              <PoolsTitle>Coming Soon!</PoolsTitle>
+            </PoolsItem>
 
 
-        </GamingPools>
-      </Content>
+          </GamingPools>
+        </Content>
+      </HomePageContainer>
     </HomePage>
   )
 }

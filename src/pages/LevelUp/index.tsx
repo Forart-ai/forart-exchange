@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import { useStyledNFTsQuery } from '../../hooks/queries/useStyledNFTsQuery'
-import { useNFTsQuery } from '../../hooks/queries/useNFTsQuery'
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
 import { Button, Checkbox, Image as AntdImage, Popover } from 'antd'
 import SwiperCore, { EffectCoverflow, Navigation, Pagination } from 'swiper'
@@ -17,9 +16,8 @@ import ResultEx from '../../assets/images/aiGenerator/resultEx.jpg'
 import { LoadingOutlined } from '@ant-design/icons'
 import { aiGeneratorStyle } from '../../apis/ai'
 import {  base64ToIPfsUri } from '../../utils'
-import useCreateNft from '../../hooks/contract/service/useNftCreate'
-import { useWeb3React } from '@web3-react/core'
 import { useHistory } from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
 
 
 SwiperCore.use([Navigation, EffectCoverflow, Pagination])
@@ -28,15 +26,26 @@ SwiperCore.use([Navigation, EffectCoverflow, Pagination])
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 1800px;
-  margin: 0 auto;
+  height: fit-content;
   display: flex;
   justify-content: center;
-  align-items: center;
+
+  @media screen and  (max-width: 1100px) {
+    width: 100vw !important;
+    background-color: #0B111E;
+    padding: 0;
+    height: 1700px;
+  }
 `
 
 const GenContainer = styled.div`
   width: 1100px;
+  height: 100%;
+
+  @media screen and  (max-width: 1100px) {
+    width: 100vw !important;
+    padding: 0 20px;
+  }
 `
 
 const Introduction = styled.div`
@@ -63,6 +72,18 @@ const Introduction = styled.div`
     color: #02A6F5;
     font-size: 16px;
   }
+  
+  @media screen and (max-width: 1100px) {
+    .title {
+      font-size: 26px;
+    }
+    .sub-title {
+      font-size: 22px;
+    }
+    .description {
+      font-size: 14px;
+    }
+  }
 `
 
 
@@ -70,14 +91,20 @@ const Banner = styled.div`
   width: 100%;
   height: 250px;
   border-radius: 10px;
-  background: url(${BannerImage}) no-repeat center;
-  background-size: 100%;
-  margin-bottom: 20px;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  @media screen and (max-width: 1100px) {
+    height: 160px;
+  }
 `
 
 const LeftArea = styled.div`
   width: 100%;
-  height: 100%;
   margin-bottom: 50px;
 `
 
@@ -88,6 +115,13 @@ const GenerateResultContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 60px;
+  
+  
+  
+  @media screen and (max-width: 1100px) {
+    height: 300px;
+    flex-direction: column;
+  }
 `
 
 const SubTitle = styled.div`
@@ -97,6 +131,10 @@ const SubTitle = styled.div`
   font-size: 28px;
   margin-bottom: 20px;
   border-bottom: 2px solid #00EBA4;
+   
+  @media screen and (max-width: 1100px) {
+    font-size: 20px;
+  }
 `
 
 
@@ -115,11 +153,21 @@ const SelectedImage = styled(AntdImage)`
 
 const SeedNFTColumn = styled.div`
   display: flex;
-  height: 100%;
   width: 30%;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  
+  @media screen and (max-width: 1100px) {
+    width: 100%;
+    flex-direction: row;
+    
+    .mobile-style {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
 `
 
 const MergeIcon = styled.div`
@@ -127,6 +175,10 @@ const MergeIcon = styled.div`
   height: 100px;
   background: url(${Merge}) no-repeat ;
   background-size: 100%;
+
+  @media screen and (max-width: 1100px) {
+   display: none;
+  }
 `
 
 const StyledButton = styled(Button)`
@@ -134,7 +186,6 @@ const StyledButton = styled(Button)`
   height: 40px;
   border: none;
   color: white;
-  font-weight: bolder;
   border-radius: 10px;
   margin-top: 25px;
 `
@@ -142,24 +193,59 @@ const StyledButton = styled(Button)`
 const ResultNFTColumn = styled.div`
   display: flex;
   width: 50%;
-  height: 100%;
   justify-content: center;
   align-items: center;
   
   .nft-border {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
+    position: relative;
   }
   
   .loading {
-    position: relative;
+    position: absolute;
     top:240px;
     left: 180px;
     font-size: 40px;
     color: #4779B5;
     z-index: 2;
   }
+  
+  @media screen and (max-width: 1100px) {
+    margin-top: 20px;
+    width: 100%;
+    
+    .nft-border {
+      width: 100%;
+    }
+    
+    .loading {
+      top: 35%;
+      left: 45%;
+    }
+  }
+`
+
+const SampleImage = styled.div`
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+  
+  .sample {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: contain;
+    background-color: #2A2E35;
+  }
+  
+  @media screen and (max-width: 1100px) {
+    height: 80px;
+    width: 80px;
+  }
+  
 `
 
 const ExampleContainer =styled.div`
@@ -170,52 +256,53 @@ const ExampleContainer =styled.div`
   align-items: center;
   margin-bottom: 40px;
   
-  .style-image {
-    width: 150px;
-    height: 150px;
-    background: url(${StyleEx}) no-repeat center;
-    background-size: 150%;
-    border-radius: 10px;
-    
-  }
+
   .plus-icon {
     width: 50px;
     height: 50px;
     background: url(${Add}) no-repeat;
     background-size: 100%;
   }
-  .content-image {
-    width: 150px;
-    height: 150px;
-    background: url(${ContentEx}) no-repeat center;
-    background-size: contain;
-    border-radius: 10px;
-
-  }
+ 
   .equal-icon {
     width: 50px;
     height: 50px;
     background: url(${RightArrow}) no-repeat;
     background-size: 100%;
   }
-  .result-image {
-    width: 150px;
-    height: 150px;
-    background: url(${ResultEx}) no-repeat center;
-    background-size: contain;
-    border-radius: 10px;
+ 
+  
+  @media screen and (max-width: 1100px) {
+    width: 100%;
+    margin-top: 40px;
+
+    .plus-icon, .equal-icon {
+      width: 30px;
+      height: 30px;
+    }
 
   }
+  
 `
 
 const Example: React.FC = () =>{
   return (
     <ExampleContainer>
-      <div className="style-image" />
+      <SampleImage>
+        <img className="sample" src={StyleEx} />
+      </SampleImage>
+
+      {/*<div className="style-image" />*/}
       <div className="plus-icon" />
-      <div className="content-image" />
+      <SampleImage>
+        <img className="sample" src={ContentEx} />
+      </SampleImage>
+      {/*<div className="content-image" />*/}
       <div className="equal-icon" />
-      <div className="result-image" />
+      {/*<div className="result-image" />*/}
+      <SampleImage>
+        <img className="sample" src={ResultEx} />
+      </SampleImage>
 
     </ExampleContainer>
   )
@@ -260,10 +347,13 @@ const SelectableNFTList: React.FC<{selectedValue:string, onSelect:(_: string) =>
   onSelect,
   list
 }) => {
+
+  const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
+
   return (
     <Swiper
       modules={[Navigation]}
-      slidesPerView={5}
+      slidesPerView={isMobile? 1 : 5}
       navigation
       spaceBetween={20}
     >
@@ -280,10 +370,26 @@ const SelectableNFTList: React.FC<{selectedValue:string, onSelect:(_: string) =>
 }
 
 const SelectedNFT: React.FC< {style: string, content: string} >= ({ style, content }) => {
+  const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
+  console.log(isMobile)
+
   return (
     <SeedNFTColumn >
-      <SelectedImage src={style} width={230} height={230} style={{ objectFit:'cover', borderRadius: '10px' }} />
-      <SelectedImage src={content} width={230} height={230} style={{ objectFit:'cover', borderRadius: '10px' }}  />
+      {
+        isMobile ? (
+          <div className="mobile-style">
+            <SelectedImage src={style} width={150} height={150} style={{ objectFit:'cover', borderRadius: '10px' }} />
+            <SelectedImage src={content} width={150} height={150} style={{ objectFit:'cover', borderRadius: '10px' }}  />
+          </div>
+
+        ):
+          (
+            <div>
+              <SelectedImage src={style} width={230} height={230} style={{ objectFit:'cover', borderRadius: '10px' }} />
+              <SelectedImage src={content} width={230} height={230} style={{ objectFit:'cover', borderRadius: '10px' }}  />
+            </div>
+          )
+      }
     </SeedNFTColumn>
   )
 }
@@ -306,6 +412,9 @@ const NewNFTContainer:React.FC<{ newNFTSrc: string, generating: boolean }> = ({ 
     history.push(`/NFTCreate?img=${newNFTSrc}`)
   },[newNFTSrc])
 
+  const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
+
+
   return (
     <ResultNFTColumn >
       <div className="nft-border">
@@ -319,7 +428,14 @@ const NewNFTContainer:React.FC<{ newNFTSrc: string, generating: boolean }> = ({ 
 
           )
         }
-        <SelectedImage src={newNFTSrc} width={400} height={400} style={{ objectFit:'cover', borderRadius: '10px' }} />
+
+        {
+          !isMobile &&  <SelectedImage src={newNFTSrc} width={400} height={400} style={{ objectFit:'cover', borderRadius: '10px' }} />
+        }
+
+        {
+          isMobile &&  <SelectedImage src={newNFTSrc} width={'100%'} height={200} style={{ objectFit:'cover', borderRadius: '10px' }} />
+        }
 
         <StyledButton onClick={ toCreateNFT }>Create NFT!</StyledButton>
 
@@ -376,7 +492,9 @@ const AIGeneration:React.FC = () => {
   return (
     <Wrapper >
       <GenContainer>
-        <Banner />
+        <Banner>
+          <img src={BannerImage} />
+        </Banner>
         <Introduction>
           <div className="title">Style Transferred NFT</div>
           <div className="sub-title">Description</div>
@@ -386,6 +504,7 @@ const AIGeneration:React.FC = () => {
           </div>
         </Introduction>
         <Example />
+
         <LeftArea>
           <SubTitle>Style Gene</SubTitle>
           <SelectableNFTList
@@ -402,6 +521,7 @@ const AIGeneration:React.FC = () => {
           />
 
         </LeftArea>
+
 
         <GenerateResultContainer >
           <SelectedNFT style={style} content={content} />

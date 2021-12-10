@@ -94,7 +94,14 @@ const LinkContainer = styled.div`
 
 
 const SCExternalLink = styled.a`
+  display: flex;
+  align-items: center;
   width: 40px;
+
+  .link-name {
+    margin-left: 20px;
+    z-index: 1;
+  }
   img {
     width: 25px;
   }
@@ -145,7 +152,6 @@ const AppSideBar:React.FC = () => {
             <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
               <img src={icon} alt={link} />
             </SCExternalLink>
-
 
           ))
         }

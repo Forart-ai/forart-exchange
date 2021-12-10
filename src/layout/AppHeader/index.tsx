@@ -5,6 +5,7 @@ import Wallet from '../../components/wallet'
 import UserIcon from '../../assets/images/header/user.svg'
 import { useHistory } from 'react-router-dom'
 import { MenuFoldOutlined, QuestionCircleFilled } from '@ant-design/icons'
+import { useMediaQuery } from 'react-responsive'
 
 
 const AppHeaderContent = styled.div`
@@ -18,6 +19,7 @@ const AppHeaderContent = styled.div`
   justify-content: space-between;
   position: relative;
   z-index: 999;
+  position: fixed;
   
   
 `
@@ -45,10 +47,16 @@ const Operator = styled.div`
       border: 3px #02A6F5 solid;
       border-radius: 30px;
   }
+  
+  @media screen and (max-width: 1100px) {
+    width: fit-content;
+  }
 `
 
 const AppHeader:React.FC <{ onCollapseChanged: () => void }> = ({ onCollapseChanged }) => {
   const history = useHistory()
+
+  const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
 
   return (
     <AppHeaderContent>
@@ -62,11 +70,14 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = ({ onCollapseChan
             marginRight: '15px'
           }}
         />
-        <img src={ForartLogo}  />
+        <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
       </Logo>
       <Operator>
         <Wallet />
-        <img src={UserIcon} onClick={() => history.push('/personal/home')} />
+        <img src={UserIcon}
+          onClick={() => history.push('/personal/home')}
+          style={ isMobile ? { width:'25px' } : {}}
+        />
       </Operator>
     </AppHeaderContent>
   )

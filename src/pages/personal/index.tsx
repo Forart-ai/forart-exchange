@@ -8,6 +8,7 @@ import { SmileOutlined, DollarOutlined, EditOutlined, UserOutlined, LoadingOutli
 import { usePersonalNFTsQuery } from '../../hooks/queries/usePersonalNFTsQuery'
 import { ChainType, ForartNftTransactionStatus, personalNftList } from '../../apis/nft'
 import NFTListItem from '../../components/NFTListItem'
+import { NftListItem } from '../../types/NFTDetail'
 
 
 const { TabPane } = Tabs
@@ -16,11 +17,14 @@ const { TabPane } = Tabs
 
 const Wrapper = styled.div`
   width: 100%;
-  height: calc(100% - 68px);
-
+  height: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media screen and  (max-width: 1100px) {
+    width: 100vw !important;
+  }
 `
 
 const PersonalCenterContainer = styled.div`
@@ -78,7 +82,6 @@ const StyledTab = styled(Tabs)`
   .ant-tabs-tab {
     font-size: 20px;
     color: #E5E8EB !important;
-    font-weight: bolder;
   }
 
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
@@ -104,6 +107,12 @@ const StyledTab = styled(Tabs)`
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
   }
+  
+  @media screen and (max-width: 1100px) {
+    .ant-tabs-tab {
+      font-size: 16px;
+    }
+  }
 `
 
 const NFTListContainer = styled.div`
@@ -118,9 +127,13 @@ const NFTListContainer = styled.div`
     height: 0;
     width: 210px;
   }
+  
+  @media screen and (max-width: 1100px) {
+    justify-content: center;
+  }
 `
 
-const UserNFTList: React.FC<any> = ({ list }) => {
+const UserNFTList: React.FC<{ list: Array<NftListItem> | undefined }> = ({ list }) => {
   return (
     <NFTListContainer>
       {

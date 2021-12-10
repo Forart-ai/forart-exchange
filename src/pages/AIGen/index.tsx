@@ -14,13 +14,10 @@ import { NFTCreateForm } from '../nftCreate'
 
 
 const Wrapper = styled.div`
-  width: 1100px;
-  margin: 0 auto;
-  height: 2000px;
-  padding-top: 20px;
+  width: 100%;
+  height: 1500px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: center;
   
   .text {
     font-size: 18px;
@@ -72,15 +69,24 @@ const Banner = styled.div`
   width: 100%;
   height: 250px;
   border-radius: 10px;
-  background: url(${BannerImage}) no-repeat center;
-  background-size: 100%;
-  margin-bottom: 20px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media screen and (max-width: 1100px) {
+    height: 160px;
+  }
 `
 
 const Introduction = styled.div`
   width: 100%;
-  height: 200px;
+  height: fit-content;
   margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
   
   .title {
     width: fit-content;
@@ -102,22 +108,35 @@ const Introduction = styled.div`
     color: #02A6F5;
     font-size: 16px;
   }
+
+  @media screen and (max-width: 1100px) {
+    .title {
+      font-size: 25px;
+    }
+    .sub-title {
+      font-size: 22px;
+    }
+    .description {
+      font-size: 14px;
+    }
+  }
 `
 
 const SampleContent = styled.div`
+  width: 100%;
   margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+
 `
 
 const SampleMain = styled.div`
+  display: flex;
+  flex-direction: column;
   
 `
 
 const EnterContent = styled.div`
   display: flex;
-align-items: center;
+  align-items: center;
   .enter {
     width: 200px;
     color: #02A6F5;
@@ -129,6 +148,19 @@ align-items: center;
     color: #EADEDE;
     font-size: 18px;
     margin-left: 30px;
+  }
+  
+  @media screen and (max-width: 1100px) {
+    flex-direction: column;
+    align-items: start;
+    
+    .enter {
+      font-size: 20px;
+    }
+    .enterData {
+      margin: 0;
+      font-size: 16px;
+    }
   }
 `
 const SubTitle = styled.div`
@@ -151,16 +183,38 @@ const SampleImg = styled.div`
     text-align: left;
     margin-right: 30px;
   }
-`
-
-const SampleImgItem = styled.div`
-  margin-right: 10px;
   
-  .item {
-    width: 150px;
-    border-radius: 10px;
+  .sample-images {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    
+    img {
+      width: 150px;
+      margin-right: 10px;
+      border-radius: 10px;
+    }
+  }
+
+  @media screen and (max-width: 1100px) {
+    flex-direction: column;
+    align-items: start;
+
+    .enter {
+      width: fit-content;
+      font-size: 20px;
+    }
+    
+    .sample-images {
+      img{
+        width: 15%;
+        border-radius: 5px;
+      }
+    }
+    
   }
 `
+
 
 const AIContentContainer = styled.div`
   margin-top: 40px;
@@ -193,12 +247,10 @@ const StyledButton = styled(Button)`
   width: 150px;
   background-image: linear-gradient(to right, #00EBA4, #02A6F5);
   justify-content: center;
-  height: 40px;
   border: none;
   color: white;
   border-radius: 10px;
   margin-left: calc((100% - 150px) / 2) ;
-  margin-top: 20px;
   font-size: 16px;
   
 `
@@ -246,6 +298,17 @@ const ResultContainer = styled.div`
     font-size: 40px;
     color: #4779B5;
     z-index: 44;
+  }
+`
+
+
+const Container = styled.div`
+  width: 1100px;
+  height: 100%;
+
+  @media screen and  (max-width: 1100px) {
+    width: 100vw !important;
+    padding: 0 20px;
   }
 `
 
@@ -423,71 +486,74 @@ const AIGen:React.FC = () => {
 
   return (
     <Wrapper >
-      <Banner />
-      <Introduction>
-        <div className="title">GAN-Driven NFT Generation</div>
-        <div className="sub-title">Description</div>
-        <div className="description">
-          Different from traditional NFT creation, GAN-Driven NFT
-          Generator can directly transform it into art according to
-          the needs and description of the artist, simple and straightforward.
-          You only need to simply describe what you want to see and AI-Driven NFT
-          Generator transforms your words into art. The result may exceed your imagination,
-          or even your cognition. It may be abstract art or a representation of reality. It
-          may also be the fusion of imagination and reality.
-        </div>
-      </Introduction>
-      <SampleContent>
-        <SampleMain>
-          <EnterContent>
-            <div className="enter">TEXT PROMPT</div>
-            <div className="enterData">an illustration of a baby daikon radish in a tutu walking a dog</div>
-          </EnterContent>
-          <SampleImg>
-            <div className="enter">AI-GENERATED IMAGES</div>
-            <div style={{ display: 'flex' }}>
-              {
-                SampleImgs.map((item, index) => (
-                  <SampleImgItem key={index}>
-                    <img className="item" src={item} />
-                  </SampleImgItem>
-                ))
-              }
-            </div>
-          </SampleImg>
-        </SampleMain>
-      </SampleContent>
-      {/*<ObjectItems objectItems={objectMap} onSelect={v => setObject(v)} />*/}
+      <Container>
+        <Banner>
+          <img src={BannerImage} />
+        </Banner>
+        <Introduction>
+          <div className="title">GAN-Driven NFT Generation</div>
+          <div className="sub-title">Description</div>
+          <div className="description">
+            Different from traditional NFT creation, GAN-Driven NFT
+            Generator can directly transform it into art according to
+            the needs and description of the artist, simple and straightforward.
+            You only need to simply describe what you want to see and AI-Driven NFT
+            Generator transforms your words into art. The result may exceed your imagination,
+            or even your cognition. It may be abstract art or a representation of reality. It
+            may also be the fusion of imagination and reality.
+          </div>
 
-      {/*<AccessoriesItems accessoriesItems={accessoriesMap} onSelect={ v => setAccessories(v) } />*/}
 
-      {/*<BehaviorItems behaviorItems={behaviorMap} onSelect={ v => setBehavior(v) } />*/}
+        </Introduction>
 
-      <AIGenContent form={form} colon={false} layout="horizontal" initialValues={formInitialValues} >
-        <AIGenContentItem
-          name="content"
-          label="content"
-          rules={[{ required: true, message: 'Content is Required!' }]}
-        >
-          <Input placeholder="Please enter a content" />
-        </AIGenContentItem>
-      </AIGenContent>
+        <SampleContent>
+          <SampleMain>
+            <EnterContent>
+              <div className="enter">TEXT PROMPT</div>
+              <div className="enterData">an illustration of a baby daikon radish in a tutu walking a dog</div>
+            </EnterContent>
+            <SampleImg>
+              <div className="enter">AI-GENERATED IMAGES</div>
+              <div className="sample-images">
+                {
+                  SampleImgs.map((item, index) => (
+                    <img key={index} className="item" src={item} />
+                  ))
+                }
+              </div>
+            </SampleImg>
+          </SampleMain>
+        </SampleContent>
 
-      {/*<StyledButton onClick={ generate } >*/}
-      {/*  {*/}
-      {/*    !generating ? 'Generate Now!' :*/}
-      {/*      'Generating...'*/}
-      {/*  }*/}
-      {/*</StyledButton>*/}
 
-      <StyledButton onClick={ () => generateByContent(form) } >
-        {
-          !generating ? 'Generate Now-!' :
-            'Generating...'
-        }
-      </StyledButton>
 
-      <AIGeneratorResultContainer resultImageSrc={resultImageSrc} generating={generating} />
+
+        <AIGenContent form={form} colon={false} layout="horizontal" initialValues={formInitialValues} >
+          <AIGenContentItem
+            name="content"
+            label="content"
+            rules={[{ required: true, message: 'Content is Required!' }]}
+          >
+            <Input placeholder="Please enter a content" />
+          </AIGenContentItem>
+        </AIGenContent>
+
+        {/*<StyledButton onClick={ generate } >*/}
+        {/*  {*/}
+        {/*    !generating ? 'Generate Now!' :*/}
+        {/*      'Generating...'*/}
+        {/*  }*/}
+        {/*</StyledButton>*/}
+
+        <StyledButton onClick={ () => generateByContent(form) } >
+          {
+            !generating ? 'Generate Now-!' :
+              'Generating...'
+          }
+        </StyledButton>
+
+        <AIGeneratorResultContainer resultImageSrc={resultImageSrc} generating={generating} />
+      </Container>
     </Wrapper>
   )
 }
