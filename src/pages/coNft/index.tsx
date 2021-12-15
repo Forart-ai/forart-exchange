@@ -7,8 +7,6 @@ import { EXTERNAL_LINKS } from '../../layout/AppSideBar'
 import CountUp from 'react-countup'
 import PoolsListItem from '../../components/PoolsListItem'
 import { usePoolsQuery } from '../../hooks/queries/usePoolsQuery'
-import { NftListItem } from '../../types/NFTDetail'
-import NFTListItem from '../../components/NFTListItem'
 
 const Wrapper = styled.div`
   max-width: 1400px;
@@ -21,7 +19,6 @@ const CoNftPageContainer = styled.div`
   width: calc(100% - 40px);
   margin-left: auto;
   margin-right: auto;
-  border: red 1px solid;
 
 `
 
@@ -30,7 +27,7 @@ const HeaderContainer = styled.div`
   height: 500px;
   margin-top: 10px;
   //background: radial-gradient( 60% 40px at center bottom 0, #fff 75%, #2A2E35 80%);
-  background: radial-gradient(62% 35px at center bottom,#1C1C1D 76%, #2A2E35 77.5%);
+  background: radial-gradient(62% 35px at center bottom, #1C1C1D 76%, #2A2E35 77.5%);
 
   border-radius: 20px;
   display: flex;
@@ -63,7 +60,7 @@ const  RightArea = styled.div`
   background: linear-gradient(45deg, #00EBA4, #02A6F5) border-box;
   
   .data-container {
-    background: linear-gradient(0deg,rgba(14,22,39,.8),rgba(36,52,84,.8)) border-box;
+    background: linear-gradient(0deg, rgba(14,22,39,.8),rgba(36,52,84,.8)) border-box;
     border-radius: 10px;
     padding: 30px 30px 18px;
     height: 100%;
