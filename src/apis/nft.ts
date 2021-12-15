@@ -18,6 +18,11 @@ export type ForartNftListQueryParams = {
     typeChain: ChainType
 }
 
+export type ForartPoolsListQueryParams = {
+  current?: number,
+  size?: number,
+}
+
 export type NFTDetailQueryRequest = {
     uri: string
     addressContract: string | undefined

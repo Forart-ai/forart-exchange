@@ -18,6 +18,7 @@ import { aiGeneratorStyle } from '../../apis/ai'
 import {  base64ToIPfsUri } from '../../utils'
 import { useHistory } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
+import { useNFTsQuery } from '../../hooks/queries/useNFTsQuery'
 
 
 SwiperCore.use([Navigation, EffectCoverflow, Pagination])
@@ -454,15 +455,21 @@ const AIGeneration:React.FC = () => {
 
   const [newNFT, setNewNFT] = useState('')
 
-  const { data: nftList } = useStyledNFTsQuery(1)
+  const { data: nftList } = useNFTsQuery({
+    current: 1,
+    size: 10,
+    searchKey:'',
+    transactionStatus: 0,
+    typeChain:'Ethereum'
+  })
 
-  const { data: styleList } = useStyledNFTsQuery(0)
+  const { data: styleList } = useStyledNFTsQuery()
 
 
 
   const contentNft = useMemo(() => {
-    return  nftList?.map( value => ({
-      image: value.url
+    return  nftList?.records.map( value => ({
+      image: value.image
     }
     ))
   },[nftList])
@@ -510,7 +517,7 @@ const AIGeneration:React.FC = () => {
           <SelectableNFTList
             selectedValue={style}
             onSelect={v=> setStyle(v)}
-            list={styleList?.map((style: { url: any}) => style?.url)}
+            list={styleList?.map((style: { image: any}) => style?.image)}
           />
 
           <SubTitle>Content</SubTitle>

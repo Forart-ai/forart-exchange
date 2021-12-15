@@ -107,6 +107,13 @@ const SCExternalLink = styled.a`
   }
   `
 
+export  const EXTERNAL_LINKS: Array<{ icon: string, link: string }> = [
+  { icon: TwitterIcon, link: 'https://twitter.com/forart_ai' },
+  { icon: TelegramIcon, link: 'https://t.me/forart_co' },
+  { icon: DiscordIcon, link: 'https://discord.gg/RDaUkaW39S' },
+  { icon: WebsiteIcon, link:'https://forart.co/' }
+]
+
 const AppSideBar:React.FC = () => {
   const { pathname } = useLocation()
 
@@ -114,12 +121,7 @@ const AppSideBar:React.FC = () => {
     return routes.filter(route => route.path === pathname || route.match?.test(pathname))[0]?.path
   })()
 
-  const EXTERNAL_LINKS: Array<{ icon: string, link: string }> = [
-    { icon: TwitterIcon, link: 'https://twitter.com/forart_ai' },
-    { icon: TelegramIcon, link: 'https://t.me/forart_co' },
-    { icon: DiscordIcon, link: 'https://discord.gg/RDaUkaW39S' },
-    { icon: WebsiteIcon, link:'https://forart.co/' }
-  ]
+
 
 
   return (
@@ -152,7 +154,6 @@ const AppSideBar:React.FC = () => {
             <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
               <img src={icon} alt={link} />
             </SCExternalLink>
-
           ))
         }
       </LinkContainer>

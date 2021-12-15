@@ -241,6 +241,8 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
       return
     }
 
+
+
     if (isHeart) {
       setFavorite(favorite)
     } else {
@@ -326,9 +328,6 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
       <div className="bottom">
         <TradingContainer>
-          {/*<div className="operation">*/}
-          {/* */}
-          {/*</div>*/}
           <div className="owner-operation">
             {
               isAllowToSell && (
@@ -357,16 +356,6 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
         </TradingContainer>
 
       </div>
-
-      {/*<div className="nft-info-container-item">*/}
-      {/*  <div className="nft-info-container-label">Owner: </div>*/}
-      {/*  <div className="nft-info-container-value"> { shortenAddress(nftDetail?.addressOwner) } </div>*/}
-      {/*  <CopyOutlined*/}
-      {/*    className="icon-copy"*/}
-      {/*    onClick={() => handleCopy(nftDetail?.addressOwner)}*/}
-      {/*  />*/}
-      {/*</div>*/}
-
 
 
       { purchaseCheckoutModal }
@@ -599,37 +588,9 @@ const NFTDetailPage: React.FC = () => {
   }, [nftDetail])
 
 
-
-  // const isAllowToSell = useMemo(() => {
-  //   if (nftDetail) {
-  //     return  account === nftDetail?.addressOwner
-  //   }
-  //   return false
-  // },[nftDetail, account])
-  //
-  // const { authorizingModal, openAuthorizingModal, closeAuthorizingModal } = useAuthorizingModal()
-  //
-  //
-  //
-  //
-  // const { sellingModal, openSellingModal, closeSellingModal } = useSellingModal({
-  //   nftDetail,
-  //   onSellingConfirmed: forceRefresh,
-  //   onStart: openAuthorizingModal
-  // })
-
-
   return (
     <Wrapper>
       <NFTDetailContainer>
-        {/*<Operating>*/}
-        {/*  {*/}
-        {/*    isAllowToSell && (*/}
-        {/*      <StyledButton onClick={openSellingModal} > Sell </StyledButton>*/}
-        {/*    )*/}
-        {/*  }*/}
-
-        {/*</Operating>*/}
         <TopRow>
           <ImageContainer>
             <Image src={coverImageUrl()} />

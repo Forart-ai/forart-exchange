@@ -5,6 +5,7 @@ import NFTDetailPage from '../pages/marketplace/nftDetail'
 import Home from '../pages/Home'
 import AIGen from '../pages/AIGen'
 import PersonalCenterPage from '../pages/personal'
+import CoNftPage from '../pages/coNft'
 
 import  HomeIcon  from '../assets/images/siderIcon/homepage_fill.svg'
 import  GanIcon  from '../assets/images/siderIcon/f-idea.svg'
@@ -29,6 +30,13 @@ const routes: Route[] = [
     title: 'Home',
     icon: HomeIcon,
     component: Home,
+    disable: false
+  },
+  {
+    path: '/co-nft',
+    title: 'CO-NFT',
+    icon: GanIcon,
+    component: CoNftPage,
     disable: false
   },
   {
