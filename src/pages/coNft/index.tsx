@@ -10,8 +10,9 @@ import { usePoolsQuery } from '../../hooks/queries/usePoolsQuery'
 
 const Wrapper = styled.div`
   max-width: 1400px;
-  height: 100%;
+  height: fit-content;
   margin: auto;
+  padding-bottom: 50px;
 `
 
 const CoNftPageContainer = styled.div`
@@ -26,10 +27,10 @@ const HeaderContainer = styled.div`
   width: 100%;
   height: 500px;
   margin-top: 10px;
-  //background: radial-gradient( 60% 40px at center bottom 0, #fff 75%, #2A2E35 80%);
-  background: radial-gradient(62% 35px at center bottom, #1C1C1D 76%, #2A2E35 77.5%);
-
-  border-radius: 20px;
+  //background: #2A2E35;
+  background: radial-gradient(62% 35px at center bottom, #1C1C1D 77%, #2A2E35 77.5%);
+  position: relative;
+  border-radius: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -107,13 +108,45 @@ const SCExternalLink = styled.a`
   }
   `
 
+const CurveTop = styled.div`
+  width: 100%;
+  position: relative;
+  height: 180px;
+  background: #2A2E35;
+  //background: radial-gradient(62% 35px at center top, #1C1C1D 77%, #2A2E35 77.5%);
+  border-radius: 50% 50% 0 0;
+`
+
 const PoolsContainer = styled.div`
   width: 100%;
-  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: #2A2E35;
+  top: -60px;
+  //background: radial-gradient(62% 35px at center top, #1C1C1D 77%, #2A2E35 77.5%);
+  
+  
+  
+  .title {
+    background: linear-gradient(90deg ,#12dbe4, #02fbab);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 42px;
+  }
+  
+`
+
+const PoolListContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
+  position: relative;
+  margin-bottom: 20px;
+
 `
 
 const StyledCountUp = styled(CountUp)`
@@ -189,14 +222,33 @@ const PoolsList: React.FC<{ poolsList?: Array<PoolsListData>}> = ({ poolsList })
 
   return (
     <PoolsContainer>
-      {
-        poolsList?.map((pool: PoolsListData, index: number) => (
-          <PoolsListItem
-            data= {pool}
-            key= {index}
-          />
-        ))
-      }
+      <div className="title">Live Pools</div>
+      <PoolListContainer>
+        {
+          poolsList?.map((pool: PoolsListData, index: number) => (
+            <PoolsListItem
+              data= {pool}
+              key= {index}
+            />
+          ))
+        }
+
+      </PoolListContainer>
+
+      <div className="title">Closed Pools</div>
+      <PoolListContainer>
+        {
+          poolsList?.map((pool: PoolsListData, index: number) => (
+            <PoolsListItem
+              data= {pool}
+              key= {index}
+            />
+          ))
+        }
+
+      </PoolListContainer>
+
+
 
     </PoolsContainer>
   )
@@ -217,6 +269,7 @@ const CoNftPage: React.FC = () => {
     <Wrapper>
       <CoNftPageContainer>
         <Header coNftData={ coNftData } />
+        <CurveTop />
         <PoolsList poolsList={ poolsList?.records } />
       </CoNftPageContainer>
     </Wrapper>

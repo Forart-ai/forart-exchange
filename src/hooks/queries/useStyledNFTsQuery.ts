@@ -25,6 +25,6 @@ export function useStyledNFTsQuery(): UseQueryResult<Array<any>> {
 //     }
 //   )
 // }
-
+//
 
 

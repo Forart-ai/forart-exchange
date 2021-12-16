@@ -2,6 +2,7 @@ import React from 'react'
 // @ts-ignore
 import styled from 'styled-components'
 import { PoolsListData } from '../types/coNFT'
+import { Button } from 'antd'
 
 
 const PoolsCardContainer = styled.div`
@@ -9,7 +10,7 @@ const PoolsCardContainer = styled.div`
   margin: 20px;
   display: flex;
   justify-content: center;
-  height: 200px;
+  height: 220px;
   border-radius: 20px;
   background: linear-gradient(180deg, rgba(36, 52, 84, .8), rgba(14, 22, 39, .8));
   box-shadow: 1px 1px 10px 0 rgb(0 0 0 / 10%);
@@ -53,7 +54,7 @@ const DataContent = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin: 10px 0;
 
   .data-column {
     flex-direction: column;
@@ -93,6 +94,8 @@ const PoolsListItem: React.FC<{data?: PoolsListData, type?: 'going' | 'closed'}>
             <div className= "value">{data?.mintors}</div>
           </div>
         </DataContent>
+        <Button>More Detail</Button>
+
       </InfoContent>
     </PoolsCardContainer>
   )
