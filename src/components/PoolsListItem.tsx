@@ -1,31 +1,69 @@
-import React from 'react'
-// @ts-ignore
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { PoolsListData } from '../types/coNFT'
 import { Button } from 'antd'
 
-
-const PoolsCardContainer = styled.div`
+const PoolsCardContainer = styled.div< { loading?: boolean }>`
   width: 600px;
+  height: 220px;
   margin: 20px;
   display: flex;
   justify-content: center;
-  height: 220px;
-  border-radius: 20px;
-  background: linear-gradient(180deg, rgba(36, 52, 84, .8), rgba(14, 22, 39, .8));
-  box-shadow: 1px 1px 10px 0 rgb(0 0 0 / 10%);
+  align-items: center;
+  border-radius: 10px;
+  background: #232324;
+  box-shadow: 16px 14px 20px #0000008c;
   position: relative;
-  border: 1px #0d0934 solid;
+  overflow: hidden;
+  //box-shadow: inset 20px 20px 20px #0000008c;
+
+  ${props => props.loading && `
+   &:before {
+    content: "";
+    background-image: conic-gradient(#02fbab 20deg, transparent 120deg);
+    position: absolute;
+    width: 150%;
+    height: 50%;
+    animation: rotate 3s linear infinite;
+  }
+
+  &:after {
+    content: "";
+    width: 590px;
+    height: 210px;
+    position: absolute;
+    background: #232324;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 20px 20px 20px #0000008c;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+  `}
+ 
 
 `
 
 const ImageContent = styled.div`
   width: 50%;
   height: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  img{
-    width: 100%;
-    height: 100%;
+  img {
+    width: 90%;
+    height: 90%;
     object-fit: cover;
     border-radius: 20px;
 
@@ -37,6 +75,7 @@ const InfoContent = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px 20px;
+  z-index: 99;
   
   .name {
     font-size: 24px;
@@ -73,9 +112,17 @@ const DataContent = styled.div`
 
 const PoolsListItem: React.FC<{data?: PoolsListData, type?: 'going' | 'closed'}> = ({ data, type }) => {
 
+  const [loading, setLoading] = useState(false)
+
+  //   useMemo(() => {
+  // if(data?.status === 'living') {
+  //   setLoading(true)
+  // }
+  //   },[data])
+
   console.log(data)
   return (
-    <PoolsCardContainer>
+    <PoolsCardContainer loading={true}>
       <ImageContent>
         <img src={data?.image} />
       </ImageContent>

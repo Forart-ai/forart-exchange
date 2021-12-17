@@ -38,7 +38,7 @@ const ThemeTable = styled(Table)<ThemeTableProps>`
 
       padding-bottom: 12px;
       line-height: 0;
-      color: ${(props: { headerTextColor: any }) => props.headerTextColor ?? '#b3b3b3'}
+      color: ${props => props.headerTextColor ?? '#b3b3b3'}
     }
 
     .ant-table-column-sorters {
@@ -50,26 +50,26 @@ const ThemeTable = styled(Table)<ThemeTableProps>`
     }
 
     .ant-table-column-sort {
-      background-color: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#282c34'};
+      background-color: ${props => props.rowBackgroundColor ?? '#282c34'};
       filter: brightness(85%);
     }
 
     .ant-table-column-has-sorters:hover {
-      background: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#282c34'};
+      background: ${props => props.rowBackgroundColor ?? '#282c34'};
       filter: brightness(100%);
     }
   }
 
   .ant-table-tbody {
     .ant-table-row {
-      background-color: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#282c34'};
-      cursor: ${(props: { rowCursor: any }) => props.rowCursor} !important;
+      background-color: ${props => props.rowBackgroundColor ?? '#282c34'};
+      cursor: ${props => props.rowCursor} !important;
       margin-bottom: 4px !important;
       transition: all 0.7s;
 
       .ant-table-cell {
         font-size: 15px;
-        color: ${(props: { rowTextColor: any }) => (props.rowTextColor ?? 'rgb(244, 244, 244)') + '!important;'}
+        color: ${props => (props.rowTextColor ?? 'rgb(244, 244, 244)') + '!important;'}
         line-height: 20px;
       }
 
@@ -82,7 +82,7 @@ const ThemeTable = styled(Table)<ThemeTableProps>`
         transform: scale(1.006);
 
         td {
-          background-color: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#282c34'};
+          background-color: ${props => props.rowBackgroundColor ?? '#282c34'};
         }
       }
 
@@ -97,7 +97,7 @@ const ThemeTable = styled(Table)<ThemeTableProps>`
       }
 
       .ant-table-column-sort {
-        background: ${(props: { rowBackgroundColor: any }) => props.rowBackgroundColor ?? '#282c34'};
+        background: ${props => props.rowBackgroundColor ?? '#282c34'};
       }
 
       &:hover {
@@ -115,7 +115,7 @@ const ThemeTable = styled(Table)<ThemeTableProps>`
     background-color: transparent;
 
     .ant-empty-description {
-      color: ${ (props: { rowTextColor: any }) => (props.rowTextColor ?? 'rgb(244, 244, 244)') + '!important;'}
+      color: ${props => (props.rowTextColor ?? 'rgb(244, 244, 244)') + '!important;'}
     }
   }
 

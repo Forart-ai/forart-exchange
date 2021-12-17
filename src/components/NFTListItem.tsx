@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom'
 import { Spin } from 'antd'
 import { ChainType } from '../apis/nft'
 import { HeartFilled, HeartOutlined } from '@ant-design/icons'
-import  PriceIcon  from '../images/wallet/celo.svg'
-import FlagIcon from '../assets/images/marketplace/flag.png'
-
+import PriceIcon from '../images/wallet/celo.svg'
 
 
 // @ts-ignore
@@ -16,10 +14,10 @@ import styled from 'styled-components'
 const NFTCardContainer = styled.div<{$empty?:boolean}>`
   color: #7c6deb;
   width: 210px;
-  height: ${(props: { $empty: any }) => props.$empty ? '0' : '320px'};
+  height: ${props => props.$empty ? '0' : '320px'};
   background-color: #282c34;
   border-radius: 10px;
-  margin-bottom: ${(props: { $empty: any }) => props.$empty ? '0' : '30px'};;
+  margin-bottom: ${props => props.$empty ? '0' : '30px'};;
   font-weight: bold;
   display: flex;
   flex-direction: column;

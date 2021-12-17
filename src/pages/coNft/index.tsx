@@ -195,7 +195,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
                 suffix= " FTA "
               />
             ) :
-              <StyledCountUp />
+              <StyledCountUp end={0} />
           }
 
           <div className="label">AVERAGE APY</div>
@@ -209,7 +209,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
                 suffix= " % "
               />
             ) :
-              <StyledCountUp />
+              <StyledCountUp  end={0} />
           }
 
         </div>

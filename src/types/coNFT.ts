@@ -11,5 +11,6 @@ export interface PoolsListData {
   name: string,
   describe: string,
   followers: number,
-  mintors: number
+  mintors: number,
+  status: string
 }

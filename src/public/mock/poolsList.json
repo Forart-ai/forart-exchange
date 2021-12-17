@@ -5,28 +5,32 @@
       "name": "Hello World",
       "describe": "Truly Decentralised Asset Management Powered by A.I. and Analytics",
       "followers": 112200,
-      "mintors": 12345
+      "mintors": 12345,
+      "status": "living"
     },
     {
       "image": "https://forart.mypinata.cloud/ipfs/QmXjAP5zBqJ5sw4181GiKDNkuAgVzPct7dQsriPG8vmnen",
       "name": "Hello World",
       "describe": "Truly Decentralised Asset Management Powered by A.I. and Analytics",
       "followers": 112200,
-      "mintors": 12345
+      "mintors": 12345,
+      "status": "closed"
     },
     {
       "image": "https://forart.mypinata.cloud/ipfs/QmXjAP5zBqJ5sw4181GiKDNkuAgVzPct7dQsriPG8vmnen",
       "name": "Hello World",
       "describe": "Truly Decentralised Asset Management Powered by A.I. and Analytics",
       "followers": 112200,
-      "mintors": 12345
+      "mintors": 12345,
+      "status": "closed"
     },
     {
       "image": "https://forart.mypinata.cloud/ipfs/QmXjAP5zBqJ5sw4181GiKDNkuAgVzPct7dQsriPG8vmnen",
       "name": "Hello World",
       "describe": "Truly Decentralised Asset Management Powered by A.I. and Analytics",
       "followers": 112200,
-      "mintors": 12345
+      "mintors": 12345,
+      "status": "living"
     }
   ],
   "total": 574,

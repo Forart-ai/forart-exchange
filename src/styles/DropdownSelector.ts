@@ -16,14 +16,14 @@ const DropdownSelector = styled(Select)<DropdownSelectorProps>`
 
   &,
   .ant-select {
-    height: ${(props: { height: any }) => props.height ?? 'fit-content'};
-    min-width: ${(props: { minWidth: any }) => props.minWidth ?? 'fit-content'};
+    height: ${props => props.height ?? 'fit-content'};
+    min-width: ${props => props.minWidth ?? 'fit-content'};
   }
 
   .ant-select-selector {
     max-width: 300px;
-    min-width: ${(props: { minWidth: any }) => props.minWidth ?? '80px'};
-    height: ${(props: { height: any }) => props.height ?? '35px'} !important;
+    min-width: ${props => props.minWidth ?? '80px'};
+    height: ${props => props.height ?? '35px'} !important;
     border: none !important;
     border-radius: 10px !important;
     background-color: #282c34 !important;
