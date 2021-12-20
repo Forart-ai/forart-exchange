@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { PoolsListData } from '../types/coNFT'
 import { Button } from 'antd'
+import { useHistory } from 'react-router-dom'
+
 
 const PoolsCardContainer = styled.div< { loading?: boolean }>`
   width: 600px;
@@ -110,19 +112,24 @@ const DataContent = styled.div`
   }
 `
 
-const PoolsListItem: React.FC<{data?: PoolsListData, type?: 'going' | 'closed'}> = ({ data, type }) => {
+const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data, status }) => {
 
   const [loading, setLoading] = useState(false)
 
-  //   useMemo(() => {
-  // if(data?.status === 'living') {
-  //   setLoading(true)
-  // }
-  //   },[data])
+  useMemo(() => {
+    if (data?.status === 'closing') {
+      setLoading(true)
+    }
+  },[status])
 
-  console.log(data)
+  const toArtistDetailUrl = '/co-nft/artistDetail/' + new URLSearchParams({
+    id: data?.name ?? ''
+  }).toString()
+
+  const history = useHistory()
+
   return (
-    <PoolsCardContainer loading={true}>
+    <PoolsCardContainer loading={loading}>
       <ImageContent>
         <img src={data?.image} />
       </ImageContent>
@@ -141,7 +148,9 @@ const PoolsListItem: React.FC<{data?: PoolsListData, type?: 'going' | 'closed'}>
             <div className= "value">{data?.mintors}</div>
           </div>
         </DataContent>
-        <Button>More Detail</Button>
+        {/*<Link to={toArtistDetailUrl}>*/}
+        <Button onClick={()=> history.push(toArtistDetailUrl)} > More Detail</Button>
+        {/*</Link>*/}
 
       </InfoContent>
     </PoolsCardContainer>

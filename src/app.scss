@@ -10,9 +10,20 @@
   font-family: 'campton';
 }
 
+
 ::-webkit-scrollbar {
-  display: none;
+  width: 10px;
+  background-color: #1C1C1D;
+
+
 }
+
+::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(#00EBA4 0%, #02A6F5 100%);
+  border-radius: 10px;
+}
+
+
 
 .ant-image-preview-img-wrapper {
   position: static !important;

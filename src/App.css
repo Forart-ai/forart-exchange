@@ -57,6 +57,6 @@ App {
   display: none !important;
 }
 
-::-webkit-scrollbar {
-  display: none;
-}
+/*::-webkit-scrollbar {*/
+/*  display: none;*/
+/*}*/

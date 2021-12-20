@@ -6,12 +6,13 @@ import Home from '../pages/Home'
 import AIGen from '../pages/AIGen'
 import PersonalCenterPage from '../pages/personal'
 import CoNftPage from '../pages/coNft'
+import ArtistDetail from '../pages/coNft/artistDetail'
 
-import  HomeIcon  from '../assets/images/siderIcon/homepage_fill.svg'
-import  GanIcon  from '../assets/images/siderIcon/f-idea.svg'
+import HomeIcon from '../assets/images/siderIcon/homepage_fill.svg'
+import GanIcon from '../assets/images/siderIcon/f-idea.svg'
 import GeneratorIcon from '../assets/images/siderIcon/generator.svg'
 import MarketplaceIcon from '../assets/images/siderIcon/marketplace.svg'
-
+import GamesIcon from '../assets/images/siderIcon/games.svg'
 
 export type Route = {
   path: string
@@ -35,9 +36,16 @@ const routes: Route[] = [
   {
     path: '/co-nft',
     title: 'CO-NFT',
-    icon: GanIcon,
+    icon: GamesIcon,
     component: CoNftPage,
     disable: false
+  },
+  {
+    path: '/co-nft/artistDetail/:id',
+    title: 'Artsit Detail',
+    icon: GamesIcon,
+    component: ArtistDetail,
+    hidden: false
   },
   {
     path: '/AI-Gen',
