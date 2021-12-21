@@ -6,5 +6,12 @@ export interface UserDetail {
   // followersAvatar: any,
   slogan:string
   avatar?: string,
-  backgroundImage?: string
+  backgroundImage?: string,
+  artDetail?: any
+}
+
+
+export interface ArtistKit {
+  id: string,
+  bodyList: any
 }

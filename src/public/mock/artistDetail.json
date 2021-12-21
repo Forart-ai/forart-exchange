@@ -41,5 +41,22 @@
     "https://t.me/i/userpic/320/1PDkGDQN1PAAum0NHqCtJcmcE_UcQM2Vhx0EE1XFSeo.jpg",
     "https://t.me/i/userpic/320/1PDkGDQN1PAAum0NHqCtJcmcE_UcQM2Vhx0EE1XFSeo.jpg"
 
+  ],
+  "artDetail": [
+    {
+      "title": "Features",
+      "image": "https://solanium-prd-backend-space.ams3.digitaloceanspaces.com/media/projects/features.png",
+      "content": "Waggle is a permissionless marketplace built for multi-chain token pools and auctions, enabling projects to raise capital post-IDO on a decentralized environment based on Solana.\n\nWaggle curates a public-facing marketplace interface which facilitates locked tokens trading activities. With Waggle, decentralized projects will be able to raise capital from their community, and users will be able to participate in community fundraising rounds in a secure and compliant environment and access opportunities previously only available to institutional players.\n\nWaggle seeks to build a future that is decentralized, efficient, and empowering."
+    },
+    {
+      "title": "About",
+      "image": "https://solanium-prd-backend-space.ams3.digitaloceanspaces.com/media/projects/features.png",
+      "content": "Waggle is a permissionless marketplace built for multi-chain token pools and auctions, enabling projects to raise capital post-IDO on a decentralized environment based on Solana.\n\nWaggle curates a public-facing marketplace interface which facilitates locked tokens trading activities. With Waggle, decentralized projects will be able to raise capital from their community, and users will be able to participate in community fundraising rounds in a secure and compliant environment and access opportunities previously only available to institutional players.\n\nWaggle seeks to build a future that is decentralized, efficient, and empowering."
+    },
+    {
+      "title": "Roadmap",
+      "image": "https://solanium-prd-backend-space.ams3.digitaloceanspaces.com/media/projects/roadmap.png",
+      "content": "Waggle is a permissionless marketplace built for multi-chain token pools and auctions, enabling projects to raise capital post-IDO on a decentralized environment based on Solana.\n\nWaggle curates a public-facing marketplace interface which facilitates locked tokens trading activities. With Waggle, decentralized projects will be able to raise capital from their community, and users will be able to participate in community fundraising rounds in a secure and compliant environment and access opportunities previously only available to institutional players.\n\nWaggle seeks to build a future that is decentralized, efficient, and empowering."
+    }
   ]
 }

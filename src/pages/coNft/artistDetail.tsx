@@ -1,10 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { UserDetail } from '../../types/userDetail'
+import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 
 import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
-import { Avatar } from 'antd'
+import { Affix, Avatar, Checkbox, Tabs } from 'antd'
+import { DollarOutlined, SmileOutlined } from '@ant-design/icons'
+import {
+  BodyContent,
+  ImageBorder,
+  MintWrapper,
+  SelectedBody,
+  StyledImage,
+  SwiperList,
+  TopContainer
+} from './artistMint.style'
+import { useArtistKitQuery } from '../../hooks/queries/useArtistKitQuery'
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
+import { Navigation } from 'swiper'
+
+
+const { TabPane } = Tabs
+
+function scrollToPart(anchorName: string) {
+  if (anchorName) {
+    const anchorElement = document.getElementById(anchorName)
+    if (anchorElement) {
+      anchorElement.scrollIntoView(
+        { behavior: 'smooth', block: 'nearest' }
+      )
+    }
+  }
+}
 
 
 const Wrapper = styled.div`
@@ -12,7 +39,8 @@ const Wrapper = styled.div`
   max-width: 1400px;
   height: fit-content;
   margin: auto;
-  padding-bottom: 50px;
+  //padding-bottom: 50px;
+  padding: 30px 20px;
 `
 
 const ArtistDetailContainer = styled.div`
@@ -20,7 +48,6 @@ const ArtistDetailContainer = styled.div`
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  //border: blue 1px solid;
 `
 
 const HeaderContainer = styled.div<{backgroundImage?: string}>`
@@ -33,7 +60,7 @@ const HeaderContainer = styled.div<{backgroundImage?: string}>`
   justify-content: space-between;
   align-items: center;
   //background: #2A2E35;
-  padding: 24px 48px;
+  padding: 2rem 2.2rem;
   flex-direction: column;
   background: linear-gradient(0deg, rgba(14,22,39,.8),rgba(36,52,84,.8)) border-box;
   
@@ -45,7 +72,6 @@ const HeaderContainer = styled.div<{backgroundImage?: string}>`
  `
 }
   
-
 `
 
 const ArtistInfo = styled.div`
@@ -92,36 +118,50 @@ const FollowersInfo = styled.div`
 `
 
 const LeftArea = styled.div` 
-  width: 18%;
+  width: 15%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
+  //border: 1px red solid;
   
   .label {
     font-size: 1rem !important;
   }
   .value{
-    font-size: 1.5rem !important;
+    font-size: 1.7rem !important;
+    margin-right: 10px;
   }
 `
 
 
-const RightArea = styled.div` 
-  width: 75%;
+const RightArea = styled.div`
+  width: 82%;
   height: 100%;
   display: flex;
   //padding: 16px;
-  
+
   .followers {
     width: 100%;
     position: relative;
     min-height: 50px;
-    overflow: hidden; !important;
-    
+    overflow: hidden;
+  !important;
+
+    &:before {
+      content: "";
+      width: 100%;
+      height: 64px;
+      position: absolute;
+      left: 0;
+      background: linear-gradient(270deg, transparent 95%, #1c2b38), linear-gradient(90deg, transparent 95%, #1c2b38);
+      z-index: 1;
+    }
+
     .followers-icon {
-      overflow: hidden; !important;
+      overflow: hidden;
+    !important;
       width: 100%;
     }
 
@@ -131,7 +171,7 @@ const RightArea = styled.div`
       animation: scrollDown 20s alternate;
       -webkit-animation-timing-function: linear;
       animation-timing-function: linear;
- 
+
       .is-48 {
         width: 48px;
         height: 48px;
@@ -148,15 +188,178 @@ const RightArea = styled.div`
         transform: translateX(-100%);
       }
     }
-    
+
+  }
+`
+
+const StyledTab = styled(Tabs)`
+  width: 100%;
+  user-select: none;
+  margin-top: 20px;
+
+  .ant-tabs-tab {
+    font-size: 20px;
+    color: #E5E8EB !important;
   }
 
-  
-  
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #94DAFF !important;
 
+  }
+
+  .ant-tabs-nav-wrap {
+    display: flex;
+    justify-content: center;!important;
+  }
+
+  .ant-tabs-nav::before {
+    //display: none; !important;
+    border-bottom: 1px #65727b solid;
+
+  }
+
+  .ant-tabs-ink-bar {
+    line-height: 20px;
+    background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+    padding: 4px;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+  
+  @media screen and (max-width: 1100px) {
+    .ant-tabs-tab {
+      font-size: 16px;
+    }
+  }
 `
 
 
+const DescriptionContainer = styled.div`
+  width: 100%;
+  height: fit-content;
+  border-radius: 20px;
+  margin: 30px 0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 25px;
+  flex-direction: column;
+  background: linear-gradient(0deg, rgba(14,22,39,.8),rgba(36,52,84,.8)) border-box;
+  
+`
+
+const ArtistDetailTab = styled.div`
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  
+  
+  @media screen and (max-width: 1100px) {
+    justify-content: center;
+  }
+  
+`
+
+const TabItem = styled.div`
+  max-width: calc(100% - 40px);
+  width: 80%;
+  height: auto;
+  
+  
+  .item{
+    width: 100%;
+    //border: 1px red solid;
+  }
+
+  .title {
+    font-size: 2.5rem;
+    color: #fff;
+  }
+
+  .image-border{
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+    margin: 1rem 0;
+    display: block;
+  }
+
+  .content {
+    color: #b2b2b2;
+    font-size: 1rem;
+  }
+`
+
+const NavLinksContainer = styled.div`
+  width: 20%;
+  height: auto;
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+
+  li {
+    width: 100%;
+    list-style: none;
+    float: left;
+    cursor: pointer;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px #3a5e71 solid;
+   
+ 
+    
+    
+  
+}
+  
+
+  @media screen and (max-width: 1100px) {
+    display: none;
+  }
+
+`
+
+const MenuItem = styled.div<{activate?: boolean}>`
+  color: #61dafb;
+`
+
+const SelectableKitItem: React.FC<{ src: string, checked?: boolean, onSelect:(_?: string) => void}> = ({
+  src,
+  checked,
+  onSelect
+}) => {
+  console.log(onSelect)
+
+  const SelectBtn: React.FC = () => {
+    return (
+      <div style={{
+        position:'relative',
+        bottom:'100px',
+        left:'10px',
+      }}
+      >
+        <Checkbox checked={checked} />
+      </div>
+    )
+  }
+
+  return (
+    <ImageBorder
+      onClick={() => onSelect(!checked ? src : undefined)}
+    >
+      <StyledImage
+        width={110}
+        height={110}
+        src={src}
+        preview={false}
+        // style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '10px', display:'flex', justifyContent:'center' }}
+      />
+      <SelectBtn />
+    </ImageBorder>
+  )
+}
 
 
 const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
@@ -193,16 +396,132 @@ const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
   )
 }
 
+const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
+
+  return (
+    <ArtistDetailTab>
+      <Affix offsetTop={125}>
+        <NavLinksContainer id="NavLinksContainer" >
+
+          {
+            userData?.artDetail.map((item:any, index:number) => (
+              <li key={index}>
+                <MenuItem onClick={() => scrollToPart(item.title)}> {item.title} </MenuItem>
+              </li>
+            ))
+          }
+        </NavLinksContainer>
+      </Affix>
+
+
+      <TabItem>
+        {
+          userData?.artDetail.map((item:any, index:number) => (
+            <section className="item" key={index} id={item.title}>
+              <h2 className="title"> {item.title} </h2>
+              <img className="image-border" src={item.image} />
+              <p className="content"> {item.content} </p>
+            </section>
+          ))
+        }
+      </TabItem>
+    </ArtistDetailTab>
+  )
+}
+
+const SelectableKitList: React.FC<{selectedValue?: string, onSelect: (_?: string) => void, list?: string[]}> =({
+  selectedValue,
+  onSelect,
+  list
+}) => {
+
+
+  return (
+    <SwiperList>
+      <Swiper
+        modules={[Navigation]}
+        slidesPerView={5}
+        // navigation
+        spaceBetween={10}
+        direction="vertical"
+      >
+        {
+          list?.map((item,key)=>(
+            <SwiperSlide key={key} >
+              <SelectableKitItem src={item} onSelect={onSelect} checked={selectedValue === item} />
+            </SwiperSlide>
+          ))
+        }
+      </Swiper>
+    </SwiperList>
+  )
+}
+
+const Mint: React.FC<{ artistKit?:ArtistKit }> = ({ artistKit }) => {
+
+  const [body, setBody] = useState<string | undefined>('')
+
+  return (
+    <MintWrapper>
+      <TopContainer>
+        <BodyContent>
+          <SelectableKitList
+            selectedValue={body}
+            onSelect={v => setBody(v)}
+            list={artistKit?.bodyList.map((body: {url:string}) => body.url)}
+          />
+          <SelectedBody>
+            {
+              body && <img src={body} />
+            }
+          </SelectedBody>
+        </BodyContent>
+      </TopContainer>
+    </MintWrapper>
+  )
+}
+
+
 
 const ArtistDetail: React.FC = () => {
 
   const { data: userData } = useArtistDetailQuery()
 
+  const { data: artistKisList } = useArtistKitQuery()
+
   return (
     <Wrapper>
       <ArtistDetailContainer>
         <UserInfo userData={userData} />
+        <DescriptionContainer>
+          <StyledTab defaultActiveKey="owned"  >
+            <TabPane
+              tab= {
+                <span>
+                  <SmileOutlined />
+                  Art Detail
+                </span>
+              }
+              key="artDetail"
+            >
 
+              <ArtDetail userData={userData} />
+            </TabPane>
+
+            <TabPane
+              tab= {
+                <span>
+                  <DollarOutlined />
+                  Mint
+                </span>
+              }
+              key="mint"
+            >
+              <Mint artistKit={artistKisList} />
+            </TabPane>
+
+          </StyledTab>
+        </DescriptionContainer>
       </ArtistDetailContainer>
     </Wrapper>
   )
