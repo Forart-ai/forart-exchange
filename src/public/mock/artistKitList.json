@@ -3,28 +3,71 @@
   "bodyList": [
     {
       "id": "1001",
-      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHSTo7A68v8eT61euKjCGFE5T3DhAjdkJ"
+      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHSTo7A68v8eT61euKjCGFE5T3DhAjdkJ",
+      "price": 12.3,
+      "rarity": "10%"
     },
     {
       "id": "1002",
-      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHSTo7A68v8eT61euKjCGFE5T3DhAjdkJ"
+      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMr1HSTo7A68v8eT61euKjCGFE5T3DhAjdkJ",
+      "price": 11.3,
+      "rarity": "20%"
     },
     {
       "id": "1003",
-      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHSTo7A68v8eT61euKjCGFE5T3DhAjdkJ"
+      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHS2To7A68v8eT61euKjCGFE5T3DhAjdkJ",
+      "price": 15.4,
+      "rarity": "20%"
     },
     {
       "id": "1001",
-      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHSTo7A68v8eT61euKjCGFE5T3DhAjdkJ"
+      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHS3To7A68v8eT61euKjCGFE5T3DhAjdkJ",
+      "price": 14.2,
+      "rarity": "20%"
     },
     {
       "id": "1002",
-      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHSTo7A68v8eT61euKjCGFE5T3DhAjdkJ"
+      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQM4rHSTo7A68v8eT61euKjCGFE5T3DhAjdkJ",
+      "price": 15.3,
+      "rarity": "20%"
     },
     {
       "id": "1003",
-      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHSTo7A68v8eT61euKjCGFE5T3DhAjdkJ"
+      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHSTo7A68v8eT61euKjCGFE5T3DhAjdkJ",
+      "price": 15.3,
+      "rarity": "20%"
+    }
+  ],
+  "hatList": [
+    {
+      "id": 1,
+      "url": "https://forart.mypinata.cloud/ipfs/QmRbntjfNVxZ7V9nyJujuDExnCXpyCsj16ChQAdr3j4QEi",
+      "price": 3.2,
+      "remain": 6,
+      "rarity": 0.10
+    },
+    {
+      "id": 2,
+      "url": "https://forart.mypinata.cloud/ipfs/QmfG9JjKXUnjEcZm7evMKFKD8TDtLt5RAuike76p6YV1pB",
+      "price": 2.31,
+      "remain": 9,
+      "rarity": 0.23
+    }
+  ],
+  "eyesList": [
+    {
+      "id": 1,
+      "url": "e76p6YV1pB",
+      "price": 2.31,
+      "remain": 9,
+      "rarity": 0.23
+    },
+    {
+      "id": 2,
+      "url": "e76p6YV1pB",
+      "price": 2.31,
+      "remain": 9,
+      "rarity": 0.23
     }
   ]
-
 }

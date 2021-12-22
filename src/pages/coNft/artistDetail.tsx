@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
@@ -9,7 +9,12 @@ import { DollarOutlined, SmileOutlined } from '@ant-design/icons'
 import {
   BodyContent,
   ImageBorder,
+  KitContent,
+  KitListContainer,
+  MintContainer,
+  MintTab,
   MintWrapper,
+  PriceContainer,
   SelectedBody,
   StyledImage,
   SwiperList,
@@ -21,6 +26,14 @@ import { Navigation } from 'swiper'
 
 
 const { TabPane } = Tabs
+
+export type KitProperties = {
+  id: number
+  url: string,
+  price: number,
+  rarity: number,
+  remain: number
+}
 
 function scrollToPart(anchorName: string) {
   if (anchorName) {
@@ -307,11 +320,7 @@ const NavLinksContainer = styled.div`
     font-size: 18px;
     margin-bottom: 10px;
     border-bottom: 1px #3a5e71 solid;
-   
- 
     
-    
-  
 }
   
 
@@ -325,12 +334,12 @@ const MenuItem = styled.div<{activate?: boolean}>`
   color: #61dafb;
 `
 
-const SelectableKitItem: React.FC<{ src: string, checked?: boolean, onSelect:(_?: string) => void}> = ({
+const SelectableKitItem: React.FC<{ src: any, checked?: boolean, onSelect:(_?: string) => void}> = ({
   src,
   checked,
   onSelect
 }) => {
-  console.log(onSelect)
+
 
   const SelectBtn: React.FC = () => {
     return (
@@ -350,16 +359,56 @@ const SelectableKitItem: React.FC<{ src: string, checked?: boolean, onSelect:(_?
       onClick={() => onSelect(!checked ? src : undefined)}
     >
       <StyledImage
-        width={110}
-        height={110}
-        src={src}
+        width={100}
+        height={100}
+        src={src.url}
         preview={false}
-        // style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '10px', display:'flex', justifyContent:'center' }}
+        style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '10px', display:'flex', justifyContent:'center' }}
       />
       <SelectBtn />
     </ImageBorder>
   )
 }
+
+
+
+const SelectableBodyItem: React.FC<{ src: any, checked?: boolean, onSelect:(_?: string) => void}> = ({
+  src,
+  checked,
+  onSelect
+}) => {
+
+  const SelectBtn: React.FC = () => {
+    return (
+      <div style={{
+        position:'relative',
+        bottom:'100px',
+        left:'10px',
+      }}
+      >
+        <Checkbox checked={checked} />
+      </div>
+    )
+  }
+
+  return (
+    <ImageBorder
+      onClick={() => onSelect(!checked ? src : undefined)}
+    >
+      <StyledImage
+        width={100}
+        height={100}
+        src={src.url}
+        preview={false}
+        style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '10px', display:'flex', justifyContent:'center' }}
+      />
+      <SelectBtn />
+    </ImageBorder>
+  )
+}
+
+
+
 
 
 const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
@@ -429,12 +478,11 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
   )
 }
 
-const SelectableKitList: React.FC<{selectedValue?: string, onSelect: (_?: string) => void, list?: string[]}> =({
+const SelectableBodyList: React.FC<{selectedValue?: any, onSelect: (_?: string) => void, list?: [{url:string, price:number, rarity:string}]}> =({
   selectedValue,
   onSelect,
   list
 }) => {
-
 
   return (
     <SwiperList>
@@ -448,7 +496,7 @@ const SelectableKitList: React.FC<{selectedValue?: string, onSelect: (_?: string
         {
           list?.map((item,key)=>(
             <SwiperSlide key={key} >
-              <SelectableKitItem src={item} onSelect={onSelect} checked={selectedValue === item} />
+              <SelectableBodyItem src={item} onSelect={onSelect} checked={selectedValue?.url === item?.url} />
             </SwiperSlide>
           ))
         }
@@ -457,34 +505,116 @@ const SelectableKitList: React.FC<{selectedValue?: string, onSelect: (_?: string
   )
 }
 
-const Mint: React.FC<{ artistKit?:ArtistKit }> = ({ artistKit }) => {
+const SelectableKitList: React.FC<{selectedValue?: any, onSelect: (_?: any) => void, list?: KitProperties[]}> =({
+  selectedValue,
+  onSelect,
+  list
+}) => {
+  return (
+    <KitListContainer>
+      {
+        list?.map((item,index) => (
+          <SelectableKitItem key={index} src={item} onSelect={onSelect} checked={selectedValue === item?.url} />
+        ))
+      }
+    </KitListContainer>
+  )
 
-  const [body, setBody] = useState<string | undefined>('')
+}
+
+const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
+  const [body, setBody] = useState<any>()
+
+  const [kits, setKits] = useState<Map<string, string>>(new Map())
+
+  useEffect(() => {
+    // @ts-ignore
+    console.log(Array.from(kits))
+  }, [kits])
+
+  const list = artistKit?.bodyList.map((body:{url: string, price: number, rarity: string}) =>({
+    url: body.url,
+    price: body.price,
+    rarity: body.rarity
+  }))
+
+  const KIT_TYPES: Array<{name: string, list: KitProperties[], key: string}> = [
+    {
+      name: 'Hats',
+      key: 'hat',
+      list: artistKit?.hatList
+    },
+    {
+      name: 'Eyes',
+      key: 'eyes',
+      list: artistKit?.eyesList
+    }
+  ]
+
+  const KIT_TYPES1: Array<{name: string, list: KitProperties[], key: string}> = useMemo(() => [
+    {
+      name: 'Hats',
+      key: 'hat',
+      list: artistKit?.hatList
+    },
+    {
+      name: 'Eyes',
+      key: 'eyes',
+      list: artistKit?.eyesList
+    }
+  ], [artistKit])
 
   return (
     <MintWrapper>
       <TopContainer>
         <BodyContent>
-          <SelectableKitList
-            selectedValue={body}
-            onSelect={v => setBody(v)}
-            list={artistKit?.bodyList.map((body: {url:string}) => body.url)}
+          <SelectableBodyList
+            selectedValue= {body}
+            onSelect= {v => setBody(v)}
+            list= {list}
           />
-          <SelectedBody>
-            {
-              body && <img src={body} />
-            }
-          </SelectedBody>
+
+          {
+            body && (
+              <SelectedBody>
+                <img src={body.url} />
+                <PriceContainer>
+                  <div className="price">{body?.price} FTA</div>
+                  <div className="price">Rarity: {body?.rarity}</div>
+                </PriceContainer>
+              </SelectedBody>
+            )
+          }
         </BodyContent>
+        <KitContent >
+          <MintTab>
+            {
+              KIT_TYPES.map(type => (
+                <TabPane key={type.name} tab={type.name} >
+                  <MintContainer>
+                    <SelectableKitList
+                      selectedValue={kits.get(type.key)}
+                      onSelect={v => {
+                        setKits(prev => {
+                          const map = new Map(prev)
+                          map.set(type.key, v ? v.url : undefined)
+                          return map
+                        })
+                      }}
+                      list={type.list}
+                    />
+                  </MintContainer>
+                </TabPane>
+              ))
+            }
+          </MintTab>
+        </KitContent>
       </TopContainer>
     </MintWrapper>
   )
 }
 
-
-
 const ArtistDetail: React.FC = () => {
-
   const { data: userData } = useArtistDetailQuery()
 
   const { data: artistKisList } = useArtistKitQuery()
@@ -494,7 +624,7 @@ const ArtistDetail: React.FC = () => {
       <ArtistDetailContainer>
         <UserInfo userData={userData} />
         <DescriptionContainer>
-          <StyledTab defaultActiveKey="owned"  >
+          <StyledTab defaultActiveKey="artDetail"  >
             <TabPane
               tab= {
                 <span>
@@ -525,7 +655,6 @@ const ArtistDetail: React.FC = () => {
       </ArtistDetailContainer>
     </Wrapper>
   )
-
 }
 
 
