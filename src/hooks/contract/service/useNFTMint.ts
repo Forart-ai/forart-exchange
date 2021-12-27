@@ -11,7 +11,7 @@ const useNFTMint = () => {
     //todo: fix any when the interface is given
     async (body: any, kit: any) => {
       console.log(body, kit)
-    },[account]
+    }, [account]
   )
 
   return { mintNFT }
