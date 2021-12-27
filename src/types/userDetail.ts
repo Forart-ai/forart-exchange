@@ -15,7 +15,7 @@ export interface ArtistKit {
   id: string,
   bodyList: any,
   hatList?: any,
-  eyesList?: any,
+  faceList?: any,
   shirtsList?: any,
   pantsList?: any
 }

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Image, Tabs } from 'antd'
+import { Button, Image, Tabs } from 'antd'
 
 const { TabPane } = Tabs
 
@@ -17,9 +17,6 @@ export const TopContainer = styled.div `
   height: 600px;
   display: flex;
   justify-content: space-between;
-  
- 
-
 `
 
 export const BodyContent = styled.div `
@@ -45,12 +42,23 @@ export const SwiperList = styled.div`
 `
 
 export const ImageBorder = styled.div`
-  //width: 100%;
+  width: 100%;
+
 `
+
+export const KitImageBorder = styled.div`
+  width: 100%;
+ 
+`
+
+
+
 
 export const StyledImage = styled(Image)`
   background: #0f1b39;
   border-radius: 10px;
+  position: relative;
+  
 `
 
 export const SelectedBody = styled.div`
@@ -122,7 +130,8 @@ export const PriceContainer = styled.div`
 export const KitContent = styled.div`
   width: 49%;
   height: auto;
-  border: 1px red solid;
+  background: #070E1E;
+  border-radius: 20px;
   
 `
 
@@ -167,10 +176,24 @@ export const MintTab = styled(Tabs)`
   }
 `
 
-export const MintContainer = styled.div``
+export const MintContainer = styled.div`
+  width: 100%;
+  height: 600px;
+  display: flex;
+  justify-content: space-between;
+`
 
 export const KitListContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   width: 100%;
-  border: 1px gainsboro solid;
+  height: fit-content;
+  
 `
+
+export const CenterContainer = styled.div`
+  width: 100%;
+`
+
+export const MintButton = styled(Button)``

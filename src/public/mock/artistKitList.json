@@ -54,19 +54,26 @@
       "rarity": 0.23
     }
   ],
-  "eyesList": [
+  "faceList": [
     {
       "id": 1,
-      "url": "e76p6YV1pB",
+      "url": "https://forart.mypinata.cloud/ipfs/QmeTNDvnZ2YUpLoSfT5CQye9MQUw9EDFK22byjnccaX4PQ",
       "price": 2.31,
       "remain": 9,
       "rarity": 0.23
     },
     {
       "id": 2,
-      "url": "e76p6YV1pB",
+      "url": "https://forart.mypinata.cloud/ipfs/QmXyqziP6YbMAeLUe7aYy1PiihPWesMQ2cttCL7CTzpQch",
       "price": 2.31,
       "remain": 9,
+      "rarity": 0.23
+    },
+    {
+      "id": 3,
+      "url": "https://forart.mypinata.cloud/ipfs/QmQTkkeCdeyWUhRzkTqc9bXNiSSULhmrLpr7pUAUe2zJTn",
+      "price": 1.01,
+      "remain": 19,
       "rarity": 0.23
     }
   ]

@@ -4,25 +4,26 @@ import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 
 import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
-import { Affix, Avatar, Checkbox, Tabs } from 'antd'
+import { Affix, Avatar, Tabs } from 'antd'
 import { DollarOutlined, SmileOutlined } from '@ant-design/icons'
 import {
   BodyContent,
-  ImageBorder,
+  CenterContainer,
   KitContent,
-  KitListContainer,
+  MintButton,
   MintContainer,
   MintTab,
   MintWrapper,
   PriceContainer,
   SelectedBody,
-  StyledImage,
-  SwiperList,
   TopContainer
 } from './artistMint.style'
 import { useArtistKitQuery } from '../../hooks/queries/useArtistKitQuery'
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
-import { Navigation } from 'swiper'
+
+import { SelectableBodyList } from '../../components/nft-mint/mintBody'
+import { SelectableKitList } from '../../components/nft-mint/mintKit'
+import { SelectedList } from '../../components/nft-mint/selectedList'
+import useNFTMint from '../../hooks/contract/service/useNFTMint'
 
 
 const { TabPane } = Tabs
@@ -334,83 +335,6 @@ const MenuItem = styled.div<{activate?: boolean}>`
   color: #61dafb;
 `
 
-const SelectableKitItem: React.FC<{ src: any, checked?: boolean, onSelect:(_?: string) => void}> = ({
-  src,
-  checked,
-  onSelect
-}) => {
-
-
-  const SelectBtn: React.FC = () => {
-    return (
-      <div style={{
-        position:'relative',
-        bottom:'100px',
-        left:'10px',
-      }}
-      >
-        <Checkbox checked={checked} />
-      </div>
-    )
-  }
-
-  return (
-    <ImageBorder
-      onClick={() => onSelect(!checked ? src : undefined)}
-    >
-      <StyledImage
-        width={100}
-        height={100}
-        src={src.url}
-        preview={false}
-        style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '10px', display:'flex', justifyContent:'center' }}
-      />
-      <SelectBtn />
-    </ImageBorder>
-  )
-}
-
-
-
-const SelectableBodyItem: React.FC<{ src: any, checked?: boolean, onSelect:(_?: string) => void}> = ({
-  src,
-  checked,
-  onSelect
-}) => {
-
-  const SelectBtn: React.FC = () => {
-    return (
-      <div style={{
-        position:'relative',
-        bottom:'100px',
-        left:'10px',
-      }}
-      >
-        <Checkbox checked={checked} />
-      </div>
-    )
-  }
-
-  return (
-    <ImageBorder
-      onClick={() => onSelect(!checked ? src : undefined)}
-    >
-      <StyledImage
-        width={100}
-        height={100}
-        src={src.url}
-        preview={false}
-        style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '10px', display:'flex', justifyContent:'center' }}
-      />
-      <SelectBtn />
-    </ImageBorder>
-  )
-}
-
-
-
-
-
 const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 
   // console.log(userData)
@@ -478,59 +402,18 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
   )
 }
 
-const SelectableBodyList: React.FC<{selectedValue?: any, onSelect: (_?: string) => void, list?: [{url:string, price:number, rarity:string}]}> =({
-  selectedValue,
-  onSelect,
-  list
-}) => {
-
-  return (
-    <SwiperList>
-      <Swiper
-        modules={[Navigation]}
-        slidesPerView={5}
-        // navigation
-        spaceBetween={10}
-        direction="vertical"
-      >
-        {
-          list?.map((item,key)=>(
-            <SwiperSlide key={key} >
-              <SelectableBodyItem src={item} onSelect={onSelect} checked={selectedValue?.url === item?.url} />
-            </SwiperSlide>
-          ))
-        }
-      </Swiper>
-    </SwiperList>
-  )
-}
-
-const SelectableKitList: React.FC<{selectedValue?: any, onSelect: (_?: any) => void, list?: KitProperties[]}> =({
-  selectedValue,
-  onSelect,
-  list
-}) => {
-  return (
-    <KitListContainer>
-      {
-        list?.map((item,index) => (
-          <SelectableKitItem key={index} src={item} onSelect={onSelect} checked={selectedValue === item?.url} />
-        ))
-      }
-    </KitListContainer>
-  )
-
-}
-
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
   const [body, setBody] = useState<any>()
 
-  const [kits, setKits] = useState<Map<string, string>>(new Map())
+  const [kits, setKits] = useState<Map<string, any>>(new Map())
+
+  const { mintNFT } = useNFTMint()
+
 
   useEffect(() => {
-    // @ts-ignore
-    console.log(Array.from(kits))
-  }, [kits])
+    console.log(kits)
+  }, [kits,body])
+
 
   const list = artistKit?.bodyList.map((body:{url: string, price: number, rarity: string}) =>({
     url: body.url,
@@ -538,31 +421,19 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
     rarity: body.rarity
   }))
 
-  const KIT_TYPES: Array<{name: string, list: KitProperties[], key: string}> = [
-    {
-      name: 'Hats',
-      key: 'hat',
-      list: artistKit?.hatList
-    },
-    {
-      name: 'Eyes',
-      key: 'eyes',
-      list: artistKit?.eyesList
-    }
-  ]
-
-  const KIT_TYPES1: Array<{name: string, list: KitProperties[], key: string}> = useMemo(() => [
-    {
-      name: 'Hats',
-      key: 'hat',
-      list: artistKit?.hatList
-    },
-    {
-      name: 'Eyes',
-      key: 'eyes',
-      list: artistKit?.eyesList
-    }
-  ], [artistKit])
+  const KIT_TYPES: Array<{name: string, list: KitProperties[], key: string}> = useMemo(() =>
+    [
+      {
+        name: 'Hats',
+        key: 'hat',
+        list: artistKit?.hatList
+      },
+      {
+        name: 'Face',
+        key: 'face',
+        list: artistKit?.faceList
+      }
+    ], [artistKit])
 
   return (
     <MintWrapper>
@@ -597,7 +468,8 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
                       onSelect={v => {
                         setKits(prev => {
                           const map = new Map(prev)
-                          map.set(type.key, v ? v.url : undefined)
+                          map.set(type.key, v ? v : undefined  )
+                          if (!v){ map.delete(type.key)}
                           return map
                         })
                       }}
@@ -610,6 +482,12 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
           </MintTab>
         </KitContent>
       </TopContainer>
+
+      <CenterContainer>
+        <SelectedList body={body} kitList={kits} />
+      </CenterContainer>
+
+      <MintButton onClick={ () => mintNFT(body, kits)}  >Mint</MintButton>
     </MintWrapper>
   )
 }
