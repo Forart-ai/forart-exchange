@@ -1,12 +1,10 @@
 import React from 'react'
 import './App.css'
 import './app.scss'
-import { Layout } from 'antd'
-import { Header } from 'antd/es/layout/layout'
+import { BackTop, Layout } from 'antd'
+import { Content } from 'antd/es/layout/layout'
 import AppHeader from './layout/AppHeader'
 import AppSideBar from './layout/AppSideBar'
-import { Content } from 'antd/es/layout/layout'
-import Sider from 'antd/es/layout/Sider'
 // @ts-ignore
 import { Route } from 'react-router-dom'
 import routes from './routes'
@@ -15,7 +13,6 @@ import '../src/font/font.css'
 import { useDispatch } from 'react-redux'
 import { setSideBarCollapsed, useSideBarCollapsed } from './store/app'
 import { useMediaQuery } from 'react-responsive'
-
 
 
 const App: React.FC = () => {
@@ -63,6 +60,7 @@ const App: React.FC = () => {
                 />
               ))
             }
+            <BackTop />
           </Content>
         </Layout>
       </Layout>

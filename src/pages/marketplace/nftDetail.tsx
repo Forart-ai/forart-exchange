@@ -4,32 +4,29 @@ import styled from 'styled-components'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { useNFTDetailQuery } from '../../hooks/queries/useNFTDetailQuery'
 import {
-  Wrapper,
-  NFTDetailContainer,
-  TopRow,
-  Title,
-  StyledTab,
-  StyledTabPane,
-  TopBaseInfo,
-  TradingContainer,
-  OtherArtworksContainer,
-  Operating,
-  OtherArtworksArea,
-  CenterRow,
-  FootRow,
+  BottomInfo,
+  CenterInfo,
   CodingFlag,
   HistoryTradeTable,
-  PropertiesItem,
-  PropertiesContainer,
   ImageContainer,
   InfoContainer,
   ItemsContainer,
   NFTBaseInfoContainer,
+  NFTDetailContainer,
+  OtherArtworksArea,
+  OtherArtworksContainer,
+  PropertiesContainer,
+  PropertiesItem,
   StyledButton,
-  CenterInfo,
-  BottomInfo
+  StyledTab,
+  StyledTabPane,
+  Title,
+  TopBaseInfo,
+  TopRow,
+  TradingContainer,
+  Wrapper
 } from './nftDetail.style'
-import { Image, message, Popover, Tabs } from 'antd'
+import { Image, message } from 'antd'
 import { NFTDetail } from '../../types/NFTDetail'
 import { shortenAddress } from '../../utils'
 import copy from 'copy-to-clipboard'
@@ -47,7 +44,7 @@ import { useWeb3React } from '@web3-react/core'
 import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import moment from 'moment'
 import ThemeTable from '../../styles/ThemeTable'
-import { getNftFavoriteCount, setNftFavorite } from '../../apis/nft'
+import { setNftFavorite } from '../../apis/nft'
 import { useNFTLikeQuery } from '../../hooks/queries/useNFTLikeQuery'
 import CodingFlagIcon from '../../assets/images/marketplace/coding-flag.png'
 import { useSellingModal } from '../../hooks/useSellingModal'
@@ -59,11 +56,6 @@ import usePurchaseByFixedPrice from '../../hooks/contract/service/usePurchaseByF
 import { usePurchaseTransactionSentModal } from '../../hooks/modals/usePurchaseTransactionSentModal'
 import { usePurchaseWaitingConfirmationModal } from '../../hooks/modals/usePurchaseWaitingConfirmationModal'
 import { cancelExchange } from '../../apis/exchange/celo'
-
-
-
-const { TabPane } = Tabs
-
 
 
 const HistoryTrade: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {

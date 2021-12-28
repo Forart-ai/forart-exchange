@@ -2,7 +2,7 @@ import React from 'react'
 // @ts-ignore
 import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
-import { Affix, Menu } from 'antd'
+import { Menu } from 'antd'
 import routes, { Route } from '../../routes'
 import TwitterIcon from '../../assets/images/contactLink/twitter.png'
 import TelegramIcon from '../../assets/images/contactLink/telegram.png'
@@ -18,6 +18,7 @@ const AppSideBarContent = styled.div`
   border-right: 1px solid #262531;
   z-index: 99;
   top: 60px;
+  
 
   .ant-menu-root.ant-menu-vertical,
   .ant-menu-root.ant-menu-vertical-left,
@@ -76,7 +77,7 @@ const CustomizedMenu = styled(Menu)`
 `
 
 const StyledMenuItem = styled(Menu.Item)`
-
+margin-left: 50px;
 
 `
 

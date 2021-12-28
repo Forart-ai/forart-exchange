@@ -14,10 +14,10 @@ const StyledFlag = styled.div`
   z-index: 99;
   width: 35px;
   height: 35px;
-  left: calc(100% - 22px);
+  left: calc(100% - 25px);
   top: calc(100% - 10px);
   border-radius: 50%;
-  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+  background: linear-gradient(110deg, #3376ff, #3efff6 65%, #4effd2);
 
   .value {
     font-weight: bold;
@@ -54,6 +54,7 @@ const KitItemContainer = styled.div`
   background: #232324;
   box-shadow: 10px 4px 10px #0000008c;
   border-radius: 10px;
+  height: 180px;
 
 
   &:last-child {

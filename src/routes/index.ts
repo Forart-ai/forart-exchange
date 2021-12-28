@@ -42,10 +42,9 @@ const routes: Route[] = [
   },
   {
     path: '/co-nft/artistDetail/:id',
-    title: 'Artsit Detail',
-    icon: GamesIcon,
+    title: 'Artist Detail',
     component: ArtistDetail,
-    hidden: false
+    hidden: true
   },
   {
     path: '/AI-Gen',

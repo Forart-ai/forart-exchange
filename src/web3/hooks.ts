@@ -1,8 +1,6 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
-import { injected, celoInjected } from './connectors'
-import { useHistory } from 'react-router-dom'
-import { message } from 'antd'
+import { celoInjected, injected } from './connectors'
 
 export function useEagerConnect() {
   const { activate, active } = useWeb3React()

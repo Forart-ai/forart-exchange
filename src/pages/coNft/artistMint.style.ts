@@ -17,11 +17,15 @@ export const TopContainer = styled.div `
   height: 600px;
   display: flex;
   justify-content: space-between;
+  
+  @media screen and (max-width: 1100px) {
+    flex-direction: column;
+  }
 `
 
 export const BodyContent = styled.div `
   width: 49%;
-  height: auto;
+  height: 100%;
   display: flex;
   background: #070E1E;
   border-radius: 20px;
@@ -62,7 +66,7 @@ export const StyledImage = styled(Image)`
 `
 
 export const SelectedBody = styled.div`
-  width: 70%;
+  width: 75%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -75,8 +79,8 @@ export const SelectedBody = styled.div`
   z-index: 1;
   
   img {
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
   }
   
   
@@ -111,8 +115,8 @@ export const PriceContainer = styled.div`
   
   &:before,
   &:after {
-    
-    background: linear-gradient(235deg, #12dbe4, #060c21, #02fbab);
+
+    background: linear-gradient(110deg, #3376ff, #3efff6 65%, #4effd2);
 
   }
 
@@ -129,10 +133,13 @@ export const PriceContainer = styled.div`
 
 export const KitContent = styled.div`
   width: 49%;
-  height: auto;
+  height: 100%;
   background: #070E1E;
   border-radius: 20px;
-  
+
+  @media screen and (max-width: 1100px) {
+    width: 100%;
+  }
 `
 
 export const MintTab = styled(Tabs)`
@@ -188,8 +195,15 @@ export const KitListContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
-  height: fit-content;
-  
+  height: 520px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  ::-webkit-scrollbar {
+    width: 10px;
+    background-color: transparent;
+  }
+
+
 `
 
 export const CenterContainer = styled.div`
@@ -197,3 +211,33 @@ export const CenterContainer = styled.div`
 `
 
 export const MintButton = styled(Button)``
+
+export const AIContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  .title{
+    font-size: 2.7em;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+  }
+`
+
+export const StyledSwitch = styled.div`
+  margin-left: 20px;
+  .ant-switch {
+    background-color: #02A6F5;
+  }
+  
+   .ant-switch-checked {
+    background-color: #00EBA4 ;
+  }
+`
+
+export const AIContent = styled.div`
+  height: auto;
+  margin: 20px 0;
+  .hide {
+    display: none;
+  }
+`

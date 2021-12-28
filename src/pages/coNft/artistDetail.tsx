@@ -4,9 +4,11 @@ import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 
 import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
-import { Affix, Avatar, Tabs } from 'antd'
+import { Anchor, Avatar, Switch, Tabs } from 'antd'
 import { DollarOutlined, SmileOutlined } from '@ant-design/icons'
 import {
+  AIContainer,
+  AIContent,
   BodyContent,
   CenterContainer,
   KitContent,
@@ -16,6 +18,7 @@ import {
   MintWrapper,
   PriceContainer,
   SelectedBody,
+  StyledSwitch,
   TopContainer
 } from './artistMint.style'
 import { useArtistKitQuery } from '../../hooks/queries/useArtistKitQuery'
@@ -23,10 +26,24 @@ import { useArtistKitQuery } from '../../hooks/queries/useArtistKitQuery'
 import { SelectableBodyList } from '../../components/nft-mint/mintBody'
 import { SelectableKitList } from '../../components/nft-mint/mintKit'
 import { SelectedList } from '../../components/nft-mint/selectedList'
+import { SelectableNFTList } from '../../components/nft-mint/styleNft'
 import useNFTMint from '../../hooks/contract/service/useNFTMint'
+import { useStyledNFTsQuery } from '../../hooks/queries/useStyledNFTsQuery'
 
 
 const { TabPane } = Tabs
+const { Link } = Anchor
+
+const onAnchorClick = (
+  e: React.MouseEvent<HTMLElement>,
+  link: {
+    title: React.ReactNode;
+    href: string;
+  },
+) => {
+  e.preventDefault()
+  console.log(link)
+}
 
 export type KitProperties = {
   id: number
@@ -268,6 +285,19 @@ const ArtistDetailTab = styled.div`
   height: auto;
   display: flex;
   justify-content: space-between;
+
+  .ant-anchor-link-title {
+    font-size: 1.2em;
+    color: #fff;
+  }
+
+  .ant-anchor-link-active > .ant-anchor-link-title {
+    color: #00EBA4;
+  }
+
+  .ant-anchor-ink::before{
+    background-color: #00EBA4;
+  }
   
   
   @media screen and (max-width: 1100px) {
@@ -373,18 +403,25 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 
   return (
     <ArtistDetailTab>
-      <Affix offsetTop={125}>
-        <NavLinksContainer id="NavLinksContainer" >
+      {/*<Affix offsetTop={125}>*/}
+      {/*  <NavLinksContainer id="NavLinksContainer" >*/}
 
-          {
-            userData?.artDetail.map((item:any, index:number) => (
-              <li key={index}>
-                <MenuItem onClick={() => scrollToPart(item.title)}> {item.title} </MenuItem>
-              </li>
-            ))
-          }
-        </NavLinksContainer>
-      </Affix>
+      {/*    {*/}
+      {/*      userData?.artDetail.map((item:any, index:number) => (*/}
+      {/*        <li key={index}>*/}
+      {/*          <MenuItem onClick={() => scrollToPart(item.title)}> {item.title} </MenuItem>*/}
+      {/*        </li>*/}
+      {/*      ))*/}
+      {/*    }*/}
+      {/*  </NavLinksContainer>*/}
+      {/*</Affix>*/}
+      <Anchor onClick={onAnchorClick} offsetTop={150}>
+        {
+          userData?.artDetail.map((item: any, index: number) => (
+            <Link href={`#${item.title}`}  key={index} title={item.title} />
+          ))
+        }
+      </Anchor>
 
 
       <TabItem>
@@ -407,7 +444,19 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
   const [kits, setKits] = useState<Map<string, any>>(new Map())
 
+  const [style, setStyle] = useState('')
+
+  const [show, setShow] = useState<boolean>(false)
+
   const { mintNFT } = useNFTMint()
+
+  const { data: styleList } = useStyledNFTsQuery()
+
+  useMemo(() => {
+    if (!show) {
+      setStyle('')
+    }
+  },[show])
 
 
   useEffect(() => {
@@ -487,7 +536,26 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         <SelectedList body={body} kitList={kits} />
       </CenterContainer>
 
-      <MintButton onClick={ () => mintNFT(body, kits)}  >Mint</MintButton>
+      <AIContainer>
+        <div className="title">
+          <div>AI-GEN</div>
+          <StyledSwitch>
+            <Switch onChange={() => setShow(!show)} />
+          </StyledSwitch>
+        </div>
+        <AIContent  >
+          <div className={ show ? 'style' : 'hide' }>
+            <SelectableNFTList
+              selectedValue={style}
+              onSelect={v=> setStyle(v)}
+              list={styleList?.map((style: { image: any}) => style?.image)}
+            />
+          </div>
+        </AIContent>
+
+      </AIContainer>
+
+      <MintButton onClick={ () => mintNFT(body, kits, style)}  >Mint</MintButton>
     </MintWrapper>
   )
 }
@@ -496,6 +564,10 @@ const ArtistDetail: React.FC = () => {
   const { data: userData } = useArtistDetailQuery()
 
   const { data: artistKisList } = useArtistKitQuery()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [userData])
 
   return (
     <Wrapper>

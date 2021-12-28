@@ -9,8 +9,8 @@ const useNFTMint = () => {
 
   const mintNFT = useCallback(
     //todo: fix any when the interface is given
-    async (body: any, kit: any) => {
-      console.log(body, kit)
+    async (body: any, kit: any, style: any) => {
+      console.log(body, kit,style)
     }, [account]
   )
 
