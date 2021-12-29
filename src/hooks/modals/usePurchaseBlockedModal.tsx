@@ -1,46 +1,50 @@
-import { Button, Divider, Modal } from 'antd'
+import { Divider, Modal } from 'antd'
 import React from 'react'
 // import StepOne from '@/assets/images/allModalImg/number1.png'
 // @ts-ignore
 import styled from 'styled-components'
 import { useModal } from '../useModal'
+import WarningIcon from '../../assets/images/modalImages/warning.svg'
+
 
 const PurchaseBlockedModal = styled(Modal)`
   .ant-modal-content {
-    border-radius: 1rem;
-    width: 62.3rem;
-    height: 43.8rem;
+    border-radius: 10px;
+  }
+  .ant-modal-body,
+  .ant-modal-header {
+    background-color: #2A2E35;!important;
+
   }
 
   .ant-modal-header {
-    border-top-right-radius: 1rem;
-    border-top-left-radius: 1rem;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+  }
+
+  .ant-divider-horizontal {
+    margin: 15px 0;
   }
 
   .head-title {
     display: flex;
     justify-content: center;
     font-weight: 550;
-    font-size: 1.8rem;
+    font-size: 1.8em;
+    color: #fff;
   }
 
   .step-tip {
-    font-size: 1.6rem;
+    font-size: 1.4em;
     font-weight: 500;
     color: #999999;
-    line-height: 2.2rem;
   }
 
   .step-one-border {
-    margin-top: 2.6rem;
-    width: 55.7rem;
-    height: 22.9rem;
-    border: 1px solid #DCDCDC;
 
     .border-head {
       display: flex;
       align-content: center;
-      padding: 1.9rem 1.9rem;
 
 
       .step-title {
@@ -54,28 +58,19 @@ const PurchaseBlockedModal = styled(Modal)`
     }
 
     .border-body {
-      padding: 1.9rem 1.9rem;
-      background: rgba(124, 109, 235, 0.1);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
 
       .border-detail {
-        font-size: 1.6rem;
+        text-align: center;
+        font-size: 1.6em;
         font-weight: 500;
-        color: #999999;
-        line-height: 22px;
-      }
+        width: 100%;
+        color: white;
 
-      .ant-btn {
-        width: 16.1rem;
-        height: 5rem;
-        background: #7C6DEB;
-        border-radius: 1rem;
-        margin-top: 2.1rem;
-      }
-
-      .ant-btn > span {
-        font-size: 1.8rem;
-        font-weight: 550;
-        color: #FFFFFF;
       }
     }
   }
@@ -88,23 +83,14 @@ export const usePurchaseBlockedModal = () => {
       onCancel={close}
       footer={null}
     >
-      <div className="head-title">
-        Complete your purchase
-      </div>
+      <div className="head-title" >Oops!</div>
       <Divider />
-      <div className="step-tip">
-        To complete your purchase, follow these steps:
-      </div>
       <div className="step-one-border">
-        <div className="border-head">
-          {/*<img src={StepOne} alt="" style={{ width: '3.7rem', height: '3.7rem' }} />*/}
-          <div className="step-title">Deposit or convert funds</div>
-        </div>
         <div className="border-body">
+          <img src={WarningIcon} />
           <div className="border-detail">
-            You don&apos;t have enough funds to complete the purchase. Please deposit or convert your funds.
+            Sorry, you don&apos;t have enough funds to complete the purchase.
           </div>
-          <Button>Deposit</Button>
         </div>
       </div>
     </PurchaseBlockedModal>

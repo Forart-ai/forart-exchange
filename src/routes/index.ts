@@ -13,6 +13,7 @@ import GanIcon from '../assets/images/siderIcon/f-idea.svg'
 import GeneratorIcon from '../assets/images/siderIcon/generator.svg'
 import MarketplaceIcon from '../assets/images/siderIcon/marketplace.svg'
 import GamesIcon from '../assets/images/siderIcon/games.svg'
+import NftChatroom from '../components/nft-chatroom'
 
 export type Route = {
   path: string
@@ -45,6 +46,13 @@ const routes: Route[] = [
     title: 'Artist Detail',
     component: ArtistDetail,
     hidden: true
+  },
+  {
+    path: '/nft-chatroom',
+    title: 'NFT-Chatroom',
+    icon: GamesIcon,
+    component: NftChatroom,
+    disable: true
   },
   {
     path: '/AI-Gen',

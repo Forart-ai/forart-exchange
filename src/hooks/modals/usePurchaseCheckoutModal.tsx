@@ -1,6 +1,5 @@
-import nftDetail from '../../pages/marketplace/nftDetail'
 import React, { useCallback, useState } from 'react'
-import { Button, Checkbox, Divider, message, Modal } from 'antd'
+import { Button, Checkbox, message, Modal } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
 // @ts-ignore
@@ -217,10 +216,28 @@ export const usePurchaseCheckoutModal = (nftDetail: any, checkoutPassed: () => v
 
   const handleCheckout = async () => {
     setChecking(true)
-    const  res =  await checkBalance(nftDetail)
-    if (res) {
-      checkoutPassed()
-    }
+    // const  res =  await checkBalance(nftDetail)
+    // if (res) {
+    //   console.log(res)
+    //   checkoutPassed()
+    // }
+    checkBalance(nftDetail?.price)
+      .then(res => {
+        if (res){
+          setChecking(false)
+          checkoutPassed()
+        } else {
+          setChecking(false)
+          checkoutFailed()
+        }
+
+      })
+      .catch(e => {
+        console.log(e)
+        message.warn(e?.toString() ?? 'Error occurred while checking balance')
+        setChecking(false)
+        checkoutFailed()
+      })
   }
 
 

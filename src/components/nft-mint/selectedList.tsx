@@ -14,6 +14,13 @@ const Container = styled.div`
   height: 155px;
   display: flex;
   justify-content: space-between;
+  overflow-x: scroll;
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 5px;
+    background-color: transparent;
+  }
 `
 
 const MintItems = styled.div`

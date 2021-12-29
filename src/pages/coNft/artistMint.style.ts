@@ -20,6 +20,7 @@ export const TopContainer = styled.div `
   
   @media screen and (max-width: 1100px) {
     flex-direction: column;
+    height: auto;
   }
 `
 
@@ -35,13 +36,21 @@ export const BodyContent = styled.div `
 
   @media screen and (max-width: 1100px) {
     width: 100%;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
   }
 `
 
 export const SwiperList = styled.div`
-  width: fit-content;
+  width: 20%;
   height: 100%;
   display: flex;
+  
+  @media screen and (max-width: 1100px) {
+    width: 100%;
+  }
   
 `
 
@@ -81,9 +90,13 @@ export const SelectedBody = styled.div`
   img {
     width: 100%;
     height: 100%;
+    margin-bottom: 10px;
   }
   
-  
+  @media screen and (max-width: 1100px) {
+    width: 100%;
+    
+  }
 `
 
 export const PriceContainer = styled.div`
@@ -115,19 +128,23 @@ export const PriceContainer = styled.div`
   
   &:before,
   &:after {
-
     background: linear-gradient(110deg, #3376ff, #3efff6 65%, #4effd2);
-
   }
-
-
-
+  
     .price {
     z-index: 5;
     background: linear-gradient(90deg ,#12dbe4, #02fbab);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.4rem;
+    font-size: 1.6em;
+  }
+  
+  @media screen and (max-width: 1100px) {
+    padding: 0 10px;
+    
+    .price {
+      font-size: 1.4em;
+    }
   }
 `
 
@@ -139,6 +156,7 @@ export const KitContent = styled.div`
 
   @media screen and (max-width: 1100px) {
     width: 100%;
+    margin-top: 20px;
   }
 `
 
@@ -188,6 +206,10 @@ export const MintContainer = styled.div`
   height: 600px;
   display: flex;
   justify-content: space-between;
+  
+  @media screen and (max-width: 1100px) {
+    height: auto;
+  }
 `
 
 export const KitListContainer = styled.div`
@@ -195,12 +217,16 @@ export const KitListContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
-  height: 520px;
+  max-height: 520px;
   overflow-y: scroll;
   overflow-x: hidden;
+  
   ::-webkit-scrollbar {
     width: 10px;
     background-color: transparent;
+  }
+  
+  @media screen and (max-width: 1100px) {
   }
 
 

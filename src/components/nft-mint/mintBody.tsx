@@ -3,6 +3,7 @@ import { ImageBorder, StyledImage, SwiperList } from '../../pages/coNft/artistMi
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
 import { Navigation } from 'swiper'
 import { Checkbox } from 'antd'
+import { useMediaQuery } from 'react-responsive'
 
 
 export const SelectableBodyItem: React.FC<{ src: any, checked?: boolean, onSelect:(_?: string) => void}> = ({
@@ -46,14 +47,16 @@ export const SelectableBodyList: React.FC<{selectedValue?: any, onSelect: (_?: s
   list
 }) => {
 
+  const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
+
   return (
     <SwiperList>
       <Swiper
         modules={[Navigation]}
-        slidesPerView={5}
+        slidesPerView={isMobile ? 3 : 5}
         // navigation
-        spaceBetween={10}
-        direction="vertical"
+        spaceBetween={isMobile ? 50 : 10}
+        direction= {isMobile ? 'horizontal' :'vertical'}
       >
         {
           list?.map((item,key)=>(

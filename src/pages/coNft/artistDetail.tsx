@@ -29,6 +29,7 @@ import { SelectedList } from '../../components/nft-mint/selectedList'
 import { SelectableNFTList } from '../../components/nft-mint/styleNft'
 import useNFTMint from '../../hooks/contract/service/useNFTMint'
 import { useStyledNFTsQuery } from '../../hooks/queries/useStyledNFTsQuery'
+import { useMediaQuery } from 'react-responsive'
 
 
 const { TabPane } = Tabs
@@ -72,6 +73,10 @@ const Wrapper = styled.div`
   margin: auto;
   //padding-bottom: 50px;
   padding: 30px 20px;
+  
+ @media screen and (max-width: 1100px) {
+   height: auto;
+ } 
 `
 
 const ArtistDetailContainer = styled.div`
@@ -101,7 +106,12 @@ const HeaderContainer = styled.div<{backgroundImage?: string}>`
  background: url(${HeaderBack}) no-repeat center;
  background-size: cover;
  `
-}
+};
+  
+  @media screen and (max-width: 1100px) {
+    padding: 0.8rem 0.5rem;
+    height: 700px;
+  }
   
 `
 
@@ -146,6 +156,11 @@ const FollowersInfo = styled.div`
   align-items: center;
   border-radius: 20px;
   padding: 15px 20px;
+  
+  @media screen and (max-width: 1100px) {
+    flex-direction: column;
+    height: 18%;
+  }
 `
 
 const LeftArea = styled.div` 
@@ -278,6 +293,10 @@ const DescriptionContainer = styled.div`
   flex-direction: column;
   background: linear-gradient(0deg, rgba(14,22,39,.8),rgba(36,52,84,.8)) border-box;
   
+  @media screen and (max-width: 1100px) {
+    padding: 10px;
+  }
+  
 `
 
 const ArtistDetailTab = styled.div`
@@ -285,6 +304,7 @@ const ArtistDetailTab = styled.div`
   height: auto;
   display: flex;
   justify-content: space-between;
+
 
   .ant-anchor-link-title {
     font-size: 1.2em;
@@ -310,8 +330,9 @@ const TabItem = styled.div`
   max-width: calc(100% - 40px);
   width: 80%;
   height: auto;
-  
-  
+
+
+
   .item{
     width: 100%;
     //border: 1px red solid;
@@ -333,6 +354,11 @@ const TabItem = styled.div`
   .content {
     color: #b2b2b2;
     font-size: 1rem;
+  }
+
+  @media screen and (max-width: 1100px) {
+    width: 100%;
+    max-width: calc(100% - 10px);
   }
 `
 
@@ -401,6 +427,9 @@ const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 
 const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 
+  const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
+
+
   return (
     <ArtistDetailTab>
       {/*<Affix offsetTop={125}>*/}
@@ -415,7 +444,7 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
       {/*    }*/}
       {/*  </NavLinksContainer>*/}
       {/*</Affix>*/}
-      <Anchor onClick={onAnchorClick} offsetTop={150}>
+      <Anchor onClick={onAnchorClick} offsetTop={150} style={isMobile ? { display:'none' }  : {}}>
         {
           userData?.artDetail.map((item: any, index: number) => (
             <Link href={`#${item.title}`}  key={index} title={item.title} />

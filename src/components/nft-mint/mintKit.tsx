@@ -57,8 +57,14 @@ const KitItemContainer = styled.div`
   height: 180px;
 
 
+
   &:last-child {
     margin-right: auto;
+  }
+  
+  @media screen and (max-width: 1100px) {
+    min-width: 140px;
+    margin: 10px 5px;
   }
 `
 
