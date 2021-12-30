@@ -49,7 +49,8 @@ const routes: Route[] = [
     title: 'NFT-Chatroom',
     icon: GamesIcon,
     component: NftChatroom,
-    disable: true
+    disable: true,
+    hidden:true
   },
   {
     path: '/AI-Gen',

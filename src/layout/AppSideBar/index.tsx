@@ -2,11 +2,10 @@ import React from 'react'
 // @ts-ignore
 import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu } from 'antd'
+import { Affix, Menu } from 'antd'
 import routes, { Route } from '../../routes'
 import TwitterIcon from '../../assets/images/contactLink/twitter.png'
 import TelegramIcon from '../../assets/images/contactLink/telegram.png'
-import WebsiteIcon from '../../assets/images/contactLink/website.png'
 import DiscordIcon from '../../assets/images/contactLink/discord.png'
 
 const AppSideBarContent = styled.div`
@@ -82,16 +81,17 @@ margin-left: 50px;
 `
 
 const LinkContainer = styled.div`
-  position: fixed;
-  width: 69px;
+  position: relative;
+  bottom: 20px;
   height: 150px;
-  bottom: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   align-items: center;
 `
+
+
 
 
 const SCExternalLink = styled.a`
@@ -108,11 +108,13 @@ const SCExternalLink = styled.a`
   }
   `
 
+
+
 export  const EXTERNAL_LINKS: Array<{ icon: string, link: string }> = [
   { icon: TwitterIcon, link: 'https://twitter.com/forart_ai' },
   { icon: TelegramIcon, link: 'https://t.me/forart_co' },
   { icon: DiscordIcon, link: 'https://discord.gg/RDaUkaW39S' },
-  { icon: WebsiteIcon, link:'https://forart.co/' }
+  // { icon: WebsiteIcon, link:'https://forart.co/' }
 ]
 
 const AppSideBar:React.FC = () => {
@@ -146,18 +148,26 @@ const AppSideBar:React.FC = () => {
             )
           })
         }
+
+
+
       </CustomizedMenu>
 
-      <LinkContainer >
-        {
-          EXTERNAL_LINKS.map(({ icon,link }) => (
+      <Affix offsetTop={500} >
+        <LinkContainer >
 
-            <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
-              <img src={icon} alt={link} />
-            </SCExternalLink>
-          ))
-        }
-      </LinkContainer>
+          {
+            EXTERNAL_LINKS.map(({ icon,link }) => (
+
+              <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
+                <img src={icon} alt={link} />
+              </SCExternalLink>
+            ))
+          }
+
+        </LinkContainer>
+      </Affix>
+
     </AppSideBarContent>
   )
 }
