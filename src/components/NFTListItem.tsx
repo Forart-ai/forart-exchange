@@ -66,6 +66,7 @@ const TopDetail = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 1.1em;
 
 
   .like {
@@ -79,6 +80,7 @@ const BottomDetail = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 1em;
   
   .artist-name {
     color:#87A7B3;

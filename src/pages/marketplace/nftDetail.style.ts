@@ -1,7 +1,7 @@
 // @ts-ignore
 import styled from 'styled-components'
 import { Button, Tabs } from 'antd'
-import CodingFlagIcon from '../../assets/images/marketplace/coding-flag.png'
+
 const { TabPane } = Tabs
 
 export const Wrapper = styled.div`
@@ -10,8 +10,6 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   overflow: hidden;
-  
- 
 `
 
 export const NFTDetailContainer = styled.div`
@@ -28,7 +26,6 @@ export const TopRow = styled.div`
   height: 100%;
 
   @media screen and (max-width: 1100px) {
-    border: 1px red solid;
     flex-direction: column;
   }
 
@@ -76,44 +73,6 @@ export const InfoContainer = styled.div`
   }
 `
 
-export const ItemsContainer = styled.div`
- width: 100%;
- height: 100%;
- display: flex;
- justify-content: space-between;
-
- .border {
-  width: 45%;
-  height: 100%;
-  background: #282c34;
-  border-radius: 10px;
-
-
-  .row {
-   padding: 0 10px;
-   height: 50%;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-
-   .label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #B3B3B3;
-
-   }
-
-   .value {
-    font-size: 14px;
-    font-weight: 550;
-    color: white;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-   }
-  }
-}
-`
 
 export const TopBaseInfo = styled.div`
   width: 100%;
@@ -122,7 +81,7 @@ export const TopBaseInfo = styled.div`
   align-items: start;
   
   .nft-name {
-    font-size: 34px;
+    font-size: 2.2em;
     font-weight: bolder;
     color: #F9F9F9;
     margin-bottom: 5px;
@@ -137,7 +96,7 @@ export const TopBaseInfo = styled.div`
     height: 100%;
     align-items: center;
     justify-content: space-between;
-    font-size: 16px;
+    font-size: 1.2em;
     color: #F9F9F9;
     width: 130px;
     
@@ -173,12 +132,13 @@ export const CenterInfo = styled.div`
     height: 10%;
     padding: 5px 10px;
     overflow-y: scroll;
-    font-size: 16px;
+    font-size: 1.3em;
     font-weight: normal;
     line-height: 20px;
     margin-top: 10px;
     background-color: #2A2E35;
     border-radius: 10px;
+    
     //overflow: hidden;
     //text-overflow: ellipsis;
     //white-space: nowrap;
@@ -186,27 +146,27 @@ export const CenterInfo = styled.div`
 
   .text {
     color: #F9F9F9;
-    font-size: 16px;
+    font-size: 1.2em;
     display: flex;
     margin: 10px 0;
     align-items: center;
 
     .price {
       margin-left: 5px;
-      font-size: 20px;
+      font-size: 1.3em;
       color: #00EBA4;
     }
   }
 
   .info-label {
-    font-size: 16px;
+    font-size: 1.2em;
     color: #cecaca;
   }
 
   .info-value {
     color: #F9F9F9;
     user-select: none;
-    font-size: 18px;
+    font-size: 1.3em;
     max-height: 100px;
 
   }
@@ -228,12 +188,12 @@ export const BottomInfo = styled.div`
 
     .label {
       color: #B3B3B3;
-      font-size: 16px;
+      font-size: 1.3em;
       margin-bottom: 10px;
     }
     .value {
       color: #F9F9F9;
-      font-size: 18px;
+      font-size: 1.4em;
       margin-bottom: 30px;
 
       img {
@@ -263,7 +223,7 @@ export const NFTBaseInfoContainer = styled.div`
 export const StyledTab  = styled(Tabs)`
   user-select: none;
   .ant-tabs-tab {
-    font-size: 16px;
+    font-size: 1.4em;
     color: #608599 !important;
   }
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
@@ -307,7 +267,7 @@ export const CenterRow = styled.div`
 `
 
 export const Title = styled.div`
- font-size: 26px;
+ font-size: 1.8em;
  font-weight: 550;
  color: #F9F9F9;
  margin-bottom: 20px;
@@ -334,28 +294,6 @@ export const CodingFlag = styled.img`
   height: 100px;
 `
 
-export const PropertiesItem = styled.div`
- width: 45%;
- height: 40%;
- display: flex;
- align-items: center;
- flex-direction: column;
- justify-content: center;
- background: #282c34;
- border-radius: 10px;
-
- color: white;
- 
- .key {
-  font-size: 18px;
-  font-weight: 550;
- }
- .value ,.percent {
-  font-size: 15px;
-  font-weight: 500;
-  color: #F9F9F9;
- }
-`
 
 export const HistoryTradeTable = styled.div`
   width: 100%;
@@ -378,79 +316,6 @@ export const FootRow = styled.div`
   justify-content: space-between;
 `
 
-export const OtherArtworksContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-
-  .artwork-group {
-    height: 300px;
-    width: 200px;
-    background-color: #282c34;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    position: relative;
-
-    .artwork-info {
-      height: 100%;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-
-
-      .artwork-img {
-        height: 80%;
-        width: 100%;
-        object-fit: contain;
-        border-radius: 10px;
-        display: flex;
-        justify-content: center;
-        
-        img {
-          height: 100%;
-          width: 100%;
-        }
-      }
-      
-      
-
-      .artwork-describe {
-        padding: 0 15px;
-
-        width: 100%;
-        font-size: 14px;
-        font-weight: 550;
-        color: white;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        margin-bottom: 15px;
-        -webkit-box-orient: vertical;
-      }
-    }
-
-    .artwork-like {
-      padding: 0 15px;
-
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      
-
-      .liked {
-        display: flex;
-        font-size: 14px;
-        font-weight: 500;
-        color: white;
-      }
-    }
-  }
-  
-`
 
 export const Operating = styled.div`
   width: 100%;

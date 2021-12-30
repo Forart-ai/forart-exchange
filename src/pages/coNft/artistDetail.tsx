@@ -4,7 +4,7 @@ import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 
 import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
-import { Anchor, Avatar, Switch, Tabs } from 'antd'
+import { Anchor, Avatar, Button, Switch, Tabs } from 'antd'
 import { DollarOutlined, SmileOutlined } from '@ant-design/icons'
 import {
   AIContainer,
@@ -136,13 +136,13 @@ const ArtistInfo = styled.div`
     background: linear-gradient(90deg, #12dbe4, #02fbab);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     text-align: center;
   }
 
   .describe {
     color: #b2b2b2;
-    font-size: 1rem;
+    font-size: 1.3em;
     text-align: center;
   }
 `
@@ -173,10 +173,10 @@ const LeftArea = styled.div`
   //border: 1px red solid;
   
   .label {
-    font-size: 1rem !important;
+    font-size: 1.3em !important;
   }
   .value{
-    font-size: 1.7rem !important;
+    font-size: 1.8em !important;
     margin-right: 10px;
   }
 `
@@ -244,7 +244,7 @@ const StyledTab = styled(Tabs)`
   margin-top: 20px;
 
   .ant-tabs-tab {
-    font-size: 20px;
+    font-size: 2em;
     color: #E5E8EB !important;
   }
 
@@ -332,18 +332,17 @@ const TabItem = styled.div`
   height: auto;
 
 
-
-  .item{
+  .item {
     width: 100%;
     //border: 1px red solid;
   }
 
   .title {
-    font-size: 2.5rem;
+    font-size: 2.5em;
     color: #fff;
   }
 
-  .image-border{
+  .image-border {
     max-width: 100%;
     object-fit: contain;
     border-radius: 20px;
@@ -352,8 +351,8 @@ const TabItem = styled.div`
   }
 
   .content {
-    color: #b2b2b2;
-    font-size: 1rem;
+    color: #d5d5d5;
+    font-size: 1.4em;
   }
 
   @media screen and (max-width: 1100px) {
@@ -362,34 +361,7 @@ const TabItem = styled.div`
   }
 `
 
-const NavLinksContainer = styled.div`
-  width: 20%;
-  height: auto;
-  align-items: start;
-  display: flex;
-  flex-direction: column;
 
-  li {
-    width: 100%;
-    list-style: none;
-    float: left;
-    cursor: pointer;
-    font-size: 18px;
-    margin-bottom: 10px;
-    border-bottom: 1px #3a5e71 solid;
-    
-}
-  
-
-  @media screen and (max-width: 1100px) {
-    display: none;
-  }
-
-`
-
-const MenuItem = styled.div<{activate?: boolean}>`
-  color: #61dafb;
-`
 
 const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 
@@ -432,18 +404,6 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 
   return (
     <ArtistDetailTab>
-      {/*<Affix offsetTop={125}>*/}
-      {/*  <NavLinksContainer id="NavLinksContainer" >*/}
-
-      {/*    {*/}
-      {/*      userData?.artDetail.map((item:any, index:number) => (*/}
-      {/*        <li key={index}>*/}
-      {/*          <MenuItem onClick={() => scrollToPart(item.title)}> {item.title} </MenuItem>*/}
-      {/*        </li>*/}
-      {/*      ))*/}
-      {/*    }*/}
-      {/*  </NavLinksContainer>*/}
-      {/*</Affix>*/}
       <Anchor onClick={onAnchorClick} offsetTop={150} style={isMobile ? { display:'none' }  : {}}>
         {
           userData?.artDetail.map((item: any, index: number) => (
@@ -584,7 +544,11 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
       </AIContainer>
 
-      <MintButton onClick={ () => mintNFT(body, kits, style)}  >Mint</MintButton>
+      <MintButton  >
+        <Button style={{ width: '100px' }} onClick={ () => mintNFT(body, kits, style)}>
+          Mint
+        </Button>
+      </MintButton>
     </MintWrapper>
   )
 }

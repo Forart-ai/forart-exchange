@@ -9,8 +9,7 @@ import ai5 from '../../assets/images/AIGen/ai5.png'
 import BannerImage from '../../assets/images/AIGen/ai-gen-banner.jpg'
 import { LoadingOutlined } from '@ant-design/icons'
 import { aiGeneratorImage, aiGeneratorImageByContent } from '../../apis/ai'
-import { base64ToIPfsUri, dictionaryToBase64 } from '../../utils'
-import { NFTCreateForm } from '../nftCreate'
+import { dictionaryToBase64 } from '../../utils'
 
 
 const Wrapper = styled.div`
@@ -18,13 +17,6 @@ const Wrapper = styled.div`
   height: 1500px;
   display: flex;
   justify-content: center;
-  
-  .text {
-    font-size: 18px;
-    color: white;
-  }
-
-  
 `
 
 const AIGenContent = styled(Form)`
@@ -35,9 +27,10 @@ const AIGenContent = styled(Form)`
 const AIGenContentItem = styled(Form.Item)`
   
   .ant-form-item-label > label {
-    font-size: 18px;
+    font-size: 1.8em;
     font-weight: 500;
     color: #02A6F5;
+
   }
 
   .ant-input {
@@ -50,19 +43,11 @@ const AIGenContentItem = styled(Form.Item)`
     border-radius: 10px !important;
     border: none;
 
-    font-size: 16px !important;
+    font-size: 1.2em;
     font-weight: 500 !important;
     color: white !important;
     line-height: 20px !important;
   }
-`
-
-const Title = styled.div`
-  font-weight: 550;
-  font-size: 46px;
-  background-image: -webkit-linear-gradient(left, #00EBA4, #02A6F5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 `
 
 const Banner = styled.div`
@@ -90,7 +75,7 @@ const Introduction = styled.div`
   
   .title {
     width: fit-content;
-    font-size: 38px;
+    font-size: 2.6em;
     background-image: -webkit-linear-gradient(left, #00EBA4, #02A6F5);
     font-weight: 550;
     -webkit-background-clip: text;
@@ -99,14 +84,14 @@ const Introduction = styled.div`
   }
   
   .sub-title {
-    font-size: 24px;
+    font-size: 2.1em;
     font-weight: 550;
     color: #02A6F5;
   }
   
   .description {
     color: #02A6F5;
-    font-size: 16px;
+    font-size: 1.3em;
   }
 
   @media screen and (max-width: 1100px) {
@@ -140,13 +125,13 @@ const EnterContent = styled.div`
   .enter {
     width: 200px;
     color: #02A6F5;
-    font-size: 22px;
+    font-size: 1.7em;
     red: left;
   }
 
   .enterData {
     color: #EADEDE;
-    font-size: 18px;
+    font-size: 1.3em;
     margin-left: 30px;
   }
   
@@ -167,7 +152,7 @@ const SubTitle = styled.div`
   color: #00EBA4;
   width: fit-content;
   font-weight: 550;
-  font-size: 28px;
+  font-size: 2em;
   margin-bottom: 20px;
   border-bottom: 2px solid #00EBA4;
 `
@@ -179,7 +164,7 @@ const SampleImg = styled.div`
   .enter {
     width: 200px;
     color: #02A6F5;
-    font-size: 22px;
+    font-size: 1.7em;
     text-align: left;
     margin-right: 30px;
   }

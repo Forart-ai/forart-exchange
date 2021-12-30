@@ -45,7 +45,7 @@ const  LeftArea = styled.div`
 const Title = styled.div`
   width: 100%;
   text-align: center;
-  font-size: 42px;
+  font-size: 2.2em;
   text-transform: uppercase;
   background: linear-gradient(180deg ,#12dbe4, #02fbab);
   -webkit-background-clip: text;
@@ -67,7 +67,7 @@ const  RightArea = styled.div`
     height: 100%;
     
     .label {
-      font-size: 22px;
+      font-size: 1.6em;
       color: #fff;
     }
   }
@@ -76,7 +76,7 @@ const  RightArea = styled.div`
 const MainInfo = styled.div`
   
   .title {
-    font-size: 42px;
+    font-size: 2.8em;
     text-transform: uppercase;
     background: linear-gradient(90deg ,#12dbe4, #02fbab);
     -webkit-background-clip: text;
@@ -84,7 +84,7 @@ const MainInfo = styled.div`
   }
   
   .description {
-    font-size: 16px;
+    font-size: 1.3em;
     color: #fff;
   }
  
@@ -134,7 +134,7 @@ const PoolsContainer = styled.div`
     background: linear-gradient(90deg ,#12dbe4, #02fbab);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 42px;
+    font-size: 2.8em;
   }
   
 `
@@ -153,7 +153,7 @@ const StyledCountUp = styled(CountUp)`
   background: linear-gradient(90deg ,#12dbe4, #02fbab);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 33px;
+  font-size: 2.8em;
 `
 
 const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {

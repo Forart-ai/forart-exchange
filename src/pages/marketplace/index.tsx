@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNFTsQuery } from '../../hooks/queries/useNFTsQuery'
 // @ts-ignore
 import styled from 'styled-components'
@@ -6,16 +6,14 @@ import banner from '../../assets/images/home/banner-new.png'
 
 import { NftListItem } from '../../types/NFTDetail'
 import NFTListItem from '../../components/NFTListItem'
-import { Button, Menu, Pagination } from 'antd'
-import NFTCreate from '../nftCreate'
+import { Button, Pagination } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { LoadingOutlined, SearchOutlined } from '@ant-design/icons'
 import { ThemeInput } from '../../styles/ThemeInput'
 import { ForartNftTransactionStatus } from '../../apis/nft'
-import {  StatusSelector } from '../../components/NFTListSelectors/index'
+import { StatusSelector } from '../../components/NFTListSelectors/index'
 import { useMediaQuery } from 'react-responsive'
-
 
 
 const Wrapper = styled.div`
@@ -50,7 +48,7 @@ const Banner = styled.div`
 `
 
 const Title = styled.div`
-  font-size: 34px;
+  font-size: 2.5em;
   font-weight: bolder;
   background-image: -webkit-linear-gradient(left, #00EBA4, #02A6F5);
   -webkit-background-clip: text;
@@ -94,6 +92,7 @@ const StyledButton = styled(Button)`
   border: none;
   color: white;
   border-radius: 10px;
+  font-size: 1.2em;
 
   @media screen and (max-width: 1100px) {
     width: 90vw;

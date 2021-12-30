@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import { useStyledNFTsQuery } from '../../hooks/queries/useStyledNFTsQuery'
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
-import { Button, Checkbox, Image as AntdImage, Popover } from 'antd'
+import { Button, Checkbox, Image as AntdImage } from 'antd'
 import SwiperCore, { EffectCoverflow, Navigation, Pagination } from 'swiper'
 import 'swiper/swiper.scss'
 import 'swiper/modules/navigation/navigation.scss'
@@ -15,7 +15,7 @@ import ContentEx from '../../assets/images/aiGenerator/contentEx.jpg'
 import ResultEx from '../../assets/images/aiGenerator/resultEx.jpg'
 import { LoadingOutlined } from '@ant-design/icons'
 import { aiGeneratorStyle } from '../../apis/ai'
-import {  base64ToIPfsUri } from '../../utils'
+import { base64ToIPfsUri } from '../../utils'
 import { useHistory } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import { useNFTsQuery } from '../../hooks/queries/useNFTsQuery'
@@ -55,7 +55,7 @@ const Introduction = styled.div`
   
   .title {
     width: fit-content;
-    font-size: 38px;
+    font-size: 2.6em;
     background-image: -webkit-linear-gradient(left, #00EBA4, #02A6F5);
     font-weight: 550;
     -webkit-background-clip: text;
@@ -64,14 +64,14 @@ const Introduction = styled.div`
   }
   
   .sub-title {
-    font-size: 24px;
+    font-size: 2.1em;
     font-weight: 550;
     color: #02A6F5;
   }
   
   .description {
     color: #02A6F5;
-    font-size: 16px;
+    font-size: 1.3em;
   }
   
   @media screen and (max-width: 1100px) {
@@ -129,7 +129,7 @@ const SubTitle = styled.div`
   color: #00EBA4;
   width: fit-content;
   font-weight: 550;
-  font-size: 28px;
+  font-size: 2em;
   margin-bottom: 20px;
   border-bottom: 2px solid #00EBA4;
    
@@ -203,13 +203,23 @@ const ResultNFTColumn = styled.div`
     align-items: center;
     flex-direction: column;
     position: relative;
+    
+    .hint {
+      width: 100%;
+      color: white;
+      font-size: 1.2em;
+      position: absolute;
+      top: 50px;
+      z-index: 4;
+      left: 80px;
+    }
   }
   
   .loading {
     position: absolute;
     top:240px;
     left: 180px;
-    font-size: 40px;
+    font-size: 2em;
     color: #4779B5;
     z-index: 2;
   }
@@ -423,8 +433,7 @@ const NewNFTContainer:React.FC<{ newNFTSrc: string, generating: boolean }> = ({ 
           generating && (
             <div>
               <LoadingOutlined className="loading" />
-              <div style={{ color:'white' }}>This will take about 10~13sec</div>
-
+              <div className="hint">This will take about 10~13sec</div>
             </div>
 
           )

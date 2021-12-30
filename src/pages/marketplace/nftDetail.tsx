@@ -6,17 +6,11 @@ import { useNFTDetailQuery } from '../../hooks/queries/useNFTDetailQuery'
 import {
   BottomInfo,
   CenterInfo,
-  CodingFlag,
   HistoryTradeTable,
   ImageContainer,
   InfoContainer,
-  ItemsContainer,
   NFTBaseInfoContainer,
   NFTDetailContainer,
-  OtherArtworksArea,
-  OtherArtworksContainer,
-  PropertiesContainer,
-  PropertiesItem,
   StyledButton,
   StyledTab,
   StyledTabPane,
@@ -34,10 +28,6 @@ import { CopyOutlined } from '@ant-design/icons'
 import Heart from '../../assets/images/marketplace/heart.svg'
 import Heart_Fill from '../../assets/images/marketplace/heart_fill.svg'
 import Show from '../../assets/images/marketplace/view.svg'
-import more1 from '../../assets/images/marketplace/more1.jpg'
-import more2 from '../../assets/images/marketplace/more2.jpg'
-import more3 from '../../assets/images/marketplace/more3.jpg'
-import more4 from '../../assets/images/marketplace/more4.jpg'
 import Celo from '../../images/wallet/celo.svg'
 
 import { useWeb3React } from '@web3-react/core'
@@ -46,7 +36,6 @@ import moment from 'moment'
 import ThemeTable from '../../styles/ThemeTable'
 import { setNftFavorite } from '../../apis/nft'
 import { useNFTLikeQuery } from '../../hooks/queries/useNFTLikeQuery'
-import CodingFlagIcon from '../../assets/images/marketplace/coding-flag.png'
 import { useSellingModal } from '../../hooks/useSellingModal'
 import { useRefreshController } from '../../contexts/refresh-controller'
 import { useAuthorizingModal } from '../../hooks/modals/useAuthorizingModal'
@@ -326,11 +315,7 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
                 <StyledButton onClick={openSellingModal} > Sell </StyledButton>
               )
             }
-            {/*{*/}
-            {/*  isAllowToSoldOut && (*/}
-            {/*    <StyledButton onClick= { handleSoldOut}> Sold out</StyledButton>*/}
-            {/*  )*/}
-            {/*}*/}
+
             {
               !account ? (
                 <StyledButton onClick={ open }>Connect To A Wallet</StyledButton>
@@ -361,208 +346,9 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
 }
 
-const NFTMetaData: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
-  const type = useLocationQuery('type')
-
-  return (
-    <ItemsContainer>
-      <div className="border">
-        <div className="row">
-          <div className="label">NFT Contract ID: </div>
-          <div className="value">
-            {
-              type === 'own' ?
-                <div className="item-value">---</div> :
-                <div className="item-value">
-                  {shortenAddress(nftDetail?.addressContract)}
-                </div>
-            }
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="label">Token &nbsp; ID:</div>
-          <div className="value"> { shortenAddress(nftDetail?.addressOwner)} </div>
-        </div>
-      </div>
-
-      <div className="border">
-        <div className="row">
-          <div className="label">Creator&apos;s Address： </div>
-          <div className="value"> {shortenAddress(nftDetail?.addressCreate)} </div>
-        </div>
-        <div className="row">
-          <div className="label">Owner&apos;s Address：</div>
-          <div className="value" >
-            {shortenAddress(nftDetail?.addressOwner)}
-          </div>
-        </div>
-      </div>
-    </ItemsContainer>
-  )
-}
-
-const Properties: React.FC = () => {
-
-  return (
-    <div>
-      <Title>Properties</Title>
-
-      <PropertiesContainer >
-        <CodingFlag src={CodingFlagIcon} />
-
-        <PropertiesItem>
-          <div className="key">CHARACTER</div>
-          <div className="value">Cats</div>
-          <div className="percent">25% have this trait</div>
-        </PropertiesItem>
-        <PropertiesItem>
-          <div className="key">CHARACTER</div>
-          <div className="value">Cats</div>
-          <div className="percent">25% have this trait</div>
-        </PropertiesItem>
-        <PropertiesItem>
-          <div className="key">CHARACTER</div>
-          <div className="value">Cats</div>
-          <div className="percent">25% have this trait</div>
-        </PropertiesItem>
-        <PropertiesItem>
-          <div className="key">CHARACTER</div>
-          <div className="value">Cats</div>
-          <div className="percent">25% have this trait</div>
-        </PropertiesItem>
-      </PropertiesContainer>
-    </div>
-  )
-}
-
-
-const MoreArtworks: React.FC = () => {
-  return (
-    <OtherArtworksArea>
-      <Title>More Artworks</Title>
-      <OtherArtworksContainer>
-        <div className="artwork-group">
-          <div className="artwork-info">
-            <div className="artwork-img">
-              <img src={more1} style={{ objectFit:'cover' }} alt="" />
-            </div>
-            <div className="artwork-describe">Face #001</div>
-
-            <div className="artwork-like">
-              <div className="liked">
-                <img
-                  src={Heart}
-                  alt=""
-                  style={{
-                    width: '2.4rem,',
-                    height: '1.4rem',
-                    display: 'flex',
-                    alignSelf: 'center',
-                    marginRight: '0.2rem'
-                  }}
-                />
-                0
-              </div>
-
-              <div className="liked">5 CELO</div>
-            </div>
-          </div>
-
-        </div>
-        <div className="artwork-group">
-          <div className="artwork-info">
-            <div className="artwork-img">
-              <img src={more2} style={{ objectFit:'cover' }} alt="" />
-            </div>
-            <div className="artwork-describe">Face #001</div>
-
-            <div className="artwork-like">
-              <div className="liked">
-                <img
-                  src={Heart}
-                  alt=""
-                  style={{
-                    width: '2.4rem,',
-                    height: '1.4rem',
-                    display: 'flex',
-                    alignSelf: 'center',
-                    marginRight: '0.2rem'
-                  }}
-                />
-                0
-              </div>
-
-              <div className="liked">5 CELO</div>
-            </div>
-          </div>
-
-        </div>
-        <div className="artwork-group">
-          <div className="artwork-info">
-            <div className="artwork-img">
-              <img src={more3} style={{ objectFit:'cover' }} alt="" />
-            </div>
-            <div className="artwork-describe">Face #001</div>
-
-            <div className="artwork-like">
-              <div className="liked">
-                <img
-                  src={Heart}
-                  alt=""
-                  style={{
-                    width: '2.4rem,',
-                    height: '1.4rem',
-                    display: 'flex',
-                    alignSelf: 'center',
-                    marginRight: '0.2rem'
-                  }}
-                />
-                0
-              </div>
-
-              <div className="liked">5 CELO</div>
-            </div>
-          </div>
-
-        </div>
-        <div className="artwork-group">
-          <div className="artwork-info">
-            <div className="artwork-img">
-              <img src={more4} style={{ objectFit:'cover' }} alt="" />
-            </div>
-            <div className="artwork-describe">Face #001</div>
-
-            <div className="artwork-like">
-              <div className="liked">
-                <img
-                  src={Heart}
-                  alt=""
-                  style={{
-                    width: '2.4rem,',
-                    height: '1.4rem',
-                    display: 'flex',
-                    alignSelf: 'center',
-                    marginRight: '0.2rem'
-                  }}
-                />
-                0
-              </div>
-
-              <div className="liked">5 CELO</div>
-            </div>
-          </div>
-
-        </div>
-
-      </OtherArtworksContainer>
-    </OtherArtworksArea>
-  )
-}
-
 
 const NFTDetailPage: React.FC = () => {
-  const { active,account } =useWeb3React()
+  const { active,account } = useWeb3React()
 
 
   // const { forceRefresh } = useRefreshController()
@@ -589,25 +375,9 @@ const NFTDetailPage: React.FC = () => {
           </ImageContainer>
           <InfoContainer >
             <NFTBaseInfo nftDetail={nftDetail} />
-
-
-            {/*<NFTMetaData nftDetail={nftDetail} />*/}
           </InfoContainer>
         </TopRow>
-
-        {/*<CenterRow >*/}
-        {/*  <Properties />*/}
-        {/*  <HistoryTrade nftDetail={nftDetail} />*/}
-        {/*</CenterRow>*/}
-
-        {/*<FootRow>*/}
-        {/*  <MoreArtworks />*/}
-        {/*</FootRow>*/}
-
       </NFTDetailContainer>
-
-      {/*{ authorizingModal }*/}
-      {/*{ sellingModal }*/}
     </Wrapper>
   )
 

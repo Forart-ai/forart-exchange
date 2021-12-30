@@ -24,7 +24,7 @@ const Wrapper = styled.div`
 
   .title {
     font-weight: 550;
-    font-size: 46px;
+    font-size: 2.8em;
 
     background-image: -webkit-linear-gradient(left, #00EBA4, #02A6F5);
     -webkit-background-clip: text;
@@ -63,7 +63,7 @@ const NFTForm = styled(Form)`
     border-radius: 1rem !important;
     border: none;
 
-    font-size: 1.4rem !important;
+    font-size: 1.4em !important;
     font-weight: 500 !important;
     color: white !important;
     line-height: 2rem !important;
@@ -87,7 +87,7 @@ const CreatForm = styled.div`
 
 const LeftAreaForm = styled.div`
   h1 {
-    font-size: 18px;
+    font-size: 1.4em;
     font-weight: 500;
     color: #00EBA4;
     line-height: 2.8rem;
@@ -97,7 +97,7 @@ const LeftAreaForm = styled.div`
 const RightAreaForm = styled.div`
   h1 {
     text-align: center;
-    font-size: 18px;
+    font-size: 1.4em;
     font-weight: 500;
     color: #00EBA4;
     line-height: 2.8rem
@@ -110,7 +110,7 @@ const NFTFormItem = styled(Form.Item)`
   display: flex; 
 
   .ant-form-item-label > label {
-    font-size: 18px;
+    font-size: 1.3em;
     font-weight: 500;
     color: #fff;
   }
@@ -125,7 +125,7 @@ const NFTFormItem = styled(Form.Item)`
     border-radius: 10px !important;
     border: none;
 
-    font-size: 16px !important;
+    font-size: 1.2em !important;
     font-weight: 500 !important;
     color: white !important;
     line-height: 20px !important;
@@ -152,7 +152,7 @@ const Selector = styled(Select)`
     display: flex;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 16px !important;
+    font-size: 1.2em !important;
     font-weight: 500 !important;
     color: white !important;
     padding-right: 20px !important;
@@ -173,7 +173,7 @@ export const Announcement = styled.div`
 
   .text {
     height: 70px;
-    font-size: 16px;
+    font-size: 1.2em;
     font-weight: 500;
     color: #ccc;
   }
@@ -214,7 +214,7 @@ const AssetUploadContainer = styled.div`
     .tip {
       text-align: center;
       width: 100%;
-      font-size: 16px;
+      font-size: 1.2em;
       font-weight: 500;
       color: #ccc;
       opacity: 0.5;

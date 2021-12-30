@@ -2,13 +2,10 @@ import LevelUp from '../pages/LevelUp'
 import NFTCreate from '../pages/nftCreate'
 import Marketplace from '../pages/marketplace'
 import NFTDetailPage from '../pages/marketplace/nftDetail'
-import Home from '../pages/Home'
 import AIGen from '../pages/AIGen'
 import PersonalCenterPage from '../pages/personal'
 import CoNftPage from '../pages/coNft'
 import ArtistDetail from '../pages/coNft/artistDetail'
-
-import HomeIcon from '../assets/images/siderIcon/homepage_fill.svg'
 import GanIcon from '../assets/images/siderIcon/f-idea.svg'
 import GeneratorIcon from '../assets/images/siderIcon/generator.svg'
 import MarketplaceIcon from '../assets/images/siderIcon/marketplace.svg'
@@ -27,15 +24,15 @@ export type Route = {
 }
 
 const routes: Route[] = [
+  // {
+  //   path: '/',
+  //   title: 'Home',
+  //   icon: HomeIcon,
+  //   component: Home,
+  //   disable: false
+  // },
   {
     path: '/',
-    title: 'Home',
-    icon: HomeIcon,
-    component: Home,
-    disable: false
-  },
-  {
-    path: '/co-nft',
     title: 'CO-NFT',
     icon: GamesIcon,
     component: CoNftPage,
@@ -63,7 +60,7 @@ const routes: Route[] = [
   },
   {
     path: '/nftBreed',
-    title: 'Al Generation',
+    title: 'Style Transformation',
     icon: GeneratorIcon,
     component: LevelUp,
     disable: false

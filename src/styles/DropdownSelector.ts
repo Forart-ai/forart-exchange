@@ -12,7 +12,7 @@ type DropdownSelectorProps = {
 // @ts-ignore
 // @ts-ignore
 const DropdownSelector = styled(Select)<DropdownSelectorProps>`
-  font-size: 18px;
+  font-size: 1.6em;
 
   &,
   .ant-select {
@@ -36,7 +36,7 @@ const DropdownSelector = styled(Select)<DropdownSelectorProps>`
     color: white !important;
     text-align: center !important;
     margin: 0 5px !important;
-    font-size: 14px;
+    font-size: 0.7em;
   }
 
   .ant-select-clear {

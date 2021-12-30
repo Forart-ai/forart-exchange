@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Button, Image, Tabs } from 'antd'
+import { Image, Tabs } from 'antd'
 
 const { TabPane } = Tabs
 
@@ -166,7 +166,7 @@ export const MintTab = styled(Tabs)`
   user-select: none;
 
   .ant-tabs-tab {
-    font-size: 1rem;
+    font-size: 1.4em;
     color: #E5E8EB !important;
   }
 
@@ -236,7 +236,10 @@ export const CenterContainer = styled.div`
   width: 100%;
 `
 
-export const MintButton = styled(Button)``
+export const MintButton = styled.div`
+  width: 100%;
+  text-align: center;
+`
 
 export const AIContainer = styled.div`
   display: flex;

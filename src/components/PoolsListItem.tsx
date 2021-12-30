@@ -80,12 +80,12 @@ const InfoContent = styled.div`
   z-index: 99;
   
   .name {
-    font-size: 24px;
+    font-size: 2em;
     color: #fff;
   }
   
   .description {
-    font-size: 14px;
+    font-size: 1em;
     color: #b2b2b2;
   }
 
@@ -101,12 +101,12 @@ const DataContent = styled.div`
     flex-direction: column;
 
     .label {
-      font-size: 14px;
+      font-size: 1em;
       color: #e8e5e5;
     }
 
     .value {
-      font-size: 18px;
+      font-size: 1.1em;
       color: #fff;
     }
   }
