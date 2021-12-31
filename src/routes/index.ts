@@ -53,8 +53,8 @@ const routes: Route[] = [
     hidden:true
   },
   {
-    path: '/AI-Gen',
-    title: 'GAN-NFT',
+    path: '/Text-to-NFT',
+    title: 'Text-to-NFT',
     icon: GanIcon,
     component: AIGen,
     disable: false
