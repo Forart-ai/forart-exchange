@@ -541,7 +541,6 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
             />
           </div>
         </AIContent>
-
       </AIContainer>
 
       <MintButton  >

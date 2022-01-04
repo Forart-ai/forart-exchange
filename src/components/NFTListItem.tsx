@@ -198,7 +198,7 @@ const NFTListItem: React.FC<{ data?: NftListItem, type?: 'nftList' | 'own', empt
             <TopDetail>
               <div style={{ display:'flex', alignItems:'center' }}>
                 <div className="chain-flag">
-                  { data && <ChainFlag >{TypeChainThumbnailMapper[data.typeChain as ChainType]}</ChainFlag> }
+                  { data && <ChainFlag > {TypeChainThumbnailMapper[data.typeChain as ChainType]} </ChainFlag> }
                 </div>
                 <div className="nft-name">{data?.name}</div>
               </div>
