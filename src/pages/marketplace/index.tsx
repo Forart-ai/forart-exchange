@@ -225,9 +225,9 @@ const marketplace: React.FC = () => {
 
   return (
     <Wrapper>
-      <Banner>
-        <img src={banner} />
-      </Banner>
+      {/*<Banner>*/}
+      {/*  <img src={banner} />*/}
+      {/*</Banner>*/}
       <Title>NFT Marketplace</Title>
 
       <NFTCreateContainer>
