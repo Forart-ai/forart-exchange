@@ -4,10 +4,9 @@ import { FormInstance, message } from 'antd'
 import { NFTCreateForm } from '../../../pages/nftCreate/index'
 import { generateNftMetadata } from '../../../utils'
 import { getUriByIpfsHash, pinJsonToIPFS } from '../../../utils/ipfs'
-import { NftCreateForm } from '../../../apis/nft'
+import { createNFT as APICreateNFT, NftCreateForm } from '../../../apis/nft'
 import usePlanetItemContract from '../usePlanetItemContract'
 import useSigner from '../../useSigner'
-import { createNFT as APICreateNFT } from '../../../apis/nft'
 import { useHistory } from 'react-router-dom'
 
 type Hint = {
@@ -36,7 +35,6 @@ const useCreateNft = () => {
   const createNft = useCallback(
     async (formInstance: FormInstance<NFTCreateForm>, promised: boolean) => {
 
-      console.log(library.network)
 
       if (library.network.chainId !== 44787) {
         message.warn('Please manually switch to Alfajores Test Network in Celo')
@@ -89,9 +87,6 @@ const useCreateNft = () => {
       const tokenUri = getUriByIpfsHash(pinResult.IpfsHash)
 
       await awardItem(tokenUri).then(res => {
-
-        console.log(res)
-
         setHash(res.hash)
         setHintMessage({
           message: 'Your creation request has been submitted! Waiting the transaction on chain confirmed. Please DO NOT close this page now!',

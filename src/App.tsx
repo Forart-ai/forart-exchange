@@ -44,6 +44,7 @@ const App: React.FC = () => {
               } :
                 {
                   zIndex: 99,
+                  position: 'fixed',
                 }
             }
           >
