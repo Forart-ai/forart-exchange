@@ -7,6 +7,7 @@ export interface CoNFTData {
 }
 
 export interface PoolsListData {
+  artistId: any
   image: string ,
   name: string,
   describe: string,

@@ -4,7 +4,7 @@ import ForartLogo from '../../assets/images/header/logo.png'
 import Wallet from '../../components/wallet'
 import UserIcon from '../../assets/images/header/user.svg'
 import { useHistory } from 'react-router-dom'
-import { MenuFoldOutlined, QuestionCircleFilled } from '@ant-design/icons'
+import { MenuFoldOutlined } from '@ant-design/icons'
 import { useMediaQuery } from 'react-responsive'
 
 
@@ -39,7 +39,7 @@ const Logo = styled.div`
 const Operator = styled.div`
   display: flex;
   align-items: center;
-  width: 250px;
+  width: 400px;
   cursor: pointer;
   
     img {
@@ -73,6 +73,7 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = ({ onCollapseChan
         <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
       </Logo>
       <Operator>
+        {/*<SolanaWallet />*/}
         <Wallet />
         <img src={UserIcon}
           onClick={() => history.push('/personal/home')}

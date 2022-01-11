@@ -1,11 +1,12 @@
 import { useQuery, UseQueryResult } from 'react-query'
+import { getArtistAssembler } from '../../apis/co-nft'
 
 
-export const useArtistKitQuery = (): UseQueryResult<any> => {
+export const useArtistKitQuery = (id:any): UseQueryResult<any> => {
   return useQuery(
-    ['ARTIST_KIT_LIST'],
+    ['ARTIST_KIT_LIST', id],
     async () => {
-      return require('../../public/mock/artistKitList.json')
+      return await getArtistAssembler(id).then(res=> res.data.data)
     }
   )
 }

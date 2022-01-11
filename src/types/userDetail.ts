@@ -13,9 +13,15 @@ export interface UserDetail {
 
 export interface ArtistKit {
   id: string,
-  bodyList: any,
-  hatList?: any,
-  faceList?: any,
-  shirtsList?: any,
-  pantsList?: any
+  body: any,
+  hat?: any,
+  face?: any,
+  shirts?: any,
+  pants?: any,
+  cloth?: any,
+  feet?: any,
+  glasses?: any,
+  hand?: any,
+  item?: any,
+  shoe?: any
 }

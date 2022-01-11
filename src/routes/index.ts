@@ -39,7 +39,7 @@ const routes: Route[] = [
     disable: false
   },
   {
-    path: '/co-nft/artistDetail/:id',
+    path: '/artistDetail',
     title: 'Artist Detail',
     component: ArtistDetail,
     hidden: true

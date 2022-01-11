@@ -166,7 +166,7 @@ export const MintTab = styled(Tabs)`
   user-select: none;
 
   .ant-tabs-tab {
-    font-size: 1.4em;
+    font-size: 1.2em !important;
     color: #E5E8EB !important;
   }
 

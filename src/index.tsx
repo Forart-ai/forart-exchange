@@ -14,6 +14,8 @@ import { QueryClient , QueryClientProvider } from 'react-query'
 import { RefreshControllerProvider } from './contexts/refresh-controller'
 import  configureStore  from './store/index.js'
 import { Provider } from 'react-redux'
+import { SolanaWeb3Provider } from './contexts/solana-web3'
+import { SolanaConnectionConfigProvider } from './contexts/solana-connection-config'
 
 const { store,persistor } = configureStore()
 
@@ -29,7 +31,12 @@ ReactDOM.render(
           <RefreshControllerProvider>
             <Router>
               <DAppProvider config={{}}>
-                <App />
+                <SolanaConnectionConfigProvider>
+                  <SolanaWeb3Provider>
+                    <App />
+                  </SolanaWeb3Provider>
+                </SolanaConnectionConfigProvider>
+
               </DAppProvider>
             </Router>
           </RefreshControllerProvider>

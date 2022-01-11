@@ -30,6 +30,7 @@ import { SelectableNFTList } from '../../components/nft-mint/styleNft'
 import useNFTMint from '../../hooks/contract/service/useNFTMint'
 import { useStyledNFTsQuery } from '../../hooks/queries/useStyledNFTsQuery'
 import { useMediaQuery } from 'react-responsive'
+import { useLocationQuery } from '../../hooks/useLocationQuery'
 
 
 const { TabPane } = Tabs
@@ -43,7 +44,6 @@ const onAnchorClick = (
   },
 ) => {
   e.preventDefault()
-  console.log(link)
 }
 
 export type KitProperties = {
@@ -365,7 +365,6 @@ const TabItem = styled.div`
 
 const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 
-  // console.log(userData)
   return (
     <HeaderContainer backgroundImage={userData?.backgroundImage}>
       <ArtistInfo>
@@ -450,28 +449,53 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
   useEffect(() => {
     console.log(kits)
-  }, [kits,body])
+  }, [kits, body])
 
 
-  const list = artistKit?.bodyList.map((body:{url: string, price: number, rarity: string}) =>({
+  const list = artistKit?.body.map((body:{url: string, price: number, rarity: string}) =>({
     url: body.url,
     price: body.price,
     rarity: body.rarity
   }))
 
+
+
+
   const KIT_TYPES: Array<{name: string, list: KitProperties[], key: string}> = useMemo(() =>
     [
       {
-        name: 'Hats',
-        key: 'hat',
-        list: artistKit?.hatList
+        name: 'Glasses',
+        key: '12_glasses',
+        list: artistKit?.glasses
       },
       {
-        name: 'Face',
-        key: 'face',
-        list: artistKit?.faceList
-      }
+        name: 'Cloth',
+        key: '05_cloth',
+        list: artistKit?.cloth
+      },
+
+      {
+        name: 'Hand',
+        key: '08_hand',
+        list: artistKit?.hand
+      },
+      {
+        name: 'Item',
+        key: '07_item',
+        list: artistKit?.item
+      },
+      {
+        name: 'Feet',
+        key: '03_feet',
+        list: artistKit?.feet
+      },
+      {
+        name: 'Shoe',
+        key: '06_shoe',
+        list: artistKit?.shoe
+      },
     ], [artistKit])
+
 
   return (
     <MintWrapper>
@@ -486,7 +510,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
           {
             body && (
               <SelectedBody>
-                <img src={body.url} />
+                <img src={body.url} style={{ objectFit:'contain' }} />
                 <PriceContainer>
                   <div className="price">{body?.price} FTA</div>
                   <div className="price">Rarity: {body?.rarity}</div>
@@ -498,7 +522,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         <KitContent >
           <MintTab>
             {
-              KIT_TYPES.map(type => (
+              KIT_TYPES?.map(type => (
                 <TabPane key={type.name} tab={type.name} >
                   <MintContainer>
                     <SelectableKitList
@@ -553,9 +577,15 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 }
 
 const ArtistDetail: React.FC = () => {
+  const artistId = useLocationQuery('artistId')
+
+  console.log(artistId)
+
   const { data: userData } = useArtistDetailQuery()
 
-  const { data: artistKisList } = useArtistKitQuery()
+  const { data: artistKitList } = useArtistKitQuery(artistId)
+
+
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -589,7 +619,7 @@ const ArtistDetail: React.FC = () => {
               }
               key="mint"
             >
-              <Mint artistKit={artistKisList} />
+              <Mint artistKit={artistKitList} />
             </TabPane>
 
           </StyledTab>

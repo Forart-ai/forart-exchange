@@ -35,3 +35,9 @@ export function dictionaryToBase64 (dic: any) {
   return base64Array
 
 }
+
+export async function sleep(milliseconds: number) {
+  return await new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
+

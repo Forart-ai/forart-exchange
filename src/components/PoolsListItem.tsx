@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { PoolsListData } from '../types/coNFT'
 import { Button } from 'antd'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 
 const PoolsCardContainer = styled.div< { loading?: boolean }>`
@@ -122,8 +122,9 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
     }
   },[status])
 
-  const toArtistDetailUrl = '/co-nft/artistDetail/' + new URLSearchParams({
-    id: data?.name ?? ''
+
+  const toArtistDetailUrl = '/artistDetail?' + new URLSearchParams({
+    artistId: data?.artistId ?? ''
   }).toString()
 
   const history = useHistory()
@@ -148,9 +149,10 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
             <div className= "value">{data?.mintors}</div>
           </div>
         </DataContent>
-        {/*<Link to={toArtistDetailUrl}>*/}
-        <Button onClick={()=> history.push(toArtistDetailUrl)} > More Detail</Button>
-        {/*</Link>*/}
+        <Link to={toArtistDetailUrl}>
+          <Button  > More Detail</Button>
+        </Link>
+
 
       </InfoContent>
     </PoolsCardContainer>

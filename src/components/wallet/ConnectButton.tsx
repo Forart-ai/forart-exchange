@@ -1,9 +1,8 @@
-import { useEthers, useEtherBalance } from '@usedapp/core'
+import { useEtherBalance, useEthers } from '@usedapp/core'
 import React from 'react'
 import styled from '@emotion/styled'
 import { formatEther } from '@ethersproject/units'
 import StyledIdenicon from './StyledIdenicon'
-
 
 
 const ConnectMain = styled.div`
@@ -68,7 +67,7 @@ const ConnectButton:React.FC = () => {
       </ConnectMessage>
     </ConnectMain>
   ) : (
-    <ConnectWalletButton onClick={handleConnectWallet}>qConnect to a wallet！</ConnectWalletButton>
+    <ConnectWalletButton onClick={handleConnectWallet}>Connect to a wallet！</ConnectWalletButton>
   )
 }
 

@@ -220,8 +220,6 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
 const PoolsList: React.FC<{ poolsList?: Array<PoolsListData>}> = ({ poolsList }) => {
 
-
-
   return (
     <PoolsContainer>
       <div className="title">Live Pools</div>
@@ -266,6 +264,7 @@ const CoNftPage: React.FC = () => {
     size: 20,
     current: 1
   })
+
 
 
   return (
