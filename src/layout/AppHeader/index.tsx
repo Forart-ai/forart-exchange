@@ -6,7 +6,6 @@ import UserIcon from '../../assets/images/header/user.svg'
 import { useHistory } from 'react-router-dom'
 import { MenuFoldOutlined } from '@ant-design/icons'
 import { useMediaQuery } from 'react-responsive'
-import SolanaWallet from '../../components/SolanaWallet'
 
 
 const AppHeaderContent = styled.div`
@@ -74,7 +73,7 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = ({ onCollapseChan
         <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
       </Logo>
       <Operator>
-        <SolanaWallet />
+        {/*<SolanaWallet />*/}
         <Wallet />
         <img src={UserIcon}
           onClick={() => history.push('/personal/home')}
