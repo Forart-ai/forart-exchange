@@ -7,3 +7,7 @@ export function getArtistArt() {
 export function getArtistAssembler(id: any) {
   return request.get(`artAssembler/artistAssembler/${id}`)
 }
+
+export function mergeImage() {
+  return request.post('genNftInfo/mergeImage')
+}

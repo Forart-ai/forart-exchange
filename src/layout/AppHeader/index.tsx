@@ -39,7 +39,7 @@ const Logo = styled.div`
 const Operator = styled.div`
   display: flex;
   align-items: center;
-  width: 400px;
+  width: fit-content;
   cursor: pointer;
   
     img {

@@ -10,12 +10,13 @@ import { DAppProvider } from '@usedapp/core'
 import { HashRouter as Router } from 'react-router-dom'
 import { Web3ReactProvider } from '@web3-react/core'
 import { WalletSelectionModalProvider } from './hooks/wallet-selection-modal'
-import { QueryClient , QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { RefreshControllerProvider } from './contexts/refresh-controller'
-import  configureStore  from './store/index.js'
+import configureStore from './store/index.js'
 import { Provider } from 'react-redux'
 import { SolanaWeb3Provider } from './contexts/solana-web3'
 import { SolanaConnectionConfigProvider } from './contexts/solana-connection-config'
+import { ModalProvider } from './contexts/modal'
 
 const { store,persistor } = configureStore()
 
@@ -28,18 +29,19 @@ ReactDOM.render(
     <Web3ReactProvider getLibrary={getLibrary}>
       <WalletSelectionModalProvider>
         <QueryClientProvider client={queryClient}>
-          <RefreshControllerProvider>
-            <Router>
-              <DAppProvider config={{}}>
-                <SolanaConnectionConfigProvider>
-                  <SolanaWeb3Provider>
-                    <App />
-                  </SolanaWeb3Provider>
-                </SolanaConnectionConfigProvider>
-
-              </DAppProvider>
-            </Router>
-          </RefreshControllerProvider>
+          <ModalProvider>
+            <RefreshControllerProvider>
+              <Router>
+                <DAppProvider config={{}}>
+                  <SolanaConnectionConfigProvider>
+                    <SolanaWeb3Provider>
+                      <App />
+                    </SolanaWeb3Provider>
+                  </SolanaConnectionConfigProvider>
+                </DAppProvider>
+              </Router>
+            </RefreshControllerProvider>
+          </ModalProvider>
         </QueryClientProvider>
 
       </WalletSelectionModalProvider>

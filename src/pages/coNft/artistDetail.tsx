@@ -2,15 +2,15 @@ import React, { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
-
 import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
-import { Anchor, Avatar, Button, Switch, Tabs } from 'antd'
+import { Anchor, Avatar, Button, Input, Switch, Tabs } from 'antd'
 import { DollarOutlined, SmileOutlined } from '@ant-design/icons'
 import {
   AIContainer,
   AIContent,
   BodyContent,
   CenterContainer,
+  ItemContainer,
   KitContent,
   MintButton,
   MintContainer,
@@ -434,11 +434,14 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
   const [style, setStyle] = useState('')
 
-  const [show, setShow] = useState<boolean>(false)
+  const [show, setShow] = useState<boolean>(true)
 
-  const { mintNFT } = useNFTMint()
+  const [genName, setGenName] = useState<string>()
+
+  const mintNFT  = useNFTMint()
 
   const { data: styleList } = useStyledNFTsQuery()
+
 
   useMemo(() => {
     if (!show) {
@@ -447,9 +450,9 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
   },[show])
 
 
-  useEffect(() => {
-    console.log(kits)
-  }, [kits, body])
+  // useEffect(() => {
+  //   console.log(kits)
+  // }, [kits, body])
 
 
   const list = artistKit?.body.map((body:{url: string, price: number, rarity: string}) =>({
@@ -567,8 +570,18 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         </AIContent>
       </AIContainer>
 
+      <ItemContainer>
+        <div className="title">
+          Gen Image Name
+
+        </div>
+        <Input placeholder="Please enter the name of the gen image" onChange={e => setGenName(e.target.value) } />
+      </ItemContainer>
+
+
+
       <MintButton  >
-        <Button style={{ width: '100px' }} onClick={ () => mintNFT(body, kits, style)}>
+        <Button style={{ width: '100px' }} onClick={ () => mintNFT(body, kits, style, genName)}>
           Mint
         </Button>
       </MintButton>
@@ -579,12 +592,9 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 const ArtistDetail: React.FC = () => {
   const artistId = useLocationQuery('artistId')
 
-  console.log(artistId)
-
   const { data: userData } = useArtistDetailQuery()
 
   const { data: artistKitList } = useArtistKitQuery(artistId)
-
 
 
   useEffect(() => {

@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   width: 100%;
 `
 const Title = styled.div`
-  font-size: 2.7em;
+  font-size: 2.5em;
   color: #ffffff;
 `
 const Container = styled.div`
@@ -48,7 +48,7 @@ const MintItems = styled.div`
 export const SelectedList: React.FC<{kitList?: Map<string, any>, body: any}> = ({ kitList, body }) => {
 
   useEffect(()=> {
-    console.log(kitList)
+    // console.log(kitList)
   },[kitList])
 
   return (

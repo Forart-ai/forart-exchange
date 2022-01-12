@@ -244,8 +244,9 @@ export const MintButton = styled.div`
 export const AIContainer = styled.div`
   display: flex;
   flex-direction: column;
+  
   .title{
-    font-size: 2.7em;
+    font-size: 2.5em;
     color: #ffffff;
     display: flex;
     align-items: center;
@@ -268,5 +269,30 @@ export const AIContent = styled.div`
   margin: 20px 0;
   .hide {
     display: none;
+  }
+`
+
+export const ItemContainer = styled.div`
+  margin-bottom: 30px;
+  
+  .title {
+    font-size: 2.5em;
+    color: #ffffff;
+  }
+
+  .ant-input {
+    &::placeholder {
+      color: #ccc;
+    }
+
+    height: 36px ;
+    background: #2A2E35 !important;
+    border-radius: 10px !important;
+    border: none;
+
+    font-size: 1.2em;
+    font-weight: 500 !important;
+    color: white !important;
+    line-height: 20px !important;
   }
 `

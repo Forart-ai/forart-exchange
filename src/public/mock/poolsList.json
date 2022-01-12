@@ -16,7 +16,7 @@
       "followers": 112200,
       "mintors": 12345,
       "status": "closing",
-      "artistId": "3312"
+      "artistId": "3313"
     },
     {
       "image": "https://forart.mypinata.cloud/ipfs/QmXjAP5zBqJ5sw4181GiKDNkuAgVzPct7dQsriPG8vmnen",
@@ -25,7 +25,7 @@
       "followers": 112200,
       "mintors": 12345,
       "status": "closed",
-      "artistId": "3312"
+      "artistId": "3314"
     },
     {
       "image": "https://forart.mypinata.cloud/ipfs/QmXjAP5zBqJ5sw4181GiKDNkuAgVzPct7dQsriPG8vmnen",
@@ -34,7 +34,7 @@
       "followers": 112200,
       "mintors": 12345,
       "status": "living",
-      "artistId": "3312"
+      "artistId": "3315"
     }
   ],
   "total": 574,

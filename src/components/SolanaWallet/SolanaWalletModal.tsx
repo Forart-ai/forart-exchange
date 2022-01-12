@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
-import { Button, Modal } from 'antd'
+import { Button } from 'antd'
 import styled from 'styled-components'
 import { useSolanaModal } from '../../hooks/useSolanaModal'
 
@@ -8,7 +8,9 @@ type WalletModalContentProps = {
   account: string
 }
 
-const WalletModal = styled(Modal)`
+const WalletModal = styled.div`
+  
+
   .ant-modal-content {
     border-radius: 1rem;
     width: 62.3rem;
@@ -33,13 +35,15 @@ const WalletModal = styled(Modal)`
     font-size: 1.8rem;
     color: white;
   }
-
+.wallet-modal-content {
   .walletModal-Title {
     text-align: center;
-    color: white;
+    color: black;
     font-weight: bolder;
     font-size: 1.8rem;
   }
+}
+  
 
   .text-label {
     font-size: 1.7rem;
@@ -76,24 +80,22 @@ const Divider = styled.div`
   top: 5rem;
   width: 100%;
   height: 0.15rem;
-  background: ${({ theme }) => theme.colors.rainbow};
 `
 
 const WalletModalContent: React.FC<WalletModalContentProps> = ({ account }) => {
   const { disconnect } = useSolanaWeb3()
 
   return (
-    <div className="wallet-modal-content">
-      <div className="walletModal-Title">{account}</div>
-      <div className="bscScan">
-        <div>
-          {/*<span className="text-label">View on Explorer</span>*/}
+    <WalletModal>
+      <div className="wallet-modal-content">
+        <div className="walletModal-Title">{account}</div>
+        <div className="bscScan">
+          <Button type="text" onClick={disconnect} className="disconnect">
+            Disconnect
+          </Button>
         </div>
-        <Button type="text" onClick={disconnect} className="disconnect">
-          Disconnect
-        </Button>
       </div>
-    </div>
+    </WalletModal>
   )
 }
 

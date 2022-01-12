@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import styled from 'styled-components'
-import { useSolanaModal } from '../../hooks/useSolanaModal'
+import useSolanaWalletModal from './SolanaWalletModal'
 
 
 type CurrentAccountProps = {
@@ -44,14 +44,14 @@ const ConnectButton = () => {
 
   return (
     <WalletButton onClick={select}>
-      Connect
+      Connect To Solana
     </WalletButton>
   )
 }
 
 const CurrentAccount: React.FC<CurrentAccountProps> = ({ account }) => {
   const { wallet } = useSolanaWeb3()
-  const { modal, open } = useSolanaModal()
+  const { modal, open } = useSolanaWalletModal()
 
   return (
     <WalletButton>
@@ -68,8 +68,8 @@ const CurrentAccount: React.FC<CurrentAccountProps> = ({ account }) => {
 }
 
 const SolanaWallet: React.FC = () => {
-  const { account, adapter, connected } = useSolanaWeb3()
-  console.log(account, adapter, connected)
+  const { account } = useSolanaWeb3()
+  console.log(account?.toString())
 
   return (
     <>
