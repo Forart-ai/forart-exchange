@@ -7,13 +7,19 @@ import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 import { Image, Progress } from 'antd'
 import styled from 'styled-components'
 
+
+type Hint = {
+  message?: string,
+  type?: 'error' | 'hint' | 'success'
+}
+
 const Container = styled.div``
 
 const MintResultImage: React.FC<{mintSrc: string}> = ({ mintSrc }) => {
   return (
     <>
       <Container>
-        <Image src={mintSrc} />
+        <Image src={mintSrc} preview={false} />
       </Container>
     </>
   )
@@ -74,8 +80,10 @@ const useNFTMint = () => {
 
   const artistId = useLocationQuery('artistId')
 
+  const [hint, setHint] = useState<Hint>({})
 
-  return  useCallback(
+
+  const mintNFT =  useCallback(
     async (body: any, kit: any, style: any, genName: any) => {
       configModal({
         closeable:true,
@@ -86,8 +94,19 @@ const useNFTMint = () => {
         }
       })
 
+      if (genName === undefined || '') {
+        setHint({
+          message: 'Please input the gen name',
+          type: 'hint'
+        })
+        return
+      }
+
       if (!account) {
-        openModal(MODAL_CONTENT.unconnectedToWallet)
+        setHint({
+          message: 'Please connect to Solana wallet first',
+          type: 'hint'
+        })
         return
       }
 
@@ -111,17 +130,19 @@ const useNFTMint = () => {
       const uri = await base64ToIPfsUri(b64toBlob(result.data))
       setMintResult(uri)
 
-
-
-      openModal( <MintResultImage mintSrc={uri} />)
+      await openModal( <MintResultImage mintSrc={uri} />)
 
 
       // kit.forEach((value: any, item: any) => {
       //   console.log(value)
       // })
 
+
     }, [account]
   )
+  return {
+    mintNFT, hint
+  }
 }
 
 

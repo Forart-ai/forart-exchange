@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 import './app.scss'
-import { BackTop, Layout } from 'antd'
+import { Affix, BackTop, Layout } from 'antd'
 import { Content } from 'antd/es/layout/layout'
 import AppHeader from './layout/AppHeader'
 import AppSideBar from './layout/AppSideBar'
@@ -34,22 +34,23 @@ const App: React.FC = () => {
       <AppHeader onCollapseChanged={toggleCollapsed} />
       <Layout>
         <Layout>
-          <Layout.Sider collapsed={sideBarCollapsed}
-            style={
-              isMobile ? {
-                position: 'fixed',
-                top: '0px',
-                left: sideBarCollapsed ? '-100%' : 0,
-                zIndex: 99,
-              } :
-                {
-                  zIndex: 99,
+          <Affix offsetTop={0}>
+            <Layout.Sider collapsed={sideBarCollapsed}
+              style={
+                isMobile ? {
                   position: 'fixed',
-                }
-            }
-          >
-            <AppSideBar />
-          </Layout.Sider>
+                  top: '0px',
+                  left: sideBarCollapsed ? '-100%' : 0,
+                  zIndex: 99,
+                } :
+                  {
+                    zIndex: 99,
+                  }
+              }
+            >
+              <AppSideBar />
+            </Layout.Sider>
+          </Affix>
           <Content  style={{ display: 'flex', width:'calc(100vw - 220px)', backgroundColor:'#1c1c1d', position:'relative',top: '60px' }}>
             {
               routes.map((router:any) => (

@@ -38,9 +38,14 @@ const WalletModal = styled.div`
 .wallet-modal-content {
   .walletModal-Title {
     text-align: center;
-    color: black;
+    color: white;
     font-weight: bolder;
-    font-size: 1.8rem;
+    font-size: 1em;
+  }
+  
+  .button-container{
+    display: flex;
+    justify-content: center;
   }
 }
   
@@ -62,14 +67,11 @@ const WalletModal = styled.div`
   }
 
   .disconnect {
-    width: 12.6rem;
-    height: 4rem;
-    background: #305099;
+    background: #0ee3a1;
     font-weight: bolder;
     border: none;
-    border-radius: 1rem;
+    border-radius: 10px;
     color: #ffffff;
-    margin-left: calc((100% - 12.6rem) / 2);
     margin-top: 20px;
   }
 `
@@ -89,7 +91,7 @@ const WalletModalContent: React.FC<WalletModalContentProps> = ({ account }) => {
     <WalletModal>
       <div className="wallet-modal-content">
         <div className="walletModal-Title">{account}</div>
-        <div className="bscScan">
+        <div className="button-container">
           <Button type="text" onClick={disconnect} className="disconnect">
             Disconnect
           </Button>

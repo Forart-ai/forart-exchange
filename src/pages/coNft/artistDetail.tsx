@@ -3,11 +3,9 @@ import styled from 'styled-components'
 import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
-import { Anchor, Avatar, Button, Input, Switch, Tabs } from 'antd'
+import { Anchor, Avatar, Button, Input, Tabs } from 'antd'
 import { DollarOutlined, SmileOutlined } from '@ant-design/icons'
 import {
-  AIContainer,
-  AIContent,
   BodyContent,
   CenterContainer,
   ItemContainer,
@@ -18,7 +16,6 @@ import {
   MintWrapper,
   PriceContainer,
   SelectedBody,
-  StyledSwitch,
   TopContainer
 } from './artistMint.style'
 import { useArtistKitQuery } from '../../hooks/queries/useArtistKitQuery'
@@ -26,7 +23,6 @@ import { useArtistKitQuery } from '../../hooks/queries/useArtistKitQuery'
 import { SelectableBodyList } from '../../components/nft-mint/mintBody'
 import { SelectableKitList } from '../../components/nft-mint/mintKit'
 import { SelectedList } from '../../components/nft-mint/selectedList'
-import { SelectableNFTList } from '../../components/nft-mint/styleNft'
 import useNFTMint from '../../hooks/contract/service/useNFTMint'
 import { useStyledNFTsQuery } from '../../hooks/queries/useStyledNFTsQuery'
 import { useMediaQuery } from 'react-responsive'
@@ -52,6 +48,12 @@ export type KitProperties = {
   price: number,
   rarity: number,
   remain: number
+}
+
+
+type MessageHintProps = {
+  message?: string,
+  type?: 'error' | 'hint' | 'success'
 }
 
 function scrollToPart(anchorName: string) {
@@ -427,6 +429,20 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
   )
 }
 
+const MessageHint: React.FC<MessageHintProps> = ({ message, type }) => {
+  const color = type ? {
+    'error': 'red',
+    'success': 'rgb(82,196,26)',
+    'hint': '#fadb14'
+  }[type] : ''
+
+  return (
+    <p style={{ fontSize: '1.2rem', color }}>
+      {message}
+    </p>
+  )
+}
+
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
   const [body, setBody] = useState<any>()
 
@@ -438,9 +454,11 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
   const [genName, setGenName] = useState<string>()
 
-  const mintNFT  = useNFTMint()
+  const { mintNFT, hint }  = useNFTMint()
 
   const { data: styleList } = useStyledNFTsQuery()
+
+  const minting = useMemo(() => !!hint.message && hint.type === 'hint',[hint])
 
 
   useMemo(() => {
@@ -476,7 +494,6 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         key: '05_cloth',
         list: artistKit?.cloth
       },
-
       {
         name: 'Hand',
         key: '08_hand',
@@ -552,33 +569,30 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         <SelectedList body={body} kitList={kits} />
       </CenterContainer>
 
-      <AIContainer>
-        <div className="title">
-          <div>AI-GEN</div>
-          <StyledSwitch>
-            <Switch onChange={() => setShow(!show)} />
-          </StyledSwitch>
-        </div>
-        <AIContent  >
-          <div className={ show ? 'style' : 'hide' }>
-            <SelectableNFTList
-              selectedValue={style}
-              onSelect={v=> setStyle(v)}
-              list={styleList?.map((style: { image: any}) => style?.image)}
-            />
-          </div>
-        </AIContent>
-      </AIContainer>
+      {/*<AIContainer>*/}
+      {/*  <div className="title">*/}
+      {/*    <div>AI-GEN</div>*/}
+      {/*    <StyledSwitch>*/}
+      {/*      <Switch onChange={() => setShow(!show)} />*/}
+      {/*    </StyledSwitch>*/}
+      {/*  </div>*/}
+      {/*  <AIContent  >*/}
+      {/*    <div className={ show ? 'style' : 'hide' }>*/}
+      {/*      <SelectableNFTList*/}
+      {/*        selectedValue={style}*/}
+      {/*        onSelect={v=> setStyle(v)}*/}
+      {/*        list={styleList?.map((style: { image: any}) => style?.image)}*/}
+      {/*      />*/}
+      {/*    </div>*/}
+      {/*  </AIContent>*/}
+      {/*</AIContainer>*/}
 
       <ItemContainer>
-        <div className="title">
-          Gen Image Name
-
-        </div>
+        <div className="title"> Gen Image Name </div>
         <Input placeholder="Please enter the name of the gen image" onChange={e => setGenName(e.target.value) } />
       </ItemContainer>
 
-
+      <MessageHint {...hint} />
 
       <MintButton  >
         <Button style={{ width: '100px' }} onClick={ () => mintNFT(body, kits, style, genName)}>

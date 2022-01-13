@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 // @ts-ignore
 import styled from 'styled-components'
-import { Avatar, Image, Tabs } from 'antd'
+import { Avatar, Tabs } from 'antd'
 import { useWeb3React } from '@web3-react/core'
 import { shortenAddress } from '../../utils'
-import { SmileOutlined, DollarOutlined, EditOutlined, UserOutlined, LoadingOutlined } from '@ant-design/icons'
+import { DollarOutlined, EditOutlined, SmileOutlined, UserOutlined } from '@ant-design/icons'
 import { usePersonalNFTsQuery } from '../../hooks/queries/usePersonalNFTsQuery'
-import { ChainType, ForartNftTransactionStatus, personalNftList } from '../../apis/nft'
+import { ChainType, ForartNftTransactionStatus } from '../../apis/nft'
 import NFTListItem from '../../components/NFTListItem'
 import { NftListItem } from '../../types/NFTDetail'
 
@@ -162,7 +162,7 @@ const TabsContainer: React.FC = () => {
 
   const [typeChain, setTypeChain] = useState<ChainType>('Ethereum')
 
-  const { data: personalNft, isLoading } = usePersonalNFTsQuery({ current, searchKey, typeChain })
+  const { data: personalNft, isLoading } = usePersonalNFTsQuery({ current, searchKey, typeChain, account })
 
   // const [personalNft, setPersonalNft] = useState<any>()
   //

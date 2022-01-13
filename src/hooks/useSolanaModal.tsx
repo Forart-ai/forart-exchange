@@ -1,5 +1,13 @@
 import React, { useMemo, useState } from 'react'
 import { Modal } from 'antd'
+import styled from 'styled-components'
+
+const StyledModal = styled(Modal)`
+  .ant-modal-body, .ant-modal-footer {
+    background: #202225;
+    border-top: none;
+  }
+`
 
 export type ModalContent = JSX.Element
 
@@ -16,9 +24,9 @@ export const useSolanaModal = (defaultContent?: ModalContent) => {
   const close = () => setVisible(false)
 
   const modal = useMemo(() => (
-    <Modal visible={visible} onCancel={close} onOk={close}>
+    <StyledModal visible={visible} onCancel={close} onOk={close}>
       {content}
-    </Modal>
+    </StyledModal>
   ), [content, visible])
 
   return {

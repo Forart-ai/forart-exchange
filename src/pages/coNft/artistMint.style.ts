@@ -61,6 +61,7 @@ export const ImageBorder = styled.div`
 
 export const KitImageBorder = styled.div`
   width: 100%;
+  cursor: pointer;
  
 `
 

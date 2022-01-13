@@ -36,13 +36,12 @@ const ImageContainer = styled.div`
   height: 130px;
 
   img {
-    object-fit: contain;
+    object-fit: cover;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     width: 100%;
     height: 100%;
     background: #0f1b39;
-
   }
 `
 
