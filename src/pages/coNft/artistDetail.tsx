@@ -527,17 +527,22 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
             list= {list}
           />
 
-          {
-            body && (
-              <SelectedBody>
-                <img src={body.url} style={{ objectFit:'contain' }} />
-                <PriceContainer>
-                  <div className="price">{body?.price} FTA</div>
-                  <div className="price">Rarity: {body?.rarity}</div>
-                </PriceContainer>
-              </SelectedBody>
-            )
-          }
+
+          <SelectedBody>
+            {
+              body && (
+                <>
+                  <img src={body.url} style={{ objectFit:'contain' }} />
+                  <PriceContainer>
+                    <div className="price">{body?.price} FTA</div>
+                    <div className="price">Rarity: {body?.rarity}</div>
+                  </PriceContainer>
+                </>
+              )
+            }
+          </SelectedBody>
+          )
+
         </BodyContent>
         <KitContent >
           <MintTab>
@@ -613,7 +618,7 @@ const ArtistDetail: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [userData])
+  }, [artistId])
 
   return (
     <Wrapper>
@@ -630,7 +635,6 @@ const ArtistDetail: React.FC = () => {
               }
               key="artDetail"
             >
-
               <ArtDetail userData={userData} />
             </TabPane>
 

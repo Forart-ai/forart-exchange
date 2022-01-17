@@ -12,8 +12,7 @@
 
 
 ::-webkit-scrollbar {
-  width: 6px;
-  background-color: #1C1C1D;
+ display: none;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -46,3 +45,22 @@
   }
 }
 
+.ant-modal-close-icon {
+  color: white;
+}
+.ant-modal-content {
+  border-radius: 10px;
+  background-color: #1D222D !important;
+}
+.ant-modal-title {
+  color: white;
+  font-weight: 550;
+  font-size: 1.6rem;
+}
+
+.ant-modal-header {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom: none;
+  background-color: #1D222D !important;
+}

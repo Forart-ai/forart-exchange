@@ -69,7 +69,6 @@ const CurrentAccount: React.FC<CurrentAccountProps> = ({ account }) => {
 
 const SolanaWallet: React.FC = () => {
   const { account } = useSolanaWeb3()
-  console.log(account?.toString())
 
   return (
     <>

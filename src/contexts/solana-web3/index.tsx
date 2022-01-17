@@ -60,6 +60,7 @@ const SolanaWeb3Context = React.createContext<WalletContextValues>({
 export const SolanaWeb3Provider: React.FC = ({ children }) => {
 
   const { endpointUrl } = useConnectionConfig()
+
   const [, setLocalStoredWallet] = useLocalStorage<SupportWalletNames>(LOCAL_STORAGE_WALLET_KEY)
   const [wallet, setWallet] = useState<SolanaWallet>()
   const [connected, setConnected] = useState(false)
@@ -69,6 +70,7 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
   const close = useCallback(() => setIsModalVisible(false), [])
 
   const { eagerConnected } = useEagerConnect()
+
 
   useEffect(() => {
     if (eagerConnected) {
@@ -111,7 +113,6 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
     return adapter?.publicKey
   }, [connected, adapter])
 
-  console.log(account, adapter)
 
 
   const connect = useCallback(adapter?.connect ?? select , [adapter, select])
@@ -124,7 +125,6 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (adapter) {
-      console.log(adapter)
       adapter.on('connect', () => {
         if (!adapter.publicKey) {
           console.error('adapter connected, but got null publicKey!')
@@ -179,16 +179,18 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
     >
       {children}
       <SolanaWalletSelectionModal title="Connect To Wallet" visible={isModalVisible} footer="" onCancel={close}>
-        {Object.values(SUPPORT_WALLETS).map(wallet => (
-          <WalletItem
-            wallet={wallet}
-            key={wallet.name}
-            onClick={(key: SupportWalletNames) => {
-              setWallet(SUPPORT_WALLETS[key])
-              close()
-            }}
-          />
-        ))}
+        {
+          Object.values(SUPPORT_WALLETS).map(wallet => (
+            <WalletItem
+              wallet={wallet}
+              key={wallet.name}
+              onClick={(key: SupportWalletNames) => {
+                setWallet(SUPPORT_WALLETS[key])
+                close()
+              }}
+            />
+          ))
+        }
       </SolanaWalletSelectionModal>
     </SolanaWeb3Context.Provider>
   )

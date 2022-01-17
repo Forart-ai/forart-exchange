@@ -77,7 +77,6 @@ const CustomizedMenu = styled(Menu)`
 
 const StyledMenuItem = styled(Menu.Item)`
 margin-left: 50px;
-
 `
 
 const LinkContainer = styled.div`
@@ -141,9 +140,7 @@ const AppSideBar:React.FC = () => {
             return (
               <StyledMenuItem key={route.path} disabled={route.disable} >
                 <img src={route.icon} className="menu-icon" width={20} />
-                <Link to={route.path}>
-                  {route.title}
-                </Link>
+                <Link to={route.path}> {route.title} </Link>
               </StyledMenuItem>
             )
           })

@@ -13,14 +13,14 @@ const StyledCurrentModal = styled(Modal)`
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     height: 60px;
-    background: #1C1C1C !important;
+    background: #1D222D !important;
   }
 
   .ant-modal-content {
     width: fit-content !important;
     height: 200px;
     border-radius: 10px;
-    background: #1C1C1C !important;
+    background: #1D222D !important;
   }
 
   .ant-modal-body {
@@ -41,7 +41,7 @@ const StyledCurrentModal = styled(Modal)`
 
 const StyledWallet = styled.div`
   height: 40px;
-  background-color: #201b1e;
+  background-color: #1D222D;
   color: #fff;
   font-size: 16px;
   display: flex;
@@ -80,7 +80,6 @@ const BalanceContainer = styled.div`
 `
 
 const StyledButton = styled(Button)`
-  width: 100px;
   height: 40px;
   border-radius: 8px;
   margin-top: 50px;

@@ -36,36 +36,36 @@ export const StyledWalletSelectionModal = styled(Modal)`
 `
 
 const StyledWalletCard = styled.div`
-  
-  &:nth-last-of-type(1) {
-    margin-bottom: 20px;
-  }
-
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  width: 100%;
+
 
   .wallet-item {
-    width:400px;
-    height: 70px;
-    margin-top: 2.2rem;
-    margin-left: calc((100% - 400px) / 2);
-    border: 1px solid #979797;
+    width: 86%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    border-radius: 10px;
-    position: relative;
+    
+    border: 0.2em solid #b2b2b2;
+    display: flex;
+    border-radius: 1rem;
     transition: all 0.4s;
+    padding: 1rem 2.2rem;
 
     img {
-      width: 45px;
-      position: absolute;
+      width: 4rem;
+      height: 4rem;
       right: 50px;
     }
 
     span {
       display: inline-block;
-      margin-left: 50px;
-      color: #979797;
-      font-size: 24px;
+      color: #ffffff;
+      font-size: 1.8rem;
       font-weight: bold;
       transition: all 0.4s;
       user-select: none;
@@ -107,19 +107,20 @@ const WalletSelectionModal: React.FC<WalletSelectionModalProps> = ({
   onClose,
 }) => {
   return (
-    <StyledWalletSelectionModal
+    <Modal
       className="wallet-selection-modal"
-      title="Connect to wallet"
       visible={visible}
       onCancel={onClose}
       footer=""
+      title="Connect to wallet"
+
     >
       {
         supportWallets.map(wallet => (
           <WalletCard wallet={wallet} key={wallet.name} />
         ))
       }
-    </StyledWalletSelectionModal>
+    </Modal>
   )
 }
 

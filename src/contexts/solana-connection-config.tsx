@@ -55,6 +55,7 @@ const DEFAULT_NETWORK: Network = 'devnet'
 
 const DEFAULT_ENDPOINT = ENDPOINTS[DEFAULT_NETWORK]
 
+
 const DEFAULT_SLIPPAGE = 1
 
 
@@ -75,6 +76,7 @@ export function SolanaConnectionConfigProvider({ children = undefined as any }) 
     'connectionEndpts',
     DEFAULT_ENDPOINT.endpointUrl
   )
+
 
   const [slippage, setSlippage] = useLocalStorage<string>(
     'slippage',

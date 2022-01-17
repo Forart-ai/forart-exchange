@@ -3,9 +3,7 @@ import { useModal } from './useModal'
 // @ts-ignore
 import styled from 'styled-components'
 import { Button, Checkbox, Form, Input, InputNumber, Modal, Select } from 'antd'
-import clsx from 'clsx'
 import useNFTSell from './contract/service/useNFTSell'
-import { useAuthorizingModal } from './modals/useAuthorizingModal'
 
 
 const SellingModal = styled(Modal)`
@@ -230,7 +228,6 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
 
   const [ checked, setChecked] = useState(false)
 
-  const { authorizingModal, openAuthorizingModal, closeAuthorizingModal } = useAuthorizingModal()
 
 
   const checkCheckbox = () => new Promise<void>((resolve, reject) => {
@@ -240,9 +237,7 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
     resolve()
   })
 
-  const [ current, setCurrent ] = useState(0)
 
-  const AVAILABLE_SELLING_METHODS = ['Fixed price', 'Auction', 'Splitting', 'Mortgage']
 
   const handleListing = async (values: typeof formInitialValues) => {
     onStart()

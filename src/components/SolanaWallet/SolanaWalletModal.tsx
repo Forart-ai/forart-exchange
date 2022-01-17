@@ -9,32 +9,9 @@ type WalletModalContentProps = {
 }
 
 const WalletModal = styled.div`
-  
 
-  .ant-modal-content {
-    border-radius: 1rem;
-    width: 62.3rem;
-  }
+  margin-top: 3em;
 
-  .ant-modal-body,
-
-  .ant-modal-header{
-    background-color: #111C3A;
-    border: none;
-  }
-
-  .ant-modal-header {
-    border-top-right-radius: 1rem;
-    border-top-left-radius: 1rem;
-  }
-
-  .ant-modal-header .ant-modal-title {
-    display: flex;
-    justify-content: center;
-    font-weight: 550;
-    font-size: 1.8rem;
-    color: white;
-  }
 .wallet-modal-content {
   .walletModal-Title {
     text-align: center;
@@ -67,7 +44,6 @@ const WalletModal = styled.div`
   }
 
   .disconnect {
-    background: #0ee3a1;
     font-weight: bolder;
     border: none;
     border-radius: 10px;
@@ -76,12 +52,18 @@ const WalletModal = styled.div`
   }
 `
 
+const Title = styled.div`
+  color: #ffffff;
+  font-size: 1.6em;
+`
+
 const Divider = styled.div`
   position: absolute;
   right: 0;
-  top: 5rem;
+  top: 4em;
   width: 100%;
-  height: 0.15rem;
+  height: 0.15em;
+  border-top: 1px #ffffff solid;
 `
 
 const WalletModalContent: React.FC<WalletModalContentProps> = ({ account }) => {
@@ -104,8 +86,10 @@ const WalletModalContent: React.FC<WalletModalContentProps> = ({ account }) => {
 const useSolanaWalletModal = () => {
   const { account } = useSolanaWeb3()
 
+
   const modalContent = useMemo(() => (
     <>
+      <Title>Your Wallet</Title>
       <Divider />
       <WalletModalContent account={account!.toBase58()} />
     </>

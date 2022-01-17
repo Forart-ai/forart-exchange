@@ -355,6 +355,10 @@ const NFTDetailPage: React.FC = () => {
 
   const uri = useLocationQuery('uri') ?? ''
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [uri])
+
   const addressContract = useLocationQuery('addressContract')
 
   const { data: nftDetail } = useNFTDetailQuery({ uri, addressContract })

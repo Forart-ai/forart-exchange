@@ -11,7 +11,7 @@ export const SolanaWalletSelectionModal = styled(Modal)`
 
   .ant-modal-body,
   .ant-modal-header {
-    background-color: #111C3A !important;
+    background-color: #1D222D !important;
   }
 
   .ant-modal-header {
@@ -39,18 +39,17 @@ export const WalletItemContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  border: 0.2rem solid #372fbd;
+  border: 0.1em solid #b2b2b2;
   border-radius: 1rem;
   padding: 1rem 2.2rem;
-  background: #554BFF;
   color: white;
   font-size: 1.8rem;
   font-weight: 500;
   cursor: pointer;
 
   img {
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
   }
 `
 

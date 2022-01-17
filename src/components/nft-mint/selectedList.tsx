@@ -11,10 +11,11 @@ const Title = styled.div`
 `
 const Container = styled.div`
   width: 100%;
-  height: 220px;
+  height: fit-content;
   display: flex;
-  justify-content: space-between;
-  overflow-x: scroll;
+  flex-wrap: wrap;
+  
+  overflow-y: scroll;
 
   ::-webkit-scrollbar {
     width: 6px;
@@ -24,13 +25,13 @@ const Container = styled.div`
 `
 
 const MintItems = styled.div`
+
   margin: 10px;
   min-width: 135px;
   min-height: 200px;
   width: 200px;
   height: 200px;
   background: #070E1E;
-  box-shadow: 10px 4px 10px #0000008c;
   border-radius: 10px;
   
   img{

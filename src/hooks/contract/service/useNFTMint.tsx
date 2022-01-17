@@ -4,7 +4,7 @@ import { b64toBlob, base64ToIPfsUri, sleep } from '../../../utils'
 import { useModal } from '../../../contexts/modal'
 import { useLocationQuery } from '../../useLocationQuery'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
-import { Image, Progress } from 'antd'
+import { Modal, Progress } from 'antd'
 import styled from 'styled-components'
 
 
@@ -13,13 +13,32 @@ type Hint = {
   type?: 'error' | 'hint' | 'success'
 }
 
-const Container = styled.div``
+const Container = styled.div`
+  height: 100%;
+  width: 100%;
+  
+  img {
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+  }
+`
+
+const WaitingForTransition: React.FC = () => {
+  return (
+    <>
+      <Modal>
+        <p>s</p>
+      </Modal>
+    </>
+  )
+}
 
 const MintResultImage: React.FC<{mintSrc: string}> = ({ mintSrc }) => {
   return (
     <>
       <Container>
-        <Image src={mintSrc} preview={false} />
+        <img src={mintSrc} />
       </Container>
     </>
   )
@@ -114,6 +133,7 @@ const useNFTMint = () => {
       await sleep(1000)
 
       openModal(MODAL_CONTENT.waitForTransfer)
+
 
       const obj = Object.create(null)
       for (const [k, v] of kit) {
