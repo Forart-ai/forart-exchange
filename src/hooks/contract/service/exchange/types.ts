@@ -45,3 +45,9 @@ export type SellingOrder = {
   feeRecipient: number;
   makerAssetExtraValue: number
 }
+
+export type LockNFT = {
+  series: number,
+  components: any,
+  wallet: string
+}

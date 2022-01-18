@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { mergeImage } from '../../../apis/ai'
-import { b64toBlob, base64ToIPfsUri, sleep } from '../../../utils'
+import { sleep } from '../../../utils'
 import { useModal } from '../../../contexts/modal'
 import { useLocationQuery } from '../../useLocationQuery'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 import { Modal, Progress } from 'antd'
 import styled from 'styled-components'
+import { LockNFT } from './exchange/types'
 
 
 type Hint = {
@@ -135,27 +135,39 @@ const useNFTMint = () => {
       openModal(MODAL_CONTENT.waitForTransfer)
 
 
-      const obj = Object.create(null)
-      for (const [k, v] of kit) {
-        obj[k] = v.url
+      // const obj = Object.create(null)
+
+      // for (const [k, v] of kit) {
+      //   arr.push(v.id)
+      // }
+      const components: number[] = []
+
+      for (const item of kit.values()){
+        components.push(item.id)
       }
 
-      console.log(genName)
+      const lockNFTForm: LockNFT = {
+        series: 0,
+        components: components,
+        wallet: account.toBase58()
+      }
 
-      obj.genImageName = genName
-      obj.belongId = '12121212455'
-      obj.artistId = artistId
+      console.log(lockNFTForm)
 
-      const result = await mergeImage(obj)
-      const uri = await base64ToIPfsUri(b64toBlob(result.data))
-      setMintResult(uri)
-
-      await openModal( <MintResultImage mintSrc={uri} />)
+      // await lockNft(lockNFTForm)
 
 
-      // kit.forEach((value: any, item: any) => {
-      //   console.log(value)
-      // })
+
+
+      // obj.genImageName = genName
+      // obj.belongId = '12121212455'
+      // obj.artistId = artistId
+      //
+      // const result = await mergeImage(obj)
+      // const uri = await base64ToIPfsUri(b64toBlob(result.data))
+      // setMintResult(uri)
+
+      // await openModal( <MintResultImage mintSrc={uri} />)
 
 
     }, [account]

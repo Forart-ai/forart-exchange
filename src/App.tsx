@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
 import './app.scss'
 import { Affix, BackTop, Layout } from 'antd'
@@ -6,7 +6,7 @@ import { Content } from 'antd/es/layout/layout'
 import AppHeader from './layout/AppHeader'
 import AppSideBar from './layout/AppSideBar'
 // @ts-ignore
-import { Route } from 'react-router-dom'
+import { Route, useLocation } from 'react-router-dom'
 import routes from './routes'
 import { useChainEffect, useEagerConnect } from './web3/hooks'
 import '../src/font/font.css'
@@ -14,11 +14,11 @@ import { useDispatch } from 'react-redux'
 import { setSideBarCollapsed, useSideBarCollapsed } from './store/app'
 import { useMediaQuery } from 'react-responsive'
 
-
 const App: React.FC = () => {
   useEagerConnect()
   useChainEffect()
 
+  const location = useLocation()
   const dispatch = useDispatch()
   const sideBarCollapsed = useSideBarCollapsed()
 
@@ -27,6 +27,10 @@ const App: React.FC = () => {
   }
 
   const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
 
 
   return (

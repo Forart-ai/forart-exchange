@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useNFTsQuery } from '../../hooks/queries/useNFTsQuery'
 // @ts-ignore
 import styled from 'styled-components'
-import banner from '../../assets/images/home/banner-new.png'
 
 import { NftListItem } from '../../types/NFTDetail'
 import NFTListItem from '../../components/NFTListItem'
@@ -207,6 +206,7 @@ const marketplace: React.FC = () => {
     transactionStatus: selectedStatus,
     typeChain: 'Ethereum'
   })
+
 
   const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
 

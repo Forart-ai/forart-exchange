@@ -82,7 +82,6 @@ margin-left: 50px;
 const LinkContainer = styled.div`
   position: relative;
   bottom: 20px;
-  height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,13 +89,11 @@ const LinkContainer = styled.div`
   align-items: center;
 `
 
-
-
-
 const SCExternalLink = styled.a`
   display: flex;
   align-items: center;
   width: 40px;
+  margin-bottom: 10px;
 
   .link-name {
     margin-left: 20px;
@@ -150,7 +147,7 @@ const AppSideBar:React.FC = () => {
 
       </CustomizedMenu>
 
-      <Affix offsetTop={500} >
+      <Affix >
         <LinkContainer >
 
           {

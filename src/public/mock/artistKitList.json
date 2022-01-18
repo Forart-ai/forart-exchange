@@ -1,80 +1,15 @@
-{
-  "id": "1",
-  "bodyList": [
+
+   [
     {
-      "id": "1001",
+      "id": "42783487696200",
+      "series": "42783487782200",
       "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHSTo7A68v8eT61euKjCGFE5T3DhAjdkJ",
-      "price": 12.3,
-      "rarity": "10%"
-    },
-    {
-      "id": "1002",
-      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMr1HSTo7A68v8eT61euKjCGFE5T3DhAjdkJ",
-      "price": 11.3,
-      "rarity": "20%"
-    },
-    {
-      "id": "1003",
-      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHS2To7A68v8eT61euKjCGFE5T3DhAjdkJ",
-      "price": 15.4,
-      "rarity": "20%"
-    },
-    {
-      "id": "1001",
-      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHS3To7A68v8eT61euKjCGFE5T3DhAjdkJ",
-      "price": 14.2,
-      "rarity": "20%"
-    },
-    {
-      "id": "1002",
-      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQM4rHSTo7A68v8eT61euKjCGFE5T3DhAjdkJ",
-      "price": 15.3,
-      "rarity": "20%"
-    },
-    {
-      "id": "1003",
-      "url": "https://forart.mypinata.cloud/ipfs/QmSjVReT1KPQMrHSTo7A68v8eT61euKjCGFE5T3DhAjdkJ",
-      "price": 15.3,
-      "rarity": "20%"
-    }
-  ],
-  "hatList": [
-    {
-      "id": 1,
-      "url": "https://forart.mypinata.cloud/ipfs/QmRbntjfNVxZ7V9nyJujuDExnCXpyCsj16ChQAdr3j4QEi",
-      "price": 3.2,
-      "remain": 6,
-      "rarity": 0.10
-    },
-    {
-      "id": 2,
-      "url": "https://forart.mypinata.cloud/ipfs/QmfG9JjKXUnjEcZm7evMKFKD8TDtLt5RAuike76p6YV1pB",
-      "price": 2.31,
-      "remain": 9,
-      "rarity": 0.23
-    }
-  ],
-  "faceList": [
-    {
-      "id": 1,
-      "url": "https://forart.mypinata.cloud/ipfs/QmeTNDvnZ2YUpLoSfT5CQye9MQUw9EDFK22byjnccaX4PQ",
-      "price": 2.31,
-      "remain": 9,
-      "rarity": 0.23
-    },
-    {
-      "id": 2,
-      "url": "https://forart.mypinata.cloud/ipfs/QmXyqziP6YbMAeLUe7aYy1PiihPWesMQ2cttCL7CTzpQch",
-      "price": 2.31,
-      "remain": 9,
-      "rarity": 0.23
-    },
-    {
-      "id": 3,
-      "url": "https://forart.mypinata.cloud/ipfs/QmQTkkeCdeyWUhRzkTqc9bXNiSSULhmrLpr7pUAUe2zJTn",
-      "price": 1.01,
-      "remain": 19,
-      "rarity": 0.23
+      "price": "0.45461861277742716",
+      "rarity": "0.3809568388590701",
+      "bodyType": "body"
     }
   ]
-}
+
+
+
+
