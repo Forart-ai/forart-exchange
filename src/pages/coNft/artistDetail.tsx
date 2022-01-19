@@ -3,12 +3,11 @@ import styled from 'styled-components'
 import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
-import { Anchor, Avatar, Button, Input, Tabs } from 'antd'
+import { Anchor, Avatar, Button, Tabs } from 'antd'
 import { DollarOutlined, SmileOutlined } from '@ant-design/icons'
 import {
   BodyContent,
   CenterContainer,
-  ItemContainer,
   KitContent,
   MintButton,
   MintContainer,
@@ -454,11 +453,10 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
   const [genName, setGenName] = useState<string>()
 
-  const { mintNFT, hint }  = useNFTMint()
+  const { mintNFT }  = useNFTMint()
 
   const { data: styleList } = useStyledNFTsQuery()
 
-  const minting = useMemo(() => !!hint.message && hint.type === 'hint',[hint])
 
 
   useMemo(() => {
@@ -592,15 +590,14 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       {/*  </AIContent>*/}
       {/*</AIContainer>*/}
 
-      <ItemContainer>
-        <div className="title"> Gen Image Name </div>
-        <Input placeholder="Please enter the name of the gen image" onChange={e => setGenName(e.target.value) } />
-      </ItemContainer>
+      {/*<ItemContainer>*/}
+      {/*  <div className="title"> Gen Image Name </div>*/}
+      {/*  <Input placeholder="Please enter the name of the gen image" onChange={e => setGenName(e.target.value) } />*/}
+      {/*</ItemContainer>*/}
 
-      <MessageHint {...hint} />
 
       <MintButton  >
-        <Button style={{ width: '100px' }} onClick={ () => mintNFT(body, kits, style, genName)}>
+        <Button style={{ width: '100px' }} onClick={ () => mintNFT(body, kits)}>
           Mint
         </Button>
       </MintButton>

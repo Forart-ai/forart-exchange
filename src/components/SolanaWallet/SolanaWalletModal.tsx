@@ -3,6 +3,8 @@ import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { Button } from 'antd'
 import styled from 'styled-components'
 import { useSolanaModal } from '../../hooks/useSolanaModal'
+import { shortenAddress } from '../../utils'
+import { DEFAULT_CLUSTER } from '../../contexts/solana-connection-config'
 
 type WalletModalContentProps = {
   account: string
@@ -72,7 +74,8 @@ const WalletModalContent: React.FC<WalletModalContentProps> = ({ account }) => {
   return (
     <WalletModal>
       <div className="wallet-modal-content">
-        <div className="walletModal-Title">{account}</div>
+        <div className="walletModal-Title">  You are now connected to {shortenAddress(account)} </div>
+        <div className="walletModal-Title"> NETWORK: { DEFAULT_CLUSTER }</div>
         <div className="button-container">
           <Button type="text" onClick={disconnect} className="disconnect">
             Disconnect

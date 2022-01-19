@@ -1,23 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { sleep } from '../../../utils'
 import { useModal } from '../../../contexts/modal'
-import { useLocationQuery } from '../../useLocationQuery'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 import { Modal, Progress } from 'antd'
 import styled from 'styled-components'
 import { LockNFT } from './exchange/types'
+import useCandyMachine from '../../programs/useCandyMachine'
+import { Keypair } from '@solana/web3.js'
 
-
-type Hint = {
-  message?: string,
-  type?: 'error' | 'hint' | 'success'
-}
+const Message = styled.div`
+  text-align: center;
+  font-size: 24px;
+`
 
 const Container = styled.div`
   height: 100%;
   width: 100%;
   
-  img {
+  img { 
     object-fit: contain;
     height: 100%;
     width: 100%;
@@ -74,12 +73,20 @@ const WaitForMinting:React.FC = () => {
 
 const MODAL_CONTENT = {
   unconnectedToWallet: (
-    <>
-      Please connect to Solana wallet first
-    </>
+    <Message>Please connect to a wallet first</Message>
   ),
 
-  waitForTransfer: <WaitForMinting />,
+  waitForTransfer:(
+    <Message>
+      ✅ Please approve transfer transaction in your wallet
+    </Message>
+  ),
+
+  mintSuccess: (
+    <Message>
+      Minted successfully! Please wait for loading metadata...
+    </Message>
+  ),
 
   opened: (
     <>
@@ -92,18 +99,13 @@ const MODAL_CONTENT = {
 const useNFTMint = () => {
 
   const { account } = useSolanaWeb3()
-
   const { openModal, configModal, closeModal } = useModal()
+  const { mint } = useCandyMachine()
 
-  const [mintResult, setMintResult] = useState('')
-
-  const artistId = useLocationQuery('artistId')
-
-  const [hint, setHint] = useState<Hint>({})
 
 
   const mintNFT =  useCallback(
-    async (body: any, kit: any, style: any, genName: any) => {
+    async (body: any, kit: any) => {
       configModal({
         closeable:true,
         contentStyle: {
@@ -113,27 +115,31 @@ const useNFTMint = () => {
         }
       })
 
-      if (genName === undefined || '') {
-        setHint({
-          message: 'Please input the gen name',
-          type: 'hint'
-        })
-        return
-      }
 
       if (!account) {
-        setHint({
-          message: 'Please connect to Solana wallet first',
-          type: 'hint'
-        })
+        openModal(MODAL_CONTENT.unconnectedToWallet)
         return
       }
 
 
-      await sleep(1000)
+      // await sleep(1000)
 
       openModal(MODAL_CONTENT.waitForTransfer)
 
+      const mintKeypair = Keypair.generate()
+
+      mint(mintKeypair)
+        .then(async _signature => {
+          console.log(mintKeypair.publicKey.toBase58(), _signature)
+          openModal(MODAL_CONTENT.mintSuccess)
+        })
+        .catch(e => {
+          openModal(
+            <Message>
+              Oops! Mint failed: {e.message || e.toString()}
+            </Message>
+          )
+        })
 
       // const obj = Object.create(null)
 
@@ -173,7 +179,7 @@ const useNFTMint = () => {
     }, [account]
   )
   return {
-    mintNFT, hint
+    mintNFT
   }
 }
 

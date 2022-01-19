@@ -1,15 +1,8 @@
 import React, { useContext, useEffect, useMemo } from 'react'
-import { Account, clusterApiUrl, Connection } from '@solana/web3.js'
+import { Account, Cluster, clusterApiUrl, Connection } from '@solana/web3.js'
 import { ENV as ChainID } from '@solana/spl-token-registry'
 import useLocalStorage from '../hooks/useLocalStorage'
 import { setProgramIds } from '../utils/ids'
-
-export type Network =
-  | 'mainnet-beta'
-  | 'testnet'
-  | 'devnet'
-  | 'localnet';
-
 
 interface ConnectionConfig {
   connection: Connection;
@@ -17,58 +10,49 @@ interface ConnectionConfig {
   endpointUrl: string;
   slippage: number;
   setSlippage: (val: number) => void;
-  network: Network;
+  network: Cluster;
   setEndpoint: (val: string) => void;
 }
 
 export type Endpoint = {
-  name: Network
+  name: Cluster
   endpointUrl: string
   chainID: ChainID,
 }
 
-export const ENDPOINTS: Record<Network, Endpoint> = {
+export const ENDPOINTS: Record<Cluster, Endpoint> = {
   'mainnet-beta': {
-    name: 'mainnet-beta' as Network,
+    name: 'mainnet-beta',
     endpointUrl: 'https://solana-api.projectserum.com/',
     chainID: ChainID.MainnetBeta
   },
   'testnet': {
-    name: 'testnet' as Network,
+    name: 'testnet',
     endpointUrl: clusterApiUrl('testnet'),
     chainID: ChainID.Testnet
   },
   'devnet': {
-    name: 'devnet' as Network,
+    name: 'devnet',
     endpointUrl: clusterApiUrl('devnet'),
     chainID: ChainID.Devnet
   },
-  'localnet': {
-    name: 'localnet' as Network,
-    endpointUrl: 'http://127.0.0.1:8899',
-    chainID: ChainID.Devnet
-  }
 }
 
+export const DEFAULT_CLUSTER: Cluster = process.env.REACT_APP_SOLANA_CLUSTER as Cluster
 
-const DEFAULT_NETWORK: Network = 'devnet'
-
-const DEFAULT_ENDPOINT = ENDPOINTS[DEFAULT_NETWORK]
-
-
+const DEFAULT_ENDPOINT = ENDPOINTS[DEFAULT_CLUSTER]
 const DEFAULT_SLIPPAGE = 1
-
 
 const SolanaConnectionConfigContext = React.createContext<ConnectionConfig>({
   endpointUrl: DEFAULT_ENDPOINT.endpointUrl,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setEndpoint: () => {},
+  setEndpoint: () => {
+  },
   slippage: DEFAULT_SLIPPAGE,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setSlippage: (_val: number) => {},
+  setSlippage: (_val: number) => {
+  },
   connection: new Connection(DEFAULT_ENDPOINT.endpointUrl, 'recent'),
   sendConnection: new Connection(DEFAULT_ENDPOINT.endpointUrl, 'recent'),
-  network: DEFAULT_NETWORK
+  network: DEFAULT_CLUSTER
 })
 
 export function SolanaConnectionConfigProvider({ children = undefined as any }) {
@@ -76,7 +60,6 @@ export function SolanaConnectionConfigProvider({ children = undefined as any }) 
     'connectionEndpts',
     DEFAULT_ENDPOINT.endpointUrl
   )
-
 
   const [slippage, setSlippage] = useLocalStorage<string>(
     'slippage',
@@ -90,7 +73,7 @@ export function SolanaConnectionConfigProvider({ children = undefined as any }) 
     endpoint
   ])
 
-  const chain = ENDPOINTS[endpoint as Network] ?? DEFAULT_ENDPOINT
+  const chain = ENDPOINTS[endpoint as Cluster] ?? DEFAULT_ENDPOINT
   const env = chain.name
 
   setProgramIds(env)
@@ -99,7 +82,6 @@ export function SolanaConnectionConfigProvider({ children = undefined as any }) 
   // is empty after opening its first time, preventing subsequent subscriptions from receiving responses.
   // This is a hack to prevent the list from every getting empty
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const id = connection.onAccountChange(new Account().publicKey, () => {
     })
     return () => {
@@ -117,7 +99,6 @@ export function SolanaConnectionConfigProvider({ children = undefined as any }) 
   useEffect(() => {
     const id = sendConnection.onAccountChange(
       new Account().publicKey,
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       () => {
       }
     )
@@ -135,7 +116,7 @@ export function SolanaConnectionConfigProvider({ children = undefined as any }) 
 
   return (
     <SolanaConnectionConfigContext.Provider
-      value={{
+      value= {{
         endpointUrl: endpoint!,
         setEndpoint,
         slippage: parseFloat(slippage!),
@@ -150,7 +131,7 @@ export function SolanaConnectionConfigProvider({ children = undefined as any }) 
   )
 }
 
-
 export function useConnectionConfig() {
   return useContext(SolanaConnectionConfigContext)
 }
+
