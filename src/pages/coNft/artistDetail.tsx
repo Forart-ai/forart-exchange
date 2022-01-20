@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
@@ -69,8 +69,8 @@ function scrollToPart(anchorName: string) {
 
 const Wrapper = styled.div`
   width: 100%;
-  max-width: 1400px;
-  height: fit-content;
+  max-width: 1900px;
+  min-height: auto;
   margin: auto;
   //padding-bottom: 50px;
   padding: 30px 20px;
@@ -302,7 +302,7 @@ const DescriptionContainer = styled.div`
 
 const ArtistDetailTab = styled.div`
   width: 100%;
-  height: auto;
+  height: fit-content;
   display: flex;
   justify-content: space-between;
 
@@ -354,6 +354,7 @@ const TabItem = styled.div`
   .content {
     color: #d5d5d5;
     font-size: 1.4em;
+    user-select: text;
   }
 
   @media screen and (max-width: 1100px) {
@@ -443,7 +444,7 @@ const MessageHint: React.FC<MessageHintProps> = ({ message, type }) => {
 }
 
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
-  const [body, setBody] = useState<any>()
+  const [body, setBody] = useState<any>(artistKit?.body[0])
 
   const [kits, setKits] = useState<Map<string, any>>(new Map())
 
@@ -469,16 +470,6 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
   // useEffect(() => {
   //   console.log(kits)
   // }, [kits, body])
-
-
-  const list = artistKit?.body.map((body:{url: string, price: number, rarity: string}) =>({
-    url: body.url,
-    price: body.price,
-    rarity: body.rarity
-  }))
-
-
-
 
   const KIT_TYPES: Array<{name: string, list: KitProperties[], key: string}> = useMemo(() =>
     [
@@ -522,7 +513,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
           <SelectableBodyList
             selectedValue= {body}
             onSelect= {v => setBody(v)}
-            list= {list}
+            list= {artistKit?.body}
           />
 
 
@@ -596,7 +587,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       {/*</ItemContainer>*/}
 
 
-      <MintButton  >
+      <MintButton >
         <Button style={{ width: '100px' }} onClick={ () => mintNFT(body, kits)}>
           Mint
         </Button>
@@ -610,19 +601,16 @@ const ArtistDetail: React.FC = () => {
 
   const { data: userData } = useArtistDetailQuery()
 
-  const { data: artistKitList } = useArtistKitQuery(artistId)
+  const { data: artistKitList } = useArtistKitQuery(3312)
 
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [artistId])
 
   return (
     <Wrapper>
       <ArtistDetailContainer>
         <UserInfo userData={userData} />
         <DescriptionContainer>
-          <StyledTab defaultActiveKey="artDetail"  >
+          <StyledTab defaultActiveKey="artDetail" onChange={ () => window.scrollTo(0, 0)}  >
             <TabPane
               tab= {
                 <span>

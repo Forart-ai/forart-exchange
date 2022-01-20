@@ -12,7 +12,6 @@ const useCandyMachine = () => {
     if (!provider) {
       return undefined
     }
-
     return new Program(CANDY_MACHINE_PROGRAM_IDL, CANDY_MACHINE_PROGRAM_ID, provider)
   }, [provider])
 

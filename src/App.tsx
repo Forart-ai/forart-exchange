@@ -55,7 +55,7 @@ const App: React.FC = () => {
               <AppSideBar />
             </Layout.Sider>
           </Affix>
-          <Content  style={{ display: 'flex', width:'calc(100vw - 220px)', backgroundColor:'#1c1c1d', position:'relative',top: '60px' }}>
+          <Content  style={{ width:'calc(100vw - 220px)', backgroundColor:'#1c1c1d', position:'relative',top: '60px' }}>
             {
               routes.map((router:any) => (
                 <Route

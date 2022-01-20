@@ -46,8 +46,13 @@ export type SellingOrder = {
   makerAssetExtraValue: number
 }
 
-export type LockNFT = {
+export type LockNFTRequest = {
   series: number,
   components: any,
   wallet: string
+}
+
+export type NftMintRequest = {
+  order: string,
+  mintKey: string
 }

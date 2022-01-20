@@ -90,7 +90,7 @@ export const SelectedBody = styled.div`
   
   img {
     width: 100%;
-    height: 100%;
+    height: 90%;
     margin-bottom: 10px;
   }
   
@@ -101,7 +101,6 @@ export const SelectedBody = styled.div`
 `
 
 export const PriceContainer = styled.div`
-  
     width: 100%;
     height: 10%;
     display: flex;

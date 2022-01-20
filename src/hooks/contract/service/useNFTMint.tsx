@@ -3,9 +3,11 @@ import { useModal } from '../../../contexts/modal'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 import { Modal, Progress } from 'antd'
 import styled from 'styled-components'
-import { LockNFT } from './exchange/types'
+import { LockNFTRequest } from './exchange/types'
 import useCandyMachine from '../../programs/useCandyMachine'
 import { Keypair } from '@solana/web3.js'
+import CONFT_API from '../../../apis/co-nft'
+import { sleep } from '../../../utils'
 
 const Message = styled.div`
   text-align: center;
@@ -76,6 +78,14 @@ const MODAL_CONTENT = {
     <Message>Please connect to a wallet first</Message>
   ),
 
+  checkStorage: (
+    <Message> Checking storage, please wait... </Message>
+  ),
+
+  failToLockNFT : (
+    <Message>Oops, it seems that the nft is gone already</Message>
+  ),
+
   waitForTransfer:(
     <Message>
       ✅ Please approve transfer transaction in your wallet
@@ -85,6 +95,13 @@ const MODAL_CONTENT = {
   mintSuccess: (
     <Message>
       Minted successfully! Please wait for loading metadata...
+    </Message>
+  ),
+
+  mintError: (
+    <Message>
+      There seems to be something wrong during loading metadata. <br />
+      But don&apos;t worry, you can view you NFT in your wallet.
     </Message>
   ),
 
@@ -101,6 +118,7 @@ const useNFTMint = () => {
   const { account } = useSolanaWeb3()
   const { openModal, configModal, closeModal } = useModal()
   const { mint } = useCandyMachine()
+  const [order, setOrder] = useState<string>('')
 
 
 
@@ -115,23 +133,56 @@ const useNFTMint = () => {
         }
       })
 
+      const mintKeypair = Keypair.generate()
+      const components: number[] = []
+
 
       if (!account) {
         openModal(MODAL_CONTENT.unconnectedToWallet)
         return
       }
 
+      const lockNFTForm: LockNFTRequest = {
+        series: 0,
+        components: components,
+        wallet: account.toBase58()
+      }
 
       // await sleep(1000)
 
+      openModal(MODAL_CONTENT.checkStorage)
+
+      components.push(body.id)
+
+      for (const item of kit.values()) {
+        components.push(item.id)
+      }
+
+
+
+      await CONFT_API.core.kits.lockNft(lockNFTForm).then((order:any) => {
+        console.log(order)
+        if (order) {
+          setOrder(order)
+        }
+        else return
+      })
+
       openModal(MODAL_CONTENT.waitForTransfer)
 
-      const mintKeypair = Keypair.generate()
 
-      mint(mintKeypair)
+      await mint(mintKeypair)
         .then(async _signature => {
           console.log(mintKeypair.publicKey.toBase58(), _signature)
           openModal(MODAL_CONTENT.mintSuccess)
+
+          CONFT_API.core.kits.nftMint({
+            order: order,
+            mintKey: mintKeypair.publicKey.toBase58()
+          })
+            .then(() => sleep(1500))
+            .then(closeModal)
+            .catch(() => {openModal(MODAL_CONTENT.mintError)})
         })
         .catch(e => {
           openModal(
@@ -140,42 +191,6 @@ const useNFTMint = () => {
             </Message>
           )
         })
-
-      // const obj = Object.create(null)
-
-      // for (const [k, v] of kit) {
-      //   arr.push(v.id)
-      // }
-      const components: number[] = []
-
-      for (const item of kit.values()){
-        components.push(item.id)
-      }
-
-      const lockNFTForm: LockNFT = {
-        series: 0,
-        components: components,
-        wallet: account.toBase58()
-      }
-
-      console.log(lockNFTForm)
-
-      // await lockNft(lockNFTForm)
-
-
-
-
-      // obj.genImageName = genName
-      // obj.belongId = '12121212455'
-      // obj.artistId = artistId
-      //
-      // const result = await mergeImage(obj)
-      // const uri = await base64ToIPfsUri(b64toBlob(result.data))
-      // setMintResult(uri)
-
-      // await openModal( <MintResultImage mintSrc={uri} />)
-
-
     }, [account]
   )
   return {

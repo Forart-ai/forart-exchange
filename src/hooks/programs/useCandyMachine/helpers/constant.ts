@@ -3,7 +3,7 @@ import { Idl } from '@project-serum/anchor'
 
 const SOLANA_CLUSTER = (process.env.REACT_APP_SOLANA_CLUSTER) as Cluster
 const END_POINT = process.env.REACT_APP_SOLANA_END_POINT || clusterApiUrl(SOLANA_CLUSTER)
-const CANDY_MACHINE_ADDR = process.env.REACT_APP_CANDY_MACHINE_ADDR as string
+const CANDY_MACHINE_ADDR = 'FKctadBMg9b32xHDNbu9rQraaW3rMkmXNCmMP715tMGy'
 
 //mock
 export const SolanaConnection = new Connection(END_POINT, { disableRetryOnRateLimit: true })
