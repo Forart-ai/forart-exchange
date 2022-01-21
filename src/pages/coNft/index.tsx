@@ -25,67 +25,70 @@ const CoNftPageContainer = styled.div`
 
 const HeaderContainer = styled.div`
   width: 100%;
-  height: 500px;
+  height: 600px;
   margin-top: 10px;
-  //background: #2A2E35;
-  background: radial-gradient(62% 35px at center bottom, #1C1C1D 77%, #2A2E35 77.5%);
   position: relative;
   border-radius: 15px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 50px 60px;
+  padding: 50px 0;
 `
 
-const  LeftArea = styled.div`
-  width: calc(60% - 5px);
-  height: 100%;
-`
-
-const Title = styled.div`
+const  LeftTop = styled.div`
   width: 100%;
-  text-align: center;
-  font-size: 2.2em;
-  text-transform: uppercase;
-  background: linear-gradient(180deg ,#12dbe4, #02fbab);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+  height: 60%;
+
 `
 
-const  RightArea = styled.div`
-  height: 100%;
-  max-width: 500px;
+const  LeftBottom = styled.div`
+  height: 35%;
+  width: 100%;
   min-width: 40%;
   padding: 1px;
   border-radius: 10px;
-  background: linear-gradient(45deg, #00EBA4, #02A6F5) border-box;
-  
+  background: linear-gradient(45deg, #12dbe4, #FF468B) border-box;
+
+  .row {
+    display: flex;
+    align-items: center;
+  }
+
   .data-container {
-    background: linear-gradient(0deg, rgba(14,22,39,.8),rgba(36,52,84,.8)) border-box;
+    background: linear-gradient(0deg, rgba(14, 22, 39, .9), rgba(2, 8, 16, 0.9)) border-box;
     border-radius: 10px;
     padding: 30px 30px 18px;
     height: 100%;
-    
+    display: flex;
+    flex-direction: column;
+
     .label {
-      font-size: 1.6em;
+      font-size: 1.3em;
       color: #fff;
+      border-right: 1px #fc6ea3 solid;
+      padding: 2px 25px;
+      margin-right: 12px;
     }
   }
 `
 
+const RightArea = styled.div`
+  border: 1px red solid;
+  width: 65%;
+`
+
 const MainInfo = styled.div`
-  
+  color: #fff;
+
   .title {
     font-size: 2.8em;
     text-transform: uppercase;
-    background: linear-gradient(90deg ,#12dbe4, #02fbab);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    //background: linear-gradient(90deg ,#12dbe4, #02fbab);
+    //-webkit-background-clip: text;
+    //-webkit-text-fill-color: transparent;
   }
   
   .description {
     font-size: 1.3em;
-    color: #fff;
   }
  
 `
@@ -122,18 +125,17 @@ const PoolsContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  position: relative;
-  background: #2A2E35;
-  top: -60px;
+  align-items: start;
   //background: radial-gradient(62% 35px at center top, #1C1C1D 77%, #2A2E35 77.5%);
-  
-  
-  
+  color: #fc6ea3;
+
+
+
+
   .title {
-    background: linear-gradient(90deg ,#12dbe4, #02fbab);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    //background: linear-gradient(90deg ,#12dbe4, #02fbab);
+    //-webkit-background-clip: text;
+    //-webkit-text-fill-color: transparent;
     font-size: 2.8em;
   }
   
@@ -143,16 +145,17 @@ const PoolListContainer = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
   margin-bottom: 20px;
 
 `
 
 const StyledCountUp = styled(CountUp)`
-  background: linear-gradient(90deg ,#12dbe4, #02fbab);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  //background: linear-gradient(90deg ,#12dbe4, #02fbab);
+  //-webkit-background-clip: text;
+  //-webkit-text-fill-color: transparent;
+  color: #FF468B;
   font-size: 2.8em;
 `
 
@@ -166,54 +169,59 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
   return (
     <HeaderContainer>
-      <LeftArea>
-        <MainInfo>
-          <div className="title">{INFO_DETAILS.title}</div>
-          <div className="description">{INFO_DETAILS.describe}</div>
-        </MainInfo>
+      <div style={{ display:'flex', flexDirection:'column',  width: '65%' }}>
+        <LeftTop>
+          <MainInfo>
+            <div className="title">{INFO_DETAILS.title}</div>
+            <div className="description">{INFO_DETAILS.describe}</div>
+          </MainInfo>
 
-        <LinkContainer>
-          {
-            EXTERNAL_LINKS.map(({ icon, link }) => (
-              <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
-                <img src={icon} alt={link} />
-              </SCExternalLink>
-            ))
-          }
-        </LinkContainer>
-      </LeftArea>
-      <RightArea>
-        <div className="data-container">
-          <div className="label">TOTAL VALUE</div>
+          <LinkContainer>
+            {
+              EXTERNAL_LINKS.map(({ icon, link }) => (
+                <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
+                  <img src={icon} alt={link} />
+                </SCExternalLink>
+              ))
+            }
+          </LinkContainer>
+        </LeftTop>
+        <LeftBottom>
+          <div className="data-container">
+            <div className= "row">
+              <div className="label">TOTAL VALUE</div>
+              {
+                coNftData ? (
+                  <StyledCountUp
+                    end={coNftData.totalValueStaked}
+                    duration={2}
+                    separator=","
+                    suffix= " FTA "
+                  />
+                ) :
+                  <StyledCountUp end={0} />
+              }
+            </div>
 
-          {
-            coNftData ? (
-              <StyledCountUp
-                end={coNftData.totalValueStaked}
-                duration={2}
-                separator=","
-                suffix= " FTA "
-              />
-            ) :
-              <StyledCountUp end={0} />
-          }
+            <div className= "row" >
+              <div className="label">AVERAGE APY</div>
+              {
+                coNftData ? (
+                  <StyledCountUp
+                    end={ (coNftData.averageAPY)*100 }
+                    duration={2}
+                    separator=","
+                    suffix= " % "
+                  />
+                ) :
+                  <StyledCountUp  end={0} />
+              }
+            </div>
 
-          <div className="label">AVERAGE APY</div>
-
-          {
-            coNftData ? (
-              <StyledCountUp
-                end={ (coNftData.averageAPY)*100 }
-                duration={2}
-                separator=","
-                suffix= " % "
-              />
-            ) :
-              <StyledCountUp  end={0} />
-          }
-
-        </div>
-      </RightArea>
+          </div>
+        </LeftBottom>
+      </div>
+      <RightArea />
     </HeaderContainer>
   )
 }
@@ -271,7 +279,6 @@ const CoNftPage: React.FC = () => {
     <Wrapper>
       <CoNftPageContainer>
         <Header coNftData={ coNftData } />
-        <CurveTop />
         <PoolsList poolsList={ poolsList?.records } />
       </CoNftPageContainer>
     </Wrapper>

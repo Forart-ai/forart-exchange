@@ -8,12 +8,12 @@ import { Link, useHistory } from 'react-router-dom'
 const PoolsCardContainer = styled.div< { loading?: boolean }>`
   width: 600px;
   height: 220px;
-  margin: 20px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  background: #232324;
+  background: #000;
   box-shadow: 16px 14px 20px #0000008c;
   position: relative;
   overflow: hidden;
@@ -22,7 +22,7 @@ const PoolsCardContainer = styled.div< { loading?: boolean }>`
   ${props => props.loading && `
    &:before {
     content: "";
-    background-image: conic-gradient(#02fbab 20deg, transparent 120deg);
+    background-image: conic-gradient(#FF468B 20deg, transparent 120deg);
     position: absolute;
     width: 150%;
     height: 50%;
@@ -34,7 +34,7 @@ const PoolsCardContainer = styled.div< { loading?: boolean }>`
     width: 590px;
     height: 210px;
     position: absolute;
-    background: #232324;
+    background: #000;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -101,13 +101,13 @@ const DataContent = styled.div`
     flex-direction: column;
 
     .label {
-      font-size: 1em;
-      color: #e8e5e5;
+      font-size: 1.1em;
+      color: #FF468B;
     }
 
     .value {
       font-size: 1.1em;
-      color: #fff;
+      color: #FF468B;
     }
   }
 `

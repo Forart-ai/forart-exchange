@@ -603,8 +603,6 @@ const ArtistDetail: React.FC = () => {
 
   const { data: artistKitList } = useArtistKitQuery(3312)
 
-
-
   return (
     <Wrapper>
       <ArtistDetailContainer>

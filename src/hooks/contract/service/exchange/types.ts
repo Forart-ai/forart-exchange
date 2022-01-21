@@ -56,3 +56,8 @@ export type NftMintRequest = {
   order: string,
   mintKey: string
 }
+
+export type GetNftRequest = {
+  wallet: string,
+  nft: string | undefined
+}

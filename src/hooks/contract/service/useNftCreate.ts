@@ -100,7 +100,7 @@ const useCreateNft = () => {
           nameArtist: form.artistName
         }
 
-        APICreateNFT(createForm).then(res1=> {
+        APICreateNFT(createForm).then(() => {
           setHintMessage({
             message: 'Create successfully!',
             type: 'hint'

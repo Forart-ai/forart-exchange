@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useModal } from '../../../contexts/modal'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
-import { Modal, Progress } from 'antd'
+import { Progress } from 'antd'
 import styled from 'styled-components'
 import { LockNFTRequest } from './exchange/types'
 import useCandyMachine from '../../programs/useCandyMachine'
 import { Keypair } from '@solana/web3.js'
 import CONFT_API from '../../../apis/co-nft'
-import { sleep } from '../../../utils'
+import { useMintResultQuery } from '../../queries/useMintResultQuery'
 
 const Message = styled.div`
   text-align: center;
@@ -25,22 +25,16 @@ const Container = styled.div`
   }
 `
 
-const WaitingForTransition: React.FC = () => {
-  return (
-    <>
-      <Modal>
-        <p>s</p>
-      </Modal>
-    </>
-  )
-}
 
-const MintResultImage: React.FC<{mintSrc: string}> = ({ mintSrc }) => {
+const MintResultImage: React.FC<{nft: string, account: string}> = ({ nft, account }) => {
+
+  console.log(nft)
+  const { data: nftResult } = useMintResultQuery(true, { wallet: account, nft: nft })
+
+  console.log(nftResult)
   return (
     <>
-      <Container>
-        <img src={mintSrc} />
-      </Container>
+      <Container />
     </>
   )
 }
@@ -74,6 +68,9 @@ const WaitForMinting:React.FC = () => {
 }
 
 const MODAL_CONTENT = {
+  kitNotEnough: (
+    <Message> Choose at least a body </Message>
+  ),
   unconnectedToWallet: (
     <Message>Please connect to a wallet first</Message>
   ),
@@ -82,7 +79,7 @@ const MODAL_CONTENT = {
     <Message> Checking storage, please wait... </Message>
   ),
 
-  failToLockNFT : (
+  nftLock : (
     <Message>Oops, it seems that the nft is gone already</Message>
   ),
 
@@ -97,7 +94,6 @@ const MODAL_CONTENT = {
       Minted successfully! Please wait for loading metadata...
     </Message>
   ),
-
   mintError: (
     <Message>
       There seems to be something wrong during loading metadata. <br />
@@ -118,7 +114,6 @@ const useNFTMint = () => {
   const { account } = useSolanaWeb3()
   const { openModal, configModal, closeModal } = useModal()
   const { mint } = useCandyMachine()
-  const [order, setOrder] = useState<string>('')
 
 
 
@@ -142,8 +137,13 @@ const useNFTMint = () => {
         return
       }
 
+      if (!body) {
+        openModal(MODAL_CONTENT.kitNotEnough)
+        return
+      }
+
       const lockNFTForm: LockNFTRequest = {
-        series: 0,
+        series: 3312,
         components: components,
         wallet: account.toBase58()
       }
@@ -152,50 +152,73 @@ const useNFTMint = () => {
 
       openModal(MODAL_CONTENT.checkStorage)
 
-      components.push(body.id)
+      components.push(body?.id)
 
       for (const item of kit.values()) {
         components.push(item.id)
       }
 
+      CONFT_API.core.kits.lockNft(lockNFTForm).then((res:any) => {
+        const orderNum = res.order
+        openModal(MODAL_CONTENT.waitForTransfer)
+
+        mint(mintKeypair)
+          .then(async _signature => {
+            openModal(MODAL_CONTENT.mintSuccess)
+            CONFT_API.core.kits.nftMint({
+              order:  orderNum.toString(),
+              mintKey: mintKeypair.publicKey.toBase58()
+            }).then((r:any) => {
+              console.log(r.nft)
+              openModal(<MintResultImage nft={r.nft} account={ account.toBase58()} />)
+            })
+              // .then(() => sleep(1500))
+              // .then(closeModal)
+              .catch(() => {openModal(MODAL_CONTENT.mintError)})
+          })
+          .catch(e => {
+            openModal(
+              <Message>
+                Oops! Mint failed: {e.message || e.toString()}
+              </Message>
+            )
+          })
 
 
-      await CONFT_API.core.kits.lockNft(lockNFTForm).then((order:any) => {
-        console.log(order)
-        if (order) {
-          setOrder(order)
-        }
-        else return
+      }).catch(e => {
+        openModal(
+          <Message>Oops! {e || e.toString()}</Message>
+        )
+        return
       })
 
-      openModal(MODAL_CONTENT.waitForTransfer)
+
+      // mint(mintKeypair)
+      //   .then(async _signature => {
+      //     console.log(mintKeypair.publicKey.toBase58(), _signature)
+      //     openModal(MODAL_CONTENT.mintSuccess)
+      //     console.log(order, mintKeypair.publicKey.toBase58())
+      //     CONFT_API.core.kits.nftMint({
+      //       order: order.toString(),
+      //       mintKey: mintKeypair.publicKey.toBase58()
+      //     })
+      //       .then(() => sleep(1500))
+      //       .then(closeModal)
+      //       .catch(() => {openModal(MODAL_CONTENT.mintError)})
+      //   })
+      //   .catch(e => {
+      //     openModal(
+      //       <Message>
+      //         Oops! Mint failed: {e.message || e.toString()}
+      //       </Message>
+      //     )
+      //   })
 
 
-      await mint(mintKeypair)
-        .then(async _signature => {
-          console.log(mintKeypair.publicKey.toBase58(), _signature)
-          openModal(MODAL_CONTENT.mintSuccess)
 
-          CONFT_API.core.kits.nftMint({
-            order: order,
-            mintKey: mintKeypair.publicKey.toBase58()
-          })
-            .then(() => sleep(1500))
-            .then(closeModal)
-            .catch(() => {openModal(MODAL_CONTENT.mintError)})
-        })
-        .catch(e => {
-          openModal(
-            <Message>
-              Oops! Mint failed: {e.message || e.toString()}
-            </Message>
-          )
-        })
     }, [account]
   )
-  return {
-    mintNFT
-  }
+  return { mintNFT }
 }
 
 
