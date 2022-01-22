@@ -88,7 +88,7 @@ const ModalProvider: React.FC = ({ children }) => {
               alt={'close'}
               onClick={close}
               src={require('../assets/images/coPools/close.svg').default}
-              style={{ position: 'absolute', right: '20px', top: '20px', cursor: 'pointer' }}
+              style={{ position: 'absolute', right: '20px', top: '60px', cursor: 'pointer' }}
             />
           )
         }

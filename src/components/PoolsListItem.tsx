@@ -7,7 +7,7 @@ import { Link, useHistory } from 'react-router-dom'
 
 const PoolsCardContainer = styled.div< { loading?: boolean }>`
   width: 600px;
-  height: 220px;
+  height: 270px;
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
@@ -32,7 +32,7 @@ const PoolsCardContainer = styled.div< { loading?: boolean }>`
   &:after {
     content: "";
     width: 590px;
-    height: 210px;
+    height: 260px;
     position: absolute;
     background: #000;
     border-radius: 10px;
@@ -88,7 +88,6 @@ const InfoContent = styled.div`
     font-size: 1em;
     color: #b2b2b2;
   }
-
 `
 
 const DataContent = styled.div`
@@ -150,7 +149,7 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
           </div>
         </DataContent>
         <Link to={toArtistDetailUrl}>
-          <Button  > More Detail</Button>
+          <Button>More Detail</Button>
         </Link>
 
 

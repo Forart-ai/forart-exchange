@@ -8,6 +8,7 @@ import useCandyMachine from '../../programs/useCandyMachine'
 import { Keypair } from '@solana/web3.js'
 import CONFT_API from '../../../apis/co-nft'
 import { useMintResultQuery } from '../../queries/useMintResultQuery'
+import { useHistory } from 'react-router-dom'
 
 const Message = styled.div`
   text-align: center;
@@ -114,6 +115,7 @@ const useNFTMint = () => {
   const { account } = useSolanaWeb3()
   const { openModal, configModal, closeModal } = useModal()
   const { mint } = useCandyMachine()
+  const history = useHistory()
 
 
 
@@ -168,12 +170,11 @@ const useNFTMint = () => {
             CONFT_API.core.kits.nftMint({
               order:  orderNum.toString(),
               mintKey: mintKeypair.publicKey.toBase58()
-            }).then((r:any) => {
-              console.log(r.nft)
-              openModal(<MintResultImage nft={r.nft} account={ account.toBase58()} />)
+            }).then(() => {
+              history.push('/personal/home')
             })
               // .then(() => sleep(1500))
-              // .then(closeModal)
+              .then(closeModal)
               .catch(() => {openModal(MODAL_CONTENT.mintError)})
           })
           .catch(e => {

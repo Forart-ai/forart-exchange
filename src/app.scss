@@ -30,7 +30,7 @@
 }
 
 .ant-btn {
-  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+  background-image: linear-gradient(to right, #12dbe4, #FF468B);
   color: white;
   border: none;
   font-weight: 550;
@@ -39,7 +39,7 @@
   font-size: 1.2em;
 
   &:hover, &:focus {
-    background-image: linear-gradient(to right, #0ee3a1, #0086c2);
+    background-image: linear-gradient(to right, #1ff3ff, #ff005e);
     filter: brightness(120%);
     color: white;
   }

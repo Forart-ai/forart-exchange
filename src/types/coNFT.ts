@@ -15,3 +15,14 @@ export interface PoolsListData {
   mintors: number,
   status: string
 }
+
+export interface MintedNFTItem {
+  id: string,
+  series: number | string,
+  components: any,
+  previewUrl: string,
+  wallet: string,
+  chainStatus: string,
+  createTime :string | number,
+  updateTime: string | number,
+}

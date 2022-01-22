@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
 // @ts-ignore
 import styled from 'styled-components'
-import { Avatar, Tabs } from 'antd'
+import { Avatar, Empty, Tabs } from 'antd'
 import { useWeb3React } from '@web3-react/core'
 import { shortenAddress } from '../../utils'
-import { DollarOutlined, EditOutlined, SmileOutlined, UserOutlined } from '@ant-design/icons'
+import { SmileOutlined, UserOutlined } from '@ant-design/icons'
 import { usePersonalNFTsQuery } from '../../hooks/queries/usePersonalNFTsQuery'
 import { ChainType, ForartNftTransactionStatus } from '../../apis/nft'
 import NFTListItem from '../../components/NFTListItem'
 import { NftListItem } from '../../types/NFTDetail'
+import { useMintResultQuery } from '../../hooks/queries/useMintResultQuery'
+import { useSolanaWeb3 } from '../../contexts/solana-web3'
+import { MintedNFTItem } from '../../types/coNFT'
+import MintListItem from '../../components/mintListItem'
 
 
 const { TabPane } = Tabs
@@ -21,6 +25,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 50px;
 
   @media screen and  (max-width: 1100px) {
     width: 100vw !important;
@@ -128,17 +133,34 @@ const NFTListContainer = styled.div`
     width: 210px;
   }
   
+  .warning {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    font-size: 1.8em;
+  }
+  
   @media screen and (max-width: 1100px) {
     justify-content: center;
   }
 `
 
+const WarningWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  .ant-empty-description {
+    color: #ffffff;
+  }
+`
+
 const UserNFTList: React.FC<{ list: Array<NftListItem> | undefined }> = ({ list }) => {
+
   return (
     <NFTListContainer>
       {
         list?.map((nft: any, index: number) => (
-          <NFTListItem data={nft} key={index} type="own" />
+
+          <NFTListItem data={nft}  type="own" key={index} />
         ))
       }
       {
@@ -150,9 +172,43 @@ const UserNFTList: React.FC<{ list: Array<NftListItem> | undefined }> = ({ list 
   )
 }
 
+const UserMintedNFTList: React.FC<{ list: Array<MintedNFTItem> | undefined  }> = ({ list }) => {
+
+  return (
+    <NFTListContainer>
+      {
+        list?.map((nft: any, index: number) => (
+
+          <MintListItem data={nft} key={index}    />
+        ))
+      }
+      {
+        new Array(5).fill({}).map((_, index) => (
+          <div className="empty" key={index} />
+        ))
+      }
+    </NFTListContainer>
+  )
+}
+
+const WarningContent: React.FC = () => {
+
+
+  return (
+    <>
+      <WarningWrapper>
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'Wallet not connected'} />
+      </WarningWrapper>
+
+    </>
+  )
+}
+
 const TabsContainer: React.FC = () => {
 
   const { account } = useWeb3React()
+
+  const { account: SolAccount } = useSolanaWeb3()
 
   const [current, setCurrent] = useState<number>(1)
 
@@ -164,29 +220,30 @@ const TabsContainer: React.FC = () => {
 
   const { data: personalNft, isLoading } = usePersonalNFTsQuery({ current, searchKey, typeChain, account })
 
-  // const [personalNft, setPersonalNft] = useState<any>()
-  //
-  // const getPersonalNft = useCallback(async () => {
-  //   personalNftList({ addressOwner:account, typeChain, size:20, current, searchKey } )
-  //     .then(res=> {
-  //       setPersonalNft(res.data.data.records)
-  //       console.log(personalNft)
-  //     })
-  // }, [account])
-  //
-  // useEffect(() => {
-  //   getPersonalNft()
-  // },[getPersonalNft])
+  const { data: mintedNft } = useMintResultQuery(true, { wallet: SolAccount?.toBase58(), nft:'' } )
 
-  const onTabChange = (key: any) => {
-    console.log(key)
-  }
-
-  console.log(personalNft)
 
   return (
     <TabsWrapper>
-      <StyledTab defaultActiveKey="owned" onChange={onTabChange}  >
+      <StyledTab defaultActiveKey="minted"  >
+        <TabPane
+          tab= {
+            <span>
+              <SmileOutlined />
+              Minted
+            </span>
+          }
+          key="minted"
+        >
+          {
+            SolAccount ?
+              <UserMintedNFTList list={mintedNft} />
+              :
+              <WarningContent />
+          }
+
+        </TabPane>
+
         <TabPane
           tab= {
             <span>
@@ -196,30 +253,16 @@ const TabsContainer: React.FC = () => {
           }
           key="owned"
         >
+          {
+            account ?
+              <UserNFTList list={personalNft} />
+              :
+              <WarningContent />
+          }
 
-          <UserNFTList list={personalNft} />
 
         </TabPane>
 
-        <TabPane
-          tab= {
-            <span>
-              <DollarOutlined />
-              On sale
-            </span>
-          }
-          key="onSale"
-        />
-
-        <TabPane
-          tab= {
-            <span>
-              <EditOutlined />
-              Created
-            </span>
-          }
-          key="created"
-        />
       </StyledTab>
     </TabsWrapper>
   )
@@ -240,7 +283,7 @@ const PersonalCenterPage: React.FC = () => {
         </BackgroundContainer>
         <UserInfo>
           <div className="username">Hello World</div>
-          <div className="address">{ shortenAddress(account?.toString())}</div>
+          <div className="address">{ shortenAddress(account?.toString()) }</div>
         </UserInfo>
 
         <TabsContainer />

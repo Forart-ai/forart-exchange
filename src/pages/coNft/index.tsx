@@ -7,6 +7,7 @@ import { EXTERNAL_LINKS } from '../../layout/AppSideBar'
 import CountUp from 'react-countup'
 import PoolsListItem from '../../components/PoolsListItem'
 import { usePoolsQuery } from '../../hooks/queries/usePoolsQuery'
+import { CaretRightOutlined } from '@ant-design/icons'
 
 const Wrapper = styled.div`
   max-width: 1400px;
@@ -51,6 +52,7 @@ const  LeftBottom = styled.div`
   .row {
     display: flex;
     align-items: center;
+    
   }
 
   .data-container {
@@ -128,15 +130,11 @@ const PoolsContainer = styled.div`
   align-items: start;
   //background: radial-gradient(62% 35px at center top, #1C1C1D 77%, #2A2E35 77.5%);
   color: #fc6ea3;
-
-
-
-
+  
   .title {
-    //background: linear-gradient(90deg ,#12dbe4, #02fbab);
-    //-webkit-background-clip: text;
-    //-webkit-text-fill-color: transparent;
     font-size: 2.8em;
+    display: flex;
+    align-items: center;
   }
   
 `
@@ -192,12 +190,14 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
               <div className="label">TOTAL VALUE</div>
               {
                 coNftData ? (
-                  <StyledCountUp
-                    end={coNftData.totalValueStaked}
-                    duration={2}
-                    separator=","
-                    suffix= " FTA "
-                  />
+                  <div style={{ display:'flex', alignItems:'baseline' }} >
+                    <StyledCountUp
+                      end={coNftData.totalValueStaked}
+                      duration={2}
+                      separator=","
+                    />
+                    <div style={{ color:'#FF468B', fontSize:'1.6em' }}>FTA</div>
+                  </div>
                 ) :
                   <StyledCountUp end={0} />
               }
@@ -207,12 +207,15 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
               <div className="label">AVERAGE APY</div>
               {
                 coNftData ? (
-                  <StyledCountUp
-                    end={ (coNftData.averageAPY)*100 }
-                    duration={2}
-                    separator=","
-                    suffix= " % "
-                  />
+
+                  <div style={{ display:'flex', alignItems:'baseline' }} >
+                    <StyledCountUp
+                      end={ (coNftData.averageAPY)*100 }
+                      duration={2}
+                      separator=","
+                    />
+                    <div style={{ color:'#FF468B', fontSize:'1.6em' }}>%</div>
+                  </div>
                 ) :
                   <StyledCountUp  end={0} />
               }
@@ -230,7 +233,10 @@ const PoolsList: React.FC<{ poolsList?: Array<PoolsListData>}> = ({ poolsList })
 
   return (
     <PoolsContainer>
-      <div className="title">Live Pools</div>
+      <div className="title">
+        <div>Live Pools</div>
+        <CaretRightOutlined style={{ fontSize:'0.6em', marginLeft: '15px' }} />
+      </div>
       <PoolListContainer>
         {
           poolsList?.map((pool: PoolsListData, index: number) => (
@@ -244,7 +250,11 @@ const PoolsList: React.FC<{ poolsList?: Array<PoolsListData>}> = ({ poolsList })
 
       </PoolListContainer>
 
-      <div className="title">Closed Pools</div>
+      <div className="title">
+        <div>Closed Pools</div>
+        <CaretRightOutlined style={{ fontSize:'0.6em', marginLeft: '15px' }} />
+      </div>
+
       <PoolListContainer>
         {
           poolsList?.map((pool: PoolsListData, index: number) => (
@@ -256,9 +266,6 @@ const PoolsList: React.FC<{ poolsList?: Array<PoolsListData>}> = ({ poolsList })
         }
 
       </PoolListContainer>
-
-
-
     </PoolsContainer>
   )
 
