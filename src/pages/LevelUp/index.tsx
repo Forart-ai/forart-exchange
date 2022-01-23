@@ -9,11 +9,11 @@ import 'swiper/modules/navigation/navigation.scss'
 import BannerImage from '../../assets/images/AIGen/ai-gen-banner.jpg'
 import Merge from '../../assets/images/aiGenerator/merge.png'
 import Add from '../../assets/images/aiGenerator/add.png'
-import RightArrow from '../../assets/images/aiGenerator/arrow-right-fill.png'
+import RightArrow from '../../assets/images/aiGenerator/arrow-right.png'
 import StyleEx from '../../assets/images/aiGenerator/styleEx.jpg'
 import ContentEx from '../../assets/images/aiGenerator/contentEx.jpg'
 import ResultEx from '../../assets/images/aiGenerator/resultEx.jpg'
-import { LoadingOutlined } from '@ant-design/icons'
+import { CaretRightOutlined, LoadingOutlined } from '@ant-design/icons'
 import { aiGeneratorStyle } from '../../apis/ai'
 import { base64ToIPfsUri } from '../../utils'
 import { useHistory } from 'react-router-dom'
@@ -27,9 +27,10 @@ SwiperCore.use([Navigation, EffectCoverflow, Pagination])
 
 const Wrapper = styled.div`
   width: 100%;
-  height: fit-content;
+  height: 100vh;
   display: flex;
   justify-content: center;
+  overflow-y: scroll;
 
   @media screen and  (max-width: 1100px) {
     width: 100vw !important;
@@ -51,36 +52,39 @@ const GenContainer = styled.div`
 
 const Introduction = styled.div`
   width: 100%;
-  height: 200px;
-  
+  height: 220px;
+
   .title {
     width: fit-content;
-    font-size: 2.6em;
-    background-image: -webkit-linear-gradient(left, #00EBA4, #02A6F5);
     font-weight: 550;
+    font-size: 2.6em;
+    //color: #FF4D9D;
+    background-image: -webkit-linear-gradient(left, #FF4D9D, #c330c9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 30px;
   }
-  
+
   .sub-title {
     font-size: 2.1em;
     font-weight: 550;
-    color: #02A6F5;
+    color: #FF4D9D;
   }
-  
+
   .description {
-    color: #02A6F5;
-    font-size: 1.3em;
+    color: #FF4D9D;
+    font-size: 1.5em;
   }
-  
+
   @media screen and (max-width: 1100px) {
     .title {
       font-size: 26px;
     }
+
     .sub-title {
       font-size: 22px;
     }
+
     .description {
       font-size: 14px;
     }
@@ -126,12 +130,13 @@ const GenerateResultContainer = styled.div`
 `
 
 const SubTitle = styled.div`
-  color: #00EBA4;
+  color: #FF4D9D;
   width: fit-content;
   font-weight: 550;
   font-size: 2em;
   margin-bottom: 20px;
-  border-bottom: 2px solid #00EBA4;
+  display: flex;
+  align-items: center;
    
   @media screen and (max-width: 1100px) {
     font-size: 20px;
@@ -174,7 +179,6 @@ const SeedNFTColumn = styled.div`
 const MergeIcon = styled.div`
   width: 100px;
   height: 100px;
-  background: url(${Merge}) no-repeat ;
   background-size: 100%;
 
   @media screen and (max-width: 1100px) {
@@ -408,9 +412,9 @@ const SelectedNFT: React.FC< {style: string, content: string} >= ({ style, conte
 const CreateButton: React.FC<{ onClick:() => void }> = ({ onClick }) => {
 
   return (
-    <div>
-      <MergeIcon />
-      <StyledButton onClick={ onClick } > Generate Now! </StyledButton>
+    <div style={{ display:'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+      <div> <img src={Merge} style={{ width:'80px' }} /></div>
+      <Button onClick={ onClick } > Generate Now! </Button>
     </div>
   )
 }
@@ -524,14 +528,21 @@ const AIGeneration:React.FC = () => {
         <Example />
 
         <LeftArea>
-          <SubTitle>Style Gene</SubTitle>
+          <SubTitle>
+            <div>Style Gene</div>
+            <CaretRightOutlined style={{ fontSize:'0.6em', marginLeft: '15px' }} />
+          </SubTitle>
+
           <SelectableNFTList
             selectedValue={style}
             onSelect={v=> setStyle(v)}
             list={styleList?.map((style: { image: any}) => style?.image)}
           />
 
-          <SubTitle>Content</SubTitle>
+          <SubTitle>
+            <div>Content</div>
+            <CaretRightOutlined style={{ fontSize:'0.6em', marginLeft: '15px' }} />
+          </SubTitle>
           <SelectableNFTList
             selectedValue={content}
             onSelect={v=> setContent(v)}

@@ -70,10 +70,10 @@ function scrollToPart(anchorName: string) {
 const Wrapper = styled.div`
   width: 100%;
   max-width: 1400px;
-  min-height: auto;
+  height: 100vh;
   margin: auto;
-  //padding-bottom: 50px;
   padding: 30px 20px;
+  overflow-y: scroll;
   
  @media screen and (max-width: 1100px) {
    height: auto;
@@ -89,18 +89,16 @@ const ArtistDetailContainer = styled.div`
 
 const HeaderContainer = styled.div<{backgroundImage?: string}>`
   width: 100%;
-  height: 800px;
+  height: 600px;
   border-radius: 20px;
   margin-top: 10px;
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  //background: #2A2E35;
   padding: 2rem 2.2rem;
   flex-direction: column;
-  background: linear-gradient(0deg, rgba(14,22,39,.8),rgba(36,52,84,.8)) border-box;
-  
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), #1E052D) border-box;
 
 
   ${props => props.backgroundImage && `
@@ -108,19 +106,18 @@ const HeaderContainer = styled.div<{backgroundImage?: string}>`
  background-size: cover;
  `
 };
-  
+
   @media screen and (max-width: 1100px) {
     padding: 0.8rem 0.5rem;
     height: 700px;
   }
-  
+
 `
 
 const ArtistInfo = styled.div`
   width: 100%;
-  height: 70%;
+  height: 100%;
   //border: 1px red solid;
-  background: rgba(14,22,39,.85);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,15 +126,15 @@ const ArtistInfo = styled.div`
   padding: 20px 40px;
 
   .username {
-    font-size: 2rem;
-    color: #fff;
+    font-size: 2em;
+    color: #FF468B;
   }
 
   .slogan {
-    background: linear-gradient(90deg, #12dbe4, #02fbab);
+    background-image: -webkit-linear-gradient(left, #FF4D9D, #c330c9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 1.4rem;
+    font-size: 1.6em;
     text-align: center;
   }
 
@@ -250,7 +247,7 @@ const StyledTab = styled(Tabs)`
   }
 
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: #94DAFF !important;
+    color: #FF468B !important;
 
   }
 
@@ -267,7 +264,7 @@ const StyledTab = styled(Tabs)`
 
   .ant-tabs-ink-bar {
     line-height: 20px;
-    background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+    background: linear-gradient(to right, #FF468B, #12dbe4) border-box;
     padding: 4px;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
@@ -292,8 +289,7 @@ const DescriptionContainer = styled.div`
   align-items: center;
   padding: 24px 25px;
   flex-direction: column;
-  background: linear-gradient(0deg, rgba(14,22,39,.8),rgba(36,52,84,.8)) border-box;
-  
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), #1E052D) border-box;
   @media screen and (max-width: 1100px) {
     padding: 10px;
   }
@@ -304,7 +300,7 @@ const ArtistDetailTab = styled.div`
   width: 100%;
   height: fit-content;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 
 
   .ant-anchor-link-title {
@@ -313,11 +309,11 @@ const ArtistDetailTab = styled.div`
   }
 
   .ant-anchor-link-active > .ant-anchor-link-title {
-    color: #00EBA4;
+    color: #FF468B;
   }
 
   .ant-anchor-ink::before{
-    background-color: #00EBA4;
+    background-color: #FF468B;
   }
   
   
@@ -368,32 +364,32 @@ const TabItem = styled.div`
 const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 
   return (
-    <HeaderContainer backgroundImage={userData?.backgroundImage}>
+    <HeaderContainer >
       <ArtistInfo>
         <Avatar size={ 64 } src={userData?.avatar} />
         <div className="username">{userData?.username}</div>
         <div className="slogan">{userData?.slogan}</div>
         <p className="describe">{userData?.describe}</p>
       </ArtistInfo>
-      <FollowersInfo>
-        <LeftArea >
-          <div className="value"> {userData?.followers.length}</div>
-          <div className="label"> Followers </div>
-        </LeftArea>
-        <RightArea>
-          <div className="followers" >
-            <div className="followers-icon">
-              <div className="followers-icon-inner">
-                {
-                  userData?.followers.map((item:string, index:number) => (
-                    <img className="is-48" src={item} key={index} />
-                  ))
-                }
-              </div>
-            </div>
-          </div>
-        </RightArea>
-      </FollowersInfo>
+      {/*<FollowersInfo>*/}
+      {/*  <LeftArea >*/}
+      {/*    <div className="value"> {userData?.followers.length}</div>*/}
+      {/*    <div className="label"> Followers </div>*/}
+      {/*  </LeftArea>*/}
+      {/*  <RightArea>*/}
+      {/*    <div className="followers" >*/}
+      {/*      <div className="followers-icon">*/}
+      {/*        <div className="followers-icon-inner">*/}
+      {/*          {*/}
+      {/*            userData?.followers.map((item:string, index:number) => (*/}
+      {/*              <img className="is-48" src={item} key={index} />*/}
+      {/*            ))*/}
+      {/*          }*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </RightArea>*/}
+      {/*</FollowersInfo>*/}
     </HeaderContainer>
   )
 }
@@ -405,13 +401,13 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 
   return (
     <ArtistDetailTab>
-      <Anchor onClick={onAnchorClick} offsetTop={150} style={isMobile ? { display:'none' }  : {}}>
-        {
-          userData?.artDetail.map((item: any, index: number) => (
-            <Link href={`#${item.title}`}  key={index} title={item.title} />
-          ))
-        }
-      </Anchor>
+      {/*<Anchor onClick={() => onAnchorClick}  style={isMobile ? { display:'none' }  : { }}>*/}
+      {/*  {*/}
+      {/*    userData?.artDetail.map((item: any, index: number) => (*/}
+      {/*      <Link href={`#${item.title}`}  key={index} title={item.title} />*/}
+      {/*    ))*/}
+      {/*  }*/}
+      {/*</Anchor>*/}
 
 
       <TabItem>

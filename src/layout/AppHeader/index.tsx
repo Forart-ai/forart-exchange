@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import ForartLogo from '../../assets/images/header/logo.png'
-import Wallet from '../../components/wallet'
 import UserIcon from '../../assets/images/header/user.svg'
 import { useHistory } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
@@ -61,7 +60,7 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = ({ onCollapseChan
       </Logo>
       <Operator>
         <SolanaWallet />
-        <Wallet />
+        {/*<Wallet />*/}
         <div style={{ fontSize: '20px', color: '#A53067' }}   onClick={() => history.push('/personal/home')} >
           <img src={UserIcon} />
         </div>

@@ -21,11 +21,11 @@ const { TabPane } = Tabs
 
 const Wrapper = styled.div`
   width: 100%;
-  min-height: 100vh;
-  height: fit-content;
+  height: calc(100vh - 60px);
   display: flex;
   justify-content: center;
   margin-bottom: 50px;
+  overflow-y: scroll;
 
   @media screen and  (max-width: 1100px) {
     width: 100vw !important;
@@ -34,7 +34,6 @@ const Wrapper = styled.div`
 
 const PersonalCenterContainer = styled.div`
   width: 95%;
-  height: 95%;
   
 `
 
@@ -67,7 +66,7 @@ const UserInfo = styled.div`
 
   .username {
     font-size: 30px;
-    color: #94DAFF;
+    color: #FF468B;
     font-weight: bolder;
   }
 
@@ -92,7 +91,7 @@ const StyledTab = styled(Tabs)`
   }
 
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: #94DAFF !important;
+    color: #FF468B !important;
 
   }
 
@@ -109,7 +108,7 @@ const StyledTab = styled(Tabs)`
 
   .ant-tabs-ink-bar {
     line-height: 20px;
-    background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+    background-image: -webkit-linear-gradient(left, #FF4D9D, #c330c9);
     padding: 4px;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
@@ -166,7 +165,7 @@ const UserNFTList: React.FC<{ list: Array<NftListItem> | undefined }> = ({ list 
         ))
       }
       {
-        new Array(5).fill({}).map((_, index) => (
+        new Array(8).fill({}).map((_, index) => (
           <div className="empty" key={index} />
         ))
       }
@@ -175,6 +174,9 @@ const UserNFTList: React.FC<{ list: Array<NftListItem> | undefined }> = ({ list 
 }
 
 const UserMintedNFTList: React.FC<{ list: Array<MintedNFTItem> | undefined  }> = ({ list }) => {
+
+
+
 
   return (
     <NFTListContainer>
@@ -185,7 +187,7 @@ const UserMintedNFTList: React.FC<{ list: Array<MintedNFTItem> | undefined  }> =
         ))
       }
       {
-        new Array(5).fill({}).map((_, index) => (
+        new Array(8).fill({}).map((_, index) => (
           <div className="empty" key={index} />
         ))
       }
@@ -272,7 +274,7 @@ const TabsContainer: React.FC = () => {
 
 const PersonalCenterPage: React.FC = () => {
 
-  const { account } = useWeb3React()
+  const { account } = useSolanaWeb3()
 
 
   return (
@@ -284,7 +286,7 @@ const PersonalCenterPage: React.FC = () => {
           </UserAvatar>
         </BackgroundContainer>
         <UserInfo>
-          <div className="username">Hello World</div>
+          <div className="username">User</div>
           <div className="address">{ shortenAddress(account?.toString()) }</div>
         </UserInfo>
 

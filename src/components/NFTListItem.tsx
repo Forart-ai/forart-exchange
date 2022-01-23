@@ -99,8 +99,8 @@ const ChainFlag = styled.span`
   display: flex;
   align-items: center;
   width:fit-content ;
-  color: #00EBA4;
-  border: 2px #00EBA4 solid; 
+  color: #FF468B;
+  border: 2px #FF468B solid; 
   height: 20px;
   padding:  5px;
   border-radius: 5px;
@@ -111,7 +111,7 @@ const StyledFlag = styled.div`
   color: #ffffff;
   text-align: center;
   z-index: 99;
-  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+  background-image: linear-gradient(to right, #02A6F5, #FF468B);
   padding: 3px;
   border-radius: 10px;
   top: -10px;

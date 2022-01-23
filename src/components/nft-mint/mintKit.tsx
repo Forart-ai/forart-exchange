@@ -41,7 +41,7 @@ const ImageContainer = styled.div`
     border-top-right-radius: 10px;
     width: 100%;
     height: 100%;
-    background: #0f1b39;
+    background: #1E052D;
   }
 `
 

@@ -3,6 +3,7 @@ import { MintedNFTItem } from '../types/coNFT'
 import styled from 'styled-components'
 import { useModal } from '../contexts/modal'
 import AttributesDialog from './attributes-dialog'
+import { Progress } from 'antd'
 
 
 const Wrapper = styled.div<{$empty?: boolean}>`
@@ -38,6 +39,7 @@ const Wrapper = styled.div<{$empty?: boolean}>`
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
   }
 
 `
@@ -50,6 +52,31 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
     const url = data?.previewUrl
     return url
   }, [data])
+
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        if (data?.chainStatus === 'GENERATING') {
+          prev = 70
+          return prev
+        }
+
+        if (data?.chainStatus === 'UPDATING') {
+          prev = 98
+          return prev
+        }
+
+        return prev + 1
+      })
+    }, 100)
+
+    return () => {
+      clearInterval(interval)
+    }
+
+  },[])
 
 
   useEffect(() => {
@@ -76,7 +103,24 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
             />
           }
           {
-            data?.chainStatus !== 'SUCCESS' && <div className="status"> {data?.chainStatus} </div>
+            (data?.chainStatus !== 'SUCCESS' && data?.chainStatus !== 'FAILED') &&
+            <>
+              <div className="status">
+                <div>  {data?.chainStatus}  </div>
+                <Progress percent={progress} />
+                {/*<div> <SyncOutlined  spin={true} /> </div>*/}
+              </div>
+
+            </>
+          }
+          {
+            data?.chainStatus === 'FAILED' &&
+            <>
+              <div className="status">
+                <div>  {data?.chainStatus}  </div>
+                <div>       <Progress percent={10} size="small" status="exception" /></div>
+              </div>
+            </>
           }
         </div>
       </Wrapper>

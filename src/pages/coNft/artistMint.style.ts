@@ -28,7 +28,7 @@ export const BodyContent = styled.div `
   width: 49%;
   height: 100%;
   display: flex;
-  background: #070E1E;
+  background: #02060e;
   border-radius: 20px;
   display: flex;
   justify-content: space-between;
@@ -69,10 +69,10 @@ export const KitImageBorder = styled.div`
 
 
 export const StyledImage = styled(Image)`
-  background: #0f1b39;
+  background: #1E052D;
   border-radius: 10px;
   position: relative;
-  
+
 `
 
 export const SelectedBody = styled.div`
@@ -82,7 +82,7 @@ export const SelectedBody = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: #0f1b39;
+  background: #1E052D;
   border-radius: 20px;
   padding: 20px;
   position: relative;
@@ -128,12 +128,12 @@ export const PriceContainer = styled.div`
   
   &:before,
   &:after {
-    background: linear-gradient(110deg, #3376ff, #3efff6 65%, #4effd2);
+    background: linear-gradient(87deg, #3376ff, #FF468B 65%, #3376ff);
   }
   
     .price {
     z-index: 5;
-    background: linear-gradient(90deg ,#12dbe4, #02fbab);
+    background: #FF468B;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 1.6em;
@@ -151,7 +151,7 @@ export const PriceContainer = styled.div`
 export const KitContent = styled.div`
   width: 49%;
   height: 100%;
-  background: #070E1E;
+  background: #02060e;
   border-radius: 20px;
 
   @media screen and (max-width: 1100px) {
@@ -171,7 +171,7 @@ export const MintTab = styled(Tabs)`
   }
 
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: #94DAFF !important;
+    color: #FF468B !important;
 
   }
 
@@ -188,7 +188,7 @@ export const MintTab = styled(Tabs)`
 
   .ant-tabs-ink-bar {
     //line-height: 161px;
-    background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+    background: linear-gradient(to right, #FF468B, #12dbe4) border-box;
     padding: 2px;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;

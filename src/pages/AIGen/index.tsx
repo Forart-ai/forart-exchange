@@ -14,7 +14,8 @@ import { dictionaryToBase64 } from '../../utils'
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 1500px;
+  height: 100vh;
+  overflow-y: scroll;
   display: flex;
   justify-content: center;
 `
@@ -26,27 +27,32 @@ const AIGenContent = styled(Form)`
 
 const AIGenContentItem = styled(Form.Item)`
   
+  display: flex;
+  justify-content: space-between;
+  
+  
   .ant-form-item-label > label {
     font-size: 1.8em;
     font-weight: 500;
-    color: #02A6F5;
+    color: #FF4D9D;
 
   }
 
   .ant-input {
+    width: 700px;
     &::placeholder {
       color: #ccc;
     }
 
     height: 36px ;
-    background: #2A2E35 !important;
+    background: #000 !important;
     border-radius: 10px !important;
-    border: none;
-
+    border: 1px #FF468B solid !important;
     font-size: 1.2em;
     font-weight: 500 !important;
     color: white !important;
     line-height: 20px !important;
+    margin-right: 10px;
   }
 `
 
@@ -76,23 +82,24 @@ const Introduction = styled.div`
   .title {
     width: fit-content;
     font-size: 2.6em;
-    background-image: -webkit-linear-gradient(left, #00EBA4, #02A6F5);
+    background-image: -webkit-linear-gradient(left, #FF4D9D, #c330c9);
     font-weight: 550;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 30px;
   }
-  
+
   .sub-title {
     font-size: 2.1em;
     font-weight: 550;
-    color: #02A6F5;
+    color: #FF4D9D;
   }
-  
+
   .description {
-    color: #02A6F5;
-    font-size: 1.3em;
+    color: #FF4D9D;
+    font-size: 1.5em;
   }
+
 
   @media screen and (max-width: 1100px) {
     .title {
@@ -124,7 +131,7 @@ const EnterContent = styled.div`
   align-items: center;
   .enter {
     width: 200px;
-    color: #02A6F5;
+    color: #FF4D9D;
     font-size: 1.7em;
     red: left;
   }
@@ -160,10 +167,11 @@ const SubTitle = styled.div`
 const SampleImg = styled.div`
   margin-top: 20px;
   display: flex;
+  flex-direction: column;
 
   .enter {
-    width: 200px;
-    color: #02A6F5;
+    width: fit-content;
+    color: #FF4D9D;
     font-size: 1.7em;
     text-align: left;
     margin-right: 30px;
@@ -228,18 +236,6 @@ span {
 }
 `
 
-const StyledButton = styled(Button)`
-  width: 150px;
-  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
-  justify-content: center;
-  border: none;
-  color: white;
-  border-radius: 10px;
-  margin-left: calc((100% - 150px) / 2) ;
-  font-size: 16px;
-  
-`
-
 const SelectedImage = styled(AntdImage)`
   .ant-image.ant-image-error {
     background-color: #61dafb; !important;
@@ -248,7 +244,7 @@ const SelectedImage = styled(AntdImage)`
 
 const ResultContainer = styled.div`
   margin-top: 25px;
-  background-color: #282c34;
+  background-color: #191919;
   height: 525px;
   display: flex;
   width: 100%;
@@ -520,7 +516,15 @@ const AIGen:React.FC = () => {
             rules={[{ required: true, message: 'Content is Required!' }]}
           >
             <Input placeholder="Please enter a content" />
+            <Button onClick={ () => generateByContent(form) } >
+              {
+                !generating ? 'Generate Now-!' :
+                  'Generating...'
+              }
+            </Button>
           </AIGenContentItem>
+
+
         </AIGenContent>
 
         {/*<StyledButton onClick={ generate } >*/}
@@ -530,12 +534,7 @@ const AIGen:React.FC = () => {
         {/*  }*/}
         {/*</StyledButton>*/}
 
-        <StyledButton onClick={ () => generateByContent(form) } >
-          {
-            !generating ? 'Generate Now-!' :
-              'Generating...'
-          }
-        </StyledButton>
+
 
         <AIGeneratorResultContainer resultImageSrc={resultImageSrc} generating={generating} />
       </Container>

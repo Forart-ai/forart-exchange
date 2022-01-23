@@ -17,13 +17,13 @@ import { useMediaQuery } from 'react-responsive'
 
 const Wrapper = styled.div`
   width: 100%;
-  height: calc(100% - 68px);
+  height: calc(100vh - 68px);
   display: flex;
   flex-direction: column;
   align-items: center;
   color: #97BCF6;
   margin-bottom: 70px;
-  min-height: 100vh;
+  overflow-y: scroll;
 
   @media screen and  (max-width: 1100px) {
     width: 100vw !important;
@@ -49,7 +49,7 @@ const Banner = styled.div`
 const Title = styled.div`
   font-size: 2.5em;
   font-weight: bolder;
-  background-image: -webkit-linear-gradient(left, #00EBA4, #02A6F5);
+  background-image: -webkit-linear-gradient(left, #FF4D9D, #c330c9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-top: 10px;
@@ -86,18 +86,6 @@ const NFTListContainer = styled.div`
   }
 `
 
-const StyledButton = styled(Button)`
-  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
-  border: none;
-  color: white;
-  border-radius: 10px;
-  font-size: 1.2em;
-
-  @media screen and (max-width: 1100px) {
-    width: 90vw;
-
-  }
-`
 
 const NFTCreateContainer = styled.div`
   display: flex;
@@ -232,7 +220,7 @@ const marketplace: React.FC = () => {
 
       <NFTCreateContainer>
         <div className="button">
-          <StyledButton onClick={() => history.push('/NFTCreate')}>NFT Create</StyledButton>
+          <Button onClick={() => history.push('/NFTCreate')}>NFT Create</Button>
         </div>
         <div className="filter">
           <ThemeInput

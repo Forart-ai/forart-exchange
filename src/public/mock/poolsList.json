@@ -4,8 +4,8 @@
       "image": "https://forart.mypinata.cloud/ipfs/QmXjAP5zBqJ5sw4181GiKDNkuAgVzPct7dQsriPG8vmnen",
       "name": "Hello World",
       "describe": "Truly Decentralised Asset Management Powered by A.I. and Analytics",
-      "followers": 112200,
-      "mintors": 12345,
+      "followers": "---",
+      "mintors": "---",
       "status": "closing",
       "artistId": "3312"
     },
@@ -13,8 +13,8 @@
       "image": "https://forart.mypinata.cloud/ipfs/QmXjAP5zBqJ5sw4181GiKDNkuAgVzPct7dQsriPG8vmnen",
       "name": "Cool Cat",
       "describe": "Truly Decentralised Asset Management Powered by A.I. and Analytics",
-      "followers": 112200,
-      "mintors": 12345,
+      "followers": "---",
+      "mintors": "---",
       "status": "closing",
       "artistId": "3313"
     },
@@ -22,8 +22,8 @@
       "image": "https://forart.mypinata.cloud/ipfs/QmXjAP5zBqJ5sw4181GiKDNkuAgVzPct7dQsriPG8vmnen",
       "name": "Crazy Bull",
       "describe": "Truly Decentralised Asset Management Powered by A.I. and Analytics",
-      "followers": 112200,
-      "mintors": 12345,
+      "followers": "---",
+      "mintors": "---",
       "status": "closed",
       "artistId": "3314"
     },
@@ -31,8 +31,8 @@
       "image": "https://forart.mypinata.cloud/ipfs/QmXjAP5zBqJ5sw4181GiKDNkuAgVzPct7dQsriPG8vmnen",
       "name": "Punk",
       "describe": "Truly Decentralised Asset Management Powered by A.I. and Analytics",
-      "followers": 112200,
-      "mintors": 12345,
+      "followers": "---",
+      "mintors": "---",
       "status": "living",
       "artistId": "3315"
     }

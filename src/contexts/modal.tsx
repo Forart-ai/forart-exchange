@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import ReactModal from 'react-modal'
 
 export type ModalContextValue = {
-  open: (content: ModalConfig['content']) => void
+  open: (content: ModalConfig['content'], closeable?: boolean) => void
   configModal: (config: ModalConfig) =>  void
   update: (modalContent?: JSX.Element) => void
   close: () => void

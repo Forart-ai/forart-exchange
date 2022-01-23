@@ -9,6 +9,7 @@ import { Keypair } from '@solana/web3.js'
 import CONFT_API from '../../../apis/co-nft'
 import { useMintResultQuery } from '../../queries/useMintResultQuery'
 import { useHistory } from 'react-router-dom'
+import { sleep } from '../../../utils'
 
 const Message = styled.div`
   text-align: center;
@@ -82,6 +83,15 @@ const MODAL_CONTENT = {
 
   nftLock : (
     <Message>Oops, it seems that the nft is gone already</Message>
+  ),
+
+  waitForMinting: <WaitForMinting />,
+
+  transferComplete: (
+    <Message>
+      Transfer complete! Minting...
+      <Progress percent={100} />
+    </Message>
   ),
 
   waitForTransfer:(
@@ -167,13 +177,15 @@ const useNFTMint = () => {
         mint(mintKeypair)
           .then(async _signature => {
             openModal(MODAL_CONTENT.mintSuccess)
-            CONFT_API.core.kits.nftMint({
+            // openModal(MODAL_CONTENT.waitForMinting, false)
+            await CONFT_API.core.kits.nftMint({
               order:  orderNum.toString(),
               mintKey: mintKeypair.publicKey.toBase58()
             }).then(() => {
               history.push('/personal/home')
+              openModal(MODAL_CONTENT.transferComplete)
             })
-              // .then(() => sleep(1500))
+              .then(() => sleep(1500))
               .then(closeModal)
               .catch(() => {openModal(MODAL_CONTENT.mintError)})
           })

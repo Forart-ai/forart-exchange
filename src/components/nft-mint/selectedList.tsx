@@ -31,7 +31,7 @@ const MintItems = styled.div`
   min-height: 200px;
   width: 200px;
   height: 200px;
-  background: #070E1E;
+  background: #1E052D;
   border-radius: 10px;
   
   img{

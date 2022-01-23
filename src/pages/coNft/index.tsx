@@ -8,10 +8,11 @@ import CountUp from 'react-countup'
 import PoolsListItem from '../../components/PoolsListItem'
 import { usePoolsQuery } from '../../hooks/queries/usePoolsQuery'
 import { CaretRightOutlined } from '@ant-design/icons'
+import Banner1 from '../../assets/images/coPools/banner.png'
 
 const Wrapper = styled.div`
   max-width: 1400px;
-  height: fit-content;
+  height: 100vh;
   margin: auto;
   padding-bottom: 50px;
   overflow: scroll;
@@ -47,7 +48,7 @@ const  LeftBottom = styled.div`
   min-width: 40%;
   padding: 1px;
   border-radius: 10px;
-  background: linear-gradient(45deg, #12dbe4, #FF468B) border-box;
+  background: linear-gradient(to bottom, #FF468B, #12dbe4) border-box;
 
   .row {
     display: flex;
@@ -74,8 +75,16 @@ const  LeftBottom = styled.div`
 `
 
 const RightArea = styled.div`
-  border: 1px red solid;
-  width: 65%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  background-image: radial-gradient(circle, #c330c9, #701473, rgb(17, 17, 17), rgb(17, 17, 17));
+
+  img {
+    width: 100%;
+    object-fit: contain;
+  }
 `
 
 const MainInfo = styled.div`
@@ -224,7 +233,9 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
           </div>
         </LeftBottom>
       </div>
-      <RightArea />
+      <RightArea >
+        <img src={Banner1} />
+      </RightArea>
     </HeaderContainer>
   )
 }
