@@ -1,10 +1,10 @@
 {
   "id": "1",
-  "username": "Monica",
-  "describe": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris",
+  "username": "HypeTeen",
+  "describe": "HypeTeen is the First CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing. Born in the first year of NFT, she/he has her/his own NFT attributes, likes to explore the unknown, and is obsessed with trendy things in the future. At the peak of her/his appearance, she/he likes fans to call: super handsome!",
   "backgroundImage":"https://solanium-prd-backend-space.ams3.digitaloceanspaces.com/media/projects/sy-header.jpg",
   "avatar": "https://solanium-prd-backend-space.ams3.digitaloceanspaces.com/media/FlippieCoin2_1.png",
-  "slogan": "A very, very sleepy parrot",
+  "slogan": "Wisdom, creativity, confidence, willing to share",
   "followers": [
     "https://t.me/i/userpic/320/1PDkGDQN1PAAum0NHqCtJcmcE_UcQM2Vhx0EE1XFSeo.jpg",
     "https://t.me/i/userpic/320/1PDkGDQN1PAAum0NHqCtJcmcE_UcQM2Vhx0EE1XFSeo.jpg",
@@ -19,9 +19,11 @@
   ],
   "artDetail": [
     {
-      "title": "Features",
+      "title": "Archive",
       "image": "https://solanium-prd-backend-space.ams3.digitaloceanspaces.com/media/projects/features.png",
-      "content": "Waggle is a permissionless marketplace built for multi-chain token pools and auctions, enabling projects to raise capital post-IDO on a decentralized environment based on Solana.\n\nWaggle curates a public-facing marketplace interface which facilitates locked tokens trading activities. With Waggle, decentralized projects will be able to raise capital from their community, and users will be able to participate in community fundraising rounds in a secure and compliant environment and access opportunities previously only available to institutional players.\n\nWaggle seeks to build a future that is decentralized, efficient, and empowering."
+      "content": "* Name:* HypeTeen <br/> Gender:*** Encrypting\n\n*** Date of birth:*** NFT first year\n\n*** Hobbies:*** Travel, Adventure, Food, Art, Social\n\n*** Personality:*** Wisdom, creativity, confidence, willing to share\n\n*** Occupation***: Ambassador of virtual and real culture"
+
+
     },
     {
       "title": "About",

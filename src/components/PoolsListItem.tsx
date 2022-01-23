@@ -88,6 +88,11 @@ const InfoContent = styled.div`
     font-size: 1em;
     color: #b2b2b2;
   }
+  .button-column{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
 `
 
 const DataContent = styled.div`
@@ -95,6 +100,8 @@ const DataContent = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 10px 0;
+  
+ 
 
   .data-column {
     flex-direction: column;
@@ -108,6 +115,7 @@ const DataContent = styled.div`
       font-size: 1.1em;
       color: #FF468B;
     }
+    
   }
 `
 
@@ -148,9 +156,12 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
             <div className= "value">{data?.mintors}</div>
           </div>
         </DataContent>
-        <Link to={toArtistDetailUrl}>
-          <Button>More Detail</Button>
-        </Link>
+
+        <div className="button-column">
+          <Link to={toArtistDetailUrl}>
+            <Button>Mint Now</Button>
+          </Link>
+        </div>
 
 
       </InfoContent>

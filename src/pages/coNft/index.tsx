@@ -10,8 +10,10 @@ import { usePoolsQuery } from '../../hooks/queries/usePoolsQuery'
 import { CaretRightOutlined } from '@ant-design/icons'
 import Banner1 from '../../assets/images/coPools/banner.png'
 
+
 const Wrapper = styled.div`
-  max-width: 1400px;
+  max-width:100vw;
+  width: 1400px;
   height: 100vh;
   margin: auto;
   padding-bottom: 50px;
@@ -170,7 +172,9 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
   const INFO_DETAILS = {
     title:'CO-NFT',
-    describe:'A co-creation mechanism between NFT artists and enthusiasts can give full play to the artist’s creative talents and enthusiasts’ hobbies and suggestions, forming a collision of NFT artistic creations and producing unexpected results.'
+    describe: 'Forart.ai provides the First AI-powered NFT SaaS for Social, which integrates NFT content creation and social attributes to provide' +
+      ' a one-click experience for NFT creation, publishing and sharing. Forart.ai provides a direct co-creation space for NFT artists and enthusiasts,' +
+      ' so that artistic inspiration and market demand can be reached in the Forart space.'
   }
 
 
@@ -205,7 +209,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
                       duration={2}
                       separator=","
                     />
-                    <div style={{ color:'#FF468B', fontSize:'1.6em' }}>FTA</div>
+                    <div style={{ color:'#FF468B', fontSize:'1.6em' }}>SOL</div>
                   </div>
                 ) :
                   <StyledCountUp end={0} />
@@ -213,7 +217,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
             </div>
 
             <div className= "row" >
-              <div className="label">AVERAGE APY</div>
+              <div className="label">CO-NFT NUMBER</div>
               {
                 coNftData ? (
 
@@ -223,7 +227,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
                       duration={2}
                       separator=","
                     />
-                    <div style={{ color:'#FF468B', fontSize:'1.6em' }}>%</div>
+                    <div style={{ color:'#FF468B', fontSize:'1.6em' }} />
                   </div>
                 ) :
                   <StyledCountUp  end={0} />

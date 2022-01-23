@@ -15,12 +15,11 @@ import { uploadToMinio } from '../../utils/minio'
 
 const Wrapper = styled.div`
   width: 100%;
-  height: fit-content;
-  padding-top: 20px;
+  height: 90vh;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 60px;
 
   .title {
     font-weight: 550;

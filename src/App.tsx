@@ -77,7 +77,7 @@ const App: React.FC = () => {
         <AppHeader onCollapseChanged={toggleCollapsed} />
 
         <AppSideBar />
-        <Content  style={{ width:'calc(100vw - 80px)', backgroundColor:'rgb(17,17,17)', position:'relative',top: '60px', left:'70px', borderRadius:'1em' }}>
+        <Content  style={{ width:'calc(100vw - 80px)', backgroundColor:'rgb(17,17,17)', position:'relative',top: '60px', left:'70px', borderRadius:'1em', height:'100vh' }}>
           {
             routes.map((router:any) => (
               <Route

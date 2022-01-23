@@ -3,8 +3,11 @@ import styled from 'styled-components'
 import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
+
+import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
+
 import { Anchor, Avatar, Button, Tabs } from 'antd'
-import { DollarOutlined, SmileOutlined } from '@ant-design/icons'
+import { BlockOutlined, CrownOutlined, SmileOutlined } from '@ant-design/icons'
 import {
   BodyContent,
   CenterContainer,
@@ -121,13 +124,14 @@ const ArtistInfo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   border-radius: 20px;
   padding: 20px 40px;
 
   .username {
+    width: 100%;
     font-size: 2em;
     color: #FF468B;
+    text-align: center;
   }
 
   .slogan {
@@ -359,6 +363,16 @@ const TabItem = styled.div`
   }
 `
 
+const AllNftWrapper = styled.div`
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  color: #ffffff;
+`
+
 
 
 const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
@@ -366,10 +380,15 @@ const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
   return (
     <HeaderContainer >
       <ArtistInfo>
-        <Avatar size={ 64 } src={userData?.avatar} />
-        <div className="username">{userData?.username}</div>
-        <div className="slogan">{userData?.slogan}</div>
-        <p className="describe">{userData?.describe}</p>
+        <div>
+          <Avatar size={ 300 } src={HyteenAvatar} />
+        </div>
+
+        <div>
+          <div className="username">{userData?.username}</div>
+          <div className="slogan">{userData?.slogan}</div>
+          <p className="describe">{userData?.describe}</p>
+        </div>
       </ArtistInfo>
       {/*<FollowersInfo>*/}
       {/*  <LeftArea >*/}
@@ -411,15 +430,81 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 
 
       <TabItem>
-        {
-          userData?.artDetail.map((item:any, index:number) => (
-            <section className="item" key={index} id={item.title}>
-              <h2 className="title"> {item.title} </h2>
-              <img className="image-border" src={item.image} />
-              <p className="content"> {item.content} </p>
-            </section>
-          ))
-        }
+        {/*{*/}
+        {/*  userData?.artDetail.map((item:any, index:number) => (*/}
+        {/*    <section className="item" key={index} id={item.title}>*/}
+        {/*      <h2 className="title"> {item.title} </h2>*/}
+        {/*      <img className="image-border" src={item.image} />*/}
+        {/*      <p className="content"> {item.content} </p>*/}
+        {/*    </section>*/}
+        {/*  ))*/}
+        {/*}*/}
+
+        <section className="item" >
+          <h2 className="title"> Archive </h2>
+          <img className="image-border"  />
+          <p className="content">
+            Name: HypeTeen <br />
+            Gender: Encrypting <br />
+            Date of birth: NFT first year <br />
+            Hobbies: Travel, Adventure, Food, Art, Social <br />
+            Personality: Wisdom, creativity, confidence, willing to share <br />
+            Occupation: Ambassador of virtual and real culture <br />
+          </p>
+        </section>
+
+        <section className="item" >
+          <h2 className="title"> Birth of HypeTeen </h2>
+          <img className="image-border"  />
+          <p className="content">
+            HypeTeen is the First CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing. Born in the first year of NFT, she/he has her/his own NFT attributes, likes to explore the unknown, and is obsessed with trendy things in the future. At the peak of her/his appearance, she/he likes fans to call: super handsome! <br /><br />
+            In 2022, she/he will take her/his fans on her/his first journey of exploration - travel around the world, learn about the customs of various countries, spread the world&apos;s culture, and share the cultural essence and consensus with fans in Forart Club. <br /> <br />
+            HypeTeen will go to a country every once in a while, and fans will vote to decide the next country, and share several NFTs with the cultural characteristics of the country. During this period, the mintors with the most CO-NFTs will have the right to buy these Special NFTs (one address can only buy one) and have Forart Club privileges.
+            6% of the income of HypeTeen NFTs will be donated to foundations and organizations related to world cultural heritage.
+          </p>
+        </section>
+
+        <section className="item" >
+          <h2 className="title"> Minter & Holder Equity </h2>
+          <img className="image-border"  />
+          <p className="content">
+            <b> Benefits for HypeTeen NFT minters:</b> <br />
+            1. Be allowed to join the Forart Club and own the rights to the Club. <br />
+
+            2. You will receive an airdrop of Forart. <br />
+
+            3. NFT holders with scarcity properties will share the HypeTeen royalties. <br /> <br />
+
+
+            <b>HypeTeen Special NFTs holders can obtain benefits:</b>  <br />
+            1. Will be added to Forart IDO&apos;s whitelist.
+          </p>
+        </section>
+
+        <section className="item" >
+          <h2 className="title">First stop </h2>
+          <img className="image-border"  />
+          <p className="content">
+            The country where HypeTeen first travels is China, and corresponding NFTs with Chinese cultural attributes have been generated. All Special NFTs will be generated and opened after the 1000th NFT is minted. <br /><br />
+            <b> Marketplace</b> <br />
+            <ul>
+              <li>Solanart</li>
+              <li>Slope </li>
+              <li>Magic Eden</li>
+            </ul>
+          </p>
+        </section>
+
+        <section className="item" >
+          <h2 className="title">Roadmap</h2>
+          <img className="image-border"  />
+          <p className="content">
+            1. Mint CO-NFTs by Users <br />
+            2. Generate Special CO-NFTs and minter winners when the 1000th NFT is minted  <br />
+            3. Vote the next country that HypeTeen will travel to  <br />
+            4. Launch on solanart, Slope and Magic Eden when the 5000th NFT is minted  <br />
+          </p>
+        </section>
       </TabItem>
     </ArtistDetailTab>
   )
@@ -436,6 +521,12 @@ const MessageHint: React.FC<MessageHintProps> = ({ message, type }) => {
     <p style={{ fontSize: '1.2rem', color }}>
       {message}
     </p>
+  )
+}
+
+const AllNftContainer: React.FC = () => {
+  return (
+    <AllNftWrapper>Coming Soon!</AllNftWrapper>
   )
 }
 
@@ -620,13 +711,25 @@ const ArtistDetail: React.FC = () => {
             <TabPane
               tab= {
                 <span>
-                  <DollarOutlined />
+                  <CrownOutlined />
                   Mint
                 </span>
               }
               key="mint"
             >
               <Mint artistKit={artistKitList} />
+            </TabPane>
+
+            <TabPane
+              tab= {
+                <span>
+                  <BlockOutlined />
+                  All NFTs
+                </span>
+              }
+              key="all"
+            >
+              <AllNftContainer />
             </TabPane>
 
           </StyledTab>

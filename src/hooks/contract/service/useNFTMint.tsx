@@ -177,14 +177,14 @@ const useNFTMint = () => {
         mint(mintKeypair)
           .then(async _signature => {
             openModal(MODAL_CONTENT.mintSuccess)
-            // openModal(MODAL_CONTENT.waitForMinting, false)
             await CONFT_API.core.kits.nftMint({
               order:  orderNum.toString(),
               mintKey: mintKeypair.publicKey.toBase58()
-            }).then(() => {
-              history.push('/personal/home')
-              openModal(MODAL_CONTENT.transferComplete)
             })
+              .then(() => {
+                history.push('/personal/home')
+                openModal(MODAL_CONTENT.transferComplete)
+              })
               .then(() => sleep(1500))
               .then(closeModal)
               .catch(() => {openModal(MODAL_CONTENT.mintError)})

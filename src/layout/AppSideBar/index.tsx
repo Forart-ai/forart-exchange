@@ -85,11 +85,8 @@ const StyledMenuItem = styled(Menu.Item)`
 
 const LinkContainer = styled.div`
   position: relative;
-  bottom: 20px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
 `
 
@@ -110,6 +107,7 @@ const SCExternalLink = styled.a`
 
 const SidebarWrapper = styled.div`
   position: absolute;
+  height: calc(100vh - 60px);
   top: 60px;
   left: 12px;
 
@@ -172,9 +170,24 @@ const AppSideBar:React.FC = () => {
                 )
               })
             }
+
+
           </div>
         </Affix>
       </CustomizedMenu>
+
+      <LinkContainer >
+
+        {
+          EXTERNAL_LINKS.map(({ icon,link }) => (
+
+            <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
+              <img src={icon} alt={link} />
+            </SCExternalLink>
+          ))
+        }
+
+      </LinkContainer>
     </SidebarWrapper>
 
 
