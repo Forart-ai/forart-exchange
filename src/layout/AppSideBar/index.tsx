@@ -2,44 +2,45 @@ import React from 'react'
 // @ts-ignore
 import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
-import { Affix, Menu } from 'antd'
+import { Affix, Menu, Tooltip } from 'antd'
 import routes, { Route } from '../../routes'
 import TwitterIcon from '../../assets/images/contactLink/twitter.png'
 import TelegramIcon from '../../assets/images/contactLink/telegram.png'
 import DiscordIcon from '../../assets/images/contactLink/discord.png'
 
 const AppSideBarContent = styled.div`
-  height: 100%;
-  min-height: 100vh;
+  height: 30%;
   padding-left: 10px;
-  background: #04111D;
   position: relative;
-  border-right: 1px solid #262531;
   z-index: 99;
   top: 60px;
+  background: none;
   
 
   .ant-menu-root.ant-menu-vertical,
   .ant-menu-root.ant-menu-vertical-left,
   .ant-menu-root.ant-menu-vertical-right,
   .ant-menu-root.ant-menu-inline {
-    background: #04111D !important;
+    background: transparent !important;
+
     box-shadow: none;
   }
 `
 
 const CustomizedMenu = styled(Menu)`
-  height: 80vh;
+  height: 30vh;
   position: relative;
-  
+
+ 
+
   .ant-menu-item {
     display: flex;
     align-items: center;
-    border-bottom-left-radius: 20px;
-    border-top-left-radius: 20px;
+    padding: 0;
+    justify-content: center;
 
     svg {
-      width: 10px;
+      width: 20px;
 
       line {
         shape-rendering: crispEdges;
@@ -49,7 +50,7 @@ const CustomizedMenu = styled(Menu)`
 
 
   .ant-menu-item-selected {
-    background-color: #1F252B !important;
+    //background-color: #1F252B !important;
 
     a {
       color: white !important;
@@ -61,23 +62,25 @@ const CustomizedMenu = styled(Menu)`
   }
 
   .ant-menu-item-active:not(.ant-menu-item-selected) {
-    background-color: #161A1F !important;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+
   }
   
   .ant-menu-title-content {
-    display: flex;
-    align-items: center;
-    img {
-      width: 18px;
-      margin-right: 25px;
-    }
+    display: none;
   }
+  
+
+ 
   
 `
 
 const StyledMenuItem = styled(Menu.Item)`
-margin-left: 50px;
+  margin-left: 50px;
   font-size: 1em;
+
+
 `
 
 const LinkContainer = styled.div`
@@ -105,6 +108,29 @@ const SCExternalLink = styled.a`
   }
   `
 
+const SidebarWrapper = styled.div`
+  position: absolute;
+  top: 60px;
+  left: 12px;
+
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: transparent !important;
+  }
+  
+  
+
+  .ant-menu-root.ant-menu-inline {
+    background: none;
+    border: none;
+  }
+
+  .side-border {
+    padding: 15px 13px;
+    background: rgb(17,17,17);
+    border-radius: 1em;
+  }
+`
+
 
 
 export  const EXTERNAL_LINKS: Array<{ icon: string, link: string }> = [
@@ -121,49 +147,77 @@ const AppSideBar:React.FC = () => {
     return routes.filter(route => route.path === pathname || route.match?.test(pathname))[0]?.path
   })()
 
-
-
-
   return (
-    <AppSideBarContent>
+    <SidebarWrapper>
       <CustomizedMenu
         selectedKeys={[selectedKey]}
         mode="inline"
-        theme="dark"
       >
-        {
-          routes.filter(route => !route.hidden).map((route: Route) => {
-            const fillColor = (route.path === pathname || route.match?.test(pathname)) ? 'white' : '#fff'
+        <Affix offsetTop={0}>
+          <div className="side-border">
+            {
+              routes.filter(route => !route.hidden).map((route: Route) => {
+                const fillColor = (route.path === pathname ) ? 'white' : 'red'
 
-            return (
-              <StyledMenuItem key={route.path} disabled={route.disable} >
-                <img src={route.icon} className="menu-icon" width={20} />
-                <Link to={route.path} > {route.title} </Link>
-              </StyledMenuItem>
-            )
-          })
-        }
+                return (
+                  <Link to={route.path} key={route.path}>
+                    <Tooltip placement={'right'} title={route.title} >
+                      <Menu.Item
+                        icon={<route.icon fill={fillColor} />}
+                        disabled={route.disable}
+                      />
+                    </Tooltip>
 
-
-
+                  </Link>
+                )
+              })
+            }
+          </div>
+        </Affix>
       </CustomizedMenu>
+    </SidebarWrapper>
 
-      <Affix >
-        <LinkContainer >
 
-          {
-            EXTERNAL_LINKS.map(({ icon,link }) => (
 
-              <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
-                <img src={icon} alt={link} />
-              </SCExternalLink>
-            ))
-          }
-
-        </LinkContainer>
-      </Affix>
-
-    </AppSideBarContent>
+  // <AppSideBarContent>
+  //   <CustomizedMenu
+  //     selectedKeys={[selectedKey]}
+  //     mode="inline"
+  //     theme="dark"
+  //   >
+  //     {
+  //       routes.filter(route => !route.hidden).map((route: Route) => {
+  //         const fillColor = (route.path === pathname || route.match?.test(pathname)) ? 'white' : '#fff'
+  //
+  //         return (
+  //           <StyledMenuItem key={route.path} disabled={route.disable} >
+  //             <img src={route.icon} className="menu-icon" width={20} />
+  //             <Link to={route.path} > {route.title} </Link>
+  //           </StyledMenuItem>
+  //         )
+  //       })
+  //     }
+  //
+  //
+  //
+  //   </CustomizedMenu>
+  //
+  //   <Affix >
+  //     <LinkContainer >
+  //
+  //       {
+  //         EXTERNAL_LINKS.map(({ icon,link }) => (
+  //
+  //           <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
+  //             <img src={icon} alt={link} />
+  //           </SCExternalLink>
+  //         ))
+  //       }
+  //
+  //     </LinkContainer>
+  //   </Affix>
+  //
+  // </AppSideBarContent>
   )
 }
 

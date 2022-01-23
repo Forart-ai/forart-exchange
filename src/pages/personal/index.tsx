@@ -21,10 +21,10 @@ const { TabPane } = Tabs
 
 const Wrapper = styled.div`
   width: 100%;
+  min-height: 100vh;
   height: fit-content;
   display: flex;
   justify-content: center;
-  align-items: center;
   margin-bottom: 50px;
 
   @media screen and  (max-width: 1100px) {
@@ -45,6 +45,8 @@ const BackgroundContainer = styled.div`
   display: flex;
   justify-content: center;
   background-color: #232326;
+  margin-top: 20px;
+  border-radius: 1em;
 `
 
 const UserAvatar = styled.div`

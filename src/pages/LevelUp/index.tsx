@@ -382,7 +382,7 @@ const SelectableNFTList: React.FC<{selectedValue:string, onSelect:(_: string) =>
 
 const SelectedNFT: React.FC< {style: string, content: string} >= ({ style, content }) => {
   const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
-  console.log(isMobile)
+  // console.log(isMobile)
 
   return (
     <SeedNFTColumn >

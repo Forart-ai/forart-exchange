@@ -14,11 +14,12 @@ const Wrapper = styled.div`
   height: fit-content;
   margin: auto;
   padding-bottom: 50px;
+  overflow: scroll;
 `
 
 const CoNftPageContainer = styled.div`
-  max-width: 1900px;
-  width: calc(100% - 40px);
+  max-width: 1400px;
+  width: calc(100% - 80px);
   margin-left: auto;
   margin-right: auto;
 
@@ -27,7 +28,6 @@ const CoNftPageContainer = styled.div`
 const HeaderContainer = styled.div`
   width: 100%;
   height: 600px;
-  margin-top: 10px;
   position: relative;
   border-radius: 15px;
   display: flex;
@@ -250,22 +250,6 @@ const PoolsList: React.FC<{ poolsList?: Array<PoolsListData>}> = ({ poolsList })
 
       </PoolListContainer>
 
-      <div className="title">
-        <div>Closed Pools</div>
-        <CaretRightOutlined style={{ fontSize:'0.6em', marginLeft: '15px' }} />
-      </div>
-
-      <PoolListContainer>
-        {
-          poolsList?.map((pool: PoolsListData, index: number) => (
-            <PoolsListItem
-              data= {pool}
-              key= {index}
-            />
-          ))
-        }
-
-      </PoolListContainer>
     </PoolsContainer>
   )
 

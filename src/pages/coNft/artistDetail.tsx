@@ -69,7 +69,7 @@ function scrollToPart(anchorName: string) {
 
 const Wrapper = styled.div`
   width: 100%;
-  max-width: 1900px;
+  max-width: 1400px;
   min-height: auto;
   margin: auto;
   //padding-bottom: 50px;
@@ -81,7 +81,7 @@ const Wrapper = styled.div`
 `
 
 const ArtistDetailContainer = styled.div`
-  max-width: 1900px;
+  max-width: 1400px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;

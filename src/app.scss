@@ -6,9 +6,16 @@
 .app {
   width: 100%;
   overflow: hidden;
-  background-color: #202225;
   font-family: 'campton';
 }
+
+.border {
+  background-image: linear-gradient(to right bottom, #B8316A, #4A0E6F) ;
+  min-width: 100vw;
+  min-height: 100vh;
+
+}
+
 
 
 ::-webkit-scrollbar {

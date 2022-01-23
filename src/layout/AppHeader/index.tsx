@@ -4,7 +4,6 @@ import ForartLogo from '../../assets/images/header/logo.png'
 import Wallet from '../../components/wallet'
 import UserIcon from '../../assets/images/header/user.svg'
 import { useHistory } from 'react-router-dom'
-import { MenuFoldOutlined } from '@ant-design/icons'
 import { useMediaQuery } from 'react-responsive'
 import SolanaWallet from '../../components/SolanaWallet'
 
@@ -14,11 +13,9 @@ const AppHeaderContent = styled.div`
   height: 60px;
   margin-bottom: -60px;
   padding: 0 20px;
-  background: #04111D;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
   z-index: 999;
   position: fixed;
   
@@ -45,8 +42,6 @@ const Operator = styled.div`
   
     img {
       width: 40px;
-      border: 3px #02A6F5 solid;
-      border-radius: 30px;
   }
   
   @media screen and (max-width: 1100px) {
@@ -62,24 +57,14 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = ({ onCollapseChan
   return (
     <AppHeaderContent>
       <Logo>
-        <MenuFoldOutlined
-          onClick={onCollapseChanged}
-          style={{
-            position: 'relative',
-            fontSize: '20px',
-            color: '#B2B2B2',
-            marginRight: '15px'
-          }}
-        />
         <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
       </Logo>
       <Operator>
         <SolanaWallet />
         <Wallet />
-        <img src={UserIcon}
-          onClick={() => history.push('/personal/home')}
-          style={ isMobile ? { width:'25px' } : {}}
-        />
+        <div style={{ fontSize: '20px', color: '#A53067' }}   onClick={() => history.push('/personal/home')} >
+          <img src={UserIcon} />
+        </div>
       </Operator>
     </AppHeaderContent>
   )

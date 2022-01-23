@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import './App.css'
 import './app.scss'
-import { Affix, BackTop, Layout } from 'antd'
+import { BackTop, Layout } from 'antd'
 import { Content } from 'antd/es/layout/layout'
 import AppHeader from './layout/AppHeader'
 import AppSideBar from './layout/AppSideBar'
@@ -34,42 +34,63 @@ const App: React.FC = () => {
 
 
   return (
+  // <Layout className="app">
+  //   <AppHeader onCollapseChanged={toggleCollapsed} />
+  //   <Layout>
+  //     <Layout>
+  //       <Affix offsetTop={0}>
+  //         <Layout.Sider collapsed={sideBarCollapsed}
+  //           style={
+  //             isMobile ? {
+  //               position: 'fixed',
+  //               top: '0px',
+  //               left: sideBarCollapsed ? '-100%' : 0,
+  //               zIndex: 99,
+  //             } :
+  //               {
+  //                 zIndex: 99,
+  //               }
+  //           }
+  //         >
+  //           <AppSideBar />
+  //         </Layout.Sider>
+  //       </Affix>
+  //       <Content  style={{ width:'calc(100vw - 220px)', backgroundColor:'rgb(17,17,17)', position:'relative',top: '60px' }}>
+  //         {
+  //           routes.map((router:any) => (
+  //             <Route
+  //               path={router.path}
+  //               exact
+  //               component={router.component}
+  //               key={router.path}
+  //             />
+  //           ))
+  //         }
+  //         <BackTop />
+  //       </Content>
+  //     </Layout>
+  //   </Layout>
+  // </Layout>
+
     <Layout className="app">
-      <AppHeader onCollapseChanged={toggleCollapsed} />
-      <Layout>
-        <Layout>
-          <Affix offsetTop={0}>
-            <Layout.Sider collapsed={sideBarCollapsed}
-              style={
-                isMobile ? {
-                  position: 'fixed',
-                  top: '0px',
-                  left: sideBarCollapsed ? '-100%' : 0,
-                  zIndex: 99,
-                } :
-                  {
-                    zIndex: 99,
-                  }
-              }
-            >
-              <AppSideBar />
-            </Layout.Sider>
-          </Affix>
-          <Content  style={{ width:'calc(100vw - 220px)', backgroundColor:'rgb(17,17,17)', position:'relative',top: '60px' }}>
-            {
-              routes.map((router:any) => (
-                <Route
-                  path={router.path}
-                  exact
-                  component={router.component}
-                  key={router.path}
-                />
-              ))
-            }
-            <BackTop />
-          </Content>
-        </Layout>
-      </Layout>
+      <div className="border" >
+        <AppHeader onCollapseChanged={toggleCollapsed} />
+
+        <AppSideBar />
+        <Content  style={{ width:'calc(100vw - 80px)', backgroundColor:'rgb(17,17,17)', position:'relative',top: '60px', left:'70px', borderRadius:'1em' }}>
+          {
+            routes.map((router:any) => (
+              <Route
+                path={router.path}
+                exact
+                component={router.component}
+                key={router.path}
+              />
+            ))
+          }
+          <BackTop />
+        </Content>
+      </div>
     </Layout>
   )
 }

@@ -10,16 +10,16 @@ type CurrentAccountProps = {
 
 const WalletButton = styled.div`
   height: 40px;
-  background-color: #201b1e;
+  background-color: #1E052D;
   color: #fff;
   font-size: 1.1em;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 30px;
-  border: 2px solid #02A6F5;
+  //border: 2px solid #02A6F5;
   box-sizing: border-box;
-  padding: 0 5px;
+  padding: 0 10px;
   margin-right: 20px;
   cursor: pointer;
 `
