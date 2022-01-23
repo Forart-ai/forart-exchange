@@ -178,11 +178,15 @@ const useNFTMint = () => {
               .catch(() => {openModal(MODAL_CONTENT.mintError)})
           })
           .catch(e => {
-            openModal(
-              <Message>
-                Oops! Mint failed: {e.message || e.toString()}
-              </Message>
-            )
+            CONFT_API.core.kits.cancelNFTMint({ wallet: account.toBase58(), order: orderNum })
+              .then(() => {
+                openModal(
+                  <Message>
+                    Oops! Mint failed: {e.message || e.toString()}
+                  </Message>
+                )
+              })
+
           })
 
 

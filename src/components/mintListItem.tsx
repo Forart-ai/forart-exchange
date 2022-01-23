@@ -66,9 +66,9 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
   return (
     <>
       <Wrapper $empty={empty} >
-        <div className= "nft-container" onClick={() => openModal(<AttributesDialog item={data} />)} >
+        <div className= "nft-container" onClick={() => {if (data?.chainStatus === 'SUCCESS'){ openModal(<AttributesDialog item={data} />) }}} >
           {
-            data?.previewUrl &&
+            (data?.previewUrl && data?.chainStatus === 'SUCCESS') &&
             <img src={getImageUrl()}
               onLoad={()=>{
                 setLoading(false)
@@ -82,8 +82,6 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
       </Wrapper>
     </>
   )
-
-
 }
 
 export default MintListItem

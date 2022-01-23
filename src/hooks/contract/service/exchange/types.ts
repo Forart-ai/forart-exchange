@@ -61,3 +61,8 @@ export type GetNftRequest = {
   wallet: string | undefined,
   nft: string | undefined
 }
+
+export type CancelNftMintRequest = {
+  wallet: string,
+  order: string | number
+}
