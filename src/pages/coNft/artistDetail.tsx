@@ -486,7 +486,13 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
           <img className="image-border"  />
           <p className="content">
             The country where HypeTeen first travels is China, and corresponding NFTs with Chinese cultural attributes have been generated. All Special NFTs will be generated and opened after the 1000th NFT is minted. <br /><br />
-            <b> Marketplace</b> <br />
+          </p>
+        </section>
+
+        <section className="item" >
+          <h2 className="title">Marketplace</h2>
+          <img className="image-border"  />
+          <p className="content">
             <ul>
               <li>Solanart</li>
               <li>Slope </li>
@@ -531,7 +537,7 @@ const AllNftContainer: React.FC = () => {
 }
 
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
-  const [body, setBody] = useState<any>(artistKit?.body[0])
+  const [body, setBody] = useState<any>(artistKit?.Body[0])
 
   const [kits, setKits] = useState<Map<string, any>>(new Map())
 
@@ -561,34 +567,44 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
   const KIT_TYPES: Array<{name: string, list: KitProperties[], key: string}> = useMemo(() =>
     [
       {
-        name: 'Glasses',
+        name: 'Eye',
         key: '12_glasses',
-        list: artistKit?.glasses
+        list: artistKit?.Eye
       },
       {
-        name: 'Cloth',
+        name: 'Pants',
         key: '05_cloth',
-        list: artistKit?.cloth
+        list: artistKit?.Pants
       },
       {
-        name: 'Hand',
+        name: 'Foot',
         key: '08_hand',
-        list: artistKit?.hand
+        list: artistKit?.Foot
       },
       {
-        name: 'Item',
+        name: 'Mouth',
         key: '07_item',
-        list: artistKit?.item
+        list: artistKit?.Mouth
       },
       {
-        name: 'Feet',
+        name: 'Hat',
         key: '03_feet',
-        list: artistKit?.feet
+        list: artistKit?.Hat
       },
       {
-        name: 'Shoe',
+        name: 'Butt',
         key: '06_shoe',
-        list: artistKit?.shoe
+        list: artistKit?.Butt
+      },
+      {
+        name: 'Clothing',
+        key: '06_clothing',
+        list: artistKit?.Clothing
+      },
+      {
+        name: 'Background',
+        key: '06_background',
+        list: artistKit?.Background
       },
     ], [artistKit])
 
@@ -600,7 +616,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
           <SelectableBodyList
             selectedValue= {body}
             onSelect= {v => setBody(v)}
-            list= {artistKit?.body}
+            list= {artistKit?.Body}
           />
 
 

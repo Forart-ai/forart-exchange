@@ -23,5 +23,14 @@ export interface ArtistKit {
   glasses?: any,
   hand?: any,
   item?: any,
-  shoe?: any
+  shoe?: any,
+  Eye?: any,
+  Foot? :any,
+  Pants?: any,
+  Body?: any,
+  Mouth?: any,
+  Hat?: any,
+  Butt?: any,
+  Background?: any,
+  Clothing?: any
 }
