@@ -14,6 +14,7 @@ import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { uploadToMinio } from '../../utils/minio'
 
 const Wrapper = styled.div`
+  max-width: 100vw;
   width: 100%;
   height: 90vh;
   overflow-y: scroll;

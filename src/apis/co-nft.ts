@@ -28,6 +28,9 @@ const CONFT_API = {
       },
       cancelNFTMint(req: CancelNftMintRequest) {
         return Service.post('/nft/mint/cancel', req)
+      },
+      getOverView() {
+        return Service.get('nft/overview')
       }
 
 

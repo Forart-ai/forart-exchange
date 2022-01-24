@@ -25,14 +25,13 @@ export const TopContainer = styled.div `
 `
 
 export const BodyContent = styled.div `
-  width: 49%;
+  width: 45%;
   height: 100%;
   display: flex;
-  background: #02060e;
+  background: #170A16;
   border-radius: 20px;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
 
   @media screen and (max-width: 1100px) {
     width: 100%;
@@ -47,6 +46,32 @@ export const SwiperList = styled.div`
   width: 20%;
   height: 100%;
   display: flex;
+  position: relative;
+
+  .navigation {
+    z-index: 2;
+    opacity: .8;
+   
+    
+    .down-arrow {
+      position: absolute;
+      bottom: -25px;
+      left: 40px;
+      cursor: pointer;
+    }
+
+    .up-arrow {
+      position: absolute;
+      top: -25px;
+      left: 40px;
+      cursor: pointer;
+
+    }
+    
+    img {
+      width: 50px;
+    }
+  }
   
   @media screen and (max-width: 1100px) {
     width: 100%;
@@ -109,7 +134,7 @@ export const PriceContainer = styled.div`
     align-items: center;
     background: #060c21;
     position: relative;
-  border-radius: 10px;
+    border-radius: 10px;
 
     &:before {
       content: '';
@@ -149,10 +174,22 @@ export const PriceContainer = styled.div`
 `
 
 export const KitContent = styled.div`
-  width: 49%;
+  width: 53%;
   height: 100%;
   background: #02060e;
   border-radius: 20px;
+  position: relative;
+  
+  .more-icon {
+    position: absolute;
+    right: 2px;
+    top: 10px;
+    //z-index: 5;
+    
+    img {
+      width: 30px;
+    }
+  }
 
   @media screen and (max-width: 1100px) {
     width: 100%;
@@ -162,28 +199,29 @@ export const KitContent = styled.div`
 
 export const MintTab = styled(Tabs)`
 
-  //width: 100%;
+  width: 100%;
   user-select: none;
+
 
   .ant-tabs-tab {
     font-size: 1.2em !important;
     color: #E5E8EB !important;
+    overflow-x: scroll;
   }
 
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
     color: #FF468B !important;
-
   }
 
   .ant-tabs-nav-wrap {
     display: flex;
-    justify-content: start; !important;
+    justify-content: start;
+  !important;
   }
 
   .ant-tabs-nav::before {
-    //display: none; !important;
-    border-bottom: 1px #65727b solid;
-
+    display: none;
+  !important;
   }
 
   .ant-tabs-ink-bar {
@@ -239,6 +277,10 @@ export const CenterContainer = styled.div`
 export const MintButton = styled.div`
   width: 100%;
   text-align: center;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 export const AIContainer = styled.div`

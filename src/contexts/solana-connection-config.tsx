@@ -50,8 +50,8 @@ const SolanaConnectionConfigContext = React.createContext<ConnectionConfig>({
   slippage: DEFAULT_SLIPPAGE,
   setSlippage: (_val: number) => {
   },
-  connection: new Connection(DEFAULT_ENDPOINT.endpointUrl, 'recent'),
-  sendConnection: new Connection(DEFAULT_ENDPOINT.endpointUrl, 'recent'),
+  connection: new Connection(DEFAULT_ENDPOINT.endpointUrl, 'finalized'),
+  sendConnection: new Connection(DEFAULT_ENDPOINT.endpointUrl, 'finalized'),
   network: DEFAULT_CLUSTER
 })
 

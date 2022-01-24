@@ -5,7 +5,7 @@ const Wrapper = styled.div`
   margin: 20px 0;
   width: 100%;
 `
-const Title = styled.div`
+export const Title = styled.div`
   font-size: 2.5em;
   color: #ffffff;
 `

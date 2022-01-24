@@ -5,6 +5,7 @@ const SOLANA_CLUSTER = (process.env.REACT_APP_SOLANA_CLUSTER) as Cluster
 const END_POINT = process.env.REACT_APP_SOLANA_END_POINT || clusterApiUrl(SOLANA_CLUSTER)
 // const CANDY_MACHINE_ADDR = 'FKctadBMg9b32xHDNbu9rQraaW3rMkmXNCmMP715tMGy'
 const CANDY_MACHINE_ADDR = process.env.REACT_APP_CANDY_MACHINE_ADDR as string
+console.log(CANDY_MACHINE_ADDR)
 
 export const SolanaConnection = new Connection(END_POINT, { disableRetryOnRateLimit: true })
 export const CANDY_MACHINE_PROGRAM_IDL: Idl = require('../candy_machine_program_idl.json')

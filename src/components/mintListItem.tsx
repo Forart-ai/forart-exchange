@@ -58,19 +58,18 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress(prev => {
-        if (data?.chainStatus === 'GENERATING') {
-          prev = 70
+        if (data?.chainStatus === 'MIXING' && prev >= 97) {
           return prev
         }
 
-        if (data?.chainStatus === 'UPDATING') {
-          prev = 98
+        if (data?.chainStatus === 'UPDATING'  && prev >= 98) {
           return prev
         }
 
         return prev + 1
+
       })
-    }, 100)
+    }, 150)
 
     return () => {
       clearInterval(interval)
@@ -90,14 +89,20 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
     }
   }, [loading])
 
+  const cb = useCallback(() => {
+    if (data?.chainStatus === 'SUCCESS') {
+      openModal(<AttributesDialog item={data} />)
+    }
+  }, [data])
+
   return (
     <>
       <Wrapper $empty={empty} >
-        <div className= "nft-container" onClick={() => {if (data?.chainStatus === 'SUCCESS'){ openModal(<AttributesDialog item={data} />) }}} >
+        <div className= "nft-container" onClick={cb} >
           {
             (data?.previewUrl && data?.chainStatus === 'SUCCESS') &&
             <img src={getImageUrl()}
-              onLoad={()=>{
+              onLoad={() => {
                 setLoading(false)
               }}
             />
@@ -118,6 +123,8 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
             <>
               <div className="status">
                 <div>  {data?.chainStatus}  </div>
+                <div> DONT WORRY, IT WILL TRY TO UPDATE AGAIN </div>
+
                 <div>       <Progress percent={10} size="small" status="exception" /></div>
               </div>
             </>

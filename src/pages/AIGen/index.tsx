@@ -13,6 +13,7 @@ import { dictionaryToBase64 } from '../../utils'
 
 
 const Wrapper = styled.div`
+  max-width: 100vw;
   width: 100%;
   height: 100vh;
   overflow-y: scroll;

@@ -3,8 +3,11 @@ import styled from 'styled-components'
 import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
-
+import MoreKit from '../../assets/images/coPools/more.svg'
 import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
+import { Title } from '../../components/nft-mint/selectedList'
+import OpenSwitch from '../../assets/images/coPools/switch.svg'
+import ArtistBanner from '../../assets/images/coPools/hypteen-banner.jpg'
 
 import { Anchor, Avatar, Button, Tabs } from 'antd'
 import { BlockOutlined, CrownOutlined, SmileOutlined } from '@ant-design/icons'
@@ -72,14 +75,14 @@ function scrollToPart(anchorName: string) {
 
 const Wrapper = styled.div`
   width: 100%;
-  max-width: 1400px;
+  max-width: 100vw;
   height: 100vh;
   margin: auto;
   padding: 30px 20px;
   overflow-y: scroll;
   
  @media screen and (max-width: 1100px) {
-   height: auto;
+   height: 100vh;
  } 
 `
 
@@ -92,7 +95,7 @@ const ArtistDetailContainer = styled.div`
 
 const HeaderContainer = styled.div<{backgroundImage?: string}>`
   width: 100%;
-  height: 600px;
+  height: 400px;
   border-radius: 20px;
   margin-top: 10px;
   position: relative;
@@ -112,7 +115,7 @@ const HeaderContainer = styled.div<{backgroundImage?: string}>`
 
   @media screen and (max-width: 1100px) {
     padding: 0.8rem 0.5rem;
-    height: 700px;
+    height: fit-content;
   }
 
 `
@@ -146,6 +149,19 @@ const ArtistInfo = styled.div`
     color: #b2b2b2;
     font-size: 1.3em;
     text-align: center;
+  }
+  
+  img {
+    width: 300px;
+    border-radius: 50%;
+  }
+  
+  @media screen and (max-width: 1100px){
+    flex-direction: column;
+    img {
+      width: 150px;
+      border-radius: 50%;
+    }
   }
 `
 
@@ -244,7 +260,11 @@ const StyledTab = styled(Tabs)`
   width: 100%;
   user-select: none;
   margin-top: 20px;
-
+  .ant-tabs-nav {
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    
+  }
   .ant-tabs-tab {
     font-size: 2em;
     color: #E5E8EB !important;
@@ -293,7 +313,7 @@ const DescriptionContainer = styled.div`
   align-items: center;
   padding: 24px 25px;
   flex-direction: column;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), #1E052D) border-box;
+  //background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), #1E052D) border-box;
   @media screen and (max-width: 1100px) {
     padding: 10px;
   }
@@ -306,7 +326,7 @@ const ArtistDetailTab = styled.div`
   display: flex;
   justify-content: center;
 
-
+  
   .ant-anchor-link-title {
     font-size: 1.2em;
     color: #fff;
@@ -332,6 +352,9 @@ const TabItem = styled.div`
   width: 80%;
   height: auto;
 
+  .banner {
+    border-radius: 1em;
+  }
 
   .item {
     width: 100%;
@@ -340,7 +363,7 @@ const TabItem = styled.div`
 
   .title {
     font-size: 2.5em;
-    color: #fff;
+    color: #FF468B;
   }
 
   .image-border {
@@ -373,6 +396,21 @@ const AllNftWrapper = styled.div`
   color: #ffffff;
 `
 
+const Message = styled.div`
+  width: 100%;
+  
+  .title {
+    display: flex;
+    align-items: center;
+    
+    img {
+      width: 35px;
+      margin-left: 15px;
+    }
+  }
+  
+`
+
 
 
 const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
@@ -381,7 +419,7 @@ const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
     <HeaderContainer >
       <ArtistInfo>
         <div>
-          <Avatar size={ 300 } src={HyteenAvatar} />
+          <img  src={HyteenAvatar} />
         </div>
 
         <div>
@@ -427,19 +465,8 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
       {/*    ))*/}
       {/*  }*/}
       {/*</Anchor>*/}
-
-
       <TabItem>
-        {/*{*/}
-        {/*  userData?.artDetail.map((item:any, index:number) => (*/}
-        {/*    <section className="item" key={index} id={item.title}>*/}
-        {/*      <h2 className="title"> {item.title} </h2>*/}
-        {/*      <img className="image-border" src={item.image} />*/}
-        {/*      <p className="content"> {item.content} </p>*/}
-        {/*    </section>*/}
-        {/*  ))*/}
-        {/*}*/}
-
+        <img className="banner" src={ArtistBanner} />
         <section className="item" >
           <h2 className="title"> Archive </h2>
           <img className="image-border"  />
@@ -485,7 +512,8 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
           <h2 className="title">First stop </h2>
           <img className="image-border"  />
           <p className="content">
-            The country where HypeTeen first travels is China, and corresponding NFTs with Chinese cultural attributes have been generated. All Special NFTs will be generated and opened after the 1000th NFT is minted. <br /><br />
+            The country where HypeTeen first travels is China, and corresponding NFTs with Chinese cultural attributes have been generated. All Special NFTs
+            will be generated and opened after the 400th NFT is minted. <br /><br />
           </p>
         </section>
 
@@ -506,9 +534,9 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
           <img className="image-border"  />
           <p className="content">
             1. Mint CO-NFTs by Users <br />
-            2. Generate Special CO-NFTs and minter winners when the 1000th NFT is minted  <br />
+            2. Generate Special CO-NFTs and minter winners when the 400th NFT is minted  <br />
             3. Vote the next country that HypeTeen will travel to  <br />
-            4. Launch on solanart, Slope and Magic Eden when the 5000th NFT is minted  <br />
+            4. Launch on solanart, Slope and Magic Eden when the 2000th NFT is minted  <br />
           </p>
         </section>
       </TabItem>
@@ -537,7 +565,11 @@ const AllNftContainer: React.FC = () => {
 }
 
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
-  const [body, setBody] = useState<any>(artistKit?.Body[0])
+
+  const initBody = artistKit?.Body[0]
+
+  const [body, setBody] = useState<any>(initBody)
+
 
   const [kits, setKits] = useState<Map<string, any>>(new Map())
 
@@ -567,19 +599,34 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
   const KIT_TYPES: Array<{name: string, list: KitProperties[], key: string}> = useMemo(() =>
     [
       {
+        name: 'Background*',
+        key: '06_background',
+        list: artistKit?.Background
+      },
+      {
+        name: 'Cloths*',
+        key: '06_clothing',
+        list: artistKit?.Clothing
+      },
+      {
+        name: 'Pants*',
+        key: '05_cloth',
+        list: artistKit?.Pants
+      },
+      {
         name: 'Eye',
         key: '12_glasses',
         list: artistKit?.Eye
       },
       {
-        name: 'Pants',
-        key: '05_cloth',
-        list: artistKit?.Pants
+        name: 'Foot',
+        key: '08_foot',
+        list: artistKit?.Foot
       },
       {
-        name: 'Foot',
+        name: 'Hand',
         key: '08_hand',
-        list: artistKit?.Foot
+        list: artistKit?.Hand
       },
       {
         name: 'Mouth',
@@ -587,25 +634,12 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         list: artistKit?.Mouth
       },
       {
-        name: 'Hat',
-        key: '03_feet',
-        list: artistKit?.Hat
-      },
-      {
         name: 'Butt',
         key: '06_shoe',
         list: artistKit?.Butt
-      },
-      {
-        name: 'Clothing',
-        key: '06_clothing',
-        list: artistKit?.Clothing
-      },
-      {
-        name: 'Background',
-        key: '06_background',
-        list: artistKit?.Background
-      },
+      }
+
+
     ], [artistKit])
 
 
@@ -625,10 +659,10 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
               body && (
                 <>
                   <img src={body.url} style={{ objectFit:'contain' }} />
-                  <PriceContainer>
-                    <div className="price">{body?.price} FTA</div>
-                    <div className="price">Rarity: {body?.rarity}</div>
-                  </PriceContainer>
+                  {/*<PriceContainer>*/}
+                  {/*  <div className="price">{body?.price} FTA</div>*/}
+                  {/*  <div className="price">Rarity: {body?.rarity}</div>*/}
+                  {/*</PriceContainer>*/}
                 </>
               )
             }
@@ -637,10 +671,13 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
         </BodyContent>
         <KitContent >
-          <MintTab>
+          <div className="more-icon">
+            <img src={MoreKit} />
+          </div>
+          <MintTab size={'small'}>
             {
               KIT_TYPES?.map(type => (
-                <TabPane key={type.name} tab={type.name} >
+                <TabPane key={type.name} tab={type.name} style={{ width:'100%', overflowX: 'scroll' }}>
                   <MintContainer>
                     <SelectableKitList
                       selectedValue={kits.get(type.key)}
@@ -688,13 +725,20 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       {/*  <div className="title"> Gen Image Name </div>*/}
       {/*  <Input placeholder="Please enter the name of the gen image" onChange={e => setGenName(e.target.value) } />*/}
       {/*</ItemContainer>*/}
-
+      <Message>
+        <div className="title">
+          <Title> Rarity by AI-Random </Title>
+          <img src={OpenSwitch} />
+        </div>
+      </Message>
 
       <MintButton >
-        <Button style={{ width: '100px' }} onClick={ () => mintNFT(body, kits)}>
+        <Button style={{ width: '120px', height:'50px' }} onClick={ () => mintNFT(body, kits)}>
           Mint
         </Button>
       </MintButton>
+
+
     </MintWrapper>
   )
 }
@@ -711,7 +755,7 @@ const ArtistDetail: React.FC = () => {
       <ArtistDetailContainer>
         <UserInfo userData={userData} />
         <DescriptionContainer>
-          <StyledTab defaultActiveKey="artDetail" onChange={ () => window.scrollTo(0, 0)}  >
+          <StyledTab defaultActiveKey="mint" onChange={ () => window.scrollTo(0, 0)}  >
             <TabPane
               tab= {
                 <span>

@@ -11,8 +11,8 @@ export interface PoolsListData {
   image: string ,
   name: string,
   describe: string,
-  followers: number |string,
-  mintors: number | string,
+  nfts: number |string,
+  minters: number | string,
   status: string
 }
 
@@ -25,4 +25,6 @@ export interface MintedNFTItem {
   chainStatus: string,
   createTime :string | number,
   updateTime: string | number,
+  rarity: string
+  chainNftName: string
 }

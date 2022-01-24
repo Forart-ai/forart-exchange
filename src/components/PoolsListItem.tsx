@@ -147,13 +147,13 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
 
         <DataContent >
           <div className="data-column">
-            <div className= "label">Followers</div>
-            <div className= "value">{data?.followers}</div>
+            <div className= "label">NFTs</div>
+            <div className= "value">{data?.nfts}</div>
           </div>
 
           <div className="data-column">
             <div className= "label">Minters</div>
-            <div className= "value">{data?.mintors}</div>
+            <div className= "value">{data?.minters}</div>
           </div>
         </DataContent>
 

@@ -207,7 +207,8 @@ export const BottomInfo = styled.div`
 `
 
 export const NFTBaseInfoContainer = styled.div`
-  width: 100% ;
+  max-width: 100vw;
+  width: 100%;
   max-height: 100%;
   display: flex;
   flex-direction: column;

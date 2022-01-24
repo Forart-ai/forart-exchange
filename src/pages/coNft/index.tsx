@@ -9,11 +9,12 @@ import PoolsListItem from '../../components/PoolsListItem'
 import { usePoolsQuery } from '../../hooks/queries/usePoolsQuery'
 import { CaretRightOutlined } from '@ant-design/icons'
 import Banner1 from '../../assets/images/coPools/banner.png'
+import { useGetOverview } from '../../hooks/queries/useGetOverview'
 
 
 const Wrapper = styled.div`
-  max-width:100vw;
-  width: 1400px;
+  max-width: 100vw;
+  width: 100%;
   height: 100vh;
   margin: auto;
   padding-bottom: 50px;
@@ -177,6 +178,9 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
       ' so that artistic inspiration and market demand can be reached in the Forart space.'
   }
 
+  const { data: overviewData } = useGetOverview()
+
+
 
   return (
     <HeaderContainer>
@@ -205,7 +209,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
                 coNftData ? (
                   <div style={{ display:'flex', alignItems:'baseline' }} >
                     <StyledCountUp
-                      end={coNftData.totalValueStaked}
+                      end={overviewData?.minted ? overviewData?.minted : '---'}
                       duration={2}
                       separator=","
                     />
@@ -217,13 +221,13 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
             </div>
 
             <div className= "row" >
-              <div className="label">CO-NFT NUMBER</div>
+              <div className="label">MINTERS</div>
               {
                 coNftData ? (
 
                   <div style={{ display:'flex', alignItems:'baseline' }} >
                     <StyledCountUp
-                      end={ (coNftData.averageAPY)*100 }
+                      end={ overviewData?.mintedWallet ?overviewData?.mintedWallet : '---' }
                       duration={2}
                       separator=","
                     />
@@ -246,6 +250,19 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
 const PoolsList: React.FC<{ poolsList?: Array<PoolsListData>}> = ({ poolsList }) => {
 
+  const { data: overviewData } = useGetOverview()
+
+
+  const req = {
+    'image': 'https://forart.mypinata.cloud/ipfs/QmSFo7w1m87FnSbcgWAsydWzsjKiExZCrt7ynxMJLQP2d4',
+    'name': 'HypeTeen',
+    'describe': 'HypeTeen is the first CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen.',
+    'nfts': overviewData?.minted,
+    'minters': overviewData?.mintedWallet,
+    'status': 'closing',
+    'artistId': '3312'
+  }
+
   return (
     <PoolsContainer>
       <div className="title">
@@ -253,6 +270,10 @@ const PoolsList: React.FC<{ poolsList?: Array<PoolsListData>}> = ({ poolsList })
         <CaretRightOutlined style={{ fontSize:'0.6em', marginLeft: '15px' }} />
       </div>
       <PoolListContainer>
+        <PoolsListItem
+          data= {req}
+          status={req.status}
+        />
         {
           poolsList?.map((pool: PoolsListData, index: number) => (
             <PoolsListItem

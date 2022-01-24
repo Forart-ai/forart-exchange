@@ -4,6 +4,9 @@ import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
 import { Navigation } from 'swiper'
 import { Checkbox } from 'antd'
 import { useMediaQuery } from 'react-responsive'
+import ArrowDown from '../../assets/images/coPools/arrow-down.svg'
+import ArrowUp from '../../assets/images/coPools/arrow-up.svg'
+
 
 
 export const SelectableBodyItem: React.FC<{ src: any, checked?: boolean, onSelect:(_?: string) => void}> = ({
@@ -51,12 +54,20 @@ export const SelectableBodyList: React.FC<{selectedValue?: any, onSelect: (_?: s
 
   return (
     <SwiperList>
+      <div className="navigation">
+        <img className="up-arrow" src={ArrowUp} />
+        <img className="down-arrow" src={ArrowDown} />
+      </div>
       <Swiper
         modules={[Navigation]}
-        slidesPerView={isMobile ? 3 : 5}
-        // navigation
+        slidesPerView={isMobile ? 3 : 6}
         spaceBetween={isMobile ? 50 : 10}
         direction= {isMobile ? 'horizontal' :'vertical'}
+        navigation={
+          { prevEl: '.navigation .up-arrow',
+            nextEl:'.navigation .down-arrow',
+            disabledClass: 'disable' }
+        }
       >
         {
           list?.map((item,key)=>(

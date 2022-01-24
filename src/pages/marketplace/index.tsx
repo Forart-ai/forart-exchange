@@ -16,6 +16,7 @@ import { useMediaQuery } from 'react-responsive'
 
 
 const Wrapper = styled.div`
+  max-width: 100vw;
   width: 100%;
   height: calc(100vh - 68px);
   display: flex;

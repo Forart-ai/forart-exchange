@@ -84,15 +84,15 @@ const StyledMenuItem = styled(Menu.Item)`
 `
 
 const LinkContainer = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
+  position: absolute;
+  bottom: 10px;
 `
 
 const SCExternalLink = styled.a`
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 40px;
   margin-bottom: 10px;
 

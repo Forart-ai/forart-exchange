@@ -9,6 +9,7 @@ import { useMediaQuery } from 'react-responsive'
 
 
 const HomePage = styled.div`
+  max-width: 100vw;
   width: 100%;
   min-height: 1000px;
  

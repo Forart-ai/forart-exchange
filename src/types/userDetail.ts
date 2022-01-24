@@ -32,5 +32,6 @@ export interface ArtistKit {
   Hat?: any,
   Butt?: any,
   Background?: any,
-  Clothing?: any
+  Clothing?: any,
+  Hand?:any
 }

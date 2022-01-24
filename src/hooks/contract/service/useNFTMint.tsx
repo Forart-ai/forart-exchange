@@ -5,11 +5,12 @@ import { Progress } from 'antd'
 import styled from 'styled-components'
 import { LockNFTRequest } from './exchange/types'
 import useCandyMachine from '../../programs/useCandyMachine'
-import { Keypair } from '@solana/web3.js'
+import { Keypair, PublicKey } from '@solana/web3.js'
 import CONFT_API from '../../../apis/co-nft'
 import { useMintResultQuery } from '../../queries/useMintResultQuery'
 import { useHistory } from 'react-router-dom'
 import { sleep } from '../../../utils'
+import { useConnectionConfig } from '../../../contexts/solana-connection-config'
 
 const Message = styled.div`
   text-align: center;
@@ -63,7 +64,7 @@ const WaitForMinting:React.FC = () => {
 
   return (
     <div>
-      <p>Waiting transfer transaction finished. This will take about 8 seconds...</p>
+      <p>Waiting transfer transaction finished. This will take about several seconds...</p>
       <Progress percent={progress} />
     </div>
   )
@@ -71,7 +72,7 @@ const WaitForMinting:React.FC = () => {
 
 const MODAL_CONTENT = {
   kitNotEnough: (
-    <Message> Choose at least a body </Message>
+    <Message> Choose at least a body, cloths, pants and background </Message>
   ),
   unconnectedToWallet: (
     <Message>Please connect to a wallet first</Message>
@@ -89,8 +90,7 @@ const MODAL_CONTENT = {
 
   transferComplete: (
     <Message>
-      Transfer complete! Minting...
-      <Progress percent={100} />
+      Transfer complete! Please wait for loading metadata...
     </Message>
   ),
 
@@ -102,13 +102,13 @@ const MODAL_CONTENT = {
 
   mintSuccess: (
     <Message>
-      Minted successfully! Please wait for loading metadata...
+      Transform successfully! Please wait for minting
     </Message>
   ),
   mintError: (
     <Message>
       There seems to be something wrong during loading metadata. <br />
-      But don&apos;t worry, you can view you NFT in your wallet.
+      {/*But don&apos;t worry, you can view you NFT in your wallet.*/}
     </Message>
   ),
 
@@ -119,15 +119,12 @@ const MODAL_CONTENT = {
   )
 }
 
-
 const useNFTMint = () => {
-
   const { account } = useSolanaWeb3()
   const { openModal, configModal, closeModal } = useModal()
   const { mint } = useCandyMachine()
   const history = useHistory()
-
-
+  const { connection } = useConnectionConfig()
 
   const mintNFT =  useCallback(
     async (body: any, kit: any) => {
@@ -149,10 +146,29 @@ const useNFTMint = () => {
         return
       }
 
-      if (!body) {
+      if (!body || kit.size === 0) {
         openModal(MODAL_CONTENT.kitNotEnough)
         return
       }
+
+
+      if (![...kit.values()].some((value: any) => value.bodyType === 'Background')) {
+        openModal(MODAL_CONTENT.kitNotEnough)
+        return
+      }
+
+
+      if (![...kit.values()].some((value: any) => value.bodyType === 'Clothing')) {
+        openModal(MODAL_CONTENT.kitNotEnough)
+        return
+      }
+
+
+      if (![...kit.values()].some((value: any) => value.bodyType === 'Pants')) {
+        openModal(MODAL_CONTENT.kitNotEnough)
+        return
+      }
+
 
       const lockNFTForm: LockNFTRequest = {
         series: 3312,
@@ -176,7 +192,8 @@ const useNFTMint = () => {
 
         mint(mintKeypair)
           .then(async _signature => {
-            openModal(MODAL_CONTENT.mintSuccess)
+            openModal(MODAL_CONTENT.waitForMinting, false)
+
             await CONFT_API.core.kits.nftMint({
               order:  orderNum.toString(),
               mintKey: mintKeypair.publicKey.toBase58()
@@ -210,26 +227,6 @@ const useNFTMint = () => {
       })
 
 
-      // mint(mintKeypair)
-      //   .then(async _signature => {
-      //     console.log(mintKeypair.publicKey.toBase58(), _signature)
-      //     openModal(MODAL_CONTENT.mintSuccess)
-      //     console.log(order, mintKeypair.publicKey.toBase58())
-      //     CONFT_API.core.kits.nftMint({
-      //       order: order.toString(),
-      //       mintKey: mintKeypair.publicKey.toBase58()
-      //     })
-      //       .then(() => sleep(1500))
-      //       .then(closeModal)
-      //       .catch(() => {openModal(MODAL_CONTENT.mintError)})
-      //   })
-      //   .catch(e => {
-      //     openModal(
-      //       <Message>
-      //         Oops! Mint failed: {e.message || e.toString()}
-      //       </Message>
-      //     )
-      //   })
 
 
 
