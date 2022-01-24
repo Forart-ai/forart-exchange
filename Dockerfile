@@ -1,6 +1,6 @@
 FROM nginx:stable-alpine as nginx
 
-COPY dist/ /bin/www
+COPY build/ /bin/www
 
 EXPOSE 80 443 8443
 
