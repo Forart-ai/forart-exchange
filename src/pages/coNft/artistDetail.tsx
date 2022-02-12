@@ -32,6 +32,9 @@ import useNFTMint from '../../hooks/contract/service/useNFTMint'
 import { useStyledNFTsQuery } from '../../hooks/queries/useStyledNFTsQuery'
 import { useMediaQuery } from 'react-responsive'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
+import { useSolanaWeb3 } from '../../contexts/solana-web3'
+import useSolanaWalletModal from '../../components/SolanaWallet/SolanaWalletModal'
+import { useCheckWhiteListModal } from '../../hooks/modals/useCheckWhiteListModal'
 
 
 const { TabPane } = Tabs
@@ -566,23 +569,27 @@ const AllNftContainer: React.FC = () => {
 
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
-  const initBody = artistKit?.Body[0]
+  const { account } = useSolanaWeb3()
 
-  const [body, setBody] = useState<any>(initBody)
+  const [body, setBody] = useState<any>()
 
+  useMemo(()=> {
+    setBody(artistKit?.Body[0])
+  }, [artistKit])
+
+  const { select } = useSolanaWeb3()
 
   const [kits, setKits] = useState<Map<string, any>>(new Map())
-
   const [style, setStyle] = useState('')
-
   const [show, setShow] = useState<boolean>(true)
-
   const [genName, setGenName] = useState<string>()
-
-  const { mintNFT }  = useNFTMint()
 
   const { data: styleList } = useStyledNFTsQuery()
 
+
+
+
+  const { checkWhiteListModal, openCheckWhiteListModal, closeCheckWhiteListModal } = useCheckWhiteListModal(body, kits)
 
 
   useMemo(() => {
@@ -590,11 +597,6 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       setStyle('')
     }
   },[show])
-
-
-  // useEffect(() => {
-  //   console.log(kits)
-  // }, [kits, body])
 
   const KIT_TYPES: Array<{name: string, list: KitProperties[], key: string}> = useMemo(() =>
     [
@@ -641,7 +643,6 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
 
     ], [artistKit])
-
 
   return (
     <MintWrapper>
@@ -733,11 +734,19 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       </Message>
 
       <MintButton >
-        <Button style={{ width: '120px', height:'50px' }} onClick={ () => mintNFT(body, kits)}>
-          Mint
-        </Button>
+        {
+          account === undefined ? (
+            <Button disabled={true} style={{ width: '120px', height:'50px' }} onClick={ select }>
+              Create
+            </Button>
+          ):
+            <Button disabled={true} style={{ width: '120px', height:'50px' }} onClick={ openCheckWhiteListModal }>
+              Create
+            </Button>
+        }
       </MintButton>
 
+      {checkWhiteListModal}
 
     </MintWrapper>
   )
