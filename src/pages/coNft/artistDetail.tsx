@@ -736,11 +736,11 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       <MintButton >
         {
           account === undefined ? (
-            <Button style={{ width: '120px', height:'50px' }} onClick={ select }>
+            <Button disabled={true} style={{ width: '120px', height:'50px' }} onClick={ select }>
               Create
             </Button>
           ):
-            <Button  style={{ width: '120px', height:'50px' }} onClick={ openCheckWhiteListModal }>
+            <Button disabled={true}  style={{ width: '120px', height:'50px' }} onClick={ openCheckWhiteListModal }>
               Create
             </Button>
         }
