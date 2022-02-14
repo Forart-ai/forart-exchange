@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/static/css/main.fddf10ec.chunk.css",
-    "main.js": "/static/js/main.b2b024a6.chunk.js",
-    "runtime-main.js": "/static/js/runtime-main.0451a1b2.js",
+    "main.js": "/static/js/main.fdc3dc11.chunk.js",
+    "runtime-main.js": "/static/js/runtime-main.1f984ee0.js",
     "static/css/2.16a0caa7.chunk.css": "/static/css/2.16a0caa7.chunk.css",
-    "static/js/2.977ddbd7.chunk.js": "/static/js/2.977ddbd7.chunk.js",
-    "static/js/3.bc5b5291.chunk.js": "/static/js/3.bc5b5291.chunk.js",
+    "static/js/2.bf904ace.chunk.js": "/static/js/2.bf904ace.chunk.js",
+    "static/js/3.5bdea0af.chunk.js": "/static/js/3.5bdea0af.chunk.js",
     "index.html": "/index.html",
-    "static/js/2.977ddbd7.chunk.js.LICENSE.txt": "/static/js/2.977ddbd7.chunk.js.LICENSE.txt",
+    "static/js/2.bf904ace.chunk.js.LICENSE.txt": "/static/js/2.bf904ace.chunk.js.LICENSE.txt",
     "static/media/font.css": "/static/media/DrivePropRegular.b284733a.ttf",
     "static/media/ai-gen-banner.9075c022.jpg": "/static/media/ai-gen-banner.9075c022.jpg",
     "static/media/ai1.6169fef8.png": "/static/media/ai1.6169fef8.png",
@@ -42,10 +42,10 @@
     "static/media/warning.2dfefd86.svg": "/static/media/warning.2dfefd86.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.0451a1b2.js",
+    "static/js/runtime-main.1f984ee0.js",
     "static/css/2.16a0caa7.chunk.css",
-    "static/js/2.977ddbd7.chunk.js",
+    "static/js/2.bf904ace.chunk.js",
     "static/css/main.fddf10ec.chunk.css",
-    "static/js/main.b2b024a6.chunk.js"
+    "static/js/main.fdc3dc11.chunk.js"
   ]
 }

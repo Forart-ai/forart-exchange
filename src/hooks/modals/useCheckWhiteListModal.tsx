@@ -33,41 +33,14 @@ const Content = styled.div`
   }
 `
 
-
 export const useCheckWhiteListModal = (body: any, kits: any) => {
-
-  const { data: inWhiteList } = useCheckWhiteList()
-  const { mintNFT }  = useNFTMint()
-
-
   const { modal, open, close } = useModal((_open, close, visible) => (
     <AuthorizingModal
       visible = {visible}
       onCancel = {close}
       footer = { null}
     >
-      <Content>
-        {
-          inWhiteList ? (
-            <>
-              <div className="feedback">congratulations! You are qualify for DIY</div>
-              <Button onClick={() => {
-                close()
-                mintNFT(body, kits)
-              }}
-              >
-                Create now!
-              </Button>
-            </>
-          ):
-            (
-              <>
-                <div className="feedback"> At present, you are not detected in the whitelist, please try again later</div>
-                <div className="hint">Contact us for assistance: xxx</div>
-              </>
-            )
-        }
-      </Content>
+      <Content />
     </AuthorizingModal>
   ))
 
