@@ -1,4 +1,4 @@
-FROM nginx:stable-alpine as nginx
+FROM node:16.13.1 as node
 
 WORKDIR /app
 
