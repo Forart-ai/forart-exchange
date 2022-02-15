@@ -13,7 +13,7 @@ const CONFT_API = {
       getBodyComponent(param: NFTComponentRequest){
         return Service.post('nft/component/find', param)
       },
-      getArtistAssembler(id:number) {
+      getArtistAssembler(id:number | string | undefined) {
         return Service.post(`nft/component/find/series/${id}`)
       },
       lockNft(data: LockNFTRequest) {
@@ -32,7 +32,17 @@ const CONFT_API = {
       getOverView() {
         return Service.get('nft/overview')
       }
-
+    },
+    user: {
+      getBoundUserByWallet(wallet? :string) {
+        return undefined
+      },
+      getUserByToken(token?: string) {
+        return undefined
+      },
+      bindingUser(token: string, wallet: string) {
+        return undefined
+      },
     }
   }
 }

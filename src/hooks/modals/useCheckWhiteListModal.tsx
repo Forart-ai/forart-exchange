@@ -4,6 +4,7 @@ import { Button, Modal, Steps } from 'antd'
 import React, { useMemo } from 'react'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { shortenAddress } from '../../utils'
+import { useLocationQuery } from '../useLocationQuery'
 
 type StepProps = {
   active?: boolean
@@ -103,7 +104,22 @@ const WalletStatus: React.FC<StepProps> = () => {
   )
 }
 
-export const useCheckWhiteListModal = (_body: any, _kits: any) => {
+const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
+  const artistId = useLocationQuery('artistId')
+
+  const { account } = useSolanaWeb3()
+
+  const redirectUri = `${location.protocol}//${location.host}/artistDetail?artistId=${artistId}`
+  const discordLoginUrl = `https://discord.com/oauth2/authorize?response_type=token&client_id=942705935221157978&state=15773059ghq9183habn&scope=identify&redirect_uri=${redirectUri}`
+
+  return (
+    <StepContent>
+      <ConnectButton status={'success'} onClick={()=>window.open(discordLoginUrl)}>Login Discord</ConnectButton>
+    </StepContent>
+  )
+}
+
+export const useCheckWhiteListModal = (body: any, kits: any) => {
   const { account } = useSolanaWeb3()
 
   const currentStep = useMemo(() => {
@@ -125,7 +141,7 @@ export const useCheckWhiteListModal = (_body: any, _kits: any) => {
 
           <Steps current={currentStep} direction={'horizontal'}>
             <Steps.Step title={'Connect to wallet'} description={<WalletStatus active={currentStep === 0} />}  />
-            <Steps.Step title={'Login via Discord'}   />
+            <Steps.Step title={'Login via Discord'} description={<DiscordIdentity />}  />
 
           </Steps>
         </TipsCard>

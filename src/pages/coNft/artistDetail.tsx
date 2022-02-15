@@ -577,11 +577,11 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       <MintButton >
         {
           account === undefined ? (
-            <Button disabled={true} style={{ width: '120px', height:'50px' }} onClick={ select }>
+            <Button style={{ width: '120px', height:'50px' }} onClick={ select }>
               Create
             </Button>
           ):
-            <Button disabled={true}  style={{ width: '120px', height:'50px' }} onClick={ openCheckWhiteListModal }>
+            <Button  style={{ width: '120px', height:'50px' }} onClick={ openCheckWhiteListModal }>
               Create
             </Button>
         }
@@ -596,7 +596,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 const ArtistDetail: React.FC = () => {
   const { data: userData } = useArtistDetailQuery()
 
-  const { data: artistKitList } = useArtistKitQuery(3312)
+  const { data: artistKitList } = useArtistKitQuery(artistId?.toString())
 
   return (
     <Wrapper>
