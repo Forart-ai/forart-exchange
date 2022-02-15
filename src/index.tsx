@@ -7,7 +7,7 @@ import { getLibrary } from './web3/connectors'
 import reportWebVitals from './reportWebVitals'
 import { DAppProvider } from '@usedapp/core'
 // @ts-ignore
-import { HashRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import { Web3ReactProvider } from '@web3-react/core'
 import { WalletSelectionModalProvider } from './hooks/wallet-selection-modal'
 import { QueryClient, QueryClientProvider } from 'react-query'
