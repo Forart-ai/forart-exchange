@@ -34,15 +34,15 @@ const CONFT_API = {
       }
     },
     user: {
-      getBoundUserByWallet(wallet? :string) {
-        return undefined
-      },
-      getUserByToken(token?: string) {
-        return undefined
-      },
-      bindingUser(token: string, wallet: string) {
-        return undefined
-      },
+      // getBoundUserByWallet(wallet? :string) {
+      //   return undefined
+      // },
+      // getUserByToken(token?: string) {
+      //   return undefined
+      // },
+      // bindingUser(token: string, wallet: string) {
+      //   return undefined
+      // },
     }
   }
 }

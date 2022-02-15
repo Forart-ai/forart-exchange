@@ -17,9 +17,9 @@ const useUserQuery = (): UseQueryResult<BoundUser> => {
   return useQuery(
     ['BoundUser', account, slowRefreshFlag],
     async () => {
-      return 0
+      return undefined
     }
   )
 }
 
-export default useUserQuery()
+export default useUserQuery

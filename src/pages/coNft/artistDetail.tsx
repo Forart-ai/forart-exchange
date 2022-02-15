@@ -26,8 +26,8 @@ import { useArtistKitQuery } from '../../hooks/queries/useArtistKitQuery'
 
 import { SelectableBodyList } from '../../components/nft-mint/mintBody'
 import { SelectableKitList } from '../../components/nft-mint/mintKit'
-import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { useCheckWhiteListModal } from '../../hooks/modals/useCheckWhiteListModal'
+import { useLocationQuery } from '../../hooks/useLocationQuery'
 
 const { TabPane } = Tabs
 
@@ -419,7 +419,7 @@ const AllNftContainer: React.FC = () => {
 
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
-  const { account } = useSolanaWeb3()
+  // const { account } = useSolanaWeb3()
 
   const [body, setBody] = useState<any>()
 
@@ -427,13 +427,13 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
     setBody(artistKit?.Body[0])
   }, [artistKit])
 
-  const { select } = useSolanaWeb3()
+  // const { select } = useSolanaWeb3()
 
   const [kits, setKits] = useState<Map<string, any>>(new Map())
   const [, setStyle] = useState('')
   const [show] = useState<boolean>(true)
 
-  const { checkWhiteListModal, openCheckWhiteListModal } = useCheckWhiteListModal(body, kits)
+  const { checkWhiteListModal, openCheckWhiteListModal } = useCheckWhiteListModal()
 
   useMemo(() => {
     if (!show) {
@@ -575,16 +575,9 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       </Message>
 
       <MintButton >
-        {
-          account === undefined ? (
-            <Button style={{ width: '120px', height:'50px' }} onClick={ select }>
-              Create
-            </Button>
-          ):
-            <Button  style={{ width: '120px', height:'50px' }} onClick={ openCheckWhiteListModal }>
-              Create
-            </Button>
-        }
+        <Button  style={{ width: '120px', height:'50px' }} onClick={ openCheckWhiteListModal }>
+          Create
+        </Button>
       </MintButton>
 
       {checkWhiteListModal}
@@ -594,6 +587,8 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 }
 
 const ArtistDetail: React.FC = () => {
+  const artistId = useLocationQuery('artistId')
+
   const { data: userData } = useArtistDetailQuery()
 
   const { data: artistKitList } = useArtistKitQuery(artistId?.toString())
