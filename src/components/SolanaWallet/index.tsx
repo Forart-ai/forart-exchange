@@ -3,7 +3,6 @@ import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import styled from 'styled-components'
 import useSolanaWalletModal from './SolanaWalletModal'
 
-
 type CurrentAccountProps = {
   account: string
 }
@@ -23,7 +22,6 @@ const WalletButton = styled.div`
   margin-right: 20px;
   cursor: pointer;
 `
-
 
 const SCCurrentAccount = styled.div`
   display: flex;

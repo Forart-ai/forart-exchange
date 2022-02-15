@@ -6,10 +6,8 @@ import { ChainType } from '../apis/nft'
 import { HeartFilled, HeartOutlined } from '@ant-design/icons'
 import PriceIcon from '../images/wallet/celo.svg'
 
-
 // @ts-ignore
 import styled from 'styled-components'
-
 
 const NFTCardContainer = styled.div<{$empty?:boolean}>`
   color: #7c6deb;
@@ -127,7 +125,6 @@ const StyledFlag = styled.div`
   }
 `
 
-
 const TypeChainThumbnailMapper: { [key in ChainType]?: string } = {
   'Ethereum': 'Celo',
   'Solana': 'Celo'
@@ -145,14 +142,12 @@ const CornerFlag: React.FC<{status: 'On Sale' | 'On Auction'}> = ({ status }) =>
 const NFTListItem: React.FC<{ data?: NftListItem, type?: 'nftList' | 'own', empty?:boolean}> = ({ data, type, empty }) => {
   const [loading, setLoading] = useState(true)
 
-  const [isHeart, setHeart] = useState<boolean>(false)
+  const [isHeart] = useState<boolean>(false)
 
-  const [favorite, setFavorite] = useState<number>(data?.favorite ?? 0)
-
+  const [favorite] = useState<number>(data?.favorite ?? 0)
 
   const getImageUrl = useCallback(() => {
-    const url = data?.image ?? data?.thumbnail?? ''
-    return url
+    return data?.image ?? data?.thumbnail ?? ''
   }, [data])
 
   useEffect(() => {
@@ -166,14 +161,12 @@ const NFTListItem: React.FC<{ data?: NftListItem, type?: 'nftList' | 'own', empt
     }
   }, [loading])
 
-
   const toDetailUrl = '/marketplace/nftDetail?' + new URLSearchParams({
     id: data?.name ?? '',
     uri: data?.valueUri ?? '',
     addressContract: data?.addressContract ?? '',
     type: type ?? '',
   }).toString()
-
 
   return (
     <div style={{ position: 'relative', height: 'fit-content' }}>

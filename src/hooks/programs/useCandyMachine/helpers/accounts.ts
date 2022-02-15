@@ -35,7 +35,6 @@ export const getMetadata = async (mint: PublicKey): Promise<PublicKey> => {
   )[0]
 }
 
-
 export const getCandyMachineCreator = async (
   candyMachine: anchor.web3.PublicKey,
 ): Promise<[anchor.web3.PublicKey, number]> => {

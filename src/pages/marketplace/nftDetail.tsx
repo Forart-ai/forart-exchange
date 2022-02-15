@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-// @ts-ignore
-import styled from 'styled-components'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { useNFTDetailQuery } from '../../hooks/queries/useNFTDetailQuery'
 import {
@@ -44,8 +42,6 @@ import { usePurchaseBlockedModal } from '../../hooks/modals/usePurchaseBlockedMo
 import usePurchaseByFixedPrice from '../../hooks/contract/service/usePurchaseByFixedPrice'
 import { usePurchaseTransactionSentModal } from '../../hooks/modals/usePurchaseTransactionSentModal'
 import { usePurchaseWaitingConfirmationModal } from '../../hooks/modals/usePurchaseWaitingConfirmationModal'
-import { cancelExchange } from '../../apis/exchange/celo'
-
 
 const HistoryTrade: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
@@ -107,16 +103,14 @@ const HistoryTrade: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
   )
 }
 
-
 const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
-  const { active,account } =useWeb3React()
+  const { account } =useWeb3React()
 
   const [reasonOfUnableToBuy, setReasonOfUnableToBuy] = useState<string>()
 
   const uri = useLocationQuery('uri')
 
   const { open } = useWalletSelectionModal()
-
 
   const handleCopy = (content: any) => {
     copy(content) && message.success('Copied successfully.', 1)
@@ -138,23 +132,18 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
     setReasonOfUnableToBuy(undefined)
   }, [account, nftDetail])
 
-
   const { data: nftViewAndFavorite } = useNFTLikeQuery(uri)
-
 
   const { purchaseBlockedModal, openPurchaseBlockedModal } = usePurchaseBlockedModal()
   const { authorizingModal, openAuthorizingModal, closeAuthorizingModal } = useAuthorizingModal()
   const { purchaseTransactionSentModal, openPurchaseTransactionSentModal } = usePurchaseTransactionSentModal()
   const { purchaseWaitingConfirmationModal, openPurchaseWaitingConfirmationModal, closePurchaseWaitingConfirmationModal } = usePurchaseWaitingConfirmationModal()
 
-
   const { purchaseByFixedPrice } = usePurchaseByFixedPrice()
 
   const checkoutFailed = () => {
     openPurchaseBlockedModal()
   }
-
-
 
   const checkoutPassed = () => {
     openAuthorizingModal()
@@ -176,9 +165,7 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
   }
 
-
-  const { purchaseCheckoutModal, openPurchaseCheckoutModal, closePurchaseCheckoutModal } = usePurchaseCheckoutModal(nftDetail, checkoutPassed, checkoutFailed)
-
+  const { purchaseCheckoutModal, openPurchaseCheckoutModal } = usePurchaseCheckoutModal(nftDetail, checkoutPassed, checkoutFailed)
 
   const handleBuyNow = () => {
     openPurchaseCheckoutModal()
@@ -191,17 +178,7 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
     return false
   },[nftDetail, account])
 
-  const isAllowToSoldOut = useMemo(()=> {
-    return nftDetail?.onSale && isAllowToSell
-  }, [nftDetail, account])
-
-
   const { forceRefresh } = useRefreshController()
-
-  const handleSoldOut = async () => {
-    await cancelExchange(nftDetail!.nftPubKey)
-  }
-
 
   const { sellingModal, openSellingModal, closeSellingModal } = useSellingModal({
     nftDetail,
@@ -222,8 +199,6 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
       return
     }
 
-
-
     if (isHeart) {
       setFavorite(favorite)
     } else {
@@ -233,9 +208,6 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
       setHeart(true)
     }
   }
-
-
-
 
   return (
     <NFTBaseInfoContainer>
@@ -258,20 +230,13 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
               {favorite}
             </div>
           </div>
-
-
-
         </TopBaseInfo>
 
         <CenterInfo>
           <div className="description"> { nftDetail?.description }</div>
-
-
           <div className="text">On sale for
             <div className="price"> {nftDetail?.price} Celo</div>
           </div>
-
-
           <div className="info-label">Creator </div>
           <div className="info-value"> { nftDetail?.nameArtist || shortenAddress(nftDetail?.addressCreate) }
             <CopyOutlined
@@ -279,7 +244,6 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
               onClick={() => handleCopy(nftDetail?.addressCreate)}
             />
           </div>
-
         </CenterInfo>
 
         <BottomInfo>
@@ -334,7 +298,6 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
       </div>
 
-
       { purchaseCheckoutModal }
       { purchaseTransactionSentModal}
       { authorizingModal }
@@ -343,16 +306,9 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
       { purchaseBlockedModal}
     </NFTBaseInfoContainer>
   )
-
 }
 
-
 const NFTDetailPage: React.FC = () => {
-  const { active,account } = useWeb3React()
-
-
-  // const { forceRefresh } = useRefreshController()
-
   const uri = useLocationQuery('uri') ?? ''
 
   useEffect(() => {
@@ -369,7 +325,6 @@ const NFTDetailPage: React.FC = () => {
       : `https://forart.mypinata.cloud${nftDetail?.image?.slice(-52)}`
   }, [nftDetail])
 
-
   return (
     <Wrapper>
       <NFTDetailContainer>
@@ -384,7 +339,6 @@ const NFTDetailPage: React.FC = () => {
       </NFTDetailContainer>
     </Wrapper>
   )
-
 }
 
 export default NFTDetailPage

@@ -7,7 +7,6 @@ import { RcFile } from 'antd/es/upload'
 import { LoadingOutlined } from '@ant-design/icons'
 import { pinFileToIPFS } from '../../utils/ipfs'
 import { useWeb3React } from '@web3-react/core'
-import { Wallet } from '../../web3/connectors'
 import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import useCreateNft from '../../hooks/contract/service/useNftCreate'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
@@ -298,7 +297,6 @@ const MessageHint: React.FC<MessageHintProps> = ({ message, type }) => {
 const AssetUpload: React.FC<AssetUploadProps> = ({ onUploadSuccess }) => {
   const aiUri = useLocationQuery('img')
 
-
   const [fileList, setFileList] = useState<RcFile[]>([])
 
   const [pinnedFileHash, setPinnedFileHash] = useState<any>()
@@ -317,10 +315,8 @@ const AssetUpload: React.FC<AssetUploadProps> = ({ onUploadSuccess }) => {
 
     styleFile.append('styleFile', fileList[0])
 
-
     // upload image to minio, 1 => content | 0 => style
     uploadToMinio(fileList[0],1)
-
 
     pinFileToIPFS(fileList[0])
       .then(r => {
@@ -396,8 +392,7 @@ const AssetUpload: React.FC<AssetUploadProps> = ({ onUploadSuccess }) => {
   )
 }
 
-const NFTCreate: React.FC<{ wallet: Wallet }> = ({ wallet }) => {
-
+const NFTCreate: React.FC = () => {
   const { account } = useWeb3React()
 
   const { createNft, hint } = useCreateNft()
@@ -525,9 +520,7 @@ const NFTCreate: React.FC<{ wallet: Wallet }> = ({ wallet }) => {
 
         <MessageHint {...hint} />
 
-
       </NFTForm>
-
 
     </Wrapper>
   )

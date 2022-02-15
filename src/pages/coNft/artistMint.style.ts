@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 import { Image, Tabs } from 'antd'
 
-const { TabPane } = Tabs
-
 export const MintWrapper = styled.div`
   width: 100%;
   height: auto;
@@ -89,9 +87,6 @@ export const KitImageBorder = styled.div`
   cursor: pointer;
  
 `
-
-
-
 
 export const StyledImage = styled(Image)`
   background: #1E052D;

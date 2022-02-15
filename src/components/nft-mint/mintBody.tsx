@@ -2,32 +2,15 @@ import React from 'react'
 import { ImageBorder, StyledImage, SwiperList } from '../../pages/coNft/artistMint.style'
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
 import { Navigation } from 'swiper'
-import { Checkbox } from 'antd'
 import { useMediaQuery } from 'react-responsive'
 import ArrowDown from '../../assets/images/coPools/arrow-down.svg'
 import ArrowUp from '../../assets/images/coPools/arrow-up.svg'
-
-
 
 export const SelectableBodyItem: React.FC<{ src: any, checked?: boolean, onSelect:(_?: string) => void}> = ({
   src,
   checked,
   onSelect
 }) => {
-
-  const SelectBtn: React.FC = () => {
-    return (
-      <div style={{
-        position:'relative',
-        bottom:'100px',
-        left:'10px',
-      }}
-      >
-        <Checkbox checked={checked} />
-      </div>
-    )
-  }
-
   return (
     <ImageBorder
       onClick={() => onSelect(!checked ? src : undefined)}

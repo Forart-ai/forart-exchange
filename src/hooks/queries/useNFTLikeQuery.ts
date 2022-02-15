@@ -1,7 +1,5 @@
 import { useQuery, UseQueryResult } from 'react-query'
-import { forartNftDetail, getNftFavoriteCount, NFTDetailQueryRequest } from '../../apis/nft'
-import { NFTDetail } from '../../types/NFTDetail'
-
+import { getNftFavoriteCount } from '../../apis/nft'
 
 export const useNFTLikeQuery = (params: any): UseQueryResult<any> => {
   return useQuery(

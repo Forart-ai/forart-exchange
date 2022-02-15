@@ -11,7 +11,6 @@ export type ForartApiResponseBody<T> = {
   success: boolean
 }
 
-
 // forartRequest.interceptors.response.use(
 //   function onFulfilled(config) {
 //     const { data: responseBody } = config
@@ -26,7 +25,6 @@ export type ForartApiResponseBody<T> = {
 //     return error
 //   }
 // )
-
 
 forartRequest.interceptors.request.use(config => {
   return config

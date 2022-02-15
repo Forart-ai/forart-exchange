@@ -1,7 +1,7 @@
 import { useModal } from '../useModal'
 import styled from 'styled-components'
 import { Button, Modal, Steps } from 'antd'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { shortenAddress } from '../../utils'
 
@@ -85,7 +85,7 @@ const ConnectButton = styled(Button)<{status?: string}>`
   
   `
 
-const WalletStatus: React.FC<StepProps> = ({ active }) => {
+const WalletStatus: React.FC<StepProps> = () => {
   const { select, account, disconnect } = useSolanaWeb3()
   return (
     account ? (
@@ -103,15 +103,7 @@ const WalletStatus: React.FC<StepProps> = ({ active }) => {
   )
 }
 
-const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
-  const { account } = useSolanaWeb3()
-
-  return (
-    <StepContent />
-  )
-}
-
-export const useCheckWhiteListModal = (body: any, kits: any) => {
+export const useCheckWhiteListModal = (_body: any, _kits: any) => {
   const { account } = useSolanaWeb3()
 
   const currentStep = useMemo(() => {

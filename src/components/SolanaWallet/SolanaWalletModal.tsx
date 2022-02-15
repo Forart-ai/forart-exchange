@@ -89,7 +89,6 @@ const WalletModalContent: React.FC<WalletModalContentProps> = ({ account }) => {
 const useSolanaWalletModal = () => {
   const { account } = useSolanaWeb3()
 
-
   const modalContent = useMemo(() => (
     <>
       <Title>Your Wallet</Title>

@@ -5,7 +5,6 @@ import { Navigation } from 'swiper'
 import { Checkbox, Image as AntdImage } from 'antd'
 import styled from '@emotion/styled'
 
-
 const StyledImage = styled(AntdImage)`
   display: flex;
   justify-content: center;

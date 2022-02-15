@@ -5,25 +5,21 @@ import { NFTSellForm } from '../../useSellingModal'
 import useSigner from '../../useSigner'
 import useNFTContract from '../usePlanetItemContract'
 import { ExchangeOrder, ExchangeOrderAsset, SellingOrder } from './exchange/types'
-import nftDetail from '../../../pages/marketplace/nftDetail'
 import { NFTDetail } from '../../../types/NFTDetail'
 import { toWei } from '../../../web3/utils'
 import { hashExchangeOrder, hashExchangeOrderAsset } from './exchange/utils'
 import { ethers } from 'ethers'
 import { sellOrder } from '../../../apis/exchange/celo'
-import { useAuthorizingModal } from '../../modals/useAuthorizingModal'
 
 type Hint = {
   message?: string,
   type?: 'error' | 'hint' | 'success'
 }
 
-
 const useNFTSell = () => {
   const { account,library } = useWeb3React()
 
   const [hint, setHintMessage] = useState<Hint>({})
-
 
   const sign = useSigner()
 
@@ -65,7 +61,6 @@ const useNFTSell = () => {
         await setApprovalForAll(contractAddress, true)
       }
 
-
       const salt = (Date.parse(new Date().toString())) / 1000
 
       const markerAsset: ExchangeOrderAsset = {
@@ -81,7 +76,6 @@ const useNFTSell = () => {
         extraValue: 0
       }
 
-
       const takerAsset: ExchangeOrderAsset = {
         settleType: 0,
         baseAsset: {
@@ -94,7 +88,6 @@ const useNFTSell = () => {
         },
         extraValue: 0
       }
-
 
       const order: ExchangeOrder = {
         dir: 0,
@@ -109,9 +102,7 @@ const useNFTSell = () => {
         salt
       }
 
-
       const signature = await sign.signMessage(ethers.utils.arrayify(hashExchangeOrder(order)))
-
 
       const sellingOrder: SellingOrder = {
         dir: 'sell',
@@ -131,12 +122,10 @@ const useNFTSell = () => {
         salt
       }
 
-
       await sellOrder(sellingOrder).then(res => {
         console.log(res)
 
       })
-
 
     },
     [ account, setApprovalForAll, isApprovedForAll ]

@@ -23,7 +23,6 @@ const useCandyMachine = () => {
     return await mintFromCandyMachine(program, mintKeypair)
   }, [program])
 
-
   return {
     program, mint
   }

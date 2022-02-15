@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import { useModal } from '../useModal'
 import WarningIcon from '../../assets/images/modalImages/warning.svg'
 
-
 const PurchaseBlockedModal = styled(Modal)`
   .ant-modal-content {
     border-radius: 10px;

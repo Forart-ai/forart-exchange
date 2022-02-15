@@ -240,7 +240,6 @@ export const usePurchaseCheckoutModal = (nftDetail: any, checkoutPassed: () => v
       })
   }
 
-
   const buildModalByNftDetail = useCallback((close: () => void, visible: boolean) => (
     <PurchaseCheckoutModal
       title="Checkout"
@@ -297,7 +296,6 @@ export const usePurchaseCheckoutModal = (nftDetail: any, checkoutPassed: () => v
   ), [nftDetail, allChecked, onChange])
 
   const { modal, open, close } = useModal((_open, close, visible) => buildModalByNftDetail(close, visible))
-
 
   return {
     purchaseCheckoutModal: modal,

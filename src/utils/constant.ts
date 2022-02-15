@@ -1,7 +1,6 @@
 import { PhantomWalletAdapter } from '../contexts/solana-web3/walletAdapters/phantom'
 import { SolanaWallet, SupportWalletNames } from '../contexts/solana-web3'
 
-
 export const SUPPORT_WALLETS: Record<SupportWalletNames, SolanaWallet> = {
   'Phantom': {
     name: 'Phantom',

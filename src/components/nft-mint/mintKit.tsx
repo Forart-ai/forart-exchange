@@ -4,7 +4,6 @@ import { KitProperties } from '../../pages/coNft/artistDetail'
 import { Checkbox } from 'antd'
 import styled from 'styled-components'
 
-
 const StyledFlag = styled.div`
   position: absolute;
   display: flex;
@@ -68,14 +67,6 @@ const KitItemContainer = styled.div`
   }
 `
 
-const KitInfo = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  color: #ffffff;
-  padding: 2px 10px;
-`
-
 const CornerRemainFlag: React.FC<{remain: string}> = ({ remain }) => {
 
   return (
@@ -124,7 +115,6 @@ export const SelectableKitItem: React.FC<{ src: any, checked?: boolean, onSelect
     </KitImageBorder>
   )
 }
-
 
 export const SelectableKitList: React.FC<{selectedValue?: any, onSelect: (_?: any) => void, list?: KitProperties[]}> =({
   selectedValue,

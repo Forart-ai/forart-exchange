@@ -2,8 +2,7 @@ import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { PoolsListData } from '../types/coNFT'
 import { Button } from 'antd'
-import { Link, useHistory } from 'react-router-dom'
-
+import { Link } from 'react-router-dom'
 
 const PoolsCardContainer = styled.div< { loading?: boolean }>`
   width: 600px;
@@ -129,12 +128,9 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
     }
   },[status])
 
-
   const toArtistDetailUrl = '/artistDetail?' + new URLSearchParams({
     artistId: data?.artistId ?? ''
   }).toString()
-
-  const history = useHistory()
 
   return (
     <PoolsCardContainer loading={loading}>
@@ -169,7 +165,6 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
               </Link>
           }
         </div>
-
 
       </InfoContent>
     </PoolsCardContainer>

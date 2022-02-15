@@ -11,7 +11,6 @@ import { CaretRightOutlined } from '@ant-design/icons'
 import Banner1 from '../../assets/images/coPools/banner.png'
 import { useGetOverview } from '../../hooks/queries/useGetOverview'
 
-
 const Wrapper = styled.div`
   max-width: 100vw;
   width: 100%;
@@ -38,14 +37,14 @@ const HeaderContainer = styled.div`
   padding: 50px 0;
 `
 
-const  LeftTop = styled.div`
+const LeftTop = styled.div`
   width: 100%;
   margin-bottom: 20px;
   height: 60%;
 
 `
 
-const  LeftBottom = styled.div`
+const LeftBottom = styled.div`
   height: 35%;
   width: 100%;
   min-width: 40%;
@@ -56,7 +55,7 @@ const  LeftBottom = styled.div`
   .row {
     display: flex;
     align-items: center;
-    
+
   }
 
   .data-container {
@@ -100,38 +99,31 @@ const MainInfo = styled.div`
     //-webkit-background-clip: text;
     //-webkit-text-fill-color: transparent;
   }
-  
+
   .description {
     font-size: 1.3em;
   }
- 
+
 `
 
 const LinkContainer = styled.div`
   margin-top: 5%;
   display: flex;
   width: fit-content;
-  
+
 `
 
 const SCExternalLink = styled.a`
   margin-right: 15px;
+
   .link-name {
     margin-left: 20px;
     z-index: 1;
   }
+
   img {
     width: 30px;
   }
-  `
-
-const CurveTop = styled.div`
-  width: 100%;
-  position: relative;
-  height: 180px;
-  background: #2A2E35;
-  //background: radial-gradient(62% 35px at center top, #1C1C1D 77%, #2A2E35 77.5%);
-  border-radius: 50% 50% 0 0;
 `
 
 const PoolsContainer = styled.div`
@@ -142,13 +134,13 @@ const PoolsContainer = styled.div`
   align-items: start;
   //background: radial-gradient(62% 35px at center top, #1C1C1D 77%, #2A2E35 77.5%);
   color: #fc6ea3;
-  
+
   .title {
     font-size: 2.8em;
     display: flex;
     align-items: center;
   }
-  
+
 `
 
 const PoolListContainer = styled.div`
@@ -172,7 +164,7 @@ const StyledCountUp = styled(CountUp)`
 const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
   const INFO_DETAILS = {
-    title:'CO-NFT',
+    title: 'CO-NFT',
     describe: 'Forart.ai provides the First AI-powered NFT SaaS for Social, which integrates NFT content creation and social attributes to provide' +
       ' a one-click experience for NFT creation, publishing and sharing. Forart.ai provides a direct co-creation space for NFT artists and enthusiasts,' +
       ' so that artistic inspiration and market demand can be reached in the Forart space.'
@@ -180,11 +172,9 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
   const { data: overviewData } = useGetOverview()
 
-
-
   return (
     <HeaderContainer>
-      <div style={{ display:'flex', flexDirection:'column',  width: '65%' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '65%' }}>
         <LeftTop>
           <MainInfo>
             <div className="title">{INFO_DETAILS.title}</div>
@@ -203,55 +193,54 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
         </LeftTop>
         <LeftBottom>
           <div className="data-container">
-            <div className= "row">
+            <div className="row">
               <div className="label">TOTAL VALUE</div>
               {
                 coNftData ? (
-                  <div style={{ display:'flex', alignItems:'baseline' }} >
+                  <div style={{ display: 'flex', alignItems: 'baseline' }}>
                     <StyledCountUp
                       end={overviewData?.minted ? overviewData?.minted : '---'}
                       duration={2}
                       separator=","
                     />
-                    <div style={{ color:'#FF468B', fontSize:'1.6em' }}>SOL</div>
+                    <div style={{ color: '#FF468B', fontSize: '1.6em' }}>SOL</div>
                   </div>
                 ) :
                   <StyledCountUp end={0} />
               }
             </div>
 
-            <div className= "row" >
+            <div className="row">
               <div className="label">MINTERS</div>
               {
                 coNftData ? (
 
-                  <div style={{ display:'flex', alignItems:'baseline' }} >
+                  <div style={{ display: 'flex', alignItems: 'baseline' }}>
                     <StyledCountUp
-                      end={ overviewData?.mintedWallet ?overviewData?.mintedWallet : '---' }
+                      end={overviewData?.mintedWallet ? overviewData?.mintedWallet : '---'}
                       duration={2}
                       separator=","
                     />
-                    <div style={{ color:'#FF468B', fontSize:'1.6em' }} />
+                    <div style={{ color: '#FF468B', fontSize: '1.6em' }} />
                   </div>
                 ) :
-                  <StyledCountUp  end={0} />
+                  <StyledCountUp end={0} />
               }
             </div>
 
           </div>
         </LeftBottom>
       </div>
-      <RightArea >
+      <RightArea>
         <img src={Banner1} />
       </RightArea>
     </HeaderContainer>
   )
 }
 
-const PoolsList: React.FC<{ poolsList?: Array<PoolsListData>}> = ({ poolsList }) => {
+const PoolsList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList }) => {
 
   const { data: overviewData } = useGetOverview()
-
 
   const req = {
     'image': 'https://forart.mypinata.cloud/ipfs/QmSFo7w1m87FnSbcgWAsydWzsjKiExZCrt7ynxMJLQP2d4',
@@ -267,18 +256,18 @@ const PoolsList: React.FC<{ poolsList?: Array<PoolsListData>}> = ({ poolsList })
     <PoolsContainer>
       <div className="title">
         <div>Live Pools</div>
-        <CaretRightOutlined style={{ fontSize:'0.6em', marginLeft: '15px' }} />
+        <CaretRightOutlined style={{ fontSize: '0.6em', marginLeft: '15px' }} />
       </div>
       <PoolListContainer>
         <PoolsListItem
-          data= {req}
+          data={req}
           status={req.status}
         />
         {
           poolsList?.map((pool: PoolsListData, index: number) => (
             <PoolsListItem
-              data= {pool}
-              key= {index}
+              data={pool}
+              key={index}
               status={pool.status}
             />
           ))
@@ -295,18 +284,16 @@ const CoNftPage: React.FC = () => {
 
   const { data: coNftData } = useCoNFTDataQuery()
 
-  const { data: poolsList }= usePoolsQuery({
+  const { data: poolsList } = usePoolsQuery({
     size: 20,
     current: 1
   })
 
-
-
   return (
     <Wrapper>
       <CoNftPageContainer>
-        <Header coNftData={ coNftData } />
-        <PoolsList poolsList={ poolsList?.records } />
+        <Header coNftData={coNftData} />
+        <PoolsList poolsList={poolsList?.records} />
       </CoNftPageContainer>
     </Wrapper>
   )

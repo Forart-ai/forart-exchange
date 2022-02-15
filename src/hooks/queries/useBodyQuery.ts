@@ -6,7 +6,6 @@ export type NFTComponentRequest = {
   bodyType: string
 }
 
-
 export const useBodyQuery = (param:NFTComponentRequest ): UseQueryResult<any> => {
   return useQuery(
     ['ARTIST_KIT_LIST', param],

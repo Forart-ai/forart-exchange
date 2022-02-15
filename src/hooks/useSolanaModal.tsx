@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { Modal } from 'antd'
 
-
 export type ModalContent = JSX.Element
 
 export const useSolanaModal = (defaultContent?: ModalContent) => {

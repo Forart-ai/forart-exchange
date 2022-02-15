@@ -10,9 +10,6 @@ export function useStyledNFTsQuery(): UseQueryResult<Array<any>> {
   )
 }
 
-
-
-
 // import { useQuery, UseQueryResult } from 'react-query'
 // import { getContentList } from '../../apis/nft'
 //
@@ -26,5 +23,4 @@ export function useStyledNFTsQuery(): UseQueryResult<Array<any>> {
 //   )
 // }
 //
-
 

@@ -8,7 +8,6 @@ import { hashExchangeOrder, hashExchangeOrderAsset } from './exchange/utils'
 import { ethers } from 'ethers'
 import useExchangeContract from '../useExchangeContract'
 
-
 export type PurchaseByFixedPriceParams = {
   nftDetail: any
   account: string
@@ -24,7 +23,7 @@ const usePurchaseByFixedPrice = () => {
   const { matchSingle } = useExchangeContract()
 
   const purchaseByFixedPrice = useCallback(
-    async ({ nftDetail, account, onAuthorized, onSuccess, onFailed }:PurchaseByFixedPriceParams) => {
+    async ({ nftDetail, account, onAuthorized, onSuccess }:PurchaseByFixedPriceParams) => {
 
       if (!sign) {
         return
@@ -32,7 +31,6 @@ const usePurchaseByFixedPrice = () => {
       const buyData = (await chooseOrder({
         valueUri: nftDetail?.valueUri
       })).data.data
-
 
       const price =toWei(buyData!.makerAsset!.baseAsset!.value)
 

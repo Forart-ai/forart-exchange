@@ -73,7 +73,6 @@ export const InfoContainer = styled.div`
   }
 `
 
-
 export const TopBaseInfo = styled.div`
   width: 100%;
   display: flex;
@@ -295,7 +294,6 @@ export const CodingFlag = styled.img`
   height: 100px;
 `
 
-
 export const HistoryTradeTable = styled.div`
   width: 100%;
 `
@@ -316,7 +314,6 @@ export const FootRow = styled.div`
   display: flex;
   justify-content: space-between;
 `
-
 
 export const Operating = styled.div`
   width: 100%;

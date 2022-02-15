@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import styled from '@emotion/styled'
-import { Button, Form, Image as AntdImage, Input, Radio } from 'antd'
+import { Button, Form, Input } from 'antd'
 import ai1 from '../../assets/images/AIGen/ai1.png'
 import ai2 from '../../assets/images/AIGen/ai2.png'
 import ai3 from '../../assets/images/AIGen/ai3.png'
@@ -8,9 +8,6 @@ import ai4 from '../../assets/images/AIGen/ai4.png'
 import ai5 from '../../assets/images/AIGen/ai5.png'
 import BannerImage from '../../assets/images/AIGen/ai-gen-banner.jpg'
 import { LoadingOutlined } from '@ant-design/icons'
-import { aiGeneratorImage, aiGeneratorImageByContent } from '../../apis/ai'
-import { dictionaryToBase64 } from '../../utils'
-
 
 const Wrapper = styled.div`
   max-width: 100vw;
@@ -156,14 +153,6 @@ const EnterContent = styled.div`
     }
   }
 `
-const SubTitle = styled.div`
-  color: #00EBA4;
-  width: fit-content;
-  font-weight: 550;
-  font-size: 2em;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #00EBA4;
-`
 
 const SampleImg = styled.div`
   margin-top: 20px;
@@ -209,40 +198,6 @@ const SampleImg = styled.div`
   }
 `
 
-
-const AIContentContainer = styled.div`
-  margin-top: 40px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`
-
-const StyledRadioGroup = styled(Radio.Group)`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-
-  
-`
-const StyledRadio = styled(Radio)`
-  background-color: #282c34;
-  padding: 5px;
-  border-radius: 10px;
-  margin-top: 10px;
-  
-  
-span {
-  font-size: 18px;
-  color: white;!important;
-}
-`
-
-const SelectedImage = styled(AntdImage)`
-  .ant-image.ant-image-error {
-    background-color: #61dafb; !important;
-  }
-`
-
 const ResultContainer = styled.div`
   margin-top: 25px;
   background-color: #191919;
@@ -283,7 +238,6 @@ const ResultContainer = styled.div`
   }
 `
 
-
 const Container = styled.div`
   width: 1100px;
   height: 100%;
@@ -294,86 +248,8 @@ const Container = styled.div`
   }
 `
 
-type objectItem = {
-  object: string,
-}
-
-type accessoriesItem = {
-  accessories: string
-}
-
-type behaviorItem = {
-  behavior: string
-}
-
 export type AIGenForm = {
   content:''
-}
-
-const ObjectItems: React.FC<{objectItems: objectItem[], onSelect:(_:string) => void}> = ({
-  onSelect,
-  objectItems,
-}) => {
-
-  return (
-    <AIContentContainer>
-      <SubTitle> Choose an object </SubTitle>
-      <StyledRadioGroup  >
-        {
-          objectItems?.map(item => (
-            <div key={item.object} onClick={() => onSelect(item.object)}>
-              <StyledRadio value={item.object}>{item.object}</StyledRadio>
-            </div>
-          ))
-        }
-      </StyledRadioGroup>
-    </AIContentContainer>
-
-  )
-}
-
-const AccessoriesItems: React.FC<{ accessoriesItems: accessoriesItem[], onSelect:(_:string) => void}> = ({
-  onSelect,
-  accessoriesItems,
-}) => {
-
-  return (
-    <AIContentContainer>
-      <SubTitle> Choose an accessories </SubTitle>
-      <StyledRadioGroup >
-        {
-          accessoriesItems?.map(item => (
-            <div key={item.accessories} onClick={() => onSelect(item.accessories)}>
-              <StyledRadio value={item.accessories}>{item.accessories}</StyledRadio>
-            </div>
-          ))
-        }
-      </StyledRadioGroup>
-    </AIContentContainer>
-
-  )
-}
-
-const BehaviorItems: React.FC<{ behaviorItems: behaviorItem[], onSelect:(_:string) => void}> = ({
-  onSelect,
-  behaviorItems,
-}) => {
-
-  return (
-    <AIContentContainer>
-      <SubTitle> Choose an behavior </SubTitle>
-      <StyledRadioGroup     >
-        {
-          behaviorItems?.map(item => (
-            <div key={item.behavior} onClick={() => onSelect(item.behavior)}>
-              <StyledRadio value={item.behavior}>{item.behavior}</StyledRadio>
-            </div>
-          ))
-        }
-      </StyledRadioGroup>
-    </AIContentContainer>
-
-  )
 }
 
 const AIGeneratorResultContainer: React.FC<{ resultImageSrc: any[], generating: boolean }> = ({ resultImageSrc,
@@ -396,45 +272,19 @@ const AIGeneratorResultContainer: React.FC<{ resultImageSrc: any[], generating: 
             <div className="empty" key={index} />
           ))
         }
+
         {/*<SelectedImage src={resultImageSrc} width={1100} height={180} style={{ objectFit:'cover', borderRadius: '10px' }} />*/}
       </div>
     </ResultContainer>
   )
 }
 
-
 const AIGen:React.FC = () => {
-  const objectMap: objectItem[] = [
-    { object: 'an avocado' },
-
-    { object: 'an baby fox' }
-  ]
-
-  const accessoriesMap: accessoriesItem[] = [
-    { accessories: 'in a christmas sweater' },
-
-    { accessories: 'with sunglasses' }
-  ]
-
-  const behaviorMap: behaviorItem[] = [
-    { behavior: 'playing chess' },
-
-    { behavior: 'flying a kite' }
-  ]
-
   const SampleImgs = [ai1, ai2, ai3, ai4, ai5]
-
-  const [object, setObject] = useState('')
-
-  const [accessories, setAccessories] = useState('')
-
-  const [behavior, setBehavior] = useState('')
-
-  const [content, setContent] = useState('')
 
   const [generating, setGenerating] = useState(false)
 
-  const [resultImageSrc, setResultImageSrc] = useState(Array<any>())
+  const [resultImageSrc] = useState(Array<any>())
 
   const [form] = Form.useForm<AIGenForm>()
 
@@ -442,29 +292,13 @@ const AIGen:React.FC = () => {
     content: ''
   }
 
-  const generate = useCallback(async () => {
-    console.log(object, accessories, behavior)
-    setGenerating(true)
-    const result = await aiGeneratorImage(object, accessories, behavior)
-    const uris = dictionaryToBase64(result.data)
-    setResultImageSrc(uris)
-    setGenerating(false)
-    return uris
-    // const uri = await base64ToIPfsUri(result.data.value)
-  },
-  [object, accessories, behavior]
-  )
-
   const generateByContent = useCallback(async form => {
     const content = form.getFieldsValue().content
     setGenerating(true)
     console.log(content)
-    const result = await aiGeneratorImageByContent(content)
 
     return
-  },
-  [form]
-  )
+  }, [form])
 
   return (
     <Wrapper >
@@ -484,7 +318,6 @@ const AIGen:React.FC = () => {
             or even your cognition. It may be abstract art or a representation of reality. It
             may also be the fusion of imagination and reality.
           </div>
-
 
         </Introduction>
 
@@ -507,9 +340,6 @@ const AIGen:React.FC = () => {
           </SampleMain>
         </SampleContent>
 
-
-
-
         <AIGenContent form={form} colon={false} layout="horizontal" initialValues={formInitialValues} >
           <AIGenContentItem
             name="content"
@@ -525,7 +355,6 @@ const AIGen:React.FC = () => {
             </Button>
           </AIGenContentItem>
 
-
         </AIGenContent>
 
         {/*<StyledButton onClick={ generate } >*/}
@@ -534,8 +363,6 @@ const AIGen:React.FC = () => {
         {/*      'Generating...'*/}
         {/*  }*/}
         {/*</StyledButton>*/}
-
-
 
         <AIGeneratorResultContainer resultImageSrc={resultImageSrc} generating={generating} />
       </Container>

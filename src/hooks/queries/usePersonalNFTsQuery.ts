@@ -1,7 +1,6 @@
 import { ChainType, personalNftList } from '../../apis/nft'
 import { useQuery, UseQueryResult } from 'react-query'
 
-
 type PersonalNFTsQueryParams = {
   current?: number
   size?: number,

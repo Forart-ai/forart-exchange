@@ -8,30 +8,9 @@ import TwitterIcon from '../../assets/images/contactLink/twitter.png'
 import TelegramIcon from '../../assets/images/contactLink/telegram.png'
 import DiscordIcon from '../../assets/images/contactLink/discord.png'
 
-const AppSideBarContent = styled.div`
-  height: 30%;
-  padding-left: 10px;
-  position: relative;
-  z-index: 99;
-  top: 60px;
-  background: none;
-  
-
-  .ant-menu-root.ant-menu-vertical,
-  .ant-menu-root.ant-menu-vertical-left,
-  .ant-menu-root.ant-menu-vertical-right,
-  .ant-menu-root.ant-menu-inline {
-    background: transparent !important;
-
-    box-shadow: none;
-  }
-`
-
 const CustomizedMenu = styled(Menu)`
   height: 30vh;
   position: relative;
-
- 
 
   .ant-menu-item {
     display: flex;
@@ -74,13 +53,6 @@ const CustomizedMenu = styled(Menu)`
 
  
   
-`
-
-const StyledMenuItem = styled(Menu.Item)`
-  margin-left: 50px;
-  font-size: 1em;
-
-
 `
 
 const LinkContainer = styled.div`
@@ -129,8 +101,6 @@ const SidebarWrapper = styled.div`
   }
 `
 
-
-
 export  const EXTERNAL_LINKS: Array<{ icon: string, link: string }> = [
   { icon: TwitterIcon, link: 'https://twitter.com/forart_ai' },
   { icon: TelegramIcon, link: 'https://t.me/forart_co' },
@@ -171,7 +141,6 @@ const AppSideBar:React.FC = () => {
               })
             }
 
-
           </div>
         </Affix>
       </CustomizedMenu>
@@ -189,8 +158,6 @@ const AppSideBar:React.FC = () => {
 
       </LinkContainer>
     </SidebarWrapper>
-
-
 
   // <AppSideBarContent>
   //   <CustomizedMenu

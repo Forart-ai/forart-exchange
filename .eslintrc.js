@@ -13,22 +13,18 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module'
   },
-  plugins: ['react'],
+  plugins: ['react', '@typescript-eslint'],
   rules: {
     indent: ['error', 2],
     quotes: ['error', 'single'],
     semi: ['error', 'never'],
     'linebreak-style': [0],
     'import/no-unresolved': [0],
-    'no-unused-vars': [
-      1,
-      {
-        argsIgnorePattern: 'res|next|^err|_'
-      }
-    ],
+    'no-unused-vars': [0],
     'no-console': [0],
     'arrow-body-style': [0],
     'no-return-await': [0],
+    'no-multiple-empty-lines': [2, { 'max': 1 }],
     'max-len': [0],
     'arrow-parens': [2, 'as-needed'],
     'no-param-reassign': [0],
@@ -51,12 +47,9 @@ module.exports = {
       when: 'multiline'
     }],
     '@typescript-eslint/no-use-before-define': ['error'],
-    '@typescript-eslint/no-unused-vars': [
-      1,
-      {
-        argsIgnorePattern: '^r|next|^e|^_'
-      }
-    ],
+    '@typescript-eslint/no-unused-vars': [2, {
+      argsIgnorePattern: '^r|next|^e|^_'
+    }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',

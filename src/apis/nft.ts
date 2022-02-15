@@ -1,11 +1,9 @@
 import forartRequest, { ForartApiPagingData, ForartApiResponseBody } from '../utils/request'
 import { NFTDetail, NftListItem } from '../types/NFTDetail'
 
-
 export type ChainType = 'Ethereum' | 'Solana' | ''
 
 export type ForartNftTransactionStatus = 0 | 1
-
 
 export type ForartNftListQueryParams = {
     current?: number,
@@ -27,7 +25,6 @@ export type NFTDetailQueryRequest = {
     uri: string
     addressContract: string | undefined
 }
-
 
 export type NftCreateForm = {
     uri: string
@@ -51,8 +48,6 @@ export type ForartPersonalNftListQueryParams = {
     searchKey?: string
 }
 
-
-
 export function createNFT(data: NftCreateForm) {
   return forartRequest.post<ForartApiResponseBody<any>>('/marketplace/nft/create/', data)
 }
@@ -65,7 +60,6 @@ export function forartNftDetail(data: NFTDetailQueryRequest) {
   return forartRequest.post<ForartApiResponseBody<NFTDetail>>('/marketplace/nft/detail', data)
 }
 
-
 export function getNftFavoriteCount(uri: any) {
   return forartRequest.get< ForartApiResponseBody<any>>(`/marketplace/view/info/${uri}`)
 }
@@ -73,7 +67,6 @@ export function getNftFavoriteCount(uri: any) {
 export function personalNftList(data: ForartPersonalNftListQueryParams) {
   return forartRequest.post<ForartApiResponseBody<any>>('/marketplace/nft/personal/list', data)
 }
-
 
 // type: 0 => style; 1 => content
 export function getContentList(type: number) {

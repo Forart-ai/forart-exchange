@@ -5,7 +5,7 @@ import { Progress } from 'antd'
 import styled from 'styled-components'
 import { LockNFTRequest } from './exchange/types'
 import useCandyMachine from '../../programs/useCandyMachine'
-import { Keypair, PublicKey } from '@solana/web3.js'
+import { Keypair } from '@solana/web3.js'
 import CONFT_API from '../../../apis/co-nft'
 import { useMintResultQuery } from '../../queries/useMintResultQuery'
 import { useHistory } from 'react-router-dom'
@@ -27,7 +27,6 @@ const Container = styled.div`
     width: 100%;
   }
 `
-
 
 const MintResultImage: React.FC<{nft: string, account: string}> = ({ nft, account }) => {
 
@@ -140,7 +139,6 @@ const useNFTMint = () => {
       const mintKeypair = Keypair.generate()
       const components: number[] = []
 
-
       if (!account) {
         openModal(MODAL_CONTENT.unconnectedToWallet)
         return
@@ -151,24 +149,20 @@ const useNFTMint = () => {
         return
       }
 
-
       if (![...kit.values()].some((value: any) => value.bodyType === 'Background')) {
         openModal(MODAL_CONTENT.kitNotEnough)
         return
       }
-
 
       if (![...kit.values()].some((value: any) => value.bodyType === 'Clothing')) {
         openModal(MODAL_CONTENT.kitNotEnough)
         return
       }
 
-
       if (![...kit.values()].some((value: any) => value.bodyType === 'Pants')) {
         openModal(MODAL_CONTENT.kitNotEnough)
         return
       }
-
 
       const lockNFTForm: LockNFTRequest = {
         series: 3312,
@@ -218,7 +212,6 @@ const useNFTMint = () => {
 
           })
 
-
       }).catch(e => {
         openModal(
           <Message>Oops! {e || e.toString()}</Message>
@@ -226,14 +219,9 @@ const useNFTMint = () => {
         return
       })
 
-
-
-
-
     }, [account]
   )
   return { mintNFT }
 }
-
 
 export default useNFTMint

@@ -3,7 +3,6 @@ import { ForartApiPagingData } from '../../utils/request'
 import {  ForartPoolsListQueryParams } from '../../apis/nft'
 import { PoolsListData } from '../../types/coNFT'
 
-
 export const usePoolsQuery = (params: ForartPoolsListQueryParams): UseQueryResult<ForartApiPagingData<PoolsListData>> => {
   return useQuery(
     ['POOLS_LIST', params],

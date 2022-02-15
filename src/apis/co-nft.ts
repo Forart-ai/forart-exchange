@@ -33,10 +33,8 @@ const CONFT_API = {
         return Service.get('nft/overview')
       }
 
-
     }
   }
 }
-
 
 export default CONFT_API

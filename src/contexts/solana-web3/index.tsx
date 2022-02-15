@@ -11,7 +11,6 @@ import { SolanaWalletSelectionModal, WalletItem } from './modal'
 import { shortenAddress } from '../../utils'
 import notify from '../../utils/notify'
 
-
 export interface WalletAdapter extends EventEmitter {
   publicKey: PublicKey;
   signTransaction: (tx: Transaction) => Promise<Transaction>;
@@ -56,7 +55,6 @@ const SolanaWeb3Context = React.createContext<WalletContextValues>({
   disconnect: () => {}
 })
 
-
 export const SolanaWeb3Provider: React.FC = ({ children }) => {
 
   const { endpointUrl } = useConnectionConfig()
@@ -70,7 +68,6 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
   const close = useCallback(() => setIsModalVisible(false), [])
 
   const { eagerConnected } = useEagerConnect()
-
 
   useEffect(() => {
     if (eagerConnected) {
@@ -112,8 +109,6 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
 
     return adapter?.publicKey
   }, [connected, adapter])
-
-
 
   const connect = useCallback(adapter?.connect ?? select , [adapter, select])
 
@@ -163,7 +158,6 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
       adapter?.removeAllListeners()
     }
   }, [adapter])
-
 
   return (
     <SolanaWeb3Context.Provider
