@@ -14,27 +14,17 @@ type Hint = {
     type?: 'error' | 'hint' | 'success'
 }
 
-type CreateNftAccountResult = {
-    nftPubKey: string
-    userAccountPubKey: string
-    transactionStatus: Promise<string>
-}
-
-
-
 const useCreateNft = () => {
   const { account, library } = useWeb3React()
   const [hint, setHintMessage] = useState<Hint>({})
-  const [hash, setHash] = useState('')
+  const [, setHash] = useState('')
   const { awardItem } =  usePlanetItemContract()
   const history = useHistory()
 
   const signer = useSigner()
 
-
   const createNft = useCallback(
     async (formInstance: FormInstance<NFTCreateForm>, promised: boolean) => {
-
 
       if (library.network.chainId !== 44787) {
         message.warn('Please manually switch to Alfajores Test Network in Celo')
@@ -111,7 +101,6 @@ const useCreateNft = () => {
 
       })
 
-
       // const res = await APICreateNFT(createForm).then(res=> {
       //   setHintMessage({
       //     message: 'Create successfully!',
@@ -123,7 +112,6 @@ const useCreateNft = () => {
 
     },[account, signer]
   )
-
 
   return {
     hint, createNft

@@ -51,7 +51,7 @@ export class CeloConnector extends AbstractConnector {
     }
   }
 
-  private handleClose(code: number, reason: string): void {
+  private handleClose(_code: number, _reason: string): void {
     this.emitDeactivate()
   }
 

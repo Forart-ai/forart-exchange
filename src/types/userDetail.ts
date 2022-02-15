@@ -10,7 +10,6 @@ export interface UserDetail {
   artDetail?: any
 }
 
-
 export interface ArtistKit {
   id: string,
   body: any,

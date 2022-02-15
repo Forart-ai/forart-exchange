@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal,Button  } from 'antd'
+import { Modal  } from 'antd'
 import { supportWallets, Wallet } from '../../web3/connectors'
 import { useWeb3React } from '@web3-react/core'
 import styled from '@emotion/styled'
@@ -115,7 +115,5 @@ const WalletSelectionModal: React.FC<WalletSelectionModalProps> = ({
     </StyledWalletSelectionModal>
   )
 }
-
-
 
 export default WalletSelectionModal

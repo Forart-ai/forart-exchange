@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-
 function onFulfilled(config: any) {
   const { data: responseBody } = config
 

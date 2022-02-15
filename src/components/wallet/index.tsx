@@ -146,7 +146,6 @@ const WalletModalContent: React.FC<CurrentAccountProps> =({
 
   },[account, library,chainId])
 
-
   return (
     <BalanceContainer>
       <div className="balance">{account}</div>
@@ -154,7 +153,6 @@ const WalletModalContent: React.FC<CurrentAccountProps> =({
     </BalanceContainer>
   )
 }
-
 
 const CurrentAccount: React.FC<CurrentAccountProps> = ({ account }) => {
 
@@ -165,7 +163,6 @@ const CurrentAccount: React.FC<CurrentAccountProps> = ({ account }) => {
     deactivate()
 
   }
-
 
   const closeModal = () => {
     setIsModalVisible(false)
@@ -193,7 +190,6 @@ const CurrentAccount: React.FC<CurrentAccountProps> = ({ account }) => {
   )
 }
 
-
 export const ConnectToWallet = () => {
   const { open } = useWalletSelectionModal()
 
@@ -204,11 +200,8 @@ export const ConnectToWallet = () => {
   )
 }
 
-
 const Wallet: React.FC = () => {
   const { account, library } = useWeb3React()
-
-
 
   return (
     <StyledWallet>

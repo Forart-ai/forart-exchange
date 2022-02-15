@@ -1,7 +1,6 @@
 import React from 'react'
-import { Dropdown, Select } from 'antd'
+import { Select } from 'antd'
 import { DropdownSelector } from '../../styles/DropdownSelector'
-
 
 const StatusSelector: React.FC<{ onChange:(_value: any) => void }> = ({ onChange }) => {
   return (
@@ -12,7 +11,6 @@ const StatusSelector: React.FC<{ onChange:(_value: any) => void }> = ({ onChange
     </DropdownSelector>
   )
 }
-
 
 export {
   StatusSelector,

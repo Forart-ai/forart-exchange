@@ -7,7 +7,6 @@ import { MintLayout, Token } from '@solana/spl-token'
 import { createAssociatedTokenAccountInstruction } from './instructions'
 import { sendTransaction } from './transactions'
 
-
 export type MintResult = string
 
 export async function mint(program: Program, mint: Keypair): Promise<MintResult> {

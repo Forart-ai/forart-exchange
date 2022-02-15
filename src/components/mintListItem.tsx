@@ -5,7 +5,6 @@ import { useModal } from '../contexts/modal'
 import AttributesDialog from './attributes-dialog'
 import { Progress } from 'antd'
 
-
 const Wrapper = styled.div<{$empty?: boolean}>`
   width: 210px;
   height: 210px;
@@ -46,7 +45,7 @@ const Wrapper = styled.div<{$empty?: boolean}>`
 
 const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data, empty }) => {
   const [loading, setLoading] = useState(true)
-  const { openModal, configModal } = useModal()
+  const { openModal } = useModal()
 
   const getImageUrl = useCallback(() => {
     const url = data?.previewUrl
@@ -76,7 +75,6 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
     }
 
   },[])
-
 
   useEffect(() => {
     if (!loading) {

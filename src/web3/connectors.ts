@@ -6,11 +6,9 @@ import CeloIcon from '../images/wallet/celo.svg'
 import { Web3Provider } from '@ethersproject/providers'
 import { CeloConnector } from './celo-connector'
 
-
 export const injected = new InjectedConnector({})
 
 export const celoInjected = new CeloConnector({})
-
 
 export enum WalletKeys {
   MetaMask = 'MetaMask',

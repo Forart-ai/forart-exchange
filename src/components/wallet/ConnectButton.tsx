@@ -4,7 +4,6 @@ import styled from '@emotion/styled'
 import { formatEther } from '@ethersproject/units'
 import StyledIdenicon from './StyledIdenicon'
 
-
 const ConnectMain = styled.div`
   padding: 4px 8px;
   position: absolute;
@@ -42,7 +41,6 @@ const ConnectMessage = styled.div`
   }
 `
 
-
 const ConnectButton:React.FC = () => {
   const { activateBrowserWallet, account } = useEthers()
   const etherBalance = useEtherBalance(account)
@@ -50,7 +48,6 @@ const ConnectButton:React.FC = () => {
   const handleConnectWallet = () => {
     activateBrowserWallet()
   }
-
 
   return account ? (
     <ConnectMain>

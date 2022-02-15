@@ -57,7 +57,6 @@ export const LevelLabel = styled.div<{ color: string, shine?: boolean }>`
   ` : ''}
 `
 
-
 export const RarityContainer = styled.div`
   width: 90%;
   height: 8%;

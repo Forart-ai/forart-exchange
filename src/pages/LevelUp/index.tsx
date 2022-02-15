@@ -20,10 +20,7 @@ import { useHistory } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import { useNFTsQuery } from '../../hooks/queries/useNFTsQuery'
 
-
 SwiperCore.use([Navigation, EffectCoverflow, Pagination])
-
-
 
 const Wrapper = styled.div`
   max-width: 100vw;
@@ -92,7 +89,6 @@ const Introduction = styled.div`
   }
 `
 
-
 const Banner = styled.div`
   width: 100%;
   height: 250px;
@@ -144,7 +140,6 @@ const SubTitle = styled.div`
   }
 `
 
-
 const StyledImage = styled(AntdImage)`
   display: flex;
   justify-content: center;
@@ -156,7 +151,6 @@ const SelectedImage = styled(AntdImage)`
     background-color: #61dafb; !important;
   }
 `
-
 
 const SeedNFTColumn = styled.div`
   display: flex;
@@ -174,16 +168,6 @@ const SeedNFTColumn = styled.div`
       width: 100%;
       justify-content: space-between;
     }
-  }
-`
-
-const MergeIcon = styled.div`
-  width: 100px;
-  height: 100px;
-  background-size: 100%;
-
-  @media screen and (max-width: 1100px) {
-   display: none;
   }
 `
 
@@ -324,7 +308,6 @@ const Example: React.FC = () =>{
   )
 }
 
-
 const SelectableNFTItem: React.FC<{ src: string, checked?: boolean, onSelect:(_:string) => void}> = ({
   src,
   checked,
@@ -430,7 +413,6 @@ const NewNFTContainer:React.FC<{ newNFTSrc: string, generating: boolean }> = ({ 
 
   const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
 
-
   return (
     <ResultNFTColumn >
       <div className="nft-border">
@@ -479,8 +461,6 @@ const AIGeneration:React.FC = () => {
 
   const { data: styleList } = useStyledNFTsQuery()
 
-
-
   const contentNft = useMemo(() => {
     return  nftList?.records.map( value => ({
       image: value.image
@@ -510,7 +490,6 @@ const AIGeneration:React.FC = () => {
   // useEffect(() => {
   //   setStyleList(styledNFTs)
   // },[styledNFTs])
-
 
   return (
     <Wrapper >
@@ -551,7 +530,6 @@ const AIGeneration:React.FC = () => {
           />
 
         </LeftArea>
-
 
         <GenerateResultContainer >
           <SelectedNFT style={style} content={content} />

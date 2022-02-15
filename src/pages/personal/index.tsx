@@ -6,7 +6,7 @@ import { useWeb3React } from '@web3-react/core'
 import { shortenAddress } from '../../utils'
 import { SmileOutlined, UserOutlined } from '@ant-design/icons'
 import { usePersonalNFTsQuery } from '../../hooks/queries/usePersonalNFTsQuery'
-import { ChainType, ForartNftTransactionStatus } from '../../apis/nft'
+import { ChainType } from '../../apis/nft'
 import NFTListItem from '../../components/NFTListItem'
 import { NftListItem } from '../../types/NFTDetail'
 import { useMintResultQuery } from '../../hooks/queries/useMintResultQuery'
@@ -14,10 +14,7 @@ import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { MintedNFTItem } from '../../types/coNFT'
 import MintListItem from '../../components/mintListItem'
 
-
 const { TabPane } = Tabs
-
-
 
 const Wrapper = styled.div`
   max-width: 100vw;
@@ -176,9 +173,6 @@ const UserNFTList: React.FC<{ list: Array<NftListItem> | undefined }> = ({ list 
 
 const UserMintedNFTList: React.FC<{ list: Array<MintedNFTItem> | undefined  }> = ({ list }) => {
 
-
-
-
   return (
     <NFTListContainer>
       {
@@ -198,7 +192,6 @@ const UserMintedNFTList: React.FC<{ list: Array<MintedNFTItem> | undefined  }> =
 
 const WarningContent: React.FC = () => {
 
-
   return (
     <>
       <WarningWrapper>
@@ -210,23 +203,19 @@ const WarningContent: React.FC = () => {
 }
 
 const TabsContainer: React.FC = () => {
-
   const { account } = useWeb3React()
 
   const { account: SolAccount } = useSolanaWeb3()
 
-  const [current, setCurrent] = useState<number>(1)
+  const [current] = useState<number>(1)
 
-  const [searchKey, setSearchKey] = useState<any>()
+  const [searchKey] = useState<any>()
 
-  const [, setStatus] = useState<ForartNftTransactionStatus>()
+  const [typeChain] = useState<ChainType>('Ethereum')
 
-  const [typeChain, setTypeChain] = useState<ChainType>('Ethereum')
-
-  const { data: personalNft, isLoading } = usePersonalNFTsQuery({ current, searchKey, typeChain, account })
+  const { data: personalNft } = usePersonalNFTsQuery({ current, searchKey, typeChain, account })
 
   const { data: mintedNft } = useMintResultQuery(true, { wallet: SolAccount?.toBase58(), nft:'' } )
-
 
   return (
     <TabsWrapper>
@@ -265,7 +254,6 @@ const TabsContainer: React.FC = () => {
               <WarningContent />
           }
 
-
         </TabPane>
 
       </StyledTab>
@@ -276,7 +264,6 @@ const TabsContainer: React.FC = () => {
 const PersonalCenterPage: React.FC = () => {
 
   const { account } = useSolanaWeb3()
-
 
   return (
     <Wrapper>
@@ -297,6 +284,5 @@ const PersonalCenterPage: React.FC = () => {
     </Wrapper>
   )
 }
-
 
 export default PersonalCenterPage

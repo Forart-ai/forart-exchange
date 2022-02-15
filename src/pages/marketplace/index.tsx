@@ -14,7 +14,6 @@ import { ForartNftTransactionStatus } from '../../apis/nft'
 import { StatusSelector } from '../../components/NFTListSelectors/index'
 import { useMediaQuery } from 'react-responsive'
 
-
 const Wrapper = styled.div`
   max-width: 100vw;
   width: 100%;
@@ -30,20 +29,6 @@ const Wrapper = styled.div`
     width: 100vw !important;
     background-color: #0B111E;
     padding: 0;
-  }
-`
-
-const Banner = styled.div`
-  width: 100%;
-  height: 300px; 
-  
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}  
-  @media screen and (max-width: 1100px) {
-    height: 100px;
   }
 `
 
@@ -86,7 +71,6 @@ const NFTListContainer = styled.div`
     }
   }
 `
-
 
 const NFTCreateContainer = styled.div`
   display: flex;
@@ -195,7 +179,6 @@ const marketplace: React.FC = () => {
     transactionStatus: selectedStatus,
     typeChain: 'Ethereum'
   })
-
 
   const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
 

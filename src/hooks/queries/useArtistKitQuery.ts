@@ -1,7 +1,6 @@
 import { useQuery, UseQueryResult } from 'react-query'
 import CONFT_API from '../../apis/co-nft'
 
-
 export const useArtistKitQuery = (id:number): UseQueryResult<any> => {
   return useQuery(
     ['ARTIST_KIT_LIST',id],

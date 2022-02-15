@@ -45,7 +45,6 @@ const MintItems = styled.div`
   }
 `
 
-
 export const SelectedList: React.FC<{kitList?: Map<string, any>, body: any}> = ({ kitList, body }) => {
 
   useEffect(()=> {

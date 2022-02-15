@@ -3,7 +3,6 @@ import { SolanaWallet, SupportWalletNames } from './index'
 import { Modal } from 'antd'
 import React from 'react'
 
-
 export const SolanaWalletSelectionModal = styled(Modal)`
   .ant-modal-content {
     border-radius: 1rem;
@@ -52,7 +51,6 @@ export const WalletItemContainer = styled.div`
     height: 4rem;
   }
 `
-
 
 export const WalletItem: React.FC<{ wallet: SolanaWallet, onClick: (name: SupportWalletNames) => void }> = ({ wallet, onClick }) => {
   const { name, icon } = wallet

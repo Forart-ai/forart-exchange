@@ -18,8 +18,7 @@ import { SolanaWeb3Provider } from './contexts/solana-web3'
 import { SolanaConnectionConfigProvider } from './contexts/solana-connection-config'
 import { ModalProvider } from './contexts/modal'
 
-const { store,persistor } = configureStore()
-
+const { store } = configureStore()
 
 const queryClient = new QueryClient()
 

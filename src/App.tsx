@@ -12,7 +12,6 @@ import { useChainEffect, useEagerConnect } from './web3/hooks'
 import '../src/font/font.css'
 import { useDispatch } from 'react-redux'
 import { setSideBarCollapsed, useSideBarCollapsed } from './store/app'
-import { useMediaQuery } from 'react-responsive'
 
 const App: React.FC = () => {
   useEagerConnect()
@@ -26,12 +25,9 @@ const App: React.FC = () => {
     dispatch(setSideBarCollapsed(!sideBarCollapsed))
   }
 
-  const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
-
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [location.pathname])
-
 
   return (
   // <Layout className="app">

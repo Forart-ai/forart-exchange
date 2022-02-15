@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { Button, Checkbox, Form, Input, InputNumber, Modal, Select } from 'antd'
 import useNFTSell from './contract/service/useNFTSell'
 
-
 const SellingModal = styled(Modal)`
   display: flex;
   justify-content: center;
@@ -59,7 +58,6 @@ const SellMethodContainer = styled.div`
   }
 `
 
-
 const Line = styled.div`
   position: absolute;
   right: 0;
@@ -74,21 +72,6 @@ const Title = styled.div`
   font-size: 20px;
   font-weight: bolder;
   margin-bottom: 10px;
-`
-
-const MethodButton = styled(Button)`
-  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
-  border: none;
-  color: white;
-  font-weight: bolder;
-  border-radius: 10px;
-
-  
-
-  .tabs__link {
-    background-color: #6974FF; !important;
-    color: #ffffff;
-  }
 `
 
 const StyledForm = styled(Form)`
@@ -195,7 +178,6 @@ type MessageHintProps = {
   type?: 'error' | 'hint' | 'success'
 }
 
-
 const MessageHint: React.FC<MessageHintProps> = ({ message, type }) => {
   const color = type ? {
     'error': '#CD1818',
@@ -214,21 +196,17 @@ export type NFTSellForm = {
   price: string
 }
 
-
 export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :SellingModalProps) => {
 
   const formInitialValues: NFTSellForm = {
     price: ''
   }
 
-
   const { sellNFT, hint } = useNFTSell()
 
   const [form] = Form.useForm<NFTSellForm>()
 
   const [ checked, setChecked] = useState(false)
-
-
 
   const checkCheckbox = () => new Promise<void>((resolve, reject) => {
     if (!checked) {
@@ -237,9 +215,7 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
     resolve()
   })
 
-
-
-  const handleListing = async (values: typeof formInitialValues) => {
+  const handleListing = async (_values: typeof formInitialValues) => {
     onStart()
     await sellNFT(nftDetail, form, checked)
     onSellingConfirmed()
@@ -250,7 +226,6 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
       .then(() => form.validateFields())
       .then(handleListing)
   }
-
 
   const { modal, open, close } = useModal((_open, close, visible) => (
     <SellingModal
@@ -312,10 +287,8 @@ export const useSellingModal = ({ nftDetail, onSellingConfirmed, onStart } :Sell
         <MessageHint {...hint} />
       </SellMethodContainer>
 
-
     </SellingModal>
   ))
-
 
   return {
     sellingModal: modal,

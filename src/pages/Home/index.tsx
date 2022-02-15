@@ -7,7 +7,6 @@ import celo from '../../assets/images/home/celo.png'
 import { useHistory } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 
-
 const HomePage = styled.div`
   max-width: 100vw;
   width: 100%;
@@ -257,7 +256,6 @@ const gamingPools:pools[] = [
 
 const Home:React.FC = () => {
 
-
   const history = useHistory()
 
   const word = 'Coming soon ...'
@@ -266,8 +264,6 @@ const Home:React.FC = () => {
     history.push(`${pathName}`)
   }
   const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
-
-
 
   return (
     <HomePage>
@@ -323,7 +319,6 @@ const Home:React.FC = () => {
               <PoolsTitle>AI-Driven Tool Kit to mint NFTs</PoolsTitle>
               <PoolsTitle>Coming Soon!</PoolsTitle>
             </PoolsItem>
-
 
           </GamingPools>
         </Content>

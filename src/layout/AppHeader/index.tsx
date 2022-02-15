@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import SolanaWallet from '../../components/SolanaWallet'
 
-
 const AppHeaderContent = styled.div`
   width: 100%;
   height: 60px;
@@ -48,7 +47,7 @@ const Operator = styled.div`
   }
 `
 
-const AppHeader:React.FC <{ onCollapseChanged: () => void }> = ({ onCollapseChanged }) => {
+const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
   const history = useHistory()
 
   const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })

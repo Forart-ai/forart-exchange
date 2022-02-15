@@ -38,7 +38,6 @@ export function useEagerConnect() {
   return tried
 }
 
-
 export function useInactiveListener(suppress = false) {
   const { active, error, activate } = useWeb3React()
 
@@ -81,10 +80,8 @@ export function useInactiveListener(suppress = false) {
   }, [active, error, suppress, activate])
 }
 
-
-
 export function useChainEffect() {
-  const { account, library } = useWeb3React()
+  const { account } = useWeb3React()
 
   const SCAN_ADDRESS = {
     [44787]: 'https://alfajores-forno.celo-testnet.org'
@@ -117,7 +114,6 @@ export function useChainEffect() {
           }
         ],
       })
-
 
     }
   },[account])

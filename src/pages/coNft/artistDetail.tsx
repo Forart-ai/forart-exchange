@@ -5,11 +5,11 @@ import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
 import MoreKit from '../../assets/images/coPools/more.svg'
 import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
-import { Title } from '../../components/nft-mint/selectedList'
+import { SelectedList, Title } from '../../components/nft-mint/selectedList'
 import OpenSwitch from '../../assets/images/coPools/switch.svg'
 import ArtistBanner from '../../assets/images/coPools/hypteen-banner.jpg'
 
-import { Anchor, Avatar, Button, Tabs } from 'antd'
+import { Button, Tabs } from 'antd'
 import { BlockOutlined, CrownOutlined, SmileOutlined } from '@ant-design/icons'
 import {
   BodyContent,
@@ -19,7 +19,6 @@ import {
   MintContainer,
   MintTab,
   MintWrapper,
-  PriceContainer,
   SelectedBody,
   TopContainer
 } from './artistMint.style'
@@ -27,28 +26,10 @@ import { useArtistKitQuery } from '../../hooks/queries/useArtistKitQuery'
 
 import { SelectableBodyList } from '../../components/nft-mint/mintBody'
 import { SelectableKitList } from '../../components/nft-mint/mintKit'
-import { SelectedList } from '../../components/nft-mint/selectedList'
-import useNFTMint from '../../hooks/contract/service/useNFTMint'
-import { useStyledNFTsQuery } from '../../hooks/queries/useStyledNFTsQuery'
-import { useMediaQuery } from 'react-responsive'
-import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
-import useSolanaWalletModal from '../../components/SolanaWallet/SolanaWalletModal'
 import { useCheckWhiteListModal } from '../../hooks/modals/useCheckWhiteListModal'
 
-
 const { TabPane } = Tabs
-const { Link } = Anchor
-
-const onAnchorClick = (
-  e: React.MouseEvent<HTMLElement>,
-  link: {
-    title: React.ReactNode;
-    href: string;
-  },
-) => {
-  e.preventDefault()
-}
 
 export type KitProperties = {
   id: number
@@ -57,24 +38,6 @@ export type KitProperties = {
   rarity: number,
   remain: number
 }
-
-
-type MessageHintProps = {
-  message?: string,
-  type?: 'error' | 'hint' | 'success'
-}
-
-function scrollToPart(anchorName: string) {
-  if (anchorName) {
-    const anchorElement = document.getElementById(anchorName)
-    if (anchorElement) {
-      anchorElement.scrollIntoView(
-        { behavior: 'smooth', block: 'nearest' }
-      )
-    }
-  }
-}
-
 
 const Wrapper = styled.div`
   width: 100%;
@@ -168,97 +131,6 @@ const ArtistInfo = styled.div`
   }
 `
 
-const FollowersInfo = styled.div` 
-  width: 100%;
-  height: 12%;
-  background: rgba(14,22,39,.85);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 20px;
-  padding: 15px 20px;
-  
-  @media screen and (max-width: 1100px) {
-    flex-direction: column;
-    height: 18%;
-  }
-`
-
-const LeftArea = styled.div` 
-  width: 15%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  //border: 1px red solid;
-  
-  .label {
-    font-size: 1.3em !important;
-  }
-  .value{
-    font-size: 1.8em !important;
-    margin-right: 10px;
-  }
-`
-
-
-const RightArea = styled.div`
-  width: 82%;
-  height: 100%;
-  display: flex;
-  //padding: 16px;
-
-  .followers {
-    width: 100%;
-    position: relative;
-    min-height: 50px;
-    overflow: hidden;
-  !important;
-
-    &:before {
-      content: "";
-      width: 100%;
-      height: 64px;
-      position: absolute;
-      left: 0;
-      background: linear-gradient(270deg, transparent 95%, #1c2b38), linear-gradient(90deg, transparent 95%, #1c2b38);
-      z-index: 1;
-    }
-
-    .followers-icon {
-      overflow: hidden;
-    !important;
-      width: 100%;
-    }
-
-    .followers-icon-inner {
-      display: flex;
-      -webkit-animation: scrollDown 200s alternate;
-      animation: scrollDown 20s alternate;
-      -webkit-animation-timing-function: linear;
-      animation-timing-function: linear;
-
-      .is-48 {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        margin: 0 5px;
-      }
-    }
-
-    @keyframes scrollDown {
-      0% {
-        transform: translateX(0px);
-      }
-      100% {
-        transform: translateX(-100%);
-      }
-    }
-
-  }
-`
-
 const StyledTab = styled(Tabs)`
   width: 100%;
   user-select: none;
@@ -303,7 +175,6 @@ const StyledTab = styled(Tabs)`
     }
   }
 `
-
 
 const DescriptionContainer = styled.div`
   width: 100%;
@@ -414,8 +285,6 @@ const Message = styled.div`
   
 `
 
-
-
 const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 
   return (
@@ -454,11 +323,7 @@ const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
   )
 }
 
-const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
-
-  const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
-
-
+const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
   return (
     <ArtistDetailTab>
       {/*<Anchor onClick={() => onAnchorClick}  style={isMobile ? { display:'none' }  : { }}>*/}
@@ -505,7 +370,6 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 
             3. NFT holders with scarcity properties will share the HypeTeen royalties. <br /> <br />
 
-
             <b>HypeTeen Special NFTs holders can obtain benefits:</b>  <br />
             1. Will be added to Forart IDO&apos;s whitelist.
           </p>
@@ -547,20 +411,6 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
   )
 }
 
-const MessageHint: React.FC<MessageHintProps> = ({ message, type }) => {
-  const color = type ? {
-    'error': 'red',
-    'success': 'rgb(82,196,26)',
-    'hint': '#fadb14'
-  }[type] : ''
-
-  return (
-    <p style={{ fontSize: '1.2rem', color }}>
-      {message}
-    </p>
-  )
-}
-
 const AllNftContainer: React.FC = () => {
   return (
     <AllNftWrapper>Coming Soon!</AllNftWrapper>
@@ -580,17 +430,10 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
   const { select } = useSolanaWeb3()
 
   const [kits, setKits] = useState<Map<string, any>>(new Map())
-  const [style, setStyle] = useState('')
-  const [show, setShow] = useState<boolean>(true)
-  const [genName, setGenName] = useState<string>()
+  const [, setStyle] = useState('')
+  const [show] = useState<boolean>(true)
 
-  const { data: styleList } = useStyledNFTsQuery()
-
-
-
-
-  const { checkWhiteListModal, openCheckWhiteListModal, closeCheckWhiteListModal } = useCheckWhiteListModal(body, kits)
-
+  const { checkWhiteListModal, openCheckWhiteListModal } = useCheckWhiteListModal(body, kits)
 
   useMemo(() => {
     if (!show) {
@@ -641,7 +484,6 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         list: artistKit?.Butt
       }
 
-
     ], [artistKit])
 
   return (
@@ -653,7 +495,6 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
             onSelect= {v => setBody(v)}
             list= {artistKit?.Body}
           />
-
 
           <SelectedBody>
             {
@@ -753,8 +594,6 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 }
 
 const ArtistDetail: React.FC = () => {
-  const artistId = useLocationQuery('artistId')
-
   const { data: userData } = useArtistDetailQuery()
 
   const { data: artistKitList } = useArtistKitQuery(3312)
@@ -807,6 +646,5 @@ const ArtistDetail: React.FC = () => {
     </Wrapper>
   )
 }
-
 
 export default ArtistDetail

@@ -2,7 +2,6 @@ import { NFTCreateForm } from '../pages/nftCreate'
 import { NFTMetadata } from '../types/NFTMetadatas'
 import { getUriByIpfsHash, pinFileToIPFS } from './ipfs'
 
-
 export function generateNftMetadata(form: NFTCreateForm): NFTMetadata {
   const { artworkName, briefIntroduction, assetIpfsHash } = form
   console.log(assetIpfsHash)
@@ -13,7 +12,6 @@ export function generateNftMetadata(form: NFTCreateForm): NFTMetadata {
     image: getUriByIpfsHash(assetIpfsHash)
   }
 }
-
 
 export const shortenAddress = (address?: string, length = 6) => {
   return address ? `${address.substring(0, length)}...${address.slice(-length)}` : '-'
