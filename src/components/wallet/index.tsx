@@ -50,10 +50,10 @@ const StyledWallet = styled.div`
   border-radius: 30px;
   //border: 2px solid #02A6F5;
   padding: 0 10px;
-
   box-sizing: border-box;
   margin-right: 20px;
   cursor: pointer;
+  
   
   @media screen and (max-width: 1100px) {
     height: 35px;
@@ -118,7 +118,7 @@ const WalletModalContent: React.FC<CurrentAccountProps> =({
 
   const { library, chainId } = useWeb3React()
 
-  const [balance, setBalance] = useState()
+  const [, setBalance] = useState()
 
   useEffect(():any => {
     if (!!account && !!library) {
@@ -201,7 +201,7 @@ export const ConnectToWallet = () => {
 }
 
 const Wallet: React.FC = () => {
-  const { account, library } = useWeb3React()
+  const { account } = useWeb3React()
 
   return (
     <StyledWallet>

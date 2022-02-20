@@ -47,7 +47,7 @@ module.exports = {
       when: 'multiline'
     }],
     '@typescript-eslint/no-use-before-define': ['error'],
-    '@typescript-eslint/no-unused-vars': [2, {
+    '@typescript-eslint/no-unused-vars': [0, {
       argsIgnorePattern: '^r|next|^e|^_'
     }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',

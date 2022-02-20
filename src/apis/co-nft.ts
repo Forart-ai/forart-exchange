@@ -34,15 +34,15 @@ const CONFT_API = {
       }
     },
     user: {
-      // getBoundUserByWallet(wallet? :string) {
-      //   return undefined
-      // },
-      // getUserByToken(token?: string) {
-      //   return undefined
-      // },
-      // bindingUser(token: string, wallet: string) {
-      //   return undefined
-      // },
+      getUserQualification(wallet? :string) {
+        return wallet ? Service.get(`/nft/promotion/create/qualification/${ wallet }`) : undefined
+      },
+      getUserByWallet(wallet?: string) {
+        return wallet ? Service.post(`/nft/promotion/discord/bind/${ wallet }`) : undefined
+      },
+      bindingUser(oauthToken: string, wallet: string) {
+        return Service.post('/nft/promotion/discord/bind', { oauthToken, wallet })
+      },
     }
   }
 }

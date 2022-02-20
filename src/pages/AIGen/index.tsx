@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import styled from '@emotion/styled'
-import { Button, Form, Input } from 'antd'
+import { Button, Radio } from 'antd'
 import ai1 from '../../assets/images/AIGen/ai1.png'
 import ai2 from '../../assets/images/AIGen/ai2.png'
 import ai3 from '../../assets/images/AIGen/ai3.png'
@@ -8,6 +8,20 @@ import ai4 from '../../assets/images/AIGen/ai4.png'
 import ai5 from '../../assets/images/AIGen/ai5.png'
 import BannerImage from '../../assets/images/AIGen/ai-gen-banner.jpg'
 import { LoadingOutlined } from '@ant-design/icons'
+import { aiGeneratorImage } from '../../apis/ai'
+import { dictionaryToBase64 } from '../../utils'
+
+type objectItem = {
+  object: string,
+}
+
+type accessoriesItem = {
+  accessories: string
+}
+
+type behaviorItem = {
+  behavior: string
+}
 
 const Wrapper = styled.div`
   max-width: 100vw;
@@ -18,41 +32,41 @@ const Wrapper = styled.div`
   justify-content: center;
 `
 
-const AIGenContent = styled(Form)`
-  width: 100%;
-  margin-top: 50px;
-`
-
-const AIGenContentItem = styled(Form.Item)`
-  
-  display: flex;
-  justify-content: space-between;
-  
-  
-  .ant-form-item-label > label {
-    font-size: 1.8em;
-    font-weight: 500;
-    color: #FF4D9D;
-
-  }
-
-  .ant-input {
-    width: 700px;
-    &::placeholder {
-      color: #ccc;
-    }
-
-    height: 36px ;
-    background: #000 !important;
-    border-radius: 10px !important;
-    border: 1px #FF468B solid !important;
-    font-size: 1.2em;
-    font-weight: 500 !important;
-    color: white !important;
-    line-height: 20px !important;
-    margin-right: 10px;
-  }
-`
+// const AIGenContent = styled(Form)`
+//   width: 100%;
+//   margin-top: 50px;
+// `
+//
+// const AIGenContentItem = styled(Form.Item)`
+//
+//   display: flex;
+//   justify-content: space-between;
+//
+//
+//   .ant-form-item-label > label {
+//     font-size: 1.8em;
+//     font-weight: 500;
+//     color: #FF4D9D;
+//
+//   }
+//
+//   .ant-input {
+//     width: 700px;
+//     &::placeholder {
+//       color: #ccc;
+//     }
+//
+//     height: 36px ;
+//     background: #000 !important;
+//     border-radius: 10px !important;
+//     border: 1px #FF468B solid !important;
+//     font-size: 1.2em;
+//     font-weight: 500 !important;
+//     color: white !important;
+//     line-height: 20px !important;
+//     margin-right: 10px;
+//   }
+// `
 
 const Banner = styled.div`
   width: 100%;
@@ -238,6 +252,15 @@ const ResultContainer = styled.div`
   }
 `
 
+const SubTitle = styled.div`
+  color: #00EBA4;
+  width: fit-content;
+  font-weight: 550;
+  font-size: 28px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #00EBA4;
+`
+
 const Container = styled.div`
   width: 1100px;
   height: 100%;
@@ -247,9 +270,100 @@ const Container = styled.div`
     padding: 0 20px;
   }
 `
+const AIContentContainer = styled.div`
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`
+
+const StyledRadioGroup = styled(Radio.Group)`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`
+
+const StyledRadio = styled(Radio)`
+  background-color: #282c34;
+  padding: 5px;
+  border-radius: 10px;
+  margin-top: 10px;
+  
+  
+span {
+  font-size: 18px;
+  color: white;!important;
+}
+`
 
 export type AIGenForm = {
   content:''
+}
+
+const ObjectItems: React.FC<{objectItems: objectItem[], onSelect:(_:string) => void}> = ({
+  onSelect,
+  objectItems,
+}) => {
+
+  return (
+    <AIContentContainer>
+      <SubTitle> Choose an object </SubTitle>
+      <StyledRadioGroup  >
+        {
+          objectItems?.map(item => (
+            <div key={item.object} onClick={() => onSelect(item.object)}>
+              <StyledRadio value={item.object}>{item.object}</StyledRadio>
+            </div>
+          ))
+        }
+      </StyledRadioGroup>
+    </AIContentContainer>
+
+  )
+}
+
+const AccessoriesItems: React.FC<{ accessoriesItems: accessoriesItem[], onSelect:(_:string) => void}> = ({
+  onSelect,
+  accessoriesItems,
+}) => {
+
+  return (
+    <AIContentContainer>
+      <SubTitle> Choose an accessories </SubTitle>
+      <StyledRadioGroup >
+        {
+          accessoriesItems?.map(item => (
+            <div key={item.accessories} onClick={() => onSelect(item.accessories)}>
+              <StyledRadio value={item.accessories}>{item.accessories}</StyledRadio>
+            </div>
+          ))
+        }
+      </StyledRadioGroup>
+    </AIContentContainer>
+
+  )
+}
+
+const BehaviorItems: React.FC<{ behaviorItems: behaviorItem[], onSelect:(_:string) => void}> = ({
+  onSelect,
+  behaviorItems,
+}) => {
+
+  return (
+    <AIContentContainer>
+      <SubTitle> Choose an behavior </SubTitle>
+      <StyledRadioGroup     >
+        {
+          behaviorItems?.map(item => (
+            <div key={item.behavior} onClick={() => onSelect(item.behavior)}>
+              <StyledRadio value={item.behavior}>{item.behavior}</StyledRadio>
+            </div>
+          ))
+        }
+      </StyledRadioGroup>
+    </AIContentContainer>
+
+  )
 }
 
 const AIGeneratorResultContainer: React.FC<{ resultImageSrc: any[], generating: boolean }> = ({ resultImageSrc,
@@ -284,21 +398,57 @@ const AIGen:React.FC = () => {
 
   const [generating, setGenerating] = useState(false)
 
-  const [resultImageSrc] = useState(Array<any>())
+  const objectMap: objectItem[] = [
+    { object: 'an avocado' },
 
-  const [form] = Form.useForm<AIGenForm>()
+    { object: 'an baby fox' }
+  ]
 
-  const formInitialValues: AIGenForm = {
-    content: ''
-  }
+  const accessoriesMap: accessoriesItem[] = [
+    { accessories: 'in a christmas sweater' },
 
-  const generateByContent = useCallback(async form => {
-    const content = form.getFieldsValue().content
+    { accessories: 'with sunglasses' }
+  ]
+
+  const behaviorMap: behaviorItem[] = [
+    { behavior: 'playing chess' },
+
+    { behavior: 'flying a kite' }
+  ]
+
+  const [object, setObject] = useState('')
+
+  const [accessories, setAccessories] = useState('')
+
+  const [behavior, setBehavior] = useState('')
+
+  const [resultImageSrc, setResultImageSrc] = useState(Array<any>())
+
+  const generate = useCallback(async () => {
+    console.log(object, accessories, behavior)
     setGenerating(true)
-    console.log(content)
+    const result = await aiGeneratorImage(object, accessories, behavior)
+    const uris = dictionaryToBase64(result.data)
+    setResultImageSrc(uris)
+    setGenerating(false)
+    return uris
+  },
+  [object, accessories, behavior]
+  )
 
-    return
-  }, [form])
+  // const [form] = Form.useForm<AIGenForm>()
+  //
+  // const formInitialValues: AIGenForm = {
+  //   content: ''
+  // }
+  //
+  // const generateByContent = useCallback(async form => {
+  //   const content = form.getFieldsValue().content
+  //   setGenerating(true)
+  //   console.log(content)
+  //
+  //   return
+  // }, [form])
 
   return (
     <Wrapper >
@@ -340,22 +490,35 @@ const AIGen:React.FC = () => {
           </SampleMain>
         </SampleContent>
 
-        <AIGenContent form={form} colon={false} layout="horizontal" initialValues={formInitialValues} >
-          <AIGenContentItem
-            name="content"
-            label="content"
-            rules={[{ required: true, message: 'Content is Required!' }]}
-          >
-            <Input placeholder="Please enter a content" />
-            <Button onClick={ () => generateByContent(form) } >
-              {
-                !generating ? 'Generate Now-!' :
-                  'Generating...'
-              }
-            </Button>
-          </AIGenContentItem>
+        {/*<AIGenContent form={form} colon={false} layout="horizontal" initialValues={formInitialValues} >*/}
+        {/*  <AIGenContentItem*/}
+        {/*    name="content"*/}
+        {/*    label="content"*/}
+        {/*    rules={[{ required: true, message: 'Content is Required!' }]}*/}
+        {/*  >*/}
+        {/*    <Input placeholder="Please enter a content" />*/}
+        {/*    <Button onClick={ () => generateByContent(form) } >*/}
+        {/*      {*/}
+        {/*        !generating ? 'Generate Now-!' :*/}
+        {/*          'Generating...'*/}
+        {/*      }*/}
+        {/*    </Button>*/}
+        {/*  </AIGenContentItem>*/}
 
-        </AIGenContent>
+        {/*</AIGenContent>*/}
+
+        <ObjectItems objectItems={objectMap} onSelect={v => setObject(v)} />
+
+        <AccessoriesItems accessoriesItems={accessoriesMap} onSelect={ v => setAccessories(v) } />
+
+        <BehaviorItems behaviorItems={behaviorMap} onSelect={ v => setBehavior(v) } />
+
+        <Button onClick={ generate } >
+          {
+            !generating ? 'Generate Now!' :
+              'Generating...'
+          }
+        </Button>
 
         {/*<StyledButton onClick={ generate } >*/}
         {/*  {*/}

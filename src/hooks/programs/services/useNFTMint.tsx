@@ -3,43 +3,19 @@ import { useModal } from '../../../contexts/modal'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 import { Progress } from 'antd'
 import styled from 'styled-components'
-import { LockNFTRequest } from './exchange/types'
-import useCandyMachine from '../../programs/useCandyMachine'
+import { LockNFTRequest } from '../../contract/service/exchange/types'
+// import useCandyMachine from '../useCandyMachine'
 import { Keypair } from '@solana/web3.js'
 import CONFT_API from '../../../apis/co-nft'
-import { useMintResultQuery } from '../../queries/useMintResultQuery'
+// import { useMintResultQuery } from '../../queries/useMintResultQuery'
 import { useHistory } from 'react-router-dom'
 import { sleep } from '../../../utils'
-import { useConnectionConfig } from '../../../contexts/solana-connection-config'
+// import { useConnectionConfig } from '../../../contexts/solana-connection-config'
 
 const Message = styled.div`
   text-align: center;
   font-size: 24px;
 `
-
-const Container = styled.div`
-  height: 100%;
-  width: 100%;
-  
-  img { 
-    object-fit: contain;
-    height: 100%;
-    width: 100%;
-  }
-`
-
-const MintResultImage: React.FC<{nft: string, account: string}> = ({ nft, account }) => {
-
-  console.log(nft)
-  const { data: nftResult } = useMintResultQuery(true, { wallet: account, nft: nft })
-
-  console.log(nftResult)
-  return (
-    <>
-      <Container />
-    </>
-  )
-}
 
 const WaitForMinting:React.FC = () => {
   const [progress, setProgress] = useState(0)
@@ -121,9 +97,9 @@ const MODAL_CONTENT = {
 const useNFTMint = () => {
   const { account } = useSolanaWeb3()
   const { openModal, configModal, closeModal } = useModal()
-  const { mint } = useCandyMachine()
+  // const { mint } = useCandyMachine()
   const history = useHistory()
-  const { connection } = useConnectionConfig()
+  // const { connection } = useConnectionConfig()
 
   const mintNFT =  useCallback(
     async (body: any, kit: any) => {
@@ -180,26 +156,64 @@ const useNFTMint = () => {
         components.push(item.id)
       }
 
-      CONFT_API.core.kits.lockNft(lockNFTForm).then((res:any) => {
+      // include mint
+
+      // CONFT_API.core.kits.lockNft(lockNFTForm).then((res:any) => {
+      //   const orderNum = res.order
+      //   openModal(MODAL_CONTENT.waitForTransfer)
+      //
+      //   mint(mintKeypair)
+      //     .then(async _signature => {
+      //       openModal(MODAL_CONTENT.waitForMinting, false)
+      //
+      //       await CONFT_API.core.kits.nftMint({
+      //         order:  orderNum.toString(),
+      //         mintKey: mintKeypair.publicKey.toBase58()
+      //       })
+      //         .then(() => {
+      //           history.push('/personal/home')
+      //           openModal(MODAL_CONTENT.transferComplete)
+      //         })
+      //         .then(() => sleep(1500))
+      //         .then(closeModal)
+      //         .catch(() => {openModal(MODAL_CONTENT.mintError)})
+      //     })
+      //     .catch(e => {
+      //       CONFT_API.core.kits.cancelNFTMint({ wallet: account.toBase58(), order: orderNum })
+      //         .then(() => {
+      //           openModal(
+      //             <Message>
+      //               Oops! Mint failed: {e.message || e.toString()}
+      //             </Message>
+      //           )
+      //         })
+      //
+      //     })
+      //
+      // }).catch(e => {
+      //   openModal(
+      //     <Message>Oops! {e || e.toString()}</Message>
+      //   )
+      //   return
+      // })
+
+      await CONFT_API.core.kits.lockNft(lockNFTForm).then((res:any) => {
         const orderNum = res.order
         openModal(MODAL_CONTENT.waitForTransfer)
 
-        mint(mintKeypair)
-          .then(async _signature => {
-            openModal(MODAL_CONTENT.waitForMinting, false)
+        openModal(MODAL_CONTENT.waitForMinting, false)
 
-            await CONFT_API.core.kits.nftMint({
-              order:  orderNum.toString(),
-              mintKey: mintKeypair.publicKey.toBase58()
-            })
-              .then(() => {
-                history.push('/personal/home')
-                openModal(MODAL_CONTENT.transferComplete)
-              })
-              .then(() => sleep(1500))
-              .then(closeModal)
-              .catch(() => {openModal(MODAL_CONTENT.mintError)})
+        CONFT_API.core.kits.nftMint({
+          order:  orderNum.toString(),
+          mintKey: mintKeypair.publicKey.toBase58()
+        })
+          .then(() => {
+            history.push('/personal/home')
+            openModal(MODAL_CONTENT.transferComplete)
           })
+          .then(() => sleep(1500))
+          .then(closeModal)
+          .catch(() => {openModal(MODAL_CONTENT.mintError)})
           .catch(e => {
             CONFT_API.core.kits.cancelNFTMint({ wallet: account.toBase58(), order: orderNum })
               .then(() => {

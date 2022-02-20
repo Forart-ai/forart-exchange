@@ -22,12 +22,13 @@ import {
   SelectedBody,
   TopContainer
 } from './artistMint.style'
-import { useArtistKitQuery } from '../../hooks/queries/useArtistKitQuery'
 
+import { useArtistKitQuery } from '../../hooks/queries/useArtistKitQuery'
 import { SelectableBodyList } from '../../components/nft-mint/mintBody'
 import { SelectableKitList } from '../../components/nft-mint/mintKit'
 import { useCheckWhiteListModal } from '../../hooks/modals/useCheckWhiteListModal'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
+import { useSolanaWeb3 } from '../../contexts/solana-web3'
 
 const { TabPane } = Tabs
 
@@ -419,15 +420,15 @@ const AllNftContainer: React.FC = () => {
 
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
-  // const { account } = useSolanaWeb3()
+  const { account, select } = useSolanaWeb3()
 
   const [body, setBody] = useState<any>()
+
+  // const { data: qulification } = useUserQuery()
 
   useMemo(()=> {
     setBody(artistKit?.Body[0])
   }, [artistKit])
-
-  // const { select } = useSolanaWeb3()
 
   const [kits, setKits] = useState<Map<string, any>>(new Map())
   const [, setStyle] = useState('')
@@ -575,9 +576,17 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       </Message>
 
       <MintButton >
-        <Button  style={{ width: '120px', height:'50px' }} onClick={ openCheckWhiteListModal }>
-          Create
-        </Button>
+        {
+          !account ? (
+            <Button  style={{ height:'50px' }} onClick={ select }>
+              Connect Wallet
+            </Button>
+          ): (
+            <Button  style={{ width: '120px', height:'50px' }} onClick={ openCheckWhiteListModal }>
+              Create
+            </Button>
+          )
+        }
       </MintButton>
 
       {checkWhiteListModal}
