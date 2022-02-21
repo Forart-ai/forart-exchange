@@ -10,6 +10,7 @@ import CONFT_API from '../../../apis/co-nft'
 // import { useMintResultQuery } from '../../queries/useMintResultQuery'
 import { useHistory } from 'react-router-dom'
 import { sleep } from '../../../utils'
+import wallet from '../../../components/wallet'
 // import { useConnectionConfig } from '../../../contexts/solana-connection-config'
 
 const Message = styled.div`
@@ -65,7 +66,7 @@ const MODAL_CONTENT = {
 
   transferComplete: (
     <Message>
-      Transfer complete! Please wait for loading metadata...
+      Create Complete!
     </Message>
   ),
 
@@ -111,7 +112,6 @@ const useNFTMint = () => {
           alignItems: 'center'
         }
       })
-      console.log(body,kit)
       const mintKeypair = Keypair.generate()
       const components: number[] = []
 
@@ -147,8 +147,6 @@ const useNFTMint = () => {
       }
 
       // await sleep(1000)
-
-      openModal(MODAL_CONTENT.checkStorage)
 
       components.push(body?.id)
 
@@ -197,41 +195,16 @@ const useNFTMint = () => {
       //   return
       // })
 
-      await CONFT_API.core.kits.lockNft(lockNFTForm).then((res:any) => {
-        const orderNum = res.order
-        openModal(MODAL_CONTENT.waitForTransfer)
+      console.log(components)
 
-        openModal(MODAL_CONTENT.waitForMinting, false)
-
-        CONFT_API.core.kits.nftMint({
-          order:  orderNum.toString(),
-          mintKey: mintKeypair.publicKey.toBase58()
+      CONFT_API.core.user.saveNFT(3312, components, account.toBase58())
+        .then(res => {
+          openModal(MODAL_CONTENT.transferComplete)
         })
-          .then(() => {
-            history.push('/personal/home')
-            openModal(MODAL_CONTENT.transferComplete)
-          })
-          .then(() => sleep(1500))
-          .then(closeModal)
-          .catch(() => {openModal(MODAL_CONTENT.mintError)})
-          .catch(e => {
-            CONFT_API.core.kits.cancelNFTMint({ wallet: account.toBase58(), order: orderNum })
-              .then(() => {
-                openModal(
-                  <Message>
-                    Oops! Mint failed: {e.message || e.toString()}
-                  </Message>
-                )
-              })
-
-          })
-
-      }).catch(e => {
-        openModal(
-          <Message>Oops! {e || e.toString()}</Message>
-        )
-        return
-      })
+        .then(closeModal)
+        .catch(err => {
+          console.log(err)
+        })
 
     }, [account]
   )

@@ -191,45 +191,45 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
             }
           </LinkContainer>
         </LeftTop>
-        <LeftBottom>
-          <div className="data-container">
-            <div className="row">
-              <div className="label">TOTAL VALUE</div>
-              {
-                coNftData ? (
-                  <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                    <StyledCountUp
-                      end={overviewData?.minted ? overviewData?.minted : '---'}
-                      duration={2}
-                      separator=","
-                    />
-                    <div style={{ color: '#FF468B', fontSize: '1.6em' }}>SOL</div>
-                  </div>
-                ) :
-                  <StyledCountUp end={0} />
-              }
-            </div>
+        {/*<LeftBottom>*/}
+        {/*  <div className="data-container">*/}
+        {/*    <div className="row">*/}
+        {/*      <div className="label">TOTAL VALUE</div>*/}
+        {/*      {*/}
+        {/*        coNftData ? (*/}
+        {/*          <div style={{ display: 'flex', alignItems: 'baseline' }}>*/}
+        {/*            <StyledCountUp*/}
+        {/*              end={overviewData?.minted ? overviewData?.minted : '---'}*/}
+        {/*              duration={2}*/}
+        {/*              separator=","*/}
+        {/*            />*/}
+        {/*            <div style={{ color: '#FF468B', fontSize: '1.6em' }}>SOL</div>*/}
+        {/*          </div>*/}
+        {/*        ) :*/}
+        {/*          <StyledCountUp end={0} />*/}
+        {/*      }*/}
+        {/*    </div>*/}
 
-            <div className="row">
-              <div className="label">MINTERS</div>
-              {
-                coNftData ? (
+        {/*    <div className="row">*/}
+        {/*      <div className="label">MINTERS</div>*/}
+        {/*      {*/}
+        {/*        coNftData ? (*/}
 
-                  <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                    <StyledCountUp
-                      end={overviewData?.mintedWallet ? overviewData?.mintedWallet : '---'}
-                      duration={2}
-                      separator=","
-                    />
-                    <div style={{ color: '#FF468B', fontSize: '1.6em' }} />
-                  </div>
-                ) :
-                  <StyledCountUp end={0} />
-              }
-            </div>
+        {/*          <div style={{ display: 'flex', alignItems: 'baseline' }}>*/}
+        {/*            <StyledCountUp*/}
+        {/*              end={overviewData?.mintedWallet ? overviewData?.mintedWallet : '---'}*/}
+        {/*              duration={2}*/}
+        {/*              separator=","*/}
+        {/*            />*/}
+        {/*            <div style={{ color: '#FF468B', fontSize: '1.6em' }} />*/}
+        {/*          </div>*/}
+        {/*        ) :*/}
+        {/*          <StyledCountUp end={0} />*/}
+        {/*      }*/}
+        {/*    </div>*/}
 
-          </div>
-        </LeftBottom>
+        {/*  </div>*/}
+        {/*</LeftBottom>*/}
       </div>
       <RightArea>
         <img src={Banner1} />

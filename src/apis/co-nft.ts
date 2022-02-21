@@ -38,11 +38,14 @@ const CONFT_API = {
         return wallet ? Service.get(`/nft/promotion/create/qualification/${ wallet }`) : undefined
       },
       getUserByWallet(wallet?: string) {
-        return wallet ? Service.post(`/nft/promotion/discord/bind/${ wallet }`) : undefined
+        return wallet ? Service.get(`/nft/promotion/discord/bind/${ wallet }`) : undefined
       },
       bindingUser(oauthToken: string, wallet: string) {
         return Service.post('/nft/promotion/discord/bind', { oauthToken, wallet })
       },
+      saveNFT(series: number | string, components: number[], wallet:string) {
+        return Service.post('/nft/promotion/create', { series, components, wallet })
+      }
     }
   }
 }

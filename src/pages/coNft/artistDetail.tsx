@@ -31,6 +31,7 @@ import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import useUserQuery from '../../hooks/queries/useUserQuery'
 import useDiscordAccessToken from '../../hooks/useDiscordAccessToken'
+import useNFTMint from '../../hooks/programs/services/useNFTMint'
 
 const { TabPane } = Tabs
 
@@ -426,9 +427,9 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
   const [body, setBody] = useState<any>()
 
-  const { data: qulification } = useUserQuery()
+  const { data: userData } = useUserQuery()
 
-  console.log(qulification)
+  console.log(userData)
 
   useMemo(()=> {
     setBody(artistKit?.Body[0])
@@ -448,7 +449,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
     else return
   },[discordAccessToken])
 
-  // const { mintNFT } = useNFTMint()
+  const { mintNFT } = useNFTMint()
 
   useMemo(() => {
     if (!show) {
@@ -585,6 +586,8 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         </div>
       </Message>
 
+      <p style={{ color: '#fff' }}>You have {userData?.getQualification} chances</p>
+
       <MintButton >
         {
           !account ? (
@@ -592,9 +595,13 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
               Connect Wallet
             </Button>
           ): (
-            <Button  style={{  height:'50px' }} onClick={ openCheckWhiteListModal }>
-              Get Qualification
-            </Button>
+            (userData?.getQualification === 0) ? (
+              <Button  style={{  height:'50px' }} onClick={ openCheckWhiteListModal }>
+                Get Qualification
+              </Button>
+            ) : (
+              <Button style={{  height:'50px' }} onClick={() => mintNFT(body, kits)}> Create  </Button>
+            )
           )
         }
 

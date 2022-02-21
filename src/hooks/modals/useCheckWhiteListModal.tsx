@@ -144,12 +144,14 @@ const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
       return userFromDiscord.data?.user
     }
 
-    if (user){
+    if (user) {
       return user
     }
 
     return undefined
   }, [userFromDiscord, user, account])
+
+  console.log(userData)
 
   if (!userData ) {
     return (
@@ -164,9 +166,12 @@ const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
       <p>
         Hello&nbsp;&nbsp;&nbsp;
         {
-          userData.avatar && <Avatar src={ `https://cdn.discordapp.com/avatars/${ (userData as any).id }/e44a2870accc5915aae48c251a156d02.png`} />
+          userData.avatar && <Avatar src={  user.byWallet.avatar || `https://cdn.discordapp.com/avatars/${ (userData as any).id }/e44a2870accc5915aae48c251a156d02.png`} />
         }
-        &nbsp;<span style={{ color: 'white', fontWeight: 'bold' }}> {userData.username} </span> !
+        {
+          userData.byWallet.avatar && <Avatar src={  user.byWallet.avatar } />
+        }
+        &nbsp;<span style={{ color: 'white', fontWeight: 'bold' }}> {user.byWallet.username ||userFromDiscord?.data?.user.username  } </span> !
       </p>
 
     </StepContent>
@@ -240,7 +245,7 @@ export const useCheckWhiteListModal = () => {
   const { account } = useSolanaWeb3()
 
   const { data: user } = useUserQuery()
- 
+
   const discordAccessToken = useDiscordAccessToken()
 
   const currentStep = useMemo(() => {
