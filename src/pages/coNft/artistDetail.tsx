@@ -29,6 +29,8 @@ import { SelectableKitList } from '../../components/nft-mint/mintKit'
 import { useCheckWhiteListModal } from '../../hooks/modals/useCheckWhiteListModal'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
+import useUserQuery from '../../hooks/queries/useUserQuery'
+import useDiscordAccessToken from '../../hooks/useDiscordAccessToken'
 
 const { TabPane } = Tabs
 
@@ -424,7 +426,9 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
   const [body, setBody] = useState<any>()
 
-  // const { data: qulification } = useUserQuery()
+  const { data: qulification } = useUserQuery()
+
+  console.log(qulification)
 
   useMemo(()=> {
     setBody(artistKit?.Body[0])
@@ -435,6 +439,14 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
   const [show] = useState<boolean>(true)
 
   const { checkWhiteListModal, openCheckWhiteListModal } = useCheckWhiteListModal()
+  const discordAccessToken = useDiscordAccessToken()
+
+  useMemo(() => {
+    if (discordAccessToken) {
+      openCheckWhiteListModal()
+    }
+    else return
+  },[discordAccessToken])
 
   // const { mintNFT } = useNFTMint()
 

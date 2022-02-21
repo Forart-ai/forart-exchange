@@ -221,7 +221,7 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
               Modal.error({
                 title:(
                   <div style={{ color: '#fff' }}>
-                    e
+                    {e}
                   </div>
                 )
               })
