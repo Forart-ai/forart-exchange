@@ -33,6 +33,7 @@ const StyledFlag = styled.div`
 const ImageContainer = styled.div`
   width: 100%;
   height: 130px;
+  overflow: hidden;
 
   img {
     object-fit: cover;
@@ -42,6 +43,23 @@ const ImageContainer = styled.div`
     width: 100%;
     height: 100%;
     background: #1E052D;
+    
+  }
+  .Clothing {
+    transform: scale(2, 2) translate(0);
+    
+  }
+  .Pants {
+    transform: scale(2,2) translate(-15px, -25px);
+  }
+  .Eye {
+    transform: scale(2, 2) translate(18px, 20px);
+  }
+  .Butt {
+    transform: scale(4, 4) translate(-15px, -10px);
+  }
+  .Hand {
+    transform: scale(3, 3) translate(-5px, -25px);
   }
 `
 
@@ -50,7 +68,6 @@ const KitItemContainer = styled.div`
   min-width: 135px;
   flex-direction: column;
   margin: 10px;
-  //background: #232324;
   box-shadow: 10px 4px 10px #0000008c;
   border-radius: 10px;
   height: 150px;
@@ -76,11 +93,13 @@ const CornerRemainFlag: React.FC<{remain: string}> = ({ remain }) => {
   )
 }
 
-export const SelectableKitItem: React.FC<{ src: any, checked?: boolean, onSelect:(_?: string) => void}> = ({
+export const SelectableKitItem: React.FC<{ src: any, checked?: boolean, onSelect:(_?: string) => void }> = ({
   src,
   checked,
-  onSelect
+  onSelect,
 }) => {
+
+  // console.log(src.bodyType)
 
   const SelectBtn: React.FC = () => {
     return (
@@ -105,7 +124,7 @@ export const SelectableKitItem: React.FC<{ src: any, checked?: boolean, onSelect
         }
       </div>
       <ImageContainer>
-        <img src={src.url}  />
+        <img className={src.bodyType}  src={src.url}  />
       </ImageContainer>
       <div  style={{ position: 'relative', height: 'fit-content' }}>
         {
@@ -126,7 +145,7 @@ export const SelectableKitList: React.FC<{selectedValue?: any, onSelect: (_?: an
       {
         list?.map((item, index) => (
           <KitItemContainer key={index}>
-            <SelectableKitItem src={item} onSelect={onSelect} checked={selectedValue?.url === item?.url} />
+            <SelectableKitItem  src={item} onSelect={onSelect} checked={selectedValue?.url === item?.url}  />
             {/*<KitInfo>*/}
             {/*  <div>{item.price} FTA</div>*/}
             {/*  <div>Rarity: {item.rarity}</div>*/}

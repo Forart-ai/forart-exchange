@@ -219,7 +219,11 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
             .catch(e => {
               setRequesting(false)
               Modal.error({
-                title: e
+                title:(
+                  <div style={{ color: '#fff' }}>
+                    e
+                  </div>
+                )
               })
             })
         }
@@ -236,7 +240,7 @@ export const useCheckWhiteListModal = () => {
   const { account } = useSolanaWeb3()
 
   const { data: user } = useUserQuery()
-
+ 
   const discordAccessToken = useDiscordAccessToken()
 
   const currentStep = useMemo(() => {
@@ -255,8 +259,6 @@ export const useCheckWhiteListModal = () => {
     return 3
 
   },[account, user,discordAccessToken])
-
-  console.log(currentStep)
 
   const { modal, open, close } = useModal((_open, close, visible) => (
     <BindingModal

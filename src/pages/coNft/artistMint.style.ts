@@ -96,22 +96,16 @@ export const StyledImage = styled(Image)`
 `
 
 export const SelectedBody = styled.div`
-  width: 75%;
+  width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   background: #1E052D;
   border-radius: 20px;
-  padding: 20px;
   position: relative;
   z-index: 1;
   
   img {
     width: 100%;
-    height: 90%;
-    margin-bottom: 10px;
+    height: 100%;
   }
   
   @media screen and (max-width: 1100px) {
@@ -237,8 +231,6 @@ export const MintTab = styled(Tabs)`
 export const MintContainer = styled.div`
   width: 100%;
   height: 600px;
-  display: flex;
-  justify-content: space-between;
   
   @media screen and (max-width: 1100px) {
     height: auto;
@@ -248,12 +240,13 @@ export const MintContainer = styled.div`
 export const KitListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  //justify-content: space-between;
   width: 100%;
   max-height: 520px;
   overflow-y: scroll;
   overflow-x: hidden;
-  
+
+
   ::-webkit-scrollbar {
     width: 10px;
     background-color: transparent;

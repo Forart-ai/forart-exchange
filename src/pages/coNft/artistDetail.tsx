@@ -5,7 +5,7 @@ import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
 import MoreKit from '../../assets/images/coPools/more.svg'
 import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
-import { SelectedList, Title } from '../../components/nft-mint/selectedList'
+import { NFTPreview, Title } from '../../components/nft-mint/selectedList'
 import OpenSwitch from '../../assets/images/coPools/switch.svg'
 import ArtistBanner from '../../assets/images/coPools/hypteen-banner.jpg'
 
@@ -436,6 +436,8 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
   const { checkWhiteListModal, openCheckWhiteListModal } = useCheckWhiteListModal()
 
+  // const { mintNFT } = useNFTMint()
+
   useMemo(() => {
     if (!show) {
       setStyle('')
@@ -446,42 +448,42 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
     [
       {
         name: 'Background*',
-        key: '06_background',
+        key: 'background',
         list: artistKit?.Background
       },
       {
         name: 'Cloths*',
-        key: '06_clothing',
+        key: 'clothing',
         list: artistKit?.Clothing
       },
       {
         name: 'Pants*',
-        key: '05_cloth',
+        key: 'pants',
         list: artistKit?.Pants
       },
       {
         name: 'Eye',
-        key: '12_glasses',
+        key: 'eye',
         list: artistKit?.Eye
       },
       {
         name: 'Foot',
-        key: '08_foot',
+        key: 'foot',
         list: artistKit?.Foot
       },
       {
         name: 'Hand',
-        key: '08_hand',
+        key: 'hand',
         list: artistKit?.Hand
       },
       {
         name: 'Mouth',
-        key: '07_item',
+        key: 'mouth',
         list: artistKit?.Mouth
       },
       {
         name: 'Butt',
-        key: '06_shoe',
+        key: 'butt',
         list: artistKit?.Butt
       }
 
@@ -501,11 +503,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
             {
               body && (
                 <>
-                  <img src={body.url} style={{ objectFit:'contain' }} />
-                  {/*<PriceContainer>*/}
-                  {/*  <div className="price">{body?.price} FTA</div>*/}
-                  {/*  <div className="price">Rarity: {body?.rarity}</div>*/}
-                  {/*</PriceContainer>*/}
+                  <NFTPreview body={body} kitList={kits} />
                 </>
               )
             }
@@ -543,7 +541,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       </TopContainer>
 
       <CenterContainer>
-        <SelectedList body={body} kitList={kits} />
+        {/*<SelectedList body={body} kitList={kits} />*/}
       </CenterContainer>
 
       {/*<AIContainer>*/}
@@ -582,10 +580,14 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
               Connect Wallet
             </Button>
           ): (
-            <Button  style={{ width: '120px', height:'50px' }} onClick={ openCheckWhiteListModal }>
-              Create
+            <Button  style={{  height:'50px' }} onClick={ openCheckWhiteListModal }>
+              Get Qualification
             </Button>
           )
+        }
+
+        {
+          // <Button onClick={() => mintNFT(body, kits)}>Mint</Button>
         }
       </MintButton>
 
@@ -629,7 +631,7 @@ const ArtistDetail: React.FC = () => {
               }
               key="mint"
             >
-              <Mint artistKit={artistKitList} />
+              <Mint artistKit = {artistKitList} />
             </TabPane>
 
             <TabPane

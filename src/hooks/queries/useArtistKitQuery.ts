@@ -5,7 +5,7 @@ export const useArtistKitQuery = (id: number | string | undefined): UseQueryResu
   return useQuery(
     ['ARTIST_KIT_LIST',id],
     async () => {
-      return await CONFT_API.core.kits.getArtistAssembler(id).then(res=> res)
+      return await CONFT_API.core.kits.getArtistAssembler(id).then(res => res)
     }
   )
 }

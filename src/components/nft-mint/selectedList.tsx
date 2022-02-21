@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -11,10 +11,9 @@ export const Title = styled.div`
 `
 const Container = styled.div`
   width: 100%;
-  height: fit-content;
+  height: 100%;
   display: flex;
   flex-wrap: wrap;
-  
   overflow-y: scroll;
 
   ::-webkit-scrollbar {
@@ -25,13 +24,12 @@ const Container = styled.div`
 `
 
 const MintItems = styled.div`
-
   margin: 10px;
   min-width: 135px;
   min-height: 200px;
   width: 200px;
   height: 200px;
-  background: #1E052D;
+  background: transparent;
   border-radius: 10px;
   
   img{
@@ -45,15 +43,34 @@ const MintItems = styled.div`
   }
 `
 
+const PreviewContainer = styled.div`
+  width: 100%;
+  height: 100%;
+`
+
+const PreviewImages = styled.div`
+  position: absolute;
+  width:100%;
+  height: 100%;
+  background: transparent;
+  border-radius: 10px;
+
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+`
+
 export const SelectedList: React.FC<{kitList?: Map<string, any>, body: any}> = ({ kitList, body }) => {
 
   useEffect(()=> {
-    // console.log(kitList)
+    // console.log(Array.from(kitList?.entries() ?? []))
   },[kitList])
 
   return (
     <Wrapper>
-      <Title>Selected</Title>
       <Container>
 
         <MintItems>
@@ -70,6 +87,47 @@ export const SelectedList: React.FC<{kitList?: Map<string, any>, body: any}> = (
           ))
         }
       </Container>
+    </Wrapper>
+  )
+}
+
+export const NFTPreview: React.FC<{kitList?: Map<string, any>, body: any}> = ({ kitList, body }) => {
+
+  const [background, setBackground] = useState<any>()
+  
+  const filterBackground = (array: any) => {
+    return array[0] !== 'background'
+  }
+
+  // let background = null
+
+  useEffect(()=> {
+    setBackground (kitList?.get('background'))
+    console.log(Array.from(kitList?.entries() ?? []).filter(filterBackground))
+  },[kitList])
+
+  return (
+    <Wrapper>
+      <PreviewContainer>
+        <PreviewImages>
+          {
+            background?.url && <img src={background?.url} />
+          }
+        </PreviewImages>
+        <PreviewImages>
+          {
+            body?.url && <img src={body?.url} />
+          }
+        </PreviewImages>
+
+        {
+          Array.from(kitList?.entries() ?? []).filter(filterBackground).map(([key, value]) => (
+            <PreviewImages  key={key}>
+              <img className="image" src={value.url} />
+            </PreviewImages>
+          ))
+        }
+      </PreviewContainer>
     </Wrapper>
   )
 }

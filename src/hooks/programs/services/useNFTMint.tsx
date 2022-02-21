@@ -111,7 +111,7 @@ const useNFTMint = () => {
           alignItems: 'center'
         }
       })
-
+      console.log(body,kit)
       const mintKeypair = Keypair.generate()
       const components: number[] = []
 
