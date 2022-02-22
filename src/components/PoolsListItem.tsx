@@ -148,7 +148,7 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
           </div>
 
           <div className="data-column">
-            <div className= "label">Minters</div>
+            <div className= "label">Creators</div>
             <div className= "value">{data?.minters}</div>
           </div>
         </DataContent>
@@ -157,11 +157,11 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
           {
             data?.status === 'closing' ?
               <Link to={toArtistDetailUrl}>
-                <Button>Mint Now</Button>
+                <Button>Create</Button>
               </Link>
               :
               <Link to={toArtistDetailUrl}>
-                <Button disabled={true}>Mint Now</Button>
+                <Button disabled={true}>Create</Button>
               </Link>
           }
         </div>

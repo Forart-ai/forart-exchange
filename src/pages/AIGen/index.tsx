@@ -26,7 +26,7 @@ type behaviorItem = {
 const Wrapper = styled.div`
   max-width: 100vw;
   width: 100%;
-  height: 100vh;
+  height: 1200px;
   overflow-y: scroll;
   display: flex;
   justify-content: center;
@@ -90,7 +90,7 @@ const Introduction = styled.div`
   margin-bottom: 30px;
   display: flex;
   flex-direction: column;
-  
+
   .title {
     width: fit-content;
     font-size: 2.6em;
@@ -108,7 +108,7 @@ const Introduction = styled.div`
   }
 
   .description {
-    color: #FF4D9D;
+    color: #ffd8e7;
     font-size: 1.5em;
   }
 
@@ -117,9 +117,11 @@ const Introduction = styled.div`
     .title {
       font-size: 25px;
     }
+
     .sub-title {
       font-size: 22px;
     }
+
     .description {
       font-size: 14px;
     }
@@ -149,7 +151,7 @@ const EnterContent = styled.div`
   }
 
   .enterData {
-    color: #EADEDE;
+    color: #ffd8e7;
     font-size: 1.3em;
     margin-left: 30px;
   }
@@ -222,6 +224,7 @@ const ResultContainer = styled.div`
   align-items: center;
   border-radius: 10px;
   align-items: center;
+  position: relative;
   
   .nft-border {
     padding: 20px 30px;
@@ -253,12 +256,12 @@ const ResultContainer = styled.div`
 `
 
 const SubTitle = styled.div`
-  color: #00EBA4;
+  color: #FF4D9D;
   width: fit-content;
   font-weight: 550;
   font-size: 28px;
   margin-bottom: 20px;
-  border-bottom: 2px solid #00EBA4;
+  border-bottom: 2px solid #FF4D9D;
 `
 
 const Container = styled.div`
@@ -275,6 +278,7 @@ const AIContentContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin-bottom: 30px;
 `
 
 const StyledRadioGroup = styled(Radio.Group)`
@@ -294,6 +298,13 @@ span {
   font-size: 18px;
   color: white;!important;
 }
+`
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
 `
 
 export type AIGenForm = {
@@ -368,6 +379,7 @@ const BehaviorItems: React.FC<{ behaviorItems: behaviorItem[], onSelect:(_:strin
 
 const AIGeneratorResultContainer: React.FC<{ resultImageSrc: any[], generating: boolean }> = ({ resultImageSrc,
   generating }) => {
+
   return (
     <ResultContainer>
       {
@@ -513,12 +525,14 @@ const AIGen:React.FC = () => {
 
         <BehaviorItems behaviorItems={behaviorMap} onSelect={ v => setBehavior(v) } />
 
-        <Button onClick={ generate } >
-          {
-            !generating ? 'Generate Now!' :
-              'Generating...'
-          }
-        </Button>
+        <ButtonContainer>
+          <Button onClick={ generate } >
+            {
+              !generating ? 'Generate Now!' :
+                'Generating...'
+            }
+          </Button>
+        </ButtonContainer>
 
         {/*<StyledButton onClick={ generate } >*/}
         {/*  {*/}

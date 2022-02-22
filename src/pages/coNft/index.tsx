@@ -10,6 +10,9 @@ import { usePoolsQuery } from '../../hooks/queries/usePoolsQuery'
 import { CaretRightOutlined } from '@ant-design/icons'
 import Banner1 from '../../assets/images/coPools/banner.png'
 import { useGetOverview } from '../../hooks/queries/useGetOverview'
+// @ts-ignore
+
+import YouTube from '@u-wave/react-youtube'
 
 const Wrapper = styled.div`
   max-width: 100vw;
@@ -30,7 +33,7 @@ const CoNftPageContainer = styled.div`
 
 const HeaderContainer = styled.div`
   width: 100%;
-  height: 600px;
+  height: 800px;
   position: relative;
   border-radius: 15px;
   display: flex;
@@ -39,9 +42,13 @@ const HeaderContainer = styled.div`
 
 const LeftTop = styled.div`
   width: 100%;
-  margin-bottom: 20px;
-  height: 60%;
+  height: 40%;
 
+`
+
+const VideoArea = styled.div`
+  width: 98%;
+  height: 60%;
 `
 
 const LeftBottom = styled.div`
@@ -80,6 +87,7 @@ const RightArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100%;
   width: 60%;
   background-image: radial-gradient(circle, #c330c9, #701473, rgb(17, 17, 17), rgb(17, 17, 17));
 
@@ -191,6 +199,19 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
             }
           </LinkContainer>
         </LeftTop>
+
+        <VideoArea>
+
+          <YouTube
+            video="GVAfF0TM-NM"
+            autoplay
+            height={'100%'}
+            width={'100%'}
+            suggestedQuality={'default'}
+            showRelatedVideos= {false}
+          />
+        </VideoArea>
+
         {/*<LeftBottom>*/}
         {/*  <div className="data-container">*/}
         {/*    <div className="row">*/}

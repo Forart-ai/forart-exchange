@@ -224,7 +224,7 @@ const TabsContainer: React.FC = () => {
           tab= {
             <span>
               <SmileOutlined />
-              Minted
+              Created
             </span>
           }
           key="minted"

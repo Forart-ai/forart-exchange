@@ -8,7 +8,7 @@ import { Progress } from 'antd'
 const Wrapper = styled.div<{$empty?: boolean}>`
   width: 210px;
   height: 210px;
-  //height: ${props => props.$empty ? '0' : '280px'};
+  //height: ${props => props.$empty ? '0' : '210px'};
   background-color: #282c34;
   border-radius: 10px;
   margin-bottom: ${props => props.$empty ? '0' : '30px'};;
@@ -18,6 +18,7 @@ const Wrapper = styled.div<{$empty?: boolean}>`
   justify-content: space-between;
   position: relative;
   cursor: pointer;
+  margin: 0 3px;
   
   .spin {
     position: absolute;

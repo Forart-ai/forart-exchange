@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
@@ -9,7 +9,7 @@ import { NFTPreview, Title } from '../../components/nft-mint/selectedList'
 import OpenSwitch from '../../assets/images/coPools/switch.svg'
 import ArtistBanner from '../../assets/images/coPools/hypteen-banner.jpg'
 
-import { Button, Tabs } from 'antd'
+import { Button, message, Modal, Tabs } from 'antd'
 import { BlockOutlined, CrownOutlined, SmileOutlined } from '@ant-design/icons'
 import {
   BodyContent,
@@ -32,6 +32,7 @@ import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import useUserQuery from '../../hooks/queries/useUserQuery'
 import useDiscordAccessToken from '../../hooks/useDiscordAccessToken'
 import useNFTMint from '../../hooks/programs/services/useNFTMint'
+import CONFT_API from '../../apis/co-nft'
 
 const { TabPane } = Tabs
 
@@ -429,8 +430,6 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
   const { data: userData } = useUserQuery()
 
-  console.log(userData)
-
   useMemo(()=> {
     setBody(artistKit?.Body[0])
   }, [artistKit])
@@ -441,6 +440,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
   const { checkWhiteListModal, openCheckWhiteListModal } = useCheckWhiteListModal()
   const discordAccessToken = useDiscordAccessToken()
+  const { mintNFT } = useNFTMint()
 
   useMemo(() => {
     if (discordAccessToken) {
@@ -448,8 +448,6 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
     }
     else return
   },[discordAccessToken])
-
-  const { mintNFT } = useNFTMint()
 
   useMemo(() => {
     if (!show) {
@@ -501,6 +499,29 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       }
 
     ], [artistKit])
+
+  const handleCreate = useCallback(
+    () => {
+      Modal.confirm({
+        closable: true,
+        style:{  height:'90%', display:'flex', alignItems:'center' },
+        width: 500,
+        title: (
+          <div style={{ color: '#fff' }}>
+            Create
+          </div>
+        ),
+        content: (
+          <div style={{ color: '#fff' }} >
+            <div>
+              Are you sure want to create this NFT?
+            </div>
+          </div>
+        ),
+        onOk: () => mintNFT(body,kits)
+      })
+    },[body, kits, account]
+  )
 
   return (
     <MintWrapper>
@@ -586,9 +607,9 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         </div>
       </Message>
 
-      <p style={{ color: '#fff' }}>You have {userData?.getQualification} chances</p>
-
       <MintButton >
+
+        { account && <p >Chances left: {userData?.getQualification} </p>}
         {
           !account ? (
             <Button  style={{ height:'50px' }} onClick={ select }>
@@ -600,7 +621,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
                 Get Qualification
               </Button>
             ) : (
-              <Button style={{  height:'50px' }} onClick={() => mintNFT(body, kits)}> Create  </Button>
+              <Button style={{  height:'50px' }} onClick={handleCreate}> Create  </Button>
             )
           )
         }
@@ -645,7 +666,7 @@ const ArtistDetail: React.FC = () => {
               tab= {
                 <span>
                   <CrownOutlined />
-                  Mint
+                  Create
                 </span>
               }
               key="mint"

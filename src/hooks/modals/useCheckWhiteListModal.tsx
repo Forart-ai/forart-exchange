@@ -128,7 +128,7 @@ const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
   const artistId = useLocationQuery('artistId')
   const { account } = useSolanaWeb3()
 
-  const redirectUri = `${location.protocol}//${location.host}/artistDetail?artistId=${artistId}`
+  const redirectUri = 'http://192.168.3.136:3000/artistDetail?artistId=3312'
   const discordLoginUrl = `https://discord.com/oauth2/authorize?response_type=token&client_id=942705935221157978&state=15773059ghq9183habn&scope=identify&redirect_uri=${redirectUri}`
 
   const { data: user } = useUserQuery()
@@ -140,18 +140,16 @@ const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
       return undefined
     }
 
-    if (!user && userFromDiscord) {
+    if (!user?.byWallet && userFromDiscord) {
       return userFromDiscord.data?.user
     }
 
-    if (user) {
+    if (user?.byWallet !== null) {
       return user
     }
 
     return undefined
   }, [userFromDiscord, user, account])
-
-  console.log(userData)
 
   if (!userData ) {
     return (
@@ -166,12 +164,12 @@ const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
       <p>
         Hello&nbsp;&nbsp;&nbsp;
         {
-          userData.avatar && <Avatar src={  user.byWallet.avatar || `https://cdn.discordapp.com/avatars/${ (userData as any).id }/e44a2870accc5915aae48c251a156d02.png`} />
+          userData.avatar && <Avatar src={ `https://cdn.discordapp.com/avatars/${ (userData as any).id }/e44a2870accc5915aae48c251a156d02.png`} />
         }
         {
-          userData.byWallet.avatar && <Avatar src={  user.byWallet.avatar } />
+          userData.byWallet && <Avatar src={  user?.byWallet.avatar } />
         }
-        &nbsp;<span style={{ color: 'white', fontWeight: 'bold' }}> {user.byWallet.username ||userFromDiscord?.data?.user.username  } </span> !
+        &nbsp;<span style={{ color: 'white', fontWeight: 'bold' }}> { userData?.byWallet?.username || userData?.username  } </span> !
       </p>
 
     </StepContent>
@@ -188,6 +186,7 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
 
   const handleBinding = useCallback(
     () => {
+
       if (!account  || !discordAccessToken) {
         return
       }
@@ -237,7 +236,17 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
   )
 
   return (
-    <ConnectButton disabled={!active} onClick={handleBinding} > Binding <br />Discord & wallet</ConnectButton>
+    <StepContent>
+      {
+        !user?.byWallet ? (
+          <ConnectButton disabled={!active} onClick={handleBinding} > Binding <br />Discord & wallet</ConnectButton>
+        ) : (
+          <p  >The Discord account has been bound with <br />
+            <span>{shortenAddress(user.byWallet?.wallet)}</span>
+          </p>
+        )
+      }
+    </StepContent>
   )
 }
 
@@ -245,7 +254,6 @@ export const useCheckWhiteListModal = () => {
   const { account } = useSolanaWeb3()
 
   const { data: user } = useUserQuery()
-
   const discordAccessToken = useDiscordAccessToken()
 
   const currentStep = useMemo(() => {
@@ -253,11 +261,11 @@ export const useCheckWhiteListModal = () => {
       return 0
     }
 
-    if (!user && !discordAccessToken) {
+    if (!user?.byWallet && !discordAccessToken) {
       return 1
     }
 
-    if (discordAccessToken || user) {
+    if (discordAccessToken || user?.byWallet) {
       return 2
     }
 

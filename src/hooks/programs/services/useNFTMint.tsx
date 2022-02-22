@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useModal } from '../../../contexts/modal'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
-import { Progress } from 'antd'
+import { Modal, Progress } from 'antd'
 import styled from 'styled-components'
 import { LockNFTRequest } from '../../contract/service/exchange/types'
 // import useCandyMachine from '../useCandyMachine'
@@ -199,11 +199,16 @@ const useNFTMint = () => {
 
       CONFT_API.core.user.saveNFT(3312, components, account.toBase58())
         .then(res => {
-          openModal(MODAL_CONTENT.transferComplete)
+          history.push('/personal/home')
+          Modal.confirm({
+            closable: true,
+            content:(<div>Create successfully!</div>)
+          })
         })
-        .then(closeModal)
         .catch(err => {
-          console.log(err)
+          openModal(
+            <Message>Oops! {err || err.toString()}</Message>
+          )
         })
 
     }, [account]

@@ -267,8 +267,14 @@ export const MintButton = styled.div`
   text-align: center;
   height: 200px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  
+  p {
+    color: #FF468B;
+    font-size: 1.2em;
+  }
 `
 
 export const AIContainer = styled.div`

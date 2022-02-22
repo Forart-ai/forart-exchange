@@ -7,8 +7,8 @@ const AttributesDialogWrapper = styled.div`
   height: 86%;
   background: #1e2125;
   display: flex;
-  padding: 20px;
-  border-radius: 1em;
+  padding: 10px;
+  border-radius: 10px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
