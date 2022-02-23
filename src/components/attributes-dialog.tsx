@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components'
 import { AttributesItem } from './attributes-item'
 
 const AttributesDialogWrapper = styled.div`
-  width: 70%;
+  width: 85%;
   height: fit-content;
   background: rgb(29,34,45);
   display: flex;
@@ -21,8 +21,6 @@ const AttributesDialogWrapper = styled.div`
 
 const LeftArea = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 50%;
   height: 100%;
@@ -118,7 +116,7 @@ const AttributesDialog: React.FC<{ item: MintedNFTItem }> = ({ item }) => {
     <AttributesDialogWrapper>
       <LeftArea>
         <img src={item?.previewUrl} />
-      
+
       </LeftArea>
 
       <RightArea>

@@ -200,10 +200,7 @@ const useNFTMint = () => {
       CONFT_API.core.user.saveNFT(3312, components, account.toBase58())
         .then(res => {
           history.push('/personal/home')
-          Modal.confirm({
-            closable: true,
-            content:(<div>Create successfully!</div>)
-          })
+
         })
         .catch(err => {
           openModal(

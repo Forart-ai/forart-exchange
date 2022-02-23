@@ -9,10 +9,11 @@ export interface AttributesListItem {
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  
 `
 
 const BoxContainer = styled.div`
-  width: 85%;
+  width: 90%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -58,16 +59,11 @@ const ItemBox = styled.div`
 
 export const AttributesItem: React.FC<{ item: Array<AttributesListItem | undefined> }> = ({ item }) => {
 
-  item?.map(items => {
-    console.log(items?.chainMeta)
-  }) 
-
   return (
     <Wrapper>
       <BoxContainer>
         {
           item?.map(items => (
-            
             <ItemBox key={items?.chainMeta.trait_type} >
               <div className="type"> {items?.chainMeta.trait_type}</div>
               <div className="value"> {items?.chainMeta.value}</div>
