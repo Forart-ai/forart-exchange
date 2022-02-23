@@ -6,11 +6,12 @@ import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
 import MoreKit from '../../assets/images/coPools/more.svg'
 import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
 import { NFTPreview, Title } from '../../components/nft-mint/selectedList'
-import OpenSwitch from '../../assets/images/coPools/switch.svg'
+// import OpenSwitch from '../../assets/images/coPools/switch.svg'
 import ArtistBanner from '../../assets/images/coPools/hypteen-banner.jpg'
+import FAQ from '../../assets/images/artistDetail/faq.svg'
 
 import { Button, message, Modal, Tabs } from 'antd'
-import { BlockOutlined, CrownOutlined, SmileOutlined } from '@ant-design/icons'
+import { BlockOutlined, CrownOutlined, SmileOutlined,createFromIconfontCN  } from '@ant-design/icons'
 import {
   BodyContent,
   CenterContainer,
@@ -35,6 +36,12 @@ import useNFTMint from '../../hooks/programs/services/useNFTMint'
 import CONFT_API from '../../apis/co-nft'
 
 const { TabPane } = Tabs
+
+const IconFont = createFromIconfontCN({
+  scriptUrl: [
+    '//at.alicdn.com/t/font_3200605_6t4q1tggh3l.js', // icon-javascript, icon-java, icon-shoppingcart (overrided)
+  ],
+})
 
 export type KitProperties = {
   id: number
@@ -277,6 +284,7 @@ const AllNftWrapper = styled.div`
 
 const Message = styled.div`
   width: 100%;
+  margin-top: 30px;
   
   .title {
     display: flex;
@@ -287,7 +295,6 @@ const Message = styled.div`
       margin-left: 15px;
     }
   }
-  
 `
 
 const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
@@ -359,16 +366,16 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
           <p className="content">
             HypeTeen is the First CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing. Born in the first year of NFT, she/he has her/his own NFT attributes, likes to explore the unknown, and is obsessed with trendy things in the future. At the peak of her/his appearance, she/he likes fans to call: super handsome! <br /><br />
             In 2022, she/he will take her/his fans on her/his first journey of exploration - travel around the world, learn about the customs of various countries, spread the world&apos;s culture, and share the cultural essence and consensus with fans in Forart Club. <br /> <br />
-            HypeTeen will go to a country every once in a while, and fans will vote to decide the next country, and share several NFTs with the cultural characteristics of the country. During this period, the mintors with the most CO-NFTs will have the right to buy these Special NFTs (one address can only buy one) and have Forart Club privileges.
+            HypeTeen will go to a country every once in a while, and fans will vote to decide the next country, and share several NFTs with the cultural characteristics of the country. During this period, the cre  with the most CO-NFTs will have the right to buy these Special NFTs (one address can only buy one) and have Forart Club privileges.
             6% of the income of HypeTeen NFTs will be donated to foundations and organizations related to world cultural heritage.
           </p>
         </section>
 
         <section className="item" >
-          <h2 className="title"> Minter & Holder Equity </h2>
+          <h2 className="title"> Creator & Holder Equity </h2>
           <img className="image-border"  />
           <p className="content">
-            <b> Benefits for HypeTeen NFT minters:</b> <br />
+            <b> Benefits for HypeTeen NFT creators:</b> <br />
             1. Be allowed to join the Forart Club and own the rights to the Club. <br />
 
             2. You will receive an airdrop of Forart. <br />
@@ -377,15 +384,6 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
 
             <b>HypeTeen Special NFTs holders can obtain benefits:</b>  <br />
             1. Will be added to Forart IDO&apos;s whitelist.
-          </p>
-        </section>
-
-        <section className="item" >
-          <h2 className="title">First stop </h2>
-          <img className="image-border"  />
-          <p className="content">
-            The country where HypeTeen first travels is China, and corresponding NFTs with Chinese cultural attributes have been generated. All Special NFTs
-            will be generated and opened after the 400th NFT is minted. <br /><br />
           </p>
         </section>
 
@@ -405,10 +403,10 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
           <h2 className="title">Roadmap</h2>
           <img className="image-border"  />
           <p className="content">
-            1. Mint CO-NFTs by Users <br />
-            2. Generate Special CO-NFTs and minter winners when the 400th NFT is minted  <br />
+            1. Create CO-NFTs by Users <br />
+            2. Generate Special CO-NFTs and creator winners when the 1000th NFT is created  <br />
             3. Vote the next country that HypeTeen will travel to  <br />
-            4. Launch on solanart, Slope and Magic Eden when the 2000th NFT is minted  <br />
+            4. Launch on solanart, Slope and Magic Eden when the 2000th NFT is created  <br />
           </p>
         </section>
       </TabItem>
@@ -602,14 +600,21 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       {/*</ItemContainer>*/}
       <Message>
         <div className="title">
-          <Title> Rarity by AI-Random </Title>
-          <img src={OpenSwitch} />
+          <Title> Random traits hat for scarcity </Title>
+          {/*<img src={OpenSwitch} />*/}
         </div>
       </Message>
 
       <MintButton >
 
-        { account && <p >Chances left: {userData?.getQualification} </p>}
+        { account && (
+          <p >
+            Chances left: {userData?.getQualification}
+            <a href={'https://docs.google.com/forms/d/e/1FAIpQLSf11PPZ04tWyKp3JEiZcShxCxEQK0y-3yb2tS2nXfKsH6XiQQ/viewform'} target={'_blank'} rel="noreferrer" >
+              <IconFont style={{ cursor:'pointer' }} type={'icon-Question'}  />
+            </a>
+          </p>
+        )}
         {
           !account ? (
             <Button  style={{ height:'50px' }} onClick={ select }>
@@ -621,7 +626,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
                 Get Qualification
               </Button>
             ) : (
-              <Button style={{  height:'50px' }} onClick={handleCreate}> Create  </Button>
+              <Button style={{ width:'180px',height:'50px' }} onClick={handleCreate}> Create  </Button>
             )
           )
         }

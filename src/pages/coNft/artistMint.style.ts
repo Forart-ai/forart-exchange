@@ -271,9 +271,14 @@ export const MintButton = styled.div`
   justify-content: center;
   align-items: center;
   
+  a{
+    margin-left: 20px;
+    color: #FF468B;
+  }
+  
   p {
     color: #FF468B;
-    font-size: 1.2em;
+    font-size: 1.4em;
   }
 `
 

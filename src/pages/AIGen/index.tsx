@@ -26,7 +26,7 @@ type behaviorItem = {
 const Wrapper = styled.div`
   max-width: 100vw;
   width: 100%;
-  height: 1200px;
+  height: 100vh;
   overflow-y: scroll;
   display: flex;
   justify-content: center;
@@ -215,15 +215,13 @@ const SampleImg = styled.div`
 `
 
 const ResultContainer = styled.div`
-  margin-top: 25px;
+  margin-top: 20px;
   background-color: #191919;
   height: 525px;
   display: flex;
   width: 100%;
   justify-content: center;
-  align-items: center;
   border-radius: 10px;
-  align-items: center;
   position: relative;
   
   .nft-border {

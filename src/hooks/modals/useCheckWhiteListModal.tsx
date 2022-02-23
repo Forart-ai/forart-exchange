@@ -76,8 +76,10 @@ const Content = styled.div`
 
 const TipsCard = styled.div`
   font-size: 1.6em;
-  a {
+  
+  a, b{
     color: #FF468B;
+    font-weight: bold;
   }
 `
 
@@ -105,6 +107,30 @@ const ConnectButton = styled(Button)<{status?: string}>`
   `}
   
   `
+
+const TableBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const Row = styled.div`
+  display: flex;
+  width: 100%;
+  height: 30px;
+  
+  b {
+    width: 20%;
+    color: #FF468B;
+  }
+  
+  .col-2 {
+    width: 32%;
+  }
+  
+  span {
+    width: 20%;
+  }
+`
 
 const WalletStatus: React.FC<StepProps> = () => {
   const {  account } = useSolanaWeb3()
@@ -203,7 +229,7 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
             <div>
               Are you sure want to binding Solana wallet address {account.toBase58()} to your Discord:
               {
-                !user
+                !user?.byWallet
                   ? <> {userFromDiscord.data?.user.username}</>
                   : <> {user.username} </>
               }
@@ -281,8 +307,85 @@ export const useCheckWhiteListModal = () => {
     >
       <Content >
         <TipsCard>
-          <p>1. Vote for Forart: <a href="">Hackathon</a></p> <br />
-          <p>2. Bind Discord </p>
+          <p > 😺  Chances left: <b>{user?.getQualification}</b> </p>
+          <p>  😻  You can get a Discord role by voting for us in Hackthon or inviting friends to join our Discord.</p>
+          <p>  🎁 Server role perks on CO-NFT creation <br /> One access mean you can create one NFT artwork for free and earn 10% of sale revenue in launchpad!</p>
+          <p>
+            <TableBox>
+              <Row>
+                <b>Roles</b>
+                <b className="col-2">Access</b>
+                <b>Chances</b>
+              </Row>
+              <Row>
+                <span>OG-L1/2/3/4</span>
+                <span className="col-2">at least 1/5/8/10 votes</span>
+                <span>1/5/8/10</span>
+              </Row>
+              {/*<Row>*/}
+              {/*  <span>OG L-2</span>*/}
+              {/*  <span className="col-2">at least 5 votes</span>*/}
+              {/*  <span>2</span>*/}
+              {/*</Row>*/}
+              {/*<Row>*/}
+              {/*  <span>OG L-3</span>*/}
+              {/*  <span className="col-2">at least 8 votes</span>*/}
+              {/*  <span>3</span>*/}
+              {/*</Row>*/}
+              {/*<Row>*/}
+              {/*  <span>OG L-4</span>*/}
+              {/*  <span className="col-2">at least 10 votes</span>*/}
+              {/*  <span>4</span>*/}
+              {/*</Row>*/}
+              <Row>
+                <span>Hero</span>
+                <span className="col-2">at least 12 votes</span>
+                <span>5</span>
+              </Row>
+              <Row>
+                <span>Legend</span>
+                <span className="col-2">at least 15 votes</span>
+                <span>6</span>
+              </Row><br />
+
+              <Row>
+                <span>Referrer L-1/2/3</span>
+                <span className="col-2">invite at least 3/6/9 people for valid votes</span>
+                <span>1/2/3</span>
+              </Row>
+              {/*<Row>*/}
+              {/*  <span>Referrer L-2</span>*/}
+              {/*  <span className="col-2">invite at least 6 people for valid votes</span>*/}
+              {/*  <span>2</span>*/}
+              {/*</Row>*/}
+              {/*<Row>*/}
+              {/*  <span>Referrer L-3</span>*/}
+              {/*  <span className="col-2">invite at least 9 people for valid votes</span>*/}
+              {/*  <span>3</span>*/}
+              {/*</Row>*/}
+              <br />
+
+              <Row>
+                <span>Inviter L-1/2/3</span>
+                <span className="col-2">invite at least 5/10/15 people for valid votes</span>
+                <span>1/2/3</span>
+              </Row>
+              {/*<Row>*/}
+              {/*  <span>Inviter L-2</span>*/}
+              {/*  <span className="col-2">invite at least 10 people for valid votes</span>*/}
+              {/*  <span>2</span>*/}
+              {/*</Row>*/}
+              {/*<Row>*/}
+              {/*  <span>Inviter L-3</span>*/}
+              {/*  <span className="col-2">invite at least 15 people for valid votes</span>*/}
+              {/*  <span>3</span>*/}
+              {/*</Row>*/}
+
+            </TableBox>
+          </p>
+          <p>👉🏻 Vote in <a href={'https://hackerlink.io/buidl/1932?roundProj=1433'} target={'_blank'} rel="noreferrer">Hackathon</a>  ,The Discord administrator checks the votes and assigns roles</p>
+
+          <p>👉🏻 Please first associate your wallet with Discord, and we&apos;ll verify your role</p>
 
           <Steps current={currentStep} direction={'horizontal'}>
             <Steps.Step title={'Connect to wallet'} description={<WalletStatus active={currentStep === 0} />}  />

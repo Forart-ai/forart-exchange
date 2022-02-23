@@ -77,7 +77,7 @@ const ModalProvider: React.FC = ({ children }) => {
             background: 'rgba(29,34,45, 0.09)',
             backdropFilter: 'blur(10px)',
             zIndex: 11,
-            color:'#fff'
+            color:'#fff',
           },
           content: { ...DEFAULT_CONTENT_STYLE, ...config.contentStyle },
         }}

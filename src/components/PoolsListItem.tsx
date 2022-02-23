@@ -89,8 +89,10 @@ const InfoContent = styled.div`
   }
   .button-column{
     width: 100%;
-    display: flex;
-    justify-content: flex-end;
+    
+    .ant-btn {
+      width: 100%;
+    }
   }
 `
 
@@ -157,7 +159,7 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
           {
             data?.status === 'closing' ?
               <Link to={toArtistDetailUrl}>
-                <Button>Create</Button>
+                <Button >Create</Button>
               </Link>
               :
               <Link to={toArtistDetailUrl}>
