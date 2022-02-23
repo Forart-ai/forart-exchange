@@ -25,7 +25,7 @@ SwiperCore.use([Navigation, EffectCoverflow, Pagination])
 const Wrapper = styled.div`
   max-width: 100vw;
   width: 100%;
-  height: 100vh;
+  height: 90vh;
   display: flex;
   justify-content: center;
   overflow-y: scroll;
@@ -70,7 +70,7 @@ const Introduction = styled.div`
   }
 
   .description {
-    color: #FF4D9D;
+    color: #ffd8e7;
     font-size: 1.5em;
   }
 
@@ -112,11 +112,10 @@ const LeftArea = styled.div`
 
 const GenerateResultContainer = styled.div`
   width: 100% ;
-  height: 500px;
+  height: 600px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 60px;
   
   
   
@@ -169,15 +168,6 @@ const SeedNFTColumn = styled.div`
       justify-content: space-between;
     }
   }
-`
-
-const StyledButton = styled(Button)`
-  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
-  height: 40px;
-  border: none;
-  color: white;
-  border-radius: 10px;
-  margin-top: 25px;
 `
 
 const ResultNFTColumn = styled.div`
@@ -434,7 +424,7 @@ const NewNFTContainer:React.FC<{ newNFTSrc: string, generating: boolean }> = ({ 
           isMobile &&  <SelectedImage src={newNFTSrc} width={'100%'} height={200} style={{ objectFit:'cover', borderRadius: '10px' }} />
         }
 
-        <StyledButton onClick={ toCreateNFT }>Create NFT!</StyledButton>
+        <Button style={{ marginTop:'20px' }} onClick={ toCreateNFT }>Create NFT!</Button>
 
       </div>
     </ResultNFTColumn>

@@ -154,7 +154,7 @@ const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
   const artistId = useLocationQuery('artistId')
   const { account } = useSolanaWeb3()
 
-  const redirectUri = 'http://192.168.3.136:3000/artistDetail?artistId=3312'
+  const redirectUri = 'https://beta.app.forart.ai/artistDetail?artistId=3312'
   const discordLoginUrl = `https://discord.com/oauth2/authorize?response_type=token&client_id=942705935221157978&state=15773059ghq9183habn&scope=identify&redirect_uri=${redirectUri}`
 
   const { data: user } = useUserQuery()

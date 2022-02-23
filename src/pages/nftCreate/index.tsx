@@ -15,23 +15,23 @@ import { uploadToMinio } from '../../utils/minio'
 const Wrapper = styled.div`
   max-width: 100vw;
   width: 100%;
-  height: 90vh;
+  height: 100vh;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;  
 
   .title {
     font-weight: 550;
     font-size: 2.8em;
-
-    background-image: -webkit-linear-gradient(left, #00EBA4, #02A6F5);
+    margin-top: 50px;
+    background-image: -webkit-linear-gradient(left, #ff468b, #7f16ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     padding-bottom: 20px;
   }
 
-  @media screen and ( max-width: 1000px ){
+  @media screen and ( max-width: 1000px ) {
     padding-top: 2rem;
     .title {
       font-weight: 550;
@@ -44,10 +44,9 @@ const Wrapper = styled.div`
 const NFTForm = styled(Form)`
   display: flex;
   flex-direction: column;
-  width: 1200px;
-  height: fit-content;
+  width: 1300px;
   background: #1D222D;
-  border: 2px solid #02A6F5;
+  border: 2px solid #ff468b;
   border-radius: 20px;
   padding: 0 20px;
   
@@ -58,7 +57,7 @@ const NFTForm = styled(Form)`
     }
 
     height: 10rem !important;
-    background: #305099 !important;
+    background: rgb(29,34,45) !important;
     border-radius: 1rem !important;
     border: none;
 
@@ -88,7 +87,7 @@ const LeftAreaForm = styled.div`
   h1 {
     font-size: 1.4em;
     font-weight: 500;
-    color: #00EBA4;
+    color: #ff468b;
     line-height: 2.8rem;
   }
 `
@@ -98,7 +97,7 @@ const RightAreaForm = styled.div`
     text-align: center;
     font-size: 1.4em;
     font-weight: 500;
-    color: #00EBA4;
+    color: #ff468b;
     line-height: 2.8rem
   }
 `
