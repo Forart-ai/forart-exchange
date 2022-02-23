@@ -15,7 +15,7 @@ import { setSideBarCollapsed, useSideBarCollapsed } from './store/app'
 
 const App: React.FC = () => {
   // useEagerConnect()
-  useChainEffect()
+  // useChainEffect()
 
   const location = useLocation()
   const dispatch = useDispatch()

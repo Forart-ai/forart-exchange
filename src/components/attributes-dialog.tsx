@@ -1,29 +1,69 @@
 import { MintedNFTItem } from '../types/coNFT'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
+import { AttributesItem } from './attributes-item'
 
 const AttributesDialogWrapper = styled.div`
-  width: 50%;
-  height: 86%;
-  background: #1e2125;
+  width: 70%;
+  height: fit-content;
+  background: rgb(29,34,45);
   display: flex;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 1em;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
   position: relative;
-
-  img {
-    width: 90%;
-    height: 90%;
-    object-fit: contain;
-  }
   
   .rarity {
     display: flex;
   }
 
+`
+
+const LeftArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 1em;
+
+  }
+`
+
+export const RightArea = styled.div`
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  font-weight: 600;
+  font-family: 'campton';
+  
+  .top {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.4em;
+    
+    .name {
+      color: #FF4D9D;
+    }
+  }
+  
+  .bottom {
+    height: fit-content;
+  }
+}
+
+
+  @media screen and (max-width: 1100px) {
+   
 `
 
 export const ShineKeyFrame = keyframes`
@@ -57,61 +97,47 @@ export const LevelLabel = styled.div<{ color: string, shine?: boolean }>`
   ` : ''}
 `
 
-export const RarityContainer = styled.div`
-  width: 90%;
-  height: 8%;
-  display: flex;
-  padding: 0 40px;
-  justify-content: space-around;
-  align-items: center;
-  background: #2d112c;
-  position: relative;
-  border-radius: 10px;
-  margin-top: 20px;
-  font-weight: 600;
-  font-family: 'campton';
-
-
-  @media screen and (max-width: 1100px) {
-    padding: 0 10px;
-
-    .value {
-      font-size: 1.4em;
-    }
-  }
-`
-
 const AttributesDialog: React.FC<{ item: MintedNFTItem }> = ({ item }) => {
 
   const level: { label: string, color: string, shine: boolean } | undefined = useMemo(() => {
     return {
       'Mythic': { label: 'Mythic', color: 'rgb(255,255,77)', shine: true },
-      'Rare': { label: 'Rare', color: 'rgb(213,95,252)', shine: true },
+      'Rare': { label: 'Rare', color: 'rgb(255,67,189)', shine: true },
       'Uncommon': { label: 'Uncommon', color: 'rgb(255,109,5)', shine: false },
       'Common': { label: 'Common', color: 'rgb(179,167,208)', shine: false }
     }[item.rarity]
   }, [item])
 
-  useEffect(() => console.log(level), [level])
+  const attr = useMemo(() => {
+    return item?.componentMetas.map((v: { chainMeta: string }) => ({
+      chainMeta: JSON.parse(v.chainMeta)
+    }))
+  }, [level, item])
 
   return (
     <AttributesDialogWrapper>
-      <img src={item?.previewUrl} />
+      <LeftArea>
+        <img src={item?.previewUrl} />
+      
+      </LeftArea>
 
-      <RarityContainer>
-        <div> {item?.chainNftName}</div>
-        <div style={{ display:'flex' }}>
-
-          {
+      <RightArea>
+        <div className="top">
+          <div className="name">{item?.chainNftName || `HypeTeen # ${item?.chainNftNameTmp}`}</div>
+          <div>  {
             level && (
               <LevelLabel color={level.color} shine={level.shine}>
                 Rarity: {level.label}
               </LevelLabel>
             )
           }
-
+          </div>
         </div>
-      </RarityContainer>
+        <div className="bottom">
+          <AttributesItem item={attr} />
+        </div>
+
+      </RightArea>
 
     </AttributesDialogWrapper>
   )

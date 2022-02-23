@@ -124,7 +124,9 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
                 <div>  {data?.chainStatus}  </div>
                 <div> DONT WORRY, IT WILL TRY TO UPDATE AGAIN </div>
 
-                <div>       <Progress percent={10} size="small" status="exception" /></div>
+                <div>
+                  <Progress percent={10} size="small" status="exception" />
+                </div>
               </div>
             </>
           }

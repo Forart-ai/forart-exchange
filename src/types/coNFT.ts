@@ -27,4 +27,7 @@ export interface MintedNFTItem {
   updateTime: string | number,
   rarity: string
   chainNftName: string
+  chainNftNameTmp: string | number
+  componentMetas: any
 }
+

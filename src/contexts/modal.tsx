@@ -74,7 +74,7 @@ const ModalProvider: React.FC = ({ children }) => {
         contentLabel="Minimal Modal Example"
         style={{
           overlay: {
-            background: 'rgba(29, 20, 56, 0.09)',
+            background: 'rgba(29,34,45, 0.09)',
             backdropFilter: 'blur(10px)',
             zIndex: 11,
             color:'#fff'
@@ -88,7 +88,7 @@ const ModalProvider: React.FC = ({ children }) => {
               alt={'close'}
               onClick={close}
               src={require('../assets/images/coPools/close.svg').default}
-              style={{ position: 'absolute', right: '20px', top: '60px', cursor: 'pointer' }}
+              style={{ position: 'absolute', right: '20px', top: '60px', cursor: 'pointer', width:'50px' }}
             />
           )
         }
