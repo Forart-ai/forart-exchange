@@ -99,9 +99,10 @@ const AttributesDialog: React.FC<{ item: MintedNFTItem }> = ({ item }) => {
 
   const level: { label: string, color: string, shine: boolean } | undefined = useMemo(() => {
     return {
-      'Mythic': { label: 'Mythic', color: 'rgb(255,255,77)', shine: true },
-      'Rare': { label: 'Rare', color: 'rgb(255,67,189)', shine: true },
-      'Uncommon': { label: 'Uncommon', color: 'rgb(255,109,5)', shine: false },
+      'Legend': { label: 'Legend', color: 'rgb(255,223,89)', shine: true },
+      'Epic': { label: 'Epic', color: 'rgb(255,67,189)', shine: true },
+      'Super Rare': { label: 'Super Rare', color: 'rgb(255,109,5)', shine: false },
+      'Rare': { label: 'Rare', color: 'rgb(129,234,202)', shine: false },
       'Common': { label: 'Common', color: 'rgb(179,167,208)', shine: false }
     }[item.rarity]
   }, [item])
