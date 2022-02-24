@@ -7,6 +7,7 @@ export const MintWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  
 
 `
 
@@ -34,7 +35,7 @@ export const BodyContent = styled.div `
   @media screen and (max-width: 1100px) {
     width: 100%;
     flex-direction: column;
-    width: 100%;
+    height: 350px;
     justify-content: center;
     align-items: center;
   }
@@ -65,7 +66,6 @@ export const SwiperList = styled.div`
       cursor: pointer;
 
     }
-    
     img {
       width: 50px;
     }
@@ -73,13 +73,15 @@ export const SwiperList = styled.div`
   
   @media screen and (max-width: 1100px) {
     width: 100%;
+    .down-arrow, .up-arrow {
+      display: none;
+    }
   }
   
 `
 
 export const ImageBorder = styled.div`
   width: 100%;
-
 `
 
 export const KitImageBorder = styled.div`
@@ -110,55 +112,6 @@ export const SelectedBody = styled.div`
   
   @media screen and (max-width: 1100px) {
     width: 100%;
-    
-  }
-`
-
-export const PriceContainer = styled.div`
-    width: 100%;
-    height: 10%;
-    display: flex;
-    padding: 0 40px;
-    justify-content: space-between;
-    align-items: center;
-    background: #060c21;
-    position: relative;
-    border-radius: 10px;
-
-    &:before {
-      content: '';
-      position: absolute;
-      border-radius: 10px;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: #fff;
-      //opacity: 0.1;
-      z-index: -1;
-      //border: 2px #fff solid;
-      //filter: blur(5px);
-    }
-  
-  &:before,
-  &:after {
-    background: linear-gradient(87deg, #3376ff, #FF468B 65%, #3376ff);
-  }
-  
-    .price {
-    z-index: 5;
-    background: #FF468B;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 1.6em;
-  }
-  
-  @media screen and (max-width: 1100px) {
-    padding: 0 10px;
-    
-    .price {
-      font-size: 1.4em;
-    }
   }
 `
 
@@ -188,10 +141,6 @@ export const KitContent = styled.div`
 
 export const MintTab = styled(Tabs)`
 
-  width: 100%;
-  user-select: none;
-
-
   .ant-tabs-tab {
     font-size: 1.2em !important;
     color: #E5E8EB !important;
@@ -204,13 +153,11 @@ export const MintTab = styled(Tabs)`
 
   .ant-tabs-nav-wrap {
     display: flex;
-    justify-content: start;
-  !important;
+    justify-content: start;!important;
   }
 
   .ant-tabs-nav::before {
-    display: none;
-  !important;
+    display: none; !important;
   }
 
   .ant-tabs-ink-bar {
@@ -307,7 +254,6 @@ export const StyledSwitch = styled.div`
 
 export const AIContent = styled.div`
   height: auto;
-  margin: 20px 0;
   .hide {
     display: none;
   }

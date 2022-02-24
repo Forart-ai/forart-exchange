@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 // @ts-ignore
 import styled from 'styled-components'
 import { CoNFTData, PoolsListData } from '../../types/coNFT'
@@ -10,6 +10,8 @@ import { usePoolsQuery } from '../../hooks/queries/usePoolsQuery'
 import { CaretRightOutlined } from '@ant-design/icons'
 import Banner1 from '../../assets/images/coPools/banner.png'
 import { useGetOverview } from '../../hooks/queries/useGetOverview'
+import { useMediaQuery } from 'react-responsive'
+
 // @ts-ignore
 
 import YouTube from '@u-wave/react-youtube'
@@ -21,6 +23,8 @@ const Wrapper = styled.div`
   margin: auto;
   padding-bottom: 50px;
   overflow: scroll;
+
+  
 `
 
 const CoNftPageContainer = styled.div`
@@ -35,15 +39,23 @@ const HeaderContainer = styled.div`
   width: 100%;
   height: 800px;
   position: relative;
-  border-radius: 15px;
   display: flex;
   padding: 50px 0;
+
+  @media screen and (max-width: 1080px) {
+    flex-direction: column;
+    padding: 10px 0;
+    height: fit-content;
+  }
 `
 
 const LeftTop = styled.div`
   width: 100%;
   height: 40%;
-
+  
+  @media screen and (max-width: 1080px) {
+    height: fit-content;
+  }
 `
 
 const VideoArea = styled.div`
@@ -83,6 +95,18 @@ const LeftBottom = styled.div`
   }
 `
 
+const LeftArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 65%;
+
+
+  @media screen and (max-width: 1080px) {
+    width: 100%;
+  }
+  
+`
+
 const RightArea = styled.div`
   display: flex;
   align-items: center;
@@ -94,6 +118,10 @@ const RightArea = styled.div`
   img {
     width: 100%;
     object-fit: contain;
+  }
+  
+  @media screen and (max-width: 1080px) {
+    display: none;
   }
 `
 
@@ -110,6 +138,10 @@ const MainInfo = styled.div`
 
   .description {
     font-size: 1.3em;
+  }
+
+  @media screen and (max-width: 1080px) {
+    width: 100%;
   }
 
 `
@@ -178,17 +210,16 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
       ' so that artistic inspiration and market demand can be reached in the Forart space.'
   }
 
-  const { data: overviewData } = useGetOverview()
+  // const { data: overviewData } = useGetOverview()
 
   return (
     <HeaderContainer>
-      <div style={{ display: 'flex', flexDirection: 'column', width: '65%' }}>
+      <LeftArea>
         <LeftTop>
           <MainInfo>
             <div className="title">{INFO_DETAILS.title}</div>
             <div className="description">{INFO_DETAILS.describe}</div>
           </MainInfo>
-
           <LinkContainer>
             {
               EXTERNAL_LINKS.map(({ icon, link }) => (
@@ -251,7 +282,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
         {/*  </div>*/}
         {/*</LeftBottom>*/}
-      </div>
+      </LeftArea>
       <RightArea>
         <img src={Banner1} />
       </RightArea>
@@ -263,6 +294,8 @@ const PoolsList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList }
 
   const { data: overviewData } = useGetOverview()
 
+  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
+
   const req = {
     'image': 'https://forart.mypinata.cloud/ipfs/QmSFo7w1m87FnSbcgWAsydWzsjKiExZCrt7ynxMJLQP2d4',
     'name': 'HypeTeen',
@@ -272,6 +305,13 @@ const PoolsList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList }
     'status': 'closing',
     'artistId': '3312'
   }
+
+  useMemo(() => {
+    if (isMobile) {
+      req.describe =  req.describe.substr(0,70) + '...'
+    }
+    else return
+  },[req])
 
   return (
     <PoolsContainer>

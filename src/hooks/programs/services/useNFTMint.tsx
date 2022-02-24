@@ -198,7 +198,7 @@ const useNFTMint = () => {
       console.log(components)
 
       CONFT_API.core.user.saveNFT(3312, components, account.toBase58())
-        .then(res => {
+        .then(() => {
           history.push('/personal/home')
 
         })

@@ -8,7 +8,6 @@ import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
 import { NFTPreview, Title } from '../../components/nft-mint/selectedList'
 // import OpenSwitch from '../../assets/images/coPools/switch.svg'
 import ArtistBanner from '../../assets/images/coPools/hypteen-banner.jpg'
-import FAQ from '../../assets/images/artistDetail/faq.svg'
 
 import { Button, message, Modal, Tabs } from 'antd'
 import { BlockOutlined, CrownOutlined, SmileOutlined,createFromIconfontCN  } from '@ant-design/icons'
@@ -476,6 +475,11 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         list: artistKit?.Eye
       },
       {
+        name: 'Mouth',
+        key: 'mouth',
+        list: artistKit?.Mouth
+      },
+      {
         name: 'Foot',
         key: 'foot',
         list: artistKit?.Foot
@@ -485,11 +489,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         key: 'hand',
         list: artistKit?.Hand
       },
-      {
-        name: 'Mouth',
-        key: 'mouth',
-        list: artistKit?.Mouth
-      },
+
       {
         name: 'Butt',
         key: 'butt',
@@ -526,7 +526,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       <TopContainer>
         <BodyContent>
           <SelectableBodyList
-            selectedValue= {body}
+            selectedValue= {body!}
             onSelect= {v => setBody(v)}
             list= {artistKit?.Body}
           />
@@ -540,17 +540,14 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
               )
             }
           </SelectedBody>
-          )
 
         </BodyContent>
         <KitContent >
-          <div className="more-icon">
-            <img src={MoreKit} />
-          </div>
-          <MintTab size={'small'}>
+
+          <MintTab tabPosition={'top'}>
             {
               KIT_TYPES?.map(type => (
-                <TabPane key={type.name} tab={type.name} style={{ width:'100%', overflowX: 'scroll' }}>
+                <TabPane key={type.name}  tab={type.name} style={{ width:'100%', overflowX: 'scroll' }}>
                   <MintContainer>
                     <SelectableKitList
                       selectedValue={kits.get(type.key)}
@@ -610,9 +607,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         { account && (
           <p >
             Chances left: {userData?.getQualification}
-            <a href={'https://docs.google.com/forms/d/e/1FAIpQLSf11PPZ04tWyKp3JEiZcShxCxEQK0y-3yb2tS2nXfKsH6XiQQ/viewform'} target={'_blank'} rel="noreferrer" >
-              <IconFont style={{ cursor:'pointer' }} type={'icon-Question'}  />
-            </a>
+            <IconFont style={{ cursor:'pointer', marginLeft: '20px' }} type={'icon-Question'}  onClick={ openCheckWhiteListModal } />
           </p>
         )}
         {

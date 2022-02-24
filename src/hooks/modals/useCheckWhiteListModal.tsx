@@ -10,6 +10,7 @@ import useUserQuery from '../queries/useUserQuery'
 import { useRefreshController } from '../../contexts/refresh-controller'
 import CONFT_API from '../../apis/co-nft'
 import useDiscordMeQuery from '../queries/useDiscordMeQuery'
+import { useMediaQuery } from 'react-responsive'
 
 type StepProps = {
   active?: boolean
@@ -111,6 +112,10 @@ const ConnectButton = styled(Button)<{status?: string}>`
 const TableBox = styled.div`
   display: flex;
   flex-direction: column;
+  
+  @media screen and (max-width: 1080px) {
+    display: none;
+  }
 `
 
 const Row = styled.div`
@@ -299,6 +304,8 @@ export const useCheckWhiteListModal = () => {
 
   },[account, user,discordAccessToken])
 
+  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
+
   const { modal, open, close } = useModal((_open, close, visible) => (
     <BindingModal
       visible = {visible}
@@ -309,7 +316,7 @@ export const useCheckWhiteListModal = () => {
         <TipsCard>
           <p > 😺  Chances left: <b>{user?.getQualification}</b> </p>
           <p>  😻  You can get a Discord role by voting for us in Hackthon or inviting friends to join our Discord.</p>
-          <p>  🎁 Server role perks on CO-NFT creation <br /> One access mean you can create one NFT artwork for free and earn 10% of sale revenue in launchpad!</p>
+          <p>  🎁  Server role perks on CO-NFT creation <br /> One access mean you can create one NFT artwork for free and earn 10% of sale revenue in launchpad!</p>
           <p>
             <TableBox>
               <Row>
@@ -383,11 +390,18 @@ export const useCheckWhiteListModal = () => {
 
             </TableBox>
           </p>
-          <p>👉🏻 Vote in <a href={'https://hackerlink.io/buidl/1932?roundProj=1433'} target={'_blank'} rel="noreferrer">Hackathon</a>  ,The Discord administrator checks the votes and assigns roles</p>
+          <p>👉🏻 1. Vote for forart in
+            <a href={'https://hackerlink.io/buidl/1932?roundProj=1433'} target={'_blank'} rel="noreferrer"> Avalanche Hackathon@Asia (AVAX Pool)</a> or
+            <a href={'https://hackerlink.io/buidl/1932?roundProj=1416'} target={'_blank'} rel="noreferrer"  > Solana Riptide Hackathon@East Asia</a>  , The Discord administrator checks the votes and assigns roles
+          </p>
 
-          <p>👉🏻 Please first associate your wallet with Discord, and we&apos;ll verify your role</p>
+          <p>👉🏻 2. Invite friends to join Discord and contact your administrator to assign roles</p>
 
-          <Steps current={currentStep} direction={'horizontal'}>
+          <p>👉🏻 3. Invite friends to Join Discord, and the administrator will check votes and assign roles</p>
+
+          <p> Please first associate your wallet with Discord, and we&apos;ll verify your role</p>
+
+          <Steps current={currentStep} direction={isMobile ? 'vertical' : 'horizontal'}>
             <Steps.Step title={'Connect to wallet'} description={<WalletStatus active={currentStep === 0} />}  />
             <Steps.Step title={'Login via Discord'} description={<DiscordIdentity active={currentStep === 1} />}  />
             <Steps.Step title={'Binding Discord and wallet'} description={<BindingStatus active={currentStep === 2}  />}  />

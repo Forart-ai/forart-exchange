@@ -153,7 +153,8 @@ export const CenterInfo = styled.div`
     .price {
       margin-left: 5px;
       font-size: 1.3em;
-      color: #00EBA4;
+      color: #ff468b;
+      font-weight: bold;
     }
   }
 
@@ -227,7 +228,7 @@ export const StyledTab  = styled(Tabs)`
     color: #608599 !important;
   }
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: #00EBA4 !important;
+    color: #FF468B !important;
 
   }
 
@@ -239,7 +240,7 @@ export const StyledTab  = styled(Tabs)`
 
   .ant-tabs-ink-bar {
     line-height: 20px;
-    background-image: linear-gradient(to right, #00EBA4, #02A6F5);
+    background: linear-gradient(to right, #FF468B, #12dbe4) border-box;
     padding: 2px;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
@@ -252,7 +253,6 @@ export const StyledTabPane  = styled(TabPane)`
 `
 
 export const StyledButton = styled(Button)`
-  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
   border: none;
   color: white;
   font-weight: bolder;

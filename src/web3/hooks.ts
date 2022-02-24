@@ -17,15 +17,15 @@ export function useEagerConnect() {
       }
     })
 
-    celoInjected.isAuthorized().then((isAuthorized:boolean) => {
-      if (isAuthorized) {
-        activate(celoInjected,undefined,true).catch(() => {
-          setTried(true)
-        })
-      } else {
-        setTried(true)
-      }
-    })
+    // celoInjected.isAuthorized().then((isAuthorized:boolean) => {
+    //   if (isAuthorized) {
+    //     activate(celoInjected,undefined,true).catch(() => {
+    //       setTried(true)
+    //     })
+    //   } else {
+    //     setTried(true)
+    //   }
+    // })
 
   },[])
 
