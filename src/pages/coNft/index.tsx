@@ -231,17 +231,17 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
           </LinkContainer>
         </LeftTop>
 
-        {/*<VideoArea>*/}
+        <VideoArea>
 
-        {/*  <YouTube*/}
-        {/*    video="GVAfF0TM-NM"*/}
-        {/*    autoplay*/}
-        {/*    height={'100%'}*/}
-        {/*    width={'100%'}*/}
-        {/*    suggestedQuality={'default'}*/}
-        {/*    showRelatedVideos= {false}*/}
-        {/*  />*/}
-        {/*</VideoArea>*/}
+          <YouTube
+            video="DszF7e5kb54"
+            autoplay
+            height={'100%'}
+            width={'100%'}
+            suggestedQuality={'default'}
+            showRelatedVideos= {false}
+          />
+        </VideoArea>
 
         {/*<LeftBottom>*/}
         {/*  <div className="data-container">*/}

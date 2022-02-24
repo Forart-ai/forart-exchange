@@ -232,7 +232,8 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
         content: (
           <div style={{ fontFamily: 'gilroy', color: '#fff' }} >
             <div>
-              Are you sure want to binding Solana wallet address {account.toBase58()} to your Discord:
+              Solana wallet address {account.toBase58()}.
+              Discord:
               {
                 !user?.byWallet
                   ? <> {userFromDiscord.data?.user.username}</>
@@ -321,7 +322,7 @@ export const useCheckWhiteListModal = () => {
             <TableBox>
               <Row>
                 <b>Roles</b>
-                <b className="col-2">Access</b>
+                <b className="col-2">Chances</b>
                 <b>Chances</b>
               </Row>
               <Row>
