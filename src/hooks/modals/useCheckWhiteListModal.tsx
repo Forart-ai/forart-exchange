@@ -322,8 +322,8 @@ export const useCheckWhiteListModal = () => {
             <TableBox>
               <Row>
                 <b>Roles</b>
-                <b className="col-2">Chances</b>
-                <b>Chances</b>
+                <b className="col-2">Access</b>
+                <b>Accesses</b>
               </Row>
               <Row>
                 <span>OG-L1/2/3/4</span>
