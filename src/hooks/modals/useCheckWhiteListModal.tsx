@@ -328,7 +328,7 @@ export const useCheckWhiteListModal = () => {
               <Row>
                 <span>OG-L1/2/3/4</span>
                 <span className="col-2">at least 1/5/8/10 votes</span>
-                <span>1/5/8/10</span>
+                <span>1/2/3/4</span>
               </Row>
               {/*<Row>*/}
               {/*  <span>OG L-2</span>*/}
