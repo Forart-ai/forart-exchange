@@ -15,7 +15,7 @@ import { setSideBarCollapsed, useSideBarCollapsed } from './store/app'
 import { useMediaQuery } from 'react-responsive'
 
 const App: React.FC = () => {
-  useEagerConnect()
+  // useEagerConnect()
   // useChainEffect()
 
   const location = useLocation()

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal  } from 'antd'
-import { supportWallets, Wallet } from '../../web3/connectors'
+import { supportWallets, WalletType } from '../../web3/connectors'
 import { useWeb3React } from '@web3-react/core'
 import styled from '@emotion/styled'
 
@@ -78,11 +78,15 @@ type WalletSelectionModalProps = {
     onClose?:() => void
 }
 
-const WalletCard: React.FC<{wallet: Wallet}> = ({ wallet }) => {
+const WalletCard: React.FC<{wallet: WalletType}> = ({ wallet }) => {
   const { activate } = useWeb3React()
   const { name, icon, connector } = wallet
 
-  const prepareToConnect = () => { activate(connector) }
+  const prepareToConnect = () => {
+    if (connector) {
+      activate(connector)
+    }
+  }
 
   return (
     <StyledWalletCard>

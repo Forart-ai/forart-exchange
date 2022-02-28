@@ -26,24 +26,24 @@ ReactDOM.render(
   <Provider store={store}>
 
     <Web3ReactProvider getLibrary={getLibrary}>
-      <WalletSelectionModalProvider>
-        <QueryClientProvider client={queryClient}>
-          <ModalProvider>
-            <RefreshControllerProvider>
-              <Router>
-                <DAppProvider config={{}}>
-                  <SolanaConnectionConfigProvider>
-                    <SolanaWeb3Provider>
+      <QueryClientProvider client={queryClient}>
+        <ModalProvider>
+          <RefreshControllerProvider>
+            <Router>
+              <DAppProvider config={{}}>
+                <SolanaConnectionConfigProvider>
+                  <SolanaWeb3Provider>
+                    <WalletSelectionModalProvider>
                       <App />
-                    </SolanaWeb3Provider>
-                  </SolanaConnectionConfigProvider>
-                </DAppProvider>
-              </Router>
-            </RefreshControllerProvider>
-          </ModalProvider>
-        </QueryClientProvider>
+                    </WalletSelectionModalProvider>
+                  </SolanaWeb3Provider>
+                </SolanaConnectionConfigProvider>
+              </DAppProvider>
+            </Router>
+          </RefreshControllerProvider>
+        </ModalProvider>
+      </QueryClientProvider>
 
-      </WalletSelectionModalProvider>
     </Web3ReactProvider>
   </Provider>
   ,

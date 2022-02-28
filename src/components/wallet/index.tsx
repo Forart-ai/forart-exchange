@@ -1,43 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { formatEther } from '@ethersproject/units'
-import styled from '@emotion/styled'
+import styled from 'styled-components'
 // @ts-ignore
 import Jazzicon from '@metamask/jazzicon'
-import { Button, Modal } from 'antd'
+import { Button, Dropdown, Menu, Modal } from 'antd'
 import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
-
-const StyledCurrentModal = styled(Modal)`
-  .ant-modal-header {
-    color: white;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    height: 60px;
-    background: #1D222D !important;
-  }
-
-  .ant-modal-content {
-    width: fit-content !important;
-    height: 200px;
-    border-radius: 10px;
-    background: #1D222D !important;
-  }
-
-  .ant-modal-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 30px !important;
-    color: white;
-  }
-
-  .ant-modal-title {
-    color: #fff !important;
-    font-size: 24px;
-    margin-top: 5px;
-    margin-left: 15px;
-  }
-`
+import { useSolanaWeb3 } from '../../contexts/solana-web3'
+import { PublicKey } from '@solana/web3.js'
+import { DownOutlined } from '@ant-design/icons'
 
 const StyledWallet = styled.div`
   height: 40px;
@@ -48,11 +19,11 @@ const StyledWallet = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 30px;
-  //border: 2px solid #02A6F5;
   padding: 0 10px;
   box-sizing: border-box;
   margin-right: 20px;
   cursor: pointer;
+  min-width: 170px;
   
   
   @media screen and (max-width: 1100px) {
@@ -69,29 +40,61 @@ const CurrentAccountContainer = styled.div`
   align-items: center;
   justify-content: center;
   
+  .wallet-add {
+    display: flex;
+    align-items: center;
+  }
+  
   @media screen and (max-width: 1100px) {
     font-size: 14px;
   }
 `
 
-const BalanceContainer = styled.div`
-  display: flex;
-  font-size: 16px;
-  user-select: none;
-`
+const MenuContainer = styled.div`
+  height: 200px;
+  width: 180px;
 
-const StyledButton = styled(Button)`
-  height: 40px;
-  border-radius: 8px;
-  margin-top: 50px;
-  background-image: linear-gradient(to right, #00EBA4, #02A6F5);
-  border: none;
-  color: white;
-  font-weight: bolder;
+
+  .ant-menu {
+    position: relative;
+    background-color: #320334;
+    border-radius: 10px;
+    border: 3px #f940ff solid;
+    height: 100%;
+    width: 100%;
+
+    top: 10px;
+  }
+
+  .menu-box {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 10px 0;
+
+
+    .disconnect {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      width: 90%;
+      height: 25%;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: white;
+      background-color: rgb(221, 52, 68);
+      border-radius: 8px;
+    }
+  }
+
+
 `
 
 type CurrentAccountProps = {
-  account: string
+  account: string | null | undefined
+  solanaAccount: undefined | PublicKey
 }
 
 const MetamaskIcon: React.FC = () => {
@@ -112,9 +115,12 @@ const MetamaskIcon: React.FC = () => {
   )
 }
 
-const WalletModalContent: React.FC<CurrentAccountProps> =({
+const WalletContent: React.FC<CurrentAccountProps> =({
   account,
+  solanaAccount
 }) => {
+  const { disconnect } = useSolanaWeb3()
+  const { deactivate } = useWeb3React()
 
   const { library, chainId } = useWeb3React()
 
@@ -147,45 +153,56 @@ const WalletModalContent: React.FC<CurrentAccountProps> =({
   },[account, library,chainId])
 
   return (
-    <BalanceContainer>
-      <div className="balance">{account}</div>
-      {/*<div>{balance !== undefined ? `${formatEther(balance)}` : ''}</div>*/}
-    </BalanceContainer>
+    <MenuContainer>
+      <Menu>
+        <div className="menu-box">
+          <div className= "disconnect" onClick={account ? deactivate : disconnect}  > Disconnect </div>
+        </div>
+      </Menu>
+    </MenuContainer>
+
+  // <BalanceContainer>
+  //   <div className="balance">{account}</div>
+  //   {/*<div>{balance !== undefined ? `${formatEther(balance)}` : ''}</div>*/}
+  // </BalanceContainer>
+
   )
 }
 
-const CurrentAccount: React.FC<CurrentAccountProps> = ({ account }) => {
+const CurrentAccount: React.FC<CurrentAccountProps> = ({ account, solanaAccount }) => {
 
-  const { deactivate } = useWeb3React()
-  const [isModalVisible, setIsModalVisible] = useState(false)
-
-  const disconnect =() => {
-    deactivate()
-
-  }
-
-  const closeModal = () => {
-    setIsModalVisible(false)
-  }
+  const menu = useCallback(() => (
+    <WalletContent account={account} solanaAccount={solanaAccount} />
+  ), [account, solanaAccount] )
 
   return (
     <CurrentAccountContainer>
-      <MetamaskIcon />
-      <div className="wallet-add" onClick={() => setIsModalVisible(true)}> {`${account.substr(0, 5)}...${account.substr(-4, 4)}`}</div>
+      {
+        account &&
+          (
+            <>
+              <Dropdown overlay= { menu } trigger= {['click']} placement= {'bottomRight'}  >
+                <div className="wallet-add" >
+                  <DownOutlined style={{ fontSize:'17px', marginRight:'10px' } } />
+                  <MetamaskIcon />
+                  {`${account.substr(0,5)}...${account.substr(-4,4)}`}
+                </div>
+              </Dropdown>
+            </>
+          )
+      }
+      {
+        solanaAccount &&
+          (
 
-      <StyledCurrentModal
-        style={{ top: 20 }}
-        wrapClassName="wallet-modal-wrapper"
-        title="Your Wallet"
-        onCancel={closeModal}
-        visible={ isModalVisible }
-        footer= { null }
-      >
-        <WalletModalContent account={account}  />
-        <StyledButton className="walletModalClose" onClick={disconnect}>
-          Disconnect
-        </StyledButton>
-      </StyledCurrentModal>
+            <Dropdown overlay= { menu } trigger= {['click']} placement= {'bottomRight'}  >
+              <div className="wallet-add" >
+                <DownOutlined style={{ fontSize:'17px', marginRight:'10px' } } />{`${solanaAccount.toBase58().substr(0,5)}...${solanaAccount.toBase58().substr(-4,4)}`}
+              </div>
+            </Dropdown>
+
+          )
+      }
     </CurrentAccountContainer>
   )
 }
@@ -194,19 +211,22 @@ export const ConnectToWallet = () => {
   const { open } = useWalletSelectionModal()
 
   return (
-    <div className="toAmount" onClick={open}>
-      <span>Connect To Ethereum</span>
+    <div onClick={open}>
+      <span>Connect Wallet</span>
     </div>
   )
 }
 
 const Wallet: React.FC = () => {
   const { account } = useWeb3React()
+  const { account : solanaAccount } = useSolanaWeb3()
+
+  console.log('eth: ' + account + '     sol:', solanaAccount?.toBase58()  )
 
   return (
     <StyledWallet>
-      {!account && <ConnectToWallet />}
-      {!!account && <CurrentAccount account={account} />}
+      { (!account && !solanaAccount ) && <ConnectToWallet /> }
+      { (!!account || !!solanaAccount) && <CurrentAccount account={account} solanaAccount={ solanaAccount } /> }
     </StyledWallet>
 
   )

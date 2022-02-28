@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSolanaWeb3 } from '../../contexts/solana-web3'
+import { SolanaWeb3Provider, useSolanaWeb3 } from '../../contexts/solana-web3'
 import styled from 'styled-components'
 import useSolanaWalletModal from './SolanaWalletModal'
 

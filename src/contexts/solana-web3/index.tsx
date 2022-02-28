@@ -5,7 +5,7 @@ import { useConnectionConfig } from '../solana-connection-config'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import useEagerConnect from '../../hooks/useEagerConnect'
 import { SUPPORT_WALLETS } from '../../utils/constant'
-import Wallet from '@project-serum/sol-wallet-adapter'
+import Wallet  from '@project-serum/sol-wallet-adapter'
 import useLocalStorage, { LOCAL_STORAGE_WALLET_KEY } from '../../hooks/useLocalStorage'
 import { SolanaWalletSelectionModal, WalletItem } from './modal'
 import { shortenAddress } from '../../utils'
@@ -40,7 +40,7 @@ export type WalletContextValues = {
   select: () => void;
   wallet: SolanaWallet | undefined;
   account?: PublicKey,
-  connect: () => void,
+  connect: (wallet: any) => void,
   disconnect: () => void
 }
 
@@ -106,11 +106,16 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
     if (!connected) {
       return undefined
     }
-
     return adapter?.publicKey
   }, [connected, adapter])
 
-  const connect = useCallback(adapter?.connect ?? select , [adapter, select])
+  // const connect = useCallback(adapter?.connect ?? select , [adapter, select])
+
+  const connect = useCallback(
+    (wallet: any ) => {
+      setWallet(wallet)
+    },[adapter, select]
+  )
 
   const disconnect = useCallback(() => {
     adapter?.disconnect()
@@ -127,7 +132,6 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
         }
 
         setConnected(true)
-        console.log(adapter)
 
         const walletPublicKey = adapter.publicKey.toBase58()
         const keyToDisplay =
@@ -172,20 +176,7 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
       }}
     >
       {children}
-      <SolanaWalletSelectionModal title="Connect To Wallet" visible={isModalVisible} footer="" onCancel={close}>
-        {
-          Object.values(SUPPORT_WALLETS).map(wallet => (
-            <WalletItem
-              wallet={wallet}
-              key={wallet.name}
-              onClick={(key: SupportWalletNames) => {
-                setWallet(SUPPORT_WALLETS[key])
-                close()
-              }}
-            />
-          ))
-        }
-      </SolanaWalletSelectionModal>
+
     </SolanaWeb3Context.Provider>
   )
 }

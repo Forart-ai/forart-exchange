@@ -1,8 +1,11 @@
-import React, { FC, useCallback, useContext, useEffect, useState } from 'react'
+import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { message, Modal } from 'antd'
-import { supportWallets, Wallet } from '../web3/connectors'
+import { supportWallets, WalletType } from '../web3/connectors'
 import { useWeb3React } from '@web3-react/core'
 import styled from '@emotion/styled'
+import { SolanaWallet, SolanaWeb3Provider, SupportWalletNames, useSolanaWeb3 } from '../contexts/solana-web3'
+import { WalletCard, WalletItem } from '../contexts/solana-web3/modal'
+import { SUPPORT_WALLETS } from '../utils/constant'
 
 export const StyledWalletSelectionModal = styled(Modal)`
   .ant-modal-header {
@@ -35,77 +38,31 @@ export const StyledWalletSelectionModal = styled(Modal)`
   }
 `
 
-const StyledWalletCard = styled.div`
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  width: 100%;
-
-
-  .wallet-item {
-    width: 86%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-    border: 0.2em solid #b2b2b2;
-    display: flex;
-    border-radius: 1rem;
-    transition: all 0.4s;
-    padding: 1rem 2.2rem;
-
-    img {
-      width: 4rem;
-      height: 4rem;
-      right: 50px;
-    }
-
-    span {
-      display: inline-block;
-      color: #ffffff;
-      font-size: 1.8rem;
-      font-weight: bold;
-      transition: all 0.4s;
-      user-select: none;
-    }
-  }
-`
-
 type WalletSelectionModalProps = {
     visible:boolean
     onClose?:() => void
-}
-
-const WalletCard: React.FC<{wallet: Wallet}> = ({ wallet }) => {
-  const { activate } = useWeb3React()
-  const { name, icon, connector } = wallet
-  const  prepareToConnect = () =>  { activate(connector) }
-
-  const connectToWallet =  useCallback(async () => {
-    const provider = await connector.getProvider()
-    if (!provider) {
-      message.warn(`Please install ${name} wallet first.`)
-      return
-    }
-    prepareToConnect()
-  }, [activate, connector])
-
-  return (
-    <StyledWalletCard>
-      <div className="wallet-item" onClick={ connectToWallet } >
-        <span>{name}</span>
-        <img className="wallet-icon" src={icon} alt="" />
-      </div>
-    </StyledWalletCard>
-  )
 }
 
 const WalletSelectionModal: React.FC<WalletSelectionModalProps> = ({
   visible,
   onClose,
 }) => {
+
+  const { connect } =  useSolanaWeb3()
+  const { activate } = useWeb3React()
+
+  const onClick = useCallback((wallet: WalletType) => {
+
+    if (wallet.chainType === 'eth' && wallet.connector) {
+      activate(wallet.connector)
+    }
+
+    if (wallet.chainType === 'solana' && wallet.adapter) {
+      connect(wallet)
+    }
+
+  }, [connect, activate])
+
   return (
     <Modal
       className="wallet-selection-modal"
@@ -117,9 +74,13 @@ const WalletSelectionModal: React.FC<WalletSelectionModalProps> = ({
     >
       {
         supportWallets.map(wallet => (
-          <WalletCard wallet={wallet} key={wallet.name} />
+          <WalletCard wallet={wallet}
+            key={wallet.name}
+            onSelect={ () => onClick(wallet) }
+          />
         ))
       }
+
     </Modal>
   )
 }
@@ -131,6 +92,7 @@ const WalletSelectionModalContext = React.createContext({
 
 const WalletSelectionModalProvider: FC = ({ children }) => {
   const { account } = useWeb3React()
+  const { account : solanaAccount } = useSolanaWeb3()
 
   const [visible, setVisible] = useState(false)
 
@@ -143,8 +105,8 @@ const WalletSelectionModalProvider: FC = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    account && close()
-  }, [close, account])
+    (account || solanaAccount) && close()
+  }, [close, solanaAccount, account])
 
   return (
     <WalletSelectionModalContext.Provider

@@ -5,6 +5,8 @@ import CeloIcon from '../images/wallet/celo.svg'
 
 import { Web3Provider } from '@ethersproject/providers'
 import { CeloConnector } from './celo-connector'
+import { WalletAdapter } from '../contexts/solana-web3'
+import { PhantomWalletAdapter } from '../contexts/solana-web3/walletAdapters/phantom'
 
 export const injected = new InjectedConnector({})
 
@@ -17,26 +19,40 @@ export enum WalletKeys {
   Celo = 'Celo'
 }
 
-export type Wallet = {
-  key: WalletKeys,
+export type WalletType = {
+  key?: WalletKeys,
   name: string
   icon: string,
-  connector: AbstractConnector
+  connector?: AbstractConnector,
+  url?: string,
+  adapter?: new() => WalletAdapter
+  chainType: 'eth' | 'solana'
 }
 
-export const supportWallets: Wallet[] = [
+export const supportWallets: WalletType[] = [
   {
-    name:'MetaMask',
-    key:WalletKeys.MetaMask,
-    icon:MetaMaskIcon,
-    connector: injected
+    name: 'MetaMask',
+    key: WalletKeys.MetaMask,
+    icon: MetaMaskIcon,
+    connector: injected,
+    chainType: 'eth'
   },
   {
-    name:'Celo',
-    key:WalletKeys.Celo,
-    icon:CeloIcon,
-    connector: celoInjected
+    name: 'Celo',
+    key: WalletKeys.Celo,
+    icon: CeloIcon,
+    connector: celoInjected,
+    chainType: 'eth'
+
   },
+  {
+    name: 'Phantom',
+    url: 'https://phantom.app/',
+    icon: 'https://raydium.io/_nuxt/img/phantom.d9e3c61.png',
+    adapter: PhantomWalletAdapter,
+    chainType: 'solana'
+
+  }
 
 ]
 
