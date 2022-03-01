@@ -33,6 +33,8 @@ import useUserQuery from '../../hooks/queries/useUserQuery'
 import useDiscordAccessToken from '../../hooks/useDiscordAccessToken'
 import useNFTMint from '../../hooks/programs/services/useNFTMint'
 import CONFT_API from '../../apis/co-nft'
+import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
+import { useWeb3React } from '@web3-react/core'
 
 const { TabPane } = Tabs
 
@@ -422,6 +424,9 @@ const AllNftContainer: React.FC = () => {
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
   const { account, select } = useSolanaWeb3()
+  const { account : EthAccount } = useWeb3React()
+
+  const { open } = useWalletSelectionModal()
 
   const [body, setBody] = useState<any>()
 
@@ -438,6 +443,10 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
   const { checkWhiteListModal, openCheckWhiteListModal } = useCheckWhiteListModal()
   const discordAccessToken = useDiscordAccessToken()
   const { mintNFT } = useNFTMint()
+
+  useMemo(() => {
+    console.log(!account || !EthAccount)
+  },[account, EthAccount])
 
   useMemo(() => {
     if (discordAccessToken) {
@@ -518,7 +527,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         ),
         onOk: () => mintNFT(body,kits)
       })
-    },[body, kits, account]
+    },[body, kits, account, EthAccount]
   )
 
   return (
@@ -604,15 +613,15 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
       <MintButton >
 
-        { account && (
+        { (account || EthAccount) && (
           <p >
             Chances left: {userData?.getQualification}
             <IconFont style={{ cursor:'pointer', marginLeft: '20px' }} type={'icon-Question'}  onClick={ openCheckWhiteListModal } />
           </p>
         )}
         {
-          !account ? (
-            <Button  style={{ height:'50px' }} onClick={ select }>
+          !account  ? (
+            <Button  style={{ height:'50px' }} onClick={ open }>
               Connect Wallet
             </Button>
           ): (

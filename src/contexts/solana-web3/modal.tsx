@@ -104,7 +104,7 @@ export const WalletItem: React.FC<{ wallet: SolanaWallet, onClick: (name: Suppor
 }
 
 export const WalletCard: React.FC<{wallet: WalletType, onSelect:(_: WalletType) => void}> = ({ wallet,onSelect }) => {
-  const { name, icon, connector } = wallet
+  const { chainType, name, icon, connector } = wallet
 
   // const { activate } = useWeb3React()
   // const prepareToConnect = () => {
@@ -113,18 +113,18 @@ export const WalletCard: React.FC<{wallet: WalletType, onSelect:(_: WalletType) 
   //   }
   // }
 
-  // const connectToWallet =  useCallback(async () => {
-  //   const provider = await connector?.getProvider()
-  //   if (!provider) {
-  //     message.warn(`Please install ${name} wallet first.`)
-  //     return
-  //   }
-  //   prepareToConnect()
-  // }, [activate, connector])
+  const connectToWallet =  useCallback(async () => {
+    const provider = await connector?.getProvider()
+    if (chainType === 'eth' && !provider) {
+      message.warn(`Please install ${name} wallet first.`)
+      return
+    }
+    onSelect(wallet)
+  }, [connector])
 
   return (
     <StyledWalletCard>
-      <div className="wallet-item" onClick={ () => onSelect(wallet) } >
+      <div className="wallet-item" onClick={ connectToWallet } >
         <span>{name}</span>
         <img className="wallet-icon" src={icon} alt="" />
       </div>

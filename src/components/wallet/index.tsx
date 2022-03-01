@@ -130,19 +130,19 @@ const WalletContent: React.FC<CurrentAccountProps> =({
     if (!!account && !!library) {
       let stale = false
 
-      library.getBalance(account)
-        .then((balance:any) => {
-          if (!stale) {
-            setBalance(balance)
-            console.log(formatEther(balance))
-          }
-        })
-        .catch(() => {
-          if (!stale) {
-            // @ts-ignore
-            setBalance(null)
-          }
-        })
+      // library.getBalance(account)
+      //   .then((balance:any) => {
+      //     if (!stale) {
+      //       setBalance(balance)
+      //       console.log(formatEther(balance))
+      //     }
+      //   })
+      //   .catch(() => {
+      //     if (!stale) {
+      //       // @ts-ignore
+      //       setBalance(null)
+      //     }
+      //   })
 
       return () =>{
         stale = true

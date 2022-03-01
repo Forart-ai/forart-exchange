@@ -11,6 +11,8 @@ import CONFT_API from '../../../apis/co-nft'
 import { useHistory } from 'react-router-dom'
 import { sleep } from '../../../utils'
 import wallet from '../../../components/wallet'
+import { useWeb3React } from '@web3-react/core'
+import { log } from 'util'
 // import { useConnectionConfig } from '../../../contexts/solana-connection-config'
 
 const Message = styled.div`
@@ -97,6 +99,8 @@ const MODAL_CONTENT = {
 
 const useNFTMint = () => {
   const { account } = useSolanaWeb3()
+  const { account : EthAccount } = useWeb3React()
+
   const { openModal, configModal, closeModal } = useModal()
   // const { mint } = useCandyMachine()
   const history = useHistory()
@@ -104,6 +108,7 @@ const useNFTMint = () => {
 
   const mintNFT =  useCallback(
     async (body: any, kit: any) => {
+      console.log(account, EthAccount)
       configModal({
         closeable:true,
         contentStyle: {
