@@ -15,6 +15,7 @@ import { useMediaQuery } from 'react-responsive'
 // @ts-ignore
 
 import YouTube from '@u-wave/react-youtube'
+import useConnectedWallet from '../../hooks/useGetCurrentWallet'
 
 const Wrapper = styled.div`
   max-width: 100vw;

@@ -13,6 +13,7 @@ import { sleep } from '../../../utils'
 import wallet from '../../../components/wallet'
 import { useWeb3React } from '@web3-react/core'
 import { log } from 'util'
+import useConnectedWallet from '../../useGetCurrentWallet'
 // import { useConnectionConfig } from '../../../contexts/solana-connection-config'
 
 const Message = styled.div`
@@ -98,8 +99,11 @@ const MODAL_CONTENT = {
 }
 
 const useNFTMint = () => {
-  const { account } = useSolanaWeb3()
-  const { account : EthAccount } = useWeb3React()
+  // const { account } = useSolanaWeb3()
+  // const { account : EthAccount } = useWeb3React()
+
+  const account = useConnectedWallet()
+  console.log(account)
 
   const { openModal, configModal, closeModal } = useModal()
   // const { mint } = useCandyMachine()
@@ -108,7 +112,6 @@ const useNFTMint = () => {
 
   const mintNFT =  useCallback(
     async (body: any, kit: any) => {
-      console.log(account, EthAccount)
       configModal({
         closeable:true,
         contentStyle: {
@@ -148,7 +151,7 @@ const useNFTMint = () => {
       const lockNFTForm: LockNFTRequest = {
         series: 3312,
         components: components,
-        wallet: account.toBase58()
+        wallet: account
       }
 
       // await sleep(1000)
@@ -202,7 +205,7 @@ const useNFTMint = () => {
 
       console.log(components)
 
-      CONFT_API.core.user.saveNFT(3312, components, account.toBase58())
+      CONFT_API.core.user.saveNFT(3312, components, account)
         .then(() => {
           history.push('/personal/home')
 

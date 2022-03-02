@@ -35,6 +35,7 @@ import useNFTMint from '../../hooks/programs/services/useNFTMint'
 import CONFT_API from '../../apis/co-nft'
 import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import { useWeb3React } from '@web3-react/core'
+import useConnectedWallet from '../../hooks/useGetCurrentWallet'
 
 const { TabPane } = Tabs
 
@@ -337,6 +338,7 @@ const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 }
 
 const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
+
   return (
     <ArtistDetailTab>
       {/*<Anchor onClick={() => onAnchorClick}  style={isMobile ? { display:'none' }  : { }}>*/}
@@ -392,11 +394,9 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
           <h2 className="title">Marketplace</h2>
           <img className="image-border"  />
           <p className="content">
-            <ul>
-              <li>Solanart</li>
-              <li>Slope </li>
-              <li>Magic Eden</li>
-            </ul>
+            · Solanart <br />
+            · Slope <br />
+            · Magic Eden <br />
           </p>
         </section>
 
@@ -423,7 +423,7 @@ const AllNftContainer: React.FC = () => {
 
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
-  const { account, select } = useSolanaWeb3()
+  const { account } = useSolanaWeb3()
   const { account : EthAccount } = useWeb3React()
 
   const { open } = useWalletSelectionModal()
@@ -443,10 +443,6 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
   const { checkWhiteListModal, openCheckWhiteListModal } = useCheckWhiteListModal()
   const discordAccessToken = useDiscordAccessToken()
   const { mintNFT } = useNFTMint()
-
-  useMemo(() => {
-    console.log(!account || !EthAccount)
-  },[account, EthAccount])
 
   useMemo(() => {
     if (discordAccessToken) {
@@ -615,22 +611,23 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
         { (account || EthAccount) && (
           <p >
-            Chances left: {userData?.getQualification}
+            Chances left: {userData?.getQualification | 0}
             <IconFont style={{ cursor:'pointer', marginLeft: '20px' }} type={'icon-Question'}  onClick={ openCheckWhiteListModal } />
           </p>
         )}
+
         {
-          !account  ? (
+          (!account && !EthAccount) ? (
             <Button  style={{ height:'50px' }} onClick={ open }>
               Connect Wallet
             </Button>
-          ): (
+          ) : (
             (userData?.getQualification === 0) ? (
               <Button  style={{  height:'50px' }} onClick={ openCheckWhiteListModal }>
                 Get Qualification
               </Button>
             ) : (
-              <Button style={{ width:'180px',height:'50px' }} onClick={handleCreate}> Create  </Button>
+              <Button style={{ width:'180px',height:'50px' }} onClick={handleCreate}> Create </Button>
             )
           )
         }

@@ -11,6 +11,7 @@ import { useRefreshController } from '../../contexts/refresh-controller'
 import CONFT_API from '../../apis/co-nft'
 import useDiscordMeQuery from '../queries/useDiscordMeQuery'
 import { useMediaQuery } from 'react-responsive'
+import useGetCurrentWallet from '../useGetCurrentWallet'
 
 type StepProps = {
   active?: boolean
@@ -129,7 +130,7 @@ const Row = styled.div`
   }
   
   .col-2 {
-    width: 32%;
+    width: 35%;
   }
   
   span {
@@ -138,13 +139,13 @@ const Row = styled.div`
 `
 
 const WalletStatus: React.FC<StepProps> = () => {
-  const {  account } = useSolanaWeb3()
+  const   account  = useGetCurrentWallet()
   return (
     account ? (
       <StepContent>
         <p>
           The wallet is connected with <br />
-          <span>{shortenAddress(account.toBase58())}</span>
+          <span>{account.substr(0,4) +'...' + account.substr(-4,4)}</span>
         </p>
         {/*<ConnectButton status={'primary'} onClick={disconnect}> Disconnect</ConnectButton>*/}
       </StepContent>
@@ -157,9 +158,9 @@ const WalletStatus: React.FC<StepProps> = () => {
 
 const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
   const artistId = useLocationQuery('artistId')
-  const { account } = useSolanaWeb3()
+  const account = useGetCurrentWallet()
 
-  const redirectUri = 'https://app.forart.ai/artistDetail?artistId=3312'
+  const redirectUri = 'http://localhost:3000/artistDetail?artistId=3312'
   const discordLoginUrl = `https://discord.com/oauth2/authorize?response_type=token&client_id=942705935221157978&state=15773059ghq9183habn&scope=identify&redirect_uri=${redirectUri}`
 
   const { data: user } = useUserQuery()
@@ -208,7 +209,7 @@ const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
 }
 
 const BindingStatus: React.FC<StepProps> = ({ active }) => {
-  const { account } = useSolanaWeb3()
+  const account = useGetCurrentWallet()
   const { forceRefresh } = useRefreshController()
   const { data: user } = useUserQuery()
   const discordAccessToken = useDiscordAccessToken()
@@ -232,7 +233,7 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
         content: (
           <div style={{ fontFamily: 'gilroy', color: '#fff' }} >
             <div>
-              Solana wallet address {account.toBase58()}.
+              Solana wallet address {account}.
               Discord:
               {
                 !user?.byWallet
@@ -246,7 +247,7 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
         ),
         onOk: () => {
           setRequesting(true)
-          CONFT_API.core.user.bindingUser(discordAccessToken, account.toBase58())
+          CONFT_API.core.user.bindingUser(discordAccessToken, account)
             .then(() => {
               forceRefresh()
               setRequesting(false)
@@ -283,7 +284,7 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
 }
 
 export const useCheckWhiteListModal = () => {
-  const { account } = useSolanaWeb3()
+  const account = useGetCurrentWallet()
 
   const { data: user } = useUserQuery()
   const discordAccessToken = useDiscordAccessToken()
@@ -375,7 +376,7 @@ export const useCheckWhiteListModal = () => {
 
               <Row>
                 <span>Inviter L-1/2/3</span>
-                <span className="col-2">invite at least 5/10/15 people for valid votes</span>
+                <span className="col-2">invite at least 5/10/15 people to join Forart Discord server</span>
                 <span>1/2/3</span>
               </Row>
               {/*<Row>*/}
