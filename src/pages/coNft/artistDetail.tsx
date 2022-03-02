@@ -6,10 +6,9 @@ import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
 import MoreKit from '../../assets/images/coPools/more.svg'
 import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
 import { NFTPreview, Title } from '../../components/nft-mint/selectedList'
-// import OpenSwitch from '../../assets/images/coPools/switch.svg'
 import ArtistBanner from '../../assets/images/coPools/hypteen-banner.jpg'
 
-import { Button, message, Modal, Tabs } from 'antd'
+import { Button, Modal, Tabs } from 'antd'
 import { BlockOutlined, CrownOutlined, SmileOutlined,createFromIconfontCN  } from '@ant-design/icons'
 import {
   BodyContent,
@@ -32,10 +31,8 @@ import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import useUserQuery from '../../hooks/queries/useUserQuery'
 import useDiscordAccessToken from '../../hooks/useDiscordAccessToken'
 import useNFTMint from '../../hooks/programs/services/useNFTMint'
-import CONFT_API from '../../apis/co-nft'
 import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import { useWeb3React } from '@web3-react/core'
-import useConnectedWallet from '../../hooks/useGetCurrentWallet'
 
 const { TabPane } = Tabs
 

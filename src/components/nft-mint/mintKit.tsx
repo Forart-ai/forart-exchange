@@ -37,8 +37,6 @@ const ImageContainer = styled.div`
 
   img {
     object-fit: cover;
-    //border-top-left-radius: 10px;
-    //border-top-right-radius: 10px;
     border-radius: 1em;
     width: 100%;
     height: 100%;
@@ -146,10 +144,6 @@ export const SelectableKitList: React.FC<{selectedValue?: any, onSelect: (_?: an
         list?.map((item, index) => (
           <KitItemContainer key={index}>
             <SelectableKitItem  src={item} onSelect={onSelect} checked={selectedValue?.url === item?.url}  />
-            {/*<KitInfo>*/}
-            {/*  <div>{item.price} FTA</div>*/}
-            {/*  <div>Rarity: {item.rarity}</div>*/}
-            {/*</KitInfo>*/}
           </KitItemContainer>
         ))
       }

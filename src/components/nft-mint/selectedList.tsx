@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { Popover } from 'antd'
 
 const Wrapper = styled.div`
   margin: 20px 0;
   width: 100%;
+  
 `
 export const Title = styled.div`
   font-size: 2.5em;
@@ -41,6 +43,16 @@ const MintItems = styled.div`
   &:last-child {
     margin-right: auto;
   }
+`
+
+const MysteryHat = styled.div`
+  position: absolute;
+  height: 100px;
+  width: 250px;
+  border: 1px red solid;
+  left: 80px;
+  top: 90px;
+  z-index: 2;
 `
 
 const PreviewContainer = styled.div`
@@ -94,7 +106,7 @@ export const SelectedList: React.FC<{kitList?: Map<string, any>, body: any}> = (
 export const NFTPreview: React.FC<{kitList?: Map<string, any>, body: any}> = ({ kitList, body }) => {
 
   const [background, setBackground] = useState<any>()
-  
+
   const filterBackground = (array: any) => {
     return array[0] !== 'background'
   }
@@ -109,6 +121,11 @@ export const NFTPreview: React.FC<{kitList?: Map<string, any>, body: any}> = ({ 
   return (
     <Wrapper>
       <PreviewContainer>
+        {/*<Popover content={<p>dd</p>} title="Title">*/}
+        {/*  <MysteryHat>*/}
+        {/*    <img src={'https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg'} />*/}
+        {/*  </MysteryHat>*/}
+        {/*</Popover>*/}
         <PreviewImages>
           {
             background?.url && <img src={background?.url} />
