@@ -177,7 +177,7 @@ export const MintTab = styled(Tabs)`
 
 export const MintContainer = styled.div`
   width: 100%;
-  height: 600px;
+  height: 100%;
   
   @media screen and (max-width: 1100px) {
     height: auto;
@@ -187,16 +187,15 @@ export const MintContainer = styled.div`
 export const KitListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  //justify-content: space-between;
   width: 100%;
   max-height: 520px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: scroll;
 
 
   ::-webkit-scrollbar {
-    width: 10px;
-    background-color: transparent;
+    display: revert;
+    width: 5px; !important;
+    height: 100%;
   }
   
   @media screen and (max-width: 1100px) {
