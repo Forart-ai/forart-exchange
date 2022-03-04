@@ -57,9 +57,9 @@ const WalletSelectionModal: React.FC<WalletSelectionModalProps> = ({
       activate(wallet.connector)
     }
 
-    if (wallet.chainType === 'solana' && wallet.adapter) {
-      connect(wallet)
-    }
+    // if (wallet.chainType === 'solana' && wallet.adapter) {
+    //   connect(wallet)
+    // }
 
   }, [connect, activate])
 

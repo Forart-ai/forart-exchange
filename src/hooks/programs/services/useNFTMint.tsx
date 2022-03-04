@@ -99,10 +99,10 @@ const MODAL_CONTENT = {
 }
 
 const useNFTMint = () => {
-  // const { account } = useSolanaWeb3()
+  const { account } = useSolanaWeb3()
   // const { account : EthAccount } = useWeb3React()
 
-  const account = useConnectedWallet()
+  // const account = useConnectedWallet()
 
   const { openModal, configModal, closeModal } = useModal()
   // const { mint } = useCandyMachine()
@@ -150,7 +150,7 @@ const useNFTMint = () => {
       const lockNFTForm: LockNFTRequest = {
         series: 3312,
         components: components,
-        wallet: account
+        wallet: account.toBase58()
       }
 
       // await sleep(1000)
@@ -204,7 +204,7 @@ const useNFTMint = () => {
 
       console.log(components)
 
-      CONFT_API.core.user.saveNFT(3312, components, account)
+      CONFT_API.core.user.saveNFT(3312, components, account.toBase58())
         .then(() => {
           history.push('/personal/home')
 

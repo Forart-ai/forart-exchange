@@ -45,14 +45,14 @@ export const supportWallets: WalletType[] = [
     chainType: 'eth'
 
   },
-  {
-    name: 'Phantom',
-    url: 'https://phantom.app/',
-    icon: 'https://raydium.io/_nuxt/img/phantom.d9e3c61.png',
-    adapter: PhantomWalletAdapter,
-    chainType: 'solana'
-
-  }
+  // {
+  //   name: 'Phantom',
+  //   url: 'https://phantom.app/',
+  //   icon: 'https://raydium.io/_nuxt/img/phantom.d9e3c61.png',
+  //   adapter: PhantomWalletAdapter,
+  //   chainType: 'solana'
+  //
+  // }
 
 ]
 

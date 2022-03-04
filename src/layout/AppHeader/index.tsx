@@ -59,7 +59,7 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
         <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
       </Logo>
       <Operator>
-        {/*<SolanaWallet />*/}
+        <SolanaWallet />
         <Wallet />
         <div style={{ fontSize: '20px', color: '#A53067' }}   onClick={() => history.push('/personal/home')} >
           <img src={UserIcon} />

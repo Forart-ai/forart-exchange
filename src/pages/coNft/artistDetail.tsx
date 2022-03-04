@@ -34,6 +34,7 @@ import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import { useWeb3React } from '@web3-react/core'
 import CONFT_API from '../../apis/co-nft'
 import MintListItem from '../../components/mintListItem'
+import AllNftList from '../../components/nft-mint/allNftList'
 
 const { TabPane } = Tabs
 
@@ -283,7 +284,6 @@ const AllNftWrapper = styled.div`
   
   
   .rc-virtual-list {
-   border: 1px green solid;
    .rc-virtual-list-holder-inner {
      display: flex;
      flex-direction: row !important;
@@ -313,12 +313,6 @@ const ListItem = styled.div`
   display: flex;
   width: fit-content;
   
-  img {
-    
-    width: 250px;
-    border-radius: 10px;
-    margin: 10px 9px;
-  }
 `
 
 const NFTListContainer = styled.div`
@@ -473,13 +467,15 @@ const AllNftContainer: React.FC = () => {
     })
   },[])
 
+  console.log(data)
+
   return (
     <AllNftWrapper>
-      <List data={data} height={800} itemHeight={100} itemKey="id" >
+      <List data={data} height={800}  itemKey="id" >
         {
           (nft,index) => (
             <ListItem key={index}>
-              <MintListItem data={nft} key={index} />
+              <AllNftList data={nft} key={index} />
             </ListItem>
           )
         }
@@ -490,7 +486,7 @@ const AllNftContainer: React.FC = () => {
 
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
-  const { account } = useSolanaWeb3()
+  const { account,select } = useSolanaWeb3()
   const { account : EthAccount } = useWeb3React()
 
   const { open } = useWalletSelectionModal()
@@ -676,7 +672,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
       <MintButton >
 
-        { (account || EthAccount) && (
+        { account  && (
           <p >
             Chances left: {userData?.getQualification | 0}
             <IconFont style={{ cursor:'pointer', marginLeft: '20px' }} type={'icon-Question'}  onClick={ openCheckWhiteListModal } />
@@ -684,8 +680,8 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         )}
 
         {
-          (!account && !EthAccount) ? (
-            <Button  style={{ height:'50px' }} onClick={ open }>
+          !account ? (
+            <Button  style={{ height:'50px' }} onClick={ select }>
               Connect Wallet
             </Button>
           ) : (

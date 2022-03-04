@@ -331,21 +331,7 @@ export const useCheckWhiteListModal = () => {
                 <span className="col-2">at least 1/5/8/10 votes</span>
                 <span>1/2/3/4</span>
               </Row>
-              {/*<Row>*/}
-              {/*  <span>OG L-2</span>*/}
-              {/*  <span className="col-2">at least 5 votes</span>*/}
-              {/*  <span>2</span>*/}
-              {/*</Row>*/}
-              {/*<Row>*/}
-              {/*  <span>OG L-3</span>*/}
-              {/*  <span className="col-2">at least 8 votes</span>*/}
-              {/*  <span>3</span>*/}
-              {/*</Row>*/}
-              {/*<Row>*/}
-              {/*  <span>OG L-4</span>*/}
-              {/*  <span className="col-2">at least 10 votes</span>*/}
-              {/*  <span>4</span>*/}
-              {/*</Row>*/}
+
               <Row>
                 <span>Hero</span>
                 <span className="col-2">at least 12 votes</span>
@@ -362,16 +348,6 @@ export const useCheckWhiteListModal = () => {
                 <span className="col-2">invite at least 3/6/9 people for valid votes</span>
                 <span>1/2/3</span>
               </Row>
-              {/*<Row>*/}
-              {/*  <span>Referrer L-2</span>*/}
-              {/*  <span className="col-2">invite at least 6 people for valid votes</span>*/}
-              {/*  <span>2</span>*/}
-              {/*</Row>*/}
-              {/*<Row>*/}
-              {/*  <span>Referrer L-3</span>*/}
-              {/*  <span className="col-2">invite at least 9 people for valid votes</span>*/}
-              {/*  <span>3</span>*/}
-              {/*</Row>*/}
               <br />
 
               <Row>
@@ -379,16 +355,6 @@ export const useCheckWhiteListModal = () => {
                 <span className="col-2">invite at least 5/10/15 people to join Forart Discord server</span>
                 <span>1/2/3</span>
               </Row>
-              {/*<Row>*/}
-              {/*  <span>Inviter L-2</span>*/}
-              {/*  <span className="col-2">invite at least 10 people for valid votes</span>*/}
-              {/*  <span>2</span>*/}
-              {/*</Row>*/}
-              {/*<Row>*/}
-              {/*  <span>Inviter L-3</span>*/}
-              {/*  <span className="col-2">invite at least 15 people for valid votes</span>*/}
-              {/*  <span>3</span>*/}
-              {/*</Row>*/}
 
             </TableBox>
           </p>
