@@ -251,7 +251,7 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
             .then(() => {
               forceRefresh()
               setRequesting(false)
-              message.success('Binding Successfully')
+              message.success('Connect Successfully')
             })
             .catch(e => {
               setRequesting(false)
@@ -272,9 +272,9 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
     <StepContent>
       {
         !user?.byWallet ? (
-          <ConnectButton disabled={!active} onClick={handleBinding} > Binding <br />Discord & wallet</ConnectButton>
+          <ConnectButton disabled={!active} onClick={handleBinding} > Connect <br />Discord & wallet</ConnectButton>
         ) : (
-          <p  >The Discord account has been bound with <br />
+          <p  >The Discord account has been connected with <br />
             <span>{shortenAddress(user.byWallet?.wallet)}</span>
           </p>
         )
@@ -316,7 +316,7 @@ export const useCheckWhiteListModal = () => {
     >
       <Content >
         <TipsCard>
-          <p > 😺  Chances left: <b>{user?.getQualification}</b> </p>
+          <p > 😺  Accesses left: <b>{user?.getQualification}</b> </p>
           <p>  😻  You can get a Discord role by voting for us in Hackthon or inviting friends to join our Discord.</p>
           <p>  🎁  Server role perks on CO-NFT creation <br /> One access mean you can create one NFT artwork for free and earn 10% of sale revenue in launchpad!</p>
           <p>
@@ -372,7 +372,7 @@ export const useCheckWhiteListModal = () => {
           <Steps current={currentStep} direction={isMobile ? 'vertical' : 'horizontal'}>
             <Steps.Step title={'Connect to wallet'} description={<WalletStatus active={currentStep === 0} />}  />
             <Steps.Step title={'Login via Discord'} description={<DiscordIdentity active={currentStep === 1} />}  />
-            <Steps.Step title={'Binding Discord and wallet'} description={<BindingStatus active={currentStep === 2}  />}  />
+            <Steps.Step title={'Connect Discord and wallet'} description={<BindingStatus active={currentStep === 2}  />}  />
           </Steps>
         </TipsCard>
       </Content>

@@ -674,7 +674,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
         { account  && (
           <p >
-            Chances left: {userData?.getQualification | 0}
+            Accesses left: {userData?.getQualification | 0}
             <IconFont style={{ cursor:'pointer', marginLeft: '20px' }} type={'icon-Question'}  onClick={ openCheckWhiteListModal } />
           </p>
         )}
