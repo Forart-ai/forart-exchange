@@ -14,6 +14,12 @@ const Wrapper = styled.div`
   align-items: center;
   //background-image: linear-gradient(to bottom, rgba(255, 31, 131, 0.6), rgba(241, 13, 192, 0.6));
   background-color: rgb(55, 13, 65);
+  transition: transform 0.22s;
+  
+  :hover {
+    transform: scale(1.05);
+    transition-duration: 0.7s;
+  }
 
   img {
     width: 100%;

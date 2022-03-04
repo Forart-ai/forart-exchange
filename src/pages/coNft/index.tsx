@@ -236,8 +236,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
           <YouTube
             video="DszF7e5kb54"
-            autoplay
-            height={'100%'}
+            height={'80%'}
             width={'100%'}
             suggestedQuality={'default'}
             showRelatedVideos= {false}
