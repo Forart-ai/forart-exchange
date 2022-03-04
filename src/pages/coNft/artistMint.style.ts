@@ -200,8 +200,6 @@ export const KitListContainer = styled.div`
   
   @media screen and (max-width: 1100px) {
   }
-
-
 `
 
 export const CenterContainer = styled.div`

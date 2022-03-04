@@ -1,14 +1,13 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
-import MoreKit from '../../assets/images/coPools/more.svg'
 import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
 import { NFTPreview, Title } from '../../components/nft-mint/selectedList'
 import ArtistBanner from '../../assets/images/coPools/hypteen-banner.jpg'
-
-import { Button, Modal, Tabs } from 'antd'
+import List from 'rc-virtual-list'
+import { Avatar, Button, Modal, Tabs } from 'antd'
 import { BlockOutlined, CrownOutlined, SmileOutlined,createFromIconfontCN  } from '@ant-design/icons'
 import {
   BodyContent,
@@ -33,6 +32,8 @@ import useDiscordAccessToken from '../../hooks/useDiscordAccessToken'
 import useNFTMint from '../../hooks/programs/services/useNFTMint'
 import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import { useWeb3React } from '@web3-react/core'
+import CONFT_API from '../../apis/co-nft'
+import MintListItem from '../../components/mintListItem'
 
 const { TabPane } = Tabs
 
@@ -273,12 +274,24 @@ const TabItem = styled.div`
 
 const AllNftWrapper = styled.div`
   width: 100%;
-  height: 300px;
+  height: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
   font-size: 2em;
   color: #ffffff;
+  
+  
+  .rc-virtual-list {
+   border: 1px green solid;
+   .rc-virtual-list-holder-inner {
+     display: flex;
+     flex-direction: row !important;
+     flex-wrap: wrap;
+     justify-content: flex-start;
+   }
+  }
+  
 `
 
 const Message = styled.div`
@@ -293,6 +306,44 @@ const Message = styled.div`
       width: 35px;
       margin-left: 15px;
     }
+  }
+`
+
+const ListItem = styled.div`
+  display: flex;
+  width: fit-content;
+  
+  img {
+    
+    width: 250px;
+    border-radius: 10px;
+    margin: 10px 9px;
+  }
+`
+
+const NFTListContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 16px;
+  border: 1px green solid;
+
+  .empty {
+    padding: 0;
+    height: 0;
+    width: 210px;
+  }
+  
+  .warning {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    font-size: 1.8em;
+  }
+  
+  @media screen and (max-width: 1100px) {
+    justify-content: center;
   }
 `
 
@@ -335,7 +386,6 @@ const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 }
 
 const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
-
   return (
     <ArtistDetailTab>
       {/*<Anchor onClick={() => onAnchorClick}  style={isMobile ? { display:'none' }  : { }}>*/}
@@ -413,8 +463,28 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
 }
 
 const AllNftContainer: React.FC = () => {
+
+  const [page, setPage] = useState<number>(1)
+  const [data, setData] = useState<any>()
+
+  useEffect(()=> {
+    CONFT_API.core.nft.getNftRank(3312, page).then(res => {
+      setData(res)
+    })
+  },[])
+
   return (
-    <AllNftWrapper>Coming Soon!</AllNftWrapper>
+    <AllNftWrapper>
+      <List data={data} height={800} itemHeight={100} itemKey="id" >
+        {
+          (nft,index) => (
+            <ListItem key={index}>
+              <MintListItem data={nft} key={index} />
+            </ListItem>
+          )
+        }
+      </List>
+    </AllNftWrapper>
   )
 }
 

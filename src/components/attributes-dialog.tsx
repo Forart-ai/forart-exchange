@@ -108,7 +108,7 @@ const AttributesDialog: React.FC<{ item: MintedNFTItem }> = ({ item }) => {
   }, [item])
 
   const attr = useMemo(() => {
-    return item?.componentMetas.map((v: { chainMeta: string }) => ({
+    return item?.componentMetas?.map((v: { chainMeta: string }) => ({
       chainMeta: JSON.parse(v.chainMeta)
     }))
   }, [level, item])

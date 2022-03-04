@@ -103,7 +103,6 @@ const useNFTMint = () => {
   // const { account : EthAccount } = useWeb3React()
 
   const account = useConnectedWallet()
-  console.log(account)
 
   const { openModal, configModal, closeModal } = useModal()
   // const { mint } = useCandyMachine()

@@ -46,6 +46,11 @@ const CONFT_API = {
       saveNFT(series: number | string, components: number[], wallet:string) {
         return Service.post('/nft/promotion/create', { series, components, wallet })
       }
+    },
+    nft:{
+      getNftRank(series: number | string, page: number) {
+        return Service.get(`nft/rank/${series}/${page}`)
+      }
     }
   }
 }
