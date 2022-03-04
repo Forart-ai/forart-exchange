@@ -538,9 +538,9 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         list: artistKit?.Pants
       },
       {
-        name: 'Eye',
-        key: 'eye',
-        list: artistKit?.Eye
+        name: 'Butt',
+        key: 'butt',
+        list: artistKit?.Butt
       },
       {
         name: 'Mouth',
@@ -548,21 +548,21 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         list: artistKit?.Mouth
       },
       {
+        name: 'Eye',
+        key: 'eye',
+        list: artistKit?.Eye
+      },
+      {
         name: 'Foot',
         key: 'foot',
         list: artistKit?.Foot
       },
+
       {
         name: 'Hand',
         key: 'hand',
         list: artistKit?.Hand
       },
-
-      {
-        name: 'Butt',
-        key: 'butt',
-        list: artistKit?.Butt
-      }
 
     ], [artistKit])
 

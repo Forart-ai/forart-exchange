@@ -68,9 +68,22 @@ const PreviewImages = styled.div`
   border-radius: 10px;
 
   img{
+    position: relative;
     width: 100%;
     height: 100%;
     object-fit: contain;
+  }
+  
+  .butt ,.foot ,.mouth {
+    z-index: 2;
+  }
+  
+  .pants {
+    z-index: 3;
+  }
+  
+  .clothing ,.eye {
+    z-index: 4;
   }
   
 `
@@ -115,7 +128,6 @@ export const NFTPreview: React.FC<{kitList?: Map<string, any>, body: any}> = ({ 
 
   useEffect(()=> {
     setBackground (kitList?.get('background'))
-    console.log(Array.from(kitList?.entries() ?? []).filter(filterBackground))
   },[kitList])
 
   return (
@@ -139,8 +151,8 @@ export const NFTPreview: React.FC<{kitList?: Map<string, any>, body: any}> = ({ 
 
         {
           Array.from(kitList?.entries() ?? []).filter(filterBackground).map(([key, value]) => (
-            <PreviewImages  key={key}>
-              <img className="image" src={value.url} />
+            <PreviewImages key={key}>
+              <img  className={key} src={value.url} />
             </PreviewImages>
           ))
         }
