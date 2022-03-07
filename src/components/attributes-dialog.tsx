@@ -4,15 +4,14 @@ import styled, { keyframes } from 'styled-components'
 import { AttributesItem } from './attributes-item'
 
 const AttributesDialogWrapper = styled.div`
-  width: 85%;
-  height: fit-content;
-  background: rgb(29,34,45);
+  max-width: 1200px;
+  background: rgb(27, 3, 42);
   display: flex;
-  padding: 10px;
+  padding: 20px;
   border-radius: 1em;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
-  
+
   .rarity {
     display: flex;
   }
@@ -22,7 +21,7 @@ const AttributesDialogWrapper = styled.div`
 const LeftArea = styled.div`
   display: flex;
   align-items: center;
-  width: 50%;
+  width: 38%;
   height: 100%;
   
   
@@ -36,26 +35,42 @@ const LeftArea = styled.div`
 `
 
 export const RightArea = styled.div`
-  width: 50%;
-  height: 100%;
+  width: 59%;
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
-  font-weight: 600;
   font-family: 'campton';
-  
+
+
   .top {
-    display: flex;
-    justify-content: space-around;
-    font-size: 1.4em;
     
+    font-size: 1.4em;
+    height: 40%;
+    font-weight: 600;
+
     .name {
-      color: #FF4D9D;
+      color: #ffffff;
+    }
+    
+    .owner {
+      display: flex;
+      font-size: .6em;
+      font-weight: lighter;
+      
+      .wallet {
+        color: white;
+        margin-left: 10px;
+      }
+      span {
+        display: table;
+        background: -webkit-linear-gradient(0deg,#17ef97 -5.04%,#6084ff 46.01%,#d324f7 96.01%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
     }
   }
   
   .bottom {
-    height: fit-content;
+    height: 80%;
   }
 }
 
@@ -80,8 +95,8 @@ export const ShineKeyFrame = keyframes`
 
 export const LevelLabel = styled.div<{ color: string, shine?: boolean }>`
   font-family: 'campton';
-  font-weight: 600;
-  font-size: 1em;
+  font-size: .7em;
+  font-weight: lighter;
 
   color: ${props => props.color.replace(/(\d)\)/, '$1, 0.9)')};
   animation: ${ShineKeyFrame} 2s infinite linear;
@@ -131,6 +146,10 @@ const AttributesDialog: React.FC<{ item: MintedNFTItem }> = ({ item }) => {
             )
           }
           </div>
+          {/*<div className="owner">*/}
+          {/*  <span>Owned by:</span>*/}
+          {/*  <div className="wallet">{item?.wallet}</div>*/}
+          {/*</div>*/}
         </div>
         <div className="bottom">
           <AttributesItem item={attr} />

@@ -72,6 +72,7 @@ const ModalProvider: React.FC = ({ children }) => {
         preventScroll={true}
         isOpen={visible}
         contentLabel="Minimal Modal Example"
+        ariaHideApp={false}
         style={{
           overlay: {
             background: 'rgba(29,34,45, 0.09)',

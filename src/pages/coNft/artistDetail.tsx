@@ -35,6 +35,7 @@ import { useWeb3React } from '@web3-react/core'
 import CONFT_API from '../../apis/co-nft'
 import MintListItem from '../../components/mintListItem'
 import AllNftList from '../../components/nft-mint/allNftList'
+import { MintedNFTItem } from '../../types/coNFT'
 
 const { TabPane } = Tabs
 
@@ -458,16 +459,25 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
 
 const AllNftContainer: React.FC = () => {
 
+  const [maxPage, setMaxPage] = useState<number>(1)
   const [page, setPage] = useState<number>(1)
-  const [data, setData] = useState<any>()
+  const [data, setData] = useState<any[]>([])
+
+  useMemo(() => {
+    CONFT_API.core.kits.getOverView().then((r: any) => {
+      setMaxPage(Math.ceil(r.minted / 10))
+      console.log(maxPage)
+    })
+  },[maxPage])
 
   useEffect(()=> {
-    CONFT_API.core.nft.getNftRank(3312, page).then(res => {
-      setData(res)
-    })
-  },[])
-
-  console.log(data)
+    if (page <= maxPage) {
+      CONFT_API.core.nft.getNftRank(3312, page).then((res:any) => {
+        setData(data.concat(res))
+        setPage(page + 1)
+      })
+    }
+  },[page, maxPage])
 
   return (
     <AllNftWrapper>
@@ -475,7 +485,7 @@ const AllNftContainer: React.FC = () => {
         {
           (nft,index) => (
             <ListItem key={index}>
-              <AllNftList data={nft} key={index} />
+              <AllNftList data={nft} index={index} />
             </ListItem>
           )
         }

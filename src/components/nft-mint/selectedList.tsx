@@ -82,7 +82,7 @@ const PreviewImages = styled.div`
     z-index: 3;
   }
   
-  .clothing ,.eye {
+  .clothing ,.eye, .hat {
     z-index: 4;
   }
   

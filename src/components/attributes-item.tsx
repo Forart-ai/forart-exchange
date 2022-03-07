@@ -1,59 +1,62 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
-import { log } from 'util'
+import ScrollContainer from 'react-indiana-drag-scroll'
 
 export interface AttributesListItem {
     chainMeta: any;
 }
 
 const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  
+  height: 100%;
+  overflow: auto;
+  width: 100%;
+  cursor: grab;
+
+  .scroll-container {
+    ::-webkit-scrollbar {
+      display: flex !important;
+      height: 5px;
+    }
+  }
 `
 
 const BoxContainer = styled.div`
-  width: 90%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
-  .empty {
-    height: 0;
-    padding: 0;
-    width: 200px;
-  }
+  padding: 0 10px 30px 0;
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-auto-flow: column;
+  grid-gap: 12px;
+  user-select: none;
 `
 
 const ItemBox = styled.div`
   height: 100px;
-  width: 200px;
-  margin-top: 50px;
+  width: 180px;
+  margin-top: 20px;
+  border-radius: 10px;
+  background: linear-gradient(91.28deg, #3a0341 1.37%, #000328 113.86%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
   .type, .value {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 3px 0;
-    height: 50%;
+    font-weight: lighter;
+
   }
 
   .type {
-   
-    border-top-left-radius: 1em;
-    border-top-right-radius: 1em;
-    background: #341222;
-    color: #FF4D9D;
+    color: #f38aad;
+
+    //background: #341222;
   }
 
   .value {
-    border-bottom-left-radius: 1em;
-    border-bottom-right-radius: 1em;
-    background: #2c283a;
+text-align: center;
     color: #fff;
   }
 
- 
+
 
 `
 
@@ -61,24 +64,23 @@ export const AttributesItem: React.FC<{ item: Array<AttributesListItem | undefin
 
   return (
     <Wrapper>
-      <BoxContainer>
-        {
-          item?.map(items => (
-            <ItemBox key={items?.chainMeta.trait_type} >
-              <div className="type"> {items?.chainMeta.trait_type}</div>
-              <div className="value"> {items?.chainMeta.value}</div>
+      <ScrollContainer className="scroll-container" hideScrollbars={false}>
 
-            </ItemBox>
+        <BoxContainer>
+          {
+            item?.map(items => (
+              <ItemBox key={items?.chainMeta.trait_type} >
+                <div className="type"> {items?.chainMeta.trait_type}</div>
+                <div className="value"> {items?.chainMeta.value}</div>
 
-          ))
+              </ItemBox>
 
-        }
-        {
-          new Array(1).fill({}).map((_, index) => (
-            <div className="empty" key={index} />
-          ))
-        }
-      </BoxContainer>
+            ))
+
+          }
+        </BoxContainer>
+      </ScrollContainer>
+
     </Wrapper>
 
   )

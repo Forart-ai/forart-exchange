@@ -115,34 +115,40 @@ const AppSideBar:React.FC = () => {
     return routes.filter(route => route.path === pathname || route.match?.test(pathname))[0]?.path
   })()
 
+  const MenuComp = () => {
+    return (
+      <Affix offsetTop={0}>
+        <div className="side-border">
+          {
+            routes.filter(route => !route.hidden).map((route: Route) => {
+              const fillColor = (route.path === pathname ) ? 'white' : 'red'
+
+              return (
+                <Link to={route.path} key={route.path}>
+                  <Tooltip placement={'right'} title={route.title} >
+                    <Menu.Item
+                      icon={<route.icon fill={fillColor} />}
+                      disabled={route.disable}
+                    />
+                  </Tooltip>
+
+                </Link>
+              )
+            })
+          }
+
+        </div>
+      </Affix>
+    )
+  }
+
   return (
     <SidebarWrapper>
       <CustomizedMenu
         selectedKeys={[selectedKey]}
         mode="inline"
       >
-        <Affix offsetTop={0}>
-          <div className="side-border">
-            {
-              routes.filter(route => !route.hidden).map((route: Route) => {
-                const fillColor = (route.path === pathname ) ? 'white' : 'red'
-
-                return (
-                  <Link to={route.path} key={route.path}>
-                    <Tooltip placement={'right'} title={route.title} >
-                      <Menu.Item
-                        icon={<route.icon fill={fillColor} />}
-                        disabled={route.disable}
-                      />
-                    </Tooltip>
-
-                  </Link>
-                )
-              })
-            }
-
-          </div>
-        </Affix>
+        <MenuComp />
       </CustomizedMenu>
 
       <LinkContainer >

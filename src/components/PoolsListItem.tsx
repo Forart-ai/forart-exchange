@@ -4,7 +4,7 @@ import { PoolsListData } from '../types/coNFT'
 import { Button } from 'antd'
 import { Link } from 'react-router-dom'
 
-const PoolsCardContainer = styled.div< { loading?: boolean }>`
+const PoolsCardContainer = styled.div< { loading?: string }>`
   width: 600px;
   height: 270px;
   margin-bottom: 20px;
@@ -18,7 +18,7 @@ const PoolsCardContainer = styled.div< { loading?: boolean }>`
   overflow: hidden;
   //box-shadow: inset 20px 20px 20px #0000008c;
 
-  ${props => props.loading && `
+  ${props => props.loading === 'true' && `
    &:before {
     content: "";
     background-image: conic-gradient(#FF468B 20deg, transparent 120deg);
@@ -122,11 +122,11 @@ const DataContent = styled.div`
 
 const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data, status }) => {
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState<string>('false')
 
   useMemo(() => {
     if (data?.status === 'closing') {
-      setLoading(true)
+      setLoading('true')
     }
   },[status])
 

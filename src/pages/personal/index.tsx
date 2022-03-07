@@ -177,7 +177,6 @@ const UserMintedNFTList: React.FC<{ list: Array<MintedNFTItem> | undefined  }> =
     <NFTListContainer>
       {
         list?.map((nft: any, index: number) => (
-
           <MintListItem data={nft} key={index} />
         ))
       }
