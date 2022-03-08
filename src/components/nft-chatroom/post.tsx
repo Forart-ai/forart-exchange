@@ -7,9 +7,9 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   height: 20%;
-  width: 50%;
+  width: 100%;
   min-width: 410px;
-  background-color: #222528;
+  background-color: #1D222D;
   border-radius: 10px;
   
   .title {

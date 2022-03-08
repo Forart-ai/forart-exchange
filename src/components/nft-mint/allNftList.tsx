@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Image } from 'antd'
 import { useModal } from '../../contexts/modal'
 import AttributesDialog from '../attributes-dialog'
+import {  HeartOutlined, HeartFilled   } from '@ant-design/icons'
 
 const Wrapper = styled.div`
   width: 200px;
@@ -17,7 +18,6 @@ const Wrapper = styled.div`
   //background-image: linear-gradient(to bottom, rgba(255, 31, 131, 0.6), rgba(241, 13, 192, 0.6));
   background-color: rgb(55, 13, 65);
   transition: transform 0.22s;
-  cursor: pointer;
   
   :hover {
     transform: scale(1.05);
@@ -29,6 +29,8 @@ const Wrapper = styled.div`
     object-fit: contain;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+    cursor: pointer;
+
   }
 `
 
@@ -39,16 +41,35 @@ const Info = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   padding: 2px 8px;
   
   .name {
-    font-size: .75em;
+    font-size: .65em;
     font-weight: bold;
+    width: 100%;
   }
   
   .rank {
+    position: relative;
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: .5em;
+    
+    .heart {
+      
+      position: absolute;
+      right: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      
+      :hover {
+        color: #ff005e;
+        background: rgba(255, 0, 94, .3);
+        transition-duration: 0.5s;
+      }
+    }
   }
 `
 
@@ -61,12 +82,20 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
     }
   }, [data])
 
+  const handleLike = useCallback((nftId: string | number) => {
+    console.log(nftId)
+  },[])
+
   return (
-    <Wrapper onClick={cb}>
-      <img src={data?.previewUrl} />
+    <Wrapper >
+      <img src={data?.previewUrl} onClick={cb} />
       <Info>
         <div className="name">{data?.chainNftName || `HypeTeen # ${data?.chainNftNameTmp}`}</div>
-        <div className="rank">Rank {index + 1}</div>
+        <div className="rank">
+          {/*<div>Rank {index + 1}</div>*/}
+          <HeartOutlined className="heart"  onClick={() =>handleLike(data?.previewUrl)} />
+          {/*<HeartFilled   />*/}
+        </div>
       </Info>
 
     </Wrapper>

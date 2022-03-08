@@ -49,8 +49,6 @@ const routes: Route[] = [
     title: 'NFT-Chatroom',
     icon: GamesIcon,
     component: NftChatroom,
-    disable: true,
-    hidden:true
   },
   {
     path: '/Text-to-NFT',
