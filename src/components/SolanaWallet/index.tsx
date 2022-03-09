@@ -11,7 +11,6 @@ const WalletButton = styled.div`
   height: 40px;
   background-color: #1E052D;
   color: #fff;
-  font-size: 1.1em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,7 +41,7 @@ const ConnectButton = () => {
 
   return (
     <WalletButton onClick={select}>
-      Connect To Solana
+      <span>Connect To Solana</span>
     </WalletButton>
   )
 }

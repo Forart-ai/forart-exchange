@@ -10,7 +10,7 @@ import { ReactComponent as GanIcon } from '../assets/images/siderIcon/f-idea.svg
 import { ReactComponent as GeneratorIcon } from '../assets/images/siderIcon/generator.svg'
 import { ReactComponent as MarketplaceIcon } from '../assets/images/siderIcon/marketplace.svg'
 import { ReactComponent as GamesIcon } from '../assets/images/siderIcon/games.svg'
-import NftChatroom from '../components/nft-chatroom'
+import NftChatroom from '../pages/nft-chatroom'
 
 export type Route = {
   path: string
@@ -49,6 +49,8 @@ const routes: Route[] = [
     title: 'NFT-Chatroom',
     icon: GamesIcon,
     component: NftChatroom,
+    hidden: true
+
   },
   {
     path: '/Text-to-NFT',

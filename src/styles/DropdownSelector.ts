@@ -22,8 +22,8 @@ const DropdownSelector = styled(Select)<DropdownSelectorProps>`
 
   .ant-select-selector {
     max-width: 300px;
-    min-width: ${props => props.minWidth ?? '80px'};
-    height: ${props => props.height ?? '35px'} !important;
+    min-width: ${props => props.minWidth ?? '120px'};
+    height: ${props => props.height ?? '40px'} !important;
     border: none !important;
     border-radius: 10px !important;
     background-color: #282c34 !important;
@@ -36,7 +36,7 @@ const DropdownSelector = styled(Select)<DropdownSelectorProps>`
     color: white !important;
     text-align: center !important;
     margin: 0 5px !important;
-    font-size: 0.7em;
+    font-size: 16px;
   }
 
   .ant-select-clear {

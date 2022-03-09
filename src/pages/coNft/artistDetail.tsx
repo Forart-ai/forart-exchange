@@ -8,7 +8,7 @@ import { NFTPreview, Title } from '../../components/nft-mint/selectedList'
 import ArtistBanner from '../../assets/images/coPools/hypteen-banner.jpg'
 import List from 'rc-virtual-list'
 import { Avatar, Button, Modal, Tabs } from 'antd'
-import { BlockOutlined, CrownOutlined, SmileOutlined,createFromIconfontCN  } from '@ant-design/icons'
+import { BlockOutlined, CrownOutlined, SmileOutlined, createFromIconfontCN, SearchOutlined } from '@ant-design/icons'
 import {
   BodyContent,
   CenterContainer,
@@ -36,6 +36,9 @@ import CONFT_API from '../../apis/co-nft'
 import MintListItem from '../../components/mintListItem'
 import AllNftList from '../../components/nft-mint/allNftList'
 import { MintedNFTItem } from '../../types/coNFT'
+import { ThemeInput } from '../../styles/ThemeInput'
+import { OrderSelector } from '../../components/NFTListSelectors'
+import { ForartNftTransactionStatus } from '../../apis/nft'
 
 const { TabPane } = Tabs
 
@@ -295,6 +298,11 @@ const AllNftWrapper = styled.div`
   
 `
 
+const Filter = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const Message = styled.div`
   width: 100%;
   margin-top: 30px;
@@ -462,25 +470,39 @@ const AllNftContainer: React.FC = () => {
   const [maxPage, setMaxPage] = useState<number>(1)
   const [page, setPage] = useState<number>(1)
   const [data, setData] = useState<any[]>([])
+  const [searchKey, setSearchKey] = useState<any>()
+  const [selectedOrder, setSelectedOrder] = useState<'asc' | 'desc' | undefined>()
+
+  const series = useLocationQuery('artistId')
 
   useMemo(() => {
     CONFT_API.core.kits.getOverView().then((r: any) => {
       setMaxPage(Math.ceil(r.minted / 10))
-      console.log(maxPage)
     })
   },[maxPage])
 
+  const onChange = (res: any) => {
+    setSearchKey(res.target.attributes[2].value)
+  }
+
   useEffect(()=> {
-    if (page <= maxPage) {
-      CONFT_API.core.nft.getNftRank(3312, page).then((res:any) => {
+    if (page <= maxPage && series) {
+      CONFT_API.core.nft.getNftRank(series, page, selectedOrder, searchKey).then((res:any) => {
         setData(data.concat(res))
         setPage(page + 1)
       })
     }
-  },[page, maxPage])
+  },[page, maxPage, selectedOrder, searchKey])
 
   return (
     <AllNftWrapper>
+      {/*<Filter>*/}
+      {/*  <ThemeInput*/}
+      {/*    onChange={onChange}*/}
+      {/*    prefix={<SearchOutlined style={{ color: 'white', width: '15px' }} />}*/}
+      {/*  />*/}
+      {/*  <OrderSelector onChange={setSelectedOrder}  />*/}
+      {/*</Filter>*/}
       <List data={data} height={800}  itemKey="id" >
         {
           (nft,index) => (

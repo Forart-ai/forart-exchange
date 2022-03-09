@@ -21,7 +21,6 @@ const AppHeaderContent = styled.div`
   
 `
 const Logo = styled.div`
-  width: 200px;
   height: 68px;
   display: flex;
   justify-content: center;
@@ -29,7 +28,7 @@ const Logo = styled.div`
 
   img{
     position: relative;
-    width: 120px;
+    width: 100px;
   }
 `
 
@@ -59,8 +58,14 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
         <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
       </Logo>
       <Operator>
-        <SolanaWallet />
-        <Wallet />
+        {
+          !isMobile && (
+            <>
+              <SolanaWallet />
+              <Wallet />
+            </>
+          )
+        }
         <div style={{ fontSize: '20px', color: '#A53067' }}   onClick={() => history.push('/personal/home')} >
           <img src={UserIcon} />
         </div>

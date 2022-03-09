@@ -5,6 +5,7 @@ import { Image } from 'antd'
 import { useModal } from '../../contexts/modal'
 import AttributesDialog from '../attributes-dialog'
 import {  HeartOutlined, HeartFilled   } from '@ant-design/icons'
+import CrownIcon from '../../assets/images/coPools/ic_crown.svg'
 
 const Wrapper = styled.div`
   width: 200px;
@@ -40,35 +41,47 @@ const Info = styled.div`
   height: 100px;
   width: 100%;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   padding: 2px 8px;
   
-  .name {
-    font-size: .65em;
-    font-weight: bold;
-    width: 100%;
-  }
+ 
   
-  .rank {
-    position: relative;
-   
+  .row {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    font-size: .5em;
-    
+    font-size: .65em;
+    width: 100%;
+
+
+    .name {
+      font-weight: bold;
+      width: 100%;
+    }
+
     .heart {
-      
-      position: absolute;
-      right: 10px;
       cursor: pointer;
       border-radius: 50%;
-      
+
       :hover {
         color: #ff005e;
         background: rgba(255, 0, 94, .3);
         transition-duration: 0.5s;
       }
+    }
+  }
+  
+  .rank {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: .6em;
+    width: 100%;
+    
+    img {
+      width: 1em;
+      margin-right: 10px;
     }
   }
 `
@@ -90,11 +103,14 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
     <Wrapper >
       <img src={data?.previewUrl} onClick={cb} />
       <Info>
-        <div className="name">{data?.chainNftName || `HypeTeen # ${data?.chainNftNameTmp}`}</div>
-        <div className="rank">
-          {/*<div>Rank {index + 1}</div>*/}
-          <HeartOutlined className="heart"  onClick={() =>handleLike(data?.previewUrl)} />
+        <div className="row">
+          <div className="name">{data?.chainNftName || `HypeTeen # ${data?.chainNftNameTmp}`}</div>
+          {/*<HeartOutlined className="heart"  onClick={() =>handleLike(data?.previewUrl)} />*/}
           {/*<HeartFilled   />*/}
+        </div>
+        <div className="rank">
+          <img src={CrownIcon} />
+          <div>{index + 1}</div>
         </div>
       </Info>
 

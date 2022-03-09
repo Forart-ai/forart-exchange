@@ -122,22 +122,24 @@ export function useChainEffect() {
   useEffect(():any => {
     const { ethereum } = window as any
 
-    ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: networkConf[43114].chainId }]
-    }).catch((e: any) => {
-      if (e.code === 4902) {
-        ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              ...networkConf[43114]
-            }
-          ],
-        })
+    if (ethereum){
+      ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: networkConf[43114].chainId }]
+      }).catch((e: any) => {
+        if (e.code === 4902) {
+          ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                ...networkConf[43114]
+              }
+            ],
+          })
 
-      }
-    })
+        }
+      })
+    }
 
   },[account])
 

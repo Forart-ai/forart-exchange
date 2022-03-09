@@ -2,8 +2,10 @@ import React from 'react'
 import AvatarIcon from '../../assets/images/nft-chatroom/avatar.svg'
 import TextArea from 'antd/es/input/TextArea'
 import ImageIcon from '../../assets/images/nft-chatroom/image-fill.svg'
-import { Button } from 'antd'
+import { Button, Form, Input } from 'antd'
 import styled from 'styled-components'
+import { NFTCreateForm } from '../nftCreate'
+import usePost from '../../hooks/usePost'
 
 const Wrapper = styled.div`
   height: 20%;
@@ -26,9 +28,10 @@ const Wrapper = styled.div`
 
 const InputContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: self-start;
   padding: 10px;
+  width: 100%;
   
   img {
     width: 50px;
@@ -59,19 +62,40 @@ const ToolsContainer = styled.div`
   }
 `
 
+const  PostForm = styled(Form)`
+    width: 100%;
+`
+
+export type PostForm = {
+    postContent: string
+}
+
 const Post: React.FC = () => {
+  const [form] = Form.useForm<PostForm>()
+
+  const formInitialValues: PostForm = {
+    postContent: '',
+
+  }
+
+  const { post } = usePost()
+
   return (
     <Wrapper>
       <div className="title">Post</div>
       <InputContainer>
         <img className="avatar" src={AvatarIcon} />
-        <TextArea bordered={false}  autoSize={{ minRows: 6 }} placeholder={'Share your feelings...'}  />
+        <PostForm form={form} initialValues={formInitialValues} >
+          <Form.Item name="postContent">
+            <Input.TextArea bordered={false}  autoSize={{ minRows: 6 }} placeholder={'Share your feelings...'}  />
+          </Form.Item>
+        </PostForm>
       </InputContainer>
       <ToolsContainer>
         <div className="tools">
           <img  src={ImageIcon} />
         </div>
-        <Button>Sent</Button>
+        <Button onClick={() => post(form)}>Sent</Button>
       </ToolsContainer>
 
     </Wrapper>

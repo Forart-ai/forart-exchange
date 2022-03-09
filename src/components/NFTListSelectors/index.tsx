@@ -12,6 +12,15 @@ const StatusSelector: React.FC<{ onChange:(_value: any) => void }> = ({ onChange
   )
 }
 
+const OrderSelector: React.FC<{ onChange:(_value: any) => void }> = ({ onChange }) => {
+  return (
+    <DropdownSelector defaultValue="" onChange= {onChange} >
+      <Select.Option value="asc">Top to Low</Select.Option>
+      <Select.Option value="desc">Low to Top</Select.Option>
+    </DropdownSelector>
+  )
+}
+
 export {
-  StatusSelector,
+  StatusSelector, OrderSelector
 }

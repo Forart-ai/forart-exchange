@@ -23,14 +23,8 @@ const StyledWallet = styled.div`
   box-sizing: border-box;
   margin-right: 20px;
   cursor: pointer;
-  min-width: 170px;
+  min-width: 140px;
   
-  
-  @media screen and (max-width: 1100px) {
-    height: 35px;
-    font-size: 12px;
-    margin-right: 10px;
-  }
 `
 
 const CurrentAccountContainer = styled.div`
