@@ -7,7 +7,7 @@ import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
 import { NFTPreview, Title } from '../../components/nft-mint/selectedList'
 import ArtistBanner from '../../assets/images/coPools/hypteen-banner.jpg'
 import List from 'rc-virtual-list'
-import { Avatar, Button, Modal, Tabs } from 'antd'
+import { Avatar, Button, Modal, Skeleton, Tabs } from 'antd'
 import { BlockOutlined, CrownOutlined, SmileOutlined, createFromIconfontCN, SearchOutlined } from '@ant-design/icons'
 import {
   BodyContent,
@@ -34,11 +34,12 @@ import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import { useWeb3React } from '@web3-react/core'
 import CONFT_API from '../../apis/co-nft'
 import MintListItem from '../../components/mintListItem'
-import AllNftList from '../../components/nft-mint/allNftList'
 import { MintedNFTItem } from '../../types/coNFT'
 import { ThemeInput } from '../../styles/ThemeInput'
 import { OrderSelector } from '../../components/NFTListSelectors'
 import { ForartNftTransactionStatus } from '../../apis/nft'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import AllNftContainer from './allNftContainer'
 
 const { TabPane } = Tabs
 
@@ -277,32 +278,6 @@ const TabItem = styled.div`
   }
 `
 
-const AllNftWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  font-size: 2em;
-  color: #ffffff;
-  
-  
-  .rc-virtual-list {
-   .rc-virtual-list-holder-inner {
-     display: flex;
-     flex-direction: row !important;
-     flex-wrap: wrap;
-     justify-content: flex-start;
-   }
-  }
-  
-`
-
-const Filter = styled.div`
-  display: flex;
-  align-items: center;
-`
-
 const Message = styled.div`
   width: 100%;
   margin-top: 30px;
@@ -316,12 +291,6 @@ const Message = styled.div`
       margin-left: 15px;
     }
   }
-`
-
-const ListItem = styled.div`
-  display: flex;
-  width: fit-content;
-  
 `
 
 const NFTListContainer = styled.div`
@@ -462,57 +431,6 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
         </section>
       </TabItem>
     </ArtistDetailTab>
-  )
-}
-
-const AllNftContainer: React.FC = () => {
-
-  const [maxPage, setMaxPage] = useState<number>(1)
-  const [page, setPage] = useState<number>(1)
-  const [data, setData] = useState<any[]>([])
-  const [searchKey, setSearchKey] = useState<any>()
-  const [selectedOrder, setSelectedOrder] = useState<'asc' | 'desc' | undefined>()
-
-  const series = useLocationQuery('artistId')
-
-  useMemo(() => {
-    CONFT_API.core.kits.getOverView().then((r: any) => {
-      setMaxPage(Math.ceil(r.minted / 10))
-    })
-  },[maxPage])
-
-  const onChange = (res: any) => {
-    setSearchKey(res.target.attributes[2].value)
-  }
-
-  useEffect(()=> {
-    if (page <= maxPage && series) {
-      CONFT_API.core.nft.getNftRank(series, page, selectedOrder, searchKey).then((res:any) => {
-        setData(data.concat(res))
-        setPage(page + 1)
-      })
-    }
-  },[page, maxPage, selectedOrder, searchKey])
-
-  return (
-    <AllNftWrapper>
-      {/*<Filter>*/}
-      {/*  <ThemeInput*/}
-      {/*    onChange={onChange}*/}
-      {/*    prefix={<SearchOutlined style={{ color: 'white', width: '15px' }} />}*/}
-      {/*  />*/}
-      {/*  <OrderSelector onChange={setSelectedOrder}  />*/}
-      {/*</Filter>*/}
-      <List data={data} height={800}  itemKey="id" >
-        {
-          (nft,index) => (
-            <ListItem key={index}>
-              <AllNftList data={nft} index={index} />
-            </ListItem>
-          )
-        }
-      </List>
-    </AllNftWrapper>
   )
 }
 

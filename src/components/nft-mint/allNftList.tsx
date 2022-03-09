@@ -105,7 +105,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
       <Info>
         <div className="row">
           <div className="name">{data?.chainNftName || `HypeTeen # ${data?.chainNftNameTmp}`}</div>
-          {/*<HeartOutlined className="heart"  onClick={() =>handleLike(data?.previewUrl)} />*/}
+          <HeartOutlined className="heart"  onClick={() =>handleLike(data?.previewUrl)} />
           {/*<HeartFilled   />*/}
         </div>
         <div className="rank">
