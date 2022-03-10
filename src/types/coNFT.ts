@@ -29,5 +29,6 @@ export interface MintedNFTItem {
   chainNftName: string
   chainNftNameTmp: string | number
   componentMetas: any
+  rank: number | string
 }
 

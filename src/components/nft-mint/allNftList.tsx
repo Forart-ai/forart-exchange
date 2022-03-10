@@ -8,8 +8,8 @@ import {  HeartOutlined, HeartFilled   } from '@ant-design/icons'
 import CrownIcon from '../../assets/images/coPools/ic_crown.svg'
 
 const Wrapper = styled.div`
-  width: 200px;
-  height: 270px;
+  width: 220px;
+  height: 280px;
   border-radius: 10px;
   margin: 10px 9px;
   display: flex;
@@ -51,7 +51,7 @@ const Info = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: .65em;
+    font-size: 1em;
     width: 100%;
 
 
@@ -76,7 +76,7 @@ const Info = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    font-size: .6em;
+    font-size: .9em;
     width: 100%;
     
     img {
@@ -110,7 +110,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
         </div>
         <div className="rank">
           <img src={CrownIcon} />
-          <div>{index + 1}</div>
+          <div>{data?.rank}</div>
         </div>
       </Info>
 

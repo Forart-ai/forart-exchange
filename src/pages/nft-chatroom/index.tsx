@@ -1,18 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button } from 'antd'
-import TextArea from 'antd/es/input/TextArea'
-import AvatarIcon from '../../assets/images/nft-chatroom/avatar.svg'
-import ImageIcon from '../../assets/images/nft-chatroom/image-fill.svg'
 import Post from './post'
 import SocialIndex from './socialIndex'
+import { Avatar } from 'antd'
 
 const Wrapper = styled.div`
   width: 100%;
-  max-width: 65vw;
+  max-width: 50vw;
   height: 100vh;
   margin: auto;
-  padding: 30px 20px;
+  padding: 20px 20px 80px 20px;
   overflow-y: scroll;
   
  @media screen and (max-width: 1100px) {
@@ -41,14 +38,64 @@ const Filter = styled.div`
   border-radius: 5px;
 `
 
+const RankingContainer = styled.div`
+  width: 40%;
+  background-color: #1D222D;
+  border-radius: 10px;
+  height: fit-content;
+  padding: 10px 20px;
+
+  .title {
+    color: #ffffff;
+    font-size: 1.7em;
+  }
+`
+
+const RankRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: #c2c2c2;
+  margin: 10px 0;
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    
+  }
+  .right {
+    display: flex;
+    align-items: center;
+  }
+`
+
 const NftChatroom: React.FC = () => {
   return (
     <Wrapper>
-      <SocialContainer>
-        <Post />
-        {/*<Filter >ALL</Filter>*/}
-        <SocialIndex />
-      </SocialContainer>
+      <div style={{ display:'flex', justifyContent: 'space-between' }}>
+        <SocialContainer>
+          <Post />
+          {/*<Filter >ALL</Filter>*/}
+          <SocialIndex />
+        </SocialContainer>
+        <RankingContainer>
+          <div className="title">Top Creators</div>
+          {
+            new Array(8).fill({}).map((_, index) => (
+              <RankRow key={index}>
+                <div className="row">
+                  <div className="right">
+                    <Avatar size={'large'} style={{ backgroundColor: '#f56a00', verticalAlign: 'middle' }} >Momo</Avatar>
+                    <div style={{ marginLeft:'10px' }}>Monica</div>
+                  </div>
+                  <b>199</b>
+                </div>
+
+              </RankRow>
+            ))
+          }
+        </RankingContainer>
+      </div>
     </Wrapper>
   )
 }

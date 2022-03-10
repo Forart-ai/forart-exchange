@@ -73,6 +73,8 @@ const ModalProvider: React.FC = ({ children }) => {
         isOpen={visible}
         contentLabel="Minimal Modal Example"
         ariaHideApp={false}
+        onRequestClose={close}
+        shouldCloseOnEsc={true}
         style={{
           overlay: {
             background: 'rgba(29,34,45, 0.09)',
@@ -89,7 +91,7 @@ const ModalProvider: React.FC = ({ children }) => {
               alt={'close'}
               onClick={close}
               src={require('../assets/images/coPools/close.svg').default}
-              style={{ position: 'absolute', right: '20px', top: '60px', cursor: 'pointer', width:'50px' }}
+              style={{ position: 'absolute', right: '200px', top: '160px', cursor: 'pointer', width:'50px' }}
             />
           )
         }

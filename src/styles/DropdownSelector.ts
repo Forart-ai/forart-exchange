@@ -23,7 +23,7 @@ const DropdownSelector = styled(Select)<DropdownSelectorProps>`
   .ant-select-selector {
     max-width: 300px;
     min-width: ${props => props.minWidth ?? '120px'};
-    height: ${props => props.height ?? '40px'} !important;
+    height: ${props => props.height ?? '45px'} !important;
     border: none !important;
     border-radius: 10px !important;
     background-color: #282c34 !important;

@@ -49,7 +49,6 @@ const routes: Route[] = [
     title: 'NFT-Chatroom',
     icon: GamesIcon,
     component: NftChatroom,
-    hidden: true
 
   },
   {

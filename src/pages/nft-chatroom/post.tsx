@@ -8,7 +8,7 @@ import { NFTCreateForm } from '../nftCreate'
 import usePost from '../../hooks/usePost'
 
 const Wrapper = styled.div`
-  height: 20%;
+  height: 270px;
   width: 100%;
   min-width: 410px;
   background-color: #1D222D;
@@ -27,6 +27,7 @@ const Wrapper = styled.div`
 `
 
 const InputContainer = styled.div`
+height: 60%;
   display: flex;
   justify-content: flex-start;
   align-items: self-start;
@@ -45,7 +46,6 @@ const InputContainer = styled.div`
 const ToolsContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 50px;
   justify-content: space-between;
   padding: 10px;
 
