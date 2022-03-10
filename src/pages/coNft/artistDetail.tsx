@@ -437,7 +437,6 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
   const { account,select } = useSolanaWeb3()
-  const { account : EthAccount } = useWeb3React()
 
   const { open } = useWalletSelectionModal()
 
@@ -536,7 +535,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         ),
         onOk: () => mintNFT(body,kits)
       })
-    },[body, kits, account, EthAccount]
+    },[body, kits, account]
   )
 
   return (
@@ -635,12 +634,13 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
               Connect Wallet
             </Button>
           ) : (
-            (userData?.getQualification === 0) ? (
+            (userData?.getQualification !== 0) ? (
+              <Button style={{ width:'180px',height:'50px' }} onClick={handleCreate}> Create </Button>
+
+            ) : (
               <Button  style={{  height:'50px' }} onClick={ openCheckWhiteListModal }>
                 Get Qualification
               </Button>
-            ) : (
-              <Button style={{ width:'180px',height:'50px' }} onClick={handleCreate}> Create </Button>
             )
           )
         }

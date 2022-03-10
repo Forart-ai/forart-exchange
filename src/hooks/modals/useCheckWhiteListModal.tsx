@@ -209,7 +209,7 @@ const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
 }
 
 const BindingStatus: React.FC<StepProps> = ({ active }) => {
-  const account = useGetCurrentWallet()
+  const { account } = useSolanaWeb3()
   const { forceRefresh } = useRefreshController()
   const { data: user } = useUserQuery()
   const discordAccessToken = useDiscordAccessToken()
@@ -233,7 +233,7 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
         content: (
           <div style={{ fontFamily: 'gilroy', color: '#fff' }} >
             <div>
-              Solana wallet address {account}.
+              Solana wallet address {shortenAddress(account.toBase58())}.
               Discord:
               {
                 !user?.byWallet
@@ -247,7 +247,7 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
         ),
         onOk: () => {
           setRequesting(true)
-          CONFT_API.core.user.bindingUser(discordAccessToken, account)
+          CONFT_API.core.user.bindingUser(discordAccessToken, account.toBase58())
             .then(() => {
               forceRefresh()
               setRequesting(false)

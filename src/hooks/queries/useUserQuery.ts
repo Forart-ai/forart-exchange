@@ -8,7 +8,7 @@ import useConnectedWallet from '../useGetCurrentWallet'
 
 const useUserQuery = (): UseQueryResult<any> => {
   // const { account } = useSolanaWeb3()
-  const account = useConnectedWallet()
+  const { account } = useSolanaWeb3()
   const { slowRefreshFlag } = useRefreshController()
   const discordAccessToken = useDiscordAccessToken()
 
@@ -16,8 +16,8 @@ const useUserQuery = (): UseQueryResult<any> => {
     ['BoundUser', account, slowRefreshFlag, discordAccessToken],
     async () => {
       const [getQualification ,byWallet] = await Promise.all([
-        CONFT_API.core.user.getUserQualification(account),
-        CONFT_API.core.user.getUserByWallet(account)
+        CONFT_API.core.user.getUserQualification(account?.toBase58()),
+        CONFT_API.core.user.getUserByWallet(account?.toBase58())
       ])
       return { getQualification, byWallet }
     },
