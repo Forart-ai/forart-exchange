@@ -225,7 +225,7 @@ export const CenterContainer = styled.div`
 export const MintButton = styled.div`
   width: 100%;
   text-align: center;
-  height: 200px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;

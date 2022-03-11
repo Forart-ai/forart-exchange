@@ -92,8 +92,10 @@ padding: 20px;
   align-items: center;
 
   span {
+    font-size: 1.3em;
     margin-top: 5px;
     color: #c2c2c2;
+    font-weight: bold;
   }
   img {
     border-radius: 10px;

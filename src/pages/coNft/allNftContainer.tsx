@@ -116,9 +116,8 @@ const AllNftContainer: React.FC = () => {
   }, [loading, page, searchKey, selectedOrder])
 
   const onPressEnter = (res: any) => {
-    console.log(selectedOrder)
     setFlag(true)
-    setSearchKey(res.target.value)
+    // setSearchKey(res.target.value)
     setData([])
     setPage(1)
   }
@@ -140,19 +139,25 @@ const AllNftContainer: React.FC = () => {
     })
   },[])
 
+  const onChange =( r:any )=> {
+    setSearchKey(r.target.value)
+  }
+
   // const a = useQuery([], async() => { return CONFT_API.core.kits.getOverView() }, { refetchInterval: 1000 })
 
   return (
     <AllNftWrapper >
       <Filter>
         <ThemeInput
+          placeholder={'Please input token ID'}
+          onChange ={(res:any) =>onChange(res)}
           onPressEnter={ onPressEnter }
           prefix={<SearchOutlined style={{ color: 'white', width: '15px' }} />}
           defaultValue={searchKey}
           style={{ width:'200px', marginRight: '20px' }}
         />
         {/*<OrderSelector onChange={ e => { setSelectedOrder(e) }} />*/}
-        <div className="btn" onClick={onPressEnter}>Search</div>
+        <div className="btn" onClick={ onPressEnter }>Search</div>
       </Filter>
 
       <div style={{ height: 1000, overflow: 'auto' }} id="scrollableDiv">

@@ -183,7 +183,7 @@ const LinkContainer = styled.div`
   margin-top: 20px;
   display: flex;
   width: 100%;
-  justify-content: flex-end;
+  justify-content: flex-start;
 `
 
 const SCExternalLink = styled.a`
@@ -289,7 +289,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
                         separator=","
                         style={{ fontSize: '1.2em' }}
                       />
-                      {/*<div style={{ color: '#FF468B', fontSize: '1em' }}>SOL</div>*/}
+                      <div style={{ color: '#FF468B', fontSize: '1em' }}> /2000</div>
                     </div>
                   ) :
                     <StyledCountUp end={0} />
@@ -320,7 +320,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
           <ButtonArea>
             <Link to={toArtistDetailUrl}>
-              <Button size={'large'}  >Create Hypteen!</Button>
+              <Button size={'large'}  >Create Hypeteen!</Button>
             </Link>
             <Button size={'large'} style={{ backgroundColor: 'rgb(42,38,48)' }} >
               <a href="https://www.youtube.com/watch?v=DszF7e5kb54" target="_blank" rel="noopener noreferrer" >

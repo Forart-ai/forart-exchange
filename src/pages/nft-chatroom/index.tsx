@@ -69,9 +69,19 @@ const RankRow = styled.div`
   }
 `
 
+const Message = styled.div`
+  width: 100%;
+  text-align: center;
+  color: #c2c2c2;
+  font-size: 2em;
+  font-weight: bolder;
+  margin: 10px 0;
+`
+
 const NftChatroom: React.FC = () => {
   return (
     <Wrapper>
+      <Message>Coming soon!</Message>
       <div style={{ display:'flex', justifyContent: 'space-between' }}>
         <SocialContainer>
           <Post />

@@ -210,7 +210,7 @@ const DescriptionContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px 25px;
+  padding: 0 25px;
   flex-direction: column;
   //background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), #1E052D) border-box;
   @media screen and (max-width: 1100px) {
@@ -631,12 +631,6 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
       {/*  <div className="title"> Gen Image Name </div>*/}
       {/*  <Input placeholder="Please enter the name of the gen image" onChange={e => setGenName(e.target.value) } />*/}
       {/*</ItemContainer>*/}
-      <Message>
-        <div className="title">
-          <Title> Random traits hat for scarcity </Title>
-          {/*<img src={OpenSwitch} />*/}
-        </div>
-      </Message>
 
       <MintButton >
 
@@ -654,7 +648,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
             </Button>
           ) : (
             (userData?.getQualification !== 0) ? (
-              <Button style={{ width:'180px',height:'50px' }} onClick={handleCreate}> Create </Button>
+              <Button style={{ width:'200px',height:'50px' }} onClick={handleCreate}> Create </Button>
 
             ) : (
               <Button  style={{  height:'50px' }} onClick={ openCheckWhiteListModal }>
