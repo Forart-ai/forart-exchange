@@ -22,7 +22,7 @@ import { Button } from 'antd'
 const Wrapper = styled.div`
   max-width: 100vw;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   margin: auto;
   padding-bottom: 50px;
   overflow: scroll;
@@ -31,10 +31,13 @@ const Wrapper = styled.div`
 `
 
 const CoNftPageContainer = styled.div`
-  max-width: 1400px;
+  max-width: 80%;
+  height: 100%;
   width: calc(100% - 80px);
   margin-left: auto;
   margin-right: auto;
+  display: flex;
+  align-items: center;
 
   @media screen and (max-width: 1080px) {
     width: 100%;
@@ -48,6 +51,7 @@ const HeaderContainer = styled.div`
   display: flex;
   padding: 50px 0;
   overflow: auto;
+  
 
   @media screen and (max-width: 1080px) {
     flex-direction: column;
@@ -179,7 +183,7 @@ const LinkContainer = styled.div`
   margin-top: 20px;
   display: flex;
   width: 100%;
-  
+  justify-content: flex-end;
 `
 
 const SCExternalLink = styled.a`
@@ -204,7 +208,7 @@ const SCExternalLink = styled.a`
 
 const ButtonArea = styled.div`
   margin-top: 20px;
-  width: 70%;
+  width: 300px;
   display: flex;
   justify-content: space-between;
 
@@ -271,15 +275,49 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
             <div className="title">{INFO_DETAILS.title}</div>
             <div className="description">{INFO_DETAILS.describe}</div>
           </MainInfo>
-          <LinkContainer>
-            {
-              EXTERNAL_LINKS.map(({ icon, link }) => (
-                <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
-                  <img src={icon} alt={link} />
-                </SCExternalLink>
-              ))
-            }
-          </LinkContainer>
+
+          <LeftBottom>
+            <div className="data-container">
+              <div className="row">
+                <div className="label">TOTAL CREATE</div>
+                {
+                  coNftData ? (
+                    <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                      <StyledCountUp
+                        end={overviewData?.minted ? overviewData?.minted : '---'}
+                        duration={2}
+                        separator=","
+                        style={{ fontSize: '1.2em' }}
+                      />
+                      {/*<div style={{ color: '#FF468B', fontSize: '1em' }}>SOL</div>*/}
+                    </div>
+                  ) :
+                    <StyledCountUp end={0} />
+                }
+              </div>
+
+              <div className="row">
+                <div className="label">CREATORS</div>
+                {
+                  coNftData ? (
+
+                    <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                      <StyledCountUp
+                        end={overviewData?.mintedWallet ? overviewData?.mintedWallet : '---'}
+                        duration={2}
+                        separator=","
+                        style={{ fontSize: '1.2em' }}
+                      />
+                      <div style={{ color: '#FF468B', fontSize: '1em' }} />
+                    </div>
+                  ) :
+                    <StyledCountUp end={0} />
+                }
+              </div>
+
+            </div>
+          </LeftBottom>
+
           <ButtonArea>
             <Link to={toArtistDetailUrl}>
               <Button size={'large'}  >Create Hypteen!</Button>
@@ -290,49 +328,18 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
               </a>
             </Button>
           </ButtonArea>
+
+          <LinkContainer>
+            {
+              EXTERNAL_LINKS.map(({ icon, link }) => (
+                <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
+                  <img src={icon} alt={link} />
+                </SCExternalLink>
+              ))
+            }
+          </LinkContainer>
         </LeftTop>
 
-        <LeftBottom>
-          <div className="data-container">
-            <div className="row">
-              <div className="label">TOTAL VALUE</div>
-              {
-                coNftData ? (
-                  <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                    <StyledCountUp
-                      end={overviewData?.minted ? overviewData?.minted : '---'}
-                      duration={2}
-                      separator=","
-                      style={{ fontSize: '1.2em' }}
-                    />
-                    {/*<div style={{ color: '#FF468B', fontSize: '1em' }}>SOL</div>*/}
-                  </div>
-                ) :
-                  <StyledCountUp end={0} />
-              }
-            </div>
-
-            <div className="row">
-              <div className="label">MINTERS</div>
-              {
-                coNftData ? (
-
-                  <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                    <StyledCountUp
-                      end={overviewData?.mintedWallet ? overviewData?.mintedWallet : '---'}
-                      duration={2}
-                      separator=","
-                      style={{ fontSize: '1.2em' }}
-                    />
-                    <div style={{ color: '#FF468B', fontSize: '1em' }} />
-                  </div>
-                ) :
-                  <StyledCountUp end={0} />
-              }
-            </div>
-
-          </div>
-        </LeftBottom>
       </LeftArea>
       <RightArea>
         <Banner>

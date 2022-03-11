@@ -404,8 +404,7 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
           <p className="content">
             HypeTeen is the First CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing. Born in the first year of NFT, she/he has her/his own NFT attributes, likes to explore the unknown, and is obsessed with trendy things in the future. At the peak of her/his appearance, she/he likes fans to call: super handsome! <br /><br />
             In 2022, she/he will take her/his fans on her/his first journey of exploration - travel around the world, learn about the customs of various countries, spread the world&apos;s culture, and share the cultural essence and consensus with fans in Forart Club. <br /> <br />
-            HypeTeen will go to a country every once in a while, and fans will vote to decide the next country, and share several NFTs with the cultural characteristics of the country. During this period, the cre  with the most CO-NFTs will have the right to buy these Special NFTs (one address can only buy one) and have Forart Club privileges.
-            6% of the income of HypeTeen NFTs will be donated to foundations and organizations related to world cultural heritage.
+
           </p>
         </section>
 
@@ -414,14 +413,12 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
           <img className="image-border"  />
           <p className="content">
             <b> Benefits for HypeTeen NFT creators:</b> <br />
-            1. Be allowed to join the Forart Club and own the rights to the Club. <br />
+            1. Each NFT you create will get 50 $FTA<br />
 
-            2. You will receive an airdrop of Forart. <br />
+            2. Acquire 10% of the sales revenue and royalty <br />
 
-            3. NFT holders with scarcity properties will share the HypeTeen royalties. <br /> <br />
+            3. Acquire Foart $FTA airdrop<br /> <br />
 
-            <b>HypeTeen Special NFTs holders can obtain benefits:</b>  <br />
-            1. Will be added to Forart IDO&apos;s whitelist.
           </p>
         </section>
 
@@ -485,8 +482,13 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
     }
   },[show])
 
-  const KIT_TYPES: Array<{name: string, list: KitProperties[], key: string}> = useMemo(() =>
+  const KIT_TYPES: Array<{name: string, list?: KitProperties[], key: string, image?: boolean}> = useMemo(() =>
     [
+      {
+        name: 'Hat?',
+        key: 'hay',
+        image: true
+      },
       {
         name: 'Background*',
         key: 'background',
@@ -583,6 +585,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
                 <TabPane key={type.name}  tab={type.name} style={{ width:'100%', overflowX: 'scroll' }}>
                   <MintContainer>
                     <SelectableKitList
+                      img={type.image}
                       selectedValue={kits.get(type.key)}
                       onSelect={v => {
                         setKits(prev => {

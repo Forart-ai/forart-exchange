@@ -3,6 +3,7 @@ import { KitImageBorder, KitListContainer } from '../../pages/coNft/artistMint.s
 import { KitProperties } from '../../pages/coNft/artistDetail'
 import { Checkbox } from 'antd'
 import styled from 'styled-components'
+import RandomHat from '../../assets/images/artistDetail/random-hat.png'
 
 const StyledFlag = styled.div`
   position: absolute;
@@ -82,6 +83,24 @@ const KitItemContainer = styled.div`
   }
 `
 
+const Fake = styled.div`
+padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  span {
+    margin-top: 5px;
+    color: #c2c2c2;
+  }
+  img {
+    border-radius: 10px;
+    width: 50%;
+  }
+`
+
 const CornerRemainFlag: React.FC<{remain: string}> = ({ remain }) => {
 
   return (
@@ -133,11 +152,13 @@ export const SelectableKitItem: React.FC<{ src: any, checked?: boolean, onSelect
   )
 }
 
-export const SelectableKitList: React.FC<{selectedValue?: any, onSelect: (_?: any) => void, list?: KitProperties[]}> =({
+export const SelectableKitList: React.FC<{img?: boolean, selectedValue?: any, onSelect: (_?: any) => void, list?: KitProperties[]}> =({
   selectedValue,
   onSelect,
-  list
+  list,
+  img
 }) => {
+  console.log(img)
   return (
     <KitListContainer>
       {
@@ -146,6 +167,14 @@ export const SelectableKitList: React.FC<{selectedValue?: any, onSelect: (_?: an
             <SelectableKitItem  src={item} onSelect={onSelect} checked={selectedValue?.url === item?.url}  />
           </KitItemContainer>
         ))
+      }
+      {
+        ( !list && img) && (
+          <Fake>
+            <img src={RandomHat}  />
+            <span >Hypeteen Rarity randomly by Hat rarity</span>
+          </Fake>
+        )
       }
     </KitListContainer>
   )
