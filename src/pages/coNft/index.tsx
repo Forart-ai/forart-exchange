@@ -324,7 +324,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
             </Link>
             <Button size={'large'} style={{ backgroundColor: 'rgb(42,38,48)' }} >
               <a href="https://www.youtube.com/watch?v=DszF7e5kb54" target="_blank" rel="noopener noreferrer" >
-                View video
+                Instruction
               </a>
             </Button>
           </ButtonArea>

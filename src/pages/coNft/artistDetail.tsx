@@ -495,7 +495,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         list: artistKit?.Background
       },
       {
-        name: 'Cloths*',
+        name: 'Clothes*',
         key: 'clothing',
         list: artistKit?.Clothing
       },
