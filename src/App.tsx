@@ -79,7 +79,7 @@ const App: React.FC = () => {
           <>
             <AppSideBar />
 
-            <Content  style={{ width:'calc(100vw - 80px)', backgroundColor:'rgb(17,17,17)', position:'relative',top: '60px', left:'70px', borderRadius:'1em', height:'100vh' }}>
+            <Content  style={{ width:'calc(100vw - 80px)', backgroundColor:'#120C18', position:'relative',top: '60px', left:'70px', borderRadius:'1em', height:'100vh' }}>
               {
                 routes.map((router:any) => (
                   <Route
@@ -94,7 +94,7 @@ const App: React.FC = () => {
             </Content>
           </>
         ) : (
-          <Content  style={{ width:'100vw', backgroundColor:'rgb(17,17,17)', position:'relative',top: '60px', height:'100vh' }}>
+          <Content  style={{ width:'100vw', backgroundColor:'#120C18', position:'relative',top: '60px', height:'100vh' }}>
             {
               routes.map((router:any) => (
                 <Route

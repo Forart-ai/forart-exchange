@@ -1,4 +1,9 @@
 @font-face {
-    font-family:'campton';
-    src: url("./DrivePropRegular.ttf");
+    font-family:'inter';
+    src: url("./Inter-Regular.ttf");
+}
+
+@font-face {
+    font-family:'inter-extraBold';
+    src: url("./Inter-ExtraBold.ttf");
 }

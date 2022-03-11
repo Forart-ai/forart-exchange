@@ -121,6 +121,8 @@ export const KitContent = styled.div`
   background: #02060e;
   border-radius: 20px;
   position: relative;
+  padding: 20px 0;
+
   
   .more-icon {
     position: absolute;
@@ -140,32 +142,46 @@ export const KitContent = styled.div`
 `
 
 export const MintTab = styled(Tabs)`
-
+  font-size: 1.1em;
   .ant-tabs-tab {
-    font-size: 1.2em !important;
+    font-size: 1.1em !important;
     color: #E5E8EB !important;
-    overflow-x: scroll;
+    font-family: 'inter' !important;
+
+  }
+
+
+  .ant-tabs-nav-list {
+    border: none !important;
   }
 
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: #FF468B !important;
+    color: #E42575 !important;
+    border-radius: 25px;
+    background-color: transparent !important;
+
+    span {
+      margin: 5px 10px;
+    }
   }
+  
 
   .ant-tabs-nav-wrap {
     display: flex;
-    justify-content: start;!important;
+    justify-content: center;
   }
 
   .ant-tabs-nav::before {
-    display: none; !important;
+    border-bottom: 1px #65727b solid;
+
   }
 
   .ant-tabs-ink-bar {
-    //line-height: 161px;
-    background: linear-gradient(to right, #FF468B, #12dbe4) border-box;
+    background: linear-gradient(to right, #E42575, #4A0E6F) border-box;
     padding: 2px;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
+    display: table !important;
   }
 
   @media screen and (max-width: 1100px) {

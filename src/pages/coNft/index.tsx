@@ -11,11 +11,13 @@ import { CaretRightOutlined } from '@ant-design/icons'
 import Banner1 from '../../assets/images/coPools/banner.png'
 import { useGetOverview } from '../../hooks/queries/useGetOverview'
 import { useMediaQuery } from 'react-responsive'
+import { Link } from 'react-router-dom'
 
 // @ts-ignore
 
 import YouTube from '@u-wave/react-youtube'
 import useConnectedWallet from '../../hooks/useGetCurrentWallet'
+import { Button } from 'antd'
 
 const Wrapper = styled.div`
   max-width: 100vw;
@@ -34,6 +36,9 @@ const CoNftPageContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
 
+  @media screen and (max-width: 1080px) {
+    width: 100%;
+  }
 `
 
 const HeaderContainer = styled.div`
@@ -42,6 +47,7 @@ const HeaderContainer = styled.div`
   position: relative;
   display: flex;
   padding: 50px 0;
+  overflow: auto;
 
   @media screen and (max-width: 1080px) {
     flex-direction: column;
@@ -50,62 +56,65 @@ const HeaderContainer = styled.div`
   }
 `
 
-const LeftTop = styled.div`
-  width: 100%;
-  height: 40%;
-  
-  @media screen and (max-width: 1080px) {
-    height: fit-content;
-  }
-`
-
-const VideoArea = styled.div`
-  width: 98%;
-  height: 60%;
-`
-
-const LeftBottom = styled.div`
-  height: 35%;
-  width: 100%;
-  min-width: 40%;
-  padding: 1px;
-  border-radius: 10px;
-  background: linear-gradient(to bottom, #FF468B, #12dbe4) border-box;
-
-  .row {
-    display: flex;
-    align-items: center;
-
-  }
-
-  .data-container {
-    background: linear-gradient(0deg, rgba(14, 22, 39, .9), rgba(2, 8, 16, 0.9)) border-box;
-    border-radius: 10px;
-    padding: 30px 30px 18px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    .label {
-      font-size: 1.3em;
-      color: #fff;
-      border-right: 1px #fc6ea3 solid;
-      padding: 2px 25px;
-      margin-right: 12px;
-    }
-  }
-`
-
 const LeftArea = styled.div`
+  width: 40%;
+  height: 100%;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
   flex-direction: column;
-  width: 65%;
-
 
   @media screen and (max-width: 1080px) {
     width: 100%;
   }
   
+`
+const LeftTop = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  @media screen and (max-width: 1080px) {
+    height: fit-content;
+  }
+`
+const LeftBottom = styled.div`
+  margin-top: 20px;
+  width: 100%;
+  min-width: 40%;
+  padding: 1px;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #E42575, #4A0E6F) border-box;
+
+  .row {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    margin: 0 10px;
+  }
+
+  .data-container {
+    background: linear-gradient(0deg, rgba(14, 22, 39, .9), rgba(2, 8, 16, 0.9)) border-box;
+    border-radius: 10px;
+    padding: 10px ;
+    height: 100%;
+    display: flex;
+
+    .label {
+      font-size: 1em;
+      color: #fff;
+      margin-right: 10px;
+    }
+  }
+  
+  @media screen and (max-width: 1080px) {
+    .data-container {
+      justify-content: space-between;
+      padding: 5px;
+    }
+  }
 `
 
 const RightArea = styled.div`
@@ -114,24 +123,42 @@ const RightArea = styled.div`
   justify-content: center;
   height: 100%;
   width: 60%;
-  background-image: radial-gradient(circle, #c330c9, #701473, rgb(17, 17, 17), rgb(17, 17, 17));
+  //background-image: radial-gradient(circle, #E42575, #680ba1, #120C18, #120C18);
+ 
+  
+ 
 
+  @media screen and (max-width: 1080px) {
+    width: 100%;
+    margin-top: 20px;
+  }
+`
+
+const Banner = styled.div`
+  width: 100%;
+  
   img {
+    padding: 0 10px;
     width: 100%;
     object-fit: contain;
+    border-radius: 20px;
+
   }
   
-  @media screen and (max-width: 1080px) {
-    display: none;
-  }
 `
 
 const MainInfo = styled.div`
   color: #fff;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
 
   .title {
     font-size: 2.8em;
     text-transform: uppercase;
+    font-weight: 900;
+    font-family: 'inter-extraBold';
     //background: linear-gradient(90deg ,#12dbe4, #02fbab);
     //-webkit-background-clip: text;
     //-webkit-text-fill-color: transparent;
@@ -139,6 +166,7 @@ const MainInfo = styled.div`
 
   .description {
     font-size: 1.3em;
+    color: #A197AA;
   }
 
   @media screen and (max-width: 1080px) {
@@ -148,14 +176,21 @@ const MainInfo = styled.div`
 `
 
 const LinkContainer = styled.div`
-  margin-top: 5%;
+  margin-top: 20px;
   display: flex;
-  width: fit-content;
-
+  width: 100%;
+  
 `
 
 const SCExternalLink = styled.a`
   margin-right: 15px;
+  background-color: rgb(42,38,48);
+  padding: 8px;
+  border-radius: 6px;
+  
+  :hover {
+    opacity: .8;
+  }
 
   .link-name {
     margin-left: 20px;
@@ -163,7 +198,18 @@ const SCExternalLink = styled.a`
   }
 
   img {
-    width: 30px;
+    width: 25px;
+  }
+`
+
+const ButtonArea = styled.div`
+  margin-top: 20px;
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+
+  @media screen and (max-width: 1080px) {
+    width: 100%;
   }
 `
 
@@ -211,7 +257,11 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
       ' so that artistic inspiration and market demand can be reached in the Forart space.'
   }
 
-  // const { data: overviewData } = useGetOverview()
+  const { data: overviewData } = useGetOverview()
+
+  const toArtistDetailUrl = '/artistDetail?' + new URLSearchParams({
+    artistId: '3312'
+  }).toString()
 
   return (
     <HeaderContainer>
@@ -230,61 +280,64 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
               ))
             }
           </LinkContainer>
+          <ButtonArea>
+            <Link to={toArtistDetailUrl}>
+              <Button size={'large'}  >Create Hypteen!</Button>
+            </Link>
+            <Button size={'large'} style={{ backgroundColor: 'rgb(42,38,48)' }} >
+              <a href="https://www.youtube.com/watch?v=DszF7e5kb54" target="_blank" rel="noopener noreferrer" >
+                View video
+              </a>
+            </Button>
+          </ButtonArea>
         </LeftTop>
 
-        <VideoArea>
+        <LeftBottom>
+          <div className="data-container">
+            <div className="row">
+              <div className="label">TOTAL VALUE</div>
+              {
+                coNftData ? (
+                  <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                    <StyledCountUp
+                      end={overviewData?.minted ? overviewData?.minted : '---'}
+                      duration={2}
+                      separator=","
+                      style={{ fontSize: '1.2em' }}
+                    />
+                    {/*<div style={{ color: '#FF468B', fontSize: '1em' }}>SOL</div>*/}
+                  </div>
+                ) :
+                  <StyledCountUp end={0} />
+              }
+            </div>
 
-          <YouTube
-            video="DszF7e5kb54"
-            height={'80%'}
-            width={'100%'}
-            suggestedQuality={'default'}
-            showRelatedVideos= {false}
-          />
-        </VideoArea>
+            <div className="row">
+              <div className="label">MINTERS</div>
+              {
+                coNftData ? (
 
-        {/*<LeftBottom>*/}
-        {/*  <div className="data-container">*/}
-        {/*    <div className="row">*/}
-        {/*      <div className="label">TOTAL VALUE</div>*/}
-        {/*      {*/}
-        {/*        coNftData ? (*/}
-        {/*          <div style={{ display: 'flex', alignItems: 'baseline' }}>*/}
-        {/*            <StyledCountUp*/}
-        {/*              end={overviewData?.minted ? overviewData?.minted : '---'}*/}
-        {/*              duration={2}*/}
-        {/*              separator=","*/}
-        {/*            />*/}
-        {/*            <div style={{ color: '#FF468B', fontSize: '1.6em' }}>SOL</div>*/}
-        {/*          </div>*/}
-        {/*        ) :*/}
-        {/*          <StyledCountUp end={0} />*/}
-        {/*      }*/}
-        {/*    </div>*/}
+                  <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                    <StyledCountUp
+                      end={overviewData?.mintedWallet ? overviewData?.mintedWallet : '---'}
+                      duration={2}
+                      separator=","
+                      style={{ fontSize: '1.2em' }}
+                    />
+                    <div style={{ color: '#FF468B', fontSize: '1em' }} />
+                  </div>
+                ) :
+                  <StyledCountUp end={0} />
+              }
+            </div>
 
-        {/*    <div className="row">*/}
-        {/*      <div className="label">MINTERS</div>*/}
-        {/*      {*/}
-        {/*        coNftData ? (*/}
-
-        {/*          <div style={{ display: 'flex', alignItems: 'baseline' }}>*/}
-        {/*            <StyledCountUp*/}
-        {/*              end={overviewData?.mintedWallet ? overviewData?.mintedWallet : '---'}*/}
-        {/*              duration={2}*/}
-        {/*              separator=","*/}
-        {/*            />*/}
-        {/*            <div style={{ color: '#FF468B', fontSize: '1.6em' }} />*/}
-        {/*          </div>*/}
-        {/*        ) :*/}
-        {/*          <StyledCountUp end={0} />*/}
-        {/*      }*/}
-        {/*    </div>*/}
-
-        {/*  </div>*/}
-        {/*</LeftBottom>*/}
+          </div>
+        </LeftBottom>
       </LeftArea>
       <RightArea>
-        <img src={Banner1} />
+        <Banner>
+          <img src={Banner1} />
+        </Banner>
       </RightArea>
     </HeaderContainer>
   )
@@ -354,7 +407,7 @@ const CoNftPage: React.FC = () => {
     <Wrapper>
       <CoNftPageContainer>
         <Header coNftData={coNftData} />
-        <PoolsList poolsList={poolsList?.records} />
+        {/*<PoolsList poolsList={poolsList?.records} />*/}
       </CoNftPageContainer>
     </Wrapper>
   )

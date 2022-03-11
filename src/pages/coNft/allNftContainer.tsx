@@ -5,7 +5,7 @@ import { ThemeInput } from '../../styles/ThemeInput'
 import { SearchOutlined } from '@ant-design/icons'
 import { OrderSelector } from '../../components/NFTListSelectors'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { Button, Divider, List, Skeleton } from 'antd'
+import { BackTop, Button, Divider, List, Skeleton } from 'antd'
 import styled from 'styled-components'
 import AllNftList from '../../components/nft-mint/allNftList'
 
@@ -24,32 +24,37 @@ const Filter = styled.div`
     margin-left: 10px;
     cursor: pointer;
   }
+  
 `
 
 const AllNftWrapper = styled.div`
   width: 100%;
   height: fit-content;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+ 
   font-size: 2em;
   color: #ffffff;
+  display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
-  
-  .ant-list-items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+  justify-content: center;
 
+
+  .ant-list-items {
+    //display: flex;
+    //flex-wrap: wrap;
+    //justify-content: space-between;
+   
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 230px);
+    grid-template-rows: repeat(auto-fill, 300px);
+    grid-gap: 12px;
+    justify-content: space-between;
+    user-select: none;
  
   }
 
-  .empty {
-    padding: 0;
-    //height: 100px;
-    width: 280px;
-  }
 
+ 
   
   
   .rc-virtual-list {
@@ -146,11 +151,11 @@ const AllNftContainer: React.FC = () => {
           defaultValue={searchKey}
           style={{ width:'200px', marginRight: '20px' }}
         />
-        <OrderSelector onChange={ e => { setSelectedOrder(e) }} />
+        {/*<OrderSelector onChange={ e => { setSelectedOrder(e) }} />*/}
         <div className="btn" onClick={onPressEnter}>Search</div>
       </Filter>
 
-      <div style={{ height: 1200, overflow: 'auto', padding: '0 16px' }} id="scrollableDiv">
+      <div style={{ height: 1000, overflow: 'auto' }} id="scrollableDiv">
 
         <InfiniteScroll
           next={loadMoreData}
@@ -162,16 +167,17 @@ const AllNftContainer: React.FC = () => {
         >
           <List dataSource={data}
             renderItem={(item,index) =>(
-              <ListItem key={index}>
-                <AllNftList data={item} index={index} />
-              </ListItem>
+              <>
+                <ListItem key={index}>
+                  <AllNftList data={item} index={index} />
+
+                </ListItem>
+
+              </>
             )}
           />
-          {/*{*/}
-          {/*  new Array(5).fill({}).map((_, index) => (*/}
-          {/*    <div className="empty" key={index} />*/}
-          {/*  ))*/}
-          {/*}*/}
+
+          <div className="empty" style={{ height: '600px' }}  />
 
         </InfiniteScroll>
       </div>

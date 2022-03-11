@@ -38,7 +38,7 @@ export const RightArea = styled.div`
   width: 59%;
   display: flex;
   flex-direction: column;
-  font-family: 'campton';
+  font-family: 'inter';
 
 
   .top {
@@ -65,7 +65,7 @@ export const RightArea = styled.div`
         background: -webkit-linear-gradient(0deg,#17ef97 -5.04%,#6084ff 46.01%,#d324f7 96.01%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-      }
+      } 
     }
   }
   
@@ -94,7 +94,7 @@ export const ShineKeyFrame = keyframes`
 `
 
 export const LevelLabel = styled.div<{ color: string, shine?: boolean }>`
-  font-family: 'campton';
+  font-family: 'inter';
   font-size: .7em;
   font-weight: lighter;
 

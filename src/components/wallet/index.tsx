@@ -14,7 +14,6 @@ const StyledWallet = styled.div`
   height: 40px;
   background-color: #1E052D;
   color: #fff;
-  font-size: 16px;
   display: flex;
   justify-content: center;
   align-items: center;

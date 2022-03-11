@@ -4,9 +4,9 @@ import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
 import { Affix, Menu, Tooltip } from 'antd'
 import routes, { Route } from '../../routes'
-import TwitterIcon from '../../assets/images/contactLink/twitter.png'
-import TelegramIcon from '../../assets/images/contactLink/telegram.png'
-import DiscordIcon from '../../assets/images/contactLink/discord.png'
+import TwitterIcon from '../../assets/images/contactLink/twitter.svg'
+import TelegramIcon from '../../assets/images/contactLink/telegram.svg'
+import DiscordIcon from '../../assets/images/contactLink/discord.svg'
 
 const CustomizedMenu = styled(Menu)`
   height: 30vh;

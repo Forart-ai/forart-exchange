@@ -6,7 +6,7 @@
 .app {
   width: 100%;
   overflow: hidden;
-  font-family: 'campton';
+  font-family: 'inter';
 }
 
 .border {
@@ -22,7 +22,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #B8316A, #4A0E6F) border-box;
+  background: linear-gradient(45deg, #E42575, #4A0E6F) border-box;
   border-radius: 10px;
 }
 
@@ -37,23 +37,27 @@
 
 .ant-btn {
   //background-image: linear-gradient(to right, #12dbe4, #FF468B);
-  background-color: #FF468B;
+  background-color: #E42575;
   color: white;
   border: none;
-  border-radius: 10px;
-  transition: filter 0.5s;
-  font-size: 1.2em;
+  border-radius: 7px;
+  //transition: filter 0.5s;
 
   &:hover, &:focus {
-    background-image: linear-gradient(to right, #fa628e, #ff005e);
-    filter: brightness(120%);
+    background-color: #E42575;
+    opacity: .8;
     color: white;
+    transition-duration: 0.2s;
+
+    //background-image: linear-gradient(to right, #fa628e, #ff005e);
+    //filter: brightness(120%);
   }
 }
 
 .ant-modal-close-icon {
   color: white;
 }
+
 .ant-modal-content {
   border-radius: 10px;
   background-color: #1D222D !important;

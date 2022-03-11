@@ -5,7 +5,7 @@ import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
 import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
 import { NFTPreview, Title } from '../../components/nft-mint/selectedList'
-import ArtistBanner from '../../assets/images/coPools/hypteen-banner.jpg'
+import ArtistBanner from '../../assets/images/coPools/ticket.png'
 import List from 'rc-virtual-list'
 import { Avatar, Button, Modal, Skeleton, Tabs } from 'antd'
 import { BlockOutlined, CrownOutlined, SmileOutlined, createFromIconfontCN, SearchOutlined } from '@ant-design/icons'
@@ -62,7 +62,7 @@ const Wrapper = styled.div`
   max-width: 100vw;
   height: 100vh;
   margin: auto;
-  padding: 30px 20px;
+  padding: 0 20px;
   overflow-y: scroll;
   
  @media screen and (max-width: 1100px) {
@@ -71,7 +71,6 @@ const Wrapper = styled.div`
 `
 
 const ArtistDetailContainer = styled.div`
-  max-width: 1400px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -107,7 +106,6 @@ const HeaderContainer = styled.div<{backgroundImage?: string}>`
 const ArtistInfo = styled.div`
   width: 100%;
   height: 100%;
-  //border: 1px red solid;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -153,38 +151,47 @@ const StyledTab = styled(Tabs)`
   width: 100%;
   user-select: none;
   margin-top: 20px;
-  .ant-tabs-nav {
-    border-top-left-radius: 1em;
-    border-top-right-radius: 1em;
-    
-  }
+
   .ant-tabs-tab {
-    font-size: 2em;
+    font-size: 1.7em;
     color: #E5E8EB !important;
+    font-family: 'inter-extraBold';
+    padding: 0;
+
+  }
+  
+  .ant-tabs-nav-list {
+    border: 1px rgb(36,24,47) solid;
+    border-radius: 30px;
+  }
+
+  ant-tabs-tab ant-tabs-tab-active {
+    padding: 0;
   }
 
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: #FF468B !important;
-
+    color: #ffffff !important;
+    border-radius: 25px;
+    background-color: #E42575;
+    span {
+      margin: 5px 10px;
+    }
   }
+  
 
   .ant-tabs-nav-wrap {
     display: flex;
-    justify-content: center;!important;
+    justify-content: center;
+
   }
 
   .ant-tabs-nav::before {
-    //display: none; !important;
-    border-bottom: 1px #65727b solid;
+    display: none; !important;
 
   }
 
   .ant-tabs-ink-bar {
-    line-height: 20px;
-    background: linear-gradient(to right, #FF468B, #12dbe4) border-box;
-    padding: 4px;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
+    display: none;
   }
   
   @media screen and (max-width: 1100px) {
@@ -239,15 +246,22 @@ const ArtistDetailTab = styled.div`
   
 `
 
+const Banner = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  img {
+    border-radius: 1em;
+  }
+`
+
 const TabItem = styled.div`
+  
   max-width: calc(100% - 40px);
   width: 80%;
   height: auto;
 
-  .banner {
-    border-radius: 1em;
-  }
-
+ 
   .item {
     width: 100%;
     //border: 1px red solid;
@@ -368,7 +382,9 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
       {/*  }*/}
       {/*</Anchor>*/}
       <TabItem>
-        <img className="banner" src={ArtistBanner} />
+        <Banner>
+          <img className="banner" src={ArtistBanner} />
+        </Banner>
         <section className="item" >
           <h2 className="title"> Archive </h2>
           <img className="image-border"  />
@@ -666,7 +682,6 @@ const ArtistDetail: React.FC = () => {
   return (
     <Wrapper>
       <ArtistDetailContainer>
-        <UserInfo userData={userData} />
         <DescriptionContainer>
           <StyledTab defaultActiveKey="mint" onChange={ () => window.scrollTo(0, 0)}  >
             <TabPane

@@ -15,7 +15,6 @@ const WalletButton = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 30px;
-  //border: 2px solid #02A6F5;
   box-sizing: border-box;
   padding: 0 10px;
   margin-right: 20px;
