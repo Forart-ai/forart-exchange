@@ -323,7 +323,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
               <Button size={'large'}  >Create Hypeteen!</Button>
             </Link>
             <Button size={'large'} style={{ backgroundColor: 'rgb(42,38,48)' }} >
-              <a href="https://www.youtube.com/watch?v=DszF7e5kb54" target="_blank" rel="noopener noreferrer" >
+              <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >
                 Instruction
               </a>
             </Button>
