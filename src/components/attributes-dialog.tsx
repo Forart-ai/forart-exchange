@@ -124,20 +124,20 @@ const AttributesDialog: React.FC<{ item: MintedNFTItem }> = ({ item }) => {
     }[item.rarity]
   }, [item])
 
-  // const attr = useMemo(() => {
-  //   return item?.componentMetas?.map((v: { chainMeta: string }) => ({
-  //     chainMeta: JSON.parse(v.chainMeta)
-  //   }))
-  // }, [level, item])
-
   const attr = useMemo(() => {
-    Service.post('nft/component/findById', item.components).then((res: any) => {
-      return res.map((v:{chainMeta: string}) => ({
-        chainMeta: JSON.parse(v.chainMeta)
-      }))
-    })
+    return item?.componentMetas?.map((v: { chainMeta: string }) => ({
+      chainMeta: JSON.parse(v.chainMeta)
+    }))
+  }, [level, item])
 
-  }, [item])
+  // const attr = useMemo(() => {
+  //   Service.post('nft/component/findById', item.components).then((res: any) => {
+  //     return res.map((v:{chainMeta: string}) => ({
+  //       chainMeta: JSON.parse(v.chainMeta)
+  //     }))
+  //   })
+  //
+  // }, [item])
 
   return (
     <AttributesDialogWrapper>
@@ -163,7 +163,7 @@ const AttributesDialog: React.FC<{ item: MintedNFTItem }> = ({ item }) => {
           {/*</div>*/}
         </div>
         <div className="bottom">
-          {/*<AttributesItem item={attr} />*/}
+          <AttributesItem item={attr} />
         </div>
 
       </RightArea>
