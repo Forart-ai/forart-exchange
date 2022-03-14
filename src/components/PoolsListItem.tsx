@@ -50,6 +50,10 @@ const PoolsCardContainer = styled.div< { loading?: string }>`
     }
   }
   `}
+
+  @media screen and (max-width: 1080px) {
+  width: 100%;
+}
  
 
 `
@@ -79,8 +83,9 @@ const InfoContent = styled.div`
   z-index: 99;
   
   .name {
-    font-size: 2em;
+    font-size: 1.5em;
     color: #fff;
+    font-weight: bold;
   }
   
   .description {

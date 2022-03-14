@@ -8,6 +8,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { BackTop, Button, Divider, List, Skeleton } from 'antd'
 import styled from 'styled-components'
 import AllNftList from '../../components/nft-mint/allNftList'
+import { LoadingOutlined } from '@ant-design/icons'
 
 const Filter = styled.div`
   display: flex;
@@ -52,10 +53,6 @@ const AllNftWrapper = styled.div`
     user-select: none;
  
   }
-
-
- 
-  
   
   .rc-virtual-list {
    .rc-virtual-list-holder-inner {
@@ -64,6 +61,12 @@ const AllNftWrapper = styled.div`
      flex-wrap: wrap;
      justify-content: center;
    }
+  }
+  
+  @media screen and (max-width: 1080px) {
+    .ant-list-items {
+      justify-content: center;
+    }
   }
   
 `
@@ -161,6 +164,9 @@ const AllNftContainer: React.FC = () => {
       </Filter>
 
       <div style={{ height: 1000, overflow: 'auto' }} id="scrollableDiv">
+        {
+          loading && (<LoadingOutlined spin style={{ color: '#ffffff', display:'flex', justifyContent: 'center' }} />)
+        }
 
         <InfiniteScroll
           next={loadMoreData}
@@ -175,7 +181,6 @@ const AllNftContainer: React.FC = () => {
               <>
                 <ListItem key={index}>
                   <AllNftList data={item} index={index} />
-
                 </ListItem>
 
               </>

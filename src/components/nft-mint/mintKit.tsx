@@ -33,20 +33,20 @@ const StyledFlag = styled.div`
 
 const ImageContainer = styled.div`
   width: 100%;
-  height: 130px;
+  height: 100%;
   overflow: hidden;
 
   img {
-    object-fit: cover;
+    object-fit: fill;
     border-radius: 1em;
     width: 100%;
     height: 100%;
     background: #1E052D;
-    
+    overflow: hidden;
+
   }
   .Clothing {
     transform: scale(2, 2) translate(0);
-    
   }
   .Pants {
     transform: scale(2,2) translate(-15px, -25px);
@@ -60,16 +60,19 @@ const ImageContainer = styled.div`
   .Hand {
     transform: scale(3, 3) translate(-5px, -25px);
   }
+  .Mouth {
+    transform: scale(2) translate(15px, 10px);
+  }
 `
 
 const KitItemContainer = styled.div`
   display: flex;
-  min-width: 135px;
+  width: 140px;
+  height: 140px;
   flex-direction: column;
   margin: 10px;
   box-shadow: 10px 4px 10px #0000008c;
   border-radius: 10px;
-  height: 150px;
 
 
 
@@ -84,12 +87,11 @@ const KitItemContainer = styled.div`
 `
 
 const Fake = styled.div`
-padding: 20px;
   width: 100%;
   display: flex;
   justify-content: center;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
 
   span {
     font-size: 1.3em;
@@ -99,7 +101,7 @@ padding: 20px;
   }
   img {
     border-radius: 10px;
-    width: 50%;
+    width: 30%;
   }
 `
 
@@ -162,14 +164,17 @@ export const SelectableKitList: React.FC<{img?: boolean, selectedValue?: any, on
 }) => {
   console.log(img)
   return (
-    <KitListContainer>
-      {
-        list?.map((item, index) => (
-          <KitItemContainer key={index}>
-            <SelectableKitItem  src={item} onSelect={onSelect} checked={selectedValue?.url === item?.url}  />
-          </KitItemContainer>
-        ))
-      }
+    <>
+      <KitListContainer>
+        {
+          list?.map((item, index) => (
+            <KitItemContainer key={index}>
+              <SelectableKitItem  src={item} onSelect={onSelect} checked={selectedValue?.url === item?.url}  />
+            </KitItemContainer>
+          ))
+        }
+
+      </KitListContainer>
       {
         ( !list && img) && (
           <Fake>
@@ -178,7 +183,7 @@ export const SelectableKitList: React.FC<{img?: boolean, selectedValue?: any, on
           </Fake>
         )
       }
-    </KitListContainer>
+    </>
   )
 
 }

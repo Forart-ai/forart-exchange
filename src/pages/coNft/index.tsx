@@ -32,12 +32,13 @@ const Wrapper = styled.div`
 
 const CoNftPageContainer = styled.div`
   max-width: 80%;
-  height: 100%;
+  height: fit-content;
   width: calc(100% - 80px);
   margin-left: auto;
   margin-right: auto;
   display: flex;
   align-items: center;
+  flex-direction: column;
 
   @media screen and (max-width: 1080px) {
     width: 100%;
@@ -71,6 +72,7 @@ const LeftArea = styled.div`
 
   @media screen and (max-width: 1080px) {
     width: 100%;
+    padding: 0;
   }
   
 `
@@ -236,11 +238,19 @@ const PoolsContainer = styled.div`
 
 const PoolListContainer = styled.div`
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  //display: flex;
+  //flex-wrap: wrap;
+  //justify-content: space-between;
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  grid-template-columns: repeat(2, auto);
   justify-content: space-between;
   position: relative;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 1080px) {
+    grid-template-columns: repeat(1, auto);
+  }
 
 `
 
@@ -414,7 +424,7 @@ const CoNftPage: React.FC = () => {
     <Wrapper>
       <CoNftPageContainer>
         <Header coNftData={coNftData} />
-        {/*<PoolsList poolsList={poolsList?.records} />*/}
+        <PoolsList poolsList={poolsList?.records} />
       </CoNftPageContainer>
     </Wrapper>
   )
