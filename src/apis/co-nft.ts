@@ -45,11 +45,20 @@ const CONFT_API = {
       },
       saveNFT(series: number | string, components: number[], wallet:string) {
         return Service.post('/nft/promotion/create', { series, components, wallet })
+      },
+      getStaredNft(series: number | string, wallet: string) {
+        return Service.post('nft/stared', { series, wallet })
       }
     },
     nft:{
       getNftRank(series: number | string, page: number, order: 'asc' | 'desc' | undefined , filter?: string | number) {
         return Service.post('nft/rank', { series, page, order, filter })
+      },
+      starNft(series: number | string, nft: string, wallet: string) {
+        return Service.post('nft/star', { series, nft, wallet })
+      },
+      findComponentsById() {
+        return Service.post('nft/component/findById',[])
       }
     }
   }
