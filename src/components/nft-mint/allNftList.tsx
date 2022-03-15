@@ -104,6 +104,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
   const { account } = useSolanaWeb3()
   const series = useLocationQuery('artistId')
 
+  const [heartNum, setHeartNum] = useState<number>(data?.star)
   const [isHeart, setIsHeart] = useState<boolean>(false)
   const [heartNft, setHeartNft] = useState<string[]>()
 
@@ -117,6 +118,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
     if (series && account) {
       CONFT_API.core.nft.starNft(series, nftId, account.toBase58()).then(() => {
         setIsHeart(true)
+        setHeartNum(prev => prev +1)
         // notification['success']({
         //   message: 'star success!'
         // })
@@ -143,7 +145,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
           <div className="name">{data?.chainNftName || `HypeTeen # ${data?.chainNftNameTmp}`}</div>
 
           <div className="heart-row">
-            <span>{data.star}</span>
+            <span>{heartNum}</span>
             {
               heartNft?.includes(data.id) ?  < HeartFilled style={{ color: '#ff005e' }}   className="heart" />
                 : <HeartOutlined className="heart"  onClick={() => handleLike(data?.id)} />
