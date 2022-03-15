@@ -56,6 +56,15 @@ const Info = styled.div`
     align-items: center;
     font-size: 1em;
     width: 100%;
+    
+    .heart-row {
+      display: flex;
+      align-items: center;
+      
+      span {
+        margin-right: 5px;
+      }
+    }
 
 
     .name {
@@ -106,11 +115,11 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
 
   const handleLike = useCallback((nftId: string) => {
     if (series && account) {
-      CONFT_API.core.nft.starNft(series, nftId, account.toBase58()).then(res => {
+      CONFT_API.core.nft.starNft(series, nftId, account.toBase58()).then(() => {
         setIsHeart(true)
-        notification['success']({
-          message: 'star success!'
-        })
+        // notification['success']({
+        //   message: 'star success!'
+        // })
       })
         .catch(err => {
           setIsHeart(false)
@@ -120,10 +129,10 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
 
   useEffect(() => {
     if (series && account) {
-      CONFT_API.core.user.getStaredNft(series, account.toBase58()).then(res => {
-        setHeartNft(res.data)
+      CONFT_API.core.user.getStaredNft(series, account.toBase58()).then((res:any) => {
+        setHeartNft(res)
       })
-    }
+    } else return
   },[account, series, isHeart])
 
   return (
@@ -132,8 +141,15 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
       <Info>
         <div className="row">
           <div className="name">{data?.chainNftName || `HypeTeen # ${data?.chainNftNameTmp}`}</div>
-          <HeartOutlined className="heart"  onClick={() => handleLike(data?.id)} />
-          {/*<HeartFilled   />*/}
+
+          <div className="heart-row">
+            <span>{data.star}</span>
+            {
+              heartNft?.includes(data.id) ?  < HeartFilled style={{ color: '#ff005e' }}   className="heart" />
+                : <HeartOutlined className="heart"  onClick={() => handleLike(data?.id)} />
+            }
+          </div>
+
         </div>
         <div className="rank">
           <img src={CrownIcon} />

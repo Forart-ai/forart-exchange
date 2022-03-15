@@ -63,6 +63,10 @@ const ImageContainer = styled.div`
   .Mouth {
     transform: scale(2) translate(15px, 10px);
   }
+  
+  .Ear {
+    transform: scale(3) translate(-10px, 30px);
+  }
 `
 
 const KitItemContainer = styled.div`

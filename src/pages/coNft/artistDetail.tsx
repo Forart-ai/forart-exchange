@@ -521,6 +521,11 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         list: artistKit?.Butt
       },
       {
+        name: 'Ear',
+        key: 'ear',
+        list: artistKit?.Ear
+      },
+      {
         name: 'Mouth',
         key: 'mouth',
         list: artistKit?.Mouth
