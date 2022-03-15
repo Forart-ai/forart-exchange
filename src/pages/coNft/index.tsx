@@ -144,10 +144,9 @@ const Banner = styled.div`
   width: 100%;
   
   img {
-    padding: 0 10px;
     width: 100%;
     object-fit: contain;
-    border-radius: 20px;
+    border-radius: 10px;
 
   }
   
@@ -264,6 +263,8 @@ const StyledCountUp = styled(CountUp)`
 
 const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
+  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
+
   const INFO_DETAILS = {
     title: 'CO-NFT',
     describe: 'Forart.ai provides the First AI-powered NFT SaaS for Social, which integrates NFT content creation and social attributes to provide' +
@@ -283,6 +284,15 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
         <LeftTop>
           <MainInfo>
             <div className="title">{INFO_DETAILS.title}</div>
+            {
+              isMobile && (
+                <RightArea>
+                  <Banner>
+                    <img src={Banner1} />
+                  </Banner>
+                </RightArea>
+              )
+            }
             <div className="description">{INFO_DETAILS.describe}</div>
           </MainInfo>
 
@@ -351,11 +361,16 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
         </LeftTop>
 
       </LeftArea>
-      <RightArea>
-        <Banner>
-          <img src={Banner1} />
-        </Banner>
-      </RightArea>
+      {
+        !isMobile && (
+          <RightArea>
+            <Banner>
+              <img src={Banner1} />
+            </Banner>
+          </RightArea>
+        )
+      }
+
     </HeaderContainer>
   )
 }
