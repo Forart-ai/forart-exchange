@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { MintedNFTItem } from '../../types/coNFT'
 import styled from 'styled-components'
-import { Image } from 'antd'
+import { Image, notification } from 'antd'
 import { useModal } from '../../contexts/modal'
 import AttributesDialog from '../attributes-dialog'
 import {  HeartOutlined, HeartFilled   } from '@ant-design/icons'
@@ -95,6 +95,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
   const { account } = useSolanaWeb3()
   const series = useLocationQuery('artistId')
 
+  const [isHeart, setIsHeart] = useState<boolean>(false)
   const [heartNft, setHeartNft] = useState<string[]>()
 
   const cb = useCallback(() => {
@@ -103,21 +104,27 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
     }
   }, [data])
 
-  // useEffect(() => {
-  //   if (series && account) {
-  //     CONFT_API.core.user.getStaredNft(series, account?.toBase58()).then(res => {
-  //       console.log(res)
-  //     })
-  //   }
-  // },[series, account])
-
   const handleLike = useCallback((nftId: string) => {
     if (series && account) {
       CONFT_API.core.nft.starNft(series, nftId, account.toBase58()).then(res => {
-        console.log(res)
+        setIsHeart(true)
+        notification['success']({
+          message: 'star success!'
+        })
       })
+        .catch(err => {
+          setIsHeart(false)
+        })
     }
   },[account, data])
+
+  useEffect(() => {
+    if (series && account) {
+      CONFT_API.core.user.getStaredNft(series, account.toBase58()).then(res => {
+        setHeartNft(res.data)
+      })
+    }
+  },[account, series, isHeart])
 
   return (
     <Wrapper >

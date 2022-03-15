@@ -57,8 +57,8 @@ const CONFT_API = {
       starNft(series: number | string, nft: string, wallet: string) {
         return Service.post('nft/star', { series, nft, wallet })
       },
-      findComponentsById() {
-        return Service.post('nft/component/findById',[])
+      findComponentsById(data: string[]) {
+        return Service.post('nft/component/findById', data)
       }
     }
   }

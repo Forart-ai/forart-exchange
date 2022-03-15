@@ -162,7 +162,6 @@ export const SelectableKitList: React.FC<{img?: boolean, selectedValue?: any, on
   list,
   img
 }) => {
-  console.log(img)
   return (
     <>
       <KitListContainer>
