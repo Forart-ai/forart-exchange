@@ -49,7 +49,6 @@ const MysteryHat = styled.div`
   position: absolute;
   height: 100px;
   width: 250px;
-  border: 1px red solid;
   left: 80px;
   top: 90px;
   z-index: 2;

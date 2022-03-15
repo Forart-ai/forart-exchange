@@ -60,7 +60,7 @@ text-align: center;
 
 `
 
-export const AttributesItem: React.FC<{ item: Array<AttributesListItem | undefined> }> = ({ item }) => {
+export const AttributesItem: React.FC<{ item?: AttributesListItem[] }> = ({ item }) => {
 
   return (
     <Wrapper>
@@ -72,11 +72,8 @@ export const AttributesItem: React.FC<{ item: Array<AttributesListItem | undefin
               <ItemBox key={items?.chainMeta.trait_type} >
                 <div className="type"> {items?.chainMeta.trait_type}</div>
                 <div className="value"> {items?.chainMeta.value}</div>
-
               </ItemBox>
-
             ))
-
           }
         </BoxContainer>
       </ScrollContainer>

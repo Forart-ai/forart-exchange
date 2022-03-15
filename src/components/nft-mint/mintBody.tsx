@@ -33,7 +33,7 @@ export const SelectableBodyList: React.FC<{selectedValue?: any, onSelect: (_?: s
   list
 }) => {
 
-  const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
+  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
   return (
     <SwiperList>
@@ -43,14 +43,12 @@ export const SelectableBodyList: React.FC<{selectedValue?: any, onSelect: (_?: s
       </div>
       <Swiper
         modules={[Navigation]}
-        slidesPerView={isMobile ? 3 : 6}
+        slidesPerView={isMobile ? 'auto' : 6}
         spaceBetween={isMobile ? 50 : 10}
-        direction= {isMobile ? 'horizontal' :'vertical'}
-        navigation={
-          { prevEl: '.navigation .up-arrow',
-            nextEl:'.navigation .down-arrow',
-            disabledClass: 'disable' }
-        }
+        direction= { isMobile ? 'horizontal' :'vertical'}
+        navigation={ isMobile &&  { prevEl: '.navigation .up-arrow',
+          nextEl:'.navigation .down-arrow',
+          disabledClass: 'disable' }}
       >
         {
           list?.map((item,key)=>(

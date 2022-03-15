@@ -469,10 +469,8 @@ const AIGeneration:React.FC = () => {
   const generate = useCallback(async () => {
     setGenerating(true)
     const result = await aiGeneratorStyle(style,content)
-    console.log(result)
     const uri = await base64ToIPfsUri(result.data)
     setNewNFT(uri)
-    console.log(uri)
     setGenerating(false)
     return uri
   },[style,content])

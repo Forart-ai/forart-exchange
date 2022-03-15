@@ -65,8 +65,9 @@ const Wrapper = styled.div`
   padding: 0 20px;
   overflow-y: scroll;
   
- @media screen and (max-width: 1100px) {
-   height: 100vh;
+ @media screen and (max-width: 1080px) {
+   min-height: 100vh;
+   padding: 0 10px;
  } 
 `
 
@@ -74,6 +75,7 @@ const ArtistDetailContainer = styled.div`
   width: 100%;
   margin-left: auto;
   margin-right: auto;
+
 `
 
 const HeaderContainer = styled.div<{backgroundImage?: string}>`
@@ -151,13 +153,14 @@ const StyledTab = styled(Tabs)`
   width: 100%;
   user-select: none;
   margin-top: 20px;
-
+  display: flex;
+  justify-content: center;
+  
   .ant-tabs-tab {
     font-size: 1.7em;
     color: #E5E8EB !important;
     font-family: 'inter-extraBold';
     padding: 0;
-
   }
   
   .ant-tabs-nav-list {
@@ -196,7 +199,13 @@ const StyledTab = styled(Tabs)`
   
   @media screen and (max-width: 1100px) {
     .ant-tabs-tab {
-      font-size: 16px;
+      font-size: 14px;
+    }
+    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+      background-color: #E42575;
+      span {
+        margin: 5px;
+      }
     }
   }
 `
@@ -204,7 +213,6 @@ const StyledTab = styled(Tabs)`
 const DescriptionContainer = styled.div`
   width: 100%;
   height: fit-content;
-  border-radius: 20px;
   margin: 30px 0;
   position: relative;
   display: flex;
@@ -215,6 +223,8 @@ const DescriptionContainer = styled.div`
   //background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), #1E052D) border-box;
   @media screen and (max-width: 1100px) {
     padding: 10px;
+    margin: 0;
+    padding: 0 10px;
   }
   
 `
@@ -224,7 +234,6 @@ const ArtistDetailTab = styled.div`
   height: fit-content;
   display: flex;
   justify-content: center;
-
   
   .ant-anchor-link-title {
     font-size: 1.2em;
@@ -250,7 +259,10 @@ const Banner = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  
   img {
+    width: 100%;
+    object-fit: contain;
     border-radius: 1em;
   }
 `
@@ -264,7 +276,6 @@ const TabItem = styled.div`
  
   .item {
     width: 100%;
-    //border: 1px red solid;
   }
 
   .title {
@@ -510,6 +521,11 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
         list: artistKit?.Butt
       },
       {
+        name: 'Ear',
+        key: 'ear',
+        list: artistKit?.Ear
+      },
+      {
         name: 'Mouth',
         key: 'mouth',
         list: artistKit?.Mouth
@@ -577,12 +593,12 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
           </SelectedBody>
 
         </BodyContent>
-        <KitContent >
 
+        <KitContent >
           <MintTab tabPosition={'top'}>
             {
               KIT_TYPES?.map(type => (
-                <TabPane key={type.name}  tab={type.name} style={{ width:'100%', overflowX: 'scroll' }}>
+                <TabPane key={type.name}  tab={type.name} style={{ width:'100%' }}>
                   <MintContainer>
                     <SelectableKitList
                       img={type.image}

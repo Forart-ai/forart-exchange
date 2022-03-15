@@ -1,7 +1,11 @@
 import { MintedNFTItem } from '../types/coNFT'
 import React, { useEffect, useMemo, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
-import { AttributesItem } from './attributes-item'
+import { AttributesItem, AttributesListItem } from './attributes-item'
+import CONFT_API from '../apis/co-nft'
+import { Service } from '../apis/service'
+import { useQuery } from 'react-query'
+import { useFindComponent } from '../hooks/queries/useFindComponent'
 
 const AttributesDialogWrapper = styled.div`
   max-width: 1200px;
@@ -122,11 +126,13 @@ const AttributesDialog: React.FC<{ item: MintedNFTItem }> = ({ item }) => {
     }[item.rarity]
   }, [item])
 
+  const { data: a } = useFindComponent(item.components)
+
   const attr = useMemo(() => {
-    return item?.componentMetas?.map((v: { chainMeta: string }) => ({
+    return a?.map((v: any) => ({
       chainMeta: JSON.parse(v.chainMeta)
     }))
-  }, [level, item])
+  }, [ item,a])
 
   return (
     <AttributesDialogWrapper>

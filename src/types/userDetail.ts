@@ -30,6 +30,7 @@ export interface ArtistKit {
   Mouth?: any,
   Hat?: any,
   Butt?: any,
+  Ear?:any,
   Background?: any,
   Clothing?: any,
   Hand?:any
