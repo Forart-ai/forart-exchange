@@ -101,7 +101,7 @@ const Info = styled.div`
 
 const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,index }) => {
   const { openModal } = useModal()
-  const { account } = useSolanaWeb3()
+  const { account, select } = useSolanaWeb3()
   const series = useLocationQuery('artistId')
 
   const [heartNum, setHeartNum] = useState<number>(data?.star)
@@ -114,7 +114,25 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
     }
   }, [data])
 
+  const handleUnlike = useCallback((nftId:string) => {
+    if (series && account) {
+      CONFT_API.core.nft.unstarNft(series, nftId, account.toBase58())
+        .then(() => {
+          setIsHeart(false)
+        }).catch(() => {
+          setIsHeart(false)
+        })
+
+      return isHeart
+
+    }
+  },[account, data])
+
   const handleLike = useCallback((nftId: string) => {
+    if (!account) {
+      select()
+      return
+    }
     if (series && account) {
       CONFT_API.core.nft.starNft(series, nftId, account.toBase58()).then(() => {
         setIsHeart(true)
@@ -123,10 +141,11 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
         //   message: 'star success!'
         // })
       })
-        .catch(err => {
+        .catch(() => {
           setIsHeart(false)
         })
     }
+
   },[account, data])
 
   useEffect(() => {
@@ -135,7 +154,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
         setHeartNft(res)
       })
     } else return
-  },[account, series, isHeart])
+  },[account, series, isHeart,handleUnlike])
 
   return (
     <Wrapper >
@@ -147,7 +166,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
           <div className="heart-row">
             <span>{heartNum}</span>
             {
-              heartNft?.includes(data.id) ?  < HeartFilled style={{ color: '#ff005e' }}   className="heart" />
+              heartNft?.includes(data.id) ?  < HeartFilled onClick={() => handleUnlike(data?.id)} style={{ color: '#ff005e' }}   className="heart" />
                 : <HeartOutlined className="heart"  onClick={() => handleLike(data?.id)} />
             }
           </div>
