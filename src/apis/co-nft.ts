@@ -59,6 +59,9 @@ const CONFT_API = {
       },
       findComponentsById(data: string[]) {
         return Service.post('nft/component/findById', data)
+      },
+      unStarNft(series: number | string, nft: string, wallet: string) {
+        return Service.post('nft/unStar', { series, nft, wallet })
       }
     }
   }

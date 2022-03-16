@@ -62,7 +62,7 @@ const Wrapper = styled.div`
   max-width: 100vw;
   height: 100vh;
   margin: auto;
-  padding: 0 20px;
+  padding: 0 20px 40px 20px;
   overflow-y: scroll;
   
  @media screen and (max-width: 1080px) {
