@@ -57,32 +57,13 @@ const Info = styled.div`
     font-size: 1em;
     width: 100%;
     
-    .heart-row {
-      display: flex;
-      align-items: center;
-      
-      span {
-        margin-right: 5px;
-      }
-    }
-
 
     .name {
       font-weight: bold;
       width: 100%;
     }
 
-    .heart {
-      cursor: pointer;
-      border-radius: 50%;
-      font-size: 1.3em;
-      
-      :hover {
-        color: #ff005e;
-        background: rgba(255, 0, 94, .3);
-        transition-duration: 0.5s;
-      }
-    }
+   
   }
   
   .rank {
@@ -99,6 +80,42 @@ const Info = styled.div`
   }
 `
 
+const HeartContainer = styled.div<{heartStatus?: 'up' | 'down'}>`
+  display: flex;
+  align-items: center;
+
+  .heart {
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 1.3em;
+
+    //:hover {
+    //  color: #ff005e;
+    //  background: rgba(255, 0, 94, .3);
+    //  transition-duration: 0.5s;
+    //}
+  }
+  
+  ${props => props.heartStatus === 'up' && `
+  
+  .heart {
+     color: #f30c74
+     }
+  `
+}
+
+  ${props => props.heartStatus === 'down' && `
+  .heart {
+     color: white
+     }
+  `
+}
+
+  span {
+    margin-right: 5px;
+  }
+`
+
 const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,index }) => {
   const { openModal } = useModal()
   const { account, select } = useSolanaWeb3()
@@ -107,6 +124,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
   const [heartNum, setHeartNum] = useState<number>(data?.star)
   const [isHeart, setIsHeart] = useState<boolean>(false)
   const [heartNft, setHeartNft] = useState<string[]>()
+  const [heartStatus, setHeartStatus] = useState<'up' | 'down'>('down')
 
   const cb = useCallback(() => {
     if (data?.chainStatus === 'SUCCESS') {
@@ -114,47 +132,65 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
     }
   }, [data])
 
-  const handleUnlike = useCallback((nftId:string) => {
-    if (series && account) {
-      CONFT_API.core.nft.unstarNft(series, nftId, account.toBase58())
-        .then(() => {
-          setIsHeart(false)
-        }).catch(() => {
-          setIsHeart(false)
-        })
-
-      return isHeart
-
-    }
-  },[account, data])
+  // const handleUnlike = useCallback((nftId:string) => {
+  //   if (series && account) {
+  //     setIsHeart(false)
+  //     setHeartNum(prev => prev - 1)
+  //     CONFT_API.core.nft.unstarNft(series, nftId, account.toBase58())
+  //       .then(() => {
+  //
+  //       }).catch(() => {
+  //         setIsHeart(false)
+  //       })
+  //
+  //     return isHeart
+  //
+  //   }
+  // },[account, data])
 
   const handleLike = useCallback((nftId: string) => {
     if (!account) {
       select()
       return
     }
-    if (series && account) {
+
+    if (series && heartStatus === 'down') {
+      setIsHeart(true)
+      setHeartNum(prev => prev + 1)
+      setHeartStatus('up')
+      console.log('down')
       CONFT_API.core.nft.starNft(series, nftId, account.toBase58()).then(() => {
-        setIsHeart(true)
-        setHeartNum(prev => prev +1)
-        // notification['success']({
-        //   message: 'star success!'
-        // })
+
       })
         .catch(() => {
           setIsHeart(false)
         })
     }
 
-  },[account, data])
+    if (series  && heartStatus === 'up') {
+      setIsHeart(false)
+      setHeartNum(prev => prev - 1)
+      setHeartStatus('down')
+      console.log('up')
+      CONFT_API.core.nft.unstarNft(series, nftId, account.toBase58()).then(() => {
+      })
+        .catch(() => {
+          setIsHeart(false)
+        })
+    }
+
+  },[account, data, heartStatus])
 
   useEffect(() => {
-    if (series && account) {
-      CONFT_API.core.user.getStaredNft(series, account.toBase58()).then((res:any) => {
-        setHeartNft(res)
-      })
-    } else return
-  },[account, series, isHeart,handleUnlike])
+
+    CONFT_API.core.user.getStaredNft(series, account?.toBase58()).then((res:any) => {
+      setHeartNft(res)
+      if (res.includes(data.id)) {
+        setHeartStatus('up')
+      }
+    })
+
+  },[account, series,])
 
   return (
     <Wrapper >
@@ -163,13 +199,14 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
         <div className="row">
           <div className="name">{data?.chainNftName || `HypeTeen # ${data?.chainNftNameTmp}`}</div>
 
-          <div className="heart-row">
+          <HeartContainer heartStatus = {heartStatus} >
             <span>{heartNum}</span>
-            {
-              heartNft?.includes(data.id) ?  < HeartFilled onClick={() => handleUnlike(data?.id)} style={{ color: '#ff005e' }}   className="heart" />
-                : <HeartOutlined className="heart"  onClick={() => handleLike(data?.id)} />
-            }
-          </div>
+            {/*{*/}
+            {/*  heartNft?.includes(data.id) ?  < HeartFilled onClick={() => handleUnlike(data?.id)} style={{ color: '#ff005e' }}   className="heart" />*/}
+            {/*    : <HeartOutlined className="heart"  onClick={() => handleLike(data?.id)} />*/}
+            {/*}*/}
+            <HeartFilled  onClick={() => handleLike(data?.id)}  className="heart" />
+          </HeartContainer>
 
         </div>
         <div className="rank">
