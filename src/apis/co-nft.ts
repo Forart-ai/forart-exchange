@@ -62,6 +62,9 @@ const CONFT_API = {
       },
       unstarNft(series: number | string, nft: string, wallet: string) {
         return Service.post('nft/unStar', { series, nft, wallet })
+      },
+      getWalletRank(series: string | number, page: number, filter?: string | number) {
+        return Service.post('nft/minter/rank', { series, page, filter })
       }
     }
   }
