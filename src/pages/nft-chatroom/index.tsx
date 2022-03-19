@@ -18,6 +18,7 @@ const Wrapper = styled.div`
 `
 
 const SocialContainer = styled.div`
+  filter: blur(7px);
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -39,6 +40,7 @@ const Filter = styled.div`
 `
 
 const RankingContainer = styled.div`
+  filter: blur(7px);
   width: 40%;
   background-color: #1D222D;
   border-radius: 10px;

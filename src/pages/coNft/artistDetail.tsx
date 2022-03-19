@@ -31,15 +31,12 @@ import useUserQuery from '../../hooks/queries/useUserQuery'
 import useDiscordAccessToken from '../../hooks/useDiscordAccessToken'
 import useNFTMint from '../../hooks/programs/services/useNFTMint'
 import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
-import { useWeb3React } from '@web3-react/core'
-import CONFT_API from '../../apis/co-nft'
-import MintListItem from '../../components/mintListItem'
-import { MintedNFTItem } from '../../types/coNFT'
-import { ThemeInput } from '../../styles/ThemeInput'
-import { OrderSelector } from '../../components/NFTListSelectors'
-import { ForartNftTransactionStatus } from '../../apis/nft'
-import InfiniteScroll from 'react-infinite-scroll-component'
 import AllNftContainer from './allNftContainer'
+import FaceMask from '../../assets/images/artistDetail/mask.webp'
+import Jacket from '../../assets/images/artistDetail/jacket.webp'
+import Glasses from '../../assets/images/artistDetail/glasses.webp'
+import Shoes from '../../assets/images/artistDetail/shoes.webp'
+import Tatoo from '../../assets/images/artistDetail/tatoo.webp'
 
 const { TabPane } = Tabs
 
@@ -62,7 +59,7 @@ const Wrapper = styled.div`
   max-width: 100vw;
   height: 100vh;
   margin: auto;
-  padding: 0 20px;
+  padding: 0 20px 40px 20px;
   overflow-y: scroll;
   
  @media screen and (max-width: 1080px) {
@@ -261,7 +258,7 @@ const Banner = styled.div`
   justify-content: center;
   
   img {
-    width: 100%;
+    width: 70%;
     object-fit: contain;
     border-radius: 1em;
   }
@@ -344,6 +341,20 @@ const NFTListContainer = styled.div`
   }
 `
 
+const ComponentsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  
+  img {
+    margin-top: 20px;
+    width: 70%;
+    border-radius: 20px;
+  }
+`
+
 const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
 
   return (
@@ -396,6 +407,13 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
         <Banner>
           <img className="banner" src={ArtistBanner} />
         </Banner>
+        <ComponentsContainer >
+          <img src={Jacket} />
+          <img src={FaceMask} />
+          <img src={Glasses} />
+          <img src={Tatoo} />
+          <img src={Shoes} />
+        </ComponentsContainer>
         <section className="item" >
           <h2 className="title"> Archive </h2>
           <img className="image-border"  />

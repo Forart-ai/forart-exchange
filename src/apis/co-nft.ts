@@ -46,7 +46,7 @@ const CONFT_API = {
       saveNFT(series: number | string, components: number[], wallet:string) {
         return Service.post('/nft/promotion/create', { series, components, wallet })
       },
-      getStaredNft(series: number | string, wallet: string) {
+      getStaredNft(series?: number | string, wallet?: string) {
         return Service.post('nft/stared', { series, wallet })
       }
     },
@@ -59,6 +59,12 @@ const CONFT_API = {
       },
       findComponentsById(data: string[]) {
         return Service.post('nft/component/findById', data)
+      },
+      unstarNft(series: number | string, nft: string, wallet: string) {
+        return Service.post('nft/unStar', { series, nft, wallet })
+      },
+      getWalletRank(series: string | number, page: number, filter?: string | number) {
+        return Service.post('nft/minter/rank', { series, page, filter })
       }
     }
   }

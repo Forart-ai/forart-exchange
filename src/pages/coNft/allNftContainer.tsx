@@ -9,6 +9,7 @@ import { BackTop, Button, Divider, List, Skeleton } from 'antd'
 import styled from 'styled-components'
 import AllNftList from '../../components/nft-mint/allNftList'
 import { LoadingOutlined } from '@ant-design/icons'
+import { useWalletRankModal } from '../../hooks/modals/useWalletRankModal'
 
 const Filter = styled.div`
   display: flex;
@@ -19,8 +20,8 @@ const Filter = styled.div`
   
   .btn {
     font-size: .7em;
-    background-color: #FF4D9D;
-    padding: 5px 4px;
+    background-color: #E42575;
+    padding: 5px 14px;
     border-radius: 10px;
     margin-left: 10px;
     cursor: pointer;
@@ -73,7 +74,6 @@ const AllNftWrapper = styled.div`
 const ListItem = styled.div`
   display: flex;
   width: fit-content;
-  
 `
 
 const AllNftContainer: React.FC = () => {
@@ -85,6 +85,8 @@ const AllNftContainer: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const series = useLocationQuery('artistId')
   const [hasMore, setHasMore] = useState<boolean>(true)
+
+  const { walletRankModal, openWalletRankModal } = useWalletRankModal()
 
   const [flag, setFlag] = useState(true)
 
@@ -118,7 +120,7 @@ const AllNftContainer: React.FC = () => {
     })
   }, [loading, page, searchKey, selectedOrder])
 
-  const onPressEnter = (res: any) => {
+  const onPressEnter = () => {
     setFlag(true)
     // setSearchKey(res.target.value)
     setData([])
@@ -128,10 +130,6 @@ const AllNftContainer: React.FC = () => {
   useEffect(() => {
     if (flag) {
       loadMoreData()
-      // .then(() => {
-      //   loadMoreData()
-      //   setFlag(false)
-      // })
       setFlag(false)
     }
   }, [flag, loadMoreData])
@@ -144,6 +142,7 @@ const AllNftContainer: React.FC = () => {
 
   const onChange =( r:any )=> {
     setSearchKey(r.target.value)
+    onPressEnter()
   }
 
   // const a = useQuery([], async() => { return CONFT_API.core.kits.getOverView() }, { refetchInterval: 1000 })
@@ -153,14 +152,14 @@ const AllNftContainer: React.FC = () => {
       <Filter>
         <ThemeInput
           placeholder={'Please input token ID'}
-          onChange ={(res:any) =>onChange(res)}
-          onPressEnter={ onPressEnter }
+          // onChange ={(res:any) =>onChange(res)}
+          onBlur = { e => onChange(e)}
           prefix={<SearchOutlined style={{ color: 'white', width: '15px' }} />}
           defaultValue={searchKey}
           style={{ width:'200px', marginRight: '20px' }}
         />
         {/*<OrderSelector onChange={ e => { setSelectedOrder(e) }} />*/}
-        <div className="btn" onClick={ onPressEnter }>Search</div>
+        <div className="btn" onClick={ openWalletRankModal }>Wallet rank</div>
       </Filter>
 
       <div style={{ height: 1000, overflow: 'auto' }} id="scrollableDiv">
@@ -191,7 +190,7 @@ const AllNftContainer: React.FC = () => {
 
         </InfiniteScroll>
       </div>
-
+      {walletRankModal}
     </AllNftWrapper>
   )
 }
