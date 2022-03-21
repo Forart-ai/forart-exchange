@@ -2,11 +2,9 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ArtistKit, UserDetail } from '../../types/userDetail'
 import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
-import HeaderBack from '../../assets/images/artistDetail/cool-background.png'
 import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
 import { NFTPreview, Title } from '../../components/nft-mint/selectedList'
 import ArtistBanner from '../../assets/images/coPools/ticket.png'
-import List from 'rc-virtual-list'
 import { Avatar, Button, Modal, Skeleton, Tabs } from 'antd'
 import { BlockOutlined, CrownOutlined, SmileOutlined, createFromIconfontCN, SearchOutlined } from '@ant-design/icons'
 import {
@@ -87,12 +85,7 @@ const HeaderContainer = styled.div<{backgroundImage?: string}>`
   padding: 2rem 2.2rem;
   flex-direction: column;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), #1E052D) border-box;
-
-
-  ${props => props.backgroundImage && `
- background: url(${HeaderBack}) no-repeat center;
- background-size: cover;
- `
+  
 };
 
   @media screen and (max-width: 1100px) {

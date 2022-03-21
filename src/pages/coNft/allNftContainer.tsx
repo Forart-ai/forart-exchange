@@ -2,31 +2,42 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import CONFT_API from '../../apis/co-nft'
 import { ThemeInput } from '../../styles/ThemeInput'
-import { SearchOutlined } from '@ant-design/icons'
 import { OrderSelector } from '../../components/NFTListSelectors'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { BackTop, Button, Divider, List, Skeleton } from 'antd'
+import {   Divider, List, Skeleton } from 'antd'
 import styled from 'styled-components'
 import AllNftList from '../../components/nft-mint/allNftList'
 import { LoadingOutlined } from '@ant-design/icons'
 import { useWalletRankModal } from '../../hooks/modals/useWalletRankModal'
+import {
+  RedoOutlined
+} from '@ant-design/icons'
 
 const Filter = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
   width: 100%;
+  height: 50px;
   margin-bottom: 10px;
   
+  .refresh {
+    height: 100%;
+    
+    background: rgb(40,44,52);
+    border-radius: 10px;
+  }
+  
+  
+  
   .btn {
-    font-size: .7em;
+    font-size: .6em;
     background-color: #E42575;
-    padding: 5px 14px;
+    padding: 8px 14px;
     border-radius: 10px;
     margin-left: 10px;
     cursor: pointer;
   }
-  
 `
 
 const AllNftWrapper = styled.div`
@@ -144,6 +155,10 @@ const AllNftContainer: React.FC = () => {
     setSearchKey(r.target.value)
     onPressEnter()
   }
+  const resetData = () => {
+    setSearchKey('')
+    onPressEnter()
+  }
 
   // const a = useQuery([], async() => { return CONFT_API.core.kits.getOverView() }, { refetchInterval: 1000 })
 
@@ -152,14 +167,17 @@ const AllNftContainer: React.FC = () => {
       <Filter>
         <ThemeInput
           placeholder={'Please input token ID'}
-          // onChange ={(res:any) =>onChange(res)}
-          onBlur = { e => onChange(e)}
-          prefix={<SearchOutlined style={{ color: 'white', width: '15px' }} />}
+          onChange ={(res:any) =>onChange(res)}
+          // onBlur = { e => onChange(e)}
+          prefix={<></>}
           defaultValue={searchKey}
-          style={{ width:'200px', marginRight: '20px' }}
+          style={{ width:'300px', marginRight: '20px' }}
         />
+        <div className="refresh">
+          <RedoOutlined style={{ width:'50px', color: '#cfcfcf' }} spin={loading} onClick={resetData} />
+        </div>
         {/*<OrderSelector onChange={ e => { setSelectedOrder(e) }} />*/}
-        <div className="btn" onClick={ openWalletRankModal }>Wallet rank</div>
+        <div className="btn" onClick={ openWalletRankModal }>Creator Ranking</div>
       </Filter>
 
       <div style={{ height: 1000, overflow: 'auto' }} id="scrollableDiv">
