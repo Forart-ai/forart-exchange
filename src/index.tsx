@@ -9,7 +9,6 @@ import { DAppProvider } from '@usedapp/core'
 // @ts-ignore
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Web3ReactProvider } from '@web3-react/core'
-import { WalletSelectionModalProvider } from './hooks/wallet-selection-modal'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RefreshControllerProvider } from './contexts/refresh-controller'
 import configureStore from './store/index.js'
@@ -27,21 +26,20 @@ ReactDOM.render(
 
     <Web3ReactProvider getLibrary={getLibrary}>
       <QueryClientProvider client={queryClient}>
-        <ModalProvider>
-          <RefreshControllerProvider>
-            <Router>
-              <DAppProvider config={{}}>
-                <SolanaConnectionConfigProvider>
-                  <SolanaWeb3Provider>
-                    <WalletSelectionModalProvider>
-                      <App />
-                    </WalletSelectionModalProvider>
-                  </SolanaWeb3Provider>
-                </SolanaConnectionConfigProvider>
-              </DAppProvider>
-            </Router>
-          </RefreshControllerProvider>
-        </ModalProvider>
+        <RefreshControllerProvider>
+          <Router>
+            <DAppProvider config={{}}>
+              <SolanaConnectionConfigProvider>
+                <SolanaWeb3Provider>
+                  <ModalProvider>
+                    <App />
+                  </ModalProvider>
+                </SolanaWeb3Provider>
+              </SolanaConnectionConfigProvider>
+            </DAppProvider>
+          </Router>
+        </RefreshControllerProvider>
+
       </QueryClientProvider>
 
     </Web3ReactProvider>

@@ -2,10 +2,9 @@ import { MintedNFTItem } from '../types/coNFT'
 import React, { useEffect, useMemo, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { AttributesItem, AttributesListItem } from './attributes-item'
-import CONFT_API from '../apis/co-nft'
-import { Service } from '../apis/service'
-import { useQuery } from 'react-query'
 import { useFindComponent } from '../hooks/queries/useFindComponent'
+import { CloseButton, useModal } from '../contexts/modal'
+import CloseIcon from '../assets/images/coPools/close.svg'
 
 const AttributesDialogWrapper = styled.div`
   max-width: 1200px;
@@ -19,7 +18,7 @@ const AttributesDialogWrapper = styled.div`
   .rarity {
     display: flex;
   }
-
+  
 `
 
 const LeftArea = styled.div`
@@ -115,6 +114,7 @@ export const LevelLabel = styled.div<{ color: string, shine?: boolean }>`
 `
 
 const AttributesDialog: React.FC<{ item: MintedNFTItem }> = ({ item }) => {
+  const { closeModal } = useModal()
 
   const level: { label: string, color: string, shine: boolean } | undefined = useMemo(() => {
     return {
@@ -136,6 +136,7 @@ const AttributesDialog: React.FC<{ item: MintedNFTItem }> = ({ item }) => {
 
   return (
     <AttributesDialogWrapper>
+      <CloseButton  onClick={closeModal} className="close-btn" />
       <LeftArea>
         <img src={item?.previewUrl} />
 

@@ -9,6 +9,9 @@ import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { PublicKey } from '@solana/web3.js'
 import { DownOutlined } from '@ant-design/icons'
+import useConnectedWallet from '../../hooks/useGetCurrentWallet'
+import { useModal } from '../../contexts/modal'
+import WalletSelectionModal from './WalletSelectionModal'
 
 const StyledWallet = styled.div`
   height: 40px;
@@ -87,7 +90,7 @@ const MenuContainer = styled.div`
 
 type CurrentAccountProps = {
   account: string | null | undefined
-  // solanaAccount: undefined | PublicKey
+  solanaAccount: undefined | PublicKey
 }
 
 const MetamaskIcon: React.FC = () => {
@@ -161,10 +164,10 @@ const WalletContent: React.FC<CurrentAccountProps> =({
   )
 }
 
-const CurrentAccount: React.FC<CurrentAccountProps> = ({ account }) => {
+const CurrentAccount: React.FC<CurrentAccountProps> = ({ account, solanaAccount }) => {
 
   const menu = useCallback(() => (
-    <WalletContent account={account} />
+    <WalletContent account={account} solanaAccount={solanaAccount} />
   ), [account] )
 
   return (
@@ -183,41 +186,46 @@ const CurrentAccount: React.FC<CurrentAccountProps> = ({ account }) => {
             </>
           )
       }
-      {/*{*/}
-      {/*  solanaAccount &&*/}
-      {/*    (*/}
+      {
+        solanaAccount &&
+          (
 
-      {/*      <Dropdown overlay= { menu } trigger= {['click']} placement= {'bottomRight'}  >*/}
-      {/*        <div className="wallet-add" >*/}
-      {/*          <DownOutlined style={{ fontSize:'17px', marginRight:'10px' } } />{`${solanaAccount.toBase58().substr(0,5)}...${solanaAccount.toBase58().substr(-4,4)}`}*/}
-      {/*        </div>*/}
-      {/*      </Dropdown>*/}
+            <Dropdown overlay= { menu } trigger= {['click']} placement= {'bottomRight'}  >
+              <div className="wallet-add" >
+                <DownOutlined style={{ fontSize:'17px', marginRight:'10px' } } />{`${solanaAccount.toBase58().substr(0,5)}...${solanaAccount.toBase58().substr(-4,4)}`}
+              </div>
+            </Dropdown>
 
-      {/*    )*/}
-      {/*}*/}
+          )
+      }
     </CurrentAccountContainer>
   )
 }
 
 export const ConnectToWallet = () => {
   const { open } = useWalletSelectionModal()
+  const { openModal } = useModal()
+
+  const openWallet = useCallback(() => {
+    openModal(<WalletSelectionModal />)
+  },[])
 
   return (
-    <div onClick={open}>
-      <span>Connect To Ethereum</span>
+    <div onClick={openWallet}>
+      <span>Connect To Wallet</span>
     </div>
   )
 }
 
 const Wallet: React.FC = () => {
+  const { account: solanaAccount } = useSolanaWeb3()
   const { account } = useWeb3React()
 
   return (
     <StyledWallet>
-      {/*{ (!account && !solanaAccount ) && <ConnectToWallet /> }*/}
-      {/*{ (!!account || !!solanaAccount) && <CurrentAccount account={account} solanaAccount={ solanaAccount } /> }*/}
-      { (!account  ) && <ConnectToWallet /> }
-      { (!!account ) && <CurrentAccount account={account} /> }
+      { (!account && !solanaAccount ) && <ConnectToWallet /> }
+      { (!!account || !!solanaAccount) && <CurrentAccount account={account} solanaAccount={ solanaAccount } /> }
+
     </StyledWallet>
 
   )

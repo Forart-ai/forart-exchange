@@ -57,15 +57,16 @@ const WalletSelectionModal: React.FC<WalletSelectionModalProps> = ({
       activate(wallet.connector)
     }
 
-    // if (wallet.chainType === 'solana' && wallet.adapter) {
-    //   connect(wallet)
-    // }
+    if (wallet.chainType === 'solana' && wallet.adapter) {
+      connect(wallet)
+    }
 
   }, [connect, activate])
 
   return (
     <Modal
       className="wallet-selection-modal"
+      centered={true}
       visible={visible}
       onCancel={onClose}
       footer=""

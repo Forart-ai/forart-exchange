@@ -61,7 +61,7 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
         {
           !isMobile && (
             <>
-              <SolanaWallet />
+              {/*<SolanaWallet />*/}
               <Wallet />
             </>
           )

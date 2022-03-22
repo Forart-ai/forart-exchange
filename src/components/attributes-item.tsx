@@ -54,6 +54,7 @@ const ItemBox = styled.div`
   .value {
 text-align: center;
     color: #fff;
+    font-size: .8em;
   }
 
 
