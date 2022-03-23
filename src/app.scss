@@ -36,11 +36,11 @@
 }
 
 .ant-btn {
-  //background-image: linear-gradient(to right, #12dbe4, #FF468B);
+  height: 100%;
   background-color: #E42575;
   color: white;
   border: none;
-  border-radius: 7px;
+  border-radius: .2em;
   //transition: filter 0.5s;
 
   &:hover, &:focus {

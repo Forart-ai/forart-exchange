@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ArtistKit, UserDetail } from '../../types/userDetail'
-import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
 import { NFTPreview, Title } from '../../components/nft-mint/selectedList'
 import ArtistBanner from '../../assets/images/coPools/ticket.png'
@@ -37,9 +36,10 @@ import Tatoo from '../../assets/images/artistDetail/tatoo.webp'
 import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 import { useMediaQuery } from 'react-responsive'
-import AnchorLink from 'react-anchor-link-smooth-scroll'
+import ArtistInfo from './artistInfo'
 
 const { TabPane } = Tabs
+const { Link } = Anchor
 
 const IconFont = createFromIconfontCN({
   scriptUrl: [
@@ -58,19 +58,21 @@ export type KitProperties = {
 const Wrapper = styled.div`
   width: 100%;
   max-width: 100vw;
-  height: 100vh;
-  margin: auto;
-  padding: 0 20px 40px 20px; 
-  overflow-y: scroll;
+  height: calc(100vh - 68px);
+  padding: 10px 0; 
+  overflow: scroll;
+ 
   
  @media screen and (max-width: 1080px) {
    min-height: 100vh;
    padding: 0 10px;
+   overflow-y: scroll;
  }  
 `
 
 const ArtistDetailContainer = styled.div`
   width: 100%;
+  height: fit-content;
   margin-left: auto;
   margin-right: auto;
 
@@ -98,54 +100,9 @@ const HeaderContainer = styled.div`
 
 `
 
-const ArtistInfo = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  padding: 20px 40px;
-
-  .username {
-    width: 100%;
-    font-size: 2em;
-    color: #FF468B;
-    text-align: center;
-  }
-
-  .slogan {
-    background-image: -webkit-linear-gradient(left, #FF4D9D, #c330c9);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 1.6em;
-    text-align: center;
-  }
-
-  .describe {
-    color: #b2b2b2;
-    font-size: 1.3em;
-    text-align: center;
-  }
-  
-  img {
-    width: 300px;
-    border-radius: 50%;
-  }
-  
-  @media screen and (max-width: 1100px){
-    flex-direction: column;
-    img {
-      width: 150px;
-      border-radius: 50%;
-    }
-  }
-`
-
 const StyledTab = styled(Tabs)`
   width: 100%;
   user-select: none;
-  margin-top: 20px;
   display: flex;
   justify-content: center;
   
@@ -190,7 +147,7 @@ const StyledTab = styled(Tabs)`
     display: none;
   }
   
-  @media screen and (max-width: 1100px) {
+  @media screen and (max-width: 1080px) {
     .ant-tabs-tab {
       font-size: 14px;
     }
@@ -203,31 +160,11 @@ const StyledTab = styled(Tabs)`
   }
 `
 
-const DescriptionContainer = styled.div`
-  width: 100%;
-  height: fit-content;
-  margin: 30px 0;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 25px;
-  flex-direction: column;
-  //background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), #1E052D) border-box;
-  @media screen and (max-width: 1100px) {
-    padding: 10px;
-    margin: 0;
-    padding: 0 10px;
-  }
-  
-`
-
 const ArtistDetailTab = styled.div`
   width: 100%;
-  height: fit-content;
   display: flex;
   justify-content: center;
-  
+
   .ant-anchor-link-title {
     font-size: 1.2em;
     color: #fff;
@@ -264,8 +201,7 @@ const TabItem = styled.div`
   
   max-width: calc(100% - 40px);
   width: 80%;
-  height: auto;
-
+  height: 100%;
  
   .item {
     width: 100%;
@@ -296,45 +232,12 @@ const TabItem = styled.div`
   }
 `
 
-const Message = styled.div`
+const TabArea = styled.div`
   width: 100%;
+  min-height: fit-content;
   margin-top: 30px;
-  
-  .title {
-    display: flex;
-    align-items: center;
-    
-    img {
-      width: 35px;
-      margin-left: 15px;
-    }
-  }
-`
-
-const NFTListContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 16px;
-  border: 1px green solid;
-
-  .empty {
-    padding: 0;
-    height: 0;
-    width: 210px;
-  }
-  
-  .warning {
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    font-size: 1.8em;
-  }
-  
-  @media screen and (max-width: 1100px) {
-    justify-content: center;
-  }
+  overflow: scroll;
+  padding: 0 10px;
 `
 
 const ComponentsContainer = styled.div`
@@ -351,55 +254,22 @@ const ComponentsContainer = styled.div`
   }
 `
 
-const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
-
-  return (
-    <HeaderContainer >
-      <ArtistInfo>
-        <div>
-          <img  src={HyteenAvatar} />
-        </div>
-
-        <div>
-          <div className="username">{userData?.username}</div>
-          <div className="slogan">{userData?.slogan}</div>
-          <p className="describe">{userData?.describe}</p>
-        </div>
-      </ArtistInfo>
-      {/*<FollowersInfo>*/}
-      {/*  <LeftArea >*/}
-      {/*    <div className="value"> {userData?.followers.length}</div>*/}
-      {/*    <div className="label"> Followers </div>*/}
-      {/*  </LeftArea>*/}
-      {/*  <RightArea>*/}
-      {/*    <div className="followers" >*/}
-      {/*      <div className="followers-icon">*/}
-      {/*        <div className="followers-icon-inner">*/}
-      {/*          {*/}
-      {/*            userData?.followers.map((item:string, index:number) => (*/}
-      {/*              <img className="is-48" src={item} key={index} />*/}
-      {/*            ))*/}
-      {/*          }*/}
-      {/*        </div>*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*  </RightArea>*/}
-      {/*</FollowersInfo>*/}
-    </HeaderContainer>
-  )
-}
-
-const ArtDetail: React.FC<{ userData?: UserDetail }> = ({ userData }) => {
+const ArtDetail: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
-  console.log(userData)
+
+  const scrollToAnchor = (anchorName: string) => {
+    if (anchorName) {
+      // 找到锚点
+      const anchorElement = document.getElementById(anchorName)
+      // 如果对应id的锚点存在，就跳转到锚点
+      if (anchorElement) { anchorElement.scrollIntoView({ block: 'center', behavior: 'smooth' }) }
+    }
+  }
 
   return (
-    <ArtistDetailTab>
-      <div>
-
-        {/*<AnchorLink href="#about">About</AnchorLink>*/}
-      </div>
-      <TabItem>
+    <ArtistDetailTab id="a">
+      {/*<a onClick={() => scrollToAnchor('about')} >About</a>*/}
+      <TabItem id="b" >
         <Banner>
           <img className="banner" src={ArtistBanner} />
         </Banner>
@@ -410,9 +280,8 @@ const ArtDetail: React.FC<{ userData?: UserDetail }> = ({ userData }) => {
           <img src={Tatoo} />
           <img src={Shoes} />
         </ComponentsContainer>
-        <section className="item" >
-          <h2 className="title" id={'about'}> Archive </h2>
-          <img className="image-border"  />
+        <section className="item"  id="about">
+          <h2 className="title"> Archive </h2>
           <p className="content">
             Name: HypeTeen <br />
             Gender: Encrypting <br />
@@ -425,7 +294,6 @@ const ArtDetail: React.FC<{ userData?: UserDetail }> = ({ userData }) => {
 
         <section className="item" >
           <h2 className="title"> Birth of HypeTeen </h2>
-          <img className="image-border"  />
           <p className="content">
             HypeTeen is the First CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing. Born in the first year of NFT, she/he has her/his own NFT attributes, likes to explore the unknown, and is obsessed with trendy things in the future. At the peak of her/his appearance, she/he likes fans to call: super handsome! <br /><br />
             In 2022, she/he will take her/his fans on her/his first journey of exploration - travel around the world, learn about the customs of various countries, spread the world&apos;s culture, and share the cultural essence and consensus with fans in Forart Club. <br /> <br />
@@ -435,7 +303,6 @@ const ArtDetail: React.FC<{ userData?: UserDetail }> = ({ userData }) => {
 
         <section className="item" >
           <h2 className="title"> Creator & Holder Equity </h2>
-          <img className="image-border"  />
           <p className="content">
             <b> Benefits for HypeTeen NFT creators:</b> <br />
             1. Each NFT you create will get 50 $FTA<br />
@@ -449,7 +316,6 @@ const ArtDetail: React.FC<{ userData?: UserDetail }> = ({ userData }) => {
 
         <section className="item" >
           <h2 className="title">Marketplace</h2>
-          <img className="image-border"  />
           <p className="content">
             · Solanart <br />
             · Slope <br />
@@ -459,7 +325,6 @@ const ArtDetail: React.FC<{ userData?: UserDetail }> = ({ userData }) => {
 
         <section className="item" >
           <h2 className="title">Roadmap</h2>
-          <img className="image-border"  />
           <p className="content">
             1. Create CO-NFTs by Users <br />
             2. Generate Special CO-NFTs and creator winners when the 1000th NFT is created  <br />
@@ -706,54 +571,51 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 const ArtistDetail: React.FC = () => {
   const artistId = useLocationQuery('artistId')
 
-  const { data: userData } = useArtistDetailQuery()
-
   const { data: artistKitList } = useArtistKitQuery(artistId?.toString())
 
   return (
     <Wrapper>
-      <ArtistDetailContainer>
-        <DescriptionContainer>
-          <StyledTab defaultActiveKey="mint" onChange={ () => window.scrollTo(0, 0)}  >
-            <TabPane
-              tab= {
-                <span>
-                  <SmileOutlined />
-                  Art Detail
-                </span>
-              }
-              key="artDetail"
-            >
-              <ArtDetail userData={userData} />
-            </TabPane>
+      <ArtistInfo />
+      <TabArea>
+        <StyledTab defaultActiveKey="mint" onChange={ () => window.scrollTo(0, 0)}  >
+          <TabPane
+            tab= {
+              <span>
+                <SmileOutlined />
+                Art Detail
+              </span>
+            }
+            key="artDetail"
+          >
+            <ArtDetail   />
+          </TabPane>
 
-            <TabPane
-              tab= {
-                <span>
-                  <CrownOutlined />
-                  Create
-                </span>
-              }
-              key="mint"
-            >
-              <Mint artistKit = {artistKitList} />
-            </TabPane>
+          <TabPane
+            tab= {
+              <span>
+                <CrownOutlined />
+                Create
+              </span>
+            }
+            key="mint"
+          >
+            <Mint artistKit = {artistKitList} />
+          </TabPane>
 
-            <TabPane
-              tab= {
-                <span>
-                  <BlockOutlined />
-                  All NFTs
-                </span>
-              }
-              key="all"
-            >
-              <AllNftContainer />
-            </TabPane>
+          <TabPane
+            tab= {
+              <span>
+                <BlockOutlined />
+                All NFTs
+              </span>
+            }
+            key="all"
+          >
+            <AllNftContainer />
+          </TabPane>
 
-          </StyledTab>
-        </DescriptionContainer>
-      </ArtistDetailContainer>
+        </StyledTab>
+      </TabArea>
     </Wrapper>
   )
 }

@@ -42,8 +42,6 @@ const Filter = styled.div`
 
 const AllNftWrapper = styled.div`
   width: 100%;
-  height: fit-content;
- 
   font-size: 2em;
   color: #ffffff;
   display: flex;
@@ -194,7 +192,7 @@ const AllNftContainer: React.FC = () => {
           endMessage={<Divider style={{ color:' #c2c2c2' }} plain> oops! there&apos;s nothong more 🤐</Divider>}
         >
           <List dataSource={data}
-            renderItem={(item,index) =>(
+            renderItem={(item,index) => (
               <>
                 <ListItem key={index}>
                   <AllNftList data={item} index={index} />

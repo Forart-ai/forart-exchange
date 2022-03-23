@@ -13,7 +13,6 @@ const Wrapper = styled.div`
   width: 700px;
   max-width: 700px;
   padding: 20px;
-  //background: rgb(27, 3, 42);
   border-radius: 10px;
   position: relative;
   border: 4px solid transparent;
@@ -27,7 +26,7 @@ const Title = styled.div`
   justify-content: center;
   font-family: inter-extraBold;
   color: #f2f2f2;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 `
 
 const TopArea = styled.div`
