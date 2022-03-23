@@ -29,7 +29,6 @@ import Show from '../../assets/images/marketplace/view.svg'
 import Celo from '../../images/wallet/celo.svg'
 
 import { useWeb3React } from '@web3-react/core'
-import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import moment from 'moment'
 import ThemeTable from '../../styles/ThemeTable'
 import { setNftFavorite } from '../../apis/nft'
@@ -42,6 +41,8 @@ import { usePurchaseBlockedModal } from '../../hooks/modals/usePurchaseBlockedMo
 import usePurchaseByFixedPrice from '../../hooks/contract/service/usePurchaseByFixedPrice'
 import { usePurchaseTransactionSentModal } from '../../hooks/modals/usePurchaseTransactionSentModal'
 import { usePurchaseWaitingConfirmationModal } from '../../hooks/modals/usePurchaseWaitingConfirmationModal'
+import { useModal } from '../../contexts/modal'
+import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 
 const HistoryTrade: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
@@ -110,7 +111,11 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
   const uri = useLocationQuery('uri')
 
-  const { open } = useWalletSelectionModal()
+  const { openModal } = useModal()
+
+  const openWallet = useCallback(() => {
+    openModal(<WalletSelectionModal />)
+  },[])
 
   const handleCopy = (content: any) => {
     copy(content) && message.success('Copied successfully.', 1)
@@ -282,7 +287,7 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
 
             {
               !account ? (
-                <StyledButton onClick={ open }>Connect To A Wallet</StyledButton>
+                <StyledButton onClick={ openWallet }>Connect To A Wallet</StyledButton>
               ) :
                 (
                   !reasonOfUnableToBuy ? (

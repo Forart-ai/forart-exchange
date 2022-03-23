@@ -2,7 +2,7 @@ import React, { cloneElement, useCallback, useContext, useState } from 'react'
 import ReactModal from 'react-modal'
 import { useMediaQuery } from 'react-responsive'
 import CloseIcon from '../assets/images/coPools/close.svg'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 export const CloseButton = styled.div`
   position: absolute;
@@ -55,7 +55,7 @@ const responsiveDefaultContentStyle = (isMobile: boolean) => {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: '24px',
-    fontFamily: 'gilroy'
+
   }
 }
 
@@ -98,6 +98,7 @@ const ModalWrapper: React.FC<{ contentStyle?: React.CSSProperties; isOpen: boole
 
   return (
     <ReactModal
+      closeTimeoutMS={2000}
       ariaHideApp={false}
       preventScroll={true}
       isOpen={isOpen}
@@ -113,8 +114,9 @@ const ModalWrapper: React.FC<{ contentStyle?: React.CSSProperties; isOpen: boole
           zIndex: 11,
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
         },
+
         content: { ...responsiveDefaultContentStyle(isMobile), ...contentStyle }
       }}
     >
@@ -122,6 +124,21 @@ const ModalWrapper: React.FC<{ contentStyle?: React.CSSProperties; isOpen: boole
     </ReactModal>
   )
 }
+
+const GlobalStyle = createGlobalStyle`
+  .ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+  }
+
+  .ReactModal__Overlay--after-open{
+    opacity: 1;
+  }
+
+  .ReactModal__Overlay--before-close{
+    opacity: 0;
+  }
+`
 
 const ModalProvider: React.FC = ({ children }) => {
   const [visible, setVisible] = useState(false)
@@ -232,6 +249,7 @@ const ModalProvider: React.FC = ({ children }) => {
 
   return (
     <ModalContext.Provider value={{ open, update, close, configModal, addEventListener, removeEventListener }}>
+      <GlobalStyle />
       <ModalWrapper isOpen={visible} contentStyle={config.contentStyle} contentWrapper={config.contentWrapper} shouldCloseOnOverlayClick={true} shouldCloseOnEsc={true} onRequestClose={close}>
         {/*<CloseButton show={config.closeable} onClose={close} />*/}
         {content}

@@ -1,19 +1,25 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { CloseButton, useModal } from '../../contexts/modal'
 import styled from 'styled-components'
-import { NetworkType, supportNetwork, WalletType } from '../../web3/connectors'
+import { networkConf, NetworkKeys, NetworkType, supportNetwork, supportWallets, WalletType } from '../../web3/connectors'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { useWeb3React } from '@web3-react/core'
 import { message } from 'antd'
+import { PhantomWalletAdapter } from '../../contexts/solana-web3/walletAdapters/phantom'
+import SolanaLogo from '../../assets/images/wallets/solanaLogoMark.svg'
+import wallet from './index'
 
 const Wrapper = styled.div`
   width: 700px;
   max-width: 700px;
-  background: rgb(27, 3, 42);
   padding: 20px;
-  border-radius: 1em;
+  //background: rgb(27, 3, 42);
+  border-radius: 10px;
   position: relative;
-
+  border: 4px solid transparent;
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  background-image: linear-gradient(to right, rgb(27, 3, 42), rgb(27, 3, 42)), linear-gradient(90deg, #ff4090, #3c69c2);
 `
 
 const Title = styled.div`
@@ -65,24 +71,25 @@ const ChosenArea = styled.div`
     color: #f2f2f2;
     font-size: .8em;
     cursor: pointer;
-    
+
+
     img{
       width: 70px;
     }
   }
 `
 
-const WalletList: React.FC<{wallet: WalletType, onSelect:(_:WalletType) => void}> = ({ wallet, onSelect }) => {
+const WalletList: React.FC<{network: string, wallet: WalletType, onSelect:(_:WalletType) => void}> = ({ network, wallet, onSelect }) => {
   const { chainType, name, connector, adapter } = wallet
 
   const connectToWallet =  useCallback(async () => {
     const provider = await connector?.getProvider()
-    if (!provider || !adapter) {
+    if ((wallet.chainType === 'eth' || wallet.chainType === 'celo' ) && !provider ) {
       message.warn(`Please install ${name} wallet first.`)
       return
     }
     onSelect(wallet)
-  }, [connector])
+  }, [connector, network])
 
   return (
     <div className="col-3" key={wallet.name} onClick={ connectToWallet }  >
@@ -94,13 +101,18 @@ const WalletList: React.FC<{wallet: WalletType, onSelect:(_:WalletType) => void}
 
 const WalletSelectionModal:React.FC = () => {
   const { closeModal } = useModal()
-  const [wallets, setWallets] = useState<WalletType[]>()
+  const [network, setNetwork] = useState<NetworkType>( {
+    key: NetworkKeys.Solana,
+    name: 'Solana',
+    icon:SolanaLogo,
+    supportedWallet: supportWallets.filter(v => v.chainType === 'solana')
+  })
 
-  const { connect } =  useSolanaWeb3()
-  const { activate } = useWeb3React()
+  const { connect, account: solAccount } =  useSolanaWeb3()
+  const { activate, account } = useWeb3React()
 
-  const onNetworkClick = (wallets:WalletType[]) => {
-    setWallets(wallets)
+  const onNetworkClick = (network: NetworkType) => {
+    setNetwork(network)
   }
 
   const onClick = useCallback((wallet: WalletType) => {
@@ -110,10 +122,57 @@ const WalletSelectionModal:React.FC = () => {
     }
 
     if (wallet.chainType === 'solana' && wallet.adapter) {
+
       connect(wallet)
     }
 
-  }, [connect, activate])
+  }, [connect, activate, network])
+
+  useEffect(():any => {
+    const { ethereum } = window as any
+
+    if (ethereum && network.name === 'Avalanche' && account) {
+      ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: networkConf[43114].chainId }]
+      }).catch((e: any) => {
+        if (e.code === 4902) {
+          ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                ...networkConf[43114]
+              }
+            ],
+          })
+        }
+      })
+    }
+    else if (ethereum && network.name === 'Celo' && account) {
+      ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: networkConf[44787].chainId }]
+      }).catch((e: any) => {
+        if (e.code === 4902) {
+          ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                ...networkConf[44787]
+              }
+            ],
+          })
+        }
+      })
+    }
+
+  },[network, account])
+
+  useEffect(() => {
+    if (account || solAccount) {
+      closeModal()
+    }
+  },[account, solAccount])
 
   return (
     <Wrapper>
@@ -127,7 +186,7 @@ const WalletSelectionModal:React.FC = () => {
         <ChosenArea >
           {
             supportNetwork.map((network: NetworkType) => (
-              <div className="col-3" key={network.key} onClick={() => onNetworkClick(network.supportedWallet)} >
+              <div className="col-3" key={network.key} onClick={() => onNetworkClick(network)} >
                 <img src={network.icon} />
                 <span>{network.name}</span>
               </div>
@@ -144,8 +203,8 @@ const WalletSelectionModal:React.FC = () => {
         </TextRow>
         <ChosenArea>
           {
-            wallets?.map(wallet => (
-              <WalletList wallet={wallet} key={wallet.name} onSelect={() => onClick(wallet)} />
+            network.supportedWallet?.map(wallet => (
+              <WalletList network={network.name} wallet={wallet} key={wallet.name} onSelect={() => onClick(wallet)} />
             ))
           }
         </ChosenArea>

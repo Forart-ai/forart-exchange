@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Button, Checkbox, Form, Input, message, Select, Upload } from 'antd'
 // @ts-ignore
 import styled from 'styled-components'
@@ -7,15 +7,16 @@ import { RcFile } from 'antd/es/upload'
 import { LoadingOutlined } from '@ant-design/icons'
 import { pinFileToIPFS } from '../../utils/ipfs'
 import { useWeb3React } from '@web3-react/core'
-import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import useCreateNft from '../../hooks/contract/service/useNftCreate'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { uploadToMinio } from '../../utils/minio'
+import { useModal } from '../../contexts/modal'
+import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 
 const Wrapper = styled.div`
   max-width: 100vw;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 70px);
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
@@ -23,12 +24,12 @@ const Wrapper = styled.div`
 
   .title {
     font-weight: 550;
-    font-size: 2.8em;
-    margin-top: 50px;
+    font-size: 2.5em;
+    font-family: inter-extraBold;
     background-image: -webkit-linear-gradient(left, #ff468b, #7f16ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    padding-bottom: 20px;
+    margin: 5px 0;
   }
 
   @media screen and ( max-width: 1000px ) {
@@ -423,7 +424,11 @@ const NFTCreate: React.FC = () => {
     }
   }, [aiUri])
 
-  const { open } = useWalletSelectionModal()
+  const { openModal } = useModal()
+
+  const openWallet = useCallback(() => {
+    openModal(<WalletSelectionModal />)
+  },[])
 
   return (
     <Wrapper >
@@ -506,7 +511,7 @@ const NFTCreate: React.FC = () => {
         <ButtonContainer>
           {
             account === undefined ? (
-              <Button onClick={open}>
+              <Button onClick={openWallet}>
                 Connect
               </Button>
             ) : (

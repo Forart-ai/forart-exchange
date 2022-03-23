@@ -91,6 +91,41 @@ export const supportNetwork: NetworkType[] = [
   }
 ]
 
+export const SCAN_ADDRESS = {
+  [44787]: 'https://alfajores-forno.celo-testnet.org',
+  [43114]: 'https://api.avax.network/ext/bc/C/rpc'
+}
+
+export const networkConf = {
+  [44787]: {
+    chainId: '0x' + parseInt('44787').toString(16),
+    chainName: 'CELO Alfajores Testnet',
+    nativeCurrency: {
+      name:'',
+      symbol:'',
+      decimals:18,
+    },
+    rpcUrls: [
+      'https://alfajores-forno.celo-testnet.org'
+    ],
+    blockExplorerUrls: [SCAN_ADDRESS[44787]]
+  },
+
+  [43114]: {
+    chainId: '0x' + parseInt('43114').toString(16),
+    chainName: 'Avalanche Mainnet C-Chain',
+    nativeCurrency: {
+      name:'',
+      symbol: 'AVAX',
+      decimals: 18,
+    },
+    rpcUrls: [
+      'https://api.avax.network/ext/bc/C/rpc'
+    ],
+    blockExplorerUrls: [SCAN_ADDRESS[43114]]
+  }
+}
+
 export function getLibrary(provider: any): Web3Provider {
   const library = new Web3Provider(provider)
   library.pollingInterval = 12000

@@ -113,7 +113,6 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
 
   const connect = useCallback(
     (wallet: any ) => {
-      console.log(wallet)
       setWallet(wallet)
     },[adapter, select]
   )

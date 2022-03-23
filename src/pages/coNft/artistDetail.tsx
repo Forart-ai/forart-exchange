@@ -5,7 +5,7 @@ import { useArtistDetailQuery } from '../../hooks/queries/useArtistDetailQuery'
 import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
 import { NFTPreview, Title } from '../../components/nft-mint/selectedList'
 import ArtistBanner from '../../assets/images/coPools/ticket.png'
-import { Avatar, Button, Modal, Skeleton, Tabs } from 'antd'
+import { Anchor, Avatar, Button, Modal, Skeleton, Tabs } from 'antd'
 import { BlockOutlined, CrownOutlined, SmileOutlined, createFromIconfontCN, SearchOutlined } from '@ant-design/icons'
 import {
   BodyContent,
@@ -28,13 +28,16 @@ import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import useUserQuery from '../../hooks/queries/useUserQuery'
 import useDiscordAccessToken from '../../hooks/useDiscordAccessToken'
 import useNFTMint from '../../hooks/programs/services/useNFTMint'
-import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import AllNftContainer from './allNftContainer'
 import FaceMask from '../../assets/images/artistDetail/mask.webp'
 import Jacket from '../../assets/images/artistDetail/jacket.webp'
 import Glasses from '../../assets/images/artistDetail/glasses.webp'
 import Shoes from '../../assets/images/artistDetail/shoes.webp'
 import Tatoo from '../../assets/images/artistDetail/tatoo.webp'
+import { useModal } from '../../contexts/modal'
+import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
+import { useMediaQuery } from 'react-responsive'
+import AnchorLink from 'react-anchor-link-smooth-scroll'
 
 const { TabPane } = Tabs
 
@@ -57,13 +60,13 @@ const Wrapper = styled.div`
   max-width: 100vw;
   height: 100vh;
   margin: auto;
-  padding: 0 20px 40px 20px;
+  padding: 0 20px 40px 20px; 
   overflow-y: scroll;
   
  @media screen and (max-width: 1080px) {
    min-height: 100vh;
    padding: 0 10px;
- } 
+ }  
 `
 
 const ArtistDetailContainer = styled.div`
@@ -73,7 +76,7 @@ const ArtistDetailContainer = styled.div`
 
 `
 
-const HeaderContainer = styled.div<{backgroundImage?: string}>`
+const HeaderContainer = styled.div`
   width: 100%;
   height: 400px;
   border-radius: 20px;
@@ -86,7 +89,7 @@ const HeaderContainer = styled.div<{backgroundImage?: string}>`
   flex-direction: column;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), #1E052D) border-box;
   
-};
+
 
   @media screen and (max-width: 1100px) {
     padding: 0.8rem 0.5rem;
@@ -386,16 +389,16 @@ const UserInfo: React.FC<{ userData?:UserDetail }> = ({ userData }) => {
   )
 }
 
-const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
+const ArtDetail: React.FC<{ userData?: UserDetail }> = ({ userData }) => {
+  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
+  console.log(userData)
+
   return (
     <ArtistDetailTab>
-      {/*<Anchor onClick={() => onAnchorClick}  style={isMobile ? { display:'none' }  : { }}>*/}
-      {/*  {*/}
-      {/*    userData?.artDetail.map((item: any, index: number) => (*/}
-      {/*      <Link href={`#${item.title}`}  key={index} title={item.title} />*/}
-      {/*    ))*/}
-      {/*  }*/}
-      {/*</Anchor>*/}
+      <div>
+
+        {/*<AnchorLink href="#about">About</AnchorLink>*/}
+      </div>
       <TabItem>
         <Banner>
           <img className="banner" src={ArtistBanner} />
@@ -408,7 +411,7 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
           <img src={Shoes} />
         </ComponentsContainer>
         <section className="item" >
-          <h2 className="title"> Archive </h2>
+          <h2 className="title" id={'about'}> Archive </h2>
           <img className="image-border"  />
           <p className="content">
             Name: HypeTeen <br />
@@ -471,9 +474,13 @@ const ArtDetail: React.FC<{ userData?:UserDetail }> = () => {
 
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
-  const { account,select } = useSolanaWeb3()
+  const { account } = useSolanaWeb3()
 
-  const { open } = useWalletSelectionModal()
+  const { openModal } = useModal()
+
+  const openWallet = useCallback(() => {
+    openModal(<WalletSelectionModal />)
+  },[])
 
   const [body, setBody] = useState<any>()
 
@@ -670,7 +677,7 @@ const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 
         {
           !account ? (
-            <Button  style={{ height:'50px' }} onClick={ select }>
+            <Button  style={{ height:'50px' }} onClick={ openWallet }>
               Connect Wallet
             </Button>
           ) : (

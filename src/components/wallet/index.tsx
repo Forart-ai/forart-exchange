@@ -5,7 +5,6 @@ import styled from 'styled-components'
 // @ts-ignore
 import Jazzicon from '@metamask/jazzicon'
 import { Button, Dropdown, Menu, Modal } from 'antd'
-import { useWalletSelectionModal } from '../../hooks/wallet-selection-modal'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { PublicKey } from '@solana/web3.js'
 import { DownOutlined } from '@ant-design/icons'
@@ -53,9 +52,9 @@ const MenuContainer = styled.div`
 
   .ant-menu {
     position: relative;
-    background-color: #320334;
+    background-color: #1D222D;
     border-radius: 10px;
-    border: 3px #f940ff solid;
+    border: 3px #271d28 solid;
     height: 100%;
     width: 100%;
 
@@ -179,7 +178,6 @@ const CurrentAccount: React.FC<CurrentAccountProps> = ({ account, solanaAccount 
               <Dropdown overlay= { menu } trigger= {['click']} placement= {'bottomRight'}  >
                 <div className="wallet-add" >
                   <DownOutlined style={{ fontSize:'17px', marginRight:'10px' } } />
-                  <MetamaskIcon />
                   {`${account.substr(0,5)}...${account.substr(-4,4)}`}
                 </div>
               </Dropdown>
@@ -203,7 +201,6 @@ const CurrentAccount: React.FC<CurrentAccountProps> = ({ account, solanaAccount 
 }
 
 export const ConnectToWallet = () => {
-  const { open } = useWalletSelectionModal()
   const { openModal } = useModal()
 
   const openWallet = useCallback(() => {

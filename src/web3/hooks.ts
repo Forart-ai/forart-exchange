@@ -82,7 +82,7 @@ export function useInactiveListener(suppress = false) {
 }
 
 export function useChainEffect() {
-  const { account } = useWeb3React()
+  const { account, connector } = useWeb3React()
 
   const SCAN_ADDRESS = {
     [44787]: 'https://alfajores-forno.celo-testnet.org',
@@ -122,7 +122,7 @@ export function useChainEffect() {
   useEffect(():any => {
     const { ethereum } = window as any
 
-    if (ethereum){
+    if (ethereum) {
       ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: networkConf[43114].chainId }]
