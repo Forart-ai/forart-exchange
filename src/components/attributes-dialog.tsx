@@ -7,7 +7,7 @@ import { CloseButton, useModal } from '../contexts/modal'
 import CloseIcon from '../assets/images/coPools/close.svg'
 
 const AttributesDialogWrapper = styled.div`
-  max-width: 1200px;
+  width: 1200px;
   background: rgb(27, 3, 42);
   display: flex;
   padding: 20px;

@@ -15,10 +15,11 @@ const AppHeaderContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 999;
+  z-index: 1;
   position: fixed;
-  
-  
+  background-image: linear-gradient(to right, #B8316A, #601b7e);
+
+
 `
 const Logo = styled.div`
   height: 68px;
@@ -42,7 +43,7 @@ const Operator = styled.div`
       width: 40px;
   }
   
-  @media screen and (max-width: 1100px) {
+  @media screen and (max-width: 1080px) {
     width: fit-content;
   }
 `

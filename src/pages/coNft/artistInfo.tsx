@@ -5,11 +5,16 @@ import HypeteenIcon from '../../assets/images/artistDetail/hypeteenIcon.png'
 import { useGetOverview } from '../../hooks/queries/useGetOverview'
 import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
-import DonateDialog from '../../components/donate-dialog'
+import DonateDialog from '../../components/modals/donation/donate-dialog'
+import { useDonation } from '../../hooks/programs/useDonation'
 
 const Wrapper = styled.div`
   height: 400px;
   width: 100%;
+
+  @media screen and (max-width: 1080px) {
+    height: 450px;
+  }
 `
 
 const MainContainer = styled.div`
@@ -18,6 +23,10 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 1080px) {
+    padding: 10px;
+  }
 `
 
 const DonateArea = styled.div`
@@ -56,9 +65,29 @@ const MainArea = styled.div`
   .info-message {
     margin-top: 20px;
     text-align: center;
-    padding: 0 35%;
+    padding: 0 50px;
     color: #c2c2c2;
     font-size: 1.2em;
+  }
+  
+  @media screen and (max-width: 1080px) {
+    height: 70%;
+    .top {
+      flex-direction: column;
+
+      span {
+        margin-left: 0;
+        font-family: inter-extraBold;
+        color: #ffffff;
+        font-size: 1.4em;
+      }
+    }
+
+    .info-message {
+      text-align: center;
+      padding: 0 10px;
+      font-size: 1.2em;
+    }
   }
 `
 
@@ -67,6 +96,11 @@ const DataArea = styled.div`
   height: 20%;
   display: flex;
   justify-content: space-between;
+
+  @media screen and (max-width: 1080px) {
+    width: 100%;
+    height: 17%;
+  }
 `
 
 const DataItem = styled.div`
@@ -85,10 +119,16 @@ const DataItem = styled.div`
     font-size: 1.1em;
     color: #f2f2f2
   }
+  
+  @media screen and (max-width: 1080px) {
+    text-align: center;
+  }
+  
 `
 
 const ArtistInfo:React.FC = () => {
   const { data: overviewData } = useGetOverview()
+  const { poolDonated } = useDonation()
 
   const { openModal } = useModal()
 
@@ -124,7 +164,7 @@ const ArtistInfo:React.FC = () => {
           </DataItem>
           <DataItem>
             <div className="data">
-              Donated: 200 USDC
+              Donated: {poolDonated ? poolDonated?.data?.toString() : '-'} USDC
             </div>
           </DataItem>
         </DataArea>

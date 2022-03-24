@@ -78,7 +78,7 @@ const SCExternalLink = styled.a`
   `
 
 const SidebarWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   height: calc(100vh - 60px);
   top: 60px;
   left: 12px;

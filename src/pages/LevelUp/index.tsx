@@ -25,7 +25,6 @@ SwiperCore.use([Navigation, EffectCoverflow, Pagination])
 const Wrapper = styled.div`
   max-width: 100vw;
   width: 100%;
-  height: 90vh;
   display: flex;
   justify-content: center;
   overflow-y: scroll;

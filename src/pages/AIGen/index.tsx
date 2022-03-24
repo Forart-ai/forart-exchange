@@ -26,10 +26,9 @@ type behaviorItem = {
 const Wrapper = styled.div`
   max-width: 100vw;
   width: 100%;
-  height: 90vh;
-  overflow-y: scroll;
   display: flex;
   justify-content: center;
+  padding-bottom: 100px;
 `
 
 // const AIGenContent = styled(Form)`

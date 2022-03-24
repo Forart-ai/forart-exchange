@@ -18,11 +18,12 @@
 
 
 ::-webkit-scrollbar {
-  display: none;
+  background-color: #120C18;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #E42575, #4A0E6F) border-box;
+  background: linear-gradient(45deg, #E42575, #E42575) border-box;
   border-radius: 10px;
 }
 

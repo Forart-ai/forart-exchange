@@ -58,15 +58,14 @@ export type KitProperties = {
 const Wrapper = styled.div`
   width: 100%;
   max-width: 100vw;
-  height: calc(100vh - 68px);
+  height: fit-content;
   padding: 10px 0; 
-  overflow: scroll;
  
   
  @media screen and (max-width: 1080px) {
-   min-height: 100vh;
+   height: 100%;
    padding: 0 10px;
-   overflow-y: scroll;
+   overflow: scroll;
  }  
 `
 
@@ -236,7 +235,6 @@ const TabArea = styled.div`
   width: 100%;
   min-height: fit-content;
   margin-top: 30px;
-  overflow: scroll;
   padding: 0 10px;
 `
 

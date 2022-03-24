@@ -6,8 +6,8 @@ const { TabPane } = Tabs
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: calc(100% - 68px);
   display: flex;
+  min-height: 100vh;
   justify-content: center;
   overflow: hidden;
 `

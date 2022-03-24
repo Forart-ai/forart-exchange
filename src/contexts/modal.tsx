@@ -93,12 +93,13 @@ const ModalWrapper: React.FC<{ contentStyle?: React.CSSProperties; isOpen: boole
   shouldCloseOnEsc,
   shouldCloseOnOverlayClick,
   children
+
 }) => {
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
   return (
     <ReactModal
-      closeTimeoutMS={2000}
+      closeTimeoutMS={100}
       ariaHideApp={false}
       preventScroll={true}
       isOpen={isOpen}
