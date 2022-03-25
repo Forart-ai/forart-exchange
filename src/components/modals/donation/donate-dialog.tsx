@@ -4,12 +4,13 @@ import { CloseButton, useModal } from '../../../contexts/modal'
 import WarningIcon from '../../../assets/images/modalImages/warning.svg'
 import { useWeb3React } from '@web3-react/core'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
-import { Button, InputNumber } from 'antd'
+import { Button, InputNumber, notification } from 'antd'
 import { useDonation } from '../../../hooks/programs/useDonation/index'
 import WalletSelectionModal from '../../wallet/WalletSelectionModal'
 import BigNumber from 'bignumber.js'
 import { USDC_TOKEN_DECIMALS } from '../../../hooks/programs/useDonation/constants'
 import { shortenAddress } from '../../../utils'
+import notify from '../../../utils/notify'
 
 const Wrapper = styled.div`
   width: 750px;
@@ -28,7 +29,7 @@ const Title = styled.div`
   justify-content: center;
   font-family: inter-extraBold;
   color: #f2f2f2;
-  margin-bottom: 40px;
+  padding: 20px 0 0 40px;
 `
 
 const MainContainer = styled.div`
@@ -65,6 +66,11 @@ const CenterArea = styled.div`
   align-items: center;
   color: #f2f2f2;
   font-size: .7em;
+  
+  .empty {
+    padding: 20px;
+    width: 100px;
+  }
   img {
     padding: 20px;
     width: 100px;
@@ -124,14 +130,23 @@ const DonateButton = styled.div`
 
 const DonateDialog: React.FC = () => {
   const { openModal, closeModal } = useModal()
-  const { account } = useSolanaWeb3()
+  const { account, wallet } = useSolanaWeb3()
 
   const { donate, userDonated } = useDonation()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [amount, setAmount] = useState('1')
 
   const handleDonate = () => {
-    donate({ donateAmount: amount })
+    setLoading(true)
+    if (!account) {
+      notify({
+        message:'Oops!',
+        description:'Please connect to Solana wallet',
+      })
+      return
+    }
+    donate({ donateAmount: amount }).then(() => setLoading(false))
       .catch(console.log)
   }
 
@@ -143,7 +158,9 @@ const DonateDialog: React.FC = () => {
   return (
     <Wrapper>
       <CloseButton onClick={closeModal} />
+
       <Title>Donate for this artist</Title>
+
       <MainContainer>
         <TopArea>
           <img src={WarningIcon} />
@@ -152,7 +169,12 @@ const DonateDialog: React.FC = () => {
           </div>
         </TopArea>
         <CenterArea>
-          <img src={WarningIcon} />
+          {
+            wallet?.icon ?
+              <img src={wallet.icon} />
+              :
+              <div className="empty" />
+          }
           <div className="account" >
             <div className="row">
               <b>Network: </b>
@@ -189,12 +211,13 @@ const DonateDialog: React.FC = () => {
           </DonateCol>
         </BottomArea>
         <DonateButton>
-          {
-            account ? (
-              <Button disabled={!amount} style={{  width:'300px' }} onClick={handleDonate}>Donate</Button>
-            ) :
-              <Button onClick={() => openModal(<WalletSelectionModal />)}>Connect to wallet</Button>
-          }
+          {/*{*/}
+          {/*  account ? (*/}
+          {/*    <Button disabled={!amount} style={{  width:'300px' }} onClick={handleDonate}>Donate</Button>*/}
+          {/*  ) :*/}
+          {/*    <Button onClick={() => openModal(<WalletSelectionModal />)}>Connect to wallet</Button>*/}
+          {/*}*/}
+          <Button loading={loading} disabled={!amount} style={{  width:'300px' }} onClick={handleDonate}>Donate</Button>
         </DonateButton>
       </MainContainer>
     </Wrapper>

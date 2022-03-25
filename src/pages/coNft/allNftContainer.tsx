@@ -4,7 +4,7 @@ import CONFT_API from '../../apis/co-nft'
 import { ThemeInput } from '../../styles/ThemeInput'
 import { OrderSelector } from '../../components/NFTListSelectors'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import {   Divider, List, Skeleton } from 'antd'
+import { Button, Divider, List, Skeleton } from 'antd'
 import styled from 'styled-components'
 import AllNftList from '../../components/nft-mint/allNftList'
 import { LoadingOutlined } from '@ant-design/icons'
@@ -18,26 +18,18 @@ const Filter = styled.div`
   align-items: center;
   justify-content: flex-end;
   width: 100%;
-  height: 50px;
+  height: 40px;
   margin-bottom: 10px;
   
   .refresh {
     height: 100%;
-    
+    margin-right: 10px;
     background: rgb(40,44,52);
-    border-radius: 10px;
+    border-radius: 5px;
   }
   
   
   
-  .btn {
-    font-size: .6em;
-    background-color: #E42575;
-    padding: 8px 14px;
-    border-radius: 10px;
-    margin-left: 10px;
-    cursor: pointer;
-  }
 `
 
 const AllNftWrapper = styled.div`
@@ -49,11 +41,21 @@ const AllNftWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
 
+  .infinite-container {
+    height: 1000px;
+    overflow: auto;
+
+    ::-webkit-scrollbar {
+     display: none;
+    }
+  }
+  
 
   .ant-list-items {
     //display: flex;
     //flex-wrap: wrap;
     //justify-content: space-between;
+    
    
     display: grid;
     grid-template-columns: repeat(auto-fill, 230px);
@@ -64,18 +66,12 @@ const AllNftWrapper = styled.div`
  
   }
   
-  .rc-virtual-list {
-   .rc-virtual-list-holder-inner {
-     display: flex;
-     flex-direction: row !important;
-     flex-wrap: wrap;
-     justify-content: center;
-   }
-  }
+  
   
   @media screen and (max-width: 1080px) {
     .ant-list-items {
-      justify-content: center;
+      grid-template-columns: repeat(2, 175px);
+      grid-template-rows: repeat(auto-fill, 240px);
     }
   }
   
@@ -172,13 +168,13 @@ const AllNftContainer: React.FC = () => {
           style={{ width:'300px', marginRight: '20px' }}
         />
         <div className="refresh">
-          <RedoOutlined style={{ width:'50px', color: '#cfcfcf' }} spin={loading} onClick={resetData} />
+          <RedoOutlined style={{ width:'40px', color: '#cfcfcf' }} spin={loading} onClick={resetData} />
         </div>
         {/*<OrderSelector onChange={ e => { setSelectedOrder(e) }} />*/}
-        <div className="btn" onClick={ openWalletRankModal }>Creator Ranking</div>
+        <Button  onClick={ openWalletRankModal }>Creator Ranking</Button>
       </Filter>
 
-      <div style={{ height: 1000, overflow: 'auto' }} id="scrollableDiv">
+      <div className="infinite-container" id="scrollableDiv">
         {
           loading && (<LoadingOutlined spin style={{ color: '#ffffff', display:'flex', justifyContent: 'center' }} />)
         }

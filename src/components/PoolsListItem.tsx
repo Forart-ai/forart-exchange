@@ -1,8 +1,10 @@
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { PoolsListData } from '../types/coNFT'
 import { Button } from 'antd'
 import { Link } from 'react-router-dom'
+import { useModal } from '../contexts/modal'
+import DonateDialog from './modals/donation/donate-dialog'
 
 const PoolsCardContainer = styled.div< { loading?: string }>`
   width: 600px;
@@ -80,7 +82,7 @@ const InfoContent = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px 20px;
-  z-index: 99;
+  z-index: 1;
   
   .name {
     font-size: 1.5em;
@@ -94,9 +96,11 @@ const InfoContent = styled.div`
   }
   .button-column{
     width: 100%;
+    display: flex;
+    justify-content: space-between;
     
     .ant-btn {
-      width: 100%;
+      width: 45%;
     }
   }
 `
@@ -139,6 +143,12 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
     artistId: data?.artistId ?? ''
   }).toString()
 
+  const { openModal } = useModal()
+
+  const openDonateModal = useCallback(() => {
+    openModal(<DonateDialog />)
+  },[])
+
   return (
     <PoolsCardContainer loading={loading}>
       <ImageContent>
@@ -163,13 +173,28 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
         <div className="button-column">
           {
             data?.status === 'closing' ?
-              <Link to={toArtistDetailUrl}>
-                <Button >Create</Button>
-              </Link>
-              :
-              <Link to={toArtistDetailUrl}>
-                <Button disabled={true}>Create</Button>
-              </Link>
+              (
+                <>
+
+                  <Button  >
+                    <Link to={toArtistDetailUrl}>
+                      Create
+                    </Link>
+                  </Button>
+                  <Button onClick={openDonateModal} >Donate</Button>
+                </>
+              ) :
+              (
+                <>
+                  <Button disabled={true} >
+                    <Link to={toArtistDetailUrl}>
+                      Create
+                    </Link>
+                  </Button>
+                  <Button disabled={true}>Donate</Button>
+                </>
+              )
+
           }
         </div>
 

@@ -7,11 +7,34 @@ import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 import DonateDialog from '../../components/modals/donation/donate-dialog'
 import { useDonation } from '../../hooks/programs/useDonation'
+import Basckground from '../../assets/images/coPools/banner.png'
 
 const Wrapper = styled.div`
-  height: 400px;
+  height: 500px;
   width: 100%;
-
+  background: url(${Basckground}) no-repeat;
+  position: relative;
+  background-size: cover;
+  text-align: center;
+  background-position: 50%;
+  
+  .cover {
+    width: 100%;
+    height: 100%;
+    background: rgb(1, 0, 29);
+    position: absolute; 
+    left: 0px;
+    top: 0px;
+    z-index: 2;
+    opacity: 0.57;
+  }
+  .blur-background {
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    bottom: 0;
+    background: linear-gradient(0deg, rgb(0, 0, 0) 33%, rgba(0, 0, 0, 0) 100%);
+  }
   @media screen and (max-width: 1080px) {
     height: 450px;
   }
@@ -19,11 +42,15 @@ const Wrapper = styled.div`
 
 const MainContainer = styled.div`
   height: 100%;
-  padding: 20px 40px;
+  padding: 10px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  z-index: 3;
+  position: relative;
+  
+  
+  
   @media screen and (max-width: 1080px) {
     padding: 10px;
   }
@@ -37,12 +64,13 @@ const DonateArea = styled.div`
 `
 
 const MainArea = styled.div`
-  width: 100%;
+  max-width: 570px;
   height: 60%;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  
+
+
   .top {
     display: flex;
     justify-content: center;
@@ -65,7 +93,6 @@ const MainArea = styled.div`
   .info-message {
     margin-top: 20px;
     text-align: center;
-    padding: 0 50px;
     color: #c2c2c2;
     font-size: 1.2em;
   }
@@ -138,6 +165,7 @@ const ArtistInfo:React.FC = () => {
 
   return (
     <Wrapper>
+      <div className="cover" />
       <MainContainer >
         <DonateArea>
           <Button onClick={openDonateModal}> Donate </Button>
@@ -168,8 +196,8 @@ const ArtistInfo:React.FC = () => {
             </div>
           </DataItem>
         </DataArea>
-
       </MainContainer>
+      <div className="blur-background" />
     </Wrapper>
   )
 }

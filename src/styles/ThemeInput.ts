@@ -11,7 +11,7 @@ const defaultColor = '#282c34'
 
 const ThemeInput = styled(Input)<SearchInputProps>`
   border-color: ${props =>  props.backgroundColor ?? defaultColor};
-  border-radius: 10px;
+  border-radius: 5px;
   font-weight: 500;
   font-size: 1.4rem;
 

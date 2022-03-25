@@ -36,6 +36,11 @@ const Wrapper = styled.div`
     cursor: pointer;
 
   }
+
+  @media screen and (max-width: 1080px) {
+    width: 165px;
+    height: 230px;
+  }
 `
 
 const Info = styled.div`

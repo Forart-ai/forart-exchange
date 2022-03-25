@@ -6,7 +6,7 @@ function notify({
   description = undefined as any,
   txid = '',
   type = 'info',
-  placement = 'bottomLeft',
+  placement = 'topLeft',
 }) {
   if (txid) {
     //   <Link
@@ -20,13 +20,14 @@ function notify({
     description = <></>
   }
   (notification as any)[type]({
-    message: <span style={{ color: 'black' }}>{message}</span>,
+    message: <span style={{ color: 'white' }}>{message}</span>,
     description: (
-      <span style={{ color: 'black', opacity: 0.5 }}>{description}</span>
+      <span style={{ color: 'white', opacity: 0.5 }}>{description}</span>
     ),
     placement,
     style: {
-      backgroundColor: 'white',
+      backgroundColor: 'rgb(48,8,73)',
+      borderRadius: '1em'
     },
   })
 }

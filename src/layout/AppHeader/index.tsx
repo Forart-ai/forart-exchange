@@ -15,7 +15,7 @@ const AppHeaderContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 1;
+  z-index: 8;
   position: fixed;
   background-image: linear-gradient(to right, #B8316A, #601b7e);
 

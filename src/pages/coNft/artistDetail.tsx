@@ -59,7 +59,7 @@ const Wrapper = styled.div`
   width: 100%;
   max-width: 100vw;
   height: fit-content;
-  padding: 10px 0; 
+  padding: 0 0 60px 0;
  
   
  @media screen and (max-width: 1080px) {

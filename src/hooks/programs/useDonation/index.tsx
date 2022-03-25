@@ -73,14 +73,16 @@ const useDonation = () => {
 
   }, [program])
 
-  const poolDonated = useQuery(['POOL_DONATED', program?.programId, account], async () => {
-    if (!program || !account) return
+  const poolDonated = useQuery(['POOL_DONATED', program?.programId], async () => {
+    if (!program ) return
 
     const poolInfo = await program.account.pool.fetch(POOL_ADDRESS)
 
     if (!poolInfo) {
       return new BigNumber(0)
     }
+
+    console.log(new BigNumber(poolInfo.totalDonateAmount.toString()).shiftedBy(-USDC_TOKEN_DECIMALS))
 
     return new BigNumber(poolInfo.totalDonateAmount.toString()).shiftedBy(-USDC_TOKEN_DECIMALS)
   })
