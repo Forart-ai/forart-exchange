@@ -51,7 +51,7 @@ const Operator = styled.div`
 const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
   const history = useHistory()
 
-  const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
+  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
   return (
     <AppHeaderContent>

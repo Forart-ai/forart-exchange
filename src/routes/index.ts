@@ -13,6 +13,7 @@ import { ReactComponent as GamesIcon } from '../assets/images/siderIcon/games.sv
 import { ReactComponent as ChatIcon } from '../assets/images/siderIcon/chat.svg'
 
 import NftChatroom from '../pages/nft-chatroom'
+import CONFTDetail from '../pages/coNft/nftDetail'
 
 export type Route = {
   path: string
@@ -39,6 +40,12 @@ const routes: Route[] = [
     icon: GamesIcon,
     component: CoNftPage,
     disable: false
+  },
+  {
+    path: '/co-nft-detail',
+    title: 'CO-NFT Detail',
+    component: CONFTDetail,
+    hidden: true
   },
   {
     path: '/artistDetail',

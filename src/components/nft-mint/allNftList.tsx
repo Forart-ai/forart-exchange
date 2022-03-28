@@ -9,6 +9,8 @@ import CrownIcon from '../../assets/images/coPools/ic_crown.svg'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import CONFT_API from '../../apis/co-nft'
+import { Link } from 'react-router-dom'
+import CONFTDetail from '../../pages/coNft/nftDetail'
 
 const Wrapper = styled.div`
   width: 220px;
@@ -34,7 +36,6 @@ const Wrapper = styled.div`
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     cursor: pointer;
-
   }
 
   @media screen and (max-width: 1080px) {
@@ -46,12 +47,11 @@ const Wrapper = styled.div`
 const Info = styled.div`
   color: white;
   display: flex;
-  height: 100px;
   width: 100%;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding: 2px 8px;
+  padding: 7px 8px;
   
  
   
@@ -197,28 +197,34 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
 
   },[account, series,])
 
+  const toDetailUrl = '/co-nft-detail?' + new URLSearchParams({
+    id: data?.id ?? '',
+  }).toString()
+
   return (
     <Wrapper >
-      <img src={data?.previewUrl} onClick={cb} />
-      <Info>
-        <div className="row">
-          <div className="name">{data?.chainNftName || `HypeTeen # ${data?.chainNftNameTmp}`}</div>
+      <Link to={toDetailUrl}>
+        <img src={data?.previewUrl}  />
+        <Info>
+          <div className="row">
+            <div className="name">{data?.chainNftName || `HypeTeen # ${data?.chainNftNameTmp}`}</div>
 
-          <HeartContainer heartStatus = {heartStatus} >
-            <span>{heartNum}</span>
-            {/*{*/}
-            {/*  heartNft?.includes(data.id) ?  < HeartFilled onClick={() => handleUnlike(data?.id)} style={{ color: '#ff005e' }}   className="heart" />*/}
-            {/*    : <HeartOutlined className="heart"  onClick={() => handleLike(data?.id)} />*/}
-            {/*}*/}
-            <HeartFilled  onClick={() => handleLike(data?.id)}  className="heart" />
-          </HeartContainer>
+            <HeartContainer heartStatus = {heartStatus} >
+              <span>{heartNum}</span>
+              {/*{*/}
+              {/*  heartNft?.includes(data.id) ?  < HeartFilled onClick={() => handleUnlike(data?.id)} style={{ color: '#ff005e' }}   className="heart" />*/}
+              {/*    : <HeartOutlined className="heart"  onClick={() => handleLike(data?.id)} />*/}
+              {/*}*/}
+              <HeartFilled  onClick={() => handleLike(data?.id)}  className="heart" />
+            </HeartContainer>
 
-        </div>
-        <div className="rank">
-          <img src={CrownIcon} />
-          <div>{data?.rank}</div>
-        </div>
-      </Info>
+          </div>
+          <div className="rank">
+            <img src={CrownIcon} />
+            <div>{data?.rank}</div>
+          </div>
+        </Info>
+      </Link>
 
     </Wrapper>
   )

@@ -129,7 +129,7 @@ const DonateButton = styled.div`
 `
 
 const DonateDialog: React.FC = () => {
-  const { openModal, closeModal } = useModal()
+  const {  closeModal } = useModal()
   const { account, wallet } = useSolanaWeb3()
 
   const { donate, userDonated } = useDonation()

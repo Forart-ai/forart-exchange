@@ -48,6 +48,9 @@ const CONFT_API = {
       },
       getStaredNft(series?: number | string, wallet?: string) {
         return Service.post('nft/stared', { series, wallet })
+      },
+      userSeriesVote(series: number | string, wallet: string, amount: number) {
+        return Service.post('nft/promotion/series/vote', { series, wallet, amount })
       }
     },
     nft:{

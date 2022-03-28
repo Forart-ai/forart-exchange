@@ -10,7 +10,6 @@ const Wrapper = styled.div`
   height: 100%;
   overflow: auto;
   width: 100%;
-  cursor: grab;
 
   .scroll-container {
     ::-webkit-scrollbar {
@@ -21,20 +20,20 @@ const Wrapper = styled.div`
 `
 
 const BoxContainer = styled.div`
-  padding: 0 10px 30px 0;
+  padding: 0 10px 20px 0;
   display: grid;
   grid-template-rows: auto auto;
   grid-auto-flow: column;
-  grid-gap: 12px;
+  grid-gap: 10px;
   user-select: none;
 `
 
 const ItemBox = styled.div`
   height: 100px;
-  width: 180px;
+  width: 150px;
   margin-top: 20px;
   border-radius: 10px;
-  background: linear-gradient(91.28deg, #3a0341 1.37%, #000328 113.86%);
+  background: linear-gradient(91.28deg, #3a0341 1.37%, #2e114f 113.86%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,14 +46,14 @@ const ItemBox = styled.div`
 
   .type {
     color: #f38aad;
-
+    font-size: 16px;
     //background: #341222;
   }
 
   .value {
-text-align: center;
+    text-align: center;
     color: #fff;
-    font-size: .8em;
+    font-size: 18px;
   }
 
 

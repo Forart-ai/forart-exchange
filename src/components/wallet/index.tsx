@@ -3,7 +3,6 @@ import { useWeb3React } from '@web3-react/core'
 import { formatEther } from '@ethersproject/units'
 import styled from 'styled-components'
 // @ts-ignore
-import Jazzicon from '@metamask/jazzicon'
 import { Button, Dropdown, Menu, Modal } from 'antd'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { PublicKey } from '@solana/web3.js'
@@ -17,7 +16,7 @@ const StyledWallet = styled.div`
   background-color: #1E052D;
   color: #fff;
   display: flex;
-  justify-content: center;
+  justify-content: center; 
   align-items: center;
   border-radius: 30px;
   padding: 0 10px;
@@ -28,7 +27,7 @@ const StyledWallet = styled.div`
   
 `
 
-const CurrentAccountContainer = styled.div`
+const CurrentAccountContainer = styled.div` 
   display: flex;
   font-size: 18px;
   user-select: none;
@@ -95,13 +94,6 @@ type CurrentAccountProps = {
 const MetamaskIcon: React.FC = () => {
   const ref =useRef<HTMLDivElement>()
   const { account } = useWeb3React()
-
-  useEffect(() => {
-    if (account && ref.current) {
-      ref.current.innerHTML = ''
-      ref.current.appendChild(Jazzicon(26, parseInt(account.slice(2, 10), 26)))
-    }
-  }, [account])
 
   return (
     <div>

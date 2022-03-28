@@ -12,12 +12,12 @@ import Banner1 from '../../assets/images/coPools/banner.png'
 import { useGetOverview } from '../../hooks/queries/useGetOverview'
 import { useMediaQuery } from 'react-responsive'
 import { Link } from 'react-router-dom'
-
+import ForartTheme from '../../contexts/theme/config/dark'
 // @ts-ignore
 
 import YouTube from '@u-wave/react-youtube'
 import useConnectedWallet from '../../hooks/useGetCurrentWallet'
-import { Button } from 'antd'
+import { Button, ThemeProvider } from '@mui/material'
 
 const Wrapper = styled.div`
   max-width: 100vw;
@@ -209,9 +209,13 @@ const SCExternalLink = styled.a`
 
 const ButtonArea = styled.div`
   margin-top: 20px;
-  width: 300px;
+  width: 350px;
   display: flex;
   justify-content: space-between;
+  
+  a{
+    color: #ffffff
+  }
 
   @media screen and (max-width: 1080px) {
     width: 100%;
@@ -279,99 +283,101 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
   }).toString()
 
   return (
-    <HeaderContainer>
-      <LeftArea>
-        <LeftTop>
-          <MainInfo>
-            <div className="title">{INFO_DETAILS.title}</div>
-            {
-              isMobile && (
-                <RightArea>
-                  <Banner>
-                    <img src={Banner1} />
-                  </Banner>
-                </RightArea>
-              )
-            }
-            <div className="description">{INFO_DETAILS.describe}</div>
-          </MainInfo>
+    <ThemeProvider theme={ForartTheme }>
+      <HeaderContainer>
+        <LeftArea>
+          <LeftTop>
+            <MainInfo>
+              <div className="title">{INFO_DETAILS.title}</div>
+              {
+                isMobile && (
+                  <RightArea>
+                    <Banner>
+                      <img src={Banner1} />
+                    </Banner>
+                  </RightArea>
+                )
+              }
+              <div className="description">{INFO_DETAILS.describe}</div>
+            </MainInfo>
 
-          <LeftBottom>
-            <div className="data-container">
-              <div className="row">
-                <div className="label">TOTAL CREATE</div>
-                {
-                  coNftData ? (
-                    <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                      <StyledCountUp
-                        end={overviewData?.minted ? overviewData?.minted : '---'}
-                        duration={2}
-                        separator=","
-                        style={{ fontSize: '1.2em' }}
-                      />
-                      <div style={{ color: '#FF468B', fontSize: '1em' }}> /2000</div>
-                    </div>
-                  ) :
-                    <StyledCountUp end={0} />
-                }
+            <LeftBottom>
+              <div className="data-container">
+                <div className="row">
+                  <div className="label">TOTAL CREATE</div>
+                  {
+                    coNftData ? (
+                      <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <StyledCountUp
+                          end={overviewData?.minted ? overviewData?.minted : '---'}
+                          duration={2}
+                          separator=","
+                          style={{ fontSize: '1.2em' }}
+                        />
+                        <div style={{ color: '#FF468B', fontSize: '1em' }}> /2000</div>
+                      </div>
+                    ) :
+                      <StyledCountUp end={0} />
+                  }
+                </div>
+
+                <div className="row">
+                  <div className="label">CREATORS</div>
+                  {
+                    coNftData ? (
+
+                      <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <StyledCountUp
+                          end={overviewData?.mintedWallet ? overviewData?.mintedWallet : '---'}
+                          duration={2}
+                          separator=","
+                          style={{ fontSize: '1.2em' }}
+                        />
+                        <div style={{ color: '#FF468B', fontSize: '1em' }} />
+                      </div>
+                    ) :
+                      <StyledCountUp end={0} />
+                  }
+                </div>
+
               </div>
+            </LeftBottom>
 
-              <div className="row">
-                <div className="label">CREATORS</div>
-                {
-                  coNftData ? (
+            <ButtonArea>
+              <Link to={toArtistDetailUrl}>
+                <Button size="medium" variant={'contained'} disableElevation color={'primary'}>Create Hypeteen</Button>
+              </Link>
+              <Button size={'medium'} variant={'contained'} disableElevation color={'secondary'}>
+                <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >
+                  Instruction
+                </a>
+              </Button>
+            </ButtonArea>
 
-                    <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                      <StyledCountUp
-                        end={overviewData?.mintedWallet ? overviewData?.mintedWallet : '---'}
-                        duration={2}
-                        separator=","
-                        style={{ fontSize: '1.2em' }}
-                      />
-                      <div style={{ color: '#FF468B', fontSize: '1em' }} />
-                    </div>
-                  ) :
-                    <StyledCountUp end={0} />
-                }
-              </div>
+            <LinkContainer>
+              {
+                EXTERNAL_LINKS.map(({ icon, link }) => (
+                  <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
+                    <img src={icon} alt={link} />
+                  </SCExternalLink>
+                ))
+              }
+            </LinkContainer>
+          </LeftTop>
 
-            </div>
-          </LeftBottom>
+        </LeftArea>
+        {
+          !isMobile && (
+            <RightArea>
+              <Banner>
+                <img src={Banner1} />
+              </Banner>
+            </RightArea>
+          )
+        }
 
-          <ButtonArea>
-            <Link to={toArtistDetailUrl}>
-              <Button size={'large'}  >Create Hypeteen!</Button>
-            </Link>
-            <Button size={'large'} style={{ backgroundColor: 'rgb(42,38,48)' }} >
-              <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >
-                Instruction
-              </a>
-            </Button>
-          </ButtonArea>
-
-          <LinkContainer>
-            {
-              EXTERNAL_LINKS.map(({ icon, link }) => (
-                <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
-                  <img src={icon} alt={link} />
-                </SCExternalLink>
-              ))
-            }
-          </LinkContainer>
-        </LeftTop>
-
-      </LeftArea>
-      {
-        !isMobile && (
-          <RightArea>
-            <Banner>
-              <img src={Banner1} />
-            </Banner>
-          </RightArea>
-        )
-      }
-
-    </HeaderContainer>
+      </HeaderContainer>
+    </ThemeProvider>
   )
 }
 
