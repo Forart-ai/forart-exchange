@@ -68,6 +68,9 @@ const CONFT_API = {
       },
       getWalletRank(series: string | number, page: number, filter?: string | number) {
         return Service.post('nft/minter/rank', { series, page, filter })
+      },
+      getNFTDetailById(id:string) {
+        return Service.get(`/nft/detail/${ id }`)
       }
     }
   }

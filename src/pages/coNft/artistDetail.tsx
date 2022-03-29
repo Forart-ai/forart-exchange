@@ -37,6 +37,7 @@ import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 import { useMediaQuery } from 'react-responsive'
 import ArtistInfo from './artistInfo'
+import { ArtDetail } from './artistIntroduction'
 
 const { TabPane } = Tabs
 const { Link } = Anchor
@@ -159,181 +160,12 @@ const StyledTab = styled(Tabs)`
   }
 `
 
-const ArtistDetailTab = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-
-  .ant-anchor-link-title {
-    font-size: 1.2em;
-    color: #fff;
-  }
-
-  .ant-anchor-link-active > .ant-anchor-link-title {
-    color: #FF468B;
-  }
-
-  .ant-anchor-ink::before{
-    background-color: #FF468B;
-  }
-  
-  
-  @media screen and (max-width: 1100px) {
-    justify-content: center;
-  }
-  
-`
-
-const Banner = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  
-  img {
-    width: 70%;
-    object-fit: contain;
-    border-radius: 1em;
-  }
-`
-
-const TabItem = styled.div`
-  
-  max-width: calc(100% - 40px);
-  width: 80%;
-  height: 100%;
- 
-  .item {
-    width: 100%;
-  }
-
-  .title {
-    font-size: 2.5em;
-    color: #FF468B;
-  }
-
-  .image-border {
-    max-width: 100%;
-    object-fit: contain;
-    border-radius: 20px;
-    margin: 1rem 0;
-    display: block;
-  }
-
-  .content {
-    color: #d5d5d5;
-    font-size: 1.4em;
-    user-select: text;
-  }
-
-  @media screen and (max-width: 1100px) {
-    width: 100%;
-    max-width: calc(100% - 10px);
-  }
-`
-
 const TabArea = styled.div`
   width: 100%;
   min-height: fit-content;
   margin-top: 30px;
   padding: 0 10px;
 `
-
-const ComponentsContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  
-  img {
-    margin-top: 20px;
-    width: 70%;
-    border-radius: 20px;
-  }
-`
-
-const ArtDetail: React.FC = () => {
-  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
-
-  const scrollToAnchor = (anchorName: string) => {
-    if (anchorName) {
-      // 找到锚点
-      const anchorElement = document.getElementById(anchorName)
-      // 如果对应id的锚点存在，就跳转到锚点
-      if (anchorElement) { anchorElement.scrollIntoView({ block: 'center', behavior: 'smooth' }) }
-    }
-  }
-
-  return (
-    <ArtistDetailTab id="a">
-      {/*<a onClick={() => scrollToAnchor('about')} >About</a>*/}
-      <TabItem id="b" >
-        <Banner>
-          <img className="banner" src={ArtistBanner} />
-        </Banner>
-        <ComponentsContainer >
-          <img src={Jacket} />
-          <img src={FaceMask} />
-          <img src={Glasses} />
-          <img src={Tatoo} />
-          <img src={Shoes} />
-        </ComponentsContainer>
-        <section className="item"  id="about">
-          <h2 className="title"> Archive </h2>
-          <p className="content">
-            Name: HypeTeen <br />
-            Gender: Encrypting <br />
-            Date of birth: NFT first year <br />
-            Hobbies: Travel, Adventure, Food, Art, Social <br />
-            Personality: Wisdom, creativity, confidence, willing to share <br />
-            Occupation: Ambassador of virtual and real culture <br />
-          </p>
-        </section>
-
-        <section className="item" >
-          <h2 className="title"> Birth of HypeTeen </h2>
-          <p className="content">
-            HypeTeen is the First CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing. Born in the first year of NFT, she/he has her/his own NFT attributes, likes to explore the unknown, and is obsessed with trendy things in the future. At the peak of her/his appearance, she/he likes fans to call: super handsome! <br /><br />
-            In 2022, she/he will take her/his fans on her/his first journey of exploration - travel around the world, learn about the customs of various countries, spread the world&apos;s culture, and share the cultural essence and consensus with fans in Forart Club. <br /> <br />
-
-          </p>
-        </section>
-
-        <section className="item" >
-          <h2 className="title"> Creator & Holder Equity </h2>
-          <p className="content">
-            <b> Benefits for HypeTeen NFT creators:</b> <br />
-            1. Each NFT you create will get 50 $FTA<br />
-
-            2. Acquire 10% of the sales revenue and royalty <br />
-
-            3. Acquire Foart $FTA airdrop<br /> <br />
-
-          </p>
-        </section>
-
-        <section className="item" >
-          <h2 className="title">Marketplace</h2>
-          <p className="content">
-            · Solanart <br />
-            · Slope <br />
-            · Magic Eden <br />
-          </p>
-        </section>
-
-        <section className="item" >
-          <h2 className="title">Roadmap</h2>
-          <p className="content">
-            1. Create CO-NFTs by Users <br />
-            2. Generate Special CO-NFTs and creator winners when the 1000th NFT is created  <br />
-            3. Vote the next country that HypeTeen will travel to  <br />
-            4. Launch on solanart, Slope and Magic Eden when the 2000th NFT is created  <br />
-          </p>
-        </section>
-      </TabItem>
-    </ArtistDetailTab>
-  )
-}
 
 const Mint: React.FC<{ artistKit?: ArtistKit }> = ({ artistKit }) => {
 

@@ -30,7 +30,7 @@ const BoxContainer = styled.div`
 
 const ItemBox = styled.div`
   height: 100px;
-  width: 150px;
+  width: 170px;
   margin-top: 20px;
   border-radius: 10px;
   background: linear-gradient(91.28deg, #3a0341 1.37%, #2e114f 113.86%);

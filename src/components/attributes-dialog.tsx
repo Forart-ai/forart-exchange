@@ -75,11 +75,8 @@ export const RightArea = styled.div`
   .bottom {
     height: 80%;
   }
-}
-
-
-  @media screen and (max-width: 1100px) {
-   
+  
+  
 `
 
 export const ShineKeyFrame = keyframes`

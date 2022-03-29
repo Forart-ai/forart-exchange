@@ -31,5 +31,6 @@ export interface MintedNFTItem {
   componentMetas: any
   rank: number | string
   star: number
+  mintKey: string
 }
 

@@ -1,4 +1,4 @@
-export type DonationIdlType = {
+export type Donation = {
     'version': '0.0.0',
     'name': 'donation',
     'instructions': [
@@ -115,6 +115,11 @@ export type DonationIdlType = {
                 {
                     'name': 'donor',
                     'isMut': true,
+                    'isSigner': false
+                },
+                {
+                    'name': 'tokenMint',
+                    'isMut': false,
                     'isSigner': false
                 },
                 {
@@ -319,11 +324,16 @@ export type DonationIdlType = {
             'code': 302,
             'name': 'DonationHasFinished',
             'msg': 'Donation has finished'
+        },
+        {
+            'code': 303,
+            'name': 'DonateAmountMustBeInteger',
+            'msg': 'Donate amount must be integer'
         }
     ]
 };
 
-export const DonationIDL: DonationIdlType = {
+export const DonationIDL: Donation = {
   'version': '0.0.0',
   'name': 'donation',
   'instructions': [
@@ -440,6 +450,11 @@ export const DonationIDL: DonationIdlType = {
         {
           'name': 'donor',
           'isMut': true,
+          'isSigner': false
+        },
+        {
+          'name': 'tokenMint',
+          'isMut': false,
           'isSigner': false
         },
         {
@@ -644,6 +659,11 @@ export const DonationIDL: DonationIdlType = {
       'code': 302,
       'name': 'DonationHasFinished',
       'msg': 'Donation has finished'
+    },
+    {
+      'code': 303,
+      'name': 'DonateAmountMustBeInteger',
+      'msg': 'Donate amount must be integer'
     }
   ]
 }

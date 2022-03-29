@@ -16,9 +16,9 @@ export type NFTComponentItem = {
 
 export function useFindComponent(param: string[]): UseQueryResult<NFTComponentItem[]>  {
   return useQuery(
-    ['NFT_ATTR'],
+    ['NFT_ATTR', param],
     async () => {
-      return await CONFT_API.core.nft.findComponentsById(param).then(res=>res)
+      return await CONFT_API.core.nft.findComponentsById(param).then(res => res)
     }
   )
 }

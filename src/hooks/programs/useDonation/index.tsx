@@ -60,6 +60,7 @@ const useDonation = () => {
       accounts: {
         pool: POOL_ADDRESS,
         donor,
+        tokenMint: USDC_TOKEN_ADDRESS,
         user: account,
         donateAccount: userATA,
         poolAccount: poolInfo.poolAccount,
