@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { ArtistKit, UserDetail } from '../../types/userDetail'
-import HyteenAvatar from '../../assets/images/artistDetail/hypeteen.jpg'
-import { NFTPreview, Title } from '../../components/nft-mint/selectedList'
-import ArtistBanner from '../../assets/images/coPools/ticket.png'
-import { Anchor, Avatar, Button, Modal, Skeleton, Tabs } from 'antd'
+import { NFTPreview } from '../../components/nft-mint/selectedList'
+import {   Button, Modal, Tabs } from 'antd'
 import { BlockOutlined, CrownOutlined, SmileOutlined, createFromIconfontCN, SearchOutlined } from '@ant-design/icons'
 import {
   BodyContent,
@@ -28,19 +26,13 @@ import useUserQuery from '../../hooks/queries/useUserQuery'
 import useDiscordAccessToken from '../../hooks/useDiscordAccessToken'
 import useNFTMint from '../../hooks/programs/services/useNFTMint'
 import AllNftContainer from './allNftContainer'
-import FaceMask from '../../assets/images/artistDetail/mask.webp'
-import Jacket from '../../assets/images/artistDetail/jacket.webp'
-import Glasses from '../../assets/images/artistDetail/glasses.webp'
-import Shoes from '../../assets/images/artistDetail/shoes.webp'
-import Tatoo from '../../assets/images/artistDetail/tatoo.webp'
+
 import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
-import { useMediaQuery } from 'react-responsive'
 import ArtistInfo from './artistInfo'
 import { ArtDetail } from './artistIntroduction'
 
 const { TabPane } = Tabs
-const { Link } = Anchor
 
 const IconFont = createFromIconfontCN({
   scriptUrl: [
@@ -59,8 +51,8 @@ export type KitProperties = {
 const Wrapper = styled.div`
   width: 100%;
   max-width: 100vw;
-  height: fit-content;
   padding: 0 0 60px 0;
+  min-height: 100vh;
  
   
  @media screen and (max-width: 1080px) {
@@ -68,36 +60,6 @@ const Wrapper = styled.div`
    padding: 0 10px;
    overflow: scroll;
  }  
-`
-
-const ArtistDetailContainer = styled.div`
-  width: 100%;
-  height: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-
-`
-
-const HeaderContainer = styled.div`
-  width: 100%;
-  height: 400px;
-  border-radius: 20px;
-  margin-top: 10px;
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem 2.2rem;
-  flex-direction: column;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), #1E052D) border-box;
-  
-
-
-  @media screen and (max-width: 1100px) {
-    padding: 0.8rem 0.5rem;
-    height: fit-content;
-  }
-
 `
 
 const StyledTab = styled(Tabs)`

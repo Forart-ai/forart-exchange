@@ -129,7 +129,7 @@ const DonateButton = styled.div`
 `
 
 const DonateDialog: React.FC = () => {
-  const {  closeModal } = useModal()
+  const {  openModal, closeModal } = useModal()
   const { account, wallet } = useSolanaWeb3()
 
   const { donate, userDonated } = useDonation()
@@ -211,13 +211,13 @@ const DonateDialog: React.FC = () => {
           </DonateCol>
         </BottomArea>
         <DonateButton>
-          {/*{*/}
-          {/*  account ? (*/}
-          {/*    <Button disabled={!amount} style={{  width:'300px' }} onClick={handleDonate}>Donate</Button>*/}
-          {/*  ) :*/}
-          {/*    <Button onClick={() => openModal(<WalletSelectionModal />)}>Connect to wallet</Button>*/}
-          {/*}*/}
-          <Button loading={loading} disabled={!amount} style={{  width:'300px' }} onClick={handleDonate}>Donate</Button>
+          {
+            account ? (
+              <Button loading={loading} disabled={!amount} style={{  width:'300px' }} onClick={handleDonate}>Donate</Button>
+
+            ) :
+              <Button onClick={() => openModal(<WalletSelectionModal />)}>Connect to wallet</Button>
+          }
         </DonateButton>
       </MainContainer>
     </Wrapper>

@@ -10,11 +10,15 @@ import BigNumber from 'bignumber.js'
 import { useModal } from '../../../contexts/modal'
 import DonationSuccess from '../../../components/modals/donation/donation-success'
 import React from 'react'
+import CONFT_API from '../../../apis/co-nft'
+import { useLocationQuery } from '../../useLocationQuery'
 
 const useDonation = () => {
   const provider = useAnchorProvider()
   const { account } = useSolanaWeb3()
   const { openModal } = useModal()
+
+  const series = useLocationQuery('artistId')
 
   const program = useMemo(() => {
     if (!provider) {
@@ -25,7 +29,7 @@ const useDonation = () => {
   }, [provider])
 
   const donate = useCallback(async (args: { donateAmount: string }) => {
-    if (!program || !account) {
+    if (!program || !account || !series) {
       return
     }
 
@@ -41,6 +45,12 @@ const useDonation = () => {
     const poolInfo = await program.account.pool.fetch(POOL_ADDRESS)
 
     const donorInfo = await program.account.donor.fetchNullable(donor)
+
+    let userDonated = '0'
+
+    if (donorInfo) {
+      userDonated   = new BigNumber(donorInfo.amount.toString()).shiftedBy(-USDC_TOKEN_DECIMALS).toString()
+    }
 
     const tx = new Transaction()
 
@@ -70,6 +80,8 @@ const useDonation = () => {
     }))
 
     await program.provider.send(tx)
+
+    await CONFT_API.core.user.userSeriesVote(series, account.toBase58(), +userDonated + +donateAmount)
     openModal(<DonationSuccess />)
 
   }, [program])

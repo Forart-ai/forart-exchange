@@ -34,8 +34,8 @@ const CONFT_API = {
       }
     },
     user: {
-      getUserQualification(wallet? :string) {
-        return wallet ? Service.get(`/nft/promotion/create/qualification/${ wallet }`) : undefined
+      getUserQualification(series: string | number, wallet? :string) {
+        return (series && wallet) ? Service.post('/nft/promotion/create/qualification/', { series, wallet }) : undefined
       },
       getUserByWallet(wallet?: string) {
         return wallet ? Service.get(`/nft/promotion/discord/bind/${ wallet }`) : undefined
