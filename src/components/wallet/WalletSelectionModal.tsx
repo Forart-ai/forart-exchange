@@ -103,7 +103,7 @@ const WalletSelectionModal:React.FC = () => {
   const [network, setNetwork] = useState<NetworkType>( {
     key: NetworkKeys.Solana,
     name: 'Solana',
-    icon:SolanaLogo,
+    icon: SolanaLogo,
     supportedWallet: supportWallets.filter(v => v.chainType === 'solana')
   })
 
