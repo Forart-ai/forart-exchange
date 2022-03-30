@@ -20,7 +20,7 @@ const Title = styled.div`
   margin-bottom: 40px;
 `
 
-const DonationSuccess:React.FC = () => {
+const DonationError:React.FC = () => {
 
   const { closeModal } = useModal()
 
@@ -28,9 +28,9 @@ const DonationSuccess:React.FC = () => {
     <Wrapper>
       <CloseButton onClick={closeModal} />
 
-      <Title> Transition success! </Title>
+      <Title>Insufficient balance</Title>
     </Wrapper>
   )
 }
 
-export default DonationSuccess
+export default DonationError

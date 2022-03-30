@@ -8,15 +8,16 @@ import { TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import { useQuery } from 'react-query'
 import BigNumber from 'bignumber.js'
 import { useModal } from '../../../contexts/modal'
-import DonationSuccess from '../../../components/modals/donation/donation-success'
+import DonationError from '../../../components/modals/donation/donation-error'
 import React from 'react'
 import CONFT_API from '../../../apis/co-nft'
 import { useLocationQuery } from '../../useLocationQuery'
+import notify from '../../../utils/notify'
 
 const useDonation = () => {
   const provider = useAnchorProvider()
   const { account } = useSolanaWeb3()
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const series = useLocationQuery('artistId')
 
@@ -40,7 +41,12 @@ const useDonation = () => {
       program.programId
     )
 
-    const userATA = (await program.provider.connection.getTokenAccountsByOwner(account,{ mint: USDC_TOKEN_ADDRESS })).value[0].pubkey
+    const userATA = (await program.provider.connection.getTokenAccountsByOwner(account,{ mint: USDC_TOKEN_ADDRESS })).value[0]?.pubkey
+
+    if (!userATA) {
+      // throw new Error('insufficient balance')
+      openModal(<DonationError />)
+    }
 
     const poolInfo = await program.account.pool.fetch(POOL_ADDRESS)
 
@@ -82,7 +88,7 @@ const useDonation = () => {
     await program.provider.send(tx)
 
     await CONFT_API.core.user.userSeriesVote(3312, account.toBase58(), +userDonated + +donateAmount)
-    openModal(<DonationSuccess />)
+    closeModal()
 
   }, [program])
 
@@ -98,6 +104,16 @@ const useDonation = () => {
     console.log(new BigNumber(poolInfo.totalDonateAmount.toString()).shiftedBy(-USDC_TOKEN_DECIMALS))
 
     return new BigNumber(poolInfo.totalDonateAmount.toString()).shiftedBy(-USDC_TOKEN_DECIMALS)
+  })
+
+  const userAta = useQuery(['USER_ATA',program?.programId, account], async () => {
+    if (!program || !account) return
+
+    const userAta = (await program.provider.connection.getTokenAccountsByOwner(account,{ mint: USDC_TOKEN_ADDRESS })).value[0]?.pubkey
+
+    console.log(userAta)
+
+    return userAta
   })
 
   const userDonated = useQuery(['USER_DONATED', program?.programId, account], async () => {
@@ -120,7 +136,8 @@ const useDonation = () => {
   return {
     donate,
     userDonated,
-    poolDonated
+    poolDonated,
+    userAta
   }
 }
 

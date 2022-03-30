@@ -132,7 +132,7 @@ const DonateDialog: React.FC = () => {
   const {  openModal, closeModal } = useModal()
   const { account, wallet } = useSolanaWeb3()
 
-  const { donate, userDonated } = useDonation()
+  const { donate, userDonated, userAta } = useDonation()
   const [loading, setLoading] = useState<boolean>(false)
 
   const [amount, setAmount] = useState('1')
