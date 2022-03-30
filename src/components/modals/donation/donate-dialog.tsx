@@ -147,7 +147,8 @@ const DonateDialog: React.FC = () => {
       return
     }
     donate({ donateAmount: amount }).then(() => setLoading(false))
-      .catch(console.log)
+      .catch(err => {
+        console.log(err)})
   }
 
   const limitNumber = (value:any) => {

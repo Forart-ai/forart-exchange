@@ -29,7 +29,7 @@ const useDonation = () => {
   }, [provider])
 
   const donate = useCallback(async (args: { donateAmount: string }) => {
-    if (!program || !account || !series) {
+    if (!program || !account ) {
       return
     }
 
@@ -81,7 +81,7 @@ const useDonation = () => {
 
     await program.provider.send(tx)
 
-    await CONFT_API.core.user.userSeriesVote(series, account.toBase58(), +userDonated + +donateAmount)
+    await CONFT_API.core.user.userSeriesVote(3312, account.toBase58(), +userDonated + +donateAmount)
     openModal(<DonationSuccess />)
 
   }, [program])
