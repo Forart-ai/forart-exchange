@@ -2,6 +2,7 @@ import { InjectedConnector } from '@web3-react/injected-connector'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import MetaMaskIcon from '../images/wallet/metamask.png'
 import CeloLogo from '../images/wallet/celo.svg'
+import PhantomLogo from '../assets/images/wallets/phantomLogo.png'
 
 import { Web3Provider } from '@ethersproject/providers'
 import { CeloConnector } from './celo-connector'
@@ -56,7 +57,7 @@ export const supportWallets: WalletType[] = [
   {
     name: 'Phantom',
     url: 'https://phantom.app/',
-    icon: 'https://www.gitbook.com/cdn-cgi/image/width=40,height=40,fit=contain,dpr=1,format=auto/https%3A%2F%2F3632261023-files.gitbook.io%2F~%2Ffiles%2Fv0%2Fb%2Fgitbook-legacy-files%2Fo%2Fspaces%252F-MVOiF6Zqit57q_hxJYp%252Favatar-1615495356537.png%3Fgeneration%3D1615495356841399%26alt%3Dmedia',
+    icon: PhantomLogo,
     adapter: PhantomWalletAdapter,
     chainType: 'solana',
   }
