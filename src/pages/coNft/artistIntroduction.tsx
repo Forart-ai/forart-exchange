@@ -162,15 +162,6 @@ export const ArtDetail: React.FC = () => {
     setValue(newValue)
   }
 
-  const scrollToAnchor = (anchorName: string) => {
-    if (anchorName) {
-      // 找到锚点
-      const anchorElement = document.getElementById(anchorName)
-      // 如果对应id的锚点存在，就跳转到锚点
-      if (anchorElement) { anchorElement.scrollIntoView({ block: 'center', behavior: 'smooth' }) }
-    }
-  }
-
   return (
     <ThemeProvider theme={ForartTheme}>
       <ArtistDetailTab id="a">
@@ -182,8 +173,8 @@ export const ArtDetail: React.FC = () => {
               aria-label="styled tabs example"
             >
               <StyledTab label="About" {...a11yProps(0)} />
-              <StyledTab label="Equity & Attributes" />
-              <StyledTab label="Connections" />
+              <StyledTab label="Equity & Attributes" {...a11yProps(1)}  />
+              <StyledTab label="Marketplace & Roadmap" {...a11yProps(2)}  />
 
             </StyledTabs>
           </TabItem>
