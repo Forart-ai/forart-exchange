@@ -18,7 +18,8 @@ import useConnectedWallet from '../../useGetCurrentWallet'
 
 const Message = styled.div`
   text-align: center;
-  font-size: 24px;
+  font-size: 28px;
+  color: #ffffff;
 `
 
 const WaitForMinting:React.FC = () => {

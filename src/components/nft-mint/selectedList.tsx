@@ -5,7 +5,6 @@ import { Popover } from 'antd'
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  border: 1px red solid;
   
 `
 export const Title = styled.div`
