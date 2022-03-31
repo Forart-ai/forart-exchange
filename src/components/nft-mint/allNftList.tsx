@@ -12,6 +12,7 @@ import CONFT_API from '../../apis/co-nft'
 import { Link } from 'react-router-dom'
 import CONFTDetail from '../../pages/coNft/nftDetail'
 import { Skeleton } from '@mui/material'
+import WalletSelectionModal from '../wallet/WalletSelectionModal'
 
 const Wrapper = styled.div`
   width: 220px;
@@ -89,6 +90,7 @@ const Info = styled.div`
 const HeartContainer = styled.div<{heartStatus?: 'up' | 'down'}>`
   display: flex;
   align-items: center;
+  z-index: 9;
 
   .heart {
     cursor: pointer;
@@ -204,36 +206,31 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
 
   return (
     <Wrapper >
-      {
-        data.previewUrl ? (
-          <Link to={toDetailUrl}>
+
+      <Link to={toDetailUrl}>
+        <img src={data.previewUrl} />
+      </Link>
+
+      <Info>
+        <div className="row">
+          <div className="name">{data?.chainNftName || `HypeTeen # ${data?.chainNftNameTmp}`}</div>
+
+          <HeartContainer heartStatus = {heartStatus} >
+            <span>{heartNum}</span>
             {
-
+              account ? (
+                <HeartFilled  onClick={() => handleLike(data?.id)}  className="heart" />
+              ) :
+                <HeartFilled  onClick={() => openModal(<WalletSelectionModal />)}  className="heart" />
             }
-            <img src={data.previewUrl}  />
-            <Info>
-              <div className="row">
-                <div className="name">{data?.chainNftName || `HypeTeen # ${data?.chainNftNameTmp}`}</div>
+          </HeartContainer>
 
-                <HeartContainer heartStatus = {heartStatus} >
-                  <span>{heartNum}</span>
-                  {/*{*/}
-                  {/*  heartNft?.includes(data.id) ?  < HeartFilled onClick={() => handleUnlike(data?.id)} style={{ color: '#ff005e' }}   className="heart" />*/}
-                  {/*    : <HeartOutlined className="heart"  onClick={() => handleLike(data?.id)} />*/}
-                  {/*}*/}
-                  <HeartFilled  onClick={() => handleLike(data?.id)}  className="heart" />
-                </HeartContainer>
-
-              </div>
-              <div className="rank">
-                <img src={CrownIcon} />
-                <div>{data?.rank}</div>
-              </div>
-            </Info>
-          </Link>
-        ) :
-          <Skeleton variant={'rectangular'} width={220} height={280} />
-      }
+        </div>
+        <div className="rank">
+          <img src={CrownIcon} />
+          <div>{data?.rank}</div>
+        </div>
+      </Info>
 
     </Wrapper>
   )

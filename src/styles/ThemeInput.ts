@@ -14,6 +14,7 @@ const ThemeInput = styled(Input)<SearchInputProps>`
   border-radius: 5px;
   font-weight: 500;
   font-size: 1.4rem;
+  height: 100%;
 
   &, .ant-input {
     background-color: ${props =>  props.backgroundColor ?? defaultColor};

@@ -182,6 +182,8 @@ const CONFTDetail:React.FC = () => {
 
   const { data: nftDetail } = useNftDetail(nftId)
 
+  console.log(nftDetail)
+
   const { data: a } = useFindComponent(nftDetail?.components)
 
   const attr = useMemo(() => {
@@ -237,7 +239,11 @@ const CONFTDetail:React.FC = () => {
       }
     })
 
-  },[account, nftDetail?.series,])
+    if (nftDetail){
+      setHeartNum(nftDetail?.star)
+    }
+
+  },[account, nftDetail])
 
   const level: { label: string, color: string, shine: boolean } | undefined = useMemo(() => {
     if (nftDetail?.rarity){

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import ScrollContainer from 'react-indiana-drag-scroll'
+import { Skeleton } from '@mui/material'
 
 export interface AttributesListItem {
     chainMeta: any;
@@ -66,16 +67,32 @@ export const AttributesItem: React.FC<{ item?: AttributesListItem[] }> = ({ item
     <Wrapper>
       <ScrollContainer className="scroll-container" hideScrollbars={false}>
 
-        <BoxContainer>
-          {
-            item?.map(items => (
-              <ItemBox key={items?.chainMeta.trait_type} >
-                <div className="type"> {items?.chainMeta.trait_type}</div>
-                <div className="value"> {items?.chainMeta.value}</div>
-              </ItemBox>
-            ))
-          }
-        </BoxContainer>
+        {
+          item ? (
+            <BoxContainer>
+              {
+                item?.map(items => (
+                  <ItemBox key={items?.chainMeta.trait_type} >
+                    <div className="type"> {items?.chainMeta.trait_type}</div>
+                    <div className="value"> {items?.chainMeta.value}</div>
+                  </ItemBox>
+                ))
+              }
+            </BoxContainer>
+          ) :
+
+            <BoxContainer>
+              {
+                new Array(9).fill({}).map((_, index) => (
+                  <Skeleton variant={'rectangular'} animation="wave"  key={index} >
+                    <ItemBox />
+                  </Skeleton>
+
+                ))
+              }
+            </BoxContainer>
+
+        }
       </ScrollContainer>
 
     </Wrapper>

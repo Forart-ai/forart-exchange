@@ -14,13 +14,23 @@ const StatusSelector: React.FC<{ onChange:(_value: any) => void }> = ({ onChange
 
 const OrderSelector: React.FC<{ onChange:(_value: any) => void }> = ({ onChange }) => {
   return (
-    <DropdownSelector defaultValue="All NFT" onChange= {onChange} >
+    <DropdownSelector defaultValue="desc" onChange= {onChange} >
       <Select.Option value="desc">Top to Low</Select.Option>
       <Select.Option value="asc">Low to Top</Select.Option>
     </DropdownSelector>
   )
 }
 
+const OrderBySelector: React.FC<{ onChange:(_value: any) => void }> = ({ onChange }) => {
+  return (
+    <DropdownSelector defaultValue="random" onChange= {onChange} >
+      <Select.Option value="random">Random</Select.Option>
+      <Select.Option value="star">Star</Select.Option>
+      <Select.Option value="rarity">Rarity</Select.Option>
+    </DropdownSelector>
+  )
+}
+
 export {
-  StatusSelector, OrderSelector
+  StatusSelector, OrderSelector, OrderBySelector
 }

@@ -28,9 +28,9 @@ const App: React.FC = () => {
     dispatch(setSideBarCollapsed(!sideBarCollapsed))
   }
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [location.pathname])
+  // useEffect(() => {
+  //   window.scrollTo(0, 0)
+  // }, [location.pathname])
 
   return (
   // <Layout className="app">

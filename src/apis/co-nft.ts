@@ -54,8 +54,8 @@ const CONFT_API = {
       }
     },
     nft:{
-      getNftRank(series: number | string, page: number, order: 'asc' | 'desc' | undefined , filter?: string | number) {
-        return Service.post('nft/rank', { series, page, order, filter })
+      getNftRank(series: number | string, page: number, order: 'asc' | 'desc' | undefined , filter?: string | number, orderBy?: string) {
+        return Service.post('nft/rank', { series, page, order, filter, orderBy })
       },
       starNft(series: number | string, nft: string, wallet: string) {
         return Service.post('nft/star', { series, nft, wallet })

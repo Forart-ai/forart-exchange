@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import CONFT_API from '../../apis/co-nft'
 import { ThemeInput } from '../../styles/ThemeInput'
-import { OrderSelector } from '../../components/NFTListSelectors'
+import { OrderBySelector, OrderSelector } from '../../components/NFTListSelectors'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Button, Divider, List, Skeleton } from 'antd'
 import styled from 'styled-components'
@@ -20,6 +20,9 @@ const Filter = styled.div`
   width: 100%;
   height: 40px;
   margin-bottom: 10px;
+  
+  
+  
   
   .refresh {
     height: 100%;
@@ -87,6 +90,7 @@ const AllNftContainer: React.FC = () => {
   const [data, setData] = useState<any[]>([])
   const [searchKey, setSearchKey] = useState<string | number>('')
   const [selectedOrder, setSelectedOrder] = useState(undefined)
+  const [orderBy, setOrderBy] = useState('random')
   const [loading, setLoading] = useState(false)
   const series = useLocationQuery('artistId')
   const [hasMore, setHasMore] = useState<boolean>(true)
@@ -103,7 +107,7 @@ const AllNftContainer: React.FC = () => {
 
       if (series) {
         setLoading( true)
-        CONFT_API.core.nft.getNftRank(series, page, selectedOrder, searchKey)
+        CONFT_API.core.nft.getNftRank(series, page, selectedOrder, searchKey, orderBy)
           .then((res:any) => {
             if (res.length === 0)  {
               setHasMore(false)
@@ -123,7 +127,7 @@ const AllNftContainer: React.FC = () => {
 
       resolve()
     })
-  }, [loading, page, searchKey, selectedOrder])
+  }, [loading, page, searchKey, selectedOrder, orderBy])
 
   const onPressEnter = () => {
     setFlag(true)
@@ -149,6 +153,7 @@ const AllNftContainer: React.FC = () => {
     setSearchKey(r.target.value)
     onPressEnter()
   }
+
   const resetData = () => {
     setSearchKey('')
     onPressEnter()
@@ -170,8 +175,9 @@ const AllNftContainer: React.FC = () => {
         <div className="refresh">
           <RedoOutlined style={{ width:'40px', color: '#cfcfcf' }} spin={loading} onClick={resetData} />
         </div>
-        {/*<OrderSelector onChange={ e => { setSelectedOrder(e) }} />*/}
-        <Button  onClick={ openWalletRankModal }>Creator Ranking</Button>
+        <OrderSelector onChange={ e => { setSelectedOrder(e); onPressEnter() }}  />
+        <OrderBySelector onChange={e => { setOrderBy(e); onPressEnter()}} />
+        <Button  onClick={ openWalletRankModal } style={{ marginLeft:'10px' }}>Creator Ranking</Button>
       </Filter>
 
       <div className="infinite-container" id="scrollableDiv">
@@ -182,7 +188,7 @@ const AllNftContainer: React.FC = () => {
         <InfiniteScroll
           next={loadMoreData}
           hasMore={ hasMore }
-          loader={<Skeleton  paragraph={{ rows: 1 }} active />}
+          loader={<></>}
           dataLength={ data?.length }
           scrollableTarget="scrollableDiv"
           endMessage={<Divider style={{ color:' #c2c2c2' }} plain> oops! there&apos;s nothong more 🤐</Divider>}
