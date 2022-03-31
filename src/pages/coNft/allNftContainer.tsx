@@ -175,7 +175,7 @@ const AllNftContainer: React.FC = () => {
         <div className="refresh">
           <RedoOutlined style={{ width:'40px', color: '#cfcfcf' }} spin={loading} onClick={resetData} />
         </div>
-        <OrderSelector onChange={ e => { setSelectedOrder(e); onPressEnter() }}  />
+        {/*<OrderSelector onChange={ e => { setSelectedOrder(e); onPressEnter() }}  />*/}
         <OrderBySelector onChange={e => { setOrderBy(e); onPressEnter()}} />
         <Button  onClick={ openWalletRankModal } style={{ marginLeft:'10px' }}>Creator Ranking</Button>
       </Filter>

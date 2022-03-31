@@ -26,7 +26,7 @@ const Wrapper = styled.div`
     left: 0px;
     top: 0px;
     z-index: 2;
-    opacity: 0.57;
+    opacity: 0.77;
   }
   .blur-background {
     position: absolute;
@@ -176,7 +176,7 @@ const ArtistInfo:React.FC = () => {
             <span> Hypeteen</span>
           </div>
           <div className="info-message">
-            The Degenerate Ape Academy is an NFT brand housed on the Solana blockchain. The academy consists of 10,000 degenerate ape NFTs.
+            HypeTeen is the first CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen.
           </div>
         </MainArea>
         <DataArea>

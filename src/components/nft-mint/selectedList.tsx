@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import { Popover } from 'antd'
 
 const Wrapper = styled.div`
-  margin: 20px 0;
   width: 100%;
+  height: 100%;
+  border: 1px red solid;
   
 `
 export const Title = styled.div`
@@ -132,11 +133,6 @@ export const NFTPreview: React.FC<{kitList?: Map<string, any>, body: any}> = ({ 
   return (
     <Wrapper>
       <PreviewContainer>
-        {/*<Popover content={<p>dd</p>} title="Title">*/}
-        {/*  <MysteryHat>*/}
-        {/*    <img src={'https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg'} />*/}
-        {/*  </MysteryHat>*/}
-        {/*</Popover>*/}
         <PreviewImages>
           {
             background?.url && <img src={background?.url} />

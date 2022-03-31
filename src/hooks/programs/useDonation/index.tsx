@@ -8,7 +8,7 @@ import { TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import { useQuery } from 'react-query'
 import BigNumber from 'bignumber.js'
 import { useModal } from '../../../contexts/modal'
-import DonationError from '../../../components/modals/donation/donation-error'
+import { DonationError, DonationSuccess } from '../../../components/modals/donation/donation-info'
 import React from 'react'
 import CONFT_API from '../../../apis/co-nft'
 import { useLocationQuery } from '../../useLocationQuery'
@@ -87,8 +87,9 @@ const useDonation = () => {
 
     await program.provider.send(tx)
 
+    openModal(<DonationSuccess />)
+
     await CONFT_API.core.user.userSeriesVote(3312, account.toBase58(), +userDonated + +donateAmount)
-    closeModal()
 
   }, [program])
 
