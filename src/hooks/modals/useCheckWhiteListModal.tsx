@@ -12,6 +12,8 @@ import CONFT_API from '../../apis/co-nft'
 import useDiscordMeQuery from '../queries/useDiscordMeQuery'
 import { useMediaQuery } from 'react-responsive'
 import useGetCurrentWallet from '../useGetCurrentWallet'
+import {  useModal as useReactModal } from '../../contexts/modal'
+import DonateDialog from '../../components/modals/donation/donate-dialog'
 
 type StepProps = {
   active?: boolean
@@ -109,34 +111,6 @@ const ConnectButton = styled(Button)<{status?: string}>`
   `}
   
   `
-
-const TableBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  
-  @media screen and (max-width: 1080px) {
-    display: none;
-  }
-`
-
-const Row = styled.div`
-  display: flex;
-  width: 100%;
-  height: 30px;
-  
-  b {
-    width: 20%;
-    color: #FF468B;
-  }
-  
-  .col-2 {
-    width: 35%;
-  }
-  
-  span {
-    width: 20%;
-  }
-`
 
 const WalletStatus: React.FC<StepProps> = () => {
   const   account  = useGetCurrentWallet()
@@ -285,6 +259,11 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
 
 export const useCheckWhiteListModal = () => {
   const account = useGetCurrentWallet()
+  const {  openModal } = useReactModal()
+
+  const openDonate = () => {
+    openModal(<DonateDialog />)
+  }
 
   const { data: user } = useUserQuery()
   const discordAccessToken = useDiscordAccessToken()
@@ -317,57 +296,16 @@ export const useCheckWhiteListModal = () => {
       <Content >
         <TipsCard>
           <p > 😺  Accesses left: <b>{user?.getQualification}</b> </p>
-          <p>  😻  You can get a Discord role by voting for us in Hackthon or inviting friends to join our Discord.</p>
-          <p>  🎁  Server role perks on CO-NFT creation <br /> One access mean you can create one NFT artwork for free and earn 10% of sale revenue in launchpad!</p>
-          <p>
-            <TableBox>
-              <Row>
-                <b>Roles</b>
-                <b className="col-2">Access</b>
-                <b>Accesses</b>
-              </Row>
-              <Row>
-                <span>OG-L1/2/3/4</span>
-                <span className="col-2">at least 1/5/8/10 votes</span>
-                <span>1/2/3/4</span>
-              </Row>
 
-              <Row>
-                <span>Hero</span>
-                <span className="col-2">at least 12 votes</span>
-                <span>5</span>
-              </Row>
-              <Row>
-                <span>Legend</span>
-                <span className="col-2">at least 15 votes</span>
-                <span>6</span>
-              </Row><br />
+          <p>👉🏻 1. Vote for Forart.ai in Hackathon, The Discord administrator checks the votes and assigns roles</p>
 
-              <Row>
-                <span>Referrer L-1/2/3</span>
-                <span className="col-2">invite at least 3/6/9 people for valid votes</span>
-                <span>1/2/3</span>
-              </Row>
-              <br />
-
-              <Row>
-                <span>Inviter L-1/2/3</span>
-                <span className="col-2">invite at least 5/10/15 people to join Forart Discord server</span>
-                <span>1/2/3</span>
-              </Row>
-
-            </TableBox>
-          </p>
-          <p>👉🏻 1. Vote for forart in
-            <a href={'https://hackerlink.io/buidl/1932?roundProj=1433'} target={'_blank'} rel="noreferrer"> Avalanche Hackathon@Asia (AVAX Pool)</a> or
-            <a href={'https://hackerlink.io/buidl/1932?roundProj=1416'} target={'_blank'} rel="noreferrer"  > Solana Riptide Hackathon@East Asia</a>  , The Discord administrator checks the votes and assigns roles
-          </p>
-
-          <p>👉🏻 2. Invite friends to join Discord and contact your administrator to assign roles</p>
+          <p>👉🏻 2.  Invite friends to join Discord and contact your administrator to assign roles</p>
 
           <p>👉🏻 3. Invite friends to Join Discord, and the administrator will check votes and assign roles</p>
 
-          <p> Please first associate your wallet with Discord, and we&apos;ll verify your role</p>
+          <p>👉🏻 4. Donate fot this artist <Button onClick={openDonate}>Click Here</Button> </p>
+
+          <p> You can also <a>view the guide {'>'}</a></p>
 
           <Steps current={currentStep} direction={isMobile ? 'vertical' : 'horizontal'}>
             <Steps.Step title={'Connect to wallet'} description={<WalletStatus active={currentStep === 0} />}  />

@@ -51,7 +51,7 @@ const TopArea = styled.div`
   font-size: .7em;
 
   .text {
-    b{
+   a, b{
       color: #ff468b;
     }
   }
@@ -165,8 +165,13 @@ const DonateDialog: React.FC = () => {
       <MainContainer>
         <TopArea>
           <img src={WarningIcon} />
-          <div className="text" >Your first donate towards a artist costs <b>1 USDC</b> inthis round.According to quadratic funding algorithm,
-            your n-th donate towards the same artist costs 1 x n USDCs.
+          <div className="text" >
+            <p>
+              Your first donate towards a artist costs <b>1 USDC</b> inthis round.According to quadratic funding algorithm,
+              your n-th donate towards the same artist costs <br /> <b>1 x n USDCs.</b>
+            </p>
+            <p>You can also view the <a>donating guide {'>'}</a>
+            </p>
           </div>
         </TopArea>
         <CenterArea>
@@ -214,7 +219,7 @@ const DonateDialog: React.FC = () => {
         <DonateButton>
           {
             account ? (
-              <Button loading={loading} disabled={!amount} style={{  width:'300px' }} onClick={handleDonate}>Donate</Button>
+              <Button loading={loading} disabled={!amount} style={{  width:'300px' }} onClick={handleDonate}>Confirm</Button>
 
             ) :
               <Button onClick={() => openModal(<WalletSelectionModal />)}>Connect to wallet</Button>

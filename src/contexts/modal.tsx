@@ -113,7 +113,7 @@ const ModalWrapper: React.FC<{ contentStyle?: React.CSSProperties; isOpen: boole
         overlay: {
           background: 'rgba(29, 20, 56, 0.09)',
           backdropFilter: 'blur(10px)',
-          zIndex: 11,
+          zIndex: 99999,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

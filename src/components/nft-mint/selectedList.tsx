@@ -18,11 +18,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   overflow-y: scroll;
 
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 5px;
-    background-color: transparent;
-  }
+  
 `
 
 const MintItems = styled.div`
