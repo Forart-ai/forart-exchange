@@ -80,7 +80,8 @@ const routes: Route[] = [
     title: 'Marketplace',
     component: Marketplace,
     icon: MarketplaceIcon,
-    disable: false
+    disable: false,
+    hidden: true
   },
   {
     path: '/marketplace/:id',

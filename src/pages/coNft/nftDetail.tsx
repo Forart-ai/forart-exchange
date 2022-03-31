@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Box, Card, CardMedia, Container, Grid, Paper, ThemeProvider } from '@mui/material'
+import { Box, Card, CardMedia, Container, Grid, Paper, ThemeProvider, Tooltip } from '@mui/material'
 import { MintedNFTItem } from '../../types/coNFT'
 import ForartTheme from '../../contexts/theme/config/dark'
 import darkTheme from 'web3modal/dist/themes/dark'
@@ -14,6 +14,11 @@ import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 import { HeartFilled, HeartOutlined } from '@ant-design/icons'
+import { useMediaQuery } from 'react-responsive'
+import { shortenAddress } from '../../utils'
+import { useLocation } from 'react-router-dom'
+import copy from 'copy-to-clipboard'
+import { message } from 'antd'
 
 const NFTInfo = styled.div`
   width: 100%;
@@ -36,6 +41,11 @@ const LeftArea = styled.div`
     object-fit: contain;
     border-radius: 10px;
   }
+
+  @media screen and (max-width: 1080px) {
+    height: 100%;
+    width: 100%;
+  }
 `
 const RightArea = styled.div`
   width: calc(100% - 470px);
@@ -44,6 +54,9 @@ const RightArea = styled.div`
   justify-content: space-between;
 
 
+  @media screen and (max-width: 1080px) {
+    width: 100%;
+  }
   
   
 `
@@ -55,6 +68,10 @@ const RightTopArea = styled.div`
   align-items: flex-start;
   height: 25%;
 
+
+  @media screen and (max-width: 1080px) {
+   height: fit-content;
+  }
 `
 
 const TopTitle = styled.div`
@@ -69,6 +86,11 @@ const TopTitle = styled.div`
   .name {
     color: #ffffff;
   }
+
+  @media screen and (max-width: 1080px) {
+    margin-top: 10px;
+    font-size: 26px;
+  }
   
 `
 
@@ -78,7 +100,7 @@ const RightBottomArea = styled.div`
 
 const Rainbow = styled.div`
     display: flex;
-    font-size: 15px;
+    font-size: 16px;
 
     .wallet {
       color: #A197AA;
@@ -95,14 +117,17 @@ const Rainbow = styled.div`
 
 const SeriesTitle = styled.div`
   color: #A197AA;
-  font-size: 24px;
+  font-size: 20px;
+  font-family: inter-extraBold;
 `
 
 const Options = styled.div`
   display: flex;
   
   img {
-  width: 35px;
+    width: 22px;
+    margin-left: 10px;
+    cursor: pointer;
 }
 `
 
@@ -128,7 +153,7 @@ const HeartContainer = styled.div<{heartStatus?: 'up' | 'down'}>`
   .heart {
     cursor: pointer;
     border-radius: 50%;
-    font-size: 25px;
+    font-size: 22px;
 
     //:hover {
     //  color: #ff005e;
@@ -155,16 +180,14 @@ const HeartContainer = styled.div<{heartStatus?: 'up' | 'down'}>`
   span {
     margin-right: 5px;
     font-family: Inter;
-    font-size: 24px;
+    font-size: 20px;
     color: #A197AA;
   }
 `
 
 export const LevelLabel = styled.div<{ color: string, shine?: boolean }>`
-  font-size: 18px;
   color: ${props => props.color.replace(/(\d)\)/, '$1, 0.9)')};
   animation: ${ShineKeyFrame} 2s infinite linear;
-  margin-left: 12px;
   ${p => p.shine ? `
     background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 65%);
     -webkit-background-clip: text;
@@ -180,9 +203,13 @@ const CONFTDetail:React.FC = () => {
 
   const nftId = useLocationQuery('id') ?? ''
 
-  const { data: nftDetail } = useNftDetail(nftId)
+  const location = useLocation()
 
-  console.log(nftDetail)
+  const handleCopy = (content: any) => {
+    copy(content) && message.success('Copied successfully.', 1)
+  }
+
+  const { data: nftDetail } = useNftDetail(nftId)
 
   const { data: a } = useFindComponent(nftDetail?.components)
 
@@ -250,16 +277,18 @@ const CONFTDetail:React.FC = () => {
       return {
         'Legend': { label: 'Legend', color: 'rgb(255,223,89)', shine: true },
         'Epic': { label: 'Epic', color: 'rgb(255,67,189)', shine: true },
-        'Super Rare': { label: 'Super Rare', color: 'rgb(255,109,5)', shine: false },
+        'Super Rare': { label: 'Super Rare', color: 'rgb(255,109,5)', shine: true },
         'Rare': { label: 'Rare', color: 'rgb(129,234,202)', shine: false },
         'Common': { label: 'Common', color: 'rgb(179,167,208)', shine: false }
       }[nftDetail.rarity]
     }
   }, [nftDetail])
 
+  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
+
   return (
     <ThemeProvider theme={ForartTheme} >
-      <Container maxWidth={'xl'} sx={{ pt:8, minHeight:'100vh' }}   >
+      <Container maxWidth={'xl'} sx={{ pt: { md:8, xs: 1 }, minHeight:'100vh', p:{ xs: 1 } }} >
 
         <NFTInfo>
           <LeftArea >
@@ -270,32 +299,35 @@ const CONFTDetail:React.FC = () => {
               <TopTitle>
                 <div style={{ display:'flex', alignItems: 'center' }}>
                   <div className="name">{nftDetail?.chainNftName || `HypeTeen # ${nftDetail?.chainNftNameTmp}`}</div>
-                  <div>  {
-                    level && (
-                      <LevelLabel color={level.color} shine={level.shine}>
-                        Rarity: {level.label}
-                      </LevelLabel>
-                    )
-                  }
-                  </div>
+
                 </div>
 
                 <Options>
                   <HeartContainer heartStatus = {heartStatus} >
                     <span>{heartNum}</span>
-                    {/*{*/}
-                    {/*  heartNft?.includes(data.id) ?  < HeartFilled onClick={() => handleUnlike(data?.id)} style={{ color: '#ff005e' }}   className="heart" />*/}
-                    {/*    : <HeartOutlined className="heart"  onClick={() => handleLike(data?.id)} />*/}
-                    {/*}*/}
                     <HeartOutlined onClick={() => handleLike(nftDetail?.id as string)} className="heart" />
                   </HeartContainer>
-                  <img src={UploadIcon} />
+                  <Tooltip title={'Copy link'}>
+                    <img src={UploadIcon} onClick={() => handleCopy(window.location.href)} />
+                  </Tooltip>
                 </Options>
+
               </TopTitle>
-              <SeriesTitle>Hypeteen</SeriesTitle>
+              <SeriesTitle>
+                <div>  {
+                  level && (
+                    <LevelLabel color={level.color} shine={level.shine}>
+                      Rarity: {level.label}
+                    </LevelLabel>
+                  )
+                }
+                </div>
+              </SeriesTitle>
               <Rainbow>
                 <span>Owned by:</span>
-                <div className="wallet">{nftDetail?.wallet}</div>
+                {
+                  !isMobile ?  <div className="wallet">{nftDetail?.wallet}</div> :  <div className="wallet">{shortenAddress(nftDetail?.wallet)}</div>
+                }
               </Rainbow>
             </RightTopArea>
             <RightBottomArea >

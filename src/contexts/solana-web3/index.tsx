@@ -30,7 +30,7 @@ export type SupportWalletNames =
 export type SolanaWallet = {
   name: SupportWalletNames
   url: string
-  icon: string
+  icon: any
   adapter?: new() => WalletAdapter
 }
 

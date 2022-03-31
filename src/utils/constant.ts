@@ -1,11 +1,12 @@
 import { PhantomWalletAdapter } from '../contexts/solana-web3/walletAdapters/phantom'
 import { SolanaWallet, SupportWalletNames } from '../contexts/solana-web3'
+import PhantomLogo from '../assets/images/wallets/phantomLogo.png'
 
 export const SUPPORT_WALLETS: Record<SupportWalletNames, SolanaWallet> = {
   'Phantom': {
     name: 'Phantom',
     url: 'https://phantom.app/',
-    icon: 'https://www.gitbook.com/cdn-cgi/image/width=40,height=40,fit=contain,dpr=1.25,format=auto/https%3A%2F%2F3632261023-files.gitbook.io%2F~%2Ffiles%2Fv0%2Fb%2Fgitbook-28427.appspot.com%2Fo%2Fspaces%252F-MVOiF6Zqit57q_hxJYp%252Favatar-1615495356537.png%3Fgeneration%3D1615495356841399%26alt%3Dmedia',
+    icon: PhantomLogo,
     adapter: PhantomWalletAdapter
   },
   // 'Solflare': {

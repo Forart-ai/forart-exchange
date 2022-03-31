@@ -9,10 +9,10 @@ import CrownIcon from '../../assets/images/coPools/ic_crown.svg'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import CONFT_API from '../../apis/co-nft'
-import { Link } from 'react-router-dom'
 import CONFTDetail from '../../pages/coNft/nftDetail'
 import { Skeleton } from '@mui/material'
 import WalletSelectionModal from '../wallet/WalletSelectionModal'
+import { Link } from 'react-router-dom'
 
 const Wrapper = styled.div`
   width: 220px;

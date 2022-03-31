@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { useModal } from '../contexts/modal'
 import AttributesDialog from './attributes-dialog'
 import { Progress } from 'antd'
+import { Link } from 'react-router-dom'
 
 const Wrapper = styled.div<{$empty?: boolean}>`
   width: 240px;
@@ -17,6 +18,7 @@ const Wrapper = styled.div<{$empty?: boolean}>`
   position: relative;
   cursor: pointer;
   margin: 10px 9px;
+  background: #2a2e35;
   
   .spin {
     position: absolute;
@@ -86,49 +88,49 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
     }
   }, [loading])
 
-  const cb = useCallback(() => {
-    if (data?.chainStatus === 'SUCCESS') {
-      openModal(<AttributesDialog item={data} />)
-    }
-  }, [data])
+  const toDetailUrl = '/co-nft-detail?' + new URLSearchParams({
+    id: data?.id ?? '',
+  }).toString()
 
   return (
     <>
       <Wrapper $empty={empty} >
-        <div className= "nft-container" onClick={cb} >
-          {
-            (data?.previewUrl && data?.chainStatus === 'SUCCESS') &&
-            <img src={getImageUrl()}
-              onLoad={() => {
-                setLoading(false)
-              }}
-            />
-          }
-          {
-            (data?.chainStatus !== 'SUCCESS' && data?.chainStatus !== 'FAILED') &&
-            <>
-              <div className="status">
-                <div>  {data?.chainStatus}  </div>
-                <Progress percent={progress} />
-                {/*<div> <SyncOutlined  spin={true} /> </div>*/}
-              </div>
+        <Link to={toDetailUrl}>
+          <div className= "nft-container" >
+            {
+              (data?.previewUrl && data?.chainStatus === 'SUCCESS') &&
+                <img src={getImageUrl()}
+                  onLoad={() => {
+                    setLoading(false)
+                  }}
+                />
+            }
+            {
+              (data?.chainStatus !== 'SUCCESS' && data?.chainStatus !== 'FAILED') &&
+                <>
+                  <div className="status">
+                    <div>  {data?.chainStatus}  </div>
+                    <Progress percent={progress} />
+                    {/*<div> <SyncOutlined  spin={true} /> </div>*/}
+                  </div>
 
-            </>
-          }
-          {
-            data?.chainStatus === 'FAILED' &&
-            <>
-              <div className="status">
-                <div>  {data?.chainStatus}  </div>
-                <div> DONT WORRY, IT WILL TRY TO UPDATE AGAIN </div>
+                </>
+            }
+            {
+              data?.chainStatus === 'FAILED' &&
+                <>
+                  <div className="status">
+                    <div>  {data?.chainStatus}  </div>
+                    <div> DONT WORRY, IT WILL TRY TO UPDATE AGAIN </div>
 
-                <div>
-                  <Progress percent={10} size="small" status="exception" />
-                </div>
-              </div>
-            </>
-          }
-        </div>
+                    <div>
+                      <Progress percent={10} size="small" status="exception" />
+                    </div>
+                  </div>
+                </>
+            }
+          </div>
+        </Link>
       </Wrapper>
     </>
   )

@@ -19,10 +19,8 @@ const Filter = styled.div`
   justify-content: flex-end;
   width: 100%;
   height: 40px;
-  margin-bottom: 10px;
-  
-  
-  
+  margin-bottom: 25px;
+  flex-wrap: wrap;
   
   .refresh {
     height: 100%;
@@ -30,7 +28,9 @@ const Filter = styled.div`
     background: rgb(40,44,52);
     border-radius: 5px;
   }
-  
+  @media screen and (max-width: 1080px) {
+    margin-bottom: 80px;
+  }
   
   
 `
