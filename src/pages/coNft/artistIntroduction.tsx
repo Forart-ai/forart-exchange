@@ -90,10 +90,22 @@ const ArtistDetailTab = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  
+  .flex {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+  }
 
   
   @media screen and (max-width: 1080px) {
     justify-content: center;
+
+    .flex {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
   }
   
 `
@@ -117,8 +129,7 @@ const TabItem = styled.div`
   
 
   @media screen and (max-width: 1100px) {
-    width: 100%;
-    max-width: calc(100% - 10px);
+    width: 40%;
   }
 `
 
@@ -135,6 +146,11 @@ const TabInfo = styled.div`
   p {
     color: #A197AA;
     font-size: 1.2rem;
+  }
+
+  @media screen and (max-width: 1100px) {
+    width: 100%;
+    padding: 0 ;
   }
 `
 
@@ -165,7 +181,8 @@ export const ArtDetail: React.FC = () => {
   return (
     <ThemeProvider theme={ForartTheme}>
       <ArtistDetailTab id="a">
-        <div style={{ display:'flex', justifyContent:'center',width:'80%' }}>
+        <div className="flex">
+
           <TabItem>
             <StyledTabs
               value={value}

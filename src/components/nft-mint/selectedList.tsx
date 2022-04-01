@@ -76,16 +76,16 @@ const PreviewImages = styled.div`
   opacity: 0;
 }
   
-  .butt ,.foot ,.mouth {
+  .Butt ,.Foot ,.Mouth {
     z-index: 2;
   }
   
-  .pants {
-    z-index: 3;
+  .Pants {
+    z-index: 5;
   }
   
-  .clothing ,.eye, .hat {
-    z-index: 4;
+  .Clothing ,.Eye, .Hat {
+    z-index: 6;
   }
   
 `

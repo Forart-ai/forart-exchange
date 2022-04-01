@@ -12,16 +12,17 @@ interface StyledTabsProps {
     children?: React.ReactNode;
     value: number;
     onChange: (event: React.SyntheticEvent, newValue: number) => void;
-    centered:boolean
 }
 
 const StyledTabs = styled((props: StyledTabsProps) => (
   <Tabs
+    centered={true}
     {...props}
     TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
   />
 ))({
   '& .MuiTabs-indicator': {
+
     display: 'flex',
     justifyContent: 'center',
     backgroundColor: 'transparent',
@@ -31,6 +32,9 @@ const StyledTabs = styled((props: StyledTabsProps) => (
     width: '100%',
     backgroundColor: '#FF468B',
   },
+  '&. MuiTabs-flexContainer': {
+    justifyContent:'center'
+  }
 })
 
 interface StyledTabProps {
@@ -42,8 +46,7 @@ const StyledTab = styled((props: StyledTabProps) => (
 ))(({ theme }) => ({
   // textTransform: 'none',
   fontWeight: 600,
-  fontSize: '1.2rem',
-  marginRight: 10,
+  fontSize: '1.1rem',
   color: 'rgba(255, 255, 255, 0.7)',
   '&.Mui-selected': {
     color: '#FF468B',
@@ -182,7 +185,6 @@ const ArtistDetail: React.FC = () => {
         <ArtistInfo />
         <TabArea>
           <StyledTabs
-            centered={true}
             value={value}
             onChange={handleChange}
             aria-label="styled tabs example"

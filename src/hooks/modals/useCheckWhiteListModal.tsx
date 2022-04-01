@@ -297,15 +297,15 @@ export const useCheckWhiteListModal = () => {
         <TipsCard>
           <p > 😺  Accesses left: <b>{user?.getQualification}</b> </p>
 
-          <p>👉🏻 1. Vote for Forart.ai in Hackathon, The Discord administrator checks the votes and assigns roles</p>
+          <p>👉🏻 1. Each member whose first time binding her/his wallet to our Discord community will acquire one creation access.</p>
 
-          <p>👉🏻 2.  Invite friends to join Discord and contact your administrator to assign roles</p>
+          <p>👉🏻 2. Vote for Forart.ai in Hackathon, The Discord administrator checks the votes and assigns roles</p>
 
-          <p>👉🏻 3. Invite friends to Join Discord, and the administrator will check votes and assign roles</p>
+          <p>👉🏻 3.  Invite friends to join Discord and contact your administrator to assign roles</p>
 
           <p>👉🏻 4. Donate fot this artist  </p>
 
-          <p> You can also <a>view the guide {'>'}</a></p>
+          <p> You can also <a href={'https://medium.com/@Forart.ai/how-to-acquire-creation-access-f6e9d63729a3'} target={'_blank'} rel={'noreferrer'}>view the guide {'>'}</a></p>
 
           <Steps current={currentStep} direction={isMobile ? 'vertical' : 'horizontal'}>
             <Steps.Step title={'Connect to wallet'} description={<WalletStatus active={currentStep === 0} />}  />

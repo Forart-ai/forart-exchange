@@ -3,7 +3,8 @@ import { Image, Tabs } from 'antd'
 
 export const MintWrapper = styled.div`
   width: 100%;
-  height: auto;
+  height: fit-content;
+  margin-bottom: 60px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -33,6 +34,7 @@ export const BodyContent = styled.div `
   border-radius: 20px;
   display: flex;
   justify-content: center;
+  position: relative;
 
   @media screen and (max-width: 1080px) {
     width: 100%;
@@ -132,6 +134,7 @@ export const KitContent = styled.div`
 
   @media screen and (max-width: 1080px) {
     width: 100%;
+    height: 800px;
     margin: 0
     
   }
@@ -212,7 +215,7 @@ export const KitListContainer = styled.div`
   display: grid;
   justify-content: space-between;
   grid-template-rows: repeat(auto-fill,auto);
-  grid-template-columns: repeat(auto-fill, 21%);
+  grid-template-columns: repeat(auto-fill, 140px);
   grid-gap: 5px;
   width: 100%;
   height: 100%;
@@ -220,9 +223,7 @@ export const KitListContainer = styled.div`
 
   
   
-  @media screen and (max-width: 1080px) {
-    grid-template-columns: repeat(2, 140px);
-  }
+  
 `
 
 export const MintButton = styled.div`

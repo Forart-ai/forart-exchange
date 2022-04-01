@@ -100,7 +100,8 @@ const InfoContent = styled.div`
     justify-content: space-between;
     
     .ant-btn {
-      width: 45%;
+      margin: 0 2px;
+      width: 50%;
     }
   }
 `
