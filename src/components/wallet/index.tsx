@@ -42,7 +42,7 @@ const MenuContainer = styled.div`
     background-color: #1D222D;
     border-radius: 10px;
     border: 3px #271d28 solid;
-    height: 100%;
+    height: 70px;
     width: 100%;
 
     top: 10px;
@@ -62,7 +62,7 @@ const MenuContainer = styled.div`
       align-items: center;
       cursor: pointer;
       width: 90%;
-      height: 25%;
+      height: 40px;
       font-size: 1.2em;
       font-weight: bold;
       color: white;
