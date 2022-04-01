@@ -121,9 +121,11 @@ const StyledTab = styled(Tabs)`
 
 const NFTListContainer = styled.div`
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, 240px);
+  grid-template-rows: repeat(auto-fill,  240px);
+  grid-gap: 20px;
   padding: 16px;
 
   .empty {

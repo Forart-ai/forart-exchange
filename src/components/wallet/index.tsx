@@ -24,24 +24,12 @@ const StyledWallet = styled.div`
   margin-right: 20px;
   cursor: pointer;
   min-width: 140px;
-  
-`
 
-const CurrentAccountContainer = styled.div` 
-  display: flex;
-  font-size: 18px;
-  user-select: none;
-  align-items: center;
-  justify-content: center;
-  
   .wallet-add {
     display: flex;
     align-items: center;
   }
   
-  @media screen and (max-width: 1100px) {
-    font-size: 14px;
-  }
 `
 
 const MenuContainer = styled.div`
@@ -162,14 +150,14 @@ const CurrentAccount: React.FC<CurrentAccountProps> = ({ account, solanaAccount 
   ), [account] )
 
   return (
-    <CurrentAccountContainer>
+    <StyledWallet>
       {
         account &&
           (
             <>
               <Dropdown overlay= { menu } trigger= {['click']} placement= {'bottomRight'}  >
                 <div className="wallet-add" >
-                  <DownOutlined style={{ fontSize:'17px', marginRight:'10px' } } />
+                  <DownOutlined />
                   {`${account.substr(0,5)}...${account.substr(-4,4)}`}
                 </div>
               </Dropdown>
@@ -182,13 +170,13 @@ const CurrentAccount: React.FC<CurrentAccountProps> = ({ account, solanaAccount 
 
             <Dropdown overlay= { menu } trigger= {['click']} placement= {'bottomRight'}  >
               <div className="wallet-add" >
-                <DownOutlined style={{ fontSize:'17px', marginRight:'10px' } } />{`${solanaAccount.toBase58().substr(0,5)}...${solanaAccount.toBase58().substr(-4,4)}`}
+                <DownOutlined style={{ fontSize:'14px', marginRight:'10px' } } />{`${solanaAccount.toBase58().substr(0,5)}...${solanaAccount.toBase58().substr(-4,4)}`}
               </div>
             </Dropdown>
 
           )
       }
-    </CurrentAccountContainer>
+    </StyledWallet>
   )
 }
 
@@ -200,9 +188,9 @@ export const ConnectToWallet = () => {
   },[])
 
   return (
-    <div onClick={openWallet}>
+    <StyledWallet onClick={openWallet}>
       <span>Connect To Wallet</span>
-    </div>
+    </StyledWallet>
   )
 }
 
@@ -211,11 +199,11 @@ const Wallet: React.FC = () => {
   const { account } = useWeb3React()
 
   return (
-    <StyledWallet>
+    <>
       { (!account && !solanaAccount ) && <ConnectToWallet /> }
       { (!!account || !!solanaAccount) && <CurrentAccount account={account} solanaAccount={ solanaAccount } /> }
 
-    </StyledWallet>
+    </>
 
   )
 }

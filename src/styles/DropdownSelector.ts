@@ -15,10 +15,14 @@ const DropdownSelector = styled(Select)<DropdownSelectorProps>`
   font-size: 1.6em;
   margin: 0 5px;
 
+  
+
   &,
   .ant-select {
     height: ${props => props.height ?? 'fit-content'};
-    min-width: ${props => props.minWidth ?? 'fit-content'};
+    min-width: ${props => props.minWidth ?? '200px'};
+    
+    
   }
 
   .ant-select-selector {
@@ -31,7 +35,10 @@ const DropdownSelector = styled(Select)<DropdownSelectorProps>`
     color: white;
     display: flex;
     align-items: center;
+
   }
+
+
 
   .ant-select-selection-item {
     color: white !important;
@@ -57,6 +64,8 @@ const DropdownSelector = styled(Select)<DropdownSelectorProps>`
   }
 
   .ant-select-selection-overflow {
+    min-width: ${props => props.minWidth ?? '200px'};
+
     .ant-select-selection-item {
       background-color: #282c34 !important;
       filter: brightness(85%);
@@ -64,6 +73,7 @@ const DropdownSelector = styled(Select)<DropdownSelectorProps>`
       border: none;
       border-radius: 10px;
       align-items: center;
+
 
       .ant-select-selection-item-remove {
         color: white;

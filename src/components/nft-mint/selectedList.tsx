@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Popover } from 'antd'
+import { NFTAttributesData } from '../../types/coNFT'
+import src from '*.png'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -64,10 +66,15 @@ const PreviewImages = styled.div`
 
   img{
     position: relative;
+    border-radius: 10px;
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
+  
+  img[src = ""], img:not([src]) {
+  opacity: 0;
+}
   
   .butt ,.foot ,.mouth {
     z-index: 2;
@@ -111,38 +118,30 @@ export const SelectedList: React.FC<{kitList?: Map<string, any>, body: any}> = (
   )
 }
 
-export const NFTPreview: React.FC<{kitList?: Map<string, any>, body: any}> = ({ kitList, body }) => {
-
-  const [background, setBackground] = useState<any>()
-
-  const filterBackground = (array: any) => {
-    return array[0] !== 'background'
-  }
-
-  // let background = null
-
-  useEffect(()=> {
-    setBackground (kitList?.get('background'))
-  },[kitList])
+export const NFTPreview: React.FC<{body: NFTAttributesData, attrList?: NFTAttributesData[]}> = ({ body, attrList }) => {
 
   return (
     <Wrapper>
       <PreviewContainer>
         <PreviewImages>
           {
-            background?.url && <img src={background?.url} />
+            attrList?.filter(item => item?.bodyType ==='Background').map((item, index) => (
+              <PreviewImages key={index}>
+                <img src={item?.url} onError={undefined} />
+              </PreviewImages>
+            ))
           }
         </PreviewImages>
         <PreviewImages>
           {
-            body?.url && <img src={body?.url} />
+            body?.url && <img src={body?.url}  alt={body?.url} />
           }
         </PreviewImages>
 
         {
-          Array.from(kitList?.entries() ?? []).filter(filterBackground).map(([key, value]) => (
-            <PreviewImages key={key}>
-              <img  className={key} src={value.url} />
+          attrList?.filter(item => item?.bodyType !=='Background').map((item, index) => (
+            <PreviewImages key={index}>
+              <img className={item?.bodyType} src={item?.url} onError={undefined} />
             </PreviewImages>
           ))
         }

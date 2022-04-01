@@ -6,6 +6,7 @@ export const useArtistKitQuery = (id: number | string | undefined): UseQueryResu
     ['ARTIST_KIT_LIST',id],
     async () => {
       return await CONFT_API.core.kits.getArtistAssembler(id).then(res => res)
-    }
+    },
+    { refetchInterval: false, refetchOnWindowFocus: false }
   )
 }

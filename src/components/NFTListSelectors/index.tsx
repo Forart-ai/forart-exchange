@@ -25,8 +25,10 @@ const OrderBySelector: React.FC<{ onChange:(_value: any) => void }> = ({ onChang
   return (
     <DropdownSelector defaultValue="random" onChange= {onChange} >
       <Select.Option value="random">Random</Select.Option>
-      <Select.Option value="star">Likes</Select.Option>
-      <Select.Option value="rarity">Hats Rarity</Select.Option>
+      <Select.Option value="star-desc">Likes: High to Low</Select.Option>
+      <Select.Option value="star-asc">Likes: Low to High</Select.Option>
+      <Select.Option value="rarity-desc">Hats rarity: High to Low</Select.Option>
+      <Select.Option value="rarity-asc">Hats rarity: Low to High</Select.Option>
     </DropdownSelector>
   )
 }

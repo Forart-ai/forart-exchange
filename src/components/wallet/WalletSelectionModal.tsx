@@ -63,6 +63,7 @@ const ChosenArea = styled.div`
   margin-top: 30px;
   
   .col-3 {
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -72,7 +73,13 @@ const ChosenArea = styled.div`
     cursor: pointer;
 
 
-    img{
+    .Celo, .Avalanche {
+      pointer-events: none;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    img {
       width: 70px;
     }
   }
@@ -185,9 +192,12 @@ const WalletSelectionModal:React.FC = () => {
         <ChosenArea >
           {
             supportNetwork.map((network: NetworkType) => (
-              <div className="col-3" key={network.key} onClick={() => onNetworkClick(network)} >
-                <img src={network.icon} />
-                <span>{network.name}</span>
+              <div className="col-3" key={network.key}  >
+                <div className={network.name} onClick={() => onNetworkClick(network)} >
+                  <img src={network.icon}  />
+                  <span>{network.name}</span>
+                </div>
+
               </div>
             ))
           }

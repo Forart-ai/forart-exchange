@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Box, Card, CardMedia, Container, Grid, Paper, ThemeProvider, Tooltip } from '@mui/material'
+import { Alert, Box, Card, CardMedia, Container, Grid, Paper, Snackbar, ThemeProvider, Tooltip } from '@mui/material'
 import { MintedNFTItem } from '../../types/coNFT'
 import ForartTheme from '../../contexts/theme/config/dark'
 import darkTheme from 'web3modal/dist/themes/dark'
@@ -201,12 +201,15 @@ const CONFTDetail:React.FC = () => {
   const { account } = useSolanaWeb3()
   const { openModal } = useModal()
 
+  const [open, setOpen] = React.useState(false)
+
   const nftId = useLocationQuery('id') ?? ''
 
   const location = useLocation()
 
   const handleCopy = (content: any) => {
-    copy(content) && message.success('Copied successfully.', 1)
+    copy(content)
+    setOpen(true)
   }
 
   const { data: nftDetail } = useNftDetail(nftId)
@@ -284,6 +287,14 @@ const CONFTDetail:React.FC = () => {
     }
   }, [nftDetail])
 
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    setOpen(false)
+  }
+
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
   return (
@@ -338,6 +349,12 @@ const CONFTDetail:React.FC = () => {
         </NFTInfo>
 
       </Container>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical:'top',horizontal:'center' }}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          Copy success!
+        </Alert>
+      </Snackbar>
+
     </ThemeProvider>
   )
 }

@@ -6,7 +6,7 @@ function notify({
   description = undefined as any,
   txid = '',
   type = 'info',
-  placement = 'topLeft',
+  placement = 'bottomLeft',
 }) {
   if (txid) {
     //   <Link

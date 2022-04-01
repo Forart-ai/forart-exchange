@@ -303,7 +303,7 @@ export const useCheckWhiteListModal = () => {
 
           <p>👉🏻 3. Invite friends to Join Discord, and the administrator will check votes and assign roles</p>
 
-          <p>👉🏻 4. Donate fot this artist <Button onClick={openDonate}>Click Here</Button> </p>
+          <p>👉🏻 4. Donate fot this artist  </p>
 
           <p> You can also <a>view the guide {'>'}</a></p>
 

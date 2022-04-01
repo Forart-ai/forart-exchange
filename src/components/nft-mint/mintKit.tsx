@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { KitImageBorder, KitListContainer } from '../../pages/coNft/artistMint.style'
 import { KitProperties } from '../../pages/coNft/artistDetail'
-import { Checkbox } from 'antd'
 import styled from 'styled-components'
 import RandomHat from '../../assets/images/artistDetail/random-hat.png'
+import { Checkbox } from '@mui/material'
 
 const StyledFlag = styled.div`
   position: absolute;
@@ -35,35 +35,42 @@ const ImageContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  box-shadow: 0 0 10px #312d8a;
 
   img {
     object-fit: fill;
     border-radius: 1em;
     width: 100%;
     height: 100%;
-    background: #1E052D;
     overflow: hidden;
 
   }
+
   .Clothing {
+    border-radius: 1em;
     transform: scale(2, 2) translate(0);
   }
+
   .Pants {
-    transform: scale(2,2) translate(-15px, -25px);
+    transform: scale(2, 2) translate(-15px, -25px);
   }
+
   .Eye {
     transform: scale(2, 2) translate(18px, 20px);
   }
+
   .Butt {
     transform: scale(4, 4) translate(-15px, -10px);
   }
+
   .Hand {
     transform: scale(3, 3) translate(-5px, -25px);
   }
+
   .Mouth {
     transform: scale(2) translate(15px, 10px);
   }
-  
+
   .Ear {
     transform: scale(3) translate(-10px, 30px);
   }
@@ -74,38 +81,14 @@ const KitItemContainer = styled.div`
   width: 140px;
   height: 140px;
   flex-direction: column;
-  margin: 10px;
-  box-shadow: 10px 4px 10px #0000008c;
+  margin: 5px;
   border-radius: 10px;
 
 
 
-  &:last-child {
-    margin-right: auto;
-  }
-  
   @media screen and (max-width: 1100px) {
     min-width: 140px;
     margin: 10px 5px;
-  }
-`
-
-const Fake = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-
-  span {
-    font-size: 1.3em;
-    margin-top: 5px;
-    color: #c2c2c2;
-    font-weight: bold;
-  }
-  img {
-    border-radius: 10px;
-    width: 30%;
   }
 `
 
@@ -124,14 +107,12 @@ export const SelectableKitItem: React.FC<{ src: any, checked?: boolean, onSelect
   onSelect,
 }) => {
 
-  // console.log(src.bodyType)
-
   const SelectBtn: React.FC = () => {
     return (
       <div style={{
         position:'absolute',
-        top: '-125px',
-        left: '5px',
+        top: '0px',
+        left: '0px',
       }}
       >
         <Checkbox checked={checked} />
@@ -145,48 +126,41 @@ export const SelectableKitItem: React.FC<{ src: any, checked?: boolean, onSelect
     >
       <div  style={{ position: 'relative', height: 'fit-content' }}>
         {
-          src?.remain && <CornerRemainFlag remain={src.remain} />
-        }
-      </div>
-      <ImageContainer>
-        <img className={src.bodyType}  src={src.url}  />
-      </ImageContainer>
-      <div  style={{ position: 'relative', height: 'fit-content' }}>
-        {
           <SelectBtn />
         }
       </div>
+
+      <ImageContainer>
+        <img className={src.bodyType}  src={src.url}  />
+      </ImageContainer>
+
     </KitImageBorder>
   )
 }
 
-export const SelectableKitList: React.FC<{img?: boolean, selectedValue?: any, onSelect: (_?: any) => void, list?: KitProperties[]}> =({
-  selectedValue,
+export const SelectableKitList: React.FC<{selectedValue?: any, onSelect: (_?: any) => void, list?: KitProperties[]}> =({
   onSelect,
   list,
-  img
 }) => {
-  return (
-    <>
-      <KitListContainer>
-        {
-          list?.map((item, index) => (
-            <KitItemContainer key={index}>
-              <SelectableKitItem  src={item} onSelect={onSelect} checked={selectedValue?.url === item?.url}  />
-            </KitItemContainer>
-          ))
-        }
+  const [state, setState] = useState<any>()
 
-      </KitListContainer>
+  return (
+    <KitListContainer>
       {
-        ( !list && img) && (
-          <Fake>
-            <img src={RandomHat}  />
-            <span >Hypeteen Rarity randomly by Hat rarity</span>
-          </Fake>
-        )
+        list?.map((item, index) => (
+          <KitItemContainer key={index}>
+            <SelectableKitItem
+              src={item}
+              onSelect={v => {
+                setState(v)
+                onSelect(v)
+              }}
+              checked={state?.url === item?.url}
+            />
+          </KitItemContainer>
+        ))
       }
-    </>
+    </KitListContainer>
   )
 
 }

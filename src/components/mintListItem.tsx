@@ -8,16 +8,11 @@ import { Link } from 'react-router-dom'
 
 const Wrapper = styled.div<{$empty?: boolean}>`
   width: 240px;
-  //height: ${props => props.$empty ? '0' : '210px'};
+  height: 240px;
   border-radius: 10px;
-  margin-bottom: ${props => props.$empty ? '0' : '30px'};;
   font-weight: bold;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   position: relative;
   cursor: pointer;
-  margin: 10px 9px;
   background: #2a2e35;
   
   .spin {

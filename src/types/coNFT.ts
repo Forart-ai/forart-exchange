@@ -34,3 +34,15 @@ export interface MintedNFTItem {
   mintKey: string
 }
 
+export interface NFTAttributesData {
+  bodyType: string,
+  chainMeta: string,
+  id: number,
+  price?: number,
+  rarity?: number,
+  seriesId: string | number,
+  stock?: number,
+  stockLimit?: number,
+  url: string
+}
+

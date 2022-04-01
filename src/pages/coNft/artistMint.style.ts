@@ -15,22 +15,24 @@ export const TopContainer = styled.div `
   width: 100%;
   height: 600px;
   display: flex;
-  justify-content: space-between;
+  padding: 0 100px;
+  justify-content: center;
   
   @media screen and (max-width: 1080px) {
     flex-direction: column;
     height: auto;
+    padding: 0;
   }
 `
 
 export const BodyContent = styled.div `
-  width: 45%;
+  width: 600px;
   height: 100%;
   display: flex;
   background: #170A16;
   border-radius: 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 
   @media screen and (max-width: 1080px) {
     width: 100%;
@@ -115,35 +117,30 @@ export const SelectedBody = styled.div`
     height: 100%;
   }
   
-  @media screen and (max-width: 1080px) {
-    width: 100%;
-  }
 `
 
 export const KitContent = styled.div`
-  width: 53%;
+  width: 750px;
   height: 100%;
-  background: #02060e;
+  background: #1E052D;
   border-radius: 20px;
   position: relative;
-  padding: 20px 0;
-
+  padding: 15px 20px;
+  margin-left: 20px;
+  overflow-y: scroll;
   
-  .more-icon {
-    position: absolute;
-    right: 2px;
-    top: 10px;
-    //z-index: 5;
-    
-    img {
-      width: 30px;
-    }
-  }
 
-  @media screen and (max-width: 1100px) {
+  @media screen and (max-width: 1080px) {
     width: 100%;
-    margin-top: 20px;
+    margin: 0
+    
   }
+`
+
+export const AttrType = styled.div`
+    font-family: inter-extraBold;
+  color: #E5E8EB;
+  font-size: 1.2rem;
 `
 
 export const MintTab = styled(Tabs)`
@@ -213,28 +210,19 @@ export const MintContainer = styled.div`
 
 export const KitListContainer = styled.div`
   display: grid;
-  justify-content: center;
+  justify-content: space-between;
   grid-template-rows: repeat(auto-fill,auto);
-  grid-template-columns: repeat(auto-fill, 140px);
-  grid-gap: 12px;
+  grid-template-columns: repeat(auto-fill, 21%);
+  grid-gap: 5px;
   width: 100%;
-  max-height: 520px;
-  overflow: scroll;
+  height: 100%;
+  //max-height: 520px;
 
-
-  ::-webkit-scrollbar {
-    display: revert;
-    width: 5px; !important;
-    height: 100%;
-  }
+  
   
   @media screen and (max-width: 1080px) {
     grid-template-columns: repeat(2, 140px);
   }
-`
-
-export const CenterContainer = styled.div`
-  width: 100%;
 `
 
 export const MintButton = styled.div`
