@@ -4,7 +4,7 @@ import CONFT_API from '../../apis/co-nft'
 import { ThemeInput } from '../../styles/ThemeInput'
 import { OrderBySelector, OrderSelector } from '../../components/NFTListSelectors'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { Button, Divider, List, Skeleton } from 'antd'
+import {  Divider, List, Skeleton } from 'antd'
 import styled from 'styled-components'
 import AllNftList from '../../components/nft-mint/allNftList'
 import { LoadingOutlined } from '@ant-design/icons'
@@ -12,6 +12,8 @@ import { useWalletRankModal } from '../../hooks/modals/useWalletRankModal'
 import {
   RedoOutlined
 } from '@ant-design/icons'
+import { useMediaQuery } from 'react-responsive'
+import { Button } from '@mui/material'
 
 const Filter = styled.div`
   display: flex;
@@ -28,8 +30,18 @@ const Filter = styled.div`
     background: rgb(40,44,52);
     border-radius: 5px;
   }
+  
+  .mobile-filter {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
   @media screen and (max-width: 1080px) {
-    margin-bottom: 80px;
+    justify-content: space-between;
+    height: fit-content;
+    
   }
   
   
@@ -73,6 +85,7 @@ const AllNftWrapper = styled.div`
   
   
   @media screen and (max-width: 1080px) {
+    padding: 0;
     .ant-list-items {
       grid-template-columns: repeat(2, 175px);
       grid-template-rows: repeat(auto-fill, 240px);
@@ -95,6 +108,8 @@ const AllNftContainer: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const series = useLocationQuery('artistId')
   const [hasMore, setHasMore] = useState<boolean>(true)
+
+  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
   const { walletRankModal, openWalletRankModal } = useWalletRankModal()
 
@@ -164,22 +179,45 @@ const AllNftContainer: React.FC = () => {
 
   return (
     <AllNftWrapper >
-      <Filter>
-        <ThemeInput
-          placeholder={'Please input token ID'}
-          onChange ={(res:any) =>onChange(res)}
-          // onBlur = { e => onChange(e)}
-          prefix={<></>}
-          defaultValue={searchKey}
-          style={{ width:'300px', marginRight: '20px' }}
-        />
-        <div className="refresh">
-          <RedoOutlined style={{ width:'40px', color: '#cfcfcf' }} spin={loading} onClick={resetData} />
-        </div>
-        {/*<OrderSelector onChange={ e => { setSelectedOrder(e); onPressEnter() }}  />*/}
-        <OrderBySelector onChange={e => { setOrderBy(e); onPressEnter()}} />
-        <Button  onClick={ openWalletRankModal } style={{ marginLeft:'10px' }}>Creator Ranking</Button>
-      </Filter>
+      {
+        isMobile ? (
+          <Filter >
+            <div className="mobile-filter">
+              <ThemeInput
+                placeholder={'Please input token ID'}
+                onChange ={(res:any) =>onChange(res)}
+                // onBlur = { e => onChange(e)}
+                prefix={<></>}
+                defaultValue={searchKey}
+                style={{ width:'300px', marginRight: '20px' }}
+              />
+              <div className="refresh">
+                <RedoOutlined style={{ width:'40px', color: '#cfcfcf' }} spin={loading} onClick={resetData} />
+              </div>
+            </div>
+            <div className="mobile-filter">
+              <OrderBySelector onChange={e => { setOrderBy(e); onPressEnter()}} />
+              <Button sx={{ '&.MuiButton-root':{ p: 0, pr:'2px', pl:'2px' } }} variant={'contained'} size={'small'}  onClick={ openWalletRankModal } style={{ marginLeft:'10px' }}>Creator Ranking</Button>
+            </div>
+          </Filter>
+        ) :
+          <Filter>
+            <ThemeInput
+              placeholder={'Please input token ID'}
+              onChange ={(res:any) =>onChange(res)}
+              // onBlur = { e => onChange(e)}
+              prefix={<></>}
+              defaultValue={searchKey}
+              style={{ width:'300px', marginRight: '20px' }}
+            />
+            <div className="refresh">
+              <RedoOutlined style={{ width:'40px', color: '#cfcfcf' }} spin={loading} onClick={resetData} />
+            </div>
+            {/*<OrderSelector onChange={ e => { setSelectedOrder(e); onPressEnter() }}  />*/}
+            <OrderBySelector onChange={e => { setOrderBy(e); onPressEnter()}} />
+            <Button  onClick={ openWalletRankModal } style={{ marginLeft:'10px' }}>Creator Ranking</Button>
+          </Filter>
+      }
 
       <div className="infinite-container" id="scrollableDiv">
         {
