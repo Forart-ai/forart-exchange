@@ -3,10 +3,13 @@ import styled from 'styled-components'
 import { CloseButton, useModal } from '../../../contexts/modal'
 const Wrapper = styled.div`
   width: 400px;
-  height: 120px;
+  height: 150px;
   padding:15px 20px;
   border-radius: 10px;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 4px solid transparent;
   background-clip: padding-box, border-box;
   background-origin: padding-box, border-box;
@@ -15,6 +18,7 @@ const Wrapper = styled.div`
 
 const Title = styled.div`
   height: 100%;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;

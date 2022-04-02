@@ -7,7 +7,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 export const CloseButton = styled.div`
   position: absolute;
   top: 20px;
-  right: 40px;
+  right: 20px;
   cursor: pointer;
   background-image: url("${require('../assets/images/coPools/close.svg').default}");
   width: 30px;

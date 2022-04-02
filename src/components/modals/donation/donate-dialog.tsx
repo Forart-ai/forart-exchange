@@ -180,7 +180,7 @@ const DonateDialog: React.FC = () => {
           <div className="text" >
             <p>
               Your first donate towards a artist costs <b>1 USDC</b> in this round.
-              your n-th donate towards the same artist costs <br /> <b>1 x n USDCs.</b>
+              your n-th donate towards the same artist costs  <b>1 x n USDCs.</b>
             </p>
             <p>You can also view the <a href={'https://medium.com/@Forart.ai/donate-guide-fdd7a631a23a' } rel={'noreferrer'} target={'_blank'}>donating guide {'>'}</a>
             </p>
