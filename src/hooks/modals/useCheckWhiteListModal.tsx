@@ -303,7 +303,7 @@ export const useCheckWhiteListModal = () => {
 
           <p>👉🏻 3.  Invite friends to join Discord and contact your administrator to assign roles</p>
 
-          <p>👉🏻 4. Donate fot this artist  </p>
+          <p>👉🏻 4. Donate for this artist  </p>
 
           <p> You can also <a href={'https://medium.com/@Forart.ai/how-to-acquire-creation-access-f6e9d63729a3'} target={'_blank'} rel={'noreferrer'}>view the guide {'>'}</a></p>
 
