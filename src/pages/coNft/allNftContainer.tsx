@@ -43,6 +43,7 @@ const AllNftWrapper = styled.div`
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
+  padding: 0 30px;
 
   .infinite-container {
     height: 1000px;

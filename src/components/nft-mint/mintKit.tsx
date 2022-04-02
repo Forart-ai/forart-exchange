@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { KitImageBorder, KitListContainer } from '../../pages/coNft/artistMint.style'
 import { KitProperties } from '../../pages/coNft/artistDetail'
 import styled from 'styled-components'
-import RandomHat from '../../assets/images/artistDetail/random-hat.png'
 import { Checkbox } from '@mui/material'
 
 const StyledFlag = styled.div`

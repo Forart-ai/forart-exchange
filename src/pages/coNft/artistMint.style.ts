@@ -139,11 +139,16 @@ export const KitContent = styled.div`
     
   }
 `
+export const AttrContent = styled.div`
+  width: 100%;
+  margin-bottom: 40px;
+`
 
 export const AttrType = styled.div`
     font-family: inter-extraBold;
   color: #E5E8EB;
   font-size: 1.2rem;
+  margin: 5px 0;
 `
 
 export const MintTab = styled(Tabs)`

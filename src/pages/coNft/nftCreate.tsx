@@ -6,7 +6,6 @@ import useUserQuery from '../../hooks/queries/useUserQuery'
 import { useCheckWhiteListModal } from '../../hooks/modals/useCheckWhiteListModal'
 import useDiscordAccessToken from '../../hooks/useDiscordAccessToken'
 import useNFTMint from '../../hooks/useNFTMint'
-import { Button, Modal } from 'antd'
 import {
   BodyContent,
   KitContent,
@@ -14,7 +13,8 @@ import {
   MintWrapper,
   SelectedBody,
   TopContainer,
-  AttrType
+  AttrType,
+  AttrContent
 } from './artistMint.style'
 import { NFTPreview } from '../../components/nft-mint/selectedList'
 import {  createFromIconfontCN } from '@ant-design/icons'
@@ -22,6 +22,9 @@ import { SelectableKitList } from '../../components/nft-mint/mintKit'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { useArtistKitQuery } from '../../hooks/queries/useArtistKitQuery'
 import { NFTAttributesData } from '../../types/coNFT'
+import RandomHats from '../../assets/images/coPools/random-hat.png'
+import { Button } from '@mui/material'
+import { Modal } from 'antd'
 
 const IconFont = createFromIconfontCN({
   scriptUrl: [
@@ -96,6 +99,7 @@ const NftCreate: React.FC = () => {
         ),
         onOk: () => mintNFT(body,attr)
       })
+
     },[body, attr, account]
   )
 
@@ -119,21 +123,26 @@ const NftCreate: React.FC = () => {
           {
             artistKit && (
               <>
+                <AttrContent>
+                  <AttrType>Hat: Hypeteen Rarity randomly by Hat rarity</AttrType>
+                  <img src={RandomHats} style={{ width: '230px' }} />
+                </AttrContent>
+
                 {
                   Object.keys(artistKit).filter(item => item === 'Body').map((type,index) => (
-                    <div key={index}>
+                    <AttrContent key={index}>
                       <AttrType> {type} </AttrType>
                       <SelectableKitList
                         onSelect={v => setBody(v)}
                         list={artistKit[type]}
                       />
-                    </div>
+                    </AttrContent>
                   ))
                 }
 
                 {
                   Object.keys(artistKit).filter(item => (item !== 'Body') && (item !== 'Hat') ).map((type,index) => (
-                    <div key={index}>
+                    <AttrContent key={index}>
                       <AttrType> {type} </AttrType>
                       <SelectableKitList
                         onSelect={v => setAttr(prev => {
@@ -143,7 +152,7 @@ const NftCreate: React.FC = () => {
                         })}
                         list={artistKit[type]}
                       />
-                    </div>
+                    </AttrContent>
                   ))
                 }
               </>
@@ -164,15 +173,15 @@ const NftCreate: React.FC = () => {
 
         {
           !account ? (
-            <Button  style={{ height:'50px' }} onClick={ openWallet }>
+            <Button variant={'contained'} size={'large'}  onClick={ openWallet }>
               Connect Wallet
             </Button>
           ) : (
             (userData?.getQualification !== 0) ? (
-              <Button style={{ width:'200px',height:'50px' }} onClick={handleCreate}> Create </Button>
+              <Button variant={'contained'} size={'large'}  onClick={handleCreate}> Create </Button>
 
             ) : (
-              <Button  style={{  height:'50px' }} onClick={ openCheckWhiteListModal }>
+              <Button variant={'contained'} size={'large'} onClick={ openCheckWhiteListModal }>
                 Get Qualification
               </Button>
             )
