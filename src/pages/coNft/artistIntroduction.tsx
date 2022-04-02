@@ -89,8 +89,8 @@ function a11yProps(index: number) {
 const ArtistDetailTab = styled.div`
   display: flex;
   justify-content: center;
-    width: 100%;
-
+  width: 100%;
+  margin-bottom: 80px ;
  
   
 `
@@ -171,96 +171,166 @@ export const ArtDetail: React.FC = () => {
   return (
     <ThemeProvider theme={ForartTheme}>
       <ArtistDetailTab id="a">
-        <TabContainer>
-          <TabItem>
-            <StyledTabs
-              value={value}
-              onChange={handleChange}
-              aria-label="styled tabs example"
-            >
-              <StyledTab label="About" {...a11yProps(0)} />
-              <StyledTab label="Equity & Attributes" {...a11yProps(1)}  />
-              <StyledTab label="Marketplace & Roadmap" {...a11yProps(2)}  />
+        {
+          !isMobile ? (
+            <>
+              <TabContainer>
+                <TabItem>
+                  <StyledTabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="styled tabs example"
+                  >
+                    <StyledTab label="About" {...a11yProps(0)} />
+                    <StyledTab label="Equity & Attributes" {...a11yProps(1)}  />
+                    <StyledTab label="Marketplace & Roadmap" {...a11yProps(2)}  />
 
-            </StyledTabs>
-          </TabItem>
-        </TabContainer>
+                  </StyledTabs>
+                </TabItem>
+              </TabContainer>
 
-        <TabInfo>
-          <TabPanel index={0} value={value}>
+              <TabInfo>
+                <TabPanel index={0} value={value}>
 
-            <section className="item"  id="about">
-              <h1 > Archive </h1>
-              <Banner>
-                <img className="banner" src={ArtistBanner} />
-              </Banner>
-              <p className="content">
-                Name: HypeTeen <br />
-                Gender: Encrypting <br />
-                Date of birth: NFT first year <br />
-                Hobbies: Travel, Adventure, Food, Art, Social <br />
-                Personality: Wisdom, creativity, confidence, willing to share <br />
-                Occupation: Ambassador of virtual and real culture <br />
-              </p>
-            </section>
+                  <section className="item"  id="about">
+                    <h1 > Archive </h1>
+                    <Banner>
+                      <img className="banner" src={ArtistBanner} />
+                    </Banner>
+                    <p className="content">
+                      Name: HypeTeen <br />
+                      Gender: Encrypting <br />
+                      Date of birth: NFT first year <br />
+                      Hobbies: Travel, Adventure, Food, Art, Social <br />
+                      Personality: Wisdom, creativity, confidence, willing to share <br />
+                      Occupation: Ambassador of virtual and real culture <br />
+                    </p>
+                  </section>
 
-            <section className="item" >
-              <h1 > Birth of HypeTeen </h1>
-              <p >
-                HypeTeen is the First CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing. Born in the first year of NFT, she/he has her/his own NFT attributes, likes to explore the unknown, and is obsessed with trendy things in the future. At the peak of her/his appearance, she/he likes fans to call: super handsome! <br /><br />
-                In 2022, she/he will take her/his fans on her/his first journey of exploration - travel around the world, learn about the customs of various countries, spread the world&apos;s culture, and share the cultural essence and consensus with fans in Forart Club. <br /> <br />
+                  <section className="item" >
+                    <h1 > Birth of HypeTeen </h1>
+                    <p >
+                      HypeTeen is the First CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing. Born in the first year of NFT, she/he has her/his own NFT attributes, likes to explore the unknown, and is obsessed with trendy things in the future. At the peak of her/his appearance, she/he likes fans to call: super handsome! <br /><br />
+                      In 2022, she/he will take her/his fans on her/his first journey of exploration - travel around the world, learn about the customs of various countries, spread the world&apos;s culture, and share the cultural essence and consensus with fans in Forart Club. <br /> <br />
 
-              </p>
-            </section>
-          </TabPanel>
+                    </p>
+                  </section>
+                </TabPanel>
 
-          <TabPanel index={1} value={value} >
-            <section className="item" >
-              <h1 > Creator & Holder Equity </h1>
-              <p >
-                <b> Benefits for HypeTeen NFT creators:</b> <br />
-                1. Each NFT you create will get 50 $FTA<br />
+                <TabPanel index={1} value={value} >
+                  <section className="item" >
+                    <h1 > Creator & Holder Equity </h1>
+                    <p >
+                      <b> Benefits for HypeTeen NFT creators:</b> <br />
+                      1. Each NFT you create will get 50 $FTA<br />
 
-                2. Acquire 10% of the sales revenue and royalty <br />
+                      2. Acquire 10% of the sales revenue and royalty <br />
 
-                3. Acquire Foart $FTA airdrop<br /> <br />
+                      3. Acquire Forart $FTA airdrop<br /> <br />
 
-              </p>
-            </section>
-            <ComponentsContainer >
-              <img src={Jacket} />
-              <img src={FaceMask} />
-              <img src={Glasses} />
-              <img src={Tatoo} />
-              <img src={Shoes} />
-            </ComponentsContainer>
-          </TabPanel>
+                    </p>
+                  </section>
+                  <ComponentsContainer >
+                    <img src={Jacket} />
+                    <img src={FaceMask} />
+                    <img src={Glasses} />
+                    <img src={Tatoo} />
+                    <img src={Shoes} />
+                  </ComponentsContainer>
+                </TabPanel>
 
-          <TabPanel index={2} value={value}>
-            <section className="item" >
-              <h1 className="title">Marketplace</h1>
-              <p >
-                · Solanart <br />
-                · Slope <br />
-                · Magic Eden <br />
-              </p>
-            </section>
+                <TabPanel index={2} value={value}>
+                  <section className="item" >
+                    <h1 className="title">Marketplace</h1>
+                    <p >
+                      · Solanart <br />
+                      · Slope <br />
+                      · Magic Eden <br />
+                    </p>
+                  </section>
 
-            <section className="item" >
-              <h1 className="title">Roadmap</h1>
-              <p>
-                1. Create CO-NFTs by Users <br />
-                2. Generate Special CO-NFTs and creator winners when the 1000th NFT is created  <br />
-                3. Vote the next country that HypeTeen will travel to  <br />
-                4. Launch on solanart, Slope and Magic Eden when the 2000th NFT is created  <br />
-              </p>
-            </section>
-          </TabPanel>
-        </TabInfo>
+                  <section className="item" >
+                    <h1 className="title">Roadmap</h1>
+                    <p>
+                      1. Create CO-NFTs by Users <br />
+                      2. Generate Special CO-NFTs and creator winners when the 1000th NFT is created  <br />
+                      3. Vote the next country that HypeTeen will travel to  <br />
+                      4. Launch on solanart, Slope and Magic Eden when the 2000th NFT is created  <br />
+                    </p>
+                  </section>
+                </TabPanel>
+              </TabInfo>
+            </>
+          ) :
+            (
+              <TabInfo >
+                <section className="item"  id="about">
+                  <h1 > Archive </h1>
+                  <Banner>
+                    <img className="banner" src={ArtistBanner} />
+                  </Banner>
+                  <p className="content">
+                    Name: HypeTeen <br />
+                    Gender: Encrypting <br />
+                    Date of birth: NFT first year <br />
+                    Hobbies: Travel, Adventure, Food, Art, Social <br />
+                    Personality: Wisdom, creativity, confidence, willing to share <br />
+                    Occupation: Ambassador of virtual and real culture <br />
+                  </p>
+                </section>
 
-        {/*<TabItem>*/}
+                <section className="item" >
+                  <h1 > Birth of HypeTeen </h1>
+                  <p >
+                    HypeTeen is the First CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing. Born in the first year of NFT, she/he has her/his own NFT attributes, likes to explore the unknown, and is obsessed with trendy things in the future. At the peak of her/his appearance, she/he likes fans to call: super handsome! <br /><br />
+                    In 2022, she/he will take her/his fans on her/his first journey of exploration - travel around the world, learn about the customs of various countries, spread the world&apos;s culture, and share the cultural essence and consensus with fans in Forart Club. <br /> <br />
 
-        {/*</TabItem>*/}
+                  </p>
+                </section>
+
+                <section className="item" >
+                  <h1 > Creator & Holder Equity </h1>
+                  <p >
+                    <b> Benefits for HypeTeen NFT creators:</b> <br />
+                    1. Each NFT you create will get 50 $FTA<br />
+
+                    2. Acquire 10% of the sales revenue and royalty <br />
+
+                    3. Acquire Forart $FTA airdrop<br /> <br />
+
+                  </p>
+                </section>
+
+                <ComponentsContainer >
+                  <img src={Jacket} />
+                  <img src={FaceMask} />
+                  <img src={Glasses} />
+                  <img src={Tatoo} />
+                  <img src={Shoes} />
+                </ComponentsContainer>
+
+                <section className="item" >
+                  <h1 className="title">Marketplace</h1>
+                  <p >
+                    · Solanart <br />
+                    · Slope <br />
+                    · Magic Eden <br />
+                  </p>
+                </section>
+
+                <section className="item" >
+                  <h1 className="title">Roadmap</h1>
+                  <p>
+                    1. Create CO-NFTs by Users <br />
+                    2. Generate Special CO-NFTs and creator winners when the 1000th NFT is created  <br />
+                    3. Vote the next country that HypeTeen will travel to  <br />
+                    4. Launch on solanart, Slope and Magic Eden when the 2000th NFT is created  <br />
+                  </p>
+                </section>
+              </TabInfo>
+            )
+        }
+
       </ArtistDetailTab>
     </ThemeProvider>
   )
