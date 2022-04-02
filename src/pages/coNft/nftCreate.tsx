@@ -25,6 +25,7 @@ import { NFTAttributesData } from '../../types/coNFT'
 import RandomHats from '../../assets/images/coPools/random-hat.png'
 import { Button } from '@mui/material'
 import { Modal } from 'antd'
+import { ConfirmCreateDialog } from './components/ConfirmCreateDialog'
 
 const IconFont = createFromIconfontCN({
   scriptUrl: [
@@ -99,6 +100,7 @@ const NftCreate: React.FC = () => {
         ),
         onOk: () => mintNFT(body,attr)
       })
+      // openModal(<ConfirmCreateDialog />)
 
     },[body, attr, account]
   )

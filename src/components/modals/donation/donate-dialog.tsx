@@ -11,6 +11,8 @@ import BigNumber from 'bignumber.js'
 import { USDC_TOKEN_DECIMALS } from '../../../hooks/programs/useDonation/constants'
 import { shortenAddress } from '../../../utils'
 import notify from '../../../utils/notify'
+import Dialog from '../../../contexts/theme/components/Dialog/Dialog'
+import { DonationError, DonationSuccess } from './donation-info'
 
 const Wrapper = styled.div`
   width: 750px;
@@ -128,6 +130,12 @@ const DonateButton = styled.div`
   justify-content: center;
 `
 
+const Message = styled.div`
+  width: 100%;
+  color: #ffffff;
+  font-size: 12px;
+`
+
 const DonateDialog: React.FC = () => {
   const {  openModal, closeModal } = useModal()
   const { account, wallet } = useSolanaWeb3()
@@ -146,9 +154,13 @@ const DonateDialog: React.FC = () => {
       })
       return
     }
+
     donate({ donateAmount: amount }).then(() => setLoading(false))
+      .then(() => openModal(<DonationSuccess />))
       .catch(err => {
-        console.log(err)})
+        openModal(<DonationError err={err.message || err.toString()} />)
+        setLoading(false)
+      })
   }
 
   const limitNumber = (value:any) => {
@@ -167,7 +179,7 @@ const DonateDialog: React.FC = () => {
           <img src={WarningIcon} />
           <div className="text" >
             <p>
-              Your first donate towards a artist costs <b>1 USDC</b> inthis round.According to quadratic funding algorithm,
+              Your first donate towards a artist costs <b>1 USDC</b> in this round.
               your n-th donate towards the same artist costs <br /> <b>1 x n USDCs.</b>
             </p>
             <p>You can also view the <a href={'https://medium.com/@Forart.ai/donate-guide-fdd7a631a23a' } rel={'noreferrer'} target={'_blank'}>donating guide {'>'}</a>

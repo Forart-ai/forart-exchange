@@ -22,7 +22,7 @@ const Title = styled.div`
   color: #f2f2f2;
 `
 
-const DonationError:React.FC = () => {
+const DonationError:React.FC<{err?: string}> = ({ err }) => {
 
   const { closeModal } = useModal()
 
@@ -30,7 +30,7 @@ const DonationError:React.FC = () => {
     <Wrapper>
       <CloseButton onClick={closeModal} />
 
-      <Title>Insufficient balance</Title>
+      <Title>{err}</Title>
     </Wrapper>
   )
 }

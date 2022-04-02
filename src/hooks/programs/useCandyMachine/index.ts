@@ -6,12 +6,9 @@ import { Keypair } from '@solana/web3.js'
 import { mint as mintFromCandyMachine } from './helpers/mint'
 
 const useCandyMachine = () => {
-  const provider = useAnchorProvider()
+  const { provider } = useAnchorProvider()
 
   const program = useMemo(() => {
-    if (!provider) {
-      return undefined
-    }
     return new Program(CANDY_MACHINE_PROGRAM_IDL, CANDY_MACHINE_PROGRAM_ID, provider)
   }, [provider])
 
