@@ -187,7 +187,7 @@ const ArtistInfo:React.FC = () => {
           </DataItem>
           <DataItem>
             <div className="data">
-              Creators: {overviewData?.mintedWallet}/2000
+              Creators: {overviewData?.mintedWallet}
             </div>
           </DataItem>
           <DataItem>
