@@ -6,6 +6,7 @@ import AIGen from '../pages/AIGen'
 import PersonalCenterPage from '../pages/personal'
 import CoNftPage from '../pages/coNft'
 import ArtistDetail from '../pages/coNft/artistDetail'
+import Staking from '../pages/staking/index'
 import { ReactComponent as GanIcon } from '../assets/images/siderIcon/f-idea.svg'
 import { ReactComponent as GeneratorIcon } from '../assets/images/siderIcon/generator.svg'
 import { ReactComponent as MarketplaceIcon } from '../assets/images/siderIcon/marketplace.svg'
@@ -100,6 +101,12 @@ const routes: Route[] = [
     title:'Personal HomePage',
     component: PersonalCenterPage,
     hidden: true
+  },
+  {
+    path:'/staking',
+    title:'Staking',
+    component: Staking,
+    icon: MarketplaceIcon,
   }
 
 ]

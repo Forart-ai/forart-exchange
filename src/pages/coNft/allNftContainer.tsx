@@ -205,7 +205,6 @@ const AllNftContainer: React.FC = () => {
             <ThemeInput
               placeholder={'Please input token ID'}
               onChange ={(res:any) =>onChange(res)}
-              // onBlur = { e => onChange(e)}
               prefix={<></>}
               defaultValue={searchKey}
               style={{ width:'300px', marginRight: '20px' }}
@@ -215,7 +214,7 @@ const AllNftContainer: React.FC = () => {
             </div>
             {/*<OrderSelector onChange={ e => { setSelectedOrder(e); onPressEnter() }}  />*/}
             <OrderBySelector onChange={e => { setOrderBy(e); onPressEnter()}} />
-            <Button  onClick={ openWalletRankModal } style={{ marginLeft:'10px' }}>Creator Ranking</Button>
+            <Button variant={'contained'}  onClick={ openWalletRankModal } style={{ marginLeft:'10px' }}>Creator Ranking</Button>
           </Filter>
       }
 

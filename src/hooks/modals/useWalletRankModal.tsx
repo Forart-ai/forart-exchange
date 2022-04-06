@@ -144,7 +144,6 @@ export const useWalletRankModal = () => {
   }, [flag, loadMoreData])
 
   const onScrollCapture = (e:any) => {
-    // scrollTop会有小数点导致等式不成立，解决方案：四舍五入
     if (Math.round(scrollRef.scrollTop) + scrollRef.clientHeight == scrollRef.scrollHeight) {
       console.log('more')
       setPage(prev => prev + 1)

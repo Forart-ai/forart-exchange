@@ -16,6 +16,8 @@ import { Provider } from 'react-redux'
 import { SolanaWeb3Provider } from './contexts/solana-web3'
 import { SolanaConnectionConfigProvider } from './contexts/solana-connection-config'
 import { ModalProvider } from './contexts/modal'
+import ForartTheme from './contexts/theme/config/dark'
+import { ThemeProvider } from '@mui/material'
 
 const { store } = configureStore()
 
@@ -23,26 +25,27 @@ const queryClient = new QueryClient()
 
 ReactDOM.render(
   <Provider store={store}>
+    <ThemeProvider theme={ForartTheme}>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <QueryClientProvider client={queryClient}>
+          <RefreshControllerProvider>
+            <Router>
+              <DAppProvider config={{}}>
+                <SolanaConnectionConfigProvider>
+                  <SolanaWeb3Provider>
+                    <ModalProvider>
+                      <App />
+                    </ModalProvider>
+                  </SolanaWeb3Provider>
+                </SolanaConnectionConfigProvider>
+              </DAppProvider>
+            </Router>
+          </RefreshControllerProvider>
 
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <QueryClientProvider client={queryClient}>
-        <RefreshControllerProvider>
-          <Router>
-            <DAppProvider config={{}}>
-              <SolanaConnectionConfigProvider>
-                <SolanaWeb3Provider>
-                  <ModalProvider>
-                    <App />
-                  </ModalProvider>
-                </SolanaWeb3Provider>
-              </SolanaConnectionConfigProvider>
-            </DAppProvider>
-          </Router>
-        </RefreshControllerProvider>
+        </QueryClientProvider>
 
-      </QueryClientProvider>
-
-    </Web3ReactProvider>
+      </Web3ReactProvider>
+    </ThemeProvider>
   </Provider>
   ,
 
