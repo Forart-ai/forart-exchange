@@ -7,3 +7,28 @@
     font-family:'inter-extraBold';
     src: url("./Inter-ExtraBold.ttf");
 }
+
+@font-face {
+    font-family:'Aldrich-Regular';
+    src: url("./Aldrich-Regular.ttf");
+}
+
+@font-face {
+    font-family:'arial';
+    src: url("./arial.ttf");
+}
+
+@font-face {
+    font-family:'arialBold';
+    src: url("./arialbd.ttf");
+}
+
+@font-face {
+    font-family:'KronaOne-Regular';
+    src: url("./KronaOne-Regular.ttf");
+}
+
+@font-face {
+    font-family:'Lingxun-Serif-Bold';
+    src: url("./Lingxun-Serif-Bold.ttf");
+}

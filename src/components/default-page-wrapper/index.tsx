@@ -2,7 +2,7 @@ import { styled } from '@mui/material'
 
 const DefaultPageWrapper = styled('div')(({ theme }) => ({
   width: '80%',
-  maxWidth: '1280px',
+  maxWidth: '1870px',
   minHeight:'100vh',
   display: 'flex',
   flexDirection: 'column',

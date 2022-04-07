@@ -4,7 +4,7 @@ import Marketplace from '../pages/marketplace'
 import NFTDetailPage from '../pages/marketplace/nftDetail'
 import AIGen from '../pages/AIGen'
 import PersonalCenterPage from '../pages/personal'
-import CoNftPage from '../pages/coNft'
+import CoNftPage from '../pages/coNft/homepage'
 import ArtistDetail from '../pages/coNft/artistDetail'
 import Staking from '../pages/staking/index'
 import { ReactComponent as GanIcon } from '../assets/images/siderIcon/f-idea.svg'
@@ -37,7 +37,7 @@ const routes: Route[] = [
   // },
   {
     path: '/',
-    title: 'CO-NFT',
+    title: 'Co-nft',
     icon: GamesIcon,
     component: CoNftPage,
     disable: false
@@ -56,24 +56,25 @@ const routes: Route[] = [
   },
   {
     path: '/nft-chatroom',
-    title: 'NFT-Chatroom',
+    title: 'Social',
     icon: ChatIcon,
     component: NftChatroom,
-
   },
   {
     path: '/Text-to-NFT',
     title: 'Text-to-NFT',
     icon: GanIcon,
     component: AIGen,
-    disable: false
+    disable: false,
+    hidden: true
   },
   {
     path: '/nftBreed',
     title: 'Style Transformation',
     icon: GeneratorIcon,
     component: LevelUp,
-    disable: false
+    disable: false,
+    hidden: true
   },
 
   {

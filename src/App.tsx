@@ -4,7 +4,6 @@ import './app.scss'
 import { BackTop, Layout } from 'antd'
 import { Content } from 'antd/es/layout/layout'
 import AppHeader from './layout/AppHeader'
-import AppSideBar from './layout/AppSideBar'
 // @ts-ignore
 import { Route, useLocation } from 'react-router-dom'
 import routes from './routes'
@@ -77,9 +76,9 @@ const App: React.FC = () => {
 
         { !isMobile ? (
           <>
-            <AppSideBar />
+            {/*<AppSideBar />*/}
 
-            <Content  style={{ width:'calc(100vw - 80px)', backgroundColor:'#120C18', position:'relative',top: '60px', left:'70px', borderTopLeftRadius:'1em' }}>
+            <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative' }}>
               {
                 routes.map((router:any) => (
                   <Route
@@ -94,7 +93,7 @@ const App: React.FC = () => {
             </Content>
           </>
         ) : (
-          <Content  style={{ width:'100vw', backgroundColor:'#120C18', position:'relative',top: '60px', height:'100vh' }}>
+          <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative',top: '60px', height:'100vh' }}>
             {
               routes.map((router:any) => (
                 <Route
