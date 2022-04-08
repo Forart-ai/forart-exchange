@@ -19,7 +19,7 @@ const ForartTheme = createTheme({
     },
     secondary: {
       light: '#ba75ff',
-      main: '#8345f4',
+      main: '#8246F5',
       dark: '#4a10c0',
       contrastText: '#fff',
     },

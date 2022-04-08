@@ -61,7 +61,7 @@ const App: React.FC = () => {
         { !isMobile ? (
           <>
 
-            <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', zIndex: 2, top:'60px' }}>
+            <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', zIndex: 3, top:'60px' }}>
               <PurpleGlow style={{ right: '0' }} />
               <PurpleGlow style={{ left: '25%' }} />
               <PurpleGlow style={{ top:'90vh', right: '0%', opacity:'.6', width:'600px', height: '600px' }} />

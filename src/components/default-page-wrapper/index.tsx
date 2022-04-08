@@ -8,8 +8,7 @@ const DefaultPageWrapper = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   alignItems:'center',
   margin:' 0 auto',
-  pb: 5,
-  pt: '60px',
+  paddingBottom: '60px',
 
   [theme.breakpoints.down('md')]: {
     width:'calc(100vw - 30px)',

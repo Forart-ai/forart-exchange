@@ -1,6 +1,6 @@
 import React, {  useState } from 'react'
 import { KitImageBorder, KitListContainer } from '../../pages/coNft/artistMint.style'
-import { KitProperties } from '../../pages/coNft/artistDetail'
+import { KitProperties } from '../../pages/coNft/artistdetail'
 import styled from 'styled-components'
 import { Checkbox } from '@mui/material'
 
@@ -30,7 +30,7 @@ const StyledFlag = styled.div`
   }
 `
 
-const ImageContainer = styled.div`
+export const ImageContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;

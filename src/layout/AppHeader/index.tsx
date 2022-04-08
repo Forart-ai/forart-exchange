@@ -14,7 +14,7 @@ const AppHeaderContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 3;
+  z-index: 10;
   position: fixed;
   background: #0A0523;
   border-bottom: 1px #8345f4 solid;

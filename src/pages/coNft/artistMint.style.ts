@@ -151,56 +151,6 @@ export const AttrType = styled.div`
   margin: 5px 0;
 `
 
-export const MintTab = styled(Tabs)`
-  font-size: 1.1em;
-  .ant-tabs-tab {
-    font-size: 1.1em !important;
-    color: #E5E8EB !important;
-    font-family: 'inter' !important;
-
-  }
-
-
-  .ant-tabs-nav-list {
-    border: none !important;
-  }
-
-  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: #E42575 !important;
-    border-radius: 25px;
-    background-color: transparent !important;
-
-    span {
-      margin: 5px 10px;
-    }
-  }
-  
-
-  .ant-tabs-nav-wrap {
-    display: flex;
-    justify-content: center;
-  }
-
-  .ant-tabs-nav::before {
-    border-bottom: 1px #65727b solid;
-
-  }
-
-  .ant-tabs-ink-bar {
-    background: linear-gradient(to right, #E42575, #4A0E6F) border-box;
-    padding: 2px;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
-    display: table !important;
-  }
-
-  @media screen and (max-width: 1100px) {
-    .ant-tabs-tab {
-      font-size: 16px;
-    }
-  }
-`
-
 export const MintContainer = styled.div`
   width: 100%;
   height: 100%;

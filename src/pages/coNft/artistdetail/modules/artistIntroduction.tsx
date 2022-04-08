@@ -1,14 +1,18 @@
 import React from 'react'
 import { useMediaQuery } from 'react-responsive'
-import ArtistBanner from '../../assets/images/coPools/ticket.png'
-import Jacket from '../../assets/images/artistDetail/jacket.webp'
-import FaceMask from '../../assets/images/artistDetail/mask.webp'
-import Glasses from '../../assets/images/artistDetail/glasses.webp'
-import Tatoo from '../../assets/images/artistDetail/tatoo.webp'
-import Shoes from '../../assets/images/artistDetail/shoes.webp'
-import styled from 'styled-components'
-import { Tab, Tabs, ThemeProvider } from '@mui/material'
-import ForartTheme from '../../contexts/theme/config/dark'
+import ArtistBanner from '../../../../assets/images/coPools/ticket.png'
+import Jacket from '../../../../assets/images/artistDetail/jacket.webp'
+import FaceMask from '../../../../assets/images/artistDetail/mask.webp'
+import Glasses from '../../../../assets/images/artistDetail/glasses.webp'
+import Tatoo from '../../../../assets/images/artistDetail/tatoo.webp'
+import Shoes from '../../../../assets/images/artistDetail/shoes.webp'
+import { styled, Tab, Tabs, ThemeProvider } from '@mui/material'
+import ForartTheme from '../../../../contexts/theme/config/dark'
+import { useArtistKitQuery } from '../../../../hooks/queries/useArtistKitQuery'
+import { useLocationQuery } from '../../../../hooks/useLocationQuery'
+import { AttrContent, AttrType } from '../../artistMint.style'
+import { SelectableKitItem, SelectableKitList } from '../../../../components/nft-mint/mintKit'
+import { KitProperties } from '../index'
 
 interface StyledTabsProps {
   children?: React.ReactNode;
@@ -22,7 +26,7 @@ const StyledTabs = styled((props: StyledTabsProps) => (
     {...props}
     TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
   />
-))({
+))(({ theme }) => ({
   '& .MuiTabs-indicator': {
     display: 'flex',
     justifyContent: 'center',
@@ -31,9 +35,9 @@ const StyledTabs = styled((props: StyledTabsProps) => (
   '& .MuiTabs-indicatorSpan': {
     maxWidth: 40,
     width: '100%',
-    backgroundColor: '#FF468B',
+    backgroundColor: theme.palette.primary.main,
   },
-})
+}))
 
 interface StyledTabProps {
   label: string;
@@ -42,16 +46,13 @@ interface StyledTabProps {
 const StyledTab = styled((props: StyledTabProps) => (
   <Tab disableRipple {...props} />
 ))(({ theme }) => ({
-  // textTransform: 'none',
-  // fontWeight: theme.typography.fontWeightRegular,
-  // fontSize: theme.typography.pxToRem(15),
-  // marginRight: theme.spacing(1),
+
   color: 'rgba(255, 255, 255, 0.7)',
   '&.Mui-selected': {
     color: '#fff',
   },
   '&.Mui-focusVisible': {
-    backgroundColor: '#FF468B',
+    backgroundColor: theme.palette.primary.main,
   },
 }))
 
@@ -71,6 +72,7 @@ function TabPanel(props: TabPanelProps) {
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
+      style={{  width: '100%' }}
     >
       {value === index && (
         <div>{children}</div>
@@ -86,7 +88,7 @@ function a11yProps(index: number) {
   }
 }
 
-const ArtistDetailTab = styled.div`
+const ArtistDetailTab = styled('div')`
   display: flex;
   justify-content: center;
   width: 100%;
@@ -95,7 +97,7 @@ const ArtistDetailTab = styled.div`
   
 `
 
-const Banner = styled.div`
+const Banner = styled('div')`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -108,13 +110,15 @@ const Banner = styled.div`
   }
 `
 
-const TabContainer = styled.div`
-  width: 18%;
+const TabContainer = styled('div')`
+  width: 20%;
   display: flex;
-  justify-content:flex-start ;
+  justify-content:flex-end ;
+  position: absolute;
+  left: 0;
 `
 
-const TabItem = styled.div`
+const TabItem = styled('div')`
   height: 100%;
   
 
@@ -123,40 +127,108 @@ const TabItem = styled.div`
   }
 `
 
-const TabInfo = styled.div`
+const TabInfo = styled('div')`
   width: 60%;
-  padding: 0 40px;
+  padding: 0 60px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
   
   h1 {
-    color: #ffffff;
-    font-size: 2rem;
-    font-family: inter-extraBold;
+    width: 100%;
+    color: ${({ theme })=> theme.palette.secondary.main};
+    font-size: 34px;
+    font-family: arialBold;
+    padding-bottom: 20px;
+    border-bottom: 1px ${({ theme }) => theme.palette.grey[500]} solid;
   }
   
   p {
-    color: #A197AA;
+    color: ${({ theme }) => theme.palette.grey[500]};
     font-size: 1.2rem;
   }
-
-  @media screen and (max-width: 1100px) {
+   
+  ${({ theme }) => theme.breakpoints.down('md')} {
     width: 100%;
     padding: 0 ;
   }
+  
 `
 
-const ComponentsContainer = styled.div`
+const ComponentsContainer = styled('div')`
   width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  
-  img {
-    margin-bottom: 20px;
-    width: 100%;
-    border-radius: 20px;
-  }
+  height: fit-content;
+  position: relative;
+  overflow: hidden;
 `
+
+const ComponentWrapper = styled('div')`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 160px);
+  gap: 10px;
+  justify-content: space-around;
+  margin-bottom: 20px;
+
+
+
+
+  .container {
+   
+    
+    img {
+      width: 160px;
+      height: 160px;
+    }
+
+    .Clothing {
+      border-radius: 1em;
+      transform: scale(2, 2) translate(0);
+    }
+
+    .Pants {
+      transform: scale(2, 2) translate(-15px, -25px);
+    }
+
+    .Eye {
+      transform: scale(2, 2) translate(18px, 20px);
+    }
+
+    .Butt {
+      transform: scale(4, 4) translate(-15px, -10px);
+    }
+
+    .Hand {
+      transform: scale(3, 3) translate(-5px, -25px);
+    }
+
+    .Mouth {
+      transform: scale(2) translate(15px, 10px);
+    }
+
+    .Ear {
+      transform: scale(3) translate(-10px, 30px);
+    }
+    
+  }
+
+ 
+`
+
+const ComponentsItem:React.FC<{list?:KitProperties[]}> = ({ list }) => {
+
+  return (
+    <ComponentWrapper>
+      {
+        list?.map((item, index) => (
+          <div key={index} className={'container'}>
+            <img className={item.bodyType}  src={item.url} />
+          </div>
+        ))
+      }
+    </ComponentWrapper>
+  )
+}
 
 export const ArtDetail: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
@@ -167,6 +239,9 @@ export const ArtDetail: React.FC = () => {
     console.log(newValue)
     setValue(newValue)
   }
+  const artistId = useLocationQuery('artistId')
+
+  const { data: artistKit } = useArtistKitQuery(artistId?.toString())
 
   return (
     <ThemeProvider theme={ForartTheme}>
@@ -231,11 +306,22 @@ export const ArtDetail: React.FC = () => {
                     </p>
                   </section>
                   <ComponentsContainer >
-                    <img src={Jacket} />
-                    <img src={FaceMask} />
-                    <img src={Glasses} />
-                    <img src={Tatoo} />
-                    <img src={Shoes} />
+
+                    {
+                      artistKit && (
+                        <>
+                          {
+                            Object.keys(artistKit).map((type,index) => (
+                              <div key={index}>
+                                <h1> {type} </h1>
+                                <ComponentsItem key={index} list={artistKit[type]} />
+                              </div>
+                            ))
+                          }
+                        </>
+                      )
+                    }
+
                   </ComponentsContainer>
                 </TabPanel>
 
@@ -260,6 +346,7 @@ export const ArtDetail: React.FC = () => {
                   </section>
                 </TabPanel>
               </TabInfo>
+
             </>
           ) :
             (
@@ -302,11 +389,22 @@ export const ArtDetail: React.FC = () => {
                 </section>
 
                 <ComponentsContainer >
-                  <img src={Jacket} />
-                  <img src={FaceMask} />
-                  <img src={Glasses} />
-                  <img src={Tatoo} />
-                  <img src={Shoes} />
+
+                  {
+                    artistKit && (
+                      <>
+                        {
+                          Object.keys(artistKit).map((type,index) => (
+                            <div key={index}>
+                              <h1> {type} </h1>
+                              <ComponentsItem key={index} list={artistKit[type]} />
+                            </div>
+                          ))
+                        }
+                      </>
+                    )
+                  }
+
                 </ComponentsContainer>
 
                 <section className="item" >
