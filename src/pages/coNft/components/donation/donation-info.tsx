@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { CloseButton, useModal } from '../../../contexts/modal'
+import { CloseButton, useModal } from '../../../../contexts/modal'
 const Wrapper = styled.div`
   width: 400px;
   height: 150px;

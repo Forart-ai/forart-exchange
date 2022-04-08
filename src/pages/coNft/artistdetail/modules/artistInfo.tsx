@@ -3,7 +3,7 @@ import { Box, Button, styled, useMediaQuery, useTheme } from '@mui/material'
 import HypeteenIcon from '../../../../assets/images/artistDetail/hypeteenIcon.png'
 import { useGetOverview } from '../../../../hooks/queries/useGetOverview'
 import { useModal } from '../../../../contexts/modal'
-import DonateDialog from '../../../../components/modals/donation/donate-dialog'
+import DonateDialog from '../../components/donation/donate-dialog'
 import { useDonation } from '../../../../hooks/programs/useDonation'
 import Background from '../../../../assets/images/coPools/hypeteen-background.png'
 
@@ -113,6 +113,7 @@ const MainArea = styled('div')`
 const DataArea = styled('div')`
   display: grid;
   grid-template-columns: repeat(3, auto);
+  justify-content: center;
   gap: 10px;
   position: absolute;
   bottom:  -100px;
@@ -196,16 +197,16 @@ const ArtistInfo:React.FC = () => {
             <DataItem>
               <DataIcon />
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
-                <div className={'value'}>{overviewData?.mintedWallet}</div>
-                <div className={'name'}>Creators</div>
+                <div className={'value'}>{poolDonated ? poolDonated?.data?.toString() : '-'} {isMobile && 'USDC'}</div>
+                <div className={'name'}>Donated</div>
               </Box>
             </DataItem>
 
             <DataItem>
               <DataIcon />
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
-                <div className={'value'}>{poolDonated ? poolDonated?.data?.toString() : '-'} {isMobile && 'USDC'}</div>
-                <div className={'name'}>Donated</div>
+                <div className={'value'}>{overviewData?.mintedWallet}</div>
+                <div className={'name'}>Creators</div>
               </Box>
             </DataItem>
           </DataArea>

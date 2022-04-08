@@ -1,9 +1,7 @@
-import { Button, ButtonProps, CardProps, TypographyProps } from '@mui/material'
+import { Button, ButtonProps, CardProps, styled, TypographyProps } from '@mui/material'
 import React from 'react'
 import {  useModal } from '../../../modal'
-import styled from 'styled-components'
 import CloseIcon from '../../../../assets/images/coPools/close.svg'
-import { on } from 'cluster'
 
 export type DialogProps = CardProps & {
     title: string | JSX.Element
@@ -17,19 +15,17 @@ export type DialogProps = CardProps & {
     closeable?: boolean
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled('div')`
   min-width: 450px;
   max-width: 98vw;
-  border-radius: 10px;
+  border-radius: 30px;
   position: relative;
-  border: 4px solid transparent;
-  background-clip: padding-box, border-box;
-  background-origin: padding-box, border-box;
-  background-image: linear-gradient(to right, rgb(27, 3, 42), rgb(27, 3, 42)), linear-gradient(90deg, #ff4090, #3c69c2);
-  padding: 20px  ;
+  border: 4px solid ${({ theme }) => theme.palette.secondary.dark};
+  background-color: #ffffff ;
+
 `
 
-const Title = styled.div`
+const Title = styled('div')`
   display: flex;
   justify-content: center;
   font-family: inter-extraBold;
@@ -37,7 +33,7 @@ const Title = styled.div`
  
 `
 
-const Header = styled.div`
+const Header = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -45,7 +41,7 @@ const Header = styled.div`
   border-bottom: 1px #600665 solid;
 `
 
-const CloseButton = styled.div`
+const CloseButton = styled('div')`
   position: absolute;
   top: 20px;
   right: 15px;
@@ -56,7 +52,7 @@ const CloseButton = styled.div`
   }
 `
 
-const Footer = styled.div`
+const Footer = styled('div')`
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -79,18 +75,22 @@ const Dialog: React.FC<DialogProps> =({
   const { closeModal } = useModal()
   return (
     <Wrapper>
-      <Header>
-        {
-          closeable && (
-            <CloseButton onClick={closeModal} >
-              <img src={CloseIcon} />
-            </CloseButton>
-          )
-        }
-        <Title>
-          {title}
-        </Title>
-      </Header>
+      {
+        title && (
+          <Header>
+            {
+              closeable && (
+                <CloseButton onClick={closeModal} >
+                  <img src={CloseIcon} />
+                </CloseButton>
+              )
+            }
+            <Title>
+              {title}
+            </Title>
+          </Header>
+        )
+      }
       {children}
       <Footer >
         {

@@ -4,7 +4,7 @@ import { PoolsListData } from '../../../../types/coNFT'
 import { Button } from 'antd'
 import { Link } from 'react-router-dom'
 import { useModal } from '../../../../contexts/modal'
-import DonateDialog from '../../../../components/modals/donation/donate-dialog'
+import DonateDialog from '../../components/donation/donate-dialog'
 import PoolAvatar from '../../../../assets/images/coPools/pool-avatar.png'
 import {
   ImageContent,

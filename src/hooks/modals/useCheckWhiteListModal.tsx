@@ -13,7 +13,6 @@ import useDiscordMeQuery from '../queries/useDiscordMeQuery'
 import { useMediaQuery } from 'react-responsive'
 import useGetCurrentWallet from '../useGetCurrentWallet'
 import {  useModal as useReactModal } from '../../contexts/modal'
-import DonateDialog from '../../components/modals/donation/donate-dialog'
 
 type StepProps = {
   active?: boolean
@@ -259,11 +258,6 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
 
 export const useCheckWhiteListModal = () => {
   const account = useGetCurrentWallet()
-  const {  openModal } = useReactModal()
-
-  const openDonate = () => {
-    openModal(<DonateDialog />)
-  }
 
   const { data: user } = useUserQuery()
   const discordAccessToken = useDiscordAccessToken()
