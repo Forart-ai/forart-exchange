@@ -14,9 +14,9 @@ const AppHeaderContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 8;
+  z-index: 3;
   position: fixed;
-  background: rgb(13,14,45, .8);
+  background: #0A0523;
   border-bottom: 1px #8345f4 solid;
   //background-image: linear-gradient(to right, #B8316A, #601b7e);
 
@@ -78,9 +78,11 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
 
   return (
     <AppHeaderContent>
-      <Logo>
-        <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
-      </Logo>
+      <Link to={'/'}>
+        <Logo>
+          <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
+        </Logo>
+      </Link>
       <Operator>
         <RouterContainer>
 

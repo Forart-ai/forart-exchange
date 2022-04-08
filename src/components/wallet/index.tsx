@@ -22,10 +22,11 @@ const StyledWallet = styled.div`
   margin-right: 20px;
   cursor: pointer;
   min-width: 140px;
+  width: 200px;
 
   background-clip: padding-box, border-box;
   background-origin: padding-box, border-box;
-  background-image:  linear-gradient(90deg, rgb(79,220,179), rgb(128,77,242), rgb(199,110,252));
+  background-image:  linear-gradient(90deg, #50DCB4, #8246F5, #C86EFF);
 
   .wallet-add {
     display: flex;

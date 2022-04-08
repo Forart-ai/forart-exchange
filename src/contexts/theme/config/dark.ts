@@ -32,6 +32,13 @@ const ForartTheme = createTheme({
       default: 'rgb(34,30,57)',
       paper:'rgb(23,20,42)'
     },
+    grey:{
+      50: '#fafafa',
+      100: '#f5f5f5',
+      200: '#eeeeee',
+      300: '#e0e0e0',
+      400: '#999999'
+    }
   },
   spacing: 10,
 

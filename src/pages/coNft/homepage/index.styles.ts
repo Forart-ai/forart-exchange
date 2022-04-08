@@ -7,13 +7,14 @@ export const HeaderContainer = styled('div')(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   overflow: 'auto',
-  margin: '150px 0',
+  minHeight: '100vh',
+  alignItems:'center',
 
-  [theme.breakpoints.down('lg')]: {
+  [theme.breakpoints.down('md')]: {
     flexDirection: 'column',
     padding: '10px 0',
     height: 'fit-content',
-    marginTop: 0,
+    margin: '100px 0',
   }
 }))
 
@@ -25,7 +26,7 @@ export const LeftArea = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   paddingRight:'30px',
 
-  [theme.breakpoints.down('lg')]: {
+  [theme.breakpoints.down('md')]: {
     width: '100%',
     padding: '0',
   }
@@ -102,4 +103,18 @@ export const RainbowButton = styled(Button)(({ theme }) => ({
   }
 
 }))
+
+export const RightArea = styled('div')`
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 50%;
+  user-select: none;
+  
+
+  //@media screen and (max-width: 1080px) {
+  //  width: 100%;
+  //  margin-top: 20px;
+  //}
+`
 
