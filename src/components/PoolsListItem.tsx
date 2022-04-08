@@ -1,10 +1,10 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { PoolsListData } from '../types/coNFT'
-import { Button } from 'antd'
 import { Link } from 'react-router-dom'
 import { useModal } from '../contexts/modal'
 import DonateDialog from './modals/donation/donate-dialog'
+import { Button } from '@mui/material'
 
 const PoolsCardContainer = styled.div< { loading?: string }>`
   width: 600px;
@@ -20,38 +20,7 @@ const PoolsCardContainer = styled.div< { loading?: string }>`
   overflow: hidden;
   //box-shadow: inset 20px 20px 20px #0000008c;
 
-  ${props => props.loading === 'true' && `
-   &:before {
-    content: "";
-    background-image: conic-gradient(#FF468B 20deg, transparent 120deg);
-    position: absolute;
-    width: 150%;
-    height: 50%;
-    animation: rotate 3s linear infinite;
-  }
-
-  &:after {
-    content: "";
-    width: 590px;
-    height: 260px;
-    position: absolute;
-    background: #000;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: inset 20px 20px 20px #0000008c;
-  }
-
-  @keyframes rotate {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(-360deg);
-    }
-  }
-  `}
+  
 
   @media screen and (max-width: 1080px) {
   width: 100%;
@@ -73,8 +42,8 @@ const ImageContent = styled.div`
     height: 90%;
     object-fit: cover;
     border-radius: 20px;
-
   }
+  
 `
 
 const InfoContent = styled.div`
@@ -94,16 +63,20 @@ const InfoContent = styled.div`
     font-size: 1em;
     color: #b2b2b2;
   }
+  
   .button-column{
     width: 100%;
     display: flex;
     justify-content: space-between;
-    
-    .ant-btn {
-      margin: 0 2px;
-      width: 50%;
+
+    a{
+      color: white;
     }
   }
+  @media screen and (max-width: 1080px) {
+    padding: 3px 2px;
+  }
+  
 `
 
 const DataContent = styled.div`
@@ -177,28 +150,22 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
               (
                 <>
 
-                  <Button  >
+                  <Button sx={{ margin:'0 4px' }} variant={'contained'}  >
                     <Link to={toArtistDetailUrl}>
                       Create
                     </Link>
-                  </Button>
-                  <Button onClick={openDonateModal} >Donate</Button>
+                  </Button >
+                  <Button   variant={'contained'} onClick={openDonateModal} >Donate</Button>
                 </>
               ) :
               (
                 <>
-                  <Button disabled={true} >
-                    <Link to={toArtistDetailUrl}>
-                      Create
-                    </Link>
-                  </Button>
-                  <Button disabled={true}>Donate</Button>
+
                 </>
               )
 
           }
         </div>
-
       </InfoContent>
     </PoolsCardContainer>
   )

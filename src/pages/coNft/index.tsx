@@ -31,7 +31,7 @@ const Wrapper = styled.div`
 `
 
 const CoNftPageContainer = styled.div`
-  max-width: 80%;
+  max-width: 90%;
   height: fit-content;
   width: calc(100% - 80px);
   margin-left: auto;
@@ -41,7 +41,7 @@ const CoNftPageContainer = styled.div`
   flex-direction: column;
 
   @media screen and (max-width: 1080px) {
-    width: 100%;
+    width: calc(100% - 10px);
   }
 `
 
@@ -50,7 +50,7 @@ const HeaderContainer = styled.div`
   height: 800px;
   position: relative;
   display: flex;
-  padding: 50px 0;
+  padding: 40px 0;
   overflow: auto;
   
 
@@ -116,6 +116,10 @@ const LeftBottom = styled.div`
   }
   
   @media screen and (max-width: 1080px) {
+    .row {
+      justify-content: center;
+      flex-direction: column;
+    }
     .data-container {
       justify-content: space-between;
       padding: 5px;
@@ -344,9 +348,9 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
           <ButtonArea>
             <Link to={toArtistDetailUrl}>
-              <Button size="medium" variant={'contained'} disableElevation color={'primary'}>Create Hypeteen</Button>
+              <Button  size={isMobile ? 'small' : 'medium'} variant={'contained'}  color={'primary'}>Create Hypeteen</Button>
             </Link>
-            <Button size={'medium'} variant={'contained'} disableElevation color={'secondary'}>
+            <Button size={isMobile ? 'small' : 'medium'} variant={'contained'}  color={'secondary'}>
               <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >
                 Instruction
               </a>

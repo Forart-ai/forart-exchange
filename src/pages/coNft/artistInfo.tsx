@@ -8,6 +8,7 @@ import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 import DonateDialog from '../../components/modals/donation/donate-dialog'
 import { useDonation } from '../../hooks/programs/useDonation'
 import Basckground from '../../assets/images/coPools/banner.png'
+import { useMediaQuery } from 'react-responsive'
 
 const Wrapper = styled.div`
   height: 500px;
@@ -158,6 +159,8 @@ const ArtistInfo:React.FC = () => {
   const { poolDonated } = useDonation()
 
   const { openModal } = useModal()
+
+  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
   const openDonateModal = useCallback(() => {
     openModal(<DonateDialog />)

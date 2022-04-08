@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import ForartLogo from '../../assets/images/logo.png'
 import UserIcon from '../../assets/images/header/user.svg'
-import { useHistory } from 'react-router-dom'
+import { useHistory,Link } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import SolanaWallet from '../../components/SolanaWallet'
 import Wallet from '../../components/wallet'
@@ -56,7 +56,9 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
   return (
     <AppHeaderContent>
       <Logo>
-        <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
+        <Link to={'/'}>
+          <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
+        </Link>
       </Logo>
       <Operator>
         {
