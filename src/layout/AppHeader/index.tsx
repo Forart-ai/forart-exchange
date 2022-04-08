@@ -2,23 +2,22 @@ import React from 'react'
 import styled from '@emotion/styled'
 import ForartLogo from '../../assets/images/logo.png'
 import UserIcon from '../../assets/images/header/user.svg'
-import { useHistory, Link, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
+import SolanaWallet from '../../components/SolanaWallet'
 import Wallet from '../../components/wallet'
-import routes, { Route } from '../../routes'
 
 const AppHeaderContent = styled.div`
   width: 100%;
   height: 60px;
+  margin-bottom: -60px;
   padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   z-index: 8;
   position: fixed;
-  background: rgb(13,14,45, .8);
-  border-bottom: 1px #8345f4 solid;
-  //background-image: linear-gradient(to right, #B8316A, #601b7e);
+  background-image: linear-gradient(to right, #B8316A, #601b7e);
 
 
 `
@@ -49,32 +48,10 @@ const Operator = styled.div`
   }
 `
 
-export const NavLinkText = styled.div`
-  transition: color 0.38s;
-  font-family: 'arial';
-  font-size: 16px;
-  letter-spacing: 1px;
-  
-  :hover:not(.active) {
-    color: #4fc89f;
-  }
-`
-
-const RouterContainer = styled('div')`
-  display: flex;
-  width: 400px;
-  min-width: 20px;
-  justify-content: space-between;
-  margin-right: 200px;
-  
-`
-
 const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
   const history = useHistory()
 
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
-
-  const { pathname }  = useLocation()
 
   return (
     <AppHeaderContent>
@@ -82,39 +59,14 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
         <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
       </Logo>
       <Operator>
-        <RouterContainer>
-
-          {
-            routes.filter(route => !route.hidden).map((route: Route, index) => (
-              // <Link to={route.path} key={route.path}>
-              //   {route.title}
-              // </Link>
-              <Link
-                key={route.path}
-                to={route.path}
-              >
-                {
-                  pathname === route.path ? (
-                    <NavLinkText aria-disabled={route.disable} style={{ color: '#85fcd0' }}>
-                      {route.title}
-                    </NavLinkText>
-                  ):
-                    (
-                      <NavLinkText style={{ color: 'white' }}>
-                        {route.title}
-                      </NavLinkText>
-                    )
-                }
-
-              </Link>
-
-            ))
-          }
-        </RouterContainer>
-
-        <Wallet />
-
-        <div style={{ fontSize: '20px', }}   onClick={() => history.push('/personal/home')} >
+        {
+          !isMobile && (
+            <>
+              <Wallet />
+            </>
+          )
+        }
+        <div style={{ fontSize: '20px', color: '#A53067' }}   onClick={() => history.push('/personal/home')} >
           <img src={UserIcon} />
         </div>
       </Operator>

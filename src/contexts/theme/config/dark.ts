@@ -12,15 +12,15 @@ const ForartTheme = createTheme({
   },
   palette: {
     primary: {
-      light: '#85fcd0',
-      main: '#4fc89f',
-      dark: '#009671',
+      light: '#ff64a3',
+      main: '#e42575',
+      dark: '#ac004a',
       contrastText: '#fff',
     },
     secondary: {
-      light: '#ba75ff',
-      main: '#8345f4',
-      dark: '#4a10c0',
+      light: '#793d9e',
+      main: '#4a0e6f',
+      dark: '#1e0043',
       contrastText: '#fff',
     },
     text:{
@@ -29,8 +29,8 @@ const ForartTheme = createTheme({
       disabled: 'rgba(255, 255, 255, 0.5)',
     },
     background: {
-      default: 'rgb(34,30,57)',
-      paper:'rgb(23,20,42)'
+      default: '#120C18',
+      paper:'rgb(42,38,48)'
     },
   },
   spacing: 10,

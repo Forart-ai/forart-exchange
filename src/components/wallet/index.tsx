@@ -13,19 +13,17 @@ import WalletSelectionModal from './WalletSelectionModal'
 
 const StyledWallet = styled.div`
   height: 40px;
+  background-color: #1E052D;
   color: #fff;
   display: flex;
   justify-content: center; 
   align-items: center;
   border-radius: 30px;
-  padding: 0 20px;
+  padding: 0 10px;
+  box-sizing: border-box;
   margin-right: 20px;
   cursor: pointer;
   min-width: 140px;
-
-  background-clip: padding-box, border-box;
-  background-origin: padding-box, border-box;
-  background-image:  linear-gradient(90deg, rgb(79,220,179), rgb(128,77,242), rgb(199,110,252));
 
   .wallet-add {
     display: flex;
