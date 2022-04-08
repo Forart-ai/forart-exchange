@@ -9,37 +9,28 @@ export const PoolsContainer = styled('div')`
 `
 
 export const PoolListContainer = styled('div')`
-  
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 320px);
+  grid-template-columns: repeat(4, auto);
   justify-content: space-between;
-  gap: 20px;
-
-  ${({ theme }) => theme.breakpoints.down('md')} {
-    grid-template-columns: repeat(auto-fit, 320px);
-    justify-content: center;
-  }
-
 `
 
 export const PoolsCardContainer = styled('div')(({ theme }) => ({
-  width: '320px',
+  width: '322px',
   height: '480px',
   marginBottom: '20px',
   display: 'flex',
   justifyContent: 'center',
   flexDirection:'column',
   alignItems: 'center',
-  borderRadius: '30px',
+  borderRadius: '10px',
   background: theme.palette.background.default,
   position: 'relative',
-  marginTop: theme.spacing(2.6),
 }))
 
 export const ImageContent = styled('div')`
-  width: 280px;
-  height: 280px;
+  width: 90%;
+  height: 60%;
   z-index: 1;
   display: flex;
   justify-content: center; 
@@ -48,7 +39,7 @@ export const ImageContent = styled('div')`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 30px;
+    border-radius: 20px;
 
   }
 `
@@ -71,22 +62,19 @@ export const DataContent = styled('div')(({ theme }) => ({
 }))
 
 export const PoolTitle = styled('div')(({ theme }) => ({
-
+  fontSize: '1.4rem',
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
   color: theme.palette.text.primary,
   height: '20%',
 
   '& .pool-name': {
-    fontFamily: 'arialBold',
-    fontSize: '24px',
+    fontFamily: 'arial',
 
   },
 
   '& .likes-value': {
     fontFamily: 'Aldrich-Regular',
-    fontSize: '20px',
   }
 }))
 
@@ -111,7 +99,6 @@ export const LeftArea = styled('div')(({ theme }) => ({
     marginRight: '6px',
     img: {
       width: '100%',
-      height: '100%',
       borderRadius: '5px',
       objectFit: 'cover',
 
@@ -122,12 +109,11 @@ export const LeftArea = styled('div')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     color: theme.palette.text.secondary,
-    fontSize: '12px',
+    fontSize: '.8rem',
 
     span: {
       color: theme.palette.text.primary,
-      fontSize: '16px',
-      fontFamily: 'arialBold',
+      fontSize: '1.28rem',
     }
   }
 }))
@@ -136,6 +122,7 @@ export const RightArea = styled('div')(({ theme }) => ({
   width: '45%',
   display: 'flex',
   justifyContent: 'space-around',
+  fontSize: '1.2rem',
   fontFamily: 'Aldrich-Regular',
 
   '& .data': {
@@ -143,12 +130,10 @@ export const RightArea = styled('div')(({ theme }) => ({
     flexDirection: 'column',
     alignItems: 'center',
     color: theme.palette.primary.main,
-    fontSize: '20px',
-
   },
 
   span: {
-    fontSize: '12px',
+    fontSize: '.66rem',
     fontFamily: 'arial',
     color: theme.palette.text.secondary,
   }
@@ -160,10 +145,6 @@ export const Operation = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
 
-  a :{
-    color : 'white'
-  }
-
 }))
 
 export const StyledButton = styled(Button)(({ theme }) => ({
@@ -173,7 +154,6 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   borderColor: theme.palette.secondary.main,
   borderRadius: '40px',
   boxShadow: 'none',
-  padding:'5px 30px',
 
   '&:hover': {
     backgroundColor: theme.palette.background.paper,

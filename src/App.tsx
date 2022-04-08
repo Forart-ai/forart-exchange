@@ -12,28 +12,6 @@ import '../src/font/font.css'
 import { useDispatch } from 'react-redux'
 import { setSideBarCollapsed, useSideBarCollapsed } from './store/app'
 import { useMediaQuery } from 'react-responsive'
-import { styled } from '@mui/material'
-
-export const BlueGlow = styled('div')`
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  mix-blend-mode: screen;
-  background: radial-gradient(circle, #00468C 0%, rgba(0, 70, 140, 0) 100%);
-  filter: blur(80px);
-  border-radius: 50%;
-  opacity: 0.8;
-`
-
-export const PurpleGlow = styled('div')`
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, #5a1993 0%, rgba(63, 21, 99, 0) 100%);
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.9;
-`
 
 const App: React.FC = () => {
   // useEagerConnect()
@@ -49,25 +27,58 @@ const App: React.FC = () => {
     dispatch(setSideBarCollapsed(!sideBarCollapsed))
   }
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [location.pathname])
+  // useEffect(() => {
+  //   window.scrollTo(0, 0)
+  // }, [location.pathname])
 
   return (
+  // <Layout className="app">
+  //   <AppHeader onCollapseChanged={toggleCollapsed} />
+  //   <Layout>
+  //     <Layout>
+  //       <Affix offsetTop={0}>
+  //         <Layout.Sider collapsed={sideBarCollapsed}
+  //           style={
+  //             isMobile ? {
+  //               position: 'fixed',
+  //               top: '0px',
+  //               left: sideBarCollapsed ? '-100%' : 0,
+  //               zIndex: 99,
+  //             } :
+  //               {
+  //                 zIndex: 99,
+  //               }
+  //           }
+  //         >
+  //           <AppSideBar />
+  //         </Layout.Sider>
+  //       </Affix>
+  //       <Content  style={{ width:'calc(100vw - 220px)', backgroundColor:'rgb(17,17,17)', position:'relative',top: '60px' }}>
+  //         {
+  //           routes.map((router:any) => (
+  //             <Route
+  //               path={router.path}
+  //               exact
+  //               component={router.component}
+  //               key={router.path}
+  //             />
+  //           ))
+  //         }
+  //         <BackTop />
+  //       </Content>
+  //     </Layout>
+  //   </Layout>
+  // </Layout>
+
     <Layout className="app">
       <div className="border" >
         <AppHeader onCollapseChanged={toggleCollapsed} />
 
         { !isMobile ? (
           <>
+            {/*<AppSideBar />*/}
 
-            <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', zIndex: 2, top:'60px' }}>
-              <PurpleGlow style={{ right: '0' }} />
-              <PurpleGlow style={{ left: '25%' }} />
-              <PurpleGlow style={{ top:'90vh', right: '0%', opacity:'.6', width:'600px', height: '600px' }} />
-              <BlueGlow style={{ right: '25%' }} />
-              <BlueGlow style={{ top:'60vh' }} />
-              <BlueGlow style={{ top:'80vh', right: '30%', opacity:'.6', width:'400px', height: '400px' }} />
+            <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative' }}>
               {
                 routes.map((router:any) => (
                   <Route
@@ -82,7 +93,7 @@ const App: React.FC = () => {
             </Content>
           </>
         ) : (
-          <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', minHeight:'100vh' }}>
+          <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative',top: '60px', height:'100vh' }}>
             {
               routes.map((router:any) => (
                 <Route
@@ -93,7 +104,6 @@ const App: React.FC = () => {
                 />
               ))
             }
-
           </Content>
         )}
       </div>

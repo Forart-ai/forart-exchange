@@ -9,11 +9,9 @@ const DefaultPageWrapper = styled('div')(({ theme }) => ({
   alignItems:'center',
   margin:' 0 auto',
   pb: 5,
-  pt: '60px',
 
   [theme.breakpoints.down('md')]: {
-    width:'calc(100vw - 30px)',
-    height: 'fit-content',
+    width:'97vw',
   }
 
 }))

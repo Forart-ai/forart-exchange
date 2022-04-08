@@ -1,25 +1,21 @@
 import React, { useMemo } from 'react'
+// @ts-ignore
 import styled from 'styled-components'
-import { CoNFTData } from '../../../types/coNFT'
+import { CoNFTData, PoolsListData } from '../../../types/coNFT'
 import { useCoNFTDataQuery } from '../../../hooks/queries/useCoNftDataQuery'
+import { EXTERNAL_LINKS } from '../../../layout/AppSideBar'
+import CountUp from 'react-countup'
+import PoolsListItem from './pools/PoolsListItem'
 import { usePoolsQuery } from '../../../hooks/queries/usePoolsQuery'
+import { CaretRightOutlined } from '@ant-design/icons'
+import Banner1 from '../../../assets/images/coPools/banner.png'
 import { useGetOverview } from '../../../hooks/queries/useGetOverview'
 import { useMediaQuery } from 'react-responsive'
 import { Link } from 'react-router-dom'
-import {
-  DescriptionText,
-  HeaderContainer,
-  LeftArea,
-  LeftBottom,
-  MainTitle,
-  RainbowButton,
-  StyledCountUp,
-  RightArea,
-} from './index.styles'
-import { Box, Button } from '@mui/material'
+import { DescriptionText, HeaderContainer, LeftArea, LeftBottom, MainTitle, RainbowButton, StyledCountUp } from './index.styles'
+import { Box, Button, ThemeProvider } from '@mui/material'
 import DefaultPageWrapper from '../../../components/default-page-wrapper'
 import PoolList from './pools/PoolList'
-import HomepageBanner from '../../../assets/images/coPools/homepage-banner.png'
 
 const LeftTop = styled.div`
   width: 100%;
@@ -29,6 +25,20 @@ const LeftTop = styled.div`
 
   @media screen and (max-width: 1080px) {
     height: fit-content;
+  }
+`
+
+const RightArea = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 50%;
+  //background-image: radial-gradient(circle, #E42575, #680ba1, #120C18, #120C18);
+  
+
+  @media screen and (max-width: 1080px) {
+    width: 100%;
+    margin-top: 20px;
   }
 `
 
@@ -142,7 +152,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
         !isMobile && (
           <RightArea>
             <Banner>
-              <img src={HomepageBanner} />
+              <img src={Banner1} />
             </Banner>
           </RightArea>
         )
