@@ -6,6 +6,7 @@ import {
 } from '../hooks/contract/service/exchange/types'
 import { NFTComponentRequest } from '../hooks/queries/useBodyQuery'
 import { Service } from './service'
+import BigNumber from 'bignumber.js'
 
 const CONFT_API = {
   core: {
@@ -49,7 +50,7 @@ const CONFT_API = {
       getStaredNft(series?: number | string, wallet?: string) {
         return Service.post('nft/stared', { series, wallet })
       },
-      userSeriesVote(series: number | string, wallet: string, amount: number) {
+      userSeriesVote(series: number | string, wallet: string, amount: number ) {
         return Service.post('nft/promotion/series/vote', { series, wallet, amount })
       }
     },

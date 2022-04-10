@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import AllNftContainer from './allNftContainer'
 
@@ -7,6 +7,9 @@ import { ArtDetail } from './artistIntroduction'
 import { Tab, Tabs, ThemeProvider } from '@mui/material'
 import ForartTheme from '../../contexts/theme/config/dark'
 import NftCreate from './nftCreate'
+import { useDonation } from '../../hooks/programs/useDonation'
+import CONFT_API from '../../apis/co-nft'
+import { useSolanaWeb3 } from '../../contexts/solana-web3'
 
 interface StyledTabsProps {
     children?: React.ReactNode;
@@ -175,9 +178,19 @@ const ArtistDetail: React.FC = () => {
 
   const [value, setValue] = React.useState(1)
 
+  const { account } = useSolanaWeb3()
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
+
+  const { userDonated } = useDonation()
+
+  useEffect(() => {
+    if (account && userDonated.data) {
+      CONFT_API.core.user.userSeriesVote(3312, account.toBase58(), ( userDonated.data).toNumber() )
+    }
+  },[account, userDonated])
 
   return (
     <ThemeProvider theme={ForartTheme}>

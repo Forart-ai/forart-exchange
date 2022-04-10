@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 // @ts-ignore
 import styled from 'styled-components'
 import { CoNFTData, PoolsListData } from '../../types/coNFT'
@@ -18,6 +18,9 @@ import ForartTheme from '../../contexts/theme/config/dark'
 import YouTube from '@u-wave/react-youtube'
 import useConnectedWallet from '../../hooks/useGetCurrentWallet'
 import { Button, ThemeProvider } from '@mui/material'
+import { useSolanaWeb3 } from '../../contexts/solana-web3'
+import { useDonation } from '../../hooks/programs/useDonation'
+import CONFT_API from '../../apis/co-nft'
 
 const Wrapper = styled.div`
   max-width: 100vw;
@@ -436,12 +439,22 @@ const PoolsList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList }
 
 const CoNftPage: React.FC = () => {
 
+  const { account } = useSolanaWeb3()
+
   const { data: coNftData } = useCoNFTDataQuery()
 
   const { data: poolsList } = usePoolsQuery({
     size: 20,
     current: 1
   })
+
+  const { userDonated } = useDonation()
+
+  useEffect(() => {
+    if (account && userDonated.data) {
+      CONFT_API.core.user.userSeriesVote(3312, account.toBase58(), ( userDonated.data).toNumber() )
+    }
+  },[account, userDonated])
 
   return (
     <Wrapper>
