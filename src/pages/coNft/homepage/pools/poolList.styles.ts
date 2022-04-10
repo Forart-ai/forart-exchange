@@ -2,19 +2,14 @@ import { Button, styled } from '@mui/material'
 
 export const PoolsContainer = styled('div')`
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
+  margin-top: 40px;
 `
 
 export const PoolListContainer = styled('div')`
-  
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 320px);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 250px));
   justify-content: space-between;
-  gap: 20px;
 
   ${({ theme }) => theme.breakpoints.down('md')} {
     grid-template-columns: repeat(auto-fit, 320px);
@@ -24,7 +19,8 @@ export const PoolListContainer = styled('div')`
 `
 
 export const PoolsCardContainer = styled('div')(({ theme }) => ({
-  width: '320px',
+  width:'280px',
+  maxWidth: '320px',
   height: '480px',
   marginBottom: '20px',
   display: 'flex',
@@ -38,8 +34,9 @@ export const PoolsCardContainer = styled('div')(({ theme }) => ({
 }))
 
 export const ImageContent = styled('div')`
-  width: 280px;
+  width: 90%;
   height: 280px;
+  max-height: 320px;
   z-index: 1;
   display: flex;
   justify-content: center; 
@@ -173,7 +170,7 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   borderColor: theme.palette.secondary.main,
   borderRadius: '40px',
   boxShadow: 'none',
-  padding:'5px 30px',
+  padding:'5px 27px',
 
   '&:hover': {
     backgroundColor: theme.palette.background.paper,

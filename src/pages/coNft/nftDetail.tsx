@@ -19,6 +19,7 @@ import { shortenAddress } from '../../utils'
 import { useLocation } from 'react-router-dom'
 import copy from 'copy-to-clipboard'
 import { message } from 'antd'
+import DefaultPageWrapper from '../../components/default-page-wrapper'
 
 const NFTInfo = styled.div`
   width: 100%;
@@ -26,6 +27,7 @@ const NFTInfo = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
+  margin-top: 60px;
   
   @media screen and (max-width: 1080px) {
     flex-direction: column;
@@ -35,6 +37,7 @@ const NFTInfo = styled.div`
 const LeftArea = styled.div`
   height: 450px;
   width: 450px;
+  
   img {
     height: 100%;
     width: 100%;
@@ -298,64 +301,61 @@ const CONFTDetail:React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
   return (
-    <ThemeProvider theme={ForartTheme} >
-      <Container maxWidth={'xl'} sx={{ pt: { md:8, xs: 1 }, minHeight:'100vh', p:{ xs: 1 } }} >
+    <DefaultPageWrapper>
+      <NFTInfo>
+        <LeftArea >
+          <img src={nftDetail?.previewUrl} />
+        </LeftArea>
+        <RightArea>
+          <RightTopArea>
+            <TopTitle>
+              <div style={{ display:'flex', alignItems: 'center' }}>
+                <div className="name">{nftDetail?.chainNftName || `HypeTeen # ${nftDetail?.chainNftNameTmp}`}</div>
 
-        <NFTInfo>
-          <LeftArea >
-            <img src={nftDetail?.previewUrl} />
-          </LeftArea>
-          <RightArea>
-            <RightTopArea>
-              <TopTitle>
-                <div style={{ display:'flex', alignItems: 'center' }}>
-                  <div className="name">{nftDetail?.chainNftName || `HypeTeen # ${nftDetail?.chainNftNameTmp}`}</div>
+              </div>
 
-                </div>
+              <Options>
+                <HeartContainer heartStatus = {heartStatus} >
+                  <span>{heartNum}</span>
+                  <HeartOutlined onClick={() => handleLike(nftDetail?.id as string)} className="heart" />
+                </HeartContainer>
+                <Tooltip title={'Copy link'}>
+                  <img src={UploadIcon} onClick={() => handleCopy(window.location.href)} />
+                </Tooltip>
+              </Options>
 
-                <Options>
-                  <HeartContainer heartStatus = {heartStatus} >
-                    <span>{heartNum}</span>
-                    <HeartOutlined onClick={() => handleLike(nftDetail?.id as string)} className="heart" />
-                  </HeartContainer>
-                  <Tooltip title={'Copy link'}>
-                    <img src={UploadIcon} onClick={() => handleCopy(window.location.href)} />
-                  </Tooltip>
-                </Options>
+            </TopTitle>
+            <SeriesTitle>
+              <div>  {
+                level && (
+                  <LevelLabel color={level.color} shine={level.shine}>
+                    Rarity: {level.label}
+                  </LevelLabel>
+                )
+              }
+              </div>
+            </SeriesTitle>
+            <Rainbow>
+              <span>Owned by:</span>
+              {
+                !isMobile ?  <div className="wallet">{nftDetail?.wallet}</div> :  <div className="wallet">{shortenAddress(nftDetail?.wallet)}</div>
+              }
+            </Rainbow>
+          </RightTopArea>
+          <RightBottomArea >
+            <AttributesItem item={attr} />
+          </RightBottomArea>
+        </RightArea>
 
-              </TopTitle>
-              <SeriesTitle>
-                <div>  {
-                  level && (
-                    <LevelLabel color={level.color} shine={level.shine}>
-                      Rarity: {level.label}
-                    </LevelLabel>
-                  )
-                }
-                </div>
-              </SeriesTitle>
-              <Rainbow>
-                <span>Owned by:</span>
-                {
-                  !isMobile ?  <div className="wallet">{nftDetail?.wallet}</div> :  <div className="wallet">{shortenAddress(nftDetail?.wallet)}</div>
-                }
-              </Rainbow>
-            </RightTopArea>
-            <RightBottomArea >
-              <AttributesItem item={attr} />
-            </RightBottomArea>
-          </RightArea>
+      </NFTInfo>
 
-        </NFTInfo>
-
-      </Container>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical:'top',horizontal:'center' }}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+      <Snackbar  open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{ vertical:'top',horizontal:'center' }}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%',  }}>
           Copy success!
         </Alert>
       </Snackbar>
+    </DefaultPageWrapper>
 
-    </ThemeProvider>
   )
 }
 

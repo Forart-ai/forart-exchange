@@ -1,27 +1,29 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useLocationQuery } from '../../hooks/useLocationQuery'
-import CONFT_API from '../../apis/co-nft'
-import { ThemeInput } from '../../styles/ThemeInput'
-import { OrderBySelector, OrderSelector } from '../../components/NFTListSelectors'
+import { useLocationQuery } from '../../../../hooks/useLocationQuery'
+import CONFT_API from '../../../../apis/co-nft'
+import { ThemeInput } from '../../../../styles/ThemeInput'
+import { OrderBySelector, OrderSelector } from '../../../../components/NFTListSelectors'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {  Divider, List, Skeleton } from 'antd'
 import styled from 'styled-components'
-import AllNftList from '../../components/nft-mint/allNftList'
+import AllNftList from '../../../../components/nft-mint/allNftList'
 import { LoadingOutlined } from '@ant-design/icons'
-import { useWalletRankModal } from '../../hooks/modals/useWalletRankModal'
+import { useWalletRankModal } from '../../../../hooks/modals/useWalletRankModal'
 import {
   RedoOutlined
 } from '@ant-design/icons'
 import { useMediaQuery } from 'react-responsive'
-import { Button } from '@mui/material'
+import { Box, Button, MenuItem } from '@mui/material'
+import StyledSelector from '../../../../contexts/theme/components/Selector'
+import { SelectRankings } from '../../components/filter-operations/selectors'
+import StyledTextField from '../../../../contexts/theme/components/TextField'
 
 const Filter = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
-  height: 40px;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   flex-wrap: wrap;
   
   .refresh {
@@ -29,7 +31,7 @@ const Filter = styled.div`
     margin-right: 10px;
     background: rgb(40,44,52);
     border-radius: 5px;
-  }
+  } 
   
   .mobile-filter {
     width: 100%;
@@ -179,44 +181,28 @@ const AllNftContainer: React.FC = () => {
 
   return (
     <AllNftWrapper >
-      {
-        isMobile ? (
-          <Filter >
-            <div className="mobile-filter">
-              <ThemeInput
-                placeholder={'Please input token ID'}
-                onChange ={(res:any) =>onChange(res)}
-                // onBlur = { e => onChange(e)}
-                prefix={<></>}
-                defaultValue={searchKey}
-                style={{ width:'300px', marginRight: '20px' }}
-              />
-              <div className="refresh">
-                <RedoOutlined style={{ width:'40px', color: '#cfcfcf' }} spin={loading} onClick={resetData} />
-              </div>
-            </div>
-            <div className="mobile-filter">
-              <OrderBySelector onChange={e => { setOrderBy(e); onPressEnter()}} />
-              <Button sx={{ '&.MuiButton-root':{ p: 0, pr:'2px', pl:'2px' } }} variant={'contained'} size={'small'}  onClick={ openWalletRankModal } style={{ marginLeft:'10px' }}>Creator Ranking</Button>
-            </div>
-          </Filter>
-        ) :
-          <Filter>
-            <ThemeInput
-              placeholder={'Please input token ID'}
-              onChange ={(res:any) =>onChange(res)}
-              prefix={<></>}
-              defaultValue={searchKey}
-              style={{ width:'300px', marginRight: '20px' }}
-            />
-            <div className="refresh">
-              <RedoOutlined style={{ width:'40px', color: '#cfcfcf' }} spin={loading} onClick={resetData} />
-            </div>
-            {/*<OrderSelector onChange={ e => { setSelectedOrder(e); onPressEnter() }}  />*/}
-            <OrderBySelector onChange={e => { setOrderBy(e); onPressEnter()}} />
-            <Button variant={'contained'}  onClick={ openWalletRankModal } style={{ marginLeft:'10px' }}>Creator Ranking</Button>
-          </Filter>
-      }
+
+      <Filter>
+        <SelectRankings value={orderBy} onChange={e => { setOrderBy(e.target.value); onPressEnter()}} />
+        <Box sx={{ display: 'grid', gap:'10px', gridTemplateColumns:'230px 180px' }}>
+          {/*<ThemeInput*/}
+          {/*  placeholder={'Please input token ID'}*/}
+          {/*  onChange ={(res:any) =>onChange(res)}*/}
+          {/*  prefix={<></>}*/}
+          {/*  defaultValue={searchKey}*/}
+          {/*  style={{ width:'300px', marginRight: '20px' }}*/}
+          {/*/>*/}
+          {/*<div className="refresh">*/}
+          {/*  <RedoOutlined style={{ width:'40px', color: '#cfcfcf' }} spin={loading} onClick={resetData} />*/}
+          {/*</div>*/}
+          <StyledTextField
+            placeholder={'Please input token ID'}
+            onChange ={(res:any) => onChange(res)}
+            variant={'outlined'}
+          />
+          <Button variant={'contained'} color={'secondary'}  onClick={ openWalletRankModal }>Creator Ranking</Button>
+        </Box>
+      </Filter>
 
       <div className="infinite-container" id="scrollableDiv">
         {

@@ -24,16 +24,7 @@ const BackgroundImage = styled('div')`
   background-size: cover;
   text-align: center;
 
-  .cover {
-    width: 100%;
-    height: 100%;
-    background: rgb(1, 0, 29);
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    z-index: 2;
-    opacity: 0;
-  }
+ 
   
 
   ${({ theme }) => theme.breakpoints.down('md')} {
@@ -46,7 +37,6 @@ const MainContainer = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 3;
   position: relative;
   padding: 20px 40px;
   
@@ -172,7 +162,6 @@ const ArtistInfo:React.FC = () => {
   return (
     <Wrapper>
       <BackgroundImage>
-        <div className="cover" />
         <MainContainer >
           <DonateArea>
             <Button variant={'contained'} color={'secondary'} onClick={openDonateModal}> Donate </Button>

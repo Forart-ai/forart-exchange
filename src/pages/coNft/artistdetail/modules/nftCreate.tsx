@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useSolanaWeb3 } from '../../contexts/solana-web3'
-import { useModal } from '../../contexts/modal'
-import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
-import useUserQuery from '../../hooks/queries/useUserQuery'
-import { useCheckWhiteListModal } from '../../hooks/modals/useCheckWhiteListModal'
-import useDiscordAccessToken from '../../hooks/useDiscordAccessToken'
-import useNFTMint from '../../hooks/useNFTMint'
+import { useSolanaWeb3 } from '../../../../contexts/solana-web3'
+import { useModal } from '../../../../contexts/modal'
+import WalletSelectionModal from '../../../../components/wallet/WalletSelectionModal'
+import useUserQuery from '../../../../hooks/queries/useUserQuery'
+import { useCheckWhiteListModal } from '../../../../hooks/modals/useCheckWhiteListModal'
+import useDiscordAccessToken from '../../../../hooks/useDiscordAccessToken'
+import useNFTMint from '../../../../hooks/useNFTMint'
+import Background from '../../../../assets/images/coPools/create-background.png'
+
 import {
   BodyContent,
   KitContent,
@@ -14,18 +16,18 @@ import {
   SelectedBody,
   TopContainer,
   AttrType,
-  AttrContent
-} from './artistMint.style'
-import { NFTPreview } from '../../components/nft-mint/selectedList'
+  AttrContent, RandomHatsContainer
+} from '../../artistMint.style'
+import { NFTPreview } from '../../../../components/nft-mint/selectedList'
 import {  createFromIconfontCN } from '@ant-design/icons'
-import { SelectableKitList } from '../../components/nft-mint/mintKit'
-import { useLocationQuery } from '../../hooks/useLocationQuery'
-import { useArtistKitQuery } from '../../hooks/queries/useArtistKitQuery'
-import { NFTAttributesData } from '../../types/coNFT'
-import RandomHats from '../../assets/images/coPools/random-hat.png'
-import { Button } from '@mui/material'
+import { SelectableKitList } from '../../../../components/nft-mint/mintKit'
+import { useLocationQuery } from '../../../../hooks/useLocationQuery'
+import { useArtistKitQuery } from '../../../../hooks/queries/useArtistKitQuery'
+import { NFTAttributesData } from '../../../../types/coNFT'
+import RandomHats from '../../../../assets/images/coPools/random-hat.png'
+import { Box, Button } from '@mui/material'
 import { Modal } from 'antd'
-import { ConfirmCreateDialog } from './components/ConfirmCreateDialog'
+import { ConfirmCreateDialog } from '../../components/ConfirmCreateDialog'
 
 const IconFont = createFromIconfontCN({
   scriptUrl: [
@@ -108,28 +110,34 @@ const NftCreate: React.FC = () => {
   return (
     <MintWrapper>
       <TopContainer>
-        <BodyContent>
-          <SelectedBody>
-            {
-              body && (
-                <>
-                  <NFTPreview body={body} attrList={attr} />
-                </>
-              )
-            }
-          </SelectedBody>
+        <Box sx={{ display:'flex', justifyContent:'space-between', flexDirection:'column' }}>
+          <BodyContent>
+            <SelectedBody>
+              {
+                body && (
+                  <>
+                    <NFTPreview body={body} attrList={attr}  />
+                  </>
+                )
+              }
+            </SelectedBody>
 
-        </BodyContent>
+          </BodyContent>
+
+          <RandomHatsContainer >
+            <img className={'background'} src={Background} />
+            <Box sx={{ display:'flex', height:'100%', justifyContent:'space-between', alignItems:'center' , padding:'10px' }}>
+              <img className={'hat'} src={RandomHats} />
+              <span>Hat: HypeTeen Rarity  <br /> randomly by Hat rarity</span>
+            </Box>
+          </RandomHatsContainer>
+
+        </Box>
 
         <KitContent >
           {
             artistKit && (
               <>
-                <AttrContent>
-                  <AttrType>Hat: Hypeteen Rarity randomly by Hat rarity</AttrType>
-                  <img src={RandomHats} style={{ width: '230px' }} />
-                </AttrContent>
-
                 {
                   Object.keys(artistKit).filter(item => item === 'Body').map((type,index) => (
                     <AttrContent key={index}>

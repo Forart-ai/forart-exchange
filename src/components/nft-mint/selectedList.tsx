@@ -56,6 +56,15 @@ const PreviewContainer = styled.div`
   width: 100%;
   height: 100%;
 `
+const PreviewBackground = styled.div`
+  position: absolute;
+  width:100%;
+  padding: 20px;
+
+  img {
+    border-radius: 30px;
+  }
+`
 
 const PreviewImages = styled.div`
   position: absolute;
@@ -123,15 +132,13 @@ export const NFTPreview: React.FC<{body: NFTAttributesData, attrList?: NFTAttrib
   return (
     <Wrapper>
       <PreviewContainer>
-        <PreviewImages>
+        <PreviewBackground>
           {
             attrList?.filter(item => item?.bodyType ==='Background').map((item, index) => (
-              <PreviewImages key={index}>
-                <img src={item?.url} onError={undefined} />
-              </PreviewImages>
+              <img  key={index} src={item?.url} onError={undefined}  />
             ))
           }
-        </PreviewImages>
+        </PreviewBackground>
         <PreviewImages>
           {
             body?.url && <img src={body?.url}  alt={body?.url} />

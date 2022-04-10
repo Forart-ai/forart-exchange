@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import AllNftContainer from '../allNftContainer'
+import AllNftContainer from './modules/allNftContainer'
 
 import ArtistInfo from './modules/artistInfo'
 import { ArtDetail } from './modules/artistIntroduction'
 import { Tab, Tabs, ThemeProvider, useMediaQuery, useTheme } from '@mui/material'
 import ForartTheme from '../../../contexts/theme/config/dark'
-import NftCreate from '../nftCreate'
+import NftCreate from './modules/nftCreate'
 
 interface StyledTabsProps {
     children?: React.ReactNode;
@@ -152,35 +152,33 @@ const Index: React.FC = () => {
   }
 
   return (
-    <ThemeProvider theme={ForartTheme}>
-      <Wrapper>
-        <ArtistInfo />
+    <Wrapper>
+      <ArtistInfo />
 
-        <TabArea>
-          <StyledTabs
-            value={value}
-            onChange={handleChange}
-            aria-label="styled tabs example"
-          >
-            <StyledTab   label="Art Detail" />
-            <StyledTab  label="Create" />
-            <StyledTab  label="ALL NFTs" />
-          </StyledTabs>
+      <TabArea>
+        <StyledTabs
+          value={value}
+          onChange={handleChange}
+          aria-label="styled tabs example"
+        >
+          <StyledTab   label="Art Detail" />
+          <StyledTab  label="Create" />
+          <StyledTab  label="ALL NFTs" />
+        </StyledTabs>
 
-        </TabArea>
-        <ContentArea  >
-          <TabPanel index={0} value={value}>
-            <ArtDetail />
-          </TabPanel>
-          <TabPanel index={1} value={value} >
-            <NftCreate  />
-          </TabPanel>
-          <TabPanel index={2} value={value}>
-            <AllNftContainer />
-          </TabPanel>
-        </ContentArea>
-      </Wrapper>
-    </ThemeProvider>
+      </TabArea>
+      <ContentArea  >
+        <TabPanel index={0} value={value}>
+          <ArtDetail />
+        </TabPanel>
+        <TabPanel index={1} value={value} >
+          <NftCreate  />
+        </TabPanel>
+        <TabPanel index={2} value={value}>
+          <AllNftContainer />
+        </TabPanel>
+      </ContentArea>
+    </Wrapper>
   )
 }
 

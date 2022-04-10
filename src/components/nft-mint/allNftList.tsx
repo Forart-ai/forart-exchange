@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { MintedNFTItem } from '../../types/coNFT'
-import styled from 'styled-components'
 import { useModal } from '../../contexts/modal'
 import AttributesDialog from '../attributes-dialog'
 import {   HeartFilled   } from '@ant-design/icons'
@@ -10,18 +9,21 @@ import { useLocationQuery } from '../../hooks/useLocationQuery'
 import CONFT_API from '../../apis/co-nft'
 import WalletSelectionModal from '../wallet/WalletSelectionModal'
 import { Link } from 'react-router-dom'
+import { styled } from '@mui/material'
 
-const Wrapper = styled.div`
+const Wrapper = styled('div')`
   width: 220px;
   height: 280px;
-  border-radius: 10px;
+  border: 1px #999999 solid;
+  border-radius: 20px;
   margin: 10px 9px;
-  display: flex;
+  padding: 10px;
+  display: flex; 
+  background-color: rgba(153, 153, 153, .2);
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
   //background-image: linear-gradient(to bottom, rgba(255, 31, 131, 0.6), rgba(241, 13, 192, 0.6));
-  background-color: rgb(55, 13, 65);
   transition: transform 0.22s;
   
   :hover {
@@ -32,8 +34,7 @@ const Wrapper = styled.div`
   img {
     width: 100%;
     object-fit: contain;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+    border-radius: 20px;
     cursor: pointer;
   }
 
@@ -43,7 +44,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Info = styled.div`
+const Info = styled('div')`
   color: white;
   display: flex;
   width: 100%;
@@ -84,15 +85,14 @@ const Info = styled.div`
   }
 `
 
-const HeartContainer = styled.div<{heartStatus?: 'up' | 'down'}>`
+const HeartContainer = styled('div')<{heartStatus?: 'up' | 'down'}>`
   display: flex;
   align-items: center;
-  z-index: 9;
 
   .heart {
     cursor: pointer;
     border-radius: 50%;
-    font-size: 1.3em;
+    font-size: 18px;
 
     //:hover {
     //  color: #ff005e;
@@ -104,7 +104,7 @@ const HeartContainer = styled.div<{heartStatus?: 'up' | 'down'}>`
   ${props => props.heartStatus === 'up' && `
   
   .heart {
-     color: #f30c74
+     color: #8246F5
      }
   `
 }
@@ -118,6 +118,7 @@ const HeartContainer = styled.div<{heartStatus?: 'up' | 'down'}>`
 
   span {
     margin-right: 5px;
+    font-family: Aldrich-Regular;
   }
 `
 

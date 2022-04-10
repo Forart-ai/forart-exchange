@@ -14,7 +14,7 @@ export const MintWrapper = styled.div`
 
 export const TopContainer = styled.div `
   width: 100%;
-  height: 600px;
+  height: 900px;
   display: flex;
   padding: 0 100px;
   justify-content: center;
@@ -28,13 +28,13 @@ export const TopContainer = styled.div `
 
 export const BodyContent = styled.div `
   width: 600px;
-  height: 100%;
+  height: 600px;
   display: flex;
-  background: #170A16;
   border-radius: 20px;
   display: flex;
   justify-content: center;
   position: relative;
+  border: 1px rgba(255,255,255, .4) solid;
 
   @media screen and (max-width: 1080px) {
     width: 100%;
@@ -43,50 +43,6 @@ export const BodyContent = styled.div `
     justify-content: center;
     align-items: center;
   }
-`
-
-export const SwiperList = styled.div`
-  width: 20%;
-  height: 100%;
-  display: flex;
-  position: relative;
-
-  .navigation {
-    z-index: 2;
-    opacity: .8;
-   
-    
-    .down-arrow {
-      position: absolute;
-      bottom: -25px;
-      left: 40px;
-      cursor: pointer;
-    }
-
-    .up-arrow {
-      position: absolute;
-      top: -25px;
-      left: 40px;
-      cursor: pointer;
-
-    }
-    img {
-      width: 50px;
-    }
-  }
-
-  .swiper-slide {
-    width: auto;
-  }
-  
-  @media screen and (max-width: 1100px) {
-    height: 30%;
-    width: 100%;
-    .down-arrow, .up-arrow {
-      display: none;
-    }
-  }
-  
 `
 
 export const ImageBorder = styled.div`
@@ -100,7 +56,6 @@ export const KitImageBorder = styled.div`
 `
 
 export const StyledImage = styled(Image)`
-  background: #1E052D;
   border-radius: 10px;
   position: relative;
 
@@ -109,7 +64,6 @@ export const StyledImage = styled(Image)`
 export const SelectedBody = styled.div`
   width: 100%;
   height: 100%;
-  background: #1E052D;
   border-radius: 20px;
   position: relative;
   z-index: 1;
@@ -121,10 +75,35 @@ export const SelectedBody = styled.div`
   
 `
 
+export const RandomHatsContainer = styled.div`
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+  background-image: -webkit-linear-gradient(left, #8246F5 , #5000B4);
+  border-radius: 30px;
+  
+   .background{
+    position: absolute;
+    right: -60px;
+  }
+  
+  .hat {
+    height: 100%;
+    border-radius: 30px;
+  }
+  
+  span {
+    width: calc(100% - 260px);
+    font-size: 22px;
+    font-family: arialBold;
+    color: #ffffff;
+    z-index: 3;
+  }
+`
+
 export const KitContent = styled.div`
   width: 750px;
   height: 100%;
-  background: #1E052D;
   border-radius: 20px;
   position: relative;
   padding: 15px 20px;
@@ -145,10 +124,12 @@ export const AttrContent = styled.div`
 `
 
 export const AttrType = styled.div`
-    font-family: inter-extraBold;
-  color: #E5E8EB;
-  font-size: 1.2rem;
-  margin: 5px 0;
+  font-family: arialBold;
+  color: #8246F5;
+  font-size: 20px;
+  padding: 10px 0;
+  border-bottom: 1px #999999 solid;
+  margin-bottom: 15px;
 `
 
 export const MintContainer = styled.div`
