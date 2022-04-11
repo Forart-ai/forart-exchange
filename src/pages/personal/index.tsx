@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 // @ts-ignore
-import {  Empty } from 'antd'
+import { Empty, TabPaneProps } from 'antd'
 import { useWeb3React } from '@web3-react/core'
 import { shortenAddress } from '../../utils'
 import { SmileOutlined, UserOutlined } from '@ant-design/icons'
@@ -11,16 +11,20 @@ import { NftListItem } from '../../types/NFTDetail'
 import { useMintResultQuery } from '../../hooks/queries/useMintResultQuery'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { MintedNFTItem } from '../../types/coNFT'
-import MintListItem from '../../components/mintListItem'
-import { styled, Tab, Tabs, useMediaQuery, useTheme } from '@mui/material'
+import MintListItem from './components/mintListItem'
+import { Box, styled, Tab, Tabs, useMediaQuery, useTheme } from '@mui/material'
 import Background from '../../assets/images/coPools/hypeteen-background.png'
 import AvatarIcon from '../../assets/images/coPools/rocket.png'
+import { ArtDetail } from '../coNft/artistdetail/modules/artistIntroduction'
+import UserCoNftList from './modules/userCoNftList'
+import CharacterCustomize from './modules/characterCustomize'
+import UserOwnedNfts from './modules/userOwnedNfts'
 
 const Wrapper = styled('div')`
   width: 100%;
   min-height: 100vh;
   text-align: center;
-  border-bottom: 1px ${({ theme }) => theme.palette.secondary.main} solid;
+
 
 `
 const BackgroundImage = styled('div')`
@@ -33,6 +37,7 @@ const BackgroundImage = styled('div')`
   justify-content: center;
   align-items: center;
   position: relative;
+  margin-bottom: 150px;
 
 
   ${({ theme }) => theme.breakpoints.down('md')} {
@@ -44,7 +49,10 @@ const PersonalCenterContainer = styled('div')`
   width: 100%;
   justify-content: center;
   align-items: center;
-  
+  display: flex;
+  flex-direction: column;
+
+
 `
 
 const UserInfoContainer = styled('div')`
@@ -115,88 +123,41 @@ const UserInfo = styled('div')`
 `
 
 const TabsWrapper = styled('div')`
-  width: 100%;
-`
-
-const NFTListContainer = styled('div')`
-  width: 100%;
-  display: grid;
-  justify-content: space-between;
-  grid-template-columns: repeat(auto-fill, 240px);
-  grid-template-rows: repeat(auto-fill,  240px);
-  grid-gap: 20px;
-  padding: 16px;
-
-  .empty {
-    padding: 0;
-    height: 0;
-    width: 210px;
-  }
-  
-  .warning {
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    font-size: 1.8em;
-  }
-  
-  @media screen and (max-width: 1100px) {
-    justify-content: center;
-  }
-`
-
-const WarningWrapper = styled('div')`
-  display: flex;
-  justify-content: center;
-  .ant-empty-description {
-    color: #ffffff;
-  }
+  width: 100vw;
 `
 
 interface StyledTabsProps {
   children?: React.ReactNode;
   value: number;
   onChange: (event: React.SyntheticEvent, newValue: number) => void;
+  variant?: 'scrollable' | 'standard';
+  centered?: boolean
 }
+
+const StyledTabs = styled((props: StyledTabsProps) => (
+  <Tabs
+    scrollButtons="auto"
+    aria-label="scrollable auto tabs example"
+    {...props}
+    TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
+  />
+))(({ theme }) => ({
+
+  '& .MuiTabs-indicator': {
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+  },
+  '& .MuiTabs-indicatorSpan': {
+    // maxWidth: 40,
+    width: '100%',
+    backgroundColor: theme.palette.primary.main,
+  },
+}))
 
 interface StyledTabProps {
   label: string;
 }
-
-const StyledTab = styled((props: StyledTabProps) => (
-  <Tab disableRipple {...props} />
-))(({ theme }) => ({
-  // textTransform: 'none',
-  fontWeight: 600,
-  fontSize: '18px',
-  color: 'rgba(255, 255, 255, 0.7)',
-  minWidth: '170px',
-  minHeight: '42px',
-  backgroundColor:'#5000B4',
-  borderRadius:'40px',
-  margin:'0 20px',
-  transition: '.5s ease',
-
-  '&.Mui-selected': {
-    color: '#ffffff',
-  },
-}))
-
-const TabPanelAnimation = styled('div')`
-  .anime {
-    animation: fadeIn .5s ;
-  }
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-`
-
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -216,64 +177,29 @@ function TabPanel(props: TabPanelProps) {
 
     >
       {value === index && (
-        <TabPanelAnimation  >
-          <div className={'anime'} >
-            {children}
-          </div>
-        </TabPanelAnimation>
+
+        <div  >
+          {children}
+        </div>
+
       )}
     </div>
   )
 }
 
-const UserNFTList: React.FC<{ list: Array<NftListItem> | undefined }> = ({ list }) => {
+const StyledTab = styled((props: StyledTabProps) => (
+  <Tab disableRipple {...props} />
+))(({ theme }) => ({
+  fontFamily: 'arialBold',
+  textTransform: 'none',
+  fontSize: '20px',
+  marginRight: theme.spacing(1),
+  color:theme.palette.secondary.main,
 
-  return (
-    <NFTListContainer>
-      {
-        list?.map((nft: any, index: number) => (
-
-          <NFTListItem data={nft}  type="own" key={index} />
-        ))
-      }
-      {
-        new Array(8).fill({}).map((_, index) => (
-          <div className="empty" key={index} />
-        ))
-      }
-    </NFTListContainer>
-  )
-}
-
-const UserMintedNFTList: React.FC<{ list: Array<MintedNFTItem> | undefined  }> = ({ list }) => {
-
-  return (
-    <NFTListContainer>
-      {
-        list?.map((nft: any, index: number) => (
-          <MintListItem data={nft} key={index} />
-        ))
-      }
-      {
-        new Array(8).fill({}).map((_, index) => (
-          <div className="empty" key={index} />
-        ))
-      }
-    </NFTListContainer>
-  )
-}
-
-const WarningContent: React.FC = () => {
-
-  return (
-    <>
-      <WarningWrapper>
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'Wallet not connected'} />
-      </WarningWrapper>
-
-    </>
-  )
-}
+  '&.Mui-selected': {
+    color:theme.palette.primary.main,
+  },
+}))
 
 const TabsContainer: React.FC = () => {
   const { account } = useWeb3React()
@@ -285,7 +211,7 @@ const TabsContainer: React.FC = () => {
 
   const theme = useTheme()
 
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const [typeChain] = useState<ChainType>('Ethereum')
 
@@ -293,80 +219,45 @@ const TabsContainer: React.FC = () => {
 
   const { data: mintedNft } = useMintResultQuery(true, { wallet: SolAccount?.toBase58(), nft:'' } )
 
-  const [value, setValue] = React.useState(1)
+  const [value, setValue] = React.useState(0)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
 
-  const StyledTabs = styled((props: StyledTabsProps) => (
-
-    <Tabs
-      variant={isMobile ? 'scrollable' : 'standard'}
-      centered={true}
-      {...props}
-      TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-    />
-  ))(({ theme }) => ({
-    '& .Mui-selected': {
-      backgroundColor:'#4fc89f',
-
-    },
-
-    '& .MuiTabs-indicator': {
-      display:'none',
-    },
-
-    '&. MuiTabs-flexContainer': {
-      justifyContent:'center'
-    }
-  }))
-
   return (
     <TabsWrapper >
-      <StyledTabs value={value} onChange={handleChange} />
-    </TabsWrapper>
+      <Box sx={{ borderBottom: '1px #5000B4 solid', width:'auto' }}>
+        <StyledTabs
+          variant={isMobile ? 'scrollable' : 'standard'}
+          centered={isMobile ? false : true}
+          value={value}
+          onChange={handleChange}
+          aria-label="styled tabs example"
 
-  // <TabsWrapper>
-  //   <StyledTab defaultActiveKey="minted"  >
-  //     <TabPane
-  //       tab= {
-  //         <span>
-  //           <SmileOutlined />
-  //           Created
-  //         </span>
-  //       }
-  //       key="minted"
-  //     >
-  //       {
-  //         SolAccount ?
-  //           <UserMintedNFTList list={mintedNft} />
-  //           :
-  //           <WarningContent />
-  //       }
-  //
-  //     </TabPane>
-  //
-  //     <TabPane
-  //       tab= {
-  //         <span>
-  //           <SmileOutlined />
-  //           Owned
-  //         </span>
-  //       }
-  //       key="owned"
-  //     >
-  //       {
-  //         account ?
-  //           <UserNFTList list={personalNft} />
-  //           :
-  //           <WarningContent />
-  //       }
-  //
-  //     </TabPane>
-  //
-  //   </StyledTab>
-  // </TabsWrapper>
+        >
+          <StyledTab label="Avatar" />
+          <StyledTab label="Identity" />
+          <StyledTab  label="CO-NFT"  />
+          <StyledTab label="NFTs" />
+          <StyledTab label="Post" />
+        </StyledTabs>
+
+      </Box>
+
+      <Box>
+        <TabPanel index={0} value={value}>
+          <CharacterCustomize />
+        </TabPanel>
+        <TabPanel index={2} value={value}>
+          <UserCoNftList list={mintedNft} />
+        </TabPanel>
+        <TabPanel index={3} value={value}>
+          <UserOwnedNfts />
+        </TabPanel>
+      </Box>
+
+    </TabsWrapper>
   )
 }
 
@@ -413,9 +304,9 @@ const PersonalCenterPage: React.FC = () => {
           </UserInfoContainer>
         </BackgroundImage>
 
-        <TabsContainer />
-
       </PersonalCenterContainer>
+      <TabsContainer />
+
     </Wrapper>
   )
 }

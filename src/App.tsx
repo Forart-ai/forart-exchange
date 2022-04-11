@@ -38,7 +38,7 @@ export const PurpleGlow = styled('div')`
 `
 
 const App: React.FC = () => {
-  // useEagerConnect()
+  useEagerConnect()
   // useChainEffect()
 
   const location = useLocation()

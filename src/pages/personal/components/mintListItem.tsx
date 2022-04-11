@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { MintedNFTItem } from '../types/coNFT'
+import { MintedNFTItem } from '../../../types/coNFT'
 import styled from 'styled-components'
-import { useModal } from '../contexts/modal'
-import AttributesDialog from './attributes-dialog'
+import { useModal } from '../../../contexts/modal'
+import AttributesDialog from '../../../components/attributes-dialog'
 import { Progress } from 'antd'
 import { Link } from 'react-router-dom'
 
@@ -41,7 +41,6 @@ const Wrapper = styled.div<{$empty?: boolean}>`
 
 const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data, empty }) => {
   const [loading, setLoading] = useState(true)
-  const { openModal } = useModal()
 
   const getImageUrl = useCallback(() => {
     const url = data?.previewUrl

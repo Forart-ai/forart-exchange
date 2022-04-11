@@ -130,6 +130,7 @@ export const AttrType = styled.div`
   padding: 10px 0;
   border-bottom: 1px #999999 solid;
   margin-bottom: 15px;
+  text-align: left;
 `
 
 export const MintContainer = styled.div`

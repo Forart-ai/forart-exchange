@@ -1,42 +1,33 @@
 import { useEffect, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { celoInjected, injected } from './connectors'
-import { useSolanaWeb3 } from '../contexts/solana-web3'
+import { SupportWalletNames, useSolanaWeb3 } from '../contexts/solana-web3'
+import useLocalStorage, { LOCAL_STORAGE_WALLET_KEY } from '../hooks/useLocalStorage'
+import { SUPPORT_WALLETS } from '../utils/constant'
+import { sleep } from '../utils'
 
 export function useEagerConnect() {
-  const { activate, active } = useWeb3React()
-  const [ tried, setTried ] = useState(false)
+  const [wallet] = useLocalStorage<SupportWalletNames>(LOCAL_STORAGE_WALLET_KEY)
+
+  const [eagerConnected, setEagerConnected] = useState<boolean>(false)
 
   useEffect(() => {
-    injected.isAuthorized().then((isAuthorized:boolean) => {
-      if (isAuthorized) {
-        activate(injected,undefined,true).catch(() => {
-          setTried(true)
-        })
-      } else {
-        setTried(true)
+    (async () => {
+      if (wallet === SUPPORT_WALLETS.Phantom.name) {
+        await sleep(1000)
+        const solana = (window as any).solana
+
+        solana
+          ?.connect({ onlyIfTrusted: true })
+          .then(() => {
+            setEagerConnected(true)
+          })
+          .catch(() => {})
       }
-    })
+    })()
+  }, [wallet])
 
-    // celoInjected.isAuthorized().then((isAuthorized:boolean) => {
-    //   if (isAuthorized) {
-    //     activate(celoInjected,undefined,true).catch(() => {
-    //       setTried(true)
-    //     })
-    //   } else {
-    //     setTried(true)
-    //   }
-    // })
-
-  },[])
-
-  useEffect(() => {
-    if (!tried && active) {
-      setTried(true)
-    }
-  }, [tried, active])
-
-  return tried
+  return { eagerConnected }
 }
 
 export function useInactiveListener(suppress = false) {
