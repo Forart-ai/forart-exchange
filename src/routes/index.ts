@@ -107,6 +107,7 @@ const routes: Route[] = [
     title:'Staking',
     component: Staking,
     icon: MarketplaceIcon,
+    hidden: true
   }
 
 ]
