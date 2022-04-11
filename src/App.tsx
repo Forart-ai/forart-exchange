@@ -23,18 +23,18 @@ export const BlueGlow = styled('div')`
   filter: blur(80px);
   border-radius: 50%;
   opacity: 0.8;
-  z-index: 1;
+  z-index: -1;
 `
 
 export const PurpleGlow = styled('div')`
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, #5a1993 0%, rgba(63, 21, 99, 0) 100%);
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.9;
-  z-index: 1;
+   position: absolute;
+   width: 400px;
+   height: 400px;
+   background: radial-gradient(circle, #5a1993 0%, rgba(63, 21, 99, 0) 100%);
+   border-radius: 50%;
+   filter: blur(80px);
+   opacity: 0.9;
+   z-index: -1;
 `
 
 const App: React.FC = () => {
@@ -63,13 +63,13 @@ const App: React.FC = () => {
         { !isMobile ? (
           <>
 
-            <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', zIndex:3,  top:'60px' }}>
-              {/*<PurpleGlow style={{ right: '0' }} />*/}
-              {/*<PurpleGlow style={{ left: '25%' }} />*/}
-              {/*<PurpleGlow style={{ top:'90vh', right: '0%', opacity:'.6', width:'600px', height: '600px' }} />*/}
-              {/*<BlueGlow style={{ right: '25%' }} />*/}
-              {/*<BlueGlow style={{ top:'60vh' }} />*/}
-              {/*<BlueGlow style={{ top:'80vh', right: '30%', opacity:'.6', width:'400px', height: '400px' }} />*/}
+            <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', zIndex: 0,  top:'60px' }}>
+              <PurpleGlow style={{ right: '0' }} />
+              <PurpleGlow style={{ left: '25%' }} />
+              <PurpleGlow style={{ top:'90vh', right: '0%', opacity:'.6', width:'600px', height: '600px' }} />
+              <BlueGlow style={{ right: '25%' }} />
+              <BlueGlow style={{ top:'60vh' }} />
+              <BlueGlow style={{ top:'80vh', right: '30%', opacity:'.6', width:'400px', height: '400px' }} />
 
               {
 

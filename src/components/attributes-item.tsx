@@ -1,13 +1,12 @@
 import React, { useMemo } from 'react'
-import styled from 'styled-components'
 import ScrollContainer from 'react-indiana-drag-scroll'
-import { Skeleton } from '@mui/material'
+import { Skeleton, styled } from '@mui/material'
 
 export interface AttributesListItem {
     chainMeta: any;
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled('div')`
   height: 100%;
   overflow: auto;
   width: 100%;
@@ -20,21 +19,20 @@ const Wrapper = styled.div`
   }
 `
 
-const BoxContainer = styled.div`
-  padding: 0 10px 20px 0;
+const BoxContainer = styled('div')`
   display: grid;
-  grid-template-rows: auto auto;
-  grid-auto-flow: column;
-  grid-gap: 10px;
+  grid-template-columns: repeat(4, 210px);
+  justify-content: space-between;
+  grid-template-rows: repeat(3, auto);
+  grid-gap: 20px;
   user-select: none;
 `
 
-const ItemBox = styled.div`
+const ItemBox = styled('div')`
   height: 100px;
-  width: 170px;
-  margin-top: 20px;
+  width: 210px;
   border-radius: 10px;
-  background: linear-gradient(91.28deg, #3a0341 1.37%, #2e114f 113.86%);
+  background: linear-gradient(60.95deg, #8246F5 2.09%, #5000B4 97.91%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,15 +44,17 @@ const ItemBox = styled.div`
   }
 
   .type {
-    color: #f38aad;
-    font-size: 16px;
+    font-family: arialBold;
+    color: ${({ theme }) => theme.palette.primary.light};
+    font-size: 18px;
     //background: #341222;
   }
 
   .value {
+    font-family: Arial;
     text-align: center;
     color: #fff;
-    font-size: 18px;
+    font-size: 22px;
   }
 
 

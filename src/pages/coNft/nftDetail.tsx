@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Alert, Box, Card, CardMedia, Container, Grid, Paper, Snackbar, ThemeProvider, Tooltip } from '@mui/material'
-import { MintedNFTItem } from '../../types/coNFT'
-import ForartTheme from '../../contexts/theme/config/dark'
-import darkTheme from 'web3modal/dist/themes/dark'
-import UploadIcon from '../../assets/images/coPools/upload.svg'
-import styled, { keyframes } from 'styled-components'
+import {
+  Alert,
+  Snackbar,
+  Tooltip
+} from '@mui/material'
+import UploadIcon from '../../assets/images/coPools/copy.png'
 import { AttributesItem } from '../../components/attributes-item'
 import { useFindComponent } from '../../hooks/queries/useFindComponent'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
@@ -18,12 +18,12 @@ import { useMediaQuery } from 'react-responsive'
 import { shortenAddress } from '../../utils'
 import { useLocation } from 'react-router-dom'
 import copy from 'copy-to-clipboard'
-import { message } from 'antd'
 import DefaultPageWrapper from '../../components/default-page-wrapper'
+import styled, {  keyframes } from 'styled-components'
 
-const NFTInfo = styled.div`
+const NFTInfo = styled('div')`
   width: 100%;
-  height: 460px;
+  height: 580px;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -34,15 +34,21 @@ const NFTInfo = styled.div`
   }
 `
 
-const LeftArea = styled.div`
-  height: 450px;
-  width: 450px;
+const LeftArea = styled('div')`
+  height: 480px;
+  width: 480px;
+  border: 1px rgba(153, 153, 153, .6) solid;
+  border-radius: 30px;
+  background-color: rgba(153, 153, 153, .15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
   img {
-    height: 100%;
-    width: 100%;
+    height: 90%;
+    width: 90%;
     object-fit: contain;
-    border-radius: 10px;
+    border-radius: 30px;
   }
 
   @media screen and (max-width: 1080px) {
@@ -50,8 +56,8 @@ const LeftArea = styled.div`
     width: 100%;
   }
 `
-const RightArea = styled.div`
-  width: calc(100% - 470px);
+const RightArea = styled('div')`
+  width: calc(100% - 570px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -64,7 +70,7 @@ const RightArea = styled.div`
   
 `
 
-const RightTopArea = styled.div`
+const RightTopArea = styled('div')`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -77,8 +83,8 @@ const RightTopArea = styled.div`
   }
 `
 
-const TopTitle = styled.div`
-  font-family: 'inter-extraBold';
+const TopTitle = styled('div')`
+  font-family: arialBold;
   width: 100%;
   font-size: 28px;
   display: flex;
@@ -87,7 +93,7 @@ const TopTitle = styled.div`
 
 
   .name {
-    color: #ffffff;
+    color: #8246F5;
   }
 
   @media screen and (max-width: 1080px) {
@@ -97,41 +103,50 @@ const TopTitle = styled.div`
   
 `
 
-const RightBottomArea = styled.div`
+const RightBottomArea = styled('div')`
   height: 70%;
 `
 
-const Rainbow = styled.div`
-    display: flex;
-    font-size: 16px;
+const Rainbow = styled('div')`
+  display: flex;
+  font-size: 16px;
+  align-items: center;
 
     .wallet {
       color: #A197AA;
       margin-left: 10px;
     }
     span {
+      border: 1px #EB1482 solid;
+      padding: 2px 4px;
+      border-radius: 5px;
       font-weight: bold;
       display: table;
-      background: -webkit-linear-gradient(0deg,#17ef97 -5.04%,#6084ff 46.01%,#d324f7 96.01%);
+      background: -webkit-linear-gradient(90deg,#EB1482 50.04%,#CD19B9 50.01%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
   }
 `
 
-const SeriesTitle = styled.div`
+const SeriesTitle = styled('div')`
   color: #A197AA;
-  font-size: 20px;
-  font-family: inter-extraBold;
+  font-size: 18px;
+  font-family: arialBold;
 `
 
-const Options = styled.div`
+const Options = styled('div')`
   display: flex;
+  align-items: center;
   
   img {
-    width: 22px;
+    height: 20px;
     margin-left: 10px;
     cursor: pointer;
 }
+  span {
+    font-size: 14px;
+    font-family: KronaOne-Regular; 
+  }
 `
 
 export const ShineKeyFrame = keyframes`
@@ -148,7 +163,7 @@ export const ShineKeyFrame = keyframes`
   }
 `
 
-const HeartContainer = styled.div<{heartStatus?: 'up' | 'down'}>`
+const HeartContainer = styled('div')<{heartStatus?: 'up' | 'down'}>`
   display: flex;
   align-items: center;
   user-select: none;
@@ -168,7 +183,7 @@ const HeartContainer = styled.div<{heartStatus?: 'up' | 'down'}>`
   ${props => props.heartStatus === 'up' && `
   
   .heart {
-     color: #f30c74
+     color: #8246F5
      }
   `
 }
@@ -188,7 +203,7 @@ const HeartContainer = styled.div<{heartStatus?: 'up' | 'down'}>`
   }
 `
 
-export const LevelLabel = styled.div<{ color: string, shine?: boolean }>`
+export const LevelLabel = styled('div')<{ color: string, shine?: boolean }>`
   color: ${props => props.color.replace(/(\d)\)/, '$1, 0.9)')};
   animation: ${ShineKeyFrame} 2s infinite linear;
   ${p => p.shine ? `
@@ -207,8 +222,6 @@ const CONFTDetail:React.FC = () => {
   const [open, setOpen] = React.useState(false)
 
   const nftId = useLocationQuery('id') ?? ''
-
-  const location = useLocation()
 
   const handleCopy = (content: any) => {
     copy(content)
@@ -349,8 +362,8 @@ const CONFTDetail:React.FC = () => {
 
       </NFTInfo>
 
-      <Snackbar  open={open} autoHideDuration={2000} onClose={handleClose} anchorOrigin={{ vertical:'top',horizontal:'center' }}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%',  }}>
+      <Snackbar  open={open} autoHideDuration={12000} onClose={handleClose} anchorOrigin={{ vertical:'bottom',horizontal:'left' }}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%','& .MuiSnackbar-root':{ zIndex: 1500 }  }}>
           Copy success!
         </Alert>
       </Snackbar>
