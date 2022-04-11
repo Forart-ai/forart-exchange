@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 // @ts-ignore
-import styled from 'styled-components'
-import { Avatar, Empty, Tabs } from 'antd'
+import {  Empty } from 'antd'
 import { useWeb3React } from '@web3-react/core'
 import { shortenAddress } from '../../utils'
 import { SmileOutlined, UserOutlined } from '@ant-design/icons'
@@ -13,113 +12,113 @@ import { useMintResultQuery } from '../../hooks/queries/useMintResultQuery'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { MintedNFTItem } from '../../types/coNFT'
 import MintListItem from '../../components/mintListItem'
+import { styled, Tab, Tabs, useMediaQuery, useTheme } from '@mui/material'
+import Background from '../../assets/images/coPools/hypeteen-background.png'
+import AvatarIcon from '../../assets/images/coPools/rocket.png'
 
-const { TabPane } = Tabs
-
-const Wrapper = styled.div`
-  max-width: 100vw;
+const Wrapper = styled('div')`
   width: 100%;
-  height: calc(100vh - 60px);
+  min-height: 100vh;
+  text-align: center;
+  border-bottom: 1px ${({ theme }) => theme.palette.secondary.main} solid;
+
+`
+const BackgroundImage = styled('div')`
+  height: 400px;
+  width: 100%;
+  background: url(${Background})  no-repeat;
+  background-size: cover;
+  text-align: center;
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
-  overflow-y: scroll;
+  align-items: center;
+  position: relative;
 
-  @media screen and  (max-width: 1100px) {
-    width: 100vw !important;
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    margin: 60px 0;
   }
 `
 
-const PersonalCenterContainer = styled.div`
-  width: 95%;
+const PersonalCenterContainer = styled('div')`
+  width: 100%;
+  justify-content: center;
+  align-items: center;
   
 `
 
-const BackgroundContainer = styled.div`
-  width: 100%;
-  height: 240px;
-  position: relative;
+const UserInfoContainer = styled('div')`
+  width: 75%;
+  height: 160px;
   display: flex;
-  justify-content: center;
-  background-color: #232326;
-  margin-top: 20px;
-  border-radius: 1em;
-`
-
-const UserAvatar = styled.div`
-  width: 130px;
-  height: 130px;
-//  border: 2px #02A6F5 solid;
-  border-radius: 70px;
+  justify-content: space-between;
   position: absolute;
-  top: 180px;
+  bottom: 0;
+
 `
 
-const UserInfo = styled.div`
+const DataColumn = styled('div')`
+  max-width: 200px;
+  height: 100%;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+
+  span {
+    color: #ffffff;
+    font-family: Aldrich-Regular;
+    font-size: 40px;
+  }
+  .label {
+    color: #999999;
+    font-size: 16px;
+  }
+`
+
+const UserInfo = styled('div')`
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 100px;
+  position: relative;
+  bottom: -50%;
+  width: 100%;
+
+  .avatar {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    box-shadow: 5px 5px 5px rgba(43, 10, 79, 0.62);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+
 
   .username {
     font-size: 30px;
-    color: #FF468B;
+    color: ${({ theme }) => theme.palette.text.primary};
     font-weight: bolder;
   }
 
   .address {
     font-size: 18px;
-    color: #646b78;
-    font-weight: bold;
+    color: ${({ theme }) => theme.palette.grey[400]};
   }
 `
 
-const TabsWrapper = styled.div`
+const TabsWrapper = styled('div')`
   width: 100%;
 `
 
-const StyledTab = styled(Tabs)`
-  user-select: none;
-  margin-top: 20px;
-
-  .ant-tabs-tab {
-    font-size: 20px;
-    color: #E5E8EB !important;
-  }
-
-  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: #FF468B !important;
-
-  }
-
-  .ant-tabs-nav-wrap {
-    display: flex;
-    justify-content: center;!important;
-  }
-
-  .ant-tabs-nav::before {
-    //display: none; !important;
-    border-bottom: 1px #65727b solid;
-
-  }
-
-  .ant-tabs-ink-bar {
-    line-height: 20px;
-    background-image: -webkit-linear-gradient(left, #FF4D9D, #c330c9);
-    padding: 4px;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
-  }
-  
-  @media screen and (max-width: 1100px) {
-    .ant-tabs-tab {
-      font-size: 16px;
-    }
-  }
-`
-
-const NFTListContainer = styled.div`
+const NFTListContainer = styled('div')`
   width: 100%;
   display: grid;
   justify-content: space-between;
@@ -146,13 +145,86 @@ const NFTListContainer = styled.div`
   }
 `
 
-const WarningWrapper = styled.div`
+const WarningWrapper = styled('div')`
   display: flex;
   justify-content: center;
   .ant-empty-description {
     color: #ffffff;
   }
 `
+
+interface StyledTabsProps {
+  children?: React.ReactNode;
+  value: number;
+  onChange: (event: React.SyntheticEvent, newValue: number) => void;
+}
+
+interface StyledTabProps {
+  label: string;
+}
+
+const StyledTab = styled((props: StyledTabProps) => (
+  <Tab disableRipple {...props} />
+))(({ theme }) => ({
+  // textTransform: 'none',
+  fontWeight: 600,
+  fontSize: '18px',
+  color: 'rgba(255, 255, 255, 0.7)',
+  minWidth: '170px',
+  minHeight: '42px',
+  backgroundColor:'#5000B4',
+  borderRadius:'40px',
+  margin:'0 20px',
+  transition: '.5s ease',
+
+  '&.Mui-selected': {
+    color: '#ffffff',
+  },
+}))
+
+const TabPanelAnimation = styled('div')`
+  .anime {
+    animation: fadeIn .5s ;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+`
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+
+    >
+      {value === index && (
+        <TabPanelAnimation  >
+          <div className={'anime'} >
+            {children}
+          </div>
+        </TabPanelAnimation>
+      )}
+    </div>
+  )
+}
 
 const UserNFTList: React.FC<{ list: Array<NftListItem> | undefined }> = ({ list }) => {
 
@@ -209,8 +281,11 @@ const TabsContainer: React.FC = () => {
   const { account: SolAccount } = useSolanaWeb3()
 
   const [current] = useState<number>(1)
-
   const [searchKey] = useState<any>()
+
+  const theme = useTheme()
+
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'))
 
   const [typeChain] = useState<ChainType>('Ethereum')
 
@@ -218,47 +293,80 @@ const TabsContainer: React.FC = () => {
 
   const { data: mintedNft } = useMintResultQuery(true, { wallet: SolAccount?.toBase58(), nft:'' } )
 
+  const [value, setValue] = React.useState(1)
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue)
+  }
+
+  const StyledTabs = styled((props: StyledTabsProps) => (
+
+    <Tabs
+      variant={isMobile ? 'scrollable' : 'standard'}
+      centered={true}
+      {...props}
+      TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
+    />
+  ))(({ theme }) => ({
+    '& .Mui-selected': {
+      backgroundColor:'#4fc89f',
+
+    },
+
+    '& .MuiTabs-indicator': {
+      display:'none',
+    },
+
+    '&. MuiTabs-flexContainer': {
+      justifyContent:'center'
+    }
+  }))
+
   return (
-    <TabsWrapper>
-      <StyledTab defaultActiveKey="minted"  >
-        <TabPane
-          tab= {
-            <span>
-              <SmileOutlined />
-              Created
-            </span>
-          }
-          key="minted"
-        >
-          {
-            SolAccount ?
-              <UserMintedNFTList list={mintedNft} />
-              :
-              <WarningContent />
-          }
-
-        </TabPane>
-
-        <TabPane
-          tab= {
-            <span>
-              <SmileOutlined />
-              Owned
-            </span>
-          }
-          key="owned"
-        >
-          {
-            account ?
-              <UserNFTList list={personalNft} />
-              :
-              <WarningContent />
-          }
-
-        </TabPane>
-
-      </StyledTab>
+    <TabsWrapper >
+      <StyledTabs value={value} onChange={handleChange} />
     </TabsWrapper>
+
+  // <TabsWrapper>
+  //   <StyledTab defaultActiveKey="minted"  >
+  //     <TabPane
+  //       tab= {
+  //         <span>
+  //           <SmileOutlined />
+  //           Created
+  //         </span>
+  //       }
+  //       key="minted"
+  //     >
+  //       {
+  //         SolAccount ?
+  //           <UserMintedNFTList list={mintedNft} />
+  //           :
+  //           <WarningContent />
+  //       }
+  //
+  //     </TabPane>
+  //
+  //     <TabPane
+  //       tab= {
+  //         <span>
+  //           <SmileOutlined />
+  //           Owned
+  //         </span>
+  //       }
+  //       key="owned"
+  //     >
+  //       {
+  //         account ?
+  //           <UserNFTList list={personalNft} />
+  //           :
+  //           <WarningContent />
+  //       }
+  //
+  //     </TabPane>
+  //
+  //   </StyledTab>
+  // </TabsWrapper>
   )
 }
 
@@ -266,18 +374,44 @@ const PersonalCenterPage: React.FC = () => {
 
   const { account } = useSolanaWeb3()
 
+  const intd = '34443'
+
   return (
     <Wrapper>
       <PersonalCenterContainer>
-        <BackgroundContainer>
-          <UserAvatar>
-            <Avatar size={126} icon={<UserOutlined />} />
-          </UserAvatar>
-        </BackgroundContainer>
-        <UserInfo>
-          <div className="username">User</div>
-          <div className="address">{ shortenAddress(account?.toString()) }</div>
-        </UserInfo>
+        <BackgroundImage>
+          <UserInfoContainer>
+            <DataColumn>
+              <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>
+              <div className={'label'}>Intergal</div>
+            </DataColumn>
+
+            <DataColumn>
+              <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>
+              <div className={'label'}>Post</div>
+            </DataColumn>
+
+            <DataColumn>
+              <UserInfo>
+                <div className={'avatar'}>
+                  <img src={AvatarIcon} />
+                </div>
+                <div className="username">User</div>
+                <div className="address">{ shortenAddress(account?.toString()) }</div>
+              </UserInfo>
+            </DataColumn>
+
+            <DataColumn>
+              <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>
+              <div className={'label'}>Followers</div>
+            </DataColumn>
+
+            <DataColumn>
+              <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>
+              <div className={'label'}>Following</div>
+            </DataColumn>
+          </UserInfoContainer>
+        </BackgroundImage>
 
         <TabsContainer />
 

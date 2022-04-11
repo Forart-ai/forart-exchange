@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import ForartLogo from '../../assets/images/logo.png'
-import UserIcon from '../../assets/images/header/user.svg'
+import UserIcon from '../../assets/images/header/avatar.png'
 import { useHistory, Link, useLocation } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import Wallet from '../../components/wallet'
@@ -10,10 +10,9 @@ import routes, { Route } from '../../routes'
 const AppHeaderContent = styled.div`
   width: 100%;
   height: 60px;
-  padding: 0 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   z-index: 1;
   position: fixed;
   background: #0A0523;
@@ -22,6 +21,15 @@ const AppHeaderContent = styled.div`
 
 
 `
+
+const MainContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  maxWidth: '1870px';
+
+`
+
 const Logo = styled.div`
   height: 68px;
   display: flex;
@@ -37,8 +45,9 @@ const Logo = styled.div`
 const Operator = styled.div`
   display: flex;
   align-items: center;
-  width: fit-content;
+  width: 60%;
   cursor: pointer;
+  justify-content: flex-end;
   
     img {
       width: 40px;
@@ -61,11 +70,11 @@ export const NavLinkText = styled.div`
 `
 
 const RouterContainer = styled('div')`
-  display: flex;
-  width: 400px;
-  min-width: 20px;
+  display: grid;
+  width: 50%;
+  grid-template-columns: repeat(3, 42%);
   justify-content: space-between;
-  margin-right: 200px;
+  margin-right: 20px;
   
 `
 
@@ -78,48 +87,51 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
 
   return (
     <AppHeaderContent>
-      <Link to={'/'}>
-        <Logo>
-          <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
-        </Logo>
-      </Link>
-      <Operator>
-        <RouterContainer>
+      <MainContent>
+        <Link to={'/'}>
+          <Logo>
+            <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
+          </Logo>
+        </Link>
+        <Operator>
+          <RouterContainer>
 
-          {
-            routes.filter(route => !route.hidden).map((route: Route, index) => (
-              // <Link to={route.path} key={route.path}>
-              //   {route.title}
-              // </Link>
-              <Link
-                key={route.path}
-                to={route.path}
-              >
-                {
-                  pathname === route.path ? (
-                    <NavLinkText aria-disabled={route.disable} style={{ color: '#85fcd0' }}>
-                      {route.title}
-                    </NavLinkText>
-                  ):
-                    (
-                      <NavLinkText style={{ color: 'white' }}>
+            {
+              routes.filter(route => !route.hidden).map((route: Route, index) => (
+                // <Link to={route.path} key={route.path}>
+                //   {route.title}
+                // </Link>
+                <Link
+                  key={route.path}
+                  to={route.path}
+                >
+                  {
+                    pathname === route.path ? (
+                      <NavLinkText aria-disabled={route.disable} style={{ color: '#85fcd0' }}>
                         {route.title}
                       </NavLinkText>
-                    )
-                }
+                    ):
+                      (
+                        <NavLinkText style={{ color: 'white' }}>
+                          {route.title}
+                        </NavLinkText>
+                      )
+                  }
 
-              </Link>
+                </Link>
 
-            ))
-          }
-        </RouterContainer>
+              ))
+            }
+          </RouterContainer>
 
-        <Wallet />
+          <Wallet />
 
-        <div style={{ fontSize: '20px', }}   onClick={() => history.push('/personal/home')} >
-          <img src={UserIcon} />
-        </div>
-      </Operator>
+          <div style={{ fontSize: '20px', }}   onClick={() => history.push('/personal/home')} >
+            <img src={UserIcon} />
+          </div>
+        </Operator>
+      </MainContent>
+
     </AppHeaderContent>
   )
 }
