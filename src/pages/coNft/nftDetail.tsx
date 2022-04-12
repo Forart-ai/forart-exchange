@@ -23,14 +23,15 @@ import styled, {  keyframes } from 'styled-components'
 
 const NFTInfo = styled('div')`
   width: 100%;
-  height: 580px;
+  height:fit-content;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  margin-top: 60px;
+  margin: 60px 0;
   
   @media screen and (max-width: 1080px) {
     flex-direction: column;
+    height: fit-content;
   }
 `
 
@@ -52,8 +53,7 @@ const LeftArea = styled('div')`
   }
 
   @media screen and (max-width: 1080px) {
-    height: 100%;
-    width: 100%;
+    margin: 0 auto;
   }
 `
 const RightArea = styled('div')`

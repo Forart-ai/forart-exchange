@@ -7,7 +7,7 @@ export interface AttributesListItem {
 }
 
 const Wrapper = styled('div')`
-  height: 100%;
+  height: fit-content;
   overflow: auto;
   width: 100%;
 
@@ -21,16 +21,17 @@ const Wrapper = styled('div')`
 
 const BoxContainer = styled('div')`
   display: grid;
-  grid-template-columns: repeat(4, 210px);
+  grid-template-columns: repeat(auto-fill, minmax(150px, 23%));
   justify-content: space-between;
   grid-template-rows: repeat(3, auto);
-  grid-gap: 20px;
+  grid-gap: 5px;
   user-select: none;
+  width: 100%;
 `
 
 const ItemBox = styled('div')`
   height: 100px;
-  width: 210px;
+  max-width: 210px;
   border-radius: 10px;
   background: linear-gradient(60.95deg, #8246F5 2.09%, #5000B4 97.91%);
   display: flex;
@@ -54,7 +55,7 @@ const ItemBox = styled('div')`
     font-family: Arial;
     text-align: center;
     color: #fff;
-    font-size: 22px;
+    font-size: 20px;
   }
 
 

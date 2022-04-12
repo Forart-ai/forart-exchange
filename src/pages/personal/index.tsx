@@ -19,6 +19,7 @@ import { ArtDetail } from '../coNft/artistdetail/modules/artistIntroduction'
 import UserCoNftList from './modules/userCoNftList'
 import CharacterCustomize from './modules/characterCustomize'
 import UserOwnedNfts from './modules/userOwnedNfts'
+import Identity from './modules/identity'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -248,6 +249,9 @@ const TabsContainer: React.FC = () => {
       <Box>
         <TabPanel index={0} value={value}>
           <CharacterCustomize />
+        </TabPanel>
+        <TabPanel index={1} value={value}>
+          <Identity />
         </TabPanel>
         <TabPanel index={2} value={value}>
           <UserCoNftList list={mintedNft} />
