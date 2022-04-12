@@ -36,7 +36,7 @@ const Wrapper = styled.div`
 const CoNftPageContainer = styled.div`
   max-width: 90%;
   height: fit-content;
-  width: calc(100% - 80px);
+  width: calc(100% - 80px); 
   margin-left: auto;
   margin-right: auto;
   display: flex;
