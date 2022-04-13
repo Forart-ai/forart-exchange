@@ -171,7 +171,7 @@ const ArtistInfo:React.FC = () => {
       <div className="cover" />
       <MainContainer >
         <DonateArea>
-          <Button onClick={openDonateModal}> Donate </Button>
+          {/*<Button disabled={true} onClick={openDonateModal}> Donate </Button>*/}
         </DonateArea>
         <MainArea>
           <div className="top">

@@ -67,7 +67,7 @@ const InfoContent = styled.div`
   .button-column{
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 
     a{
       color: white;
@@ -150,12 +150,12 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
               (
                 <>
 
-                  <Button sx={{ margin:'0 4px' }} variant={'contained'}  >
+                  <Button sx={{ width:'100%' }} variant={'contained'}  >
                     <Link to={toArtistDetailUrl}>
                       Create
                     </Link>
                   </Button >
-                  <Button   variant={'contained'} onClick={openDonateModal} >Donate</Button>
+                  {/*<Button disabled sx={{ '&.MuiButton-root .Mui-disabled':{ color: '#999999',backgroundColor:'red' } }}   variant={'contained'} onClick={openDonateModal} >Donate</Button>*/}
                 </>
               ) :
               (
