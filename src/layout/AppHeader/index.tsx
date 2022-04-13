@@ -126,7 +126,7 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
 
           <Wallet />
 
-          <div style={{ fontSize: '20px', }}   onClick={() => history.push('/personal/home')} >
+          <div style={{ fontSize: '20px', }}   onClick={() => history.push('/account')} >
             <img src={UserIcon} />
           </div>
         </Operator>

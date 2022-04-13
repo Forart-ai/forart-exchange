@@ -7,10 +7,11 @@ const NFTListContainer = styled('div')`
   width: 100%;
   display: grid;
   justify-content: space-between;
-  grid-template-columns: repeat(auto-fill, 240px);
-  grid-template-rows: repeat(auto-fill,  240px);
-  grid-gap: 20px;
-  padding: 16px;
+  grid-template-columns: repeat(auto-fill, 260px);
+  grid-template-rows: repeat(auto-fill,  400px);
+  grid-gap: 16px;
+  padding: 30px 20px;
+  margin: 60px 0;
   
   @media screen and (max-width: 1100px) {
     justify-content: center;

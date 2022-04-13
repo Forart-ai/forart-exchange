@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { Empty, TabPaneProps } from 'antd'
 import { useWeb3React } from '@web3-react/core'
 import { shortenAddress } from '../../utils'
-import { SmileOutlined, UserOutlined } from '@ant-design/icons'
 import { usePersonalNFTsQuery } from '../../hooks/queries/usePersonalNFTsQuery'
 import { ChainType } from '../../apis/nft'
 import NFTListItem from '../../components/NFTListItem'
@@ -13,13 +12,16 @@ import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { MintedNFTItem } from '../../types/coNFT'
 import MintListItem from './components/mintListItem'
 import { Box, styled, Tab, Tabs, useMediaQuery, useTheme } from '@mui/material'
-import Background from '../../assets/images/coPools/hypeteen-background.png'
+import Background from '../../assets/images/home/default-user-background.png'
 import AvatarIcon from '../../assets/images/coPools/rocket.png'
 import { ArtDetail } from '../coNft/artistdetail/modules/artistIntroduction'
 import UserCoNftList from './modules/userCoNftList'
 import CharacterCustomize from './modules/characterCustomize'
 import UserOwnedNfts from './modules/userOwnedNfts'
 import Identity from './modules/identity'
+import SettingIcon from '../../assets/images/siderIcon/setting.svg'
+import { useModal } from '../../contexts/modal'
+import UserProfileSetting from './components/user-profile-setting'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -31,7 +33,7 @@ const Wrapper = styled('div')`
 const BackgroundImage = styled('div')`
   height: 400px;
   width: 100%;
-  background: url(${Background})  no-repeat;
+  background: url(${Background}) center  no-repeat;
   background-size: cover;
   text-align: center;
   display: flex;
@@ -115,6 +117,11 @@ const UserInfo = styled('div')`
     font-size: 30px;
     color: ${({ theme }) => theme.palette.text.primary};
     font-weight: bolder;
+    
+    img {
+      width: 20px;
+      cursor: pointer;
+    }
   }
 
   .address {
@@ -143,13 +150,14 @@ const StyledTabs = styled((props: StyledTabsProps) => (
     TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
   />
 ))(({ theme }) => ({
-
   '& .MuiTabs-indicator': {
+
     display: 'flex',
     justifyContent: 'center',
     backgroundColor: 'transparent',
   },
   '& .MuiTabs-indicatorSpan': {
+
     // maxWidth: 40,
     width: '100%',
     backgroundColor: theme.palette.primary.main,
@@ -194,6 +202,8 @@ const StyledTab = styled((props: StyledTabProps) => (
   fontFamily: 'arialBold',
   textTransform: 'none',
   fontSize: '20px',
+  margin:'0 40px',
+
   marginRight: theme.spacing(1),
   color:theme.palette.secondary.main,
 
@@ -220,7 +230,7 @@ const TabsContainer: React.FC = () => {
 
   const { data: mintedNft } = useMintResultQuery(true, { wallet: SolAccount?.toBase58(), nft:'' } )
 
-  const [value, setValue] = React.useState(0)
+  const [value, setValue] = React.useState(2)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
@@ -271,6 +281,8 @@ const PersonalCenterPage: React.FC = () => {
 
   const intd = '34443'
 
+  const { openModal } = useModal()
+
   return (
     <Wrapper>
       <PersonalCenterContainer>
@@ -291,7 +303,7 @@ const PersonalCenterPage: React.FC = () => {
                 <div className={'avatar'}>
                   <img src={AvatarIcon} />
                 </div>
-                <div className="username">User</div>
+                <div className="username">User <img src={SettingIcon} onClick={() => openModal(<UserProfileSetting />)} /> </div>
                 <div className="address">{ shortenAddress(account?.toString()) }</div>
               </UserInfo>
             </DataColumn>

@@ -1,6 +1,7 @@
 import { createTheme } from '@mui/material/styles'
 
 const ForartTheme = createTheme({
+
   breakpoints: {
     values: {
       xs: 0,
@@ -11,11 +12,12 @@ const ForartTheme = createTheme({
     },
   },
   palette: {
+    mode:'dark',
     primary: {
       light: '#85fcd0',
       main: '#4fc89f',
       dark: '#009671',
-      contrastText: '#fff',
+      contrastText: '#ffffff',
     },
     secondary: {
       light: '#ba75ff',
@@ -30,9 +32,9 @@ const ForartTheme = createTheme({
     },
     background: {
       default: 'rgb(34,30,57)',
-      paper:'rgb(23,20,42)'
+      paper:'transparent'
     },
-    grey:{
+    grey: {
       50: '#fafafa',
       100: '#f5f5f5',
       200: '#eeeeee',

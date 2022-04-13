@@ -62,7 +62,6 @@ const App: React.FC = () => {
 
         { !isMobile ? (
           <>
-
             <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', zIndex: 0,  top:'60px' }}>
               <PurpleGlow style={{ right: '0' }} />
               <PurpleGlow style={{ left: '25%' }} />
@@ -75,15 +74,13 @@ const App: React.FC = () => {
 
                 routes.map((router:any) => (
 
-                  <>
-                    <Route
-                      path={router.path}
-                      exact
-                      component={router.component}
-                      key={router.path}
-                    />
+                  <Route
+                    path={router.path}
+                    exact
+                    component={router.component}
+                    key={router.path}
+                  />
 
-                  </>
                 ))
               }
               <BackTop />

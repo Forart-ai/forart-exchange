@@ -98,7 +98,7 @@ const routes: Route[] = [
     hidden: true
   },
   {
-    path:'/personal/home',
+    path:'/account',
     title:'Personal HomePage',
     component: PersonalCenterPage,
     hidden: true

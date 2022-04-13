@@ -79,7 +79,7 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
           </PoolInfo>
 
           <Operation >
-            <StyledButton variant={'contained'}>
+            <StyledButton disabled={true} variant={'contained'}>
               <Link to={toArtistDetailUrl}>
                 Create
               </Link>
