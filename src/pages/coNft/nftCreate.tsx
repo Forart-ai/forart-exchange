@@ -26,6 +26,7 @@ import RandomHats from '../../assets/images/coPools/random-hat.png'
 import { Button } from '@mui/material'
 import { Modal } from 'antd'
 import { ConfirmCreateDialog } from './components/ConfirmCreateDialog'
+import { useGetOverview } from '../../hooks/queries/useGetOverview'
 
 const IconFont = createFromIconfontCN({
   scriptUrl: [
@@ -36,6 +37,8 @@ const IconFont = createFromIconfontCN({
 const NftCreate: React.FC = () => {
 
   const { account } = useSolanaWeb3()
+
+  const { data: overviewData } = useGetOverview()
 
   const { openModal } = useModal()
 
@@ -168,22 +171,22 @@ const NftCreate: React.FC = () => {
 
         { account  && (
           <p >
-            Accesses left: {userData?.getQualification | 0}
+            Accesses left: {userData?.getQualification || '0'}
             <IconFont style={{ cursor:'pointer', marginLeft: '20px' }} type={'icon-Question'}  onClick={ openCheckWhiteListModal } />
           </p>
         )}
 
         {
           !account ? (
-            <Button variant={'contained'} size={'large'}  onClick={ openWallet }>
+            <Button disabled={overviewData?.minted >= 2000} variant={'contained'} size={'large'}  onClick={ openWallet }>
               Connect Wallet
             </Button>
           ) : (
             (userData?.getQualification !== 0) ? (
-              <Button variant={'contained'} size={'large'}  onClick={handleCreate}> Create </Button>
+              <Button  disabled={overviewData?.minted >= 2000} variant={'contained'} size={'large'}  onClick={handleCreate}> Create </Button>
 
             ) : (
-              <Button variant={'contained'} size={'large'} onClick={ openCheckWhiteListModal }>
+              <Button  disabled={overviewData?.minted >= 2000} variant={'contained'} size={'large'} onClick={ openCheckWhiteListModal }>
                 Get Qualification
               </Button>
             )
