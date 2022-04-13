@@ -178,7 +178,7 @@ const NftCreate: React.FC = () => {
 
         {
           !account ? (
-            <Button disabled={overviewData?.minted >= 2000} variant={'contained'} size={'large'}  onClick={ openWallet }>
+            <Button  variant={'contained'} size={'large'}  onClick={ openWallet }>
               Connect Wallet
             </Button>
           ) : (
