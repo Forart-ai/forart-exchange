@@ -4,10 +4,14 @@ import  InputBase  from '@mui/material/InputBase'
 import { alpha, InputLabel, TextField } from '@mui/material'
 
 interface StyledTextFieldProps {
-    onChange: (event: any) => void;
-    placeholder: string;
-    variant: 'outlined' | 'filled' | 'standard';
-    name?: string
+  onChange: (event: any) => void
+  placeholder: string
+  variant: 'outlined' | 'filled' | 'standard'
+  name?: string
+  fullWidth?: boolean
+  size?: 'small' | 'medium'
+  multiline?: boolean
+  maxRows?: number
 }
 
 const StyledInput = styled(InputBase)(({ theme }) => ({
@@ -19,8 +23,6 @@ const StyledInput = styled(InputBase)(({ theme }) => ({
     border: `1px solid ${ theme.palette.secondary.main}`,
     fontSize: 16,
     color: '#999999',
-    width: 'auto',
-    padding: '10px 12px',
     transition: theme.transitions.create([
       'border-color',
       'background-color',
@@ -48,13 +50,12 @@ const StyledInput = styled(InputBase)(({ theme }) => ({
 
 const StyledTextField:React.FC<StyledTextFieldProps> = (props:StyledTextFieldProps) => {
   return (
-    <div>
-      <StyledInput
-        {...props}
-        placeholder={props.placeholder ?? ''}
+    <StyledInput
+      maxRows={props.maxRows}
+      {...props}
+      placeholder={props.placeholder ?? ''}
 
-      />
-    </div>
+    />
   )
 }
 

@@ -1,11 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import { useStyledNFTsQuery } from '../../hooks/queries/useStyledNFTsQuery'
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
+
+// import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
 import { Button, Checkbox, Image as AntdImage } from 'antd'
 import SwiperCore, { EffectCoverflow, Navigation, Pagination } from 'swiper'
-import 'swiper/swiper.scss'
-import 'swiper/modules/navigation/navigation.scss'
+// import 'swiper/swiper.scss'
+// import 'swiper/modules/navigation/navigation.scss'
 import BannerImage from '../../assets/images/AIGen/ai-gen-banner.jpg'
 import Merge from '../../assets/images/aiGenerator/merge.png'
 import Add from '../../assets/images/aiGenerator/add.png'
@@ -339,21 +340,22 @@ const SelectableNFTList: React.FC<{selectedValue:string, onSelect:(_: string) =>
   const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
 
   return (
-    <Swiper
-      modules={[Navigation]}
-      slidesPerView={isMobile? 1 : 5}
-      navigation
-      spaceBetween={20}
-    >
-      {
-        list?.map((item,key) => (
-          <SwiperSlide key={key} style={{ display:'flex', justifyContent:'center' }} >
-            <SelectableNFTItem src={item} onSelect={onSelect} checked={selectedValue === item} />
-          </SwiperSlide>
-        ))
-      }
-
-    </Swiper>
+    <></>
+    // <Swiper
+    //   modules={[Navigation]}
+    //   slidesPerView={isMobile? 1 : 5}
+    //   navigation
+    //   spaceBetween={20}
+    // >
+    //   {
+    //     list?.map((item,key) => (
+    //       <SwiperSlide key={key} style={{ display:'flex', justifyContent:'center' }} >
+    //         <SelectableNFTItem src={item} onSelect={onSelect} checked={selectedValue === item} />
+    //       </SwiperSlide>
+    //     ))
+    //   }
+    //
+    // </Swiper>
   )
 }
 

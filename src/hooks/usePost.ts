@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { FormInstance } from 'antd'
-import { PostForm } from '../pages/nft-chatroom/post'
+import { PostForm } from '../pages/social/post'
 import { useSolanaWeb3 } from '../contexts/solana-web3'
 
 const usePost = () => {

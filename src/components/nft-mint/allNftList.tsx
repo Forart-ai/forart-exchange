@@ -124,7 +124,7 @@ const HeartContainer = styled('div')<{heartStatus?: 'up' | 'down'}>`
 
 const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,index }) => {
   const { openModal } = useModal()
-  const { account, select } = useSolanaWeb3()
+  const { account } = useSolanaWeb3()
   const series = useLocationQuery('artistId')
 
   const [heartNum, setHeartNum] = useState<number>(data?.star)
@@ -156,7 +156,6 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
 
   const handleLike = useCallback((nftId: string) => {
     if (!account) {
-      select()
       return
     }
 

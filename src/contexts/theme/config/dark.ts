@@ -32,7 +32,7 @@ const ForartTheme = createTheme({
     },
     background: {
       default: 'rgb(34,30,57)',
-      paper:'transparent'
+      paper: 'rgb(40,0,90)'
     },
     grey: {
       50: '#fafafa',

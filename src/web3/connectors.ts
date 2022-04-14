@@ -6,11 +6,12 @@ import PhantomLogo from '../assets/images/wallets/phantomLogo.png'
 
 import { Web3Provider } from '@ethersproject/providers'
 import { CeloConnector } from './celo-connector'
-import { WalletAdapter } from '../contexts/solana-web3'
-import { PhantomWalletAdapter } from '../contexts/solana-web3/walletAdapters/phantom'
 
 import SolanaLogo from '../assets/images/wallets/solanaLogoMark.svg'
 import AvalancheLogo from '../assets/images/wallets/avalanche.png'
+import { BaseMessageSignerWalletAdapter } from '@solana/wallet-adapter-base'
+import { PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
+
 export const injected = new InjectedConnector({})
 
 export const celoInjected = new CeloConnector({})
@@ -19,7 +20,8 @@ export enum WalletKeys {
   MetaMask = 'MetaMask',
   BSC = 'BSC',
   WalletConnect = 'WalletConnect',
-  Celo = 'Celo'
+  Celo = 'Celo',
+  Phantom = 'Phantom'
 }
 
 export enum NetworkKeys {
@@ -34,7 +36,7 @@ export type WalletType = {
   icon: string,
   connector?: AbstractConnector,
   url?: string,
-  adapter?: new() => WalletAdapter
+  adapter?: new() => BaseMessageSignerWalletAdapter
   chainType: 'eth' | 'solana' | 'celo'
 }
 
@@ -52,15 +54,13 @@ export const supportWallets: WalletType[] = [
     icon: CeloLogo,
     connector: celoInjected,
     chainType: 'celo' || 'eth'
-
   },
   {
     name: 'Phantom',
-    url: 'https://phantom.app/',
     icon: PhantomLogo,
     adapter: PhantomWalletAdapter,
-    chainType: 'solana',
-  }
+    chainType: 'solana'
+  },
 ]
 
 export type NetworkType = {

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-function onFulfilled(config: any) {
+function onResponseFulfilled(config: any) {
   const { data: responseBody } = config
 
   if (responseBody.code) {
@@ -13,7 +13,7 @@ function onFulfilled(config: any) {
   return config.data
 }
 
-function onRejected(error: any) {
+function onResponseRejected(error: any) {
   const responseData = error.response?.data
 
   if (!responseData) {
@@ -37,7 +37,7 @@ const Service = axios.create({
 })
 
 Service.interceptors.response.use(
-  onFulfilled, onRejected
+  onResponseFulfilled, onResponseRejected
 )
 
 export { Service }

@@ -65,7 +65,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
   const { data: overviewData } = useGetOverview()
 
-  const toArtistDetailUrl = '/artistDetail?' + new URLSearchParams({
+  const toArtistDetailUrl = '/co-nft/artistDetail?' + new URLSearchParams({
     artistId: '3312'
   }).toString()
 

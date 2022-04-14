@@ -20,7 +20,7 @@ const Wrapper = styled('div')`
   max-width: 98vw;
   border-radius: 30px;
   position: relative;
-  border: 4px solid ${({ theme }) => theme.palette.primary.main};
+  border: 2px solid ${({ theme }) => theme.palette.primary.main};
   background-color: #28005A ;
   padding: 30px;
 

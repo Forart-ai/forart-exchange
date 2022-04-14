@@ -8,18 +8,17 @@ export const PoolsContainer = styled('div')`
 export const PoolListContainer = styled('div')`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 250px));
+  grid-template-columns: repeat(auto-fit, 25%);
   justify-content: space-between;
 
   ${({ theme }) => theme.breakpoints.down('md')} {
     grid-template-columns: repeat(auto-fit, 320px);
     justify-content: center;
   }
-
 `
 
 export const PoolsCardContainer = styled('div')(({ theme }) => ({
-  width:'280px',
+  width:'300px',
   maxWidth: '320px',
   height: '480px',
   marginBottom: '20px',

@@ -26,8 +26,8 @@ const Wrapper = styled('div')`
     height: 220px;
     width: 220px;
     cursor: pointer;
-    padding: 20px 10px 0 10px;
     margin: 0 auto;
+   
 
 
     .spin {
@@ -36,9 +36,10 @@ const Wrapper = styled('div')`
     }
 
     img {
+      margin-top: 15px;
       object-fit: contain;
-      width: 100%;
-      height: 100%;
+      width: 90%;
+      height: 90%;
       border-radius: 20px;
     }
   }

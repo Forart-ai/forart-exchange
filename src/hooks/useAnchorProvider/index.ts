@@ -19,7 +19,7 @@ const useAnchorProvider = () => {
     }
 
     return {
-      provider: new Provider(connection, adapter, {}),
+      provider: new Provider(connection, adapter as any, {}),
       readOnly: false
     }
   }, [connection, adapter, connected])

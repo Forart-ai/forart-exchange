@@ -5,9 +5,8 @@ import { networkConf, NetworkKeys, NetworkType, supportNetwork, supportWallets, 
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { useWeb3React } from '@web3-react/core'
 import { message } from 'antd'
-import { PhantomWalletAdapter } from '../../contexts/solana-web3/walletAdapters/phantom'
 import SolanaLogo from '../../assets/images/wallets/solanaLogoMark.svg'
-import wallet from './index'
+import { useSignLogin } from '../../hooks/useSignLogin'
 
 const Wrapper = styled.div`
   width: 700px;
@@ -114,8 +113,10 @@ const WalletSelectionModal:React.FC = () => {
     supportedWallet: supportWallets.filter(v => v.chainType === 'solana')
   })
 
-  const { connect, account: solAccount } =  useSolanaWeb3()
+  const { connect, account: solAccount, adapter } = useSolanaWeb3()
   const { activate, account } = useWeb3React()
+
+  const message = new TextEncoder().encode('hello world')
 
   const onNetworkClick = (network: NetworkType) => {
     setNetwork(network)
@@ -128,8 +129,8 @@ const WalletSelectionModal:React.FC = () => {
     }
 
     if (wallet.chainType === 'solana' && wallet.adapter) {
-
       connect(wallet)
+
     }
 
   }, [connect, activate, network])
@@ -189,7 +190,7 @@ const WalletSelectionModal:React.FC = () => {
           <div className="step-number">1</div>
           <div> Choose a network</div>
         </TextRow>
-        <ChosenArea >
+        <ChosenArea>
           {
             supportNetwork.map((network: NetworkType) => (
               <div className="col-3" key={network.key}  >
@@ -197,7 +198,6 @@ const WalletSelectionModal:React.FC = () => {
                   <img src={network.icon}  />
                   <span>{network.name}</span>
                 </div>
-
               </div>
             ))
           }

@@ -1,27 +1,17 @@
-import EventEmitter from 'eventemitter3'
 import type { PublicKey } from '@solana/web3.js'
-import { Transaction } from '@solana/web3.js'
 import { useConnectionConfig } from '../solana-connection-config'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import useEagerConnect from '../../hooks/useEagerConnect'
 import { SUPPORT_WALLETS } from '../../utils/constant'
-import Wallet  from '@project-serum/sol-wallet-adapter'
 import useLocalStorage, { LOCAL_STORAGE_WALLET_KEY } from '../../hooks/useLocalStorage'
-import { SolanaWalletSelectionModal, WalletItem } from './modal'
 import { shortenAddress } from '../../utils'
 import notify from '../../utils/notify'
-
-export interface WalletAdapter extends EventEmitter {
-  publicKey: PublicKey;
-  signTransaction: (tx: Transaction) => Promise<Transaction>;
-  signAllTransactions: (txs: Transaction[]) => Promise<Transaction[]>;
-  connect: () => any;
-  disconnect: () => any;
-}
+import { BaseMessageSignerWalletAdapter } from '@solana/wallet-adapter-base'
 
 export type SupportWalletNames =
     | 'Phantom'
-// | 'Solflare'
+    | 'Slope'
+    | 'Solflare'
 // | 'Solong'
 // | 'MathWallet'
 // | 'Ledger'
@@ -29,15 +19,13 @@ export type SupportWalletNames =
 
 export type SolanaWallet = {
   name: SupportWalletNames
-  url: string
   icon: any
-  adapter?: new() => WalletAdapter
+  adapter: new() => BaseMessageSignerWalletAdapter
 }
 
 export type WalletContextValues = {
-  adapter: WalletAdapter | undefined;
+  adapter: BaseMessageSignerWalletAdapter | undefined;
   connected: boolean;
-  select: () => void;
   wallet: SolanaWallet | undefined;
   account?: PublicKey,
   connect: (wallet: any) => void,
@@ -47,33 +35,28 @@ export type WalletContextValues = {
 const SolanaWeb3Context = React.createContext<WalletContextValues>({
   adapter: undefined,
   connected: false,
-  select: () => {
-  },
   wallet: undefined,
-  connect: () => {
-  },
+  connect: () => {},
   disconnect: () => {}
 })
 
 export const SolanaWeb3Provider: React.FC = ({ children }) => {
+
+  useEagerConnect()
 
   const { endpointUrl } = useConnectionConfig()
 
   const [, setLocalStoredWallet] = useLocalStorage<SupportWalletNames>(LOCAL_STORAGE_WALLET_KEY)
   const [wallet, setWallet] = useState<SolanaWallet>()
   const [connected, setConnected] = useState(false)
-  const [isModalVisible, setIsModalVisible] = useState(false)
 
-  const select = useCallback(() => setIsModalVisible(true), [])
-  const close = useCallback(() => setIsModalVisible(false), [])
-
-  const { eagerConnected } = useEagerConnect()
-
-  useEffect(() => {
-    if (eagerConnected) {
-      setWallet(SUPPORT_WALLETS.Phantom)
-    }
-  }, [eagerConnected])
+  // const { eagerConnected } = useEagerConnect()
+  //
+  // useEffect(() => {
+  //   if (eagerConnected) {
+  //     setWallet(SUPPORT_WALLETS.Phantom)
+  //   }
+  // }, [eagerConnected])
 
   const adapter = useMemo(
     () => {
@@ -81,10 +64,7 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
         return undefined
       }
 
-      return new (wallet.adapter || Wallet)(
-        wallet.url,
-        endpointUrl
-      ) as WalletAdapter
+      return new wallet.adapter() as BaseMessageSignerWalletAdapter
     },
     [wallet, endpointUrl]
   )
@@ -94,6 +74,17 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
     if (wallet && adapter) {
       adapter.connect()
         .then(() => {
+          const walletPublicKey = adapter.publicKey!.toBase58()
+          const keyToDisplay =
+              walletPublicKey.length > 20
+                ? shortenAddress(walletPublicKey)
+                : walletPublicKey
+
+          setConnected(true)
+          notify({
+            message: 'Wallet update',
+            description: 'Connected to wallet ' + keyToDisplay
+          })
           setLocalStoredWallet(wallet.name)
         })
         .catch(() => {
@@ -106,69 +97,35 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
     if (!connected) {
       return undefined
     }
-    return adapter?.publicKey
+
+    return adapter?.publicKey || undefined
   }, [connected, adapter])
 
   // const connect = useCallback(adapter?.connect ?? select , [adapter, select])
 
   const connect = useCallback(
-    (wallet: any ) => {
+    (wallet: any) => {
       setWallet(wallet)
-    },[adapter, select]
+    },[adapter]
   )
 
   const disconnect = useCallback(() => {
     adapter?.disconnect()
     setWallet(undefined)
     setLocalStoredWallet(undefined)
+    setConnected(false)
+
+    notify({
+      message: 'Wallet update',
+      description: 'Disconnected from wallet'
+    })
   } , [adapter])
-
-  useEffect(() => {
-    if (adapter) {
-      adapter.on('connect', () => {
-        if (!adapter.publicKey) {
-          console.error('adapter connected, but got null publicKey!')
-          return
-        }
-
-        setConnected(true)
-
-        const walletPublicKey = adapter.publicKey.toBase58()
-        const keyToDisplay =
-            walletPublicKey.length > 20
-              ? shortenAddress(walletPublicKey)
-              : walletPublicKey
-
-        notify({
-          message: 'Wallet update',
-          description: 'Connected to wallet ' + keyToDisplay
-        })
-      })
-
-      adapter.on('disconnect', () => {
-        setConnected(false)
-        notify({
-          message: 'Wallet update',
-          description: 'Disconnected from wallet'
-        })
-      })
-    }
-
-    return () => {
-      setConnected(false)
-      if (adapter) {
-        adapter.disconnect()
-      }
-      adapter?.removeAllListeners()
-    }
-  }, [adapter])
 
   return (
     <SolanaWeb3Context.Provider
       value={{
         adapter,
         connected,
-        select,
         wallet,
         account,
         connect,

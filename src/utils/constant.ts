@@ -1,19 +1,24 @@
-import { PhantomWalletAdapter } from '../contexts/solana-web3/walletAdapters/phantom'
 import { SolanaWallet, SupportWalletNames } from '../contexts/solana-web3'
 import PhantomLogo from '../assets/images/wallets/phantomLogo.png'
+
+import { PhantomWalletAdapter, SlopeWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 
 export const SUPPORT_WALLETS: Record<SupportWalletNames, SolanaWallet> = {
   'Phantom': {
     name: 'Phantom',
-    url: 'https://phantom.app/',
     icon: PhantomLogo,
     adapter: PhantomWalletAdapter
   },
-  // 'Solflare': {
-  //   name: 'Solflare',
-  //   url: 'https://solflare.com/access-wallet',
-  //   icon: `${ASSETS_URL}solflare.svg`
-  // },
+  'Solflare': {
+    name: 'Solflare',
+    icon: '',
+    adapter: SolflareWalletAdapter,
+  },
+  Slope: {
+    name: 'Slope',
+    icon: '',
+    adapter: SlopeWalletAdapter
+  }
   // 'Solong': {
   //   name: 'Solong',
   //   url: 'https://solongwallet.com',

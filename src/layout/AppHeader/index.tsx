@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from '@emotion/styled'
 import ForartLogo from '../../assets/images/logo.png'
 import UserIcon from '../../assets/images/header/avatar.png'
@@ -6,6 +6,10 @@ import { useHistory, Link, useLocation } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import Wallet from '../../components/wallet'
 import routes, { Route } from '../../routes'
+import { useSolanaWeb3 } from '../../contexts/solana-web3'
+import { useModal } from '../../contexts/modal'
+import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
+import { useSignLogin } from '../../hooks/useSignLogin'
 
 const AppHeaderContent = styled.div`
   width: 100%;
@@ -85,10 +89,43 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
 
   const { pathname }  = useLocation()
 
+  const { account } = useSolanaWeb3()
+  const { login } = useSignLogin()
+
+  const { openModal } = useModal()
+
+  const handleRedirect = async () => {
+    if (!account) {
+      openModal(<WalletSelectionModal />)
+    }
+
+    else {
+      await login().then(() => {
+        history.push('/account')
+
+      })
+    }
+    return
+  }
+
+  const eff = useCallback(async () => {
+    if (!account) {
+      openModal(<WalletSelectionModal />)
+    }
+
+    else {
+      await login().then(() => {
+        history.push('/account')
+      })
+    }
+    return
+
+  },[account])
+
   return (
     <AppHeaderContent>
       <MainContent>
-        <Link to={'/'}>
+        <Link to={ '/' }>
           <Logo>
             <img src={ForartLogo}  style={ isMobile ? { width: '80px' } : { }}  />
           </Logo>
@@ -126,7 +163,7 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
 
           <Wallet />
 
-          <div style={{ fontSize: '20px', }}   onClick={() => history.push('/account')} >
+          <div style={{ fontSize: '20px', }}   onClick={ eff} >
             <img src={UserIcon} />
           </div>
         </Operator>
