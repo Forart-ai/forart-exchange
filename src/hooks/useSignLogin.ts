@@ -1,49 +1,56 @@
 import { useSolanaWeb3 } from '../contexts/solana-web3'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import nacl from 'tweetnacl'
 import AUTH_API from '../apis/auth'
+import useLocalStorage from './useLocalStorage'
+import useEagerConnect from './useEagerConnect'
 
 const randomString = (len: number) => {
   const p = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   return [...Array(len)].reduce(a=>a+p[~~(Math.random()*p.length)],'')
 }
 
-const useSignLogin = () => {
+export function useSignLogin() {
   const { adapter, account } = useSolanaWeb3()
+  const { eagerConnected } = useEagerConnect()
 
-  const randomMessage = 'hello world'
+  const [token, setToken] = useLocalStorage<string>('TOKEN','')
 
-  const login = useCallback(async () => {
+  useEffect( () => {
+    (async () => {
+      const a = randomString(150)
 
-    const a = randomString(150)
+      console.log(a)
 
-    console.log(a)
+      const message = new TextEncoder().encode(a)
 
-    const message = new TextEncoder().encode(a)
+      if (!adapter || !account ) {
+        console.log('none')
+        return
+      }
 
-    if (!adapter || !account){
-      return
-    }
+      const signed = (await adapter.signMessage(message))!
 
-    const signed = (await adapter.signMessage(message))!
+      // console.log(nacl.sign.detached.verify(message, signed, Uint8Array.from(account!.toBuffer())))
 
-    // console.log(nacl.sign.detached.verify(message, signed, Uint8Array.from(account!.toBuffer())))
+      const signature = Buffer.from(signed).toString('base64')
 
-    const signature = Buffer.from(signed).toString('base64')
+      console.log(Buffer.from(signed).toString('base64'))
 
-    console.log(Buffer.from(signed).toString('base64'))
+      // await AUTH_API.userSignLogin({ wallet: account.toBase58(), toSign: randomMessage, signed: signature } ).then(res => {
+      //   console.log(res.data)
+      // })
 
-    // await AUTH_API.userSignLogin({ wallet: account.toBase58(), toSign: randomMessage, signed: signature } ).then(res => {
-    //   console.log(res.data)
-    // })
+      setToken('MONICaaaAd')
 
-    return signature
+      console.log(token)
+
+      return signature
+    })()
 
   },[account, adapter])
 
-  return {
-    login
-  }
+  return { token }
 }
 
-export { useSignLogin }
+export default useSignLogin

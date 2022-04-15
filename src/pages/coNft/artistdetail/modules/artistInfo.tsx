@@ -27,7 +27,7 @@ const BackgroundImage = styled('div')`
  
   
 
-  ${({ theme }) => theme.breakpoints.down('md')} {
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     margin: 60px 0;
   }
 `
@@ -39,8 +39,8 @@ const MainContainer = styled('div')`
   align-items: center;
   position: relative;
   padding: 20px 40px;
-  
-  ${({ theme }) => theme.breakpoints.down('md')} {
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     padding: 10px;
   }
 `
@@ -107,8 +107,8 @@ const DataArea = styled('div')`
   gap: 10px;
   position: absolute;
   bottom:  -100px;
-  
-  ${({ theme }) => theme.breakpoints.down('md')} {
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     width: 100%;
   }
 `
@@ -130,8 +130,8 @@ const DataItem = styled('div')`
     color: ${({ theme }) => theme.palette.grey[500]};
     font-size: 16px;
   }
-  
-  ${({ theme }) => theme.breakpoints.down('md')} {
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     text-align: center;
     width: 125px;
   }
@@ -164,7 +164,7 @@ const ArtistInfo:React.FC = () => {
       <BackgroundImage>
         <MainContainer >
           <DonateArea>
-            <Button variant={'contained'} color={'secondary'} onClick={openDonateModal}> Donate </Button>
+            {/*<Button variant={'contained'} color={'secondary'} onClick={openDonateModal}> Donate </Button>*/}
           </DonateArea>
           <MainArea>
             <img src={HypeteenIcon} />

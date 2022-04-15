@@ -14,7 +14,7 @@ const Wrapper = styled('div')`
     color: ${({ theme }) => theme.palette.primary.light};
   }
 
-  ${({ theme }) => theme.breakpoints.down('md')} {
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     .level {
       font-size: 22px;
      

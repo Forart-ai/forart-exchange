@@ -50,8 +50,9 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
   const [wallet, setWallet] = useState<SolanaWallet>()
   const [connected, setConnected] = useState(false)
 
-  // const { eagerConnected } = useEagerConnect()
-  //
+  const { eagerConnected } = useEagerConnect()
+
+  // connect wallet every refresh
   // useEffect(() => {
   //   if (eagerConnected) {
   //     setWallet(SUPPORT_WALLETS.Phantom)

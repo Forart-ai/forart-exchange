@@ -22,7 +22,7 @@ const Wrapper = styled('div')`
   }
 
 
-  ${({ theme }) => theme.breakpoints.down('md')} {
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     span {
       margin-left: 10px;
       font-size: 24px;

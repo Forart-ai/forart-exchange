@@ -7,15 +7,16 @@ export const HeaderContainer = styled('div')(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   overflow: 'auto',
-  minHeight: '100vh',
   alignItems:'center',
+  margin: '70px 0',
 
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
     padding: '10px 0',
     height: 'fit-content',
     margin: '100px 0',
-  }
+  },
+
 }))
 
 export const LeftArea = styled('div')(({ theme }) => ({
@@ -26,10 +27,15 @@ export const LeftArea = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   paddingRight:'30px',
 
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('sm')]: {
     width: '100%',
     padding: '0',
+  },
+
+  [theme.breakpoints.between('md', 'lg')]: {
+    paddingRight:'20px',
   }
+
 }))
 
 export const LeftBottom = styled('div')(({ theme }) => ({
@@ -48,12 +54,12 @@ export const LeftBottom = styled('div')(({ theme }) => ({
     fontSize: '1rem',
     color: theme.palette.primary.light,
   }
+
 }))
 
 export const StyledCountUp = styled(CountUp)(({ theme }) => ({
   color: theme.palette.primary.light,
   fontSize: '2.6rem',
-
 }))
 
 export const MainTitle = styled('div')(({ theme }) => ({
@@ -63,7 +69,7 @@ export const MainTitle = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   fontSize: '3.2rem',
   color: theme.palette.text.primary,
-  fontFamily:'KronaOne-Regular',
+  fontFamily: 'KronaOne-Regular',
 
   '& .title1': {
     color: theme.palette.primary.main
@@ -76,6 +82,15 @@ export const MainTitle = styled('div')(({ theme }) => ({
       color: theme.palette.text.primary,
 
     }
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '30px',
+  },
+
+  [theme.breakpoints.between('sm','md')]: {
+    fontSize: '22px',
+
   }
 
 }))
@@ -86,7 +101,7 @@ export const DescriptionText = styled('div')(({ theme }) => ({
   justifyContent: 'flex-start',
   flexDirection: 'column',
   fontSize: '1.2rem',
-  color: theme.palette.text.secondary,
+  color: theme.palette.grey[400],
   fontFamily:'arial',
 
 }))
@@ -100,6 +115,7 @@ export const RainbowButton = styled(Button)(({ theme }) => ({
     padding: '8px 16px',
     backgroundClip: 'padding-box, border-box',
     backgroundOrigin: 'padding-box, border-box',
+    borderRadius: '10px'
   }
 
 }))
@@ -110,6 +126,11 @@ export const RightArea = styled('div')`
   height: 100%;
   width: 50%;
   user-select: none;
+
+  ${({ theme }) => theme.breakpoints.down('sm')}{
+    margin-top: 20px;
+    width: 100%;
+  }
   
 
   //@media screen and (max-width: 1080px) {

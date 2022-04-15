@@ -8,7 +8,13 @@ const Text = styled('div')(({ theme }) => ({
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
     fontFamily: 'KronaOne-Regular',
-  }
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    span: {
+      fontSize: '22px',
+    }
+  },
 }))
 
 const RainbowText:React.FC = props => {

@@ -27,8 +27,6 @@ const Wrapper = styled('div')`
     width: 220px;
     cursor: pointer;
     margin: 0 auto;
-   
-
 
     .spin {
       position: absolute;
@@ -38,8 +36,8 @@ const Wrapper = styled('div')`
     img {
       margin-top: 15px;
       object-fit: contain;
-      width: 90%;
-      height: 90%;
+      width: 95%;
+      height: 95%;
       border-radius: 20px;
     }
   }
@@ -58,7 +56,7 @@ const Wrapper = styled('div')`
 `
 
 const NFTInfo = styled('div')`
-  padding: 20px 20px 10px 20px;
+  padding: 10px;
   width: 100%;
   display: flex;
   flex-direction: column;

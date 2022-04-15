@@ -10,7 +10,7 @@ const DefaultPageWrapper = styled('div')(({ theme }) => ({
   margin:' 0 auto',
   paddingBottom: '60px',
 
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('sm')]: {
     width:'calc(100vw - 30px)',
     height: 'fit-content',
   }

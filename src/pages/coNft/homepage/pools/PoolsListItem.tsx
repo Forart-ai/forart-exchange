@@ -29,7 +29,7 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
     }
   },[status])
 
-  const toArtistDetailUrl = '/artistDetail?' + new URLSearchParams({
+  const toArtistDetailUrl = 'co-nft/artistDetail?' + new URLSearchParams({
     artistId: data?.artistId ?? ''
   }).toString()
 
@@ -49,10 +49,10 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
         <InfoContent>
           <PoolTitle>
             <div className="pool-name"> {data?.name }</div>
-            <div className="likes-value">
-              <img src={HeartFilled} style={{ marginRight: '10px' }} />
-              345
-            </div>
+            {/*<div className="likes-value">*/}
+            {/*  <img src={HeartFilled} style={{ marginRight: '10px' }} />*/}
+            {/*  345*/}
+            {/*</div>*/}
           </PoolTitle>
 
           <PoolInfo>
@@ -79,7 +79,7 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
           </PoolInfo>
 
           <Operation >
-            <StyledButton disabled={true} variant={'contained'}>
+            <StyledButton variant={'contained'}>
               <Link to={toArtistDetailUrl}>
                 Create
               </Link>

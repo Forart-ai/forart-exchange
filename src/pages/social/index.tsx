@@ -65,7 +65,7 @@ const NftChatroom: React.FC = () => {
           <Header />
 
           <PostArea>
-            <RainbowButton > Show CO-NFT</RainbowButton>
+            <RainbowButton> Show CO-NFT </RainbowButton>
             <StyledTextarea minRows={5}  onChange={() => {}} placeholder={'something to say?'}  />
             <Button variant={'contained'}> Post </Button>
           </PostArea>

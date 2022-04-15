@@ -10,6 +10,7 @@ import { DownOutlined } from '@ant-design/icons'
 import useConnectedWallet from '../../hooks/useGetCurrentWallet'
 import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from './WalletSelectionModal'
+import WalletInfoModal from './modal/wallet-info-modal'
 
 const StyledWallet = styled.div`
   height: 40px;
@@ -148,35 +149,27 @@ const WalletContent: React.FC<CurrentAccountProps> =({
 
 const CurrentAccount: React.FC<CurrentAccountProps> = ({ account, solanaAccount }) => {
 
-  const menu = useCallback(() => (
-    <WalletContent account={account} solanaAccount={solanaAccount} />
-  ), [account] )
+  const { openModal } = useModal()
+  const {  disconnect } = useSolanaWeb3()
 
   return (
-    <StyledWallet>
+    <StyledWallet onClick={() => openModal(<WalletInfoModal account={solanaAccount?.toBase58().toString()} disconnect={disconnect} />)}>
       {
         account &&
           (
             <>
-              <Dropdown overlay= { menu } trigger= {['click']} placement= {'bottomRight'}  >
-                <div className="wallet-add" >
-                  <DownOutlined />
-                  {`${account.substr(0,5)}...${account.substr(-4,4)}`}
-                </div>
-              </Dropdown>
+
+              {`${account.substr(0,5)}...${account.substr(-4,4)}`}
+
             </>
           )
       }
       {
         solanaAccount &&
           (
-
-            <Dropdown overlay= { menu } trigger= {['click']} placement= {'bottomRight'}  >
-              <div className="wallet-add" >
-                <DownOutlined style={{ fontSize:'14px', marginRight:'10px' } } />{`${solanaAccount.toBase58().substr(0,5)}...${solanaAccount.toBase58().substr(-4,4)}`}
-              </div>
-            </Dropdown>
-
+            <>
+              {`${solanaAccount.toBase58().substr(0,5)}...${solanaAccount.toBase58().substr(-4,4)}`}
+            </>
           )
       }
     </StyledWallet>

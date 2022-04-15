@@ -29,7 +29,7 @@ const NFTInfo = styled('div')`
   flex-direction: row;
   margin: 60px 0;
   
-  @media screen and (max-width: 1080px) {
+  @media screen and (max-width: 800px) {
     flex-direction: column;
     height: fit-content;
   }
@@ -44,16 +44,20 @@ const LeftArea = styled('div')`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+  padding: 20px;
+  object-fit: contain;
+
+
   img {
     height: 90%;
     width: 90%;
-    object-fit: contain;
     border-radius: 30px;
   }
 
-  @media screen and (max-width: 1080px) {
+  @media screen and (max-width: 800px) {
     margin: 0 auto;
+    height: 100%;
+    width: 100%;
   }
 `
 const RightArea = styled('div')`
@@ -319,46 +323,46 @@ const CONFTDetail:React.FC = () => {
         <LeftArea >
           <img src={nftDetail?.previewUrl} />
         </LeftArea>
-        <RightArea>
-          <RightTopArea>
-            <TopTitle>
-              <div style={{ display:'flex', alignItems: 'center' }}>
-                <div className="name">{nftDetail?.chainNftName || `HypeTeen # ${nftDetail?.chainNftNameTmp}`}</div>
+        {/*<RightArea>*/}
+        {/*  <RightTopArea>*/}
+        {/*    <TopTitle>*/}
+        {/*      <div style={{ display:'flex', alignItems: 'center' }}>*/}
+        {/*        <div className="name">{nftDetail?.chainNftName || `HypeTeen # ${nftDetail?.chainNftNameTmp}`}</div>*/}
 
-              </div>
+        {/*      </div>*/}
 
-              <Options>
-                <HeartContainer heartStatus = {heartStatus} >
-                  <span>{heartNum}</span>
-                  <HeartOutlined onClick={() => handleLike(nftDetail?.id as string)} className="heart" />
-                </HeartContainer>
-                <Tooltip title={'Copy link'}>
-                  <img src={UploadIcon} onClick={() => handleCopy(window.location.href)} />
-                </Tooltip>
-              </Options>
+        {/*      <Options>*/}
+        {/*        <HeartContainer heartStatus = {heartStatus} >*/}
+        {/*          <span>{heartNum}</span>*/}
+        {/*          <HeartOutlined onClick={() => handleLike(nftDetail?.id as string)} className="heart" />*/}
+        {/*        </HeartContainer>*/}
+        {/*        <Tooltip title={'Copy link'}>*/}
+        {/*          <img src={UploadIcon} onClick={() => handleCopy(window.location.href)} />*/}
+        {/*        </Tooltip>*/}
+        {/*      </Options>*/}
 
-            </TopTitle>
-            <SeriesTitle>
-              <div>  {
-                level && (
-                  <LevelLabel color={level.color} shine={level.shine}>
-                    Rarity: {level.label}
-                  </LevelLabel>
-                )
-              }
-              </div>
-            </SeriesTitle>
-            <Rainbow>
-              <span>Owned by:</span>
-              {
-                !isMobile ?  <div className="wallet">{nftDetail?.wallet}</div> :  <div className="wallet">{shortenAddress(nftDetail?.wallet)}</div>
-              }
-            </Rainbow>
-          </RightTopArea>
-          <RightBottomArea >
-            <AttributesItem item={attr} />
-          </RightBottomArea>
-        </RightArea>
+        {/*    </TopTitle>*/}
+        {/*    <SeriesTitle>*/}
+        {/*      <div>  {*/}
+        {/*        level && (*/}
+        {/*          <LevelLabel color={level.color} shine={level.shine}>*/}
+        {/*            Rarity: {level.label}*/}
+        {/*          </LevelLabel>*/}
+        {/*        )*/}
+        {/*      }*/}
+        {/*      </div>*/}
+        {/*    </SeriesTitle>*/}
+        {/*    <Rainbow>*/}
+        {/*      <span>Owned by:</span>*/}
+        {/*      {*/}
+        {/*        !isMobile ?  <div className="wallet">{nftDetail?.wallet}</div> :  <div className="wallet">{shortenAddress(nftDetail?.wallet)}</div>*/}
+        {/*      }*/}
+        {/*    </Rainbow>*/}
+        {/*  </RightTopArea>*/}
+        {/*  <RightBottomArea >*/}
+        {/*    <AttributesItem item={attr} />*/}
+        {/*  </RightBottomArea>*/}
+        {/*</RightArea>*/}
 
       </NFTInfo>
 

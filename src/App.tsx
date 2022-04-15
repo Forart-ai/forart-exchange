@@ -7,12 +7,15 @@ import AppHeader from './layout/AppHeader'
 // @ts-ignore
 import { Route, useLocation } from 'react-router-dom'
 import routes from './routes'
-import { useChainEffect, useEagerConnect } from './web3/hooks'
 import '../src/font/font.css'
 import { useDispatch } from 'react-redux'
 import { setSideBarCollapsed, useSideBarCollapsed } from './store/app'
 import { useMediaQuery } from 'react-responsive'
-import { styled } from '@mui/material'
+import { BottomNavigation, BottomNavigationAction, Paper, styled } from '@mui/material'
+import { useSolanaWeb3 } from './contexts/solana-web3'
+import { useSignLogin } from './hooks/useSignLogin'
+import useEagerConnect from './hooks/useEagerConnect'
+import AppBottomNavigation from './layout/AppBottomNavigation'
 
 export const BlueGlow = styled('div')`
   position: absolute;
@@ -38,18 +41,14 @@ export const PurpleGlow = styled('div')`
 `
 
 const App: React.FC = () => {
-  useEagerConnect()
   // useChainEffect()
+  // useEagerConnect()
 
   const location = useLocation()
-  const dispatch = useDispatch()
-  const sideBarCollapsed = useSideBarCollapsed()
 
-  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
+  const isMobile = useMediaQuery({ query: '(max-width: 576px)' })
 
-  const toggleCollapsed = () => {
-    dispatch(setSideBarCollapsed(!sideBarCollapsed))
-  }
+  useSignLogin()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -58,10 +57,10 @@ const App: React.FC = () => {
   return (
     <Layout className="app">
       <div className="border" >
-        <AppHeader onCollapseChanged={toggleCollapsed} />
 
         { !isMobile ? (
           <>
+            <AppHeader  />
             <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', zIndex: 0,  top:'60px' }}>
               <PurpleGlow style={{ right: '0' }} />
               <PurpleGlow style={{ left: '25%' }} />
@@ -69,7 +68,6 @@ const App: React.FC = () => {
               <BlueGlow style={{ right: '25%' }} />
               <BlueGlow style={{ top:'60vh' }} />
               <BlueGlow style={{ top:'80vh', right: '30%', opacity:'.6', width:'400px', height: '400px' }} />
-
               {
 
                 routes.map((router:any) => (
@@ -87,19 +85,21 @@ const App: React.FC = () => {
             </Content>
           </>
         ) : (
-          <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', minHeight:'100vh' }}>
-            {
-              routes.map((router:any) => (
-                <Route
-                  path={router.path}
-                  exact
-                  component={router.component}
-                  key={router.path}
-                />
-              ))
-            }
-
-          </Content>
+          <>
+            <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', minHeight:'100vh', }}>
+              {
+                routes.map((router:any) => (
+                  <Route
+                    path={router.path}
+                    exact
+                    component={router.component}
+                    key={router.path}
+                  />
+                ))
+              }
+            </Content>
+            {/*<AppBottomNavigation />*/}
+          </>
         )}
       </div>
     </Layout>

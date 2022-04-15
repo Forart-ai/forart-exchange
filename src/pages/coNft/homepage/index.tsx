@@ -20,6 +20,7 @@ import { Box, Button } from '@mui/material'
 import DefaultPageWrapper from '../../../components/default-page-wrapper'
 import PoolList from './pools/PoolList'
 import HomepageBanner from '../../../assets/images/coPools/homepage-banner.png'
+import useLocalStorage from '../../../hooks/useLocalStorage'
 
 const LeftTop = styled.div`
   width: 100%;
@@ -27,9 +28,7 @@ const LeftTop = styled.div`
   justify-content: center;
   flex-direction: column;
 
-  @media screen and (max-width: 1080px) {
-    height: fit-content;
-  }
+  
 `
 
 const Banner = styled.div`
@@ -46,9 +45,8 @@ const Banner = styled.div`
 
 const ButtonArea = styled.div`
   margin: 40px 0;
-  width: 400px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   
   a{
     color: #ffffff
@@ -61,13 +59,15 @@ const ButtonArea = styled.div`
 
 const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
-  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
-
   const { data: overviewData } = useGetOverview()
 
   const toArtistDetailUrl = '/co-nft/artistDetail?' + new URLSearchParams({
     artistId: '3312'
   }).toString()
+
+  const token = useLocalStorage('TOKEN')
+
+  console.log(token)
 
   return (
     <HeaderContainer>
@@ -81,13 +81,12 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
 
           <DescriptionText>
             Forart.ai provides the First AI-powered NFT SaaS for Social, which integrates NFT content creation and social attributes to provide
-            a one-click experience for NFT creation, publishing and sharing. Forart.ai provides a direct co-creation space for NFT artists and enthusiasts,
-            so that artistic inspiration and market demand can be reached in the Forart space.
+            a one-click experience for NFT creation, publishing and sharing.
           </DescriptionText>
 
           <ButtonArea>
             <Link to={toArtistDetailUrl}>
-              <Button sx={{ padding: '15px 25px' }} variant={'contained'} color={'secondary'} >Create Hypeteen</Button>
+              <Button sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Create Hypeteen</Button>
             </Link>
 
             <RainbowButton>
@@ -103,7 +102,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
           <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center', marginRight: '40px' }}>
             {
               coNftData ? (
-                <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                <div style={{ display: 'flex', alignItems: 'baseline',  width:'200px' }}>
                   <StyledCountUp
                     end={overviewData?.minted ? overviewData?.minted : '---'}
                     duration={2}
@@ -138,15 +137,12 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
         </LeftBottom>
 
       </LeftArea>
-      {
-        !isMobile && (
-          <RightArea>
-            <Banner>
-              <img src={HomepageBanner} />
-            </Banner>
-          </RightArea>
-        )
-      }
+
+      <RightArea>
+        <Banner>
+          <img src={HomepageBanner} />
+        </Banner>
+      </RightArea>
 
     </HeaderContainer>
   )

@@ -29,6 +29,7 @@ const Wrapper = styled('div')`
 const Title = styled('div')`
   display: flex;
   justify-content: center;
+  align-items: center;
   font-family: inter-extraBold;
   color: #f2f2f2;
  
@@ -39,13 +40,10 @@ const Header = styled('div')`
   justify-content: space-between;
   align-items: center;
   padding-bottom: 10px;
-  border-bottom: 1px #600665 solid;
+  border-bottom: 1px ${({ theme }) => theme.palette.primary.main} solid;
 `
 
 const CloseButton = styled('div')`
-  position: absolute;
-  top: 20px;
-  right: 15px;
   cursor: pointer;
   
   img {
@@ -55,6 +53,7 @@ const CloseButton = styled('div')`
 
 const Footer = styled('div')`
   width: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
 `
@@ -79,6 +78,9 @@ const Dialog: React.FC<DialogProps> =({
       {
         title && (
           <Header>
+            <Title>
+              {title}
+            </Title>
             {
               closeable && (
                 <CloseButton onClick={closeModal} >
@@ -86,9 +88,7 @@ const Dialog: React.FC<DialogProps> =({
                 </CloseButton>
               )
             }
-            <Title>
-              {title}
-            </Title>
+
           </Header>
         )
       }
@@ -98,6 +98,13 @@ const Dialog: React.FC<DialogProps> =({
           onCancel && (
             <Button onClick={onCancel} variant={'contained'} color={'secondary'} >
               {cancelButtonProps?.children || 'Cancel'}
+            </Button>
+          )
+        }
+        {
+          onConfirm && (
+            <Button onClick={onConfirm} variant={'contained'} color={'primary'} >
+              {confirmButtonProps?.children || 'Submit'}
             </Button>
           )
         }

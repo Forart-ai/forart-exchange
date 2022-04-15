@@ -14,7 +14,7 @@ const Wrapper = styled('div')`
   flex-direction: column;
   margin: 0 auto;
 
-  ${({ theme }) => theme.breakpoints.down('md')} {
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     width: 90%;
   }
   
@@ -29,7 +29,7 @@ const IdentityContainer = styled('div')`
   display: flex;
   justify-content: space-between ;
 
-  ${({ theme }) => theme.breakpoints.down('md')} {
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     flex-direction: column;
     padding: 20px;
   }
@@ -45,7 +45,7 @@ const RainbowText = styled('div')`
     font-family: KronaOne-Regular;
   }
 
-  ${({ theme }) => theme.breakpoints.down('md')} {
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     span {
       font-size: 36px;
     }
@@ -56,7 +56,7 @@ const LeftContainer = styled('div')`
   height: 100%;
   width: 40%;
 
-  ${({ theme }) => theme.breakpoints.down('md')} {
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     width: 100%;
   }
 `
@@ -65,7 +65,7 @@ const RightContainer = styled('div')`
   height: 100%;
   width: 55%;
 
-  ${({ theme }) => theme.breakpoints.down('md')} {
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     width: 100%;
   }
 `
@@ -101,7 +101,7 @@ const MainTitle = styled('div')`
   color: #ffffff;
   text-align: left;
 
-  ${({ theme }) => theme.breakpoints.down('md')} {
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     margin-top: 10px;
     font-size: 30px;
   }

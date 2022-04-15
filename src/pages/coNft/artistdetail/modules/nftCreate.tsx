@@ -177,29 +177,27 @@ const NftCreate: React.FC = () => {
         { account  && (
           <p >
             Accesses left: {userData?.getQualification | 0}
-            <IconFont style={{ cursor:'pointer', marginLeft: '20px' }} type={'icon-Question'}  onClick={ openCheckWhiteListModal } />
+
           </p>
         )}
 
-        {
-          !account ? (
-            <Button variant={'contained'} size={'large'}  onClick={ openWallet }>
-              Connect Wallet
-            </Button>
-          ) : (
-            (userData?.getQualification !== 0) ? (
-              <Button variant={'contained'} size={'large'}  onClick={handleCreate}> Create </Button>
+        {/*{*/}
+        {/*  !account ? (*/}
+        {/*    <Button variant={'contained'} size={'large'}  onClick={ openWallet }>*/}
+        {/*      Connect Wallet*/}
+        {/*    </Button>*/}
+        {/*  ) : (*/}
+        {/*    (userData?.getQualification !== 0) ? (*/}
+        {/*      <Button variant={'contained'} size={'large'}  onClick={handleCreate}> Create </Button>*/}
 
-            ) : (
-              <Button variant={'contained'} size={'large'} onClick={ openCheckWhiteListModal }>
-                Get Qualification
-              </Button>
-            )
-          )
-        }
+        {/*    ) : (*/}
+        {/*      <Button variant={'contained'} size={'large'} onClick={ openCheckWhiteListModal }>*/}
+        {/*        Get Qualification*/}
+        {/*      </Button>*/}
+        {/*    )*/}
+        {/*  )*/}
+        {/*}*/}
       </MintButton>
-
-      {checkWhiteListModal}
 
     </MintWrapper>
   )

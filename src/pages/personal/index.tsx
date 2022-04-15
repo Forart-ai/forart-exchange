@@ -43,7 +43,7 @@ const BackgroundImage = styled('div')`
   margin-bottom: 150px;
 
 
-  ${({ theme }) => theme.breakpoints.down('md')} {
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     margin: 60px 0;
   }
 `

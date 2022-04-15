@@ -4,11 +4,11 @@ const ForartTheme = createTheme({
 
   breakpoints: {
     values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
+      xs: 370,
+      sm: 576,
+      md: 852,
+      lg: 968,
+      xl: 1080,
     },
   },
   palette: {

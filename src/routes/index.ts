@@ -59,6 +59,7 @@ const routes: Route[] = [
     title: 'Social',
     icon: ChatIcon,
     component: NftChatroom,
+    disable: true
   },
   {
     path: '/Text-to-NFT',
@@ -108,6 +109,8 @@ const routes: Route[] = [
     title:'Staking',
     component: Staking,
     icon: MarketplaceIcon,
+    disable:true
+
   }
 
 ]

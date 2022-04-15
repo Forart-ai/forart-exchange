@@ -82,7 +82,7 @@ const RouterContainer = styled('div')`
   
 `
 
-const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
+const AppHeader:React.FC  = () => {
   const history = useHistory()
 
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
@@ -90,37 +90,19 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
   const { pathname }  = useLocation()
 
   const { account } = useSolanaWeb3()
-  const { login } = useSignLogin()
 
   const { openModal } = useModal()
 
-  const handleRedirect = async () => {
+  const handleRedirect = () => {
     if (!account) {
       openModal(<WalletSelectionModal />)
     }
-
     else {
-      await login().then(() => {
-        history.push('/account')
-
-      })
+      history.push('/account')
+      return
     }
-    return
+
   }
-
-  const eff = useCallback(async () => {
-    if (!account) {
-      openModal(<WalletSelectionModal />)
-    }
-
-    else {
-      await login().then(() => {
-        history.push('/account')
-      })
-    }
-    return
-
-  },[account])
 
   return (
     <AppHeaderContent>
@@ -135,9 +117,6 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
 
             {
               routes.filter(route => !route.hidden).map((route: Route, index) => (
-                // <Link to={route.path} key={route.path}>
-                //   {route.title}
-                // </Link>
                 <Link
                   key={route.path}
                   to={route.path}
@@ -163,7 +142,7 @@ const AppHeader:React.FC <{ onCollapseChanged: () => void }> = () => {
 
           <Wallet />
 
-          <div style={{ fontSize: '20px', }}   onClick={ eff} >
+          <div style={{ fontSize: '20px', }}   onClick={ handleRedirect} >
             <img src={UserIcon} />
           </div>
         </Operator>

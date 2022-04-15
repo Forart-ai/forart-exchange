@@ -116,21 +116,20 @@ const WalletSelectionModal:React.FC = () => {
   const { connect, account: solAccount, adapter } = useSolanaWeb3()
   const { activate, account } = useWeb3React()
 
-  const message = new TextEncoder().encode('hello world')
-
   const onNetworkClick = (network: NetworkType) => {
     setNetwork(network)
   }
 
-  const onClick = useCallback((wallet: WalletType) => {
+  const onClick = useCallback( (wallet: WalletType) => {
 
     if (wallet.chainType === 'eth' && wallet.connector) {
       activate(wallet.connector)
+      return
     }
 
     if (wallet.chainType === 'solana' && wallet.adapter) {
       connect(wallet)
-
+      return
     }
 
   }, [connect, activate, network])

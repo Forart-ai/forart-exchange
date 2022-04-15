@@ -32,8 +32,6 @@ const defaultFormValues = {
 
 const UserProfileSetting:React.FC = () => {
 
-  const token = useLocalStorage('dd')
-
   const [formValues, setFormValues] = useState(defaultFormValues)
 
   const [selectedFile, setSelectedFile] = React.useState(null)

@@ -147,8 +147,8 @@ const TabInfo = styled('div')`
     color: ${({ theme }) => theme.palette.grey[500]};
     font-size: 1.2rem;
   }
-   
-  ${({ theme }) => theme.breakpoints.down('md')} {
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
     width: 100%;
     padding: 0 ;
   }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
@@ -13,11 +13,12 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { RefreshControllerProvider } from './contexts/refresh-controller'
 import configureStore from './store/index.js'
 import { Provider } from 'react-redux'
-import { SolanaWeb3Provider } from './contexts/solana-web3'
+import { SolanaWeb3Provider, useSolanaWeb3 } from './contexts/solana-web3'
 import { SolanaConnectionConfigProvider } from './contexts/solana-connection-config'
 import { ModalProvider } from './contexts/modal'
 import ForartTheme from './contexts/theme/config/dark'
 import { ThemeProvider } from '@mui/material'
+import { useSignLogin } from './hooks/useSignLogin'
 
 const { store } = configureStore()
 
