@@ -29,7 +29,6 @@ const AppBottomNavigation: React.FC = () => {
 
           {
             routes.filter(route => (!route.hidden) && (!route.disable)).map((route: Route, index) => (
-
               <BottomNavigationAction key={index} value={route.path} aria-disabled={route.disable} label={ route.title} />
             ))
           }

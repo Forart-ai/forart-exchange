@@ -25,7 +25,6 @@ export function useSignLogin() {
       const message = new TextEncoder().encode(a)
 
       if (!adapter || !account ) {
-        console.log('none')
         return
       }
 
@@ -35,7 +34,7 @@ export function useSignLogin() {
 
       const signature = Buffer.from(signed).toString('base64')
 
-      console.log(Buffer.from(signed).toString('base64'))
+      // console.log(Buffer.from(signed).toString('base64'))
 
       // await AUTH_API.userSignLogin({ wallet: account.toBase58(), toSign: randomMessage, signed: signature } ).then(res => {
       //   console.log(res.data)

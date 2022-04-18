@@ -19,11 +19,11 @@ const StyledWallet = styled.div`
   justify-content: center; 
   align-items: center;
   border-radius: 30px;
-  padding: 0 20px;
+  padding: 0 10px;
   margin-right: 20px;
   cursor: pointer;
-  min-width: 140px;
-  width: 200px;
+  min-width: 170px;
+  width: 180px;
 
   background-clip: padding-box, border-box;
   background-origin: padding-box, border-box;

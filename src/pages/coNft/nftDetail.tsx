@@ -20,6 +20,8 @@ import { useLocation } from 'react-router-dom'
 import copy from 'copy-to-clipboard'
 import DefaultPageWrapper from '../../components/default-page-wrapper'
 import styled, {  keyframes } from 'styled-components'
+import html2canvas from 'html2canvas'
+import Button from '@mui/material/Button'
 
 const NFTInfo = styled('div')`
   width: 100%;
@@ -29,10 +31,33 @@ const NFTInfo = styled('div')`
   flex-direction: row;
   margin: 60px 0;
   
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1080px) {
     flex-direction: column;
     height: fit-content;
   }
+`
+const Wrapper = styled.div`
+  background-color: rgb(13,14,45);
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+`
+
+const Canvas = styled.div`
+  background-color: rgb(13,14,45);
+  padding: 20px;
+  height: 100%;
+  width: 80%;
+  max-width: 1870px;
+  display: flex;
+  flex-direction: column;
+  alig-items: center;
+  margin: 0 auto;
+
+  @media screen and (max-width: 1080px) {
+    width: calc(100vw - 10px)
+  }
+
 `
 
 const LeftArea = styled('div')`
@@ -71,6 +96,7 @@ const RightArea = styled('div')`
     width: 100%;
   }
   
+
   
 `
 
@@ -80,11 +106,10 @@ const RightTopArea = styled('div')`
   justify-content: space-between;
   align-items: flex-start;
   height: 25%;
+  margin-bottom: 20px;
 
 
-  @media screen and (max-width: 1080px) {
-   height: fit-content;
-  }
+  
 `
 
 const TopTitle = styled('div')`
@@ -136,6 +161,7 @@ const SeriesTitle = styled('div')`
   color: #A197AA;
   font-size: 18px;
   font-family: arialBold;
+  margin-bottom: 16px;
 `
 
 const Options = styled('div')`
@@ -317,61 +343,80 @@ const CONFTDetail:React.FC = () => {
 
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
+  const exportImage = () => {
+    html2canvas(document.querySelector('#canvas')!, {
+      allowTaint: true,
+      useCORS: true,
+    }).then(res => {
+      const data = new Image()
+      data.src = res.toDataURL('image/png')
+      const alink = document.createElement('a')
+      alink.href = data.src
+      alink.download = 'test.png'
+      alink.click()
+    })
+  }
+
   return (
-    <DefaultPageWrapper>
-      <NFTInfo>
-        <LeftArea >
-          <img src={nftDetail?.previewUrl} />
-        </LeftArea>
-        {/*<RightArea>*/}
-        {/*  <RightTopArea>*/}
-        {/*    <TopTitle>*/}
-        {/*      <div style={{ display:'flex', alignItems: 'center' }}>*/}
-        {/*        <div className="name">{nftDetail?.chainNftName || `HypeTeen # ${nftDetail?.chainNftNameTmp}`}</div>*/}
+    <Wrapper>
+      <Canvas id={'canvas'}>
+        <NFTInfo >
+          <LeftArea >
+            <img  src={nftDetail?.previewUrl} />
+          </LeftArea>
+          <RightArea>
+            <RightTopArea>
+              <TopTitle>
+                <div style={{ display:'flex', alignItems: 'center' }}>
+                  <div className="name">{nftDetail?.chainNftName || `HypeTeen # ${nftDetail?.chainNftNameTmp}`}</div>
 
-        {/*      </div>*/}
+                </div>
 
-        {/*      <Options>*/}
-        {/*        <HeartContainer heartStatus = {heartStatus} >*/}
-        {/*          <span>{heartNum}</span>*/}
-        {/*          <HeartOutlined onClick={() => handleLike(nftDetail?.id as string)} className="heart" />*/}
-        {/*        </HeartContainer>*/}
-        {/*        <Tooltip title={'Copy link'}>*/}
-        {/*          <img src={UploadIcon} onClick={() => handleCopy(window.location.href)} />*/}
-        {/*        </Tooltip>*/}
-        {/*      </Options>*/}
+                <Options>
+                  <HeartContainer heartStatus = {heartStatus} >
+                    <span>{heartNum}</span>
+                    <HeartOutlined onClick={() => handleLike(nftDetail?.id as string)} className="heart" />
+                  </HeartContainer>
+                  <Tooltip title={'Copy link'}>
+                    <img src={UploadIcon} onClick={() => handleCopy(window.location.href)} />
+                  </Tooltip>
+                </Options>
 
-        {/*    </TopTitle>*/}
-        {/*    <SeriesTitle>*/}
-        {/*      <div>  {*/}
-        {/*        level && (*/}
-        {/*          <LevelLabel color={level.color} shine={level.shine}>*/}
-        {/*            Rarity: {level.label}*/}
-        {/*          </LevelLabel>*/}
-        {/*        )*/}
-        {/*      }*/}
-        {/*      </div>*/}
-        {/*    </SeriesTitle>*/}
-        {/*    <Rainbow>*/}
-        {/*      <span>Owned by:</span>*/}
-        {/*      {*/}
-        {/*        !isMobile ?  <div className="wallet">{nftDetail?.wallet}</div> :  <div className="wallet">{shortenAddress(nftDetail?.wallet)}</div>*/}
-        {/*      }*/}
-        {/*    </Rainbow>*/}
-        {/*  </RightTopArea>*/}
-        {/*  <RightBottomArea >*/}
-        {/*    <AttributesItem item={attr} />*/}
-        {/*  </RightBottomArea>*/}
-        {/*</RightArea>*/}
+              </TopTitle>
+              <SeriesTitle>
+                <div>  {
+                  level && (
+                    <LevelLabel color={level.color} shine={level.shine}>
+                      Rarity: {level.label}
+                    </LevelLabel>
+                  )
+                }
+                </div>
+              </SeriesTitle>
+              <Rainbow>
+                <span>Owned by:</span>
+                {
+                  !isMobile ?  <div className="wallet">{nftDetail?.wallet}</div> :  <div className="wallet">{shortenAddress(nftDetail?.wallet)}</div>
+                }
+              </Rainbow>
+            </RightTopArea>
+            <RightBottomArea >
+              <AttributesItem item={attr} />
+            </RightBottomArea>
+          </RightArea>
 
-      </NFTInfo>
+        </NFTInfo>
 
-      <Snackbar  open={open} autoHideDuration={12000} onClose={handleClose} anchorOrigin={{ vertical:'bottom',horizontal:'left' }}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%','& .MuiSnackbar-root':{ zIndex: 1500 }  }}>
-          Copy success!
-        </Alert>
-      </Snackbar>
-    </DefaultPageWrapper>
+        <Snackbar  open={open} autoHideDuration={12000} onClose={handleClose} anchorOrigin={{ vertical:'bottom',horizontal:'left' }}>
+          <Alert onClose={handleClose} severity="success" sx={{ width: '100%','& .MuiSnackbar-root':{ zIndex: 1500 }  }}>
+            Copy success!
+          </Alert>
+        </Snackbar>
+
+      </Canvas>
+      <Button variant={'contained'} onClick={() => exportImage()}>Click</Button>
+
+    </Wrapper>
 
   )
 }

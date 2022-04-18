@@ -48,7 +48,7 @@ const App: React.FC = () => {
 
   const isMobile = useMediaQuery({ query: '(max-width: 576px)' })
 
-  useSignLogin()
+  // useSignLogin()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -86,6 +86,7 @@ const App: React.FC = () => {
           </>
         ) : (
           <>
+            <AppHeader  />
             <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', minHeight:'100vh', }}>
               {
                 routes.map((router:any) => (

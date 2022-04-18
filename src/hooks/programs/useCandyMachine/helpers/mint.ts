@@ -20,6 +20,7 @@ export async function mint(program: Program, mint: Keypair): Promise<MintResult>
   const remainingAccounts = []
   const signers = [mint]
   const cleanupInstructions = []
+
   const instructions = [
     anchor.web3.SystemProgram.createAccount( {
       fromPubkey: minterPublicKey,

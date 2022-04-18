@@ -40,6 +40,9 @@ const ForartTheme = createTheme({
       200: '#eeeeee',
       300: '#e0e0e0',
       400: '#999999'
+    },
+    action: {
+      disabled: 'rgba(255,255,255,0.4)',
     }
   },
   spacing: 10,

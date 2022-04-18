@@ -164,7 +164,7 @@ const ArtistInfo:React.FC = () => {
       <BackgroundImage>
         <MainContainer >
           <DonateArea>
-            {/*<Button variant={'contained'} color={'secondary'} onClick={openDonateModal}> Donate </Button>*/}
+            <Button sx={{ '&.Mui-disabled': { pointerEvents: 'all', cursor:'not-allowed' } }} disabled={true} variant={'contained'} color={'secondary'} onClick={openDonateModal}> Donate </Button>
           </DonateArea>
           <MainArea>
             <img src={HypeteenIcon} />

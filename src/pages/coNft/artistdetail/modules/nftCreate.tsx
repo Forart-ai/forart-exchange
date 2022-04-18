@@ -28,6 +28,7 @@ import RandomHats from '../../../../assets/images/coPools/random-hat.png'
 import { Box, Button } from '@mui/material'
 import { Modal } from 'antd'
 import { ConfirmCreateDialog } from '../../components/ConfirmCreateDialog'
+import { useWhiteList } from '../../../../hooks/programs/useWhiteList'
 
 const IconFont = createFromIconfontCN({
   scriptUrl: [
@@ -40,6 +41,8 @@ const NftCreate: React.FC = () => {
   const { account } = useSolanaWeb3()
 
   const { openModal } = useModal()
+
+  const { checkWhiteList } = useWhiteList()
 
   const artistId = useLocationQuery('artistId')
 
@@ -65,9 +68,7 @@ const NftCreate: React.FC = () => {
   const discordAccessToken = useDiscordAccessToken()
   const { mintNFT } = useNFTMint()
 
-  useEffect(() => {
-    console.log(body, attr)
-  },[body, attr])
+  const  userTokenAmount  = checkWhiteList()
 
   useEffect(() => {
     if (discordAccessToken) {

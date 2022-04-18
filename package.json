@@ -49,6 +49,7 @@
     "echarts-for-react": "^3.0.2",
     "ethers": "^5.5.1",
     "eventemitter3": "^4.0.7",
+    "html2canvas": "^1.4.1",
     "https-browserify": "^1.0.0",
     "moment": "^2.29.2",
     "rc-virtual-list": "^3.4.2",

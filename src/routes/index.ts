@@ -37,7 +37,7 @@ const routes: Route[] = [
   // },
   {
     path: '/',
-    title: 'Co-nft',
+    title: 'CO-NFT',
     icon: GamesIcon,
     component: CoNftPage,
     disable: false
