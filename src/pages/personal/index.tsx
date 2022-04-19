@@ -96,7 +96,6 @@ const UserInfo = styled('div')`
   align-items: center;
   position: relative;
   bottom: -50%;
-  width: 100%;
 
   .avatar {
     width: 128px;
@@ -117,8 +116,11 @@ const UserInfo = styled('div')`
     font-size: 30px;
     color: ${({ theme }) => theme.palette.text.primary};
     font-weight: bolder;
+    display: flex;
+    align-items: center;
     
     img {
+      margin-left: 10px;
       width: 20px;
       cursor: pointer;
     }
@@ -132,6 +134,8 @@ const UserInfo = styled('div')`
 
 const TabsWrapper = styled('div')`
   width: 100vw;
+  position: relative;
+  margin-top: 50px;
 `
 
 interface StyledTabsProps {
@@ -247,26 +251,26 @@ const TabsContainer: React.FC = () => {
           aria-label="styled tabs example"
 
         >
-          <StyledTab label="Avatar" />
+          {/*<StyledTab label="Avatar" />*/}
           <StyledTab label="Identity" />
           <StyledTab  label="CO-NFT"  />
           <StyledTab label="NFTs" />
-          <StyledTab label="Post" />
+          {/*<StyledTab label="Post" />*/}
         </StyledTabs>
 
       </Box>
 
       <Box>
+        {/*<TabPanel index={0} value={value}>*/}
+        {/*  <CharacterCustomize artistId={'3312'} />*/}
+        {/*</TabPanel>*/}
         <TabPanel index={0} value={value}>
-          <CharacterCustomize />
-        </TabPanel>
-        <TabPanel index={1} value={value}>
           <Identity />
         </TabPanel>
-        <TabPanel index={2} value={value}>
+        <TabPanel index={1} value={value}>
           <UserCoNftList list={mintedNft} />
         </TabPanel>
-        <TabPanel index={3} value={value}>
+        <TabPanel index={2} value={value}>
           <UserOwnedNfts />
         </TabPanel>
       </Box>
@@ -287,37 +291,37 @@ const PersonalCenterPage: React.FC = () => {
     <Wrapper>
       <PersonalCenterContainer>
         <BackgroundImage>
-          <UserInfoContainer>
-            <DataColumn>
-              <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>
-              <div className={'label'}>Intergal</div>
-            </DataColumn>
+          {/*<UserInfoContainer>*/}
+          {/*  <DataColumn>*/}
+          {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
+          {/*    <div className={'label'}>Intergal</div>*/}
+          {/*  </DataColumn>*/}
 
-            <DataColumn>
-              <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>
-              <div className={'label'}>Post</div>
-            </DataColumn>
+          {/*  <DataColumn>*/}
+          {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
+          {/*    <div className={'label'}>Post</div>*/}
+          {/*  </DataColumn>*/}
 
-            <DataColumn>
-              <UserInfo>
-                <div className={'avatar'}>
-                  <img src={AvatarIcon} />
-                </div>
-                <div className="username">User <img src={SettingIcon} onClick={() => openModal(<UserProfileSetting />)} /> </div>
-                <div className="address">{ shortenAddress(account?.toString()) }</div>
-              </UserInfo>
-            </DataColumn>
+          <DataColumn>
+            <UserInfo>
+              <div className={'avatar'}>
+                <img src={AvatarIcon} />
+              </div>
+              <div className="username">User <img src={SettingIcon} onClick={() => openModal(<UserProfileSetting />)} /> </div>
+              <div className="address">{ shortenAddress(account?.toString()) }</div>
+            </UserInfo>
+          </DataColumn>
 
-            <DataColumn>
-              <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>
-              <div className={'label'}>Followers</div>
-            </DataColumn>
+          {/*  <DataColumn>*/}
+          {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
+          {/*    <div className={'label'}>Followers</div>*/}
+          {/*  </DataColumn>*/}
 
-            <DataColumn>
-              <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>
-              <div className={'label'}>Following</div>
-            </DataColumn>
-          </UserInfoContainer>
+          {/*  <DataColumn>*/}
+          {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
+          {/*    <div className={'label'}>Following</div>*/}
+          {/*  </DataColumn>*/}
+          {/*</UserInfoContainer>*/}
         </BackgroundImage>
 
       </PersonalCenterContainer>

@@ -16,7 +16,7 @@ interface StyledSelectorProps {
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   // 'aria-label': 'Without label',
-  minWidth:'260px',
+  minWidth:'200px',
   'label + &': {
     marginTop: theme.spacing(2),
   },
@@ -27,7 +27,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     border: `1px solid ${theme.palette.secondary.main}`,
     fontSize: 16,
     color: '#999999',
-    padding: '10px 26px 10px 12px',
+    padding: '4px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
     // Use the system font instead of the default Roboto font.
     fontFamily: [
@@ -53,19 +53,17 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 
 const StyledSelector:React.FC<StyledSelectorProps> = (props: StyledSelectorProps) => {
   return (
-    <div>
-      <FormControl sx={{ m: 1 }} variant="standard">
-        <InputLabel id="demo-customized-select-label">{props.title}</InputLabel>
-        <Select
-          labelId="demo-customized-select-label"
-          id="demo-customized-select"
-          {...props}
-          input={<BootstrapInput />}
-        >
-          {props.children}
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl size={'small'}  variant="standard">
+      <InputLabel id="demo-customized-select-label">{props.title}</InputLabel>
+      <Select
+        labelId="demo-customized-select-label"
+        id="demo-customized-select"
+        {...props}
+        input={<BootstrapInput />}
+      >
+        {props.children}
+      </Select>
+    </FormControl>
   )
 }
 export default StyledSelector

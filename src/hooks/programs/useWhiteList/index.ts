@@ -14,6 +14,7 @@ const useWhiteList = () => {
     if (!account) {
       return
     }
+    console.log('in')
 
     const userTokenAmount = (await connection.getTokenAccountsByOwner(account, { mint: WHITELIST_TOKEN_ADDRESS })).value[0]?.pubkey
 
@@ -23,11 +24,12 @@ const useWhiteList = () => {
 
     const tokenAccount = await connection.getParsedAccountInfo(userTokenAmount)
 
-    const tokenBalance = (tokenAccount.value?.data as ParsedAccountData).parsed.info.tokenAmount.decimals
+    const tokenBalance = (tokenAccount.value?.data as ParsedAccountData).parsed.info.tokenAmount.uiAmountString
 
     console.log(tokenBalance)
 
-    return userTokenAmount
+    return tokenBalance
+
   },[account])
 
   return {

@@ -3,9 +3,12 @@ import { Box, Button, styled, useMediaQuery, useTheme } from '@mui/material'
 import HypeteenIcon from '../../../../assets/images/artistDetail/hypeteenIcon.png'
 import { useGetOverview } from '../../../../hooks/queries/useGetOverview'
 import { useModal } from '../../../../contexts/modal'
-import DonateDialog from '../../components/donation/donate-dialog'
+import DonateDialog from '../../components/modals/donation/donate-dialog'
 import { useDonation } from '../../../../hooks/programs/useDonation'
 import Background from '../../../../assets/images/coPools/hypeteen-background.png'
+import LightBulb from '../../../../assets/images/siderIcon/light-bulb.png'
+import Cube from '../../../../assets/images/siderIcon/cube.png'
+import Gift from '../../../../assets/images/siderIcon/gift.png'
 
 const Wrapper = styled('div')`
   height: 700px;
@@ -145,6 +148,10 @@ const DataIcon = styled('div')`
   background: linear-gradient(90deg, #EB1482 0%, #CD19B9 100%);
   box-sizing: border-box;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
 `
 
 const ArtistInfo:React.FC = () => {
@@ -176,7 +183,9 @@ const ArtistInfo:React.FC = () => {
 
           <DataArea>
             <DataItem>
-              <DataIcon />
+              <DataIcon >
+                <img src={LightBulb} />
+              </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
                 <div className={'value'}>{overviewData?.minted}</div>
                 <div className={'name'}>Created</div>
@@ -184,7 +193,9 @@ const ArtistInfo:React.FC = () => {
             </DataItem>
 
             <DataItem>
-              <DataIcon />
+              <DataIcon>
+                <img src={Gift} />
+              </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
                 <div className={'value'}>{poolDonated ? poolDonated?.data?.toString() : '-'} {isMobile && 'USDC'}</div>
                 <div className={'name'}>Donated</div>
@@ -192,7 +203,9 @@ const ArtistInfo:React.FC = () => {
             </DataItem>
 
             <DataItem>
-              <DataIcon />
+              <DataIcon >
+                <img src={Cube} />
+              </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
                 <div className={'value'}>{overviewData?.mintedWallet}</div>
                 <div className={'name'}>Creators</div>

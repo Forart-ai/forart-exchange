@@ -184,23 +184,14 @@ const AllNftContainer: React.FC = () => {
 
       <Filter>
         <SelectRankings value={orderBy} onChange={e => { setOrderBy(e.target.value); onPressEnter()}} />
-        <Box sx={{ display: 'grid', gap:'10px', gridTemplateColumns:'230px 180px' }}>
-          {/*<ThemeInput*/}
-          {/*  placeholder={'Please input token ID'}*/}
-          {/*  onChange ={(res:any) =>onChange(res)}*/}
-          {/*  prefix={<></>}*/}
-          {/*  defaultValue={searchKey}*/}
-          {/*  style={{ width:'300px', marginRight: '20px' }}*/}
-          {/*/>*/}
-          {/*<div className="refresh">*/}
-          {/*  <RedoOutlined style={{ width:'40px', color: '#cfcfcf' }} spin={loading} onClick={resetData} />*/}
-          {/*</div>*/}
+
+        <Box sx={{  display: 'flex', justifyContent:'space-between',  marginTop:'10px' }}>
           <StyledTextField
             placeholder={'Please input token ID'}
             onChange ={(res:any) => onChange(res)}
             variant={'outlined'}
           />
-          <Button variant={'contained'} color={'secondary'}  onClick={ openWalletRankModal }>Creator Ranking</Button>
+          <Button sx={{ marginLeft: '20px' }} variant={'contained'} color={'secondary'}  onClick={ openWalletRankModal }>Creator Ranking</Button>
         </Box>
       </Filter>
 

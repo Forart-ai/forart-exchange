@@ -213,7 +213,7 @@ export const RightArea = styled('div')(({ theme }) => ({
 export const Operation = styled('div')(({ theme }) => ({
   width: '100%',
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'center',
 
   a :{
     color : 'white'

@@ -13,30 +13,30 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
 
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
-  const req = {
+  const hypeteen = {
     'image': 'https://forart.mypinata.cloud/ipfs/QmSFo7w1m87FnSbcgWAsydWzsjKiExZCrt7ynxMJLQP2d4',
     'name': 'HypeTeen',
     'describe': 'HypeTeen is the first CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen.',
     'nfts': overviewData?.minted,
     'minters': overviewData?.mintedWallet,
-    'status': 'closing',
+    'status': 'living',
     'artistId': '3312'
   }
 
   useMemo(() => {
     if (isMobile) {
-      req.describe =  req.describe.substr(0,70) + '...'
+      hypeteen.describe =  hypeteen.describe.substr(0,70) + '...'
     }
     else return
-  },[req])
+  },[hypeteen])
 
   return (
     <PoolsContainer>
       <RainbowText>CO-NFT Lived Pools</RainbowText>
       <PoolListContainer>
         <PoolsListItem
-          data={req}
-          status={req.status}
+          data={hypeteen}
+          status={hypeteen.status}
         />
         {
           poolsList?.map((pool: PoolsListData, index: number) => (

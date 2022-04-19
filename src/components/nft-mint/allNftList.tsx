@@ -85,7 +85,7 @@ const Info = styled('div')`
   }
 `
 
-const HeartContainer = styled('div')<{heartStatus?: 'up' | 'down'}>`
+const HeartContainer = styled('div')<{heartstatus?: 'up' | 'down'}>`
   display: flex;
   align-items: center;
 
@@ -101,7 +101,7 @@ const HeartContainer = styled('div')<{heartStatus?: 'up' | 'down'}>`
     //}
   }
   
-  ${props => props.heartStatus === 'up' && `
+  ${props => props.heartstatus === 'up' && `
   
   .heart {
      color: #8246F5
@@ -109,7 +109,7 @@ const HeartContainer = styled('div')<{heartStatus?: 'up' | 'down'}>`
   `
 }
 
-  ${props => props.heartStatus === 'down' && `
+  ${props => props.heartstatus === 'down' && `
   .heart {
      color: white
      }
@@ -130,7 +130,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
   const [heartNum, setHeartNum] = useState<number>(data?.star)
   const [isHeart, setIsHeart] = useState<boolean>(false)
   const [heartNft, setHeartNft] = useState<string[]>()
-  const [heartStatus, setHeartStatus] = useState<'up' | 'down'>('down')
+  const [heartstatus, setHeartStatus] = useState<'up' | 'down'>('down')
 
   const cb = useCallback(() => {
     if (data?.chainStatus === 'SUCCESS') {
@@ -159,7 +159,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
       return
     }
 
-    if (series && heartStatus === 'down') {
+    if (series && heartstatus === 'down') {
       setIsHeart(true)
       setHeartNum(prev => prev + 1)
       setHeartStatus('up')
@@ -172,7 +172,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
         })
     }
 
-    if (series  && heartStatus === 'up') {
+    if (series  && heartstatus === 'up') {
       setIsHeart(false)
       setHeartNum(prev => prev - 1)
       setHeartStatus('down')
@@ -184,7 +184,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
         })
     }
 
-  },[account, data, heartStatus])
+  },[account, data, heartstatus])
 
   useEffect(() => {
 
@@ -212,7 +212,7 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
         <div className="row">
           <div className="name">{data?.chainNftName || `HypeTeen # ${data?.chainNftNameTmp}`}</div>
 
-          <HeartContainer heartStatus = {heartStatus} >
+          <HeartContainer heartstatus = {heartstatus} >
             <span>{heartNum}</span>
             {
               account ? (

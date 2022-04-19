@@ -29,7 +29,7 @@ const Wrapper = styled('div')`
 
 export const TopContainer = styled('div') `
   width: 100%;
-  height: 900px;
+  height: fit-content;
   display: flex;
   padding: 0 100px;
   justify-content: center;
@@ -41,13 +41,20 @@ export const TopContainer = styled('div') `
   }
 `
 
-const CharacterCustomize:React.FC = () => {
-  const { data: artistKit } = useArtistKitQuery('3312')
+const CharacterCustomize:React.FC<{artistId: string, selected: (_?: any, __?: any) => void}> = ({ artistId, selected }) => {
+  const { data: artistKit } = useArtistKitQuery(artistId)
+
   const [body, setBody] = useState<NFTAttributesData>(artistKit?.Body[0])
+
   const [attr, setAttr] = useState<NFTAttributesData[]>([])
+
   useEffect(()=> {
     setBody(artistKit?.Body[0])
   }, [artistKit])
+
+  useEffect(() => {
+    selected(body, attr)
+  },[attr,body])
 
   return (
     <Wrapper >
@@ -64,11 +71,9 @@ const CharacterCustomize:React.FC = () => {
               }
             </SelectedBody>
           </BodyContent>
-
-          <Box sx={{ width: '100%', marginTop: '20px' }}>
-            <Button variant={'contained'} sx={{ width: '200px' }}> Edit </Button>
-          </Box>
-
+          {/*<Box sx={{ width: '100%', marginTop: '20px' }}>*/}
+          {/*  <Button variant={'contained'} sx={{ width: '200px' }}> Edit </Button>*/}
+          {/*</Box>*/}
         </Box>
 
         <KitContent >

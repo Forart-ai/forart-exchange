@@ -39,7 +39,7 @@ export const ENDPOINTS: Record<Cluster, Endpoint> = {
 }
 
 // export const DEFAULT_CLUSTER: Cluster = process.env.REACT_APP_SOLANA_CLUSTER as Cluster
-export const DEFAULT_CLUSTER: Cluster = 'devnet'
+export const DEFAULT_CLUSTER: Cluster = 'testnet'
 
 const DEFAULT_ENDPOINT = ENDPOINTS[DEFAULT_CLUSTER]
 const DEFAULT_SLIPPAGE = 1

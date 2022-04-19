@@ -7,17 +7,12 @@ import { useWeb3React } from '@web3-react/core'
 import { message } from 'antd'
 import SolanaLogo from '../../assets/images/wallets/solanaLogoMark.svg'
 import { useSignLogin } from '../../hooks/useSignLogin'
+import Dialog from '../../contexts/theme/components/Dialog/Dialog'
 
 const Wrapper = styled.div`
   width: 700px;
   max-width: 700px;
-  padding: 20px;
-  border-radius: 10px;
   position: relative;
-  border: 4px solid transparent;
-  background-clip: padding-box, border-box;
-  background-origin: padding-box, border-box;
-  background-image: linear-gradient(to right, rgb(27, 3, 42), rgb(27, 3, 42)), linear-gradient(90deg, #ff4090, #3c69c2);
 `
 
 const Title = styled.div`
@@ -32,7 +27,7 @@ const TopArea = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  margin-top: 10px;
 `
 
 const TextRow = styled.div`
@@ -181,43 +176,44 @@ const WalletSelectionModal:React.FC = () => {
   },[account, solAccount])
 
   return (
-    <Wrapper>
-      <CloseButton onClick={closeModal} />
-      <Title>Connect to wallet</Title>
-      <TopArea>
-        <TextRow >
-          <div className="step-number">1</div>
-          <div> Choose a network</div>
-        </TextRow>
-        <ChosenArea>
-          {
-            supportNetwork.map((network: NetworkType) => (
-              <div className="col-3" key={network.key}  >
-                <div className={network.name} onClick={() => onNetworkClick(network)} >
-                  <img src={network.icon}  />
-                  <span>{network.name}</span>
+
+    <Dialog title={'Connect to wallet'}>
+      <Wrapper>
+        <TopArea>
+          <TextRow >
+            <div className="step-number">1</div>
+            <div> Choose a network</div>
+          </TextRow>
+          <ChosenArea>
+            {
+              supportNetwork.map((network: NetworkType) => (
+                <div className="col-3" key={network.key}  >
+                  <div className={network.name} onClick={() => onNetworkClick(network)} >
+                    <img src={network.icon}  />
+                    <span>{network.name}</span>
+                  </div>
                 </div>
-              </div>
-            ))
-          }
-        </ChosenArea>
+              ))
+            }
+          </ChosenArea>
 
-      </TopArea>
+        </TopArea>
 
-      <TopArea>
-        <TextRow >
-          <div className="step-number">2</div>
-          <div> Choose a wallet</div>
-        </TextRow>
-        <ChosenArea>
-          {
-            network.supportedWallet?.map(wallet => (
-              <WalletList network={network.name} wallet={wallet} key={wallet.name} onSelect={() => onClick(wallet)} />
-            ))
-          }
-        </ChosenArea>
-      </TopArea>
-    </Wrapper>
+        <TopArea>
+          <TextRow >
+            <div className="step-number">2</div>
+            <div> Choose a wallet</div>
+          </TextRow>
+          <ChosenArea>
+            {
+              network.supportedWallet?.map(wallet => (
+                <WalletList network={network.name} wallet={wallet} key={wallet.name} onSelect={() => onClick(wallet)} />
+              ))
+            }
+          </ChosenArea>
+        </TopArea>
+      </Wrapper>
+    </Dialog>
   )
 }
 

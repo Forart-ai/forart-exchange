@@ -65,9 +65,7 @@ const Header: React.FC<{ coNftData?: CoNFTData }> = ({ coNftData }) => {
     artistId: '3312'
   }).toString()
 
-  const token = useLocalStorage('TOKEN')
-
-  console.log(token)
+  // const token = useLocalStorage('TOKEN')
 
   return (
     <HeaderContainer>

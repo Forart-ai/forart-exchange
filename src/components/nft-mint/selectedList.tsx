@@ -15,7 +15,6 @@ export const Title = styled.div`
 `
 const Container = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-wrap: wrap;
   overflow-y: scroll;
@@ -52,16 +51,14 @@ const MysteryHat = styled.div`
   z-index: 2;
 `
 
-const PreviewContainer = styled.div`
-  width: 100%;
-  height: 100%;
-`
 const PreviewBackground = styled.div`
   position: absolute;
-  width:100%;
+  
   padding: 20px;
 
   img {
+    width:100%;
+    height: 100%;
     border-radius: 30px;
   }
 `
@@ -127,32 +124,30 @@ export const SelectedList: React.FC<{kitList?: Map<string, any>, body: any}> = (
   )
 }
 
-export const NFTPreview: React.FC<{body: NFTAttributesData, attrList?: NFTAttributesData[]}> = ({ body, attrList }) => {
+export const NFTPreview: React.FC<{body?: NFTAttributesData, attrList?: NFTAttributesData[]}> = ({ body, attrList }) => {
 
   return (
     <Wrapper>
-      <PreviewContainer>
-        <PreviewBackground>
-          {
-            attrList?.filter(item => item?.bodyType ==='Background').map((item, index) => (
-              <img  key={index} src={item?.url} onError={undefined}  />
-            ))
-          }
-        </PreviewBackground>
-        <PreviewImages>
-          {
-            body?.url && <img src={body?.url}  alt={body?.url} />
-          }
-        </PreviewImages>
-
+      <PreviewBackground>
         {
-          attrList?.filter(item => item?.bodyType !=='Background').map((item, index) => (
-            <PreviewImages key={index}>
-              <img className={item?.bodyType} src={item?.url} onError={undefined} />
-            </PreviewImages>
+          attrList?.filter(item => item?.bodyType ==='Background').map((item, index) => (
+            <img  key={index} src={item?.url} onError={undefined}  />
           ))
         }
-      </PreviewContainer>
+      </PreviewBackground>
+      <PreviewImages>
+        {
+          body?.url && <img src={body?.url}  alt={body?.url} />
+        }
+      </PreviewImages>
+
+      {
+        attrList?.filter(item => item?.bodyType !=='Background').map((item, index) => (
+          <PreviewImages key={index}>
+            <img className={item?.bodyType} src={item?.url} onError={undefined} />
+          </PreviewImages>
+        ))
+      }
     </Wrapper>
   )
 }

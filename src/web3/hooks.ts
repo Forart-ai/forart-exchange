@@ -6,30 +6,6 @@ import useLocalStorage, { LOCAL_STORAGE_WALLET_KEY } from '../hooks/useLocalStor
 import { SUPPORT_WALLETS } from '../utils/constant'
 import { sleep } from '../utils'
 
-export function useEagerConnect() {
-  const [wallet] = useLocalStorage<SupportWalletNames>(LOCAL_STORAGE_WALLET_KEY)
-
-  const [eagerConnected, setEagerConnected] = useState<boolean>(false)
-
-  useEffect(() => {
-    (async () => {
-      if (wallet === SUPPORT_WALLETS.Phantom.name) {
-        await sleep(1000)
-        const solana = (window as any).solana
-
-        solana
-          ?.connect({ onlyIfTrusted: true })
-          .then(() => {
-            setEagerConnected(true)
-          })
-          .catch(() => {})
-      }
-    })()
-  }, [wallet])
-
-  return { eagerConnected }
-}
-
 export function useInactiveListener(suppress = false) {
   const { active, error, activate } = useWeb3React()
 

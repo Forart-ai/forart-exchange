@@ -15,8 +15,9 @@ interface StyledTextFieldProps {
 }
 
 const StyledInput = styled(InputBase)(({ theme }) => ({
-
   '& .MuiInputBase-input': {
+    minWidth: '200px',
+
     borderRadius: 4,
     position: 'relative',
     backgroundColor: theme.palette.secondary.dark,

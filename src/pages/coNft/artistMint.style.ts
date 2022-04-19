@@ -1,7 +1,6 @@
-import styled from 'styled-components'
-import { Image, Tabs } from 'antd'
+import { styled } from '@mui/material'
 
-export const MintWrapper = styled.div`
+export const MintWrapper = styled('div')`
   width: 100%;
   height: fit-content;
   margin-bottom: 60px;
@@ -12,7 +11,7 @@ export const MintWrapper = styled.div`
 
 `
 
-export const TopContainer = styled.div `
+export const TopContainer = styled('div') `
   width: 100%;
   height: 900px;
   display: flex;
@@ -26,7 +25,7 @@ export const TopContainer = styled.div `
   }
 `
 
-export const BodyContent = styled.div `
+export const BodyContent = styled('div') `
   width: 600px;
   height: 600px;
   display: flex;
@@ -45,23 +44,17 @@ export const BodyContent = styled.div `
   }
 `
 
-export const ImageBorder = styled.div`
+export const ImageBorder = styled('div')`
   width: 100%;
 `
 
-export const KitImageBorder = styled.div`
+export const KitImageBorder = styled('div')`
   width: 100%;
   height: 100%;
   cursor: pointer;
 `
 
-export const StyledImage = styled(Image)`
-  border-radius: 10px;
-  position: relative;
-
-`
-
-export const SelectedBody = styled.div`
+export const SelectedBody = styled('div')`
   width: 100%;
   height: 100%;
   border-radius: 20px;
@@ -75,7 +68,7 @@ export const SelectedBody = styled.div`
   
 `
 
-export const RandomHatsContainer = styled.div`
+export const RandomHatsContainer = styled('div')`
   height: 250px;
   position: relative;
   overflow: hidden;
@@ -101,9 +94,9 @@ export const RandomHatsContainer = styled.div`
   }
 `
 
-export const KitContent = styled.div`
+export const KitContent = styled('div')`
   width: 750px;
-  height: 100%;
+  height: 600px;
   border-radius: 20px;
   position: relative;
   padding: 15px 20px;
@@ -118,12 +111,12 @@ export const KitContent = styled.div`
     
   }
 `
-export const AttrContent = styled.div`
+export const AttrContent = styled('div')`
   width: 100%;
   margin-bottom: 40px;
 `
 
-export const AttrType = styled.div`
+export const AttrType = styled('div')`
   font-family: arialBold;
   color: #8246F5;
   font-size: 20px;
@@ -133,7 +126,7 @@ export const AttrType = styled.div`
   text-align: left;
 `
 
-export const MintContainer = styled.div`
+export const MintContainer = styled('div')`
   width: 100%;
   height: 100%;
 
@@ -148,11 +141,11 @@ export const MintContainer = styled.div`
   }
 `
 
-export const KitListContainer = styled.div`
+export const KitListContainer = styled('div')`
   display: grid;
   justify-content: space-between;
-  grid-template-rows: repeat(auto-fill,auto);
   grid-template-columns: repeat(auto-fill, 140px);
+  grid-template-rows: repeat(auto-fill,auto);
   grid-gap: 5px;
   width: 100%;
   height: 100%;
@@ -160,10 +153,9 @@ export const KitListContainer = styled.div`
 
   
   
-  
 `
 
-export const MintButton = styled.div`
+export const MintButton = styled('div')`
   width: 100%;
   text-align: center;
   height: 200px;
@@ -183,7 +175,7 @@ export const MintButton = styled.div`
   }
 `
 
-export const AIContainer = styled.div`
+export const AIContainer = styled('div')`
   display: flex;
   flex-direction: column;
   
@@ -195,7 +187,7 @@ export const AIContainer = styled.div`
   }
 `
 
-export const StyledSwitch = styled.div`
+export const StyledSwitch = styled('div')`
   margin-left: 20px;
   .ant-switch {
     background-color: #02A6F5;
@@ -206,14 +198,14 @@ export const StyledSwitch = styled.div`
   }
 `
 
-export const AIContent = styled.div`
+export const AIContent = styled('div')`
   height: auto;
   .hide {
     display: none;
   }
 `
 
-export const ItemContainer = styled.div`
+export const ItemContainer = styled('div')`
   margin-bottom: 30px;
   
   .title {

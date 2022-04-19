@@ -6,6 +6,9 @@ import styled from 'styled-components'
 import CONFT_API from '../apis/co-nft'
 import { useHistory } from 'react-router-dom'
 import { NFTAttributesData } from '../types/coNFT'
+import { Alert } from '@mui/material'
+import { Keypair } from '@solana/web3.js'
+import useCandyMachine from './programs/useCandyMachine'
 
 const Message = styled.div`
   text-align: center;
@@ -46,7 +49,8 @@ const MODAL_CONTENT = {
     <Message> Choose at least a body, cloths, pants and background </Message>
   ),
   unconnectedToWallet: (
-    <Message>Please connect to a wallet first</Message>
+    <Alert severity="error">This is an error alert — check it out!</Alert>
+
   ),
 
   checkStorage: (
@@ -93,8 +97,12 @@ const MODAL_CONTENT = {
 const useNFTMint = () => {
   const { account } = useSolanaWeb3()
 
+  const { mint } = useCandyMachine()
+
   const { openModal, configModal, closeModal } = useModal()
   const history = useHistory()
+
+  const [message, setMessage] = useState<string>('')
 
   const mintNFT =  useCallback(
     async (body: any, kit: NFTAttributesData[]) => {
@@ -108,34 +116,33 @@ const useNFTMint = () => {
           alignItems: 'center'
         }
       })
+
       const components: number[] = []
 
       if (!account) {
-        openModal(MODAL_CONTENT.unconnectedToWallet)
+        throw new Error('No account found')
         return
       }
 
       if (!body || kit.length === 0) {
-        openModal(MODAL_CONTENT.kitNotEnough)
+        throw new Error(' Choose at least a body, cloths, pants and background ')
         return
       }
 
       if (!kit.some((value: any) => value?.bodyType === 'Background')) {
-        openModal(MODAL_CONTENT.kitNotEnough)
+        throw new Error(' Choose at least a body, cloths, pants and background ')
         return
       }
 
       if (!kit.some((value: any) => value?.bodyType === 'Clothing')) {
-        openModal(MODAL_CONTENT.kitNotEnough)
+        throw new Error(' Choose at least a body, cloths, pants and background ')
         return
       }
 
       if (!kit.some((value: any) => value?.bodyType === 'Pants')) {
-        openModal(MODAL_CONTENT.kitNotEnough)
+        throw new Error(' Choose at least a body, cloths, pants and background ')
         return
       }
-
-      components.push(body?.id)
 
       kit.map(item => {
         if (item) {
@@ -145,20 +152,27 @@ const useNFTMint = () => {
 
       console.log(components)
 
-      CONFT_API.core.user.saveNFT(3312, components, account.toBase58())
-        .then(() => {
-          history.push('/personal/home')
+      const mintKeypair = Keypair.generate()
 
+      mint(mintKeypair)
+        .then(async _signature => {
+          console.log(mintKeypair.publicKey.toBase58(), _signature)
         })
-        .catch(err => {
-          openModal(
-            <Message>Oops! {err || err.toString()}</Message>
-          )
-        })
+
+      // CONFT_API.core.user.saveNFT(3312, components, account.toBase58())
+      //   .then(() => {
+      //     history.push('/personal/home')
+      //
+      //   })
+      //   .catch(err => {
+      //     openModal(
+      //       <Message>Oops! {err || err.toString()}</Message>
+      //     )
+      //   })
 
     }, [account]
   )
-  return { mintNFT }
+  return { mintNFT, message }
 }
 
 export default useNFTMint

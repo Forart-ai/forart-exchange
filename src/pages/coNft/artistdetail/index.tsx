@@ -121,13 +121,13 @@ const TabArea = styled.div`
 
 const Index: React.FC = () => {
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   const StyledTabs = styled((props: StyledTabsProps) => (
 
     <Tabs
       variant={isMobile ? 'scrollable' : 'standard'}
-      centered={true}
+      centered={isMobile ? false : true}
       {...props}
       TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
     />
@@ -138,7 +138,7 @@ const Index: React.FC = () => {
     },
 
     '& .MuiTabs-indicator': {
-      display:'none',
+      display: 'none',
     },
 
     '&. MuiTabs-flexContainer': {

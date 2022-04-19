@@ -4,7 +4,7 @@ import { PoolsListData } from '../../../../types/coNFT'
 import { Button } from 'antd'
 import { Link } from 'react-router-dom'
 import { useModal } from '../../../../contexts/modal'
-import DonateDialog from '../../components/donation/donate-dialog'
+import DonateDialog from '../../components/modals/donation/donate-dialog'
 import PoolAvatar from '../../../../assets/images/coPools/pool-avatar.png'
 import {
   ImageContent,
@@ -79,12 +79,18 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
           </PoolInfo>
 
           <Operation >
-            <StyledButton variant={'contained'}>
-              <Link to={toArtistDetailUrl}>
-                Create
-              </Link>
-            </StyledButton>
-            <StyledButton onClick={openDonateModal} variant={'contained'} sx={{ borderColor: ForartTheme.palette.grey[400] }}>Donate</StyledButton>
+            {
+              data?.status === 'closed' ? (
+                <StyledButton sx={{ width:'100%' }} disabled={true} variant={'contained'}>
+                  Create
+                </StyledButton>
+              ):
+                <StyledButton sx={{ width:'100%' }} variant={'contained'}>
+                  <Link to={toArtistDetailUrl}>
+                    Create
+                  </Link>
+                </StyledButton>
+            }
           </Operation>
 
         </InfoContent>

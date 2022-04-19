@@ -14,7 +14,10 @@ const useEagerConnect = () => {
 
       if (wallet === SUPPORT_WALLETS.Phantom.name) {
         await sleep(1000)
+
         const solana = (window as any).solana
+
+        console.log(solana)
 
         solana?.connect({ onlyIfTrusted: true })
           .then(() => {

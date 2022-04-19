@@ -20,7 +20,7 @@ const AppHeaderContent = styled('div')`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  z-index: 10;
   position: fixed;
   background: #0A0523;
   border-bottom: 1px #8345f4 solid;
@@ -100,8 +100,8 @@ const DrawerHeader = styled('div')`
 `
 const MobileNavItem = styled('div')`
   font-family: arialBold;
-  padding: 20px 10px;
-  font-size: 18px;
+  padding: 20px 16px;
+  font-size: 16px;
   letter-spacing: 1px;
   
   a {
@@ -219,12 +219,12 @@ const AppHeader:React.FC  = () => {
                     >
                       {
                         pathname === route.path ? (
-                          <NavLinkText aria-disabled={route.disable} style={{ color: '#85fcd0' }}>
+                          <NavLinkText  style={{ color: '#85fcd0' }}>
                             {route.title}
                           </NavLinkText>
                         ):
                           (
-                            <NavLinkText style={{ color: 'white' }}>
+                            <NavLinkText style= {{ color: 'white' }}>
                               {route.title}
                             </NavLinkText>
                           )
