@@ -149,10 +149,14 @@ export const KitListContainer = styled('div')`
   grid-gap: 5px;
   width: 100%;
   height: 100%;
-  //max-height: 520px;
 
-  
-  
+  @media screen and (max-width: 1080px) {
+    display: flex;
+    flex-flow:row;
+    flex-wrap: nowrap; 
+    overflow-x: auto; 
+    list-style: none;
+  }
 `
 
 export const MintButton = styled('div')`

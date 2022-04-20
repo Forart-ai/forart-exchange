@@ -16,13 +16,14 @@ export type DialogProps = CardProps & {
 }
 
 const Wrapper = styled('div')`
-  min-width: 450px;
+  min-width: 400px;
   max-width: 98vw;
   border-radius: 30px;
   position: relative;
   border: 2px solid ${({ theme }) => theme.palette.primary.main};
   background-color: #28005A ;
   padding: 30px;
+  margin: 20px;
 
 `
 
@@ -92,6 +93,7 @@ const Dialog: React.FC<DialogProps> =({
           </Header>
         )
       }
+
       {children}
       <Footer >
         {

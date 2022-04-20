@@ -15,14 +15,16 @@ const belongsToCollection = (data: MetadataResult, creator?: PublicKey) => {
 export const useOwnedNFTsQuery = (creator?: PublicKey): UseQueryResult<MetadataResult[] | undefined> => {
   const { connection } = useConnectionConfig()
   const { account } = useSolanaWeb3()
-  const { intermediateRefreshFlag } = useRefreshController()
+  const { quietRefreshFlag } = useRefreshController()
 
   return useQuery(
-    ['OWNED_NFTS', account, creator, intermediateRefreshFlag],
+    ['OWNED_NFTS', account, creator, quietRefreshFlag],
     async (): Promise<MetadataResult[] | undefined> => {
       if (!account || !connection) {
         return undefined
       }
+
+      console.log(quietRefreshFlag)
 
       const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
         account, { programId: TOKEN_PROGRAM_ID }
@@ -43,7 +45,32 @@ export const useOwnedNFTsQuery = (creator?: PublicKey): UseQueryResult<MetadataR
     },
     {
       refetchOnWindowFocus: false,
-      refetchInterval: false
+      refetchInterval: false,
+      keepPreviousData: true
     }
   )
 }
+
+export const useNFTQuery = (mint: PublicKey): UseQueryResult<MetadataResult | undefined> => {
+  const { connection } = useConnectionConfig()
+  const { account } = useSolanaWeb3()
+  const { quietRefreshFlag } = useRefreshController()
+
+  return useQuery(
+    ['NFT_DETAIL', account, mint, quietRefreshFlag],
+    async (): Promise<any | undefined> => {
+      if (!account || !connection) {
+        return undefined
+      }
+
+      return  loadMetadata(connection, mint)
+
+    },
+    {
+      refetchOnWindowFocus: false,
+      refetchInterval: false,
+      keepPreviousData: true
+    }
+  )
+}
+

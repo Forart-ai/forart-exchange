@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Dialog from '../../../../../contexts/theme/components/Dialog/Dialog'
 import { NFTAttributesData } from '../../../../../types/coNFT'
 import { styled } from '@mui/material'
@@ -9,10 +9,11 @@ import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
 import CustomizeButton from '../../../../../contexts/theme/components/Button'
 import { useModal } from '../../../../../contexts/modal'
 import MintMessageDialog from './mint-message'
+import { ClipLoader } from 'react-spinners'
 
 const Wrapper = styled('div')`
   width: 500px;
-  height: 450px;
+  height: 500px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -32,7 +33,7 @@ const AttrReviewDialog:React.FC<{body?: NFTAttributesData, attr: NFTAttributesDa
 
   const { openModal } = useModal()
 
-  const { mintNFT, message } = useNFTMint()
+  const { mintNFT, message, loading } = useNFTMint()
 
   const handleMint = useCallback(
     () => {
@@ -42,14 +43,28 @@ const AttrReviewDialog:React.FC<{body?: NFTAttributesData, attr: NFTAttributesDa
     },[body, attr, account]
   )
 
+  useEffect(() => {
+    console.log(loading)
+  },[loading])
+
   return (
     <Dialog title={'Sure to mint this NFT?'} closeable={true}>
       <Wrapper >
         <ImagePreview>
           <NFTPreview body={body} attrList={attr} />
         </ImagePreview>
-        <CustomizeButton onClick={handleMint} color={'secondary'} variant={'contained'}> Start minting </CustomizeButton>
-        {message}
+
+        <CustomizeButton disabled={loading} onClick={handleMint} color={'secondary'} variant={'contained'}>
+          {
+            loading ? (
+              <> minting <ClipLoader  size={30} color={'white'}  /> </>
+            ) : (
+              <>dd</>
+            )
+          }
+        </CustomizeButton>
+
+        <div className={'message'}> {message}</div>
       </Wrapper>
     </Dialog>
   )

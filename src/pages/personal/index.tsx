@@ -232,7 +232,7 @@ const TabsContainer: React.FC = () => {
 
   const { data: personalNft } = usePersonalNFTsQuery({ current, searchKey, typeChain, account })
 
-  const { data: mintedNft } = useMintResultQuery(true, { wallet: SolAccount?.toBase58(), nft:'' } )
+  const { data: mintedNft } = useMintResultQuery({ wallet: SolAccount?.toBase58(), nft:'' } )
 
   const [value, setValue] = React.useState(2)
 

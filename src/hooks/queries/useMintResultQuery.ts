@@ -4,8 +4,7 @@ import { useRefreshController } from '../../contexts/refresh-controller'
 import CONFT_API from '../../apis/co-nft'
 import { GetNftRequest } from '../contract/service/exchange/types'
 
-// @ts-ignore
-export const useMintResultQuery = (quicklyRefetch?: boolean, params: GetNftRequest): UseQueryResult<any> => {
+export const useMintResultQuery = (params: GetNftRequest): UseQueryResult<any> => {
   const { account } = useSolanaWeb3()
   const { quietRefreshFlag } = useRefreshController()
 
@@ -18,10 +17,6 @@ export const useMintResultQuery = (quicklyRefetch?: boolean, params: GetNftReque
 
       return CONFT_API.core.kits.getNFTQuery(params).then(res => res)
     },
-    {
-      refetchInterval: quicklyRefetch ? 1000 : undefined,
-      refetchOnWindowFocus: true
-    }
   )
 }
 

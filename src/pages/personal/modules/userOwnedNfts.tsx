@@ -1,5 +1,5 @@
 import { useOwnedNFTsQuery } from '../../../hooks/queries/useOwnedNFTsQuery'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { styled } from '@mui/material'
 import MintListItem from '../components/mintListItem'
 
@@ -54,16 +54,25 @@ const Info = styled('div')`
   }
 `
 
-const NFTItem: React.FC<{ item: any }> = ({ item }) => {
+const NFTItem: React.FC<{ item?: any }> = ({ item }) => {
 
   return (
     <NFTItemsContainer>
-      <ImageContainer>
-        <img src={item.data.image} />
-      </ImageContainer>
-      <Info>
-        <div className={'label'}> { item.data.name}</div>
-      </Info>
+      {
+        item.data ? (
+          <>
+            <ImageContainer>
+              <img src={item.data.image} />
+            </ImageContainer>
+            <Info>
+              <div className={'label'}> { item.data.name}</div>
+            </Info>
+          </>
+        ) :
+          (
+            <></>
+          )
+      }
     </NFTItemsContainer>
   )
 }
@@ -72,8 +81,6 @@ const UserOwnedNfts: React.FC = () => {
   const holds = useOwnedNFTsQuery()
 
   const { data, isLoading } = holds
-
-  console.log(data)
 
   return (
     <NFTListContainer>

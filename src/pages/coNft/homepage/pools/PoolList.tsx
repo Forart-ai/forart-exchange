@@ -6,6 +6,7 @@ import { CaretRightOutlined } from '@ant-design/icons'
 import PoolsListItem from './PoolsListItem'
 import { PoolListContainer, PoolsContainer } from './poolList.styles'
 import RainbowText from '../../../../contexts/theme/components/RainbowText'
+import PainterAvatar from '../../../../assets/images/coPools/painter.webp'
 
 const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList }) => {
 
@@ -23,6 +24,16 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'artistId': '3312'
   }
 
+  const identity = {
+    'image': PainterAvatar,
+    'name': 'Painter',
+    'describe': 'HypeTeen is the first CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen.',
+    'nfts': overviewData?.minted,
+    'minters': overviewData?.mintedWallet,
+    'status': 'living',
+    'artistId': '1024'
+  }
+
   useMemo(() => {
     if (isMobile) {
       hypeteen.describe =  hypeteen.describe.substr(0,70) + '...'
@@ -37,6 +48,10 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
         <PoolsListItem
           data={hypeteen}
           status={hypeteen.status}
+        />
+        <PoolsListItem
+          data={identity}
+          status={identity.status}
         />
         {
           poolsList?.map((pool: PoolsListData, index: number) => (

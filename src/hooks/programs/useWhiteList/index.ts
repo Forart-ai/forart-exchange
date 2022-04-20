@@ -20,6 +20,7 @@ const useWhiteList = () => {
 
     if (!userTokenAmount) {
       throw new Error('Sorry')
+      return
     }
 
     const tokenAccount = await connection.getParsedAccountInfo(userTokenAmount)

@@ -8,9 +8,8 @@ export const HeaderContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   overflow: 'auto',
   alignItems:'center',
-  margin: '70px 0',
 
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('md')]: {
     flexDirection: 'column',
     padding: '10px 0',
     height: 'fit-content',
@@ -18,6 +17,19 @@ export const HeaderContainer = styled('div')(({ theme }) => ({
   },
 
 }))
+
+export const Wrapper = styled('div')`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+  
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    flex-direction: column;
+    
+  }
+`
 
 export const LeftArea = styled('div')(({ theme }) => ({
   width: '50%',

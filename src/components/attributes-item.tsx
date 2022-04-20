@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import { Skeleton, styled } from '@mui/material'
+import { Attribute } from '../utils/metaplex/metadata'
 
 export interface AttributesListItem {
     chainMeta: any;
@@ -76,6 +77,44 @@ export const AttributesItem: React.FC<{ item?: AttributesListItem[] }> = ({ item
                   <ItemBox key={items?.chainMeta.trait_type} >
                     <div className="type"> {items?.chainMeta.trait_type}</div>
                     <div className="value"> {items?.chainMeta.value}</div>
+                  </ItemBox>
+                ))
+              }
+            </BoxContainer>
+          ) :
+
+            <BoxContainer>
+              {
+                new Array(9).fill({}).map((_, index) => (
+                  <Skeleton variant={'rectangular'} animation="wave"  key={index} >
+                    <ItemBox />
+                  </Skeleton>
+
+                ))
+              }
+            </BoxContainer>
+
+        }
+      </ScrollContainer>
+
+    </Wrapper>
+
+  )
+}
+
+export const AttributesItemForWalletNft: React.FC<{ item?: Attribute[] }> = ({ item }) => {
+
+  return (
+    <Wrapper>
+      <ScrollContainer className="scroll-container" hideScrollbars={false}>
+        {
+          item ? (
+            <BoxContainer>
+              {
+                item?.map((items,index) => (
+                  <ItemBox key={index} >
+                    <div className="type"> {items?.trait_type}</div>
+                    <div className="value"> {items?.value}</div>
                   </ItemBox>
                 ))
               }

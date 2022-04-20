@@ -85,11 +85,11 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
                   Create
                 </StyledButton>
               ):
-                <StyledButton sx={{ width:'100%' }} variant={'contained'}>
-                  <Link to={toArtistDetailUrl}>
+                <Link to={toArtistDetailUrl} style={{ width:'100%' }}>
+                  <StyledButton sx={{ width:'100%' }} variant={'contained'}>
                     Create
-                  </Link>
-                </StyledButton>
+                  </StyledButton>
+                </Link>
             }
           </Operation>
 

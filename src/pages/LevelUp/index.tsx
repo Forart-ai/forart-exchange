@@ -4,7 +4,7 @@ import { useStyledNFTsQuery } from '../../hooks/queries/useStyledNFTsQuery'
 
 // import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
 import { Button, Checkbox, Image as AntdImage } from 'antd'
-import SwiperCore, { EffectCoverflow, Navigation, Pagination } from 'swiper'
+// import SwiperCore, { EffectCoverflow, Navigation, Pagination } from 'swiper'
 // import 'swiper/swiper.scss'
 // import 'swiper/modules/navigation/navigation.scss'
 import BannerImage from '../../assets/images/AIGen/ai-gen-banner.jpg'
@@ -21,7 +21,7 @@ import { useHistory } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import { useNFTsQuery } from '../../hooks/queries/useNFTsQuery'
 
-SwiperCore.use([Navigation, EffectCoverflow, Pagination])
+// SwiperCore.use([Navigation, EffectCoverflow, Pagination])
 
 const Wrapper = styled.div`
   max-width: 100vw;

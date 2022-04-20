@@ -34,6 +34,31 @@
 }
 
 
+.swiper-wrapper {
+  width: 100% !important;
+
+
+  @media screen and (max-width: 900px) {
+    max-width: 600px;
+  }
+
+  @media screen and (max-width: 500px) {
+    max-width: 420px;
+  }
+}
+
+
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
+}
+.swiper-pagination-bullet-active {
+  background-color: #8246F5 !important;
+}
+
+.swiper-pagination-bullet-active-next {
+  background-color: #8246F5 !important;
+}
 
 .ant-image-preview-img-wrapper {
   position: static !important;

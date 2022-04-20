@@ -9,11 +9,18 @@ import { NFTAttributesData } from '../types/coNFT'
 import { Alert } from '@mui/material'
 import { Keypair } from '@solana/web3.js'
 import useCandyMachine from './programs/useCandyMachine'
+import Dialog from '../contexts/theme/components/Dialog/Dialog'
+import { useRefreshController } from '../contexts/refresh-controller'
+import { ClipLoader, FadeLoader, MoonLoader } from 'react-spinners'
 
 const Message = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  font-size: 28px;
+  font-size: 24px;
   color: #ffffff;
+  height: 100px;
 `
 
 const WaitForMinting:React.FC = () => {
@@ -61,8 +68,6 @@ const MODAL_CONTENT = {
     <Message>Oops, it seems that the nft is gone already</Message>
   ),
 
-  waitForMinting: <WaitForMinting />,
-
   transferComplete: (
     <Message>
       Create Complete!
@@ -70,15 +75,26 @@ const MODAL_CONTENT = {
   ),
 
   waitForTransfer:(
-    <Message>
-      ✅ Please approve transfer transaction in your wallet
-    </Message>
+    <Dialog title={''} closeable>
+      <Message>
+        ✅ Please approve transfer transaction in your wallet
+      </Message>
+    </Dialog>
+  ),
+
+  waitForMinting: (
+    <Dialog title={'Infos'} closeable>
+      <Message> Start minting &nbsp; &nbsp; <ClipLoader  size={30} color={'white'}  /> </Message>
+    </Dialog>
   ),
 
   mintSuccess: (
-    <Message>
-      Transform successfully! Please wait for minting
-    </Message>
+    <Dialog title={''} closeable>
+      <Message>
+        Transform successfully! Please wait for minting
+      </Message>
+    </Dialog>
+
   ),
   mintError: (
     <Message>
@@ -97,30 +113,28 @@ const MODAL_CONTENT = {
 const useNFTMint = () => {
   const { account } = useSolanaWeb3()
 
+  const { openModal } = useModal()
+
+  const { forceRefresh } = useRefreshController()
+
   const { mint } = useCandyMachine()
 
-  const { openModal, configModal, closeModal } = useModal()
   const history = useHistory()
+
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [message, setMessage] = useState<string>('')
 
   const mintNFT =  useCallback(
     async (body: any, kit: NFTAttributesData[]) => {
 
-      console.log(body, kit)
-      configModal({
-        closeable:true,
-        contentStyle: {
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }
-      })
+      setLoading(true)
 
       const components: number[] = []
 
       if (!account) {
-        throw new Error('No account found')
+        setMessage('start minting')
+        // setLoading(false)
         return
       }
 
@@ -154,10 +168,21 @@ const useNFTMint = () => {
 
       const mintKeypair = Keypair.generate()
 
-      mint(mintKeypair)
-        .then(async _signature => {
-          console.log(mintKeypair.publicKey.toBase58(), _signature)
-        })
+      setMessage('✅ Please approve transfer transaction in your wallet')
+
+      // mint(mintKeypair)
+      //   .then(async _signature => {
+      //     console.log(mintKeypair.publicKey.toBase58(), _signature)
+      //     openModal(MODAL_CONTENT.mintSuccess)
+      //   })
+      //   .then(forceRefresh)
+      //   .catch(err => {
+      //     openModal(
+      //       <Dialog title={'Oops, Something is wrong'} closeable>
+      //         <Message>Mint Failed: {err.message || err.toString()}</Message>
+      //       </Dialog>
+      //     )
+      //   })
 
       // CONFT_API.core.user.saveNFT(3312, components, account.toBase58())
       //   .then(() => {
@@ -172,7 +197,7 @@ const useNFTMint = () => {
 
     }, [account]
   )
-  return { mintNFT, message }
+  return { mintNFT, loading, message }
 }
 
 export default useNFTMint

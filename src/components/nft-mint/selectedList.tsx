@@ -53,8 +53,9 @@ const MysteryHat = styled.div`
 
 const PreviewBackground = styled.div`
   position: absolute;
-  
   padding: 20px;
+  width:100%;
+  height: 100%;
 
   img {
     width:100%;

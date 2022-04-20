@@ -23,118 +23,7 @@ import styled, {  keyframes } from 'styled-components'
 import html2canvas from 'html2canvas'
 import Button from '@mui/material/Button'
 
-const NFTInfo = styled('div')`
-  width: 100%;
-  height:fit-content;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  margin: 60px 0;
-  
-  @media screen and (max-width: 1080px) {
-    flex-direction: column;
-    height: fit-content;
-  }
-`
-const Wrapper = styled.div`
-  background-color: rgb(13,14,45);
-  height: 100%;
-  width: 100%;
-  min-height: 100vh;
-`
-
-const Canvas = styled.div`
-  background-color: rgb(13,14,45);
-  padding: 20px;
-  height: 100%;
-  width: 80%;
-  max-width: 1870px;
-  display: flex;
-  flex-direction: column;
-  alig-items: center;
-  margin: 0 auto;
-
-  @media screen and (max-width: 1080px) {
-    width: calc(100vw - 10px)
-  }
-
-`
-
-const LeftArea = styled('div')`
-  height: 480px;
-  width: 480px;
-  border: 1px rgba(153, 153, 153, .6) solid;
-  border-radius: 30px;
-  background-color: rgba(153, 153, 153, .15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  object-fit: contain;
-
-
-  img {
-    height: 90%;
-    width: 90%;
-    border-radius: 30px;
-  }
-
-  @media screen and (max-width: 800px) {
-    margin: 0 auto;
-    height: 100%;
-    width: 100%;
-  }
-`
-const RightArea = styled('div')`
-  width: calc(100% - 570px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-
-  @media screen and (max-width: 1080px) {
-    width: 100%;
-  }
-  
-
-  
-`
-
-const RightTopArea = styled('div')`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  height: 25%;
-  margin-bottom: 20px;
-
-
-  
-`
-
-const TopTitle = styled('div')`
-  font-family: arialBold;
-  width: 100%;
-  font-size: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-
-  .name {
-    color: #8246F5;
-  }
-
-  @media screen and (max-width: 1080px) {
-    margin-top: 10px;
-    font-size: 26px;
-  }
-  
-`
-
-const RightBottomArea = styled('div')`
-  height: 70%;
-`
+import { Wrapper, NFTInfo, Options, LeftArea, RightArea, Canvas, RightTopArea, RightBottomArea, TopTitle } from './index.style'
 
 const Rainbow = styled('div')`
   display: flex;
@@ -162,21 +51,6 @@ const SeriesTitle = styled('div')`
   font-size: 18px;
   font-family: arialBold;
   margin-bottom: 16px;
-`
-
-const Options = styled('div')`
-  display: flex;
-  align-items: center;
-  
-  img {
-    height: 20px;
-    margin-left: 10px;
-    cursor: pointer;
-}
-  span {
-    font-size: 14px;
-    font-family: KronaOne-Regular; 
-  }
 `
 
 export const ShineKeyFrame = keyframes`
@@ -414,7 +288,7 @@ const CONFTDetail:React.FC = () => {
         </Snackbar>
 
       </Canvas>
-      <Button variant={'contained'} onClick={() => exportImage()}>Click</Button>
+      {/*<Button variant={'contained'} onClick={() => exportImage()}>Click</Button>*/}
 
     </Wrapper>
 

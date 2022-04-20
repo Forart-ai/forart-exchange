@@ -8,7 +8,7 @@ const NFTListContainer = styled('div')`
   display: grid;
   justify-content: space-between;
   grid-template-columns: repeat(auto-fill, 260px);
-  grid-template-rows: repeat(auto-fill,  400px);
+  grid-template-rows: repeat(auto-fill,  auto);
   grid-gap: 16px;
   padding: 30px 20px;
   margin: 60px 0;

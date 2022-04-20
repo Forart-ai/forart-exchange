@@ -14,7 +14,8 @@ import { ReactComponent as GamesIcon } from '../assets/images/siderIcon/games.sv
 import { ReactComponent as ChatIcon } from '../assets/images/siderIcon/chat.svg'
 
 import NftChatroom from '../pages/social'
-import CONFTDetail from '../pages/coNft/nftDetail'
+import CONFTDetail from '../pages/nftDetail/coNftDetail'
+import WalletNftDetail from '../pages/nftDetail/walletNftDetail'
 
 export type Route = {
   path: string
@@ -49,6 +50,12 @@ const routes: Route[] = [
     hidden: true
   },
   {
+    path: '/nft-detail',
+    title: 'NFT Detail',
+    component: WalletNftDetail,
+    hidden: true
+  },
+  {
     path: '/co-nft/artistDetail',
     title: 'Artist Detail',
     component: ArtistDetail,
@@ -69,14 +76,14 @@ const routes: Route[] = [
     disable: false,
     hidden: true
   },
-  {
-    path: '/nftBreed',
-    title: 'Style Transformation',
-    icon: GeneratorIcon,
-    component: LevelUp,
-    disable: false,
-    hidden: true
-  },
+  // {
+  //   path: '/nftBreed',
+  //   title: 'Style Transformation',
+  //   icon: GeneratorIcon,
+  //   component: LevelUp,
+  //   disable: false,
+  //   hidden: true
+  // },
 
   {
     path: '/marketplace',

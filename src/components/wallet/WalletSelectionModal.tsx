@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { CloseButton, useModal } from '../../contexts/modal'
-import styled from 'styled-components'
 import { networkConf, NetworkKeys, NetworkType, supportNetwork, supportWallets, WalletType } from '../../web3/connectors'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { useWeb3React } from '@web3-react/core'
@@ -8,14 +7,15 @@ import { message } from 'antd'
 import SolanaLogo from '../../assets/images/wallets/solanaLogoMark.svg'
 import { useSignLogin } from '../../hooks/useSignLogin'
 import Dialog from '../../contexts/theme/components/Dialog/Dialog'
+import { styled } from '@mui/material'
 
-const Wrapper = styled.div`
+const Wrapper = styled('div')`
   width: 700px;
   max-width: 700px;
   position: relative;
 `
 
-const Title = styled.div`
+const Title = styled('div')`
   display: flex;
   justify-content: center;
   font-family: inter-extraBold;
@@ -23,14 +23,14 @@ const Title = styled.div`
   margin-bottom: 40px;
 `
 
-const TopArea = styled.div`
+const TopArea = styled('div')`
   width: 100%;
   display: flex;
   flex-direction: column;
   margin-top: 10px;
 `
 
-const TextRow = styled.div`
+const TextRow = styled('div')`
   display: flex;
   color: #f2f2f2;
   font-size: .85em;
@@ -42,7 +42,7 @@ const TextRow = styled.div`
     height: 35px;
     padding: 5px;
     border-radius: 50%;
-    background: #ff468b;
+    background: ${({ theme }) => theme.palette.secondary.main};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,7 +50,7 @@ const TextRow = styled.div`
   }
 `
 
-const ChosenArea = styled.div`
+const ChosenArea = styled('div')`
   display: grid;
   grid-template-columns: 100px 100px 100px;
   justify-content: space-around;
@@ -177,7 +177,7 @@ const WalletSelectionModal:React.FC = () => {
 
   return (
 
-    <Dialog title={'Connect to wallet'}>
+    <Dialog title={'Connect to wallet'} closeable>
       <Wrapper>
         <TopArea>
           <TextRow >

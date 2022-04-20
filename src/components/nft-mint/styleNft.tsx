@@ -1,7 +1,7 @@
 import React from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
-import { Navigation } from 'swiper'
+// import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
+// import { Navigation } from 'swiper'
 import { Checkbox, Image as AntdImage } from 'antd'
 import styled from '@emotion/styled'
 
@@ -53,20 +53,21 @@ export const SelectableNFTList: React.FC<{selectedValue:string, onSelect:(_: str
   const isMobile = useMediaQuery({ query: '(max-width: 1100px)' })
 
   return (
-    <Swiper
-      modules={[Navigation]}
-      slidesPerView={isMobile? 1 : 5}
-      navigation
-      spaceBetween={20}
-    >
-      {
-        list?.map((item,key) => (
-          <SwiperSlide key={key} style={{ display:'flex', justifyContent:'center' }} >
-            <SelectableNFTItem src={item} onSelect={onSelect} checked={selectedValue === item} />
-          </SwiperSlide>
-        ))
-      }
-
-    </Swiper>
+    // <Swiper
+    //   modules={[Navigation]}
+    //   slidesPerView={isMobile? 1 : 5}
+    //   navigation
+    //   spaceBetween={20}
+    // >
+    //   {
+    //     list?.map((item,key) => (
+    //       <SwiperSlide key={key} style={{ display:'flex', justifyContent:'center' }} >
+    //         <SelectableNFTItem src={item} onSelect={onSelect} checked={selectedValue === item} />
+    //       </SwiperSlide>
+    //     ))
+    //   }
+    //
+    // </Swiper>
+    <></>
   )
 }

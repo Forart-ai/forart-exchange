@@ -47,19 +47,17 @@ const IdentifyCreate:React.FC = () => {
 
   useEffect(() => {
     if (account) {
-      checkWhiteList().then(res => {
-        setMintChance(res)
-      }).catch(err => {
-        console.log(err.toString())
-      }
-      )
+      checkWhiteList()
+        .then(res => {
+          setMintChance(res)
+        })
+        .catch(() => {
+          setMintChance(0)
+        }
+        )
     }
     else return
-  },[account, mintChance])
-
-  useEffect(() => {
-    console.log(mintChance)
-  },[mintChance])
+  },[account,mintChance])
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -70,18 +68,25 @@ const IdentifyCreate:React.FC = () => {
         }}
       />
       <Operation>
-        <div className={'message'}> Mint chances: &nbsp;
-          {
-            !account ? (
-              <>-</>
-            ):  mintChance ? (
-              <> {mintChance} </>
-            ) :
-              <SyncLoader color={'#8246F5'} size={8}  />
-          }
-        </div>
+        {
+          account ? (
+            <div className={'message'}> Mint chances: &nbsp;
+              {
+                mintChance ?
+                  (
+                    <> {mintChance} </>
+                  ) : <SyncLoader color={'#8246F5'} size={8}  />
+              }
 
-        <CustomizeButton size={'large'} variant={'contained'} color={'secondary'} onClick={ handleCreate}> Mint now!</CustomizeButton>
+            </div>
+          )
+            :
+            (
+              <div className={'message'}>wallet unconnected</div>
+            )
+        }
+
+        <CustomizeButton disabled={!account} size={'large'} variant={'contained'} color={'secondary'} onClick={ handleCreate}> Mint now!</CustomizeButton>
 
       </Operation>
     </Box>

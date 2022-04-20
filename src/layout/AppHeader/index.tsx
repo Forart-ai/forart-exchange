@@ -79,6 +79,12 @@ export const NavLinkText = styled('div')`
   }
 `
 
+export const DisableNav = styled('div')`
+  cursor: not-allowed ;
+  user-select: none;
+  color: #999999;
+`
+
 const RouterContainer = styled('div')`
   display: flex;
   justify-content: space-between;
@@ -212,27 +218,33 @@ const AppHeader:React.FC  = () => {
               <RouterContainer>
 
                 {
-                  routes.filter(route => !route.hidden).map((route: Route, index) => (
-                    <Link
-                      key={route.path}
-                      to={route.path}
-                    >
-                      {
-                        pathname === route.path ? (
-                          <NavLinkText  style={{ color: '#85fcd0' }}>
-                            {route.title}
-                          </NavLinkText>
-                        ):
-                          (
-                            <NavLinkText style= {{ color: 'white' }}>
-                              {route.title}
-                            </NavLinkText>
-                          )
-                      }
+                  routes.filter(route => !route.hidden).map((route: Route, index) => {
+                    return route.disable ? (
+                      <DisableNav style= {{ color: 'white' }}>
+                        {route.title}
+                      </DisableNav>
+                    ) :
+                      (
+                        <Link
+                          key={index}
+                          to={route.path}
+                        >
+                          {
+                            pathname === route.path ? (
+                              <NavLinkText  style={{ color: '#85fcd0' }}>
+                                {route.title}
+                              </NavLinkText>
+                            ):
+                              (
+                                <NavLinkText style= {{ color: 'white' }}>
+                                  {route.title}
+                                </NavLinkText>
+                              )
+                          }
 
-                    </Link>
-
-                  ))
+                        </Link>
+                      )
+                  })
                 }
               </RouterContainer>
             )

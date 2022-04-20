@@ -82,6 +82,7 @@ const KitItemContainer = styled.div`
   flex-direction: column;
   margin: 5px;
   border-radius: 10px;
+  
 
 
 

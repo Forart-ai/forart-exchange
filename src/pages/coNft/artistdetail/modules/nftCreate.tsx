@@ -13,16 +13,11 @@ import {
 import { useWhiteList } from '../../../../hooks/programs/useWhiteList'
 import HypeteenCreate from './hypeteen/hypeteenCreate'
 import IdentifyCreate from './identifyNFT/identifyCreate'
+import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 
 const NftCreate: React.FC = () => {
 
-  const { account } = useSolanaWeb3()
-
-  const { openModal } = useModal()
-
-  const openWallet = useCallback(() => {
-    openModal(<WalletSelectionModal />)
-  },[])
+  const artistId = useLocationQuery('artistId')
 
   //bind discord
   //
@@ -37,8 +32,12 @@ const NftCreate: React.FC = () => {
 
   return (
     <MintWrapper >
-      {/*<HypeteenCreate />*/}
-      <IdentifyCreate />
+      {
+        artistId === '3312' ?
+          <HypeteenCreate />
+          :
+          <IdentifyCreate />
+      }
     </MintWrapper>
   )
 }
