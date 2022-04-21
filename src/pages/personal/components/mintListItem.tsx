@@ -10,6 +10,13 @@ import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 import { shortenAddress } from '../../../utils'
 import moment from 'moment'
 import { Wrapper, NFTInfo, Owner, Messages, PriceContainer, Grid } from '../modules/css/modules.style'
+import { ChainType, NftSeriesType } from '../../../apis/nft'
+import { BounceLoader, ClockLoader, MoonLoader } from 'react-spinners'
+
+const NftSeriesThumbnailMapper: { [key in NftSeriesType]?: string } = {
+  '3312': 'HypeTeen',
+  '1024': 'Painter'
+}
 
 const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data, empty }) => {
   const [loading, setLoading] = useState(true)
@@ -77,7 +84,8 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
               <>
                 <div className="status">
                   <div>  {data?.chainStatus}  </div>
-                  <Progress percent={progress} />
+                  {/*<Progress percent={progress} />*/}
+                  <ClockLoader size={40} color={'#ffffff'} />
                   {/*<div> <SyncOutlined  spin={true} /> </div>*/}
                 </div>
 
@@ -102,7 +110,7 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
         <Owner>
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent:'space-between', alignItems:'start', marginLeft:'10px' }}>
             <div className={'label'}>Name</div>
-            <div className={'username'}>HypeTeen #{data?.chainNftNameTmp}</div>
+            <div className={'username'}>{NftSeriesThumbnailMapper[data?.series as NftSeriesType]} #{data?.chainNftNameTmp}</div>
           </Box>
           <img className={'solana-icon'} src={SolanaIcon} />
         </Owner>

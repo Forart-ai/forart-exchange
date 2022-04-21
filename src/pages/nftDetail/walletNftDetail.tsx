@@ -14,6 +14,8 @@ import { PublicKey } from '@solana/web3.js'
 import { useMediaQuery } from 'react-responsive'
 import moment from 'moment'
 import html2canvas from 'html2canvas'
+import copy from 'copy-to-clipboard'
+import CopyIcon from '../../assets/images/coPools/copy.png'
 
 const WalletNftDetail:React.FC = () => {
 
@@ -21,7 +23,9 @@ const WalletNftDetail:React.FC = () => {
 
   const nft = useNFTQuery(new PublicKey(mint!))
 
-  const exportImage = () => {
+  const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
+
+  const exportImage = ( nftName?: string) => {
     html2canvas(document.querySelector('#canvas')!, {
       allowTaint: true,
       useCORS: true,
@@ -30,7 +34,7 @@ const WalletNftDetail:React.FC = () => {
       data.src = res.toDataURL('image/png')
       const alink = document.createElement('a')
       alink.href = data.src
-      alink.download = 'test.png'
+      alink.download = nftName ? nftName : 'PainterScreenSnap'
       alink.click()
     })
   }
@@ -47,13 +51,11 @@ const WalletNftDetail:React.FC = () => {
               <TopTitle>
                 <div style={{ display:'flex', alignItems: 'center' }}>
                   <div className="name" > { nft.data?.data?.name}</div>
-
                 </div>
                 <Options>
 
-                  <Tooltip title={'Copy link'}>
-                    <img src={UploadIcon} onClick={() => exportImage()} />
-                  </Tooltip>
+                  <img src={UploadIcon} onClick={() => exportImage(nft.data?.data?.name)} />
+
                 </Options>
 
               </TopTitle>
@@ -62,12 +64,15 @@ const WalletNftDetail:React.FC = () => {
                   { nft.data?.data?.collection.family}
                 </div>
               </SeriesTitle>
-              {/*<Rainbow>*/}
-              {/*  <span>Update time: </span>*/}
-              {/*  {*/}
-              {/*    !isMobile ?  <div className="wallet">{nft.dataUpdatedAt && moment(nft.dataUpdatedAt).format('YYYY-MM-DD ')}</div> : <></>*/}
-              {/*  }*/}
-              {/*</Rainbow>*/}
+              <Rainbow>
+                <span>Token Address </span>
+                {
+                  <div className={'label'}>{isMobile ? shortenAddress(nft.data?.account?.data.mint) :  nft.data?.account?.data.mint}</div>
+                }
+                <Tooltip title={'Copy link'}>
+                  <img src={CopyIcon} onClick={() => copy(nft.data?.account?.data.mint as string)} />
+                </Tooltip>
+              </Rainbow>
             </RightTopArea>
             <RightBottomArea >
               <AttributesItemForWalletNft item={nft.data?.data?.attributes} />

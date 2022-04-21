@@ -20,7 +20,7 @@ const StyledWallet = styled.div`
   align-items: center;
   border-radius: 30px;
   padding: 0 10px;
-  margin-right: 20px;
+  //margin-right: 20px;
   cursor: pointer;
   min-width: 170px;
   width: 180px;

@@ -29,8 +29,8 @@ function onResponseRejected(error: any) {
   return Promise.reject(responseData)
 }
 
-const API_HOST = 'https://api.forart.ai/api/forart/'
-// const API_HOST = 'http://192.168.3.41:25580/forart/'
+// const API_HOST = 'https://api.forart.ai/api/forart/'
+const API_HOST = 'http://34.212.28.9:19889/'
 
 const Service = axios.create({
   baseURL: `${API_HOST}`

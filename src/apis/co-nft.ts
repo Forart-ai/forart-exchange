@@ -16,21 +16,15 @@ const CONFT_API = {
       getArtistAssembler(id:number | string | undefined) {
         return Service.post(`nft/component/find/series/${id}`)
       },
-      lockNft(data: LockNFTRequest) {
-        return Service.post('nft/create', data)
-      },
 
-      nftMint(req: NftMintRequest) {
-        return Service.post('nft/mint', req)
-      },
       getNFTQuery(req: GetNftRequest) {
         return Service.post('/nft/query', req)
       },
       cancelNFTMint(req: CancelNftMintRequest) {
         return Service.post('/nft/mint/cancel', req)
       },
-      getOverView() {
-        return Service.get('nft/overview')
+      getOverView(series: number | undefined) {
+        return Service.get(`nft/overview/${series}`)
       }
     },
     user: {
@@ -71,7 +65,13 @@ const CONFT_API = {
       },
       getNFTDetailById(id:string) {
         return Service.get(`/nft/detail/${ id }`)
-      }
+      },
+      nftCreate(data: LockNFTRequest) {
+        return Service.post('nft/create', data)
+      },
+      nftMint(req: NftMintRequest) {
+        return Service.post('nft/mint', req)
+      },
     }
   }
 }

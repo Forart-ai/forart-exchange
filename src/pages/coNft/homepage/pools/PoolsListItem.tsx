@@ -62,17 +62,17 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
               </div>
               <div className={'owner'} >
                 <div> Owned by </div>
-                <span> Monica </span>
+                <span> {data?.artistName} </span>
               </div>
             </LeftArea>
             <RightArea >
               <div className={'data'}>
-                <div>{data?.nfts}</div>
+                <div>{data?.nfts ?? '0'}</div>
                 <span>NFTs</span>
               </div>
 
               <div className={'data'}>
-                <div>{data?.minters}</div>
+                <div>{data?.minters ?? '0'}</div>
                 <span>Creators</span>
               </div>
             </RightArea>

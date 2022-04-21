@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import ForartLogo from '../../assets/images/logo.png'
+import ForartLogo from '../../assets/images/forart-logo.png'
 import UserIcon from '../../assets/images/header/avatar.png'
 import { useHistory, Link, useLocation } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
@@ -96,27 +96,72 @@ const RouterContainer = styled('div')`
 const DrawerHeader = styled('div')`
   height: 60px;
   width: 100%;
-  background-color: rgb(13,14,45);
-  padding: 7px 10px;
+  background-color: #1b013b;
+  padding:  10px;
   object-fit: contain;
-  
-  img{
+
+  img {
     height: 100%;
   }
 `
 const MobileNavItem = styled('div')`
-  font-family: arialBold;
-  padding: 20px 16px;
   font-size: 16px;
-  letter-spacing: 1px;
+  width: 100%;
+  margin-bottom: 35px;
+
+  .selected {
+    border: 1px #8246F5 solid;
+    border-radius: 30px;
+    background-color: rgba(91, 3, 192, 0.27);
+    padding: 10px;
+    color: #ffffff;
+  }
+
+  .disabled {
+    color: #999999;
+
+ }
+  .normal {
+    color: #ffffff;
+    width: 100%;
+  }
   
-  a {
-    color: white;
+
+  //a  {
+  //  color: red;
+  //  border: 1px red solid;
+  //}
+`
+
+const PersonalArea = styled('div')`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  
+  img {
+    width: 60px;
+    margin-bottom: 10px;
   }
 `
 
 const DrawerList:React.FC = () => {
   const { pathname }  = useLocation()
+  const { openModal } = useModal()
+  const { account } = useSolanaWeb3()
+  const history = useHistory()
+
+  const handleRedirect = () => {
+    if (!account) {
+      openModal(<WalletSelectionModal />)
+    }
+    else {
+      history.push('/account')
+      return
+    }
+  }
 
   return (
     <Box
@@ -125,36 +170,48 @@ const DrawerList:React.FC = () => {
       <DrawerHeader >
         <Link to={ '/' }>
           <img src={ForartLogo}    />
+
         </Link>
       </DrawerHeader>
-      <List>
+
+      <PersonalArea>
+        <img  onClick={handleRedirect} src={UserIcon} />
+        <Wallet />
+      </PersonalArea>
+
+      <List sx={{ padding:'30px 20px', width: '100%' }}>
         {
-          routes.filter(route => !route.hidden).map((route: Route, index) => (
-            <>
-              {
-                pathname === route.path ? (
-                  <MobileNavItem key={index} >
-                    <Link  to={route.path}>
-                      <div style={{ color: '#85fcd0' }} > {route.title}</div>
-                    </Link>
-                  </MobileNavItem>
-                ): (
-                  <MobileNavItem key={index}>
-                    <Link  to={route.path}>
-                      {route.title}
-                    </Link>
-                  </MobileNavItem>
-                )
-              }
-            </>
-          ))
+          routes.filter(route => !route.hidden).map((route: Route, index) => {
+            return route.disable ? (
+              <MobileNavItem >
+                <div className={'disabled'}> {route.title} </div>
+              </MobileNavItem>
+            ):
+              <>
+                {
+                  pathname === route.path ? (
+                    <MobileNavItem key={index} >
+                      <Link style={{ width:'100%' }}  to={route.path}>
+                        <div className={'selected'}  > {route.title}</div>
+                      </Link>
+                    </MobileNavItem>
+                  ): (
+                    <MobileNavItem key={index}>
+                      <Link to={route.path}>
+                        <div className={'normal'}> {route.title} </div>
+                      </Link>
+                    </MobileNavItem>
+                  )
+                }
+              </>
+          })
         }
 
       </List>
 
-      <Box sx={{  position: 'absolute', bottom: '30px', left: '35px' }}>
-        <Wallet />
-      </Box>
+      {/*<Box sx={{  position: 'absolute', bottom: '30px', left: '35px' }}>*/}
+      {/*  <Wallet />*/}
+      {/*</Box>*/}
 
     </Box>
   )
@@ -259,7 +316,7 @@ const AppHeader:React.FC  = () => {
                   anchor={'left'}
                   open={state['left']}
                   onClose={toggleDrawer('left', false)}
-                  sx={{ '& .MuiDrawer-paper': { backgroundColor: 'rgb(24,24,73)', backgroundImage:'none' } }}
+                  sx={{ '& .MuiDrawer-paper': { backgroundColor: 'rgb(22,5,41)', backgroundImage:'none' } }}
                 >
                   <DrawerList />
                 </Drawer>
@@ -267,7 +324,7 @@ const AppHeader:React.FC  = () => {
                 <img onClick={toggleDrawer('left',true)} src={DrawerIcon} />
               </>
             ) : (
-              <div style={{ fontSize: '20px', }}   onClick={ handleRedirect} >
+              <div style={{ fontSize: '20px', marginLeft:'20px' }}   onClick={handleRedirect} >
                 <img src={UserIcon} />
               </div>
             )

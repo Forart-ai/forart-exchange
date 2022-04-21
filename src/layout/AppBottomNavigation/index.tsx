@@ -23,13 +23,12 @@ const AppBottomNavigation: React.FC = () => {
           value={value}
           onChange={(event, newValue) => {
             setValue(newValue)
-            console.log(event)
           }}
         >
 
           {
-            routes.filter(route => (!route.hidden) && (!route.disable)).map((route: Route, index) => (
-              <BottomNavigationAction key={index} value={route.path} aria-disabled={route.disable} label={ route.title} />
+            routes.filter(route => (!route.hidden) ).map((route: Route, index) => (
+              <BottomNavigationAction key={index} value={route.path}  label={ route.title} />
             ))
           }
 

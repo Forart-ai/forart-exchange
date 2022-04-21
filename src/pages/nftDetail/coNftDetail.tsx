@@ -4,7 +4,10 @@ import {
   Snackbar,
   Tooltip
 } from '@mui/material'
-import UploadIcon from '../../assets/images/coPools/copy.png'
+import UploadIcon from '../../assets/images/coPools/download.svg'
+
+import CopyIcon from '../../assets/images/coPools/copy.png'
+
 import { AttributesItem } from '../../components/attributes-item'
 import { useFindComponent } from '../../hooks/queries/useFindComponent'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
@@ -47,10 +50,19 @@ const Rainbow = styled('div')`
 `
 
 const SeriesTitle = styled('div')`
-  color: #A197AA;
-  font-size: 18px;
+  color: #ba75ff;
+  font-size: 16px;
   font-family: arialBold;
   margin-bottom: 16px;
+  
+  span {
+    display: flex;
+  }
+  
+  .token-address {
+    display: flex;
+    font-family: Arial;
+  }
 `
 
 export const ShineKeyFrame = keyframes`
@@ -217,7 +229,7 @@ const CONFTDetail:React.FC = () => {
 
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
-  const exportImage = () => {
+  const exportImage = (fileName?: string) => {
     html2canvas(document.querySelector('#canvas')!, {
       allowTaint: true,
       useCORS: true,
@@ -226,7 +238,7 @@ const CONFTDetail:React.FC = () => {
       data.src = res.toDataURL('image/png')
       const alink = document.createElement('a')
       alink.href = data.src
-      alink.download = 'test.png'
+      alink.download = fileName ?? 'ForartScreenSnap'
       alink.click()
     })
   }
@@ -251,20 +263,29 @@ const CONFTDetail:React.FC = () => {
                     <span>{heartNum}</span>
                     <HeartOutlined onClick={() => handleLike(nftDetail?.id as string)} className="heart" />
                   </HeartContainer>
-                  <Tooltip title={'Copy link'}>
-                    <img src={UploadIcon} onClick={() => handleCopy(window.location.href)} />
-                  </Tooltip>
+                  <img src={UploadIcon} onClick={() => exportImage(nftDetail?.chainNftName)} />
                 </Options>
 
               </TopTitle>
               <SeriesTitle>
-                <div>  {
-                  level && (
-                    <LevelLabel color={level.color} shine={level.shine}>
-                      Rarity: {level.label}
-                    </LevelLabel>
-                  )
-                }
+                <div>
+                  {
+                    level && (
+                      <LevelLabel color={level.color} shine={level.shine}>
+                        Rarity: {level.label}
+                      </LevelLabel>
+                    )
+                  }
+                  {
+                    nftDetail?.mintKey && (
+                      <div className={'token-address'}>
+                        <span>Token Address: &nbsp; </span>
+                        {
+                          !isMobile ?  <div className="wallet">{nftDetail?.mintKey}</div> : <div>{shortenAddress(nftDetail?.mintKey)}</div>
+                        }
+                      </div>
+                    )
+                  }
                 </div>
               </SeriesTitle>
               <Rainbow>

@@ -9,6 +9,7 @@ const Text = styled('div')`
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  height: fit-content;
 `
 const MintMessageDialog:React.FC<{message:string}> = ({ message }) => {
   return (

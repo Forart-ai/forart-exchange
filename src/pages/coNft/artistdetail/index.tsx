@@ -163,7 +163,7 @@ const Index: React.FC = () => {
         >
           <StyledTab   label="Art Detail" />
           <StyledTab  label="Create" />
-          <StyledTab  label="ALL NFTs" />
+          <StyledTab  label="CO-Gallery" />
         </StyledTabs>
 
       </TabArea>

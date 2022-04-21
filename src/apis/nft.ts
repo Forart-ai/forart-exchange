@@ -3,6 +3,8 @@ import { NFTDetail, NftListItem } from '../types/NFTDetail'
 
 export type ChainType = 'Ethereum' | 'Solana' | ''
 
+export type NftSeriesType = 3312 | 1024
+
 export type ForartNftTransactionStatus = 0 | 1
 
 export type ForartNftListQueryParams = {

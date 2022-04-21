@@ -74,7 +74,9 @@ const ButtonArea = styled.div`
 
 const Header: React.FC = () => {
 
-  const { data: overviewData } = useGetOverview()
+  const { data: hypeteenData } = useGetOverview(3312)
+
+  const { data: painterData } = useGetOverview(1024)
 
   const toArtistDetailUrl = '/co-nft/artistDetail?' + new URLSearchParams({
     artistId: '3312'
@@ -94,9 +96,10 @@ const Header: React.FC = () => {
         modules={[Pagination, Autoplay]}
         className={'styled-swiper'}
         autoplay={{
-          delay: 5000,
+          delay: 8000,
           disableOnInteraction: false,
         }}
+        draggable={true}
         loop={true}
       >
 
@@ -130,12 +133,12 @@ const Header: React.FC = () => {
               </LeftTop>
 
               <LeftBottom>
-                <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center', marginRight: '40px' }}>
+                <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center', marginRight: '100px' }}>
                   {
-                    overviewData ? (
+                    hypeteenData ? (
                       <div style={{ display: 'flex', alignItems: 'baseline',  width:'200px' }}>
                         <StyledCountUp
-                          end={overviewData?.minted ? overviewData?.minted : '---'}
+                          end={hypeteenData?.minted ? hypeteenData?.minted : '---'}
                           duration={2}
                           separator=","
 
@@ -150,10 +153,10 @@ const Header: React.FC = () => {
 
                 <Box sx={{ display:'flex', flexDirection:'column', justifyContent:'space-between', alignItems:'center' }}>
                   {
-                    overviewData ? (
+                    hypeteenData ? (
                       <div style={{ display: 'flex', alignItems: 'baseline' }}>
                         <StyledCountUp
-                          end={overviewData?.mintedWallet ? overviewData?.mintedWallet : '---'}
+                          end={hypeteenData?.mintedWallet ? hypeteenData?.mintedWallet : '---'}
                           duration={2}
                           separator=","
 
@@ -182,19 +185,20 @@ const Header: React.FC = () => {
             <LeftArea>
               <LeftTop>
                 <MainTitle>
-                  <div className="title1"> HypeTeen </div>
-                  The First CO-NFT
-                  <div className={'title2'}><span>On</span> Forart Created</div>
+                  <div className="title1"> Painter  </div>
+
+                  <div className={'title2'}> <span> The Unique Admin Ticket</span> To  Forart.ai</div>
                 </MainTitle>
 
                 <DescriptionText>
-                  Forart.ai provides the First AI-powered NFT SaaS for Social, which integrates NFT content creation and social attributes to provide
-                  a one-click experience for NFT creation, publishing and sharing.
+                  Forart.ai is a brand new AI technology-driven C2E world,
+                  which is full of imagination and adventure.
+                  We&apos;re searching for a limited number of 10000 innovative and creative painters to jointly explore its future.
                 </DescriptionText>
 
                 <ButtonArea>
                   <Link to={toArtistDetailUrl}>
-                    <Button sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Create Hypeteen</Button>
+                    <Button sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Create Painter</Button>
                   </Link>
 
                   <RainbowButton>
@@ -207,12 +211,12 @@ const Header: React.FC = () => {
               </LeftTop>
 
               <LeftBottom>
-                <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center', marginRight: '40px' }}>
+                <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center',  marginRight: '100px' }}>
                   {
-                    overviewData ? (
+                    painterData ? (
                       <div style={{ display: 'flex', alignItems: 'baseline',  width:'200px' }}>
                         <StyledCountUp
-                          end={overviewData?.minted ? overviewData?.minted : '---'}
+                          end={painterData?.minted ? painterData?.minted : '---'}
                           duration={2}
                           separator=","
 
@@ -227,10 +231,10 @@ const Header: React.FC = () => {
 
                 <Box sx={{ display:'flex', flexDirection:'column', justifyContent:'space-between', alignItems:'center' }}>
                   {
-                    overviewData ? (
+                    painterData ? (
                       <div style={{ display: 'flex', alignItems: 'baseline' }}>
                         <StyledCountUp
-                          end={overviewData?.mintedWallet ? overviewData?.mintedWallet : '---'}
+                          end={painterData?.mintedWallet ? painterData?.mintedWallet : '---'}
                           duration={2}
                           separator=","
 

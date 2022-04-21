@@ -12,6 +12,9 @@ import useCandyMachine from './programs/useCandyMachine'
 import Dialog from '../contexts/theme/components/Dialog/Dialog'
 import { useRefreshController } from '../contexts/refresh-controller'
 import { ClipLoader, FadeLoader, MoonLoader } from 'react-spinners'
+import { createNFT } from '../apis/nft'
+import { sleep } from '../utils'
+import { useConnectionConfig } from '../contexts/solana-connection-config'
 
 const Message = styled.div`
   display: flex;
@@ -20,7 +23,8 @@ const Message = styled.div`
   text-align: center;
   font-size: 24px;
   color: #ffffff;
-  height: 100px;
+  width: 400px;
+  max-width: 98vw;
 `
 
 const WaitForMinting:React.FC = () => {
@@ -113,7 +117,7 @@ const MODAL_CONTENT = {
 const useNFTMint = () => {
   const { account } = useSolanaWeb3()
 
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const { forceRefresh } = useRefreshController()
 
@@ -125,6 +129,8 @@ const useNFTMint = () => {
 
   const [message, setMessage] = useState<string>('')
 
+  const { connection } = useConnectionConfig()
+
   const mintNFT =  useCallback(
     async (body: any, kit: NFTAttributesData[]) => {
 
@@ -133,28 +139,20 @@ const useNFTMint = () => {
       const components: number[] = []
 
       if (!account) {
-        setMessage('start minting')
-        // setLoading(false)
+        throw new Error(' Wallet unconnected ')
+        setLoading(false)
         return
       }
 
-      if (!body || kit.length === 0) {
-        throw new Error(' Choose at least a body, cloths, pants and background ')
+      console.log(kit)
+
+      if ( kit.length !== 7) {
+        throw new Error(' Must choose all attributes ')
         return
       }
 
-      if (!kit.some((value: any) => value?.bodyType === 'Background')) {
-        throw new Error(' Choose at least a body, cloths, pants and background ')
-        return
-      }
-
-      if (!kit.some((value: any) => value?.bodyType === 'Clothing')) {
-        throw new Error(' Choose at least a body, cloths, pants and background ')
-        return
-      }
-
-      if (!kit.some((value: any) => value?.bodyType === 'Pants')) {
-        throw new Error(' Choose at least a body, cloths, pants and background ')
+      if ( !body) {
+        throw new Error(' A body is needed')
         return
       }
 
@@ -164,25 +162,48 @@ const useNFTMint = () => {
         }
       })
 
-      console.log(components)
+      const a = components.concat(body.id)
+      console.log(a)
 
       const mintKeypair = Keypair.generate()
 
-      setMessage('✅ Please approve transfer transaction in your wallet')
+      CONFT_API.core.nft.nftCreate({ series: 1024, components: a, wallet:account.toBase58(), mintKey: mintKeypair.publicKey.toBase58() }).then((res:any) => {
+        setMessage('  Sending transaction...')
+        mint(mintKeypair)
+          .then(async _signature => {
+            console.log(mintKeypair.publicKey.toBase58(), _signature)
+            setMessage(' Transaction sent successfully! Please wait for confirming')
+            return connection.confirmTransaction(_signature)
+          })
+          .then(() => {
+            setLoading(false)
+            setMessage(' Transaction confirmed. The NFT has been mint ')
+          })
+          .then(() => {
+            CONFT_API.core.nft.nftMint({ nft: res.nft, wallet: account.toBase58(), mintKey: mintKeypair.publicKey.toBase58() })
+              .then(() => closeModal())
+              .then(() =>sleep(1500))
+              .then(forceRefresh)
+          })
 
-      // mint(mintKeypair)
-      //   .then(async _signature => {
-      //     console.log(mintKeypair.publicKey.toBase58(), _signature)
-      //     openModal(MODAL_CONTENT.mintSuccess)
-      //   })
-      //   .then(forceRefresh)
-      //   .catch(err => {
-      //     openModal(
-      //       <Dialog title={'Oops, Something is wrong'} closeable>
-      //         <Message>Mint Failed: {err.message || err.toString()}</Message>
-      //       </Dialog>
-      //     )
-      //   })
+          .catch(err => {
+            openModal(
+              <Dialog title={'Oops, Something is wrong'} closeable>
+                <Message>Mint Failed: {err.message || err.toString()}</Message>
+              </Dialog>
+            )
+            setLoading(false)
+
+          })
+      }).catch(er => {
+        openModal(
+          <Dialog title={'Oops, Something is wrong'} closeable>
+            <Message>Mint Failed: {er.message || er.toString()}</Message>
+          </Dialog>
+        )
+      })
+
+      setMessage('✅ Please approve transfer transaction in your wallet')
 
       // CONFT_API.core.user.saveNFT(3312, components, account.toBase58())
       //   .then(() => {
@@ -195,7 +216,7 @@ const useNFTMint = () => {
       //     )
       //   })
 
-    }, [account]
+    }, [account, connection]
   )
   return { mintNFT, loading, message }
 }

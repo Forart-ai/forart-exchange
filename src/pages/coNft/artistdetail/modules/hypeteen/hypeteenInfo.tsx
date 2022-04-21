@@ -156,7 +156,7 @@ const DataIcon = styled('div')`
 
 const HypeteenInfo:React.FC = () => {
 
-  const { data: overviewData } = useGetOverview()
+  const { data: overviewData } = useGetOverview(3312)
   const { poolDonated } = useDonation()
 
   const { openModal } = useModal()

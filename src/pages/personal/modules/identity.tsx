@@ -68,7 +68,7 @@ const RightContainer = styled('div')`
 const ImageContainer = styled('div')`
   border-radius: 10px;
   width: 100%;
-  height: 100%;
+  height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -189,9 +189,10 @@ const NFTItem:React.FC<{item?: any }> = ({ item }) => {
 
 const Identity:React.FC = () => {
 
-  const holds = useOwnedNFTsQuery(new PublicKey('4LVBRxUgQhJ8ZWn48SkJ4pgcNeZJekhSxq1uatDVUyoS'))
+  const holds = useOwnedNFTsQuery(new PublicKey('7qk4GmEjX2E8rwx3U3FdNzzi5LuSv53fxGAYG9oJuqNZ'))
   const { data, isLoading } = holds
 
+  console.log(data)
   return (
     <Wrapper >
       {

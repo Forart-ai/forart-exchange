@@ -10,7 +10,7 @@ import PainterAvatar from '../../../../assets/images/coPools/painter.webp'
 
 const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList }) => {
 
-  const { data: overviewData } = useGetOverview()
+  const { data: overviewData } = useGetOverview(3312)
 
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
@@ -21,7 +21,8 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'nfts': overviewData?.minted,
     'minters': overviewData?.mintedWallet,
     'status': 'living',
-    'artistId': '3312'
+    'artistId': '3312',
+    artistName: 'Monica'
   }
 
   const identity = {
@@ -31,7 +32,9 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'nfts': overviewData?.minted,
     'minters': overviewData?.mintedWallet,
     'status': 'living',
-    'artistId': '1024'
+    'artistId': '1024',
+    artistName: 'Forart.ai'
+
   }
 
   useMemo(() => {

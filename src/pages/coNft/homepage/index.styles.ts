@@ -25,9 +25,10 @@ export const Wrapper = styled('div')`
   justify-content: center;
   min-height: 90vh;
   
+ 
+
   ${({ theme }) => theme.breakpoints.down('md')} {
     flex-direction: column;
-    
   }
 `
 
@@ -44,8 +45,9 @@ export const LeftArea = styled('div')(({ theme }) => ({
     padding: '0',
   },
 
-  [theme.breakpoints.between('md', 'lg')]: {
+  [theme.breakpoints.down('md')]: {
     paddingRight:'20px',
+    width: '100%',
   }
 
 }))
@@ -82,6 +84,7 @@ export const MainTitle = styled('div')(({ theme }) => ({
   fontSize: '3.2rem',
   color: theme.palette.text.primary,
   fontFamily: 'KronaOne-Regular',
+  userSelect:'none',
 
   '& .title1': {
     color: theme.palette.primary.main
@@ -112,9 +115,14 @@ export const DescriptionText = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'flex-start',
   flexDirection: 'column',
-  fontSize: '1.2rem',
+  fontSize: '18px',
   color: theme.palette.grey[400],
   fontFamily:'arial',
+  userSelect:'none',
+
+  [theme.breakpoints.down('md')]: {
+    fontSize: '16px',
+  }
 
 }))
 

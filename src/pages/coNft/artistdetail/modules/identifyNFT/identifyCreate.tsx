@@ -26,8 +26,11 @@ const Operation = styled('div')`
   }
 `
 
-const IdentifyCreate:React.FC = () => {
+const IdentifyCreate: React.FC = () => {
   const { checkWhiteList }  = useWhiteList()
+
+  const { data, isFetching, error } = checkWhiteList
+
   const { openModal } = useModal()
 
   const { account } = useSolanaWeb3()
@@ -38,30 +41,30 @@ const IdentifyCreate:React.FC = () => {
 
   const [attr, setAttr] = useState<NFTAttributesData[]>([])
 
-  const handleCreate = useCallback(
+  const handleCreate = useCallback (
     () => {
       openModal(<AttrReviewDialog body={body} attr={attr} />)
 
     },[body, attr, account]
   )
 
-  useEffect(() => {
-    if (account) {
-      checkWhiteList()
-        .then(res => {
-          setMintChance(res)
-        })
-        .catch(() => {
-          setMintChance(0)
-        }
-        )
-    }
-    else return
-  },[account,mintChance])
+  // useEffect(() => {
+  //   if (account) {
+  //     checkWhiteList()
+  //       .then(res => {
+  //         setMintChance(res)
+  //       })
+  //       .catch(() => {
+  //         setMintChance(0)
+  //       }
+  //       )
+  //   }
+  //   else return
+  // },[account,mintChance])
 
   return (
     <Box sx={{ width: '100%' }}>
-      <CharacterCustomize artistId={'3312'}
+      <CharacterCustomize artistId={'1024'}
         selected={(body, attributes) => {
           setBody(body)
           setAttr(attributes)
@@ -72,21 +75,19 @@ const IdentifyCreate:React.FC = () => {
           account ? (
             <div className={'message'}> Mint chances: &nbsp;
               {
-                mintChance ?
-                  (
-                    <> {mintChance} </>
-                  ) : <SyncLoader color={'#8246F5'} size={8}  />
+                error ? <>{(error as any).message}</> :
+                  !isFetching ? <>{data}</> : <SyncLoader color={'#8246F5'} size={8}  />
               }
-
             </div>
+          ) : (
+            <div className={'message'}>wallet unconnected</div>
           )
-            :
-            (
-              <div className={'message'}>wallet unconnected</div>
-            )
         }
 
-        <CustomizeButton disabled={!account} size={'large'} variant={'contained'} color={'secondary'} onClick={ handleCreate}> Mint now!</CustomizeButton>
+        {
+          data !== '0' ? <CustomizeButton disabled={!data} size={'large'} variant={'contained'} color={'secondary'} onClick={ handleCreate}> Mint now!</CustomizeButton>
+            : <CustomizeButton disabled={true} size={'large'} variant={'contained'} color={'secondary'}> Run out of tickets </CustomizeButton>
+        }
 
       </Operation>
     </Box>

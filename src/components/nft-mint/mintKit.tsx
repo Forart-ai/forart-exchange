@@ -1,10 +1,9 @@
 import React, {  useState } from 'react'
 import { KitImageBorder, KitListContainer } from '../../pages/coNft/artistMint.style'
 import { KitProperties } from '../../pages/coNft/artistdetail'
-import styled from 'styled-components'
-import { Checkbox } from '@mui/material'
+import { Checkbox, styled } from '@mui/material'
 
-const StyledFlag = styled.div`
+const StyledFlag = styled('div')`
   position: absolute;
   display: flex;
   align-items: center;
@@ -30,52 +29,53 @@ const StyledFlag = styled.div`
   }
 `
 
-export const ImageContainer = styled.div`
+export const ImageContainer = styled('div')`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  box-shadow: 0 0 10px #312d8a;
+  background-color: #28005A;
+  border: 1px  #50DCB4 solid;
+  border-radius: 10px;
 
   img {
     object-fit: fill;
-    border-radius: 1em;
     width: 100%;
     height: 100%;
     overflow: hidden;
 
   }
 
-  .Clothing {
-    border-radius: 1em;
-    transform: scale(2, 2) translate(0);
-  }
-
-  .Pants {
-    transform: scale(2, 2) translate(-15px, -25px);
-  }
-
-  .Eye {
-    transform: scale(2, 2) translate(18px, 20px);
-  }
-
-  .Butt {
-    transform: scale(4, 4) translate(-15px, -10px);
-  }
-
-  .Hand {
-    transform: scale(3, 3) translate(-5px, -25px);
-  }
-
-  .Mouth {
-    transform: scale(2) translate(15px, 10px);
-  }
-
-  .Ear {
-    transform: scale(3) translate(-10px, 30px);
-  }
+  //.Clothing {
+  //  border-radius: 1em;
+  //  transform: scale(2, 2) translate(0);
+  //}
+  //
+  //.Pants {
+  //  transform: scale(2, 2) translate(-15px, -25px);
+  //}
+  //
+  //.Eye {
+  //  transform: scale(2, 2) translate(18px, 20px);
+  //}
+  //
+  //.Butt {
+  //  transform: scale(4, 4) translate(-15px, -10px);
+  //}
+  //
+  //.Hand {
+  //  transform: scale(3, 3) translate(-5px, -25px);
+  //}
+  //
+  //.Mouth {
+  //  transform: scale(2) translate(15px, 10px);
+  //}
+  //
+  //.Ear {
+  //  transform: scale(3) translate(-10px, 30px);
+  //}
 `
 
-const KitItemContainer = styled.div`
+const KitItemContainer = styled('div')`
   display: flex;
   width: 140px;
   height: 140px;

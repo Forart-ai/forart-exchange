@@ -49,11 +49,13 @@ const ItemBox = styled('div')`
     font-family: arialBold;
     color: ${({ theme }) => theme.palette.primary.light};
     font-size: 18px;
+    font-family: Aldrich-Regular;
+    font-weight: bolder;
     //background: #341222;
   }
 
   .value {
-    font-family: Arial;
+    font-family: Aldrich-Regular;
     text-align: center;
     color: #fff;
     font-size: 20px;

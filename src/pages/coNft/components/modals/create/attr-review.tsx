@@ -18,6 +18,12 @@ const Wrapper = styled('div')`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  
+  .message {
+    margin-top: 20px;
+    font-size: 18px;
+    color: white;
+  }
 `
 
 const ImagePreview = styled('div')`
@@ -31,21 +37,19 @@ const AttrReviewDialog:React.FC<{body?: NFTAttributesData, attr: NFTAttributesDa
 
   const { account } = useSolanaWeb3()
 
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const { mintNFT, message, loading } = useNFTMint()
 
   const handleMint = useCallback(
     () => {
-      mintNFT(body,attr).catch(err => {
-        openModal(<MintMessageDialog message={err.toString()} />)
-      })
+      mintNFT(body,attr)
+
+        .catch(err => {
+          openModal(<MintMessageDialog message={err.toString()} />)
+        })
     },[body, attr, account]
   )
-
-  useEffect(() => {
-    console.log(loading)
-  },[loading])
 
   return (
     <Dialog title={'Sure to mint this NFT?'} closeable={true}>
@@ -57,9 +61,9 @@ const AttrReviewDialog:React.FC<{body?: NFTAttributesData, attr: NFTAttributesDa
         <CustomizeButton disabled={loading} onClick={handleMint} color={'secondary'} variant={'contained'}>
           {
             loading ? (
-              <> minting <ClipLoader  size={30} color={'white'}  /> </>
+              <> Start minting... <ClipLoader  size={20} color={'#999999'}  /> </>
             ) : (
-              <>dd</>
+              <>Yes</>
             )
           }
         </CustomizeButton>

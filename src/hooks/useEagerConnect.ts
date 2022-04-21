@@ -17,8 +17,6 @@ const useEagerConnect = () => {
 
         const solana = (window as any).solana
 
-        console.log(solana)
-
         solana?.connect({ onlyIfTrusted: true })
           .then(() => {
             setEagerConnected(true)

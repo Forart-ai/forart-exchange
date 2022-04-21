@@ -7,7 +7,7 @@ export const sendTransaction = async (
   signers: Keypair[],
 ) => {
   const transaction = new Transaction()
-  instructions.forEach(instruction => transaction.add(instruction))
+  transaction.add(...instructions)
 
   return await provider.send(transaction, signers)
 }

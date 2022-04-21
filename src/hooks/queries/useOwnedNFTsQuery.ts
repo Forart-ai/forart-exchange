@@ -24,8 +24,6 @@ export const useOwnedNFTsQuery = (creator?: PublicKey): UseQueryResult<MetadataR
         return undefined
       }
 
-      console.log(quietRefreshFlag)
-
       const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
         account, { programId: TOKEN_PROGRAM_ID }
       ).then(r => r.value.map(o => o.account.data))

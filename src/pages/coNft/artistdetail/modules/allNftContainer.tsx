@@ -162,7 +162,7 @@ const AllNftContainer: React.FC = () => {
   }, [flag, loadMoreData])
 
   useEffect(() => {
-    CONFT_API.core.kits.getOverView().then((r: any) => {
+    CONFT_API.core.kits.getOverView(3312).then((r: any) => {
       setTotal(r.minted)
     })
   },[])

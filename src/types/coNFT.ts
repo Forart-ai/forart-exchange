@@ -13,7 +13,8 @@ export interface PoolsListData {
   describe: string,
   nfts: number |string,
   minters: number | string,
-  status: string
+  status: string,
+  artistName: string,
 }
 
 export interface MintedNFTItem {

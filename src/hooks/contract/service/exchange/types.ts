@@ -49,11 +49,13 @@ export type SellingOrder = {
 export type LockNFTRequest = {
   series: number,
   components: any,
-  wallet: string
+  wallet: string,
+  mintKey: string
 }
 
 export type NftMintRequest = {
-  order: string,
+ nft: string,
+  wallet: string,
   mintKey: string
 }
 

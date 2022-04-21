@@ -155,14 +155,5 @@ export async function mint(program: Program, mint: Keypair): Promise<MintResult>
     }),
   )
 
-  const signature = (
-    await sendTransaction(program.provider, instructions, signers)
-  )
-
-  if (cleanupInstructions.length) {
-    await sendTransaction(program.provider, cleanupInstructions, [])
-  }
-
-  return signature
-
+  return sendTransaction(program.provider, [...instructions, ...cleanupInstructions], signers)
 }

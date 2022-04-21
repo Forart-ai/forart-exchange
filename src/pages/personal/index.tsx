@@ -234,7 +234,7 @@ const TabsContainer: React.FC = () => {
 
   const { data: mintedNft } = useMintResultQuery({ wallet: SolAccount?.toBase58(), nft:'' } )
 
-  const [value, setValue] = React.useState(2)
+  const [value, setValue] = React.useState(1)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
@@ -283,8 +283,6 @@ const PersonalCenterPage: React.FC = () => {
 
   const { account } = useSolanaWeb3()
 
-  const intd = '34443'
-
   const { openModal } = useModal()
 
   return (
@@ -307,7 +305,9 @@ const PersonalCenterPage: React.FC = () => {
               <div className={'avatar'}>
                 <img src={AvatarIcon} />
               </div>
-              <div className="username">User <img src={SettingIcon} onClick={() => openModal(<UserProfileSetting />)} /> </div>
+              <div className="username">User
+                {/*<img src={SettingIcon} onClick={() => openModal(<UserProfileSetting />)} /> */}
+              </div>
               <div className="address">{ shortenAddress(account?.toString()) }</div>
             </UserInfo>
           </DataColumn>

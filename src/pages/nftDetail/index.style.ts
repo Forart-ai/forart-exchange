@@ -118,19 +118,25 @@ export const Rainbow = styled('div')`
   font-size: 16px;
   align-items: center;
 
-    .wallet {
-      color: #A197AA;
-      margin-left: 10px;
-    }
-    span {
-      border: 1px #EB1482 solid;
-      padding: 2px 4px;
-      border-radius: 5px;
-      font-weight: bold;
-      display: table;
-      background: -webkit-linear-gradient(90deg,#EB1482 50.04%,#CD19B9 50.01%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+  .wallet {
+    color: #A197AA;
+    margin-left: 10px;
+  }
+
+  span {
+    border: 1px #EB1482 solid;
+    padding: 2px 4px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: table;
+    background: -webkit-linear-gradient(90deg, #EB1482 50.04%, #CD19B9 50.01%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .label {
+    color: #c1a3ff;
+    margin: 0 10px;
   }
 `
 

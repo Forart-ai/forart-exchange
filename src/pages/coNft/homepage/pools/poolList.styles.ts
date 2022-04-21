@@ -2,7 +2,7 @@ import { Button, styled } from '@mui/material'
 
 export const PoolsContainer = styled('div')`
   width: 100%;
-  margin: 40px 0;
+  margin: 40px 0 ;
 `
 
 export const PoolListContainer = styled('div')`
@@ -13,7 +13,7 @@ export const PoolListContainer = styled('div')`
   gap: 10px;
 
   ${({ theme }) => theme.breakpoints.down('sm')} {
-    grid-template-columns: repeat(2, minmax(180px, 42%));
+    grid-template-columns: repeat(2, minmax(190px, 42%));
     justify-content: space-between;
   }
 
@@ -140,7 +140,8 @@ export const LeftArea = styled('div')(({ theme }) => ({
   fontSize: '12px',
 
   '& .avatar': {
-    width: '40%',
+    width: '64px',
+    height: '64px',
     marginRight: '6px',
     img: {
       width: '100%',

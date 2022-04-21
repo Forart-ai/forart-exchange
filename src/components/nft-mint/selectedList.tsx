@@ -60,12 +60,13 @@ const PreviewBackground = styled.div`
   img {
     width:100%;
     height: 100%;
-    border-radius: 30px;
+    border-radius: 20px;
   }
 `
 
 const PreviewImages = styled.div`
   position: absolute;
+  padding: 20px;
   width:100%;
   height: 100%;
   background: transparent;
@@ -73,57 +74,50 @@ const PreviewImages = styled.div`
 
   img{
     position: relative;
-    border-radius: 10px;
+    border-radius: 20px;
     width: 100%;
     height: 100%;
     object-fit: contain;
+    
   }
+  
   
   img[src = ""], img:not([src]) {
   opacity: 0;
 }
   
-  .Butt ,.Foot ,.Mouth {
+  
+  
+  .Artboard {
     z-index: 2;
   }
-  
-  .Pants {
-    z-index: 5;
+
+  .Body {
+    z-index: 3;
   }
   
-  .Clothing ,.Eye, .Hat {
+  .Clothing , .Head {
+    z-index: 4;
+  }
+  .Pen-Body, .Wrist, .Nib {
+    z-index: 7;
+  }
+  
+
+  .Butt ,.Foot ,.Mouth,  .Foot {
+    z-index: 4;
+  }
+
+  .Pants, .Ear {
+    z-index: 5;
+  }
+
+  .Clothing ,.Eye, .Hat, .Hand {
     z-index: 6;
   }
   
+  
 `
-
-export const SelectedList: React.FC<{kitList?: Map<string, any>, body: any}> = ({ kitList, body }) => {
-
-  useEffect(()=> {
-    // console.log(Array.from(kitList?.entries() ?? []))
-  },[kitList])
-
-  return (
-    <Wrapper>
-      <Container>
-
-        <MintItems>
-          {
-            body?.url && <img src={body?.url} />
-          }
-        </MintItems>
-
-        {
-          Array.from(kitList?.entries() ?? []).map(([key, value]) => (
-            <MintItems  key={key}>
-              <img className="image" src={value.url} />
-            </MintItems>
-          ))
-        }
-      </Container>
-    </Wrapper>
-  )
-}
 
 export const NFTPreview: React.FC<{body?: NFTAttributesData, attrList?: NFTAttributesData[]}> = ({ body, attrList }) => {
 
@@ -138,14 +132,14 @@ export const NFTPreview: React.FC<{body?: NFTAttributesData, attrList?: NFTAttri
       </PreviewBackground>
       <PreviewImages>
         {
-          body?.url && <img src={body?.url}  alt={body?.url} />
+          body?.url && <img className={'Body'} src={body?.url}  alt={body?.url} />
         }
       </PreviewImages>
 
       {
         attrList?.filter(item => item?.bodyType !=='Background').map((item, index) => (
           <PreviewImages key={index}>
-            <img className={item?.bodyType} src={item?.url} onError={undefined} />
+            <img className={item?.bodyType.replace(' ', '-')} src={item?.url} onError={undefined} />
           </PreviewImages>
         ))
       }

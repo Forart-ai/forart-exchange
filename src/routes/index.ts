@@ -112,11 +112,11 @@ const routes: Route[] = [
     hidden: true
   },
   {
-    path:'/staking',
-    title:'Staking',
+    path:'/game',
+    title:'Game',
     component: Staking,
     icon: MarketplaceIcon,
-    disable:true
+    disable: true
 
   }
 

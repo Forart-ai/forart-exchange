@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { Box, Button, styled, useMediaQuery, useTheme } from '@mui/material'
-import HypeteenIcon from '../../../../../assets/images/artistDetail/hypeteenIcon.png'
+import AvatarIcon from '../../../../../assets/images/coPools/painter.webp'
 import LightBulb from '../../../../../assets/images/siderIcon/light-bulb.png'
 import Gift from '../../../../../assets/images/siderIcon/gift.png'
 import Cube from '../../../../../assets/images/siderIcon/cube.png'
@@ -109,7 +109,7 @@ const DataArea = styled('div')`
   justify-content: center;
   gap: 10px;
   position: absolute;
-  bottom:  -100px;
+  bottom:  -60px;
 
   ${({ theme }) => theme.breakpoints.down('sm')} {
     width: 100%;
@@ -156,7 +156,7 @@ const DataIcon = styled('div')`
 
 const IdentityInfo:React.FC = () => {
 
-  const { data: overviewData } = useGetOverview()
+  const { data: overviewData } = useGetOverview(1024)
 
   const { openModal } = useModal()
   const theme = useTheme()
@@ -174,10 +174,11 @@ const IdentityInfo:React.FC = () => {
             <Button sx={{ '&.Mui-disabled': { pointerEvents: 'all', cursor:'not-allowed' } }} disabled={true} variant={'contained'} color={'secondary'} onClick={openDonateModal}> Donate </Button>
           </DonateArea>
           <MainArea>
-            <img src={HypeteenIcon} />
-            <span> Hypeteen</span>
+            <img src={AvatarIcon} />
+            <span> Painter </span>
             <div className="info-message">
-              HypeTeen is the first CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen.
+              Forart.ai are searching for a limited number of 10000 innovative and creative painters to jointly explore its future.
+
             </div>
           </MainArea>
 
@@ -187,7 +188,7 @@ const IdentityInfo:React.FC = () => {
                 <img src={LightBulb} />
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
-                <div className={'value'}>{overviewData?.minted}</div>
+                <div className={'value'}>{overviewData?.minted ?? '0'}</div>
                 <div className={'name'}>Created</div>
               </Box>
             </DataItem>
@@ -197,7 +198,7 @@ const IdentityInfo:React.FC = () => {
                 <img src={Cube} />
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
-                <div className={'value'}>{overviewData?.mintedWallet}</div>
+                <div className={'value'}>{overviewData?.mintedWallet?? '0'}</div>
                 <div className={'name'}>Creators</div>
               </Box>
             </DataItem>

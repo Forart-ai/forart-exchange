@@ -7,7 +7,8 @@
       "followers": "---",
       "mintors": "---",
       "status": "closed",
-      "artistId": "3314"
+      "artistId": "3314",
+      "artistName": "----"
     },
     {
       "image": "https://forart.mypinata.cloud/ipfs/QmPkmvXdDXYtJpn7Pprqvxy4VamNMyzuED9iq2DkQD8BCc",
@@ -16,7 +17,8 @@
       "followers": "---",
       "mintors": "---",
       "status": "closed",
-      "artistId": "3315"
+      "artistId": "3315",
+      "artistName": "----"
     }
   ],
   "total": 574,
