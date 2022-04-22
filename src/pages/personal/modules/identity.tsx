@@ -22,7 +22,8 @@ const Wrapper = styled('div')`
   grid-template-rows: repeat(auto-fill,  400px);
   grid-gap: 16px;
   padding: 30px 20px;
-  margin: 60px 0;
+  margin: 20px 0;
+  min-height: 70vh; 
 
   @media screen and (max-width: 1100px) {
     justify-content: center;
@@ -92,6 +93,7 @@ const HistoryContainer = styled('div')`
 
 const NFTItemsContainer = styled('div')`
   width: 260px;
+  min-height: 350px;
   //border-top-left-radius: 20px;
   //border-top-right-radius: 20px;
   border-radius: 20px;
@@ -170,10 +172,10 @@ const NFTItem:React.FC<{item?: any }> = ({ item }) => {
 
               </NFTInfo>
 
-              <PriceContainer>
-                <div className={'text'}>Price</div>
-                <div className={'value'}>- SOL</div>
-              </PriceContainer>
+              {/*<PriceContainer>*/}
+              {/*  <div className={'text'}>Price</div>*/}
+              {/*  <div className={'value'}>- SOL</div>*/}
+              {/*</PriceContainer>*/}
             </>
           ) :
             (

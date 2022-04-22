@@ -189,7 +189,7 @@ const IdentityInfo:React.FC = () => {
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
                 <div className={'value'}>{overviewData?.minted ?? '0'}</div>
-                <div className={'name'}>Created</div>
+                <div className={'name'}>Minted</div>
               </Box>
             </DataItem>
 
@@ -199,7 +199,7 @@ const IdentityInfo:React.FC = () => {
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
                 <div className={'value'}>{overviewData?.mintedWallet?? '0'}</div>
-                <div className={'name'}>Creators</div>
+                <div className={'name'}>Minters</div>
               </Box>
             </DataItem>
           </DataArea>

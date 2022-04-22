@@ -194,9 +194,7 @@ const useNFTMint = () => {
               .then(forceRefresh)
           })
           .catch(err => {
-            CONFT_API.core.nft.nftRemove(res.nft, account.toBase58(), mintKeypair.publicKey.toBase58()).then(() => {
-              setMessage(' The transaction has been canceled')
-            })
+
             openModal(
               <Dialog title={'Oops, Something is wrong'} closeable>
                 <Message>Mint Failed: {err.message || err.toString()}</Message>

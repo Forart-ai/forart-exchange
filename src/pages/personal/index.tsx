@@ -93,7 +93,6 @@ const TabsArea = styled('div')`
   display: flex;
   justify-content: center;
   min-height: 50vh;
-  margin: 60px 0;
   padding-bottom: 100px;
 `
 

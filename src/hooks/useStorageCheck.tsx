@@ -14,6 +14,7 @@ import { useConnectionConfig } from '../contexts/solana-connection-config'
 import { NFTPreview } from '../components/nft-mint/selectedList'
 import { NFTAttributesData } from '../types/coNFT'
 import { Keypair } from '@solana/web3.js'
+import { useRefreshController } from '../contexts/refresh-controller'
 
 const Content = styled('div')`
   width: 500px;
@@ -63,6 +64,8 @@ const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
 
   const [open, setOpen] = React.useState(false)
 
+  const { closeModal } = useModal()
+
   const [notExisted, setNotExisted] = useState<boolean>(false)
 
   useEffect(() => {
@@ -72,8 +75,6 @@ const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
         const index = res.map((o: { bodyType: any }) => o.bodyType).indexOf('Body')
         const body = (res as any[]).splice(index, 1)
         const attr = res
-
-        console.log(body, res)
 
         setBody(body[0])
         setAttr(attr)
@@ -98,6 +99,8 @@ const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
         mintKey: item.mintKey
       }).then(() => {
         setMessage('Start minting, you can see your nft in your wallet')
+      }).catch(err => {
+        setMessage( err.message || err.toString())
       })
     },
     [],
@@ -107,8 +110,8 @@ const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
     async (item: any) => {
 
       CONFT_API.core.nft.nftRemove(item.id, item.mintWallet, item.mintKey).then(res => {
-        console.log(res)
         setMessage('Give up this order successfully, you may close this dialog now.')
+        closeModal()
       })
     },
     [],
@@ -166,11 +169,12 @@ const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
 }
 
 const useMinting = (wallet?: string): UseQueryResult<any> => {
+  const { quietRefreshFlag } = useRefreshController()
 
   return useQuery(
-    ['USER_MINTING', wallet],
+    ['USER_MINTING', wallet, quietRefreshFlag],
     async () => {
-      return await CONFT_API.core.user.getUserMinting(wallet).then(res=>res)
+      return await CONFT_API.core.user.getUserMinting(wallet).then(res => res)
     }
   )
 }
@@ -178,7 +182,7 @@ const useMinting = (wallet?: string): UseQueryResult<any> => {
 const useStorageCheck = () => {
   const { account } = useSolanaWeb3()
 
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const { data } = useMinting(account?.toBase58())
 
@@ -187,6 +191,8 @@ const useStorageCheck = () => {
   useEffect(() => {
     if (data?.length) {
       openModal(<MintItem mintList={data} />)
+    } else {
+      closeModal()
     }
   }, [account, data])
 

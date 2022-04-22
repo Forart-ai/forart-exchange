@@ -15,7 +15,7 @@ import {
 import { useMediaQuery } from 'react-responsive'
 import { Box, Button, MenuItem } from '@mui/material'
 import StyledSelector from '../../../../contexts/theme/components/Selector'
-import { SelectRankings } from '../../components/filter-operations/selectors'
+import { SelectPainterRankings, SelectRankings } from '../../components/filter-operations/selectors'
 import StyledTextField from '../../../../contexts/theme/components/TextField'
 
 const Filter = styled.div`
@@ -183,7 +183,13 @@ const AllNftContainer: React.FC = () => {
     <AllNftWrapper >
 
       <Filter>
-        <SelectRankings value={orderBy} onChange={e => { setOrderBy(e.target.value); onPressEnter()}} />
+        {
+          series === '1024' ?
+            <SelectPainterRankings  value={orderBy} onChange={e => { setOrderBy(e.target.value); onPressEnter()}} />
+            :
+            <SelectRankings value={orderBy} onChange={e => { setOrderBy(e.target.value); onPressEnter()}} />
+
+        }
 
         <Box sx={{  display: 'flex', justifyContent:'space-between',  marginTop:'10px' }}>
           <StyledTextField

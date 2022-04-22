@@ -89,7 +89,7 @@ const AppFooter:React.FC = () => {
         <Info >
           <LeftArea >
             <img src={Logo} />
-            <span>The First AI-powered NFT Social NFT</span>
+            <span>The First AI-powered Social NFT</span>
           </LeftArea>
           <RightArea >
             {

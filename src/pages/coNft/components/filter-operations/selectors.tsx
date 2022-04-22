@@ -15,4 +15,15 @@ const SelectRankings:React.FC<{value: string, onChange:(event: any, child?: any)
   )
 }
 
-export { SelectRankings }
+const SelectPainterRankings:React.FC<{value: string, onChange:(event: any, child?: any) => void;}> = ({ value, onChange }) => {
+  return (
+    <StyledSelector  onChange={onChange}  title={'Ranking'} value={value}>
+      {/*<InputLabel>Age</InputLabel>*/}
+      <MenuItem value={'random'}>ALL NFTs</MenuItem>
+      <MenuItem value={'star-desc'}>Like: High to Low</MenuItem>
+      <MenuItem value={'star-asc'}>Like: Low to High</MenuItem>
+    </StyledSelector>
+  )
+}
+
+export { SelectRankings, SelectPainterRankings }

@@ -81,6 +81,10 @@ const Header: React.FC = () => {
     artistId: '3312'
   }).toString()
 
+  const toPainterDetailUrl = '/co-nft/artistDetail?' + new URLSearchParams({
+    artistId: '1024'
+  }).toString()
+
   // const token = useLocalStorage('TOKEN')
 
   return (
@@ -168,7 +172,7 @@ const Header: React.FC = () => {
 
             <RightArea>
               <Banner>
-                <img src={HomepageBanner} />
+                <img src={HomepageBanner} style={{ width: '80%' }} />
               </Banner>
             </RightArea>
           </Wrapper>
@@ -180,7 +184,7 @@ const Header: React.FC = () => {
 
             <RightArea>
               <Banner>
-                <img src={PainterBanner} />
+                <img src={PainterBanner}  />
               </Banner>
             </RightArea>
 
@@ -199,7 +203,7 @@ const Header: React.FC = () => {
                 </DescriptionText>
 
                 <ButtonArea>
-                  <Link to={toArtistDetailUrl}>
+                  <Link to={toPainterDetailUrl}>
                     <Button sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Create Painter</Button>
                   </Link>
 

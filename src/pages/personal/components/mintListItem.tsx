@@ -128,10 +128,10 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
 
       </NFTInfo>
 
-      <PriceContainer>
-        <div className={'text'}>Price</div>
-        <div className={'value'}>- SOL</div>
-      </PriceContainer>
+      {/*<PriceContainer>*/}
+      {/*  <div className={'text'}>Price</div>*/}
+      {/*  <div className={'value'}>- SOL</div>*/}
+      {/*</PriceContainer>*/}
 
     </Wrapper>
   )
