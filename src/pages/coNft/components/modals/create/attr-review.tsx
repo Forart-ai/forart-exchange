@@ -43,11 +43,7 @@ const AttrReviewDialog:React.FC<{body?: NFTAttributesData, attr: NFTAttributesDa
 
   const handleMint = useCallback(
     () => {
-      mintNFT(body,attr)
-
-        .catch(err => {
-          openModal(<MintMessageDialog message={err.toString()} />)
-        })
+      mintNFT(body,attr).then(()=>{})
     },[body, attr, account]
   )
 

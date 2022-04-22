@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import ForartLogo from '../../assets/images/forart-logo.png'
+import ForartLogo from '../../assets/logo.png'
 import UserIcon from '../../assets/images/header/avatar.png'
 import { useHistory, Link, useLocation } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'

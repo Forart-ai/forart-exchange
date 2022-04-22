@@ -7,7 +7,7 @@ import CONFT_API from '../apis/co-nft'
 import { useHistory } from 'react-router-dom'
 import { NFTAttributesData } from '../types/coNFT'
 import { Alert } from '@mui/material'
-import { Keypair } from '@solana/web3.js'
+import { Keypair, LAMPORTS_PER_SOL } from '@solana/web3.js'
 import useCandyMachine from './programs/useCandyMachine'
 import Dialog from '../contexts/theme/components/Dialog/Dialog'
 import { useRefreshController } from '../contexts/refresh-controller'
@@ -15,6 +15,11 @@ import { ClipLoader, FadeLoader, MoonLoader } from 'react-spinners'
 import { createNFT } from '../apis/nft'
 import { sleep } from '../utils'
 import { useConnectionConfig } from '../contexts/solana-connection-config'
+import BigNumber from 'bignumber.js'
+
+const TRANSACTION_FEE = new BigNumber('5000' )
+
+const ACCOUNT_FEE = new BigNumber('0.01197').multipliedBy(LAMPORTS_PER_SOL)
 
 const Message = styled.div`
   display: flex;
@@ -138,16 +143,15 @@ const useNFTMint = () => {
 
       const components: number[] = []
 
+      kit.map(item => {
+        if (item) {
+          components.push(item?.id)
+        }
+      })
+
       if (!account) {
         throw new Error(' Wallet unconnected ')
         setLoading(false)
-        return
-      }
-
-      console.log(kit)
-
-      if ( kit.length !== 7) {
-        throw new Error(' Must choose all attributes ')
         return
       }
 
@@ -156,18 +160,29 @@ const useNFTMint = () => {
         return
       }
 
-      kit.map(item => {
-        if (item) {
-          components.push(item?.id)
-        }
-      })
+      if ( components.length !== 7) {
+        throw new Error(' Must choose all attributes ')
+        return
+      }
 
       const a = components.concat(body.id)
-      console.log(a)
+
+      const solBalance = new BigNumber(await connection.getBalance(account))
+
+      if (solBalance.lt(TRANSACTION_FEE.plus(ACCOUNT_FEE))) {
+        setMessage('Insufficient SOL balance')
+        setLoading(false)
+        return
+      }
+
+      console.log(solBalance.toString())
 
       const mintKeypair = Keypair.generate()
 
-      CONFT_API.core.nft.nftCreate({ series: 1024, components: a, wallet:account.toBase58(), mintKey: mintKeypair.publicKey.toBase58() }).then((res:any) => {
+      const secretKey = mintKeypair.secretKey
+
+      await  CONFT_API.core.nft.nftCreate({ series: 1024, components: a, wallet:account.toBase58(), mintKey: mintKeypair.publicKey.toBase58() }).then((res:any) => {
+        console.log(res)
         setMessage('  Sending transaction...')
         mint(mintKeypair)
           .then(async _signature => {
@@ -203,7 +218,7 @@ const useNFTMint = () => {
         )
       })
 
-      setMessage('✅ Please approve transfer transaction in your wallet')
+      // setMessage('✅ Please approve transfer transaction in your wallet')
 
       // CONFT_API.core.user.saveNFT(3312, components, account.toBase58())
       //   .then(() => {

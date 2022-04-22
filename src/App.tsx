@@ -16,6 +16,7 @@ import { useSolanaWeb3 } from './contexts/solana-web3'
 import { useSignLogin } from './hooks/useSignLogin'
 import useEagerConnect from './hooks/useEagerConnect'
 import AppBottomNavigation from './layout/AppBottomNavigation'
+import AppFooter from './layout/AppFooter'
 
 export const BlueGlow = styled('div')`
   position: absolute;
@@ -82,7 +83,9 @@ const App: React.FC = () => {
                 ))
               }
               <BackTop />
+              <AppFooter />
             </Content>
+
           </>
         ) : (
           <>

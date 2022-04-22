@@ -19,10 +19,8 @@ import {
 import { Box, Button } from '@mui/material'
 import DefaultPageWrapper from '../../../components/default-page-wrapper'
 import PoolList from './pools/PoolList'
-import HomepageBanner from '../../../assets/images/coPools/homepage-banner.png'
-import Ticket from '../../../assets/images/coPools/ticket.png'
+import HomepageBanner from '../../../assets/images/coPools/homepage-banner.webp'
 
-import useLocalStorage from '../../../hooks/useLocalStorage'
 import {  Swiper , SwiperSlide } from 'swiper/react'
 import  { Pagination, Autoplay } from 'swiper'
 
