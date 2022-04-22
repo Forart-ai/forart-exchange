@@ -137,7 +137,7 @@ const useNFTMint = () => {
   const { connection } = useConnectionConfig()
 
   const mintNFT =  useCallback(
-    async (body: any, kit: NFTAttributesData[]) => {
+    async (body: any, kit: NFTAttributesData[], mintKeypair: Keypair) => {
 
       setLoading(true)
 
@@ -155,35 +155,28 @@ const useNFTMint = () => {
         return
       }
 
-      if ( !body) {
-        throw new Error(' A body is needed')
-        return
-      }
+      const a = components.concat(body.id)
 
-      if ( components.length !== 7) {
+      if ( a.length !== 8) {
         throw new Error(' Must choose all attributes ')
         return
       }
 
-      const a = components.concat(body.id)
-
       const solBalance = new BigNumber(await connection.getBalance(account))
 
       if (solBalance.lt(TRANSACTION_FEE.plus(ACCOUNT_FEE))) {
-        setMessage('Insufficient SOL balance')
+        setMessage(`Insufficient SOL balance, the transaction cost ${TRANSACTION_FEE.plus(ACCOUNT_FEE).shiftedBy(-9).toString()} Sol`, )
         setLoading(false)
         return
       }
 
-      console.log(solBalance.toString())
-
-      const mintKeypair = Keypair.generate()
-
       const secretKey = mintKeypair.secretKey
 
-      await  CONFT_API.core.nft.nftCreate({ series: 1024, components: a, wallet:account.toBase58(), mintKey: mintKeypair.publicKey.toBase58() }).then((res:any) => {
+      console.log(secretKey.toString())
+
+      await CONFT_API.core.nft.nftCreate({ series: 1024, components: a, wallet:account.toBase58(), mintKey: mintKeypair.publicKey.toBase58(), mintPrivateKey: Buffer.from(secretKey).toString('base64') }).then((res:any) => {
         console.log(res)
-        setMessage('  Sending transaction...')
+        setMessage('✅ Please approve transfer transaction in your wallet')
         mint(mintKeypair)
           .then(async _signature => {
             console.log(mintKeypair.publicKey.toBase58(), _signature)
@@ -200,7 +193,6 @@ const useNFTMint = () => {
               .then(() =>sleep(1500))
               .then(forceRefresh)
           })
-
           .catch(err => {
             openModal(
               <Dialog title={'Oops, Something is wrong'} closeable>
@@ -217,19 +209,6 @@ const useNFTMint = () => {
           </Dialog>
         )
       })
-
-      // setMessage('✅ Please approve transfer transaction in your wallet')
-
-      // CONFT_API.core.user.saveNFT(3312, components, account.toBase58())
-      //   .then(() => {
-      //     history.push('/personal/home')
-      //
-      //   })
-      //   .catch(err => {
-      //     openModal(
-      //       <Message>Oops! {err || err.toString()}</Message>
-      //     )
-      //   })
 
     }, [account, connection]
   )

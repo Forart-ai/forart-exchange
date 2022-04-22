@@ -3,7 +3,7 @@ import CONFT_API from '../../apis/co-nft'
 
 export const useGetOverview = (series: number): UseQueryResult<any> => {
   return useQuery(
-    ['CONFT_OVERVIEW'],
+    ['CONFT_OVERVIEW', series],
     async () => {
       return await CONFT_API.core.kits.getOverView(series).then(res=>res)
     }

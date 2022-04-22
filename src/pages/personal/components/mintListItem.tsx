@@ -110,7 +110,7 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
         <Owner>
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent:'space-between', alignItems:'start', marginLeft:'10px' }}>
             <div className={'label'}>Name</div>
-            <div className={'username'}>{NftSeriesThumbnailMapper[data?.series as NftSeriesType]} #{data?.chainNftNameTmp}</div>
+            <div className={'username'}>{data?.chainNftName}</div>
           </Box>
           <img className={'solana-icon'} src={SolanaIcon} />
         </Owner>

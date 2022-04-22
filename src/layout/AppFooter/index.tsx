@@ -8,7 +8,7 @@ import EmailIcon from '../../assets/images/socialIcons/email.png'
 import { EXTERNAL_LINKS } from '../AppSideBar'
 
 const Footer = styled('div')`
-  height: 300px;
+  height: 260px;
   position: relative;
   bottom: 60px;
   display: flex;
@@ -89,13 +89,13 @@ const AppFooter:React.FC = () => {
         <Info >
           <LeftArea >
             <img src={Logo} />
-            <span>The First Powerd Social NFT</span>
+            <span>The First AI-powered NFT Social NFT</span>
           </LeftArea>
           <RightArea >
             {
               EXTERNAL_LINKS.map(({ icon,link }) => (
 
-                <SCExternalLink key={link} href={link} target="_blank" rel="noreferrer">
+                <SCExternalLink key={icon} href={link} target="_blank" rel="noreferrer">
                   <img src={icon} alt={link} />
                 </SCExternalLink>
               ))

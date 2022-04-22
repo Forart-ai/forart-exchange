@@ -134,7 +134,6 @@ const Info = styled('div')`
 `
 
 const NFTItem:React.FC<{item?: any }> = ({ item }) => {
-  console.log(item)
 
   const { account } = useSolanaWeb3()
 

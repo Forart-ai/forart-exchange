@@ -6,6 +6,7 @@ import {
 } from '../hooks/contract/service/exchange/types'
 import { NFTComponentRequest } from '../hooks/queries/useBodyQuery'
 import { Service } from './service'
+import wallet from '../components/wallet'
 
 const CONFT_API = {
   core: {
@@ -45,7 +46,11 @@ const CONFT_API = {
       },
       userSeriesVote(series: number | string, wallet: string, amount: number) {
         return Service.post('nft/promotion/series/vote', { series, wallet, amount })
+      },
+      getUserMinting(wallet?: string) {
+        return Service.get(`nft/minting/${wallet}`)
       }
+
     },
     nft:{
       getNftRank(series: number | string, page: number, order: 'asc' | 'desc' | undefined , filter?: string | number, orderBy?: string) {
@@ -72,6 +77,10 @@ const CONFT_API = {
       nftMint(req: NftMintRequest) {
         return Service.post('nft/mint', req)
       },
+      nftRemove(nft:string, wallet: string, mintKey: string) {
+        return Service.post('nft/mint/remove', { nft, wallet, mintKey })
+      }
+
     }
   }
 }

@@ -10,8 +10,6 @@ import Dialog from '../../contexts/theme/components/Dialog/Dialog'
 import { styled } from '@mui/material'
 
 const Wrapper = styled('div')`
-  width: 700px;
-  max-width: 700px;
   position: relative;
 `
 
@@ -51,11 +49,19 @@ const TextRow = styled('div')`
 `
 
 const ChosenArea = styled('div')`
-  display: grid;
-  grid-template-columns: 100px 100px 100px;
-  justify-content: space-around;
+  //display: grid;
+  //grid-template-columns: 100px 100px 100px;
+  //justify-content: space-around;
   margin-top: 30px;
-  
+  display: flex;
+  justify-content: center;
+
+  :hover {
+    background-color: rgb(20, 0, 44);
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
   .col-3 {
 
     display: flex;
@@ -77,6 +83,22 @@ const ChosenArea = styled('div')`
       width: 70px;
     }
   }
+
+  .row {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-family: Aldrich-Regular;
+    justify-content: center;
+    width: 100%;
+    padding: 7px 10px;
+
+    img {
+      width: 40px;
+      margin-right: 20px;
+
+    }
+  }
 `
 
 const WalletList: React.FC<{network: string, wallet: WalletType, onSelect:(_:WalletType) => void}> = ({ network, wallet, onSelect }) => {
@@ -92,7 +114,14 @@ const WalletList: React.FC<{network: string, wallet: WalletType, onSelect:(_:Wal
   }, [connector, network])
 
   return (
-    <div className="col-3" key={wallet.name} onClick={ connectToWallet }  >
+  // <div className="col-3" key={wallet.name} onClick={ connectToWallet }  >
+  //   <img src={wallet.icon} />
+  //   <span>{wallet.name}</span>
+  // </div>
+
+  //---------------------------------------------------
+
+    <div className="row" key={wallet.name} onClick={ connectToWallet }  >
       <img src={wallet.icon} />
       <span>{wallet.name}</span>
     </div>
@@ -179,31 +208,43 @@ const WalletSelectionModal:React.FC = () => {
 
     <Dialog title={'Connect to wallet'} closeable>
       <Wrapper>
-        <TopArea>
-          <TextRow >
-            <div className="step-number">1</div>
-            <div> Choose a network</div>
-          </TextRow>
-          <ChosenArea>
-            {
-              supportNetwork.map((network: NetworkType) => (
-                <div className="col-3" key={network.key}  >
-                  <div className={network.name} onClick={() => onNetworkClick(network)} >
-                    <img src={network.icon}  />
-                    <span>{network.name}</span>
-                  </div>
-                </div>
-              ))
-            }
-          </ChosenArea>
+        {/*<TopArea>*/}
+        {/*  <TextRow >*/}
+        {/*    <div className="step-number">1</div>*/}
+        {/*    <div> Choose a network</div>*/}
+        {/*  </TextRow>*/}
+        {/*  <ChosenArea>*/}
+        {/*    {*/}
+        {/*      supportNetwork.map((network: NetworkType) => (*/}
+        {/*        <div className="col-3" key={network.key}  >*/}
+        {/*          <div className={network.name} onClick={() => onNetworkClick(network)} >*/}
+        {/*            <img src={network.icon}  />*/}
+        {/*            <span>{network.name}</span>*/}
+        {/*          </div>*/}
+        {/*        </div>*/}
+        {/*      ))*/}
+        {/*    }*/}
+        {/*  </ChosenArea>*/}
 
-        </TopArea>
+        {/*</TopArea>*/}
+
+        {/*<TopArea>*/}
+        {/*  <TextRow >*/}
+        {/*    <div className="step-number">2</div>*/}
+        {/*    <div> Choose a wallet</div>*/}
+        {/*  </TextRow>*/}
+        {/*  <ChosenArea>*/}
+        {/*    {*/}
+        {/*      network.supportedWallet?.map(wallet => (*/}
+        {/*        <WalletList network={network.name} wallet={wallet} key={wallet.name} onSelect={() => onClick(wallet)} />*/}
+        {/*      ))*/}
+        {/*    }*/}
+        {/*  </ChosenArea>*/}
+        {/*</TopArea>*/}
+
+        {/*-------------------------------------------------------*/}
 
         <TopArea>
-          <TextRow >
-            <div className="step-number">2</div>
-            <div> Choose a wallet</div>
-          </TextRow>
           <ChosenArea>
             {
               network.supportedWallet?.map(wallet => (

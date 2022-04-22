@@ -33,7 +33,7 @@ export const ENDPOINTS: Record<Cluster, Endpoint> = {
   },
   'devnet': {
     name: 'devnet',
-    endpointUrl: clusterApiUrl('devnet'),
+    endpointUrl: 'https://mango.devnet.rpcpool.com',
     chainID: ChainID.Devnet
   },
 }

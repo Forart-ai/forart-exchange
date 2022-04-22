@@ -10,6 +10,7 @@ import CustomizeButton from '../../../../../contexts/theme/components/Button'
 import { useModal } from '../../../../../contexts/modal'
 import MintMessageDialog from './mint-message'
 import { ClipLoader } from 'react-spinners'
+import { Keypair } from '@solana/web3.js'
 
 const Wrapper = styled('div')`
   width: 500px;
@@ -34,16 +35,20 @@ const ImagePreview = styled('div')`
 `
 
 const AttrReviewDialog:React.FC<{body?: NFTAttributesData, attr: NFTAttributesData[]}> = ({ body, attr }) => {
-
   const { account } = useSolanaWeb3()
 
   const { openModal, closeModal } = useModal()
+
+  const mintKeypair = Keypair.generate()
 
   const { mintNFT, message, loading } = useNFTMint()
 
   const handleMint = useCallback(
     () => {
-      mintNFT(body,attr).then(()=>{})
+      mintNFT(body, attr, mintKeypair)
+        .catch(err => {
+          openModal(<MintMessageDialog message={err.toString()} />)
+        })
     },[body, attr, account]
   )
 

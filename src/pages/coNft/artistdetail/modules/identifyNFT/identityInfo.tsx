@@ -4,7 +4,7 @@ import AvatarIcon from '../../../../../assets/images/coPools/painter.webp'
 import LightBulb from '../../../../../assets/images/siderIcon/light-bulb.png'
 import Gift from '../../../../../assets/images/siderIcon/gift.png'
 import Cube from '../../../../../assets/images/siderIcon/cube.png'
-import Background from '../../../../../assets/images/coPools/hypeteen-background.png'
+import Background from '../../../../../assets/images/coPools/painter-background.jpg'
 import { useGetOverview } from '../../../../../hooks/queries/useGetOverview'
 import { useDonation } from '../../../../../hooks/programs/useDonation'
 import { useModal } from '../../../../../contexts/modal'
@@ -109,7 +109,7 @@ const DataArea = styled('div')`
   justify-content: center;
   gap: 10px;
   position: absolute;
-  bottom:  -60px;
+  bottom:  -100px;
 
   ${({ theme }) => theme.breakpoints.down('sm')} {
     width: 100%;

@@ -20,6 +20,7 @@ import { Box, Button } from '@mui/material'
 import DefaultPageWrapper from '../../../components/default-page-wrapper'
 import PoolList from './pools/PoolList'
 import HomepageBanner from '../../../assets/images/coPools/homepage-banner.webp'
+import PainterBanner from '../../../assets/images/home/painter-banner.webp'
 
 import {  Swiper , SwiperSlide } from 'swiper/react'
 import  { Pagination, Autoplay } from 'swiper'
@@ -29,7 +30,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/autoplay'
 
-const LeftTop = styled.div`
+export const LeftTop = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -38,7 +39,7 @@ const LeftTop = styled.div`
   
 `
 
-const Banner = styled.div` 
+export const Banner = styled.div` 
   width: 100%;
   height: 100%;
   display: flex;
@@ -56,7 +57,7 @@ const Banner = styled.div`
   
 `
 
-const ButtonArea = styled.div`
+export const ButtonArea = styled.div`
   margin: 40px 0;
   display: flex;
   justify-content: flex-start;
@@ -72,19 +73,15 @@ const ButtonArea = styled.div`
 
 const Header: React.FC = () => {
 
-  const { data: hypeteenData } = useGetOverview(3312)
-
   const { data: painterData } = useGetOverview(1024)
+
+  const { data: hypeteenData } = useGetOverview(3312)
 
   const toArtistDetailUrl = '/co-nft/artistDetail?' + new URLSearchParams({
     artistId: '3312'
   }).toString()
 
   // const token = useLocalStorage('TOKEN')
-
-  const settings ={
-    dots: true
-  }
 
   return (
     <HeaderContainer>
@@ -178,8 +175,15 @@ const Header: React.FC = () => {
 
         </SwiperSlide>
 
-        <SwiperSlide>
+        <SwiperSlide >
           <Wrapper>
+
+            <RightArea>
+              <Banner>
+                <img src={PainterBanner} />
+              </Banner>
+            </RightArea>
+
             <LeftArea>
               <LeftTop>
                 <MainTitle>
@@ -247,13 +251,8 @@ const Header: React.FC = () => {
               </LeftBottom>
 
             </LeftArea>
-            <RightArea>
-              <Banner>
-                <img src={HomepageBanner} />
-              </Banner>
-            </RightArea>
-          </Wrapper>
 
+          </Wrapper>
         </SwiperSlide>
 
       </Swiper>

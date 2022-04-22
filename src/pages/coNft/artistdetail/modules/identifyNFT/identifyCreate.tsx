@@ -10,6 +10,8 @@ import AttrReviewDialog from '../../../components/modals/create/attr-review'
 import { Box, styled } from '@mui/material'
 import { MoonLoader, SyncLoader } from 'react-spinners'
 import CustomizeButton from '../../../../../contexts/theme/components/Button'
+import useStorageCheck from '../../../../../hooks/useStorageCheck'
+import { Keypair } from '@solana/web3.js'
 
 const Operation = styled('div')`
   width: 100%;
@@ -32,6 +34,8 @@ const IdentifyCreate: React.FC = () => {
   const { data, isFetching, error } = checkWhiteList
 
   const { openModal } = useModal()
+
+  useStorageCheck()
 
   const { account } = useSolanaWeb3()
 

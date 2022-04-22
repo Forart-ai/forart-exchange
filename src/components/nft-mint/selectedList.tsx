@@ -119,7 +119,7 @@ const PreviewImages = styled.div`
   
 `
 
-export const NFTPreview: React.FC<{body?: NFTAttributesData, attrList?: NFTAttributesData[]}> = ({ body, attrList }) => {
+export const NFTPreview: React.FC<{ body?: NFTAttributesData, attrList?: NFTAttributesData[] }> = ({ body, attrList }) => {
 
   return (
     <Wrapper>

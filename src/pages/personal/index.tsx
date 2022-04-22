@@ -89,6 +89,14 @@ const DataColumn = styled('div')`
   }
 `
 
+const TabsArea = styled('div')`
+  display: flex;
+  justify-content: center;
+  min-height: 50vh;
+  margin: 60px 0;
+  padding-bottom: 100px;
+`
+
 const UserInfo = styled('div')`
   display: flex;
   justify-content: center;
@@ -252,7 +260,7 @@ const TabsContainer: React.FC = () => {
 
         >
           {/*<StyledTab label="Avatar" />*/}
-          <StyledTab label="Identity" />
+          <StyledTab label="Painter" />
           <StyledTab  label="CO-NFT"  />
           <StyledTab label="NFTs" />
           {/*<StyledTab label="Post" />*/}
@@ -265,13 +273,27 @@ const TabsContainer: React.FC = () => {
         {/*  <CharacterCustomize artistId={'3312'} />*/}
         {/*</TabPanel>*/}
         <TabPanel index={0} value={value}>
-          <Identity />
+          <TabsArea>
+            <Box sx={{ maxWidth:'1500px', width:'80%' }}>
+              <Identity />
+            </Box>
+          </TabsArea>
         </TabPanel>
         <TabPanel index={1} value={value}>
-          <UserCoNftList list={mintedNft} />
+          <TabsArea>
+            <Box sx={{ maxWidth:'1500px', width:'80%' }}>
+              <UserCoNftList list={mintedNft} />
+            </Box>
+          </TabsArea>
+
         </TabPanel>
         <TabPanel index={2} value={value}>
-          <UserOwnedNfts />
+          <TabsArea>
+            <Box sx={{ maxWidth:'1500px', width:'80%' }}>
+              <UserOwnedNfts />
+            </Box>
+          </TabsArea>
+
         </TabPanel>
       </Box>
 

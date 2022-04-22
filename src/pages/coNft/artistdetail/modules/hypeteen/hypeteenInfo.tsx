@@ -188,7 +188,7 @@ const HypeteenInfo:React.FC = () => {
                 <img src={LightBulb} />
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
-                <div className={'value'}>{overviewData?.minted}</div>
+                <div className={'value'}>{overviewData?.minted ?? '0'}</div>
                 <div className={'name'}>Created</div>
               </Box>
             </DataItem>
@@ -208,7 +208,7 @@ const HypeteenInfo:React.FC = () => {
                 <img src={Cube} />
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
-                <div className={'value'}>{overviewData?.mintedWallet}</div>
+                <div className={'value'}>{overviewData?.mintedWallet ?? '0'}</div>
                 <div className={'name'}>Creators</div>
               </Box>
             </DataItem>

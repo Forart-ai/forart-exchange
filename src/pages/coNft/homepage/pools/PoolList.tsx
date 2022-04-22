@@ -12,6 +12,8 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
 
   const { data: overviewData } = useGetOverview(3312)
 
+  const { data: painterData } = useGetOverview(1024)
+
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
   const hypeteen = {
@@ -29,8 +31,8 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'image': PainterAvatar,
     'name': 'Painter',
     'describe': 'HypeTeen is the first CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen.',
-    'nfts': overviewData?.minted,
-    'minters': overviewData?.mintedWallet,
+    'nfts': painterData?.minted,
+    'minters': painterData?.mintedWallet,
     'status': 'living',
     'artistId': '1024',
     artistName: 'Forart.ai'
