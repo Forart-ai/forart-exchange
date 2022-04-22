@@ -214,13 +214,8 @@ const useNFTMint = () => {
           .catch(err => {
 
             openModal(
-              // <Dialog title={'Oops, Something is wrong'} closeable>
-              //   <Message>Mint Failed: {err.message || err.toString()}</Message>
-              // </Dialog>
-              <Dialog title={'Congratulations!'} closeable  >
-                <Message>Mint successfully</Message>
-                <CustomizeButton variant={'contained'} color={'secondary'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
-                <CustomizeButton variant={'contained'} onClick={() => history.push('/account')}> Personal space</CustomizeButton>
+              <Dialog title={'Oops, Something is wrong'} closeable>
+                <Message>Mint Failed: {err.message || err.toString()}</Message>
               </Dialog>
             )
             setLoading(false)

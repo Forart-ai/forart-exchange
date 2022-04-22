@@ -30,6 +30,8 @@ function onResponseRejected(error: any) {
 }
 
 const API_HOST = 'https://api.forart.ai/api/forart/'
+// const API_HOST = 'https://dev-api.forart.ai/'
+
 // const API_HOST = 'http://34.212.28.9:19889/'
 
 const Service = axios.create({
