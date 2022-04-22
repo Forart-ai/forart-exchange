@@ -20,8 +20,8 @@ const SelectPainterRankings:React.FC<{value: string, onChange:(event: any, child
     <StyledSelector  onChange={onChange}  title={'Ranking'} value={value}>
       {/*<InputLabel>Age</InputLabel>*/}
       <MenuItem value={'random'}>ALL NFTs</MenuItem>
-      <MenuItem value={'star-desc'}>Like: High to Low</MenuItem>
-      <MenuItem value={'star-asc'}>Like: Low to High</MenuItem>
+      {/*<MenuItem value={'star-desc'}>Like: High to Low</MenuItem>*/}
+      {/*<MenuItem value={'star-asc'}>Like: Low to High</MenuItem>*/}
     </StyledSelector>
   )
 }

@@ -3,7 +3,7 @@ import { styled, Tab, Tabs } from '@mui/material'
 import { useMediaQuery } from 'react-responsive'
 import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
 import { useArtistKitQuery } from '../../../../../hooks/queries/useArtistKitQuery'
-import ArtistBanner from '../../../../../assets/images/coPools/ticket.png'
+import ArtistBanner from '../../../../../assets/images/artistDetail/painter-poster.jpg'
 import { KitProperties } from '../../index'
 
 interface StyledTabsProps {
@@ -234,17 +234,16 @@ const IdentifyDetail: React.FC = () => {
                       <img className="banner" src={ArtistBanner} />
                     </Banner>
                     <p className="content">
-                      Forart.ai is a brand new AI technology-driven C2E world, which is full of imagination and adventure. <br />
-                      We&apos;re searching for a limited number of 10000 innovative and creative painters to jointly explore its future. <br />
+                      {/*Forart.ai is a brand new AI technology-driven C2E world, which is full of imagination and adventure. <br />*/}
+                      {/*We&apos;re searching for a limited number of 10000 innovative and creative painters to jointly explore its future. <br />*/}
                     </p>
                   </section>
 
                   <section className="item" >
-                    <h1 > Birth of HypeTeen </h1>
+                    <h1 > Birth of Painter </h1>
                     <p >
-                      HypeTeen is the First CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing. Born in the first year of NFT, she/he has her/his own NFT attributes, likes to explore the unknown, and is obsessed with trendy things in the future. At the peak of her/his appearance, she/he likes fans to call: super handsome! <br /><br />
-                      In 2022, she/he will take her/his fans on her/his first journey of exploration - travel around the world, learn about the customs of various countries, spread the world&apos;s culture, and share the cultural essence and consensus with fans in Forart Club. <br /> <br />
-
+                      Forart.ai is a brand new AI technology-driven C2E world, which is full of imagination and adventure. <br />
+                      We&apos;re searching for a limited number of 10000 innovative and creative painters to jointly explore its future. <br />
                     </p>
                   </section>
                 </TabPanel>
@@ -253,12 +252,11 @@ const IdentifyDetail: React.FC = () => {
                   <section className="item" >
                     <h1 > Creator & Holder Equity </h1>
                     <p >
-                      <b> Benefits for HypeTeen NFT creators:</b> <br />
-                      1. Each NFT you create will get 50 $FTA<br />
-
-                      2. Acquire 10% of the sales revenue and royalty <br />
-
-                      3. Acquire Forart $FTA airdrop<br /> <br />
+                      1. Participate in the next Co-NFT creation and further exploration on Forart.ai platform. <br />
+                      2. Get the whitelist of Forart.ai IDO. <br />
+                      3. Acquire platform Co-NFT revenue sharing. <br />
+                      4. Level up to get a higher yield rate. <br />
+                      5. Trading and staking. <br />
 
                     </p>
                   </section>
@@ -295,10 +293,20 @@ const IdentifyDetail: React.FC = () => {
                   <section className="item" >
                     <h1 className="title">Roadmap</h1>
                     <p>
-                      1. Create CO-NFTs by Users <br />
-                      2. Generate Special CO-NFTs and creator winners when the 1000th NFT is created  <br />
-                      3. Vote the next country that HypeTeen will travel to  <br />
-                      4. Launch on solanart, Slope and Magic Eden when the 2000th NFT is created  <br />
+                      April - May: <br />
+                      1 Recruit more Painters <br />
+                      2 Expand more CO-NFT Series<br />
+                      3 Unlock new functions of Forart.ai<br /><br />
+
+                      June :<br />
+                      1 Level up to get a higher yield rate.<br />
+                      2 Listing on NFT Marketplaces<br />
+                      3 NFT Staking V1<br /><br />
+
+                      July+<br />
+                      1 Get the whitelist of Forart.ai IDO.<br />
+                      2 Acquire Co-NFT revenue sharing.<br />
+                      3 Unlock new Gaming Modules<br /><br />
                     </p>
                   </section>
                 </TabPanel>

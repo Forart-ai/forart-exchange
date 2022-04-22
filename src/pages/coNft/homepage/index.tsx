@@ -102,6 +102,85 @@ const Header: React.FC = () => {
         loop={true}
       >
 
+        <SwiperSlide >
+          <Wrapper>
+
+            <RightArea>
+              <Banner>
+                <img src={PainterBanner}  />
+              </Banner>
+            </RightArea>
+
+            <LeftArea>
+              <LeftTop>
+                <MainTitle>
+                  <div className="title1"> Painter  </div>
+
+                  <div className={'title2'}> <span> The Unique Admin Ticket</span> To  Forart.ai</div>
+                </MainTitle>
+
+                <DescriptionText>
+                  Forart.ai is an AI-Powered C2E platform with Social-Fi and Game-Fi elements.
+                  We&apos;re searching for 10000 innovative and creative painters to jointly explore the adventure trip.
+                </DescriptionText>
+
+                <ButtonArea>
+                  <Link to={toPainterDetailUrl}>
+                    <Button sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Create Painter</Button>
+                  </Link>
+
+                  <RainbowButton>
+                    <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >
+                      Instruction
+                    </a>
+                  </RainbowButton>
+                </ButtonArea>
+
+              </LeftTop>
+
+              <LeftBottom>
+                <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center',  marginRight: '100px' }}>
+                  {
+                    painterData ? (
+                      <div style={{ display: 'flex', alignItems: 'baseline',  width:'200px', justifyContent:'center' }}>
+                        <StyledCountUp
+                          end={painterData?.minted ? painterData?.minted : '---'}
+                          duration={2}
+                          separator=","
+
+                        />
+                        <div className={'total-data'}> /10000</div>
+                      </div>
+                    ) :
+                      <StyledCountUp end={0} />
+                  }
+                  <div className={'label'}>Total create</div>
+                </Box>
+
+                <Box sx={{ display:'flex', flexDirection:'column', justifyContent:'space-between', alignItems:'center' }}>
+                  {
+                    painterData ? (
+                      <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <StyledCountUp
+                          end={painterData?.mintedWallet ? painterData?.mintedWallet : '---'}
+                          duration={2}
+                          separator=","
+
+                        />
+                        <div className={'total-data'}> </div>
+                      </div>
+                    ) :
+                      <StyledCountUp end={0} />
+                  }
+                  <div className={'label'}>Creators</div>
+                </Box>
+              </LeftBottom>
+
+            </LeftArea>
+
+          </Wrapper>
+        </SwiperSlide>
+
         <SwiperSlide>
           <Wrapper>
             <LeftArea>
@@ -113,8 +192,7 @@ const Header: React.FC = () => {
                 </MainTitle>
 
                 <DescriptionText>
-                  Forart.ai provides the First AI-powered NFT SaaS for Social, which integrates NFT content creation and social attributes to provide
-                  a one-click experience for NFT creation, publishing and sharing.
+                  Forart.ai is an AI-Powered “Create To Earn” Game & Social platform, which combines the attributes of GameFi and SocialFi, making NFT artists and enthusiasts realize NFT co-creation in the way of NFT DIY games.
                 </DescriptionText>
 
                 <ButtonArea>
@@ -177,86 +255,6 @@ const Header: React.FC = () => {
             </RightArea>
           </Wrapper>
 
-        </SwiperSlide>
-
-        <SwiperSlide >
-          <Wrapper>
-
-            <RightArea>
-              <Banner>
-                <img src={PainterBanner}  />
-              </Banner>
-            </RightArea>
-
-            <LeftArea>
-              <LeftTop>
-                <MainTitle>
-                  <div className="title1"> Painter  </div>
-
-                  <div className={'title2'}> <span> The Unique Admin Ticket</span> To  Forart.ai</div>
-                </MainTitle>
-
-                <DescriptionText>
-                  Forart.ai is a brand new AI technology-driven C2E world,
-                  which is full of imagination and adventure.
-                  We&apos;re searching for a limited number of 10000 innovative and creative painters to jointly explore its future.
-                </DescriptionText>
-
-                <ButtonArea>
-                  <Link to={toPainterDetailUrl}>
-                    <Button sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Create Painter</Button>
-                  </Link>
-
-                  <RainbowButton>
-                    <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >
-                      Instruction
-                    </a>
-                  </RainbowButton>
-                </ButtonArea>
-
-              </LeftTop>
-
-              <LeftBottom>
-                <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center',  marginRight: '100px' }}>
-                  {
-                    painterData ? (
-                      <div style={{ display: 'flex', alignItems: 'baseline',  width:'200px' }}>
-                        <StyledCountUp
-                          end={painterData?.minted ? painterData?.minted : '---'}
-                          duration={2}
-                          separator=","
-
-                        />
-                        <div className={'total-data'}> /2000</div>
-                      </div>
-                    ) :
-                      <StyledCountUp end={0} />
-                  }
-                  <div className={'label'}>Total create</div>
-                </Box>
-
-                <Box sx={{ display:'flex', flexDirection:'column', justifyContent:'space-between', alignItems:'center' }}>
-                  {
-                    painterData ? (
-                      <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                        <StyledCountUp
-                          end={painterData?.mintedWallet ? painterData?.mintedWallet : '---'}
-                          duration={2}
-                          separator=","
-
-                        />
-                        <div className={'total-data'}> </div>
-                      </div>
-                    ) :
-                      <StyledCountUp end={0} />
-                  }
-                  <div className={'label'}>Creators</div>
-                </Box>
-              </LeftBottom>
-
-            </LeftArea>
-
-          </Wrapper>
         </SwiperSlide>
 
       </Swiper>

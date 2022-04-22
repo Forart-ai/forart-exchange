@@ -41,60 +41,62 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
 
   return (
     <ThemeProvider theme={ForartTheme}>
-      <PoolsCardContainer >
-        <ImageContent>
-          <img src={data?.image} />
-        </ImageContent>
+      <Link to={data?.artistId ? toArtistDetailUrl : ''} >
+        <PoolsCardContainer  >
+          <ImageContent>
+            <img src={data?.image} />
+          </ImageContent>
 
-        <InfoContent>
-          <PoolTitle>
-            <div className="pool-name"> {data?.name }</div>
-            {/*<div className="likes-value">*/}
-            {/*  <img src={HeartFilled} style={{ marginRight: '10px' }} />*/}
-            {/*  345*/}
-            {/*</div>*/}
-          </PoolTitle>
+          <InfoContent>
+            <PoolTitle>
+              <div className="pool-name"> {data?.name }</div>
+              {/*<div className="likes-value">*/}
+              {/*  <img src={HeartFilled} style={{ marginRight: '10px' }} />*/}
+              {/*  345*/}
+              {/*</div>*/}
+            </PoolTitle>
 
-          <PoolInfo>
-            <LeftArea>
-              <div className={'avatar'} >
-                <img src={data?.image} />
-              </div>
-              <div className={'owner'} >
-                <div> Owned by </div>
-                <span> {data?.artistName} </span>
-              </div>
-            </LeftArea>
-            <RightArea >
-              <div className={'data'}>
-                <div>{data?.nfts ?? '0'}</div>
-                <span>NFTs</span>
-              </div>
+            <PoolInfo>
+              <LeftArea>
+                <div className={'avatar'} >
+                  <img src={data?.image} />
+                </div>
+                <div className={'owner'} >
+                  <div> Owned by </div>
+                  <span> {data?.artistName} </span>
+                </div>
+              </LeftArea>
+              <RightArea >
+                <div className={'data'}>
+                  <div>{data?.nfts ?? '0'}</div>
+                  <span>NFTs</span>
+                </div>
 
-              <div className={'data'}>
-                <div>{data?.minters ?? '0'}</div>
-                <span>Creators</span>
-              </div>
-            </RightArea>
-          </PoolInfo>
+                <div className={'data'}>
+                  <div>{data?.minters ?? '0'}</div>
+                  <span>Creators</span>
+                </div>
+              </RightArea>
+            </PoolInfo>
 
-          <Operation >
-            {
-              data?.status === 'closed' ? (
-                <StyledButton sx={{ width:'100%' }} disabled={true} variant={'contained'}>
-                  Create
-                </StyledButton>
-              ):
-                <Link to={toArtistDetailUrl} style={{ width:'100%' }}>
-                  <StyledButton sx={{ width:'100%' }} variant={'contained'}>
+            <Operation >
+              {
+                data?.status === 'closed' ? (
+                  <StyledButton sx={{ width:'100%' }} disabled={true} variant={'contained'}>
                     Create
                   </StyledButton>
-                </Link>
-            }
-          </Operation>
+                ):
+                  <Link to={toArtistDetailUrl} style={{ width:'100%' }}>
+                    <StyledButton sx={{ width:'100%' }} variant={'contained'}>
+                      Create
+                    </StyledButton>
+                  </Link>
+              }
+            </Operation>
 
-        </InfoContent>
-      </PoolsCardContainer>
+          </InfoContent>
+        </PoolsCardContainer>
+      </Link>
     </ThemeProvider>
   )
 }

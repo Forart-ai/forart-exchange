@@ -326,7 +326,7 @@ const PersonalCenterPage: React.FC = () => {
               <div className={'avatar'}>
                 <img src={AvatarIcon} />
               </div>
-              <div className="username">User
+              <div className="username">Painter
                 {/*<img src={SettingIcon} onClick={() => openModal(<UserProfileSetting />)} /> */}
               </div>
               <div className="address">{ shortenAddress(account?.toString()) }</div>

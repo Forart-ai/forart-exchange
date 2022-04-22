@@ -2,7 +2,7 @@ import { useSolanaWeb3 } from '../contexts/solana-web3'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useModal } from '../contexts/modal'
 import Dialog from '../contexts/theme/components/Dialog/Dialog'
-import { Alert, AlertTitle, Snackbar, styled } from '@mui/material'
+import { Alert, AlertTitle, Box, Snackbar, styled } from '@mui/material'
 import CONFT_API from '../apis/co-nft'
 import { useQuery, UseQueryResult } from 'react-query'
 import CustomizeButton from '../contexts/theme/components/Button'
@@ -15,6 +15,7 @@ import { NFTPreview } from '../components/nft-mint/selectedList'
 import { NFTAttributesData } from '../types/coNFT'
 import { Keypair } from '@solana/web3.js'
 import { useRefreshController } from '../contexts/refresh-controller'
+import { useHistory } from 'react-router-dom'
 
 const Content = styled('div')`
   width: 500px;
@@ -26,6 +27,18 @@ const Content = styled('div')`
   
   }
 `
+
+const Message = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 24px;
+  color: #ffffff;
+  width: 400px;
+  max-width: 98vw;
+`
+
 const Row = styled('div')`
   display: flex;
   justify-content: space-between;
@@ -60,11 +73,13 @@ const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
   const [body, setBody] = useState<NFTAttributesData>()
   const [attr, setAttr] = useState<NFTAttributesData[]>()
 
+  const history = useHistory()
+
   const [message, setMessage] = useState<string>('')
 
   const [open, setOpen] = React.useState(false)
 
-  const { closeModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const [notExisted, setNotExisted] = useState<boolean>(false)
 
@@ -99,6 +114,23 @@ const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
         mintKey: item.mintKey
       }).then(() => {
         setMessage('Start minting, you can see your nft in your wallet')
+        openModal(
+          <Dialog title={'Congratulations!'} closeable  >
+            <Message>Mint successfully!</Message>
+            <Box sx={{ width:'100%', display:'flex', justifyContent:'space-around', marginTop:'30px' }}>
+              <CustomizeButton style={{ margin:'10px' }} variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
+              <CustomizeButton style={{ margin:'10px' }}
+                variant={'contained'}
+                color={'secondary'}
+                onClick={() => {
+                  history.push('/account')
+                  closeModal()
+                }}
+              > Personal space
+              </CustomizeButton>
+            </Box>
+          </Dialog>
+        )
       }).catch(err => {
         setMessage( err.message || err.toString())
       })
@@ -126,9 +158,22 @@ const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
           return connection.confirmTransaction(_signature)
         })
         .then(() => {
+          setMessage('Start minting, Please wait for a moment.')
           CONFT_API.core.nft.nftMint({ nft: item.id, wallet: item.mintWallet, mintKey: item.mintKey })
-            .then(res => {console.log(res)})
             .then(() =>sleep(1500))
+            .then(() => {
+              setMessage('Start minting, you can see your nft in your wallet.')
+              openModal(
+                <Dialog title={'Congratulations!'} closeable  >
+                  <Message>Mint successfully!</Message>
+                  <Box sx={{ width:'100%', display:'flex', justifyContent:'space-around', marginTop:'30px' }}>
+                    <CustomizeButton style={{ margin:'10px' }} variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
+                    <CustomizeButton style={{ margin:'10px' }} variant={'contained'}  color={'secondary'} onClick={() => {history.push('/account'); closeModal()}}> Personal space</CustomizeButton>
+                  </Box>
+                </Dialog>
+              )
+            })
+
         })
         .catch(console.error)
 
@@ -145,10 +190,11 @@ const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
                 <PreviewArea>
                   <NFTPreview body={body} attrList={attr} />
                 </PreviewArea>
+
                 <div className={'operation'}>
-                  <CustomizeButton onClick={() => giveUp(item)} color={'secondary'} variant={'contained'}>Give up</CustomizeButton>
-                  <CustomizeButton onClick={() =>handleMint(item)} variant={'contained'}>Pay</CustomizeButton>
-                  <CustomizeButton onClick={() =>check(item)} variant={'contained'} disabled={notExisted}>I have purchased</CustomizeButton>
+                  <CustomizeButton style={{ backgroundColor:'#e53935' }} onClick={() => giveUp(item)}  variant={'contained'}>Give up</CustomizeButton>
+                  <CustomizeButton  onClick={() =>handleMint(item)} variant={'contained'}>Pay</CustomizeButton>
+                  <CustomizeButton onClick={() =>check(item)} color={'secondary'} variant={'contained'} disabled={notExisted}>I have purchased</CustomizeButton>
                 </div>
 
                 <span> {message}</span>
@@ -172,7 +218,7 @@ const useMinting = (wallet?: string): UseQueryResult<any> => {
   const { quietRefreshFlag } = useRefreshController()
 
   return useQuery(
-    ['USER_MINTING', wallet, quietRefreshFlag],
+    ['USER_MINTING', wallet],
     async () => {
       return await CONFT_API.core.user.getUserMinting(wallet).then(res => res)
     }

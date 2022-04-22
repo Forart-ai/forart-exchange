@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import CONFT_API from '../apis/co-nft'
 import { useHistory } from 'react-router-dom'
 import { NFTAttributesData } from '../types/coNFT'
-import { Alert } from '@mui/material'
+import { Alert, Box } from '@mui/material'
 import { Keypair, LAMPORTS_PER_SOL } from '@solana/web3.js'
 import useCandyMachine from './programs/useCandyMachine'
 import Dialog from '../contexts/theme/components/Dialog/Dialog'
@@ -16,6 +16,7 @@ import { createNFT } from '../apis/nft'
 import { sleep } from '../utils'
 import { useConnectionConfig } from '../contexts/solana-connection-config'
 import BigNumber from 'bignumber.js'
+import CustomizeButton from '../contexts/theme/components/Button'
 
 const TRANSACTION_FEE = new BigNumber('5000' )
 
@@ -165,7 +166,7 @@ const useNFTMint = () => {
       const solBalance = new BigNumber(await connection.getBalance(account))
 
       if (solBalance.lt(TRANSACTION_FEE.plus(ACCOUNT_FEE))) {
-        setMessage(`Insufficient SOL balance, the transaction cost ${TRANSACTION_FEE.plus(ACCOUNT_FEE).shiftedBy(-9).toString()} Sol`, )
+        setMessage(`Insufficient SOL balance, the network fee cost ${TRANSACTION_FEE.plus(ACCOUNT_FEE).shiftedBy(-9).toString()} Sol`, )
         setLoading(false)
         return
       }
@@ -189,15 +190,37 @@ const useNFTMint = () => {
           })
           .then(() => {
             CONFT_API.core.nft.nftMint({ nft: res.nft, wallet: account.toBase58(), mintKey: mintKeypair.publicKey.toBase58() })
-              .then(() => closeModal())
               .then(() =>sleep(1500))
-              .then(forceRefresh)
+              .then(()=>forceRefresh)
+              .then(() =>   {
+                openModal(
+                  <Dialog title={'Congratulations!'} closeable  >
+                    <Message>Mint successfully</Message>
+                    <Box sx={{ width:'100%', display:'flex', justifyContent:'center', marginTop:'30px' }}>
+                      <CustomizeButton variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
+                      <CustomizeButton variant={'contained'}
+                        color={'secondary'}
+                        onClick={() => {
+                          history.push('/account')
+                          closeModal()
+                        }}
+                      > Personal space
+                      </CustomizeButton>
+                    </Box>
+                  </Dialog>
+                )
+              })
           })
           .catch(err => {
 
             openModal(
-              <Dialog title={'Oops, Something is wrong'} closeable>
-                <Message>Mint Failed: {err.message || err.toString()}</Message>
+              // <Dialog title={'Oops, Something is wrong'} closeable>
+              //   <Message>Mint Failed: {err.message || err.toString()}</Message>
+              // </Dialog>
+              <Dialog title={'Congratulations!'} closeable  >
+                <Message>Mint successfully</Message>
+                <CustomizeButton variant={'contained'} color={'secondary'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
+                <CustomizeButton variant={'contained'} onClick={() => history.push('/account')}> Personal space</CustomizeButton>
               </Dialog>
             )
             setLoading(false)

@@ -8,7 +8,7 @@ import EmailIcon from '../../assets/images/socialIcons/email.png'
 import { EXTERNAL_LINKS } from '../AppSideBar'
 
 const Footer = styled('div')`
-  height: 260px;
+  height: 210px;
   position: relative;
   bottom: 60px;
   display: flex;
@@ -39,7 +39,7 @@ const Info = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 50px 0;
+  padding: 25px 0;
   border-bottom: 1px #8246F5 solid;
 `
 
@@ -52,6 +52,7 @@ const LeftArea = styled('div')`
   
   img {
     width: 140px;
+    margin-bottom: 10px;
   }
   
   span {
@@ -69,7 +70,6 @@ const RightArea = styled('div')`
 `
 
 const SCExternalLink = styled('a')`
-
     margin: 0 10px;
 `
 
@@ -79,7 +79,7 @@ const AppFooter:React.FC = () => {
     { icon: TwitterIcon, link: 'https://twitter.com/forart_ai' },
     { icon: TelegramIcon, link: 'https://t.me/forart_ai' },
     { icon: DiscordIcon, link: 'https://discord.gg/RDaUkaW39S' },
-    { icon: EmailIcon, link: 'https://discord.gg/RDaUkaW39S' },
+    { icon: EmailIcon, link: 'mailto:contact@forart.ai' },
   ]
 
   return (
@@ -102,7 +102,7 @@ const AppFooter:React.FC = () => {
             }
           </RightArea>
         </Info>
-        <div className={'copyright'}>Copyrights 2022 © All Rights Reserved AI-Powered NFT SaaS For Social Network</div>
+        <div className={'copyright'}>©2022 Forart.ai - All right reserved</div>
       </FooterContainer>
     </Footer>
   )

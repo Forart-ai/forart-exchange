@@ -5,11 +5,14 @@ import { useCallback } from 'react'
 import { WHITELIST_TOKEN_ADDRESS } from './constant'
 import { ParsedAccountData } from '@solana/web3.js'
 import { useQuery } from 'react-query'
+import { useRefreshController } from '../../../contexts/refresh-controller'
 
 const useWhiteList = () => {
   const { provider } = useAnchorProvider()
   const { account } = useSolanaWeb3()
   const { connection } = useConnectionConfig()
+
+  const { forceRefresh, quietRefreshFlag } = useRefreshController()
 
   // const checkWhiteList = useCallback(async () => {
   //   if (!account) {
@@ -33,7 +36,7 @@ const useWhiteList = () => {
   //
   // },[account])
 
-  const checkWhiteList = useQuery(['USER_MINT_CHANCE', account?.toBase58()], async () => {
+  const checkWhiteList = useQuery(['USER_MINT_CHANCE', account?.toBase58(), quietRefreshFlag], async () => {
     if (!account) {
       return
     }
@@ -55,7 +58,7 @@ const useWhiteList = () => {
     const tokenBalance = (tokenAccount.value?.data as ParsedAccountData).parsed.info.tokenAmount.uiAmountString
 
     return tokenBalance
-  }, { refetchInterval: false, refetchOnWindowFocus: true })
+  }, { refetchOnWindowFocus: true })
 
   return {
     checkWhiteList

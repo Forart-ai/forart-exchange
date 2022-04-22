@@ -12,7 +12,6 @@ const NFTListContainer = styled('div')`
   grid-gap: 16px;
   padding: 30px 20px;
   margin: 20px 0;
-  min-height: 70vh;
   
   @media screen and (max-width: 1100px) {
     justify-content: center;
