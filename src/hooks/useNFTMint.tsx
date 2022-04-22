@@ -212,14 +212,12 @@ const useNFTMint = () => {
               })
           })
           .catch(err => {
-
             openModal(
               <Dialog title={'Oops, Something is wrong'} closeable>
                 <Message>Mint Failed: {err.message || err.toString()}</Message>
               </Dialog>
             )
             setLoading(false)
-
           })
       })
         .catch(er => {

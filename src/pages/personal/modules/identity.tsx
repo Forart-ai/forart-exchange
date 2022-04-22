@@ -190,7 +190,7 @@ const NFTItem:React.FC<{item?: any }> = ({ item }) => {
 
 const Identity:React.FC = () => {
 
-  const holds = useOwnedNFTsQuery(new PublicKey('7qk4GmEjX2E8rwx3U3FdNzzi5LuSv53fxGAYG9oJuqNZ'))
+  const holds = useOwnedNFTsQuery(new PublicKey('BKESw19SUogJFRoXtpb981H9ExcRxEU2jVXYEgdXPdy8'))
   const { data, isLoading } = holds
 
   console.log(data)
