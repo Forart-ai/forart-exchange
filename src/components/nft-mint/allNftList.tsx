@@ -163,7 +163,6 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
       setIsHeart(true)
       setHeartNum(prev => prev + 1)
       setHeartStatus('up')
-      console.log('down')
       CONFT_API.core.nft.starNft(series, nftId, account.toBase58()).then(() => {
 
       })
@@ -176,7 +175,6 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
       setIsHeart(false)
       setHeartNum(prev => prev - 1)
       setHeartStatus('down')
-      console.log('up')
       CONFT_API.core.nft.unstarNft(series, nftId, account.toBase58()).then(() => {
       })
         .catch(() => {
@@ -224,8 +222,13 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
 
         </div>
         <div className="rank">
-          <img src={CrownIcon} />
-          <div>{data?.rank}</div>
+          {
+            series === '3312' &&
+              <>
+                <img src={CrownIcon} />
+                <div>{data?.rank}</div>
+              </>
+          }
         </div>
       </Info>
 
