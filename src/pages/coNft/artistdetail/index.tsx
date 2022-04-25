@@ -7,6 +7,8 @@ import { ArtDetail } from './modules/artistIntroduction'
 import { Tab, Tabs, ThemeProvider, useMediaQuery, useTheme } from '@mui/material'
 import ForartTheme from '../../../contexts/theme/config/dark'
 import NftCreate from './modules/nftCreate'
+import { useLocationQuery } from '../../../hooks/useLocationQuery'
+import HypeteenMintPage from './modules/hypeteen/hypeteenMintPage'
 
 interface StyledTabsProps {
     children?: React.ReactNode;
@@ -123,6 +125,8 @@ const Index: React.FC = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
+  const series = useLocationQuery('artistId')
+
   const StyledTabs = styled((props: StyledTabsProps) => (
 
     <Tabs
@@ -145,7 +149,7 @@ const Index: React.FC = () => {
       justifyContent:'center'
     }
   }))
-  const [value, setValue] = React.useState(1)
+  const [value, setValue] = React.useState(3)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
@@ -164,6 +168,9 @@ const Index: React.FC = () => {
           <StyledTab   label="Art Detail" />
           <StyledTab  label="Create" />
           <StyledTab  label="CO-Gallery" />
+          {
+            series === '3312' &&  <StyledTab  label="mint" />
+          }
         </StyledTabs>
 
       </TabArea>
@@ -176,6 +183,10 @@ const Index: React.FC = () => {
         </TabPanel>
         <TabPanel index={2} value={value}>
           <AllNftContainer />
+        </TabPanel>
+
+        <TabPanel index={3} value={value}>
+          <HypeteenMintPage />
         </TabPanel>
       </ContentArea>
     </Wrapper>

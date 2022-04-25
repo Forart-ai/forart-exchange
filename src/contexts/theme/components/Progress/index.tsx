@@ -23,7 +23,7 @@ import { ProgressProps } from 'antd'
 // }))
 
 const BorderLinearProgress = styled(LinearProgress)`
-  height: 20px;
+  min-height: 30px;
   border-radius: 20px;
   border: 1px ${({ theme }) => theme.palette.primary.main} solid;
 
