@@ -115,7 +115,12 @@ const useDonation = () => {
       return new BigNumber(0)
     }
 
-    return new BigNumber(poolInfo.totalDonateAmount.toString()).shiftedBy(-USDC_TOKEN_DECIMALS)
+    const totalDonateAmount = new BigNumber(poolInfo.totalDonateAmount.toString())
+    const totalFeeAmount = new BigNumber(poolInfo.totalFeeAmount.toString())
+
+    const total = totalDonateAmount.plus(totalFeeAmount)
+
+    return total.shiftedBy(-USDC_TOKEN_DECIMALS)
   })
 
   const userAta = useQuery(['USER_ATA',program?.programId, account], async () => {
