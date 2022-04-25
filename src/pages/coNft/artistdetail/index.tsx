@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import AllNftContainer from './modules/allNftContainer'
 
@@ -149,7 +149,17 @@ const Index: React.FC = () => {
       justifyContent:'center'
     }
   }))
-  const [value, setValue] = React.useState(3)
+
+  const [value, setValue] = React.useState(1)
+
+  useEffect(() => {
+    if (series === '1024') {
+      setValue(1)
+    }
+    else if (series === '3312') {
+      setValue(3)
+    }
+  }, [series])
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
