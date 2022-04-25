@@ -72,7 +72,7 @@ const CONFT_API = {
         return Service.get(`/nft/detail/${ id }`)
       },
       nftCreate(data: LockNFTRequest) {
-        return Service.post('nft/create', data)
+        return Service.post('nft/create', data, { timeout: 5000 })
       },
       nftMint(req: NftMintRequest) {
         return Service.post('nft/mint', req)

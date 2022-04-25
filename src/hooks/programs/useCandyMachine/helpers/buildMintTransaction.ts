@@ -1,21 +1,21 @@
 import * as anchor from '@project-serum/anchor'
 import { Program } from '@project-serum/anchor'
-import { Keypair, SystemProgram, Transaction } from '@solana/web3.js'
+import { Keypair, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
 import { getAtaForMint, getCandyMachineCreator, getMasterEdition, getMetadata, getTokenWallet } from './accounts'
-import { HypeteenCandyMachineAddress, TOKEN_METADATA_PROGRAM_ID, TOKEN_PROGRAM_ID } from './constant'
+import {  TOKEN_METADATA_PROGRAM_ID, TOKEN_PROGRAM_ID } from './constant'
 import { MintLayout, Token } from '@solana/spl-token'
 import { createAssociatedTokenAccountInstruction } from './instructions'
 import { sendTransaction } from './transactions'
 
 export type MintResult = string
 
-export async function mint(program: Program, mint: Keypair): Promise<MintResult> {
+export async function buildMintTransaction(program: Program, mint: Keypair, candyMachineAddress: PublicKey): Promise<Transaction> {
   const minterPublicKey = program.provider.wallet.publicKey
   const toPublicKey = program.provider.wallet.publicKey
 
   const userTokenAccountAddress = await getTokenWallet(toPublicKey, mint.publicKey)
 
-  const candyMachine: any = await program.account.candyMachine.fetch(HypeteenCandyMachineAddress)
+  const candyMachine: any = await program.account.candyMachine.fetch(candyMachineAddress)
 
   const remainingAccounts = []
   const signers = [mint]
@@ -128,12 +128,12 @@ export async function mint(program: Program, mint: Keypair): Promise<MintResult>
   const metadataAddress = await getMetadata(mint.publicKey)
   const masterEdition = await getMasterEdition(mint.publicKey)
 
-  const [candyMachineCreator, creatorBump] = await getCandyMachineCreator(HypeteenCandyMachineAddress)
+  const [candyMachineCreator, creatorBump] = await getCandyMachineCreator(candyMachineAddress)
 
   instructions.push(
     await program.instruction.mintNft(creatorBump, {
       accounts: {
-        candyMachine: HypeteenCandyMachineAddress,
+        candyMachine: candyMachineAddress,
         candyMachineCreator,
         payer: minterPublicKey,
         //@ts-ignore
@@ -155,6 +155,17 @@ export async function mint(program: Program, mint: Keypair): Promise<MintResult>
     }),
   )
 
-  return sendTransaction(program.provider, [...instructions, ...cleanupInstructions], signers)
+  const tx = new Transaction({
+    feePayer: program.provider.wallet.publicKey,
+    recentBlockhash: (await program.provider.connection.getLatestBlockhash()).blockhash
+  })
 
+  tx.add(...instructions).add(...cleanupInstructions)
+
+  if (signers.length) {
+    tx.sign(...signers)
+  }
+
+  return tx
+  // return sendTransaction(program.provider, [...instructions, ...cleanupInstructions], signers)
 }

@@ -17,6 +17,8 @@ import { sleep } from '../utils'
 import { useConnectionConfig } from '../contexts/solana-connection-config'
 import BigNumber from 'bignumber.js'
 import CustomizeButton from '../contexts/theme/components/Button'
+import { buildMintTransaction } from './programs/useCandyMachine/helpers/buildMintTransaction'
+import { PainterCandyMachineAddress } from './programs/useCandyMachine/helpers/constant'
 
 const TRANSACTION_FEE = new BigNumber('5000' )
 
@@ -127,7 +129,7 @@ const useNFTMint = () => {
 
   const { forceRefresh } = useRefreshController()
 
-  const { mint } = useCandyMachine()
+  const { builtMint } = useCandyMachine()
 
   const history = useHistory()
 
@@ -158,7 +160,7 @@ const useNFTMint = () => {
 
       const a = components.concat(body.id)
 
-      if ( a.length !== 8) {
+      if (a.length !== 8) {
         throw new Error(' Must choose all attributes ')
         return
       }
@@ -166,74 +168,93 @@ const useNFTMint = () => {
       const solBalance = new BigNumber(await connection.getBalance(account))
 
       if (solBalance.lt(TRANSACTION_FEE.plus(ACCOUNT_FEE))) {
-        setMessage(`Insufficient SOL balance, the network fee cost ${TRANSACTION_FEE.plus(ACCOUNT_FEE).shiftedBy(-9).toString()} Sol`, )
+        setMessage(`Insufficient SOL balance, the network fee cost ${TRANSACTION_FEE.plus(ACCOUNT_FEE).shiftedBy(-9).toString()} Sol`,)
         setLoading(false)
         return
       }
 
       const secretKey = mintKeypair.secretKey
 
-      console.log(secretKey.toString())
+      const end = false
+      const left = 0
+      const transaction = builtMint( mintKeypair, PainterCandyMachineAddress)
 
-      await CONFT_API.core.nft.nftCreate({ series: 1024, components: a, wallet:account.toBase58(), mintKey: mintKeypair.publicKey.toBase58(), mintPrivateKey: Buffer.from(secretKey).toString('base64') }).then((res:any) => {
-        console.log(res)
-        setMessage('✅ Please approve transfer transaction in your wallet')
-        mint(mintKeypair)
-          .then(async _signature => {
-            console.log(mintKeypair.publicKey.toBase58(), _signature)
-            setMessage(' Transaction sent successfully! Please wait for confirming')
-            return connection.confirmTransaction(_signature)
-          })
-          .then(() => {
-            setLoading(false)
-            setMessage(' Transaction confirmed. The NFT has been mint ')
-          })
-          .then(() => {
-            CONFT_API.core.nft.nftMint({ nft: res.nft, wallet: account.toBase58(), mintKey: mintKeypair.publicKey.toBase58() })
-              .then(() =>sleep(1500))
-              .then(()=>forceRefresh)
-              .then(() =>   {
-                openModal(
-                  <Dialog title={'Congratulations!'} closeable  >
-                    <Message>Mint successfully</Message>
-                    <Box sx={{ width:'100%', display:'flex', justifyContent:'center', marginTop:'30px' }}>
-                      <CustomizeButton variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
-                      <CustomizeButton variant={'contained'}
-                        color={'secondary'}
-                        onClick={() => {
-                          history.push('/account')
-                          closeModal()
-                        }}
-                      > Personal space
-                      </CustomizeButton>
-                    </Box>
-                  </Dialog>
-                )
-              })
-          })
-          .catch(err => {
+      console.log('transaction',transaction)
 
-            openModal(
-              // <Dialog title={'Oops, Something is wrong'} closeable>
-              //   <Message>Mint Failed: {err.message || err.toString()}</Message>
-              // </Dialog>
-              <Dialog title={'Congratulations!'} closeable  >
-                <Message>Mint successfully</Message>
-                <CustomizeButton variant={'contained'} color={'secondary'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
-                <CustomizeButton variant={'contained'} onClick={() => history.push('/account')}> Personal space</CustomizeButton>
-              </Dialog>
-            )
-            setLoading(false)
+      // CONFT_API.core.nft.nftCreate()
+      //   .then((leftTime: number) => {
+      //       left = leftTime
+      //       setInterval(() => { left >= 0 && left -= 1}, 1000)
+      //     setTimeout(() => { end = true }, leftTime)
+      //     return adapter.sign(tx)
+      //   })
+      //   .then(transaction => {
+      //     if (!end) {
+      //       connection.sendRawTransaction(transaction)
+      //     }
+      //   })
 
-          })
-      })
-        .catch(er => {
-          openModal(
-            <Dialog title={'Oops, Something is wrong'} closeable>
-              <Message>Mint Failed: {er.message || er.toString()}</Message>
-            </Dialog>
-          )
-        })
+      //------------------------------------------------------
+
+      // await CONFT_API.core.nft.nftCreate({ series: 1024, components: a, wallet:account.toBase58(), mintKey: mintKeypair.publicKey.toBase58(), mintPrivateKey: Buffer.from(secretKey).toString('base64') }).then((res:any) => {
+      //   console.log(res)
+      //   setMessage('✅ Please approve transfer transaction in your wallet')
+      //   mint(mintKeypair)
+      //     .then(async _signature => {
+      //       console.log(mintKeypair.publicKey.toBase58(), _signature)
+      //       setMessage(' Transaction sent successfully! Please wait for confirming')
+      //       return connection.confirmTransaction(_signature)
+      //     })
+      //     .then(() => {
+      //       setLoading(false)
+      //       setMessage(' Transaction confirmed. The NFT has been mint ')
+      //     })
+      //     .then(() => {
+      //       CONFT_API.core.nft.nftMint({ nft: res.nft, wallet: account.toBase58(), mintKey: mintKeypair.publicKey.toBase58() })
+      //         .then(() =>sleep(1500))
+      //         .then(()=>forceRefresh)
+      //         .then(() =>   {
+      //           openModal(
+      //             <Dialog title={'Congratulations!'} closeable  >
+      //               <Message>Mint successfully</Message>
+      //               <Box sx={{ width:'100%', display:'flex', justifyContent:'center', marginTop:'30px' }}>
+      //                 <CustomizeButton variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
+      //                 <CustomizeButton variant={'contained'}
+      //                   color={'secondary'}
+      //                   onClick={() => {
+      //                     history.push('/account')
+      //                     closeModal()
+      //                   }}
+      //                 > Personal space
+      //                 </CustomizeButton>
+      //               </Box>
+      //             </Dialog>
+      //           )
+      //         })
+      //     })
+      //     .catch(err => {
+      //
+      //       openModal(
+      //         // <Dialog title={'Oops, Something is wrong'} closeable>
+      //         //   <Message>Mint Failed: {err.message || err.toString()}</Message>
+      //         // </Dialog>
+      //         <Dialog title={'Congratulations!'} closeable  >
+      //           <Message>Mint successfully</Message>
+      //           <CustomizeButton variant={'contained'} color={'secondary'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
+      //           <CustomizeButton variant={'contained'} onClick={() => history.push('/account')}> Personal space</CustomizeButton>
+      //         </Dialog>
+      //       )
+      //       setLoading(false)
+      //
+      //     })
+      // })
+      //   .catch(er => {
+      //     openModal(
+      //       <Dialog title={'Oops, Something is wrong'} closeable>
+      //         <Message>Mint Failed: {er.message || er.toString()}</Message>
+      //       </Dialog>
+      //     )
+      //   })
 
     }, [account, connection]
   )

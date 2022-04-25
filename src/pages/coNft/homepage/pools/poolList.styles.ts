@@ -8,45 +8,35 @@ export const PoolsContainer = styled('div')`
 export const PoolListContainer = styled('div')`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 320px);
+  grid-template-columns: repeat(4, minmax(300px, 320px));
   justify-content: space-between;
-  gap: 10px;
+  gap: 20px;
+  overflow-x: auto;
+  list-style: none;
 
   ${({ theme }) => theme.breakpoints.down('sm')} {
-    grid-template-columns: repeat(2, minmax(190px, 42%));
-    justify-content: space-between;
+   zoom: 0.8;
   }
-
-  ${({ theme }) => theme.breakpoints.between('sm','md')} {
-    grid-template-columns: repeat(2, minmax(240px, 42%));
-    justify-content: space-between;
-  }
-
  
 `
 
-export const PoolsCardContainer = styled('div')(({ theme }) => ({
-  width:'100%',
-  height: '480px',
-  display: 'flex',
-  justifyContent: 'center',
-  flexDirection:'column',
-  alignItems: 'center',
-  borderRadius: '20px',
-  background: theme.palette.background.default,
-  position: 'relative',
-  marginTop: theme.spacing(2.6),
-  border: '1px #999999 solid',
+export const PoolsCardContainer = styled('div')`
+  
+  width: 100%;
+  height: 480px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  background-color: ${({ theme }) => theme.palette.background.default};
+  position: relative;
+  margin-top: 26px;
+  border: 1px #999999 solid;
+  
 
-  [theme.breakpoints.down('sm')]: {
-    height: '360px',
-  },
 
-  [theme.breakpoints.between('sm','md')]: {
-    height: '420px',
-  },
-
-}))
+`
 
 export const ImageContent = styled('div')`
   width: 100%;
@@ -65,7 +55,6 @@ export const ImageContent = styled('div')`
   }
   
   ${({ theme }) => theme.breakpoints.down('sm')} {
-    height: 220px;
 
   }
 
@@ -81,7 +70,6 @@ export const InfoContent = styled('div')`
   z-index: 1;
 
   ${({ theme }) => theme.breakpoints.down('md')} {
-    padding: 10px 10px;
   }
   
 `
@@ -115,12 +103,10 @@ export const PoolTitle = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.down('sm')]: {
     '& .pool-name': {
-      fontSize: '16px',
 
     },
 
     '& .likes-value': {
-      fontSize: '12px',
     },
   },
 }))
@@ -167,10 +153,8 @@ export const LeftArea = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.down('sm')]: {
     '& .owner': {
-      fontSize: '8px',
 
       span: {
-        fontSize: '12px',
       }
     },
   }
@@ -200,12 +184,10 @@ export const RightArea = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.down('sm')] :{
     '& .data': {
-      fontSize: '10px',
 
     },
 
     span: {
-      fontSize: '8px',
     },
   }
 

@@ -3,9 +3,11 @@ import { Idl } from '@project-serum/anchor'
 
 const SOLANA_CLUSTER = (process.env.REACT_APP_SOLANA_CLUSTER) as Cluster
 const END_POINT = process.env.REACT_APP_SOLANA_END_POINT || clusterApiUrl(SOLANA_CLUSTER)
-const CANDY_MACHINE_ADDR = process.env.REACT_APP_CANDY_MACHINE_ADDR as string
+const PAINTER_CANDY_MACHINE_ADDR = process.env.REACT_APP_CANDY_MACHINE_ADDR as string
 
-// const CANDY_MACHINE_ADDR = 'FKctadBMg9b32xHDNbu9rQraaW3rMkmXNCmMP715tMGy'
+//devnet
+// const PAINTER_CANDY_MACHINE_ADDR ='AzyBxzWm3s4WZrh3MFksnDEPfSEfcTzKmDzt2L9L7ano'
+const HYPETEEN_CANDY_MACHINE_ADDR = 'FaEuBjb9B6jN52y7uKBHVKu8eY8PkbH5Mq6L42TBFcEj'
 
 export const SolanaConnection = new Connection(END_POINT, { disableRetryOnRateLimit: true })
 
@@ -19,6 +21,8 @@ export const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new PublicKey('ATokenGPvb
 
 export const TOKEN_PROGRAM_ID = new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA')
 
-export const CandyMachineAddress = new PublicKey(CANDY_MACHINE_ADDR)
+export const PainterCandyMachineAddress = new PublicKey(PAINTER_CANDY_MACHINE_ADDR)
+
+export const HypeteenCandyMachineAddress = new PublicKey(HYPETEEN_CANDY_MACHINE_ADDR)
 
 export const DEFAULT_TIMEOUT = 15000

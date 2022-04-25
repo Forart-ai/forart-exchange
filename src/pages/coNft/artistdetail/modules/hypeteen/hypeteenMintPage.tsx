@@ -113,7 +113,6 @@ const Operation = styled('div')`
     }
   }
   
-  
 `
 
 const HypeteenMintPage:React.FC = () => {
@@ -149,7 +148,7 @@ const HypeteenMintPage:React.FC = () => {
       </MintWrapper>
       <Operation>
         <div className={'progress'}>
-          <CustomizedProgressBars style={{ height:'30px' }}  percent={30}  />
+          <CustomizedProgressBars style={{ height:'30px' }}  percent={0}  />
           <p>0 / 2000</p>
         </div>
         <CustomizeButton disabled={true} color={'secondary'} variant={'contained'}>Mint</CustomizeButton>

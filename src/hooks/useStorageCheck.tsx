@@ -16,6 +16,7 @@ import { NFTAttributesData } from '../types/coNFT'
 import { Keypair } from '@solana/web3.js'
 import { useRefreshController } from '../contexts/refresh-controller'
 import { useHistory } from 'react-router-dom'
+import { PainterCandyMachineAddress } from './programs/useCandyMachine/helpers/constant'
 
 const Content = styled('div')`
   width: 500px;
@@ -67,7 +68,7 @@ const PreviewArea = styled('div')`
 const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
   const { account } = useSolanaWeb3()
 
-  const { mint } = useCandyMachine()
+  const { builtMint } = useCandyMachine()
   const { connection } = useConnectionConfig()
 
   const [body, setBody] = useState<NFTAttributesData>()
@@ -151,31 +152,31 @@ const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
 
   const handleMint = useCallback(
     (item: any) => {
-      const keypair = Keypair.fromSecretKey(new Buffer(item.mintPrivateKey, 'base64'))
-
-      mint(keypair)
-        .then(async _signature => {
-          return connection.confirmTransaction(_signature)
-        })
-        .then(() => {
-          setMessage('Start minting, Please wait for a moment.')
-          CONFT_API.core.nft.nftMint({ nft: item.id, wallet: item.mintWallet, mintKey: item.mintKey })
-            .then(() =>sleep(1500))
-            .then(() => {
-              setMessage('Start minting, you can see your nft in your wallet.')
-              openModal(
-                <Dialog title={'Congratulations!'} closeable  >
-                  <Message>Mint successfully!</Message>
-                  <Box sx={{ width:'100%', display:'flex', justifyContent:'space-around', marginTop:'30px' }}>
-                    <CustomizeButton style={{ margin:'10px' }} variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
-                    <CustomizeButton style={{ margin:'10px' }} variant={'contained'}  color={'secondary'} onClick={() => {history.push('/account'); closeModal()}}> Personal space</CustomizeButton>
-                  </Box>
-                </Dialog>
-              )
-            })
-
-        })
-        .catch(console.error)
+      // const keypair = Keypair.fromSecretKey(new Buffer(item.mintPrivateKey, 'base64'))
+      //
+      // builtMint(keypair, PainterCandyMachineAddress)
+      //   .then(async _signature => {
+      //     return connection.confirmTransaction(_signature)
+      //   })
+      //   .then(() => {
+      //     setMessage('Start minting, Please wait for a moment.')
+      //     CONFT_API.core.nft.nftMint({ nft: item.id, wallet: item.mintWallet, mintKey: item.mintKey })
+      //       .then(() =>sleep(1500))
+      //       .then(() => {
+      //         setMessage('Start minting, you can see your nft in your wallet.')
+      //         openModal(
+      //           <Dialog title={'Congratulations!'} closeable  >
+      //             <Message>Mint successfully!</Message>
+      //             <Box sx={{ width:'100%', display:'flex', justifyContent:'space-around', marginTop:'30px' }}>
+      //               <CustomizeButton style={{ margin:'10px' }} variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
+      //               <CustomizeButton style={{ margin:'10px' }} variant={'contained'}  color={'secondary'} onClick={() => {history.push('/account'); closeModal()}}> Personal space</CustomizeButton>
+      //             </Box>
+      //           </Dialog>
+      //         )
+      //       })
+      //
+      //   })
+      //   .catch(console.error)
 
     },[account])
 
