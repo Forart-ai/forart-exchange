@@ -9,6 +9,8 @@ import SmallBox1 from '../../../../../assets/images/artistDetail/mint/Rectangle-
 import SmallBox2 from '../../../../../assets/images/artistDetail/mint/Rectangle.png'
 import SmallBoxBlur1 from '../../../../../assets/images/artistDetail/mint/blur1.png'
 import SmallBoxBlur2 from '../../../../../assets/images/artistDetail/mint/blur2.png'
+import useOpenBlindBox from '../../../../../hooks/useOpenBlindBox'
+import { useGetOverview } from '../../../../../hooks/queries/useGetOverview'
 
 const MintWrapper = styled('div')`
   position: relative;
@@ -116,23 +118,8 @@ const Operation = styled('div')`
 `
 
 const HypeteenMintPage:React.FC = () => {
-  const [progress, setProgress] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 99) {
-          return prev
-        }
-
-        return prev + 1
-      })
-    }, 150)
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [])
+  const { openBlindBox } = useOpenBlindBox()
+  const { data: painterData } = useGetOverview(1024)
 
   return (
     <DefaultPageWrapper>
@@ -148,10 +135,10 @@ const HypeteenMintPage:React.FC = () => {
       </MintWrapper>
       <Operation>
         <div className={'progress'}>
-          <CustomizedProgressBars style={{ height:'30px' }}  percent={0}  />
-          <p>0 / 2000</p>
+          <CustomizedProgressBars style={{ height:'30px' }}  percent={painterData?.minted}  />
+          <p>{painterData?.minted} / 2000</p>
         </div>
-        <CustomizeButton disabled={true} color={'secondary'} variant={'contained'}>Mint</CustomizeButton>
+        <CustomizeButton onClick={ openBlindBox } color={'secondary'} variant={'contained'}>Mint</CustomizeButton>
       </Operation>
 
     </DefaultPageWrapper>

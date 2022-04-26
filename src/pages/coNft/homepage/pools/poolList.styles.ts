@@ -33,9 +33,7 @@ export const PoolsCardContainer = styled('div')`
   position: relative;
   margin-top: 26px;
   border: 1px #999999 solid;
-  
-
-
+  cursor: pointer;
 `
 
 export const ImageContent = styled('div')`

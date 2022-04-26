@@ -13,16 +13,16 @@ const useCandyMachine = () => {
     return new Program(CANDY_MACHINE_PROGRAM_IDL, CANDY_MACHINE_PROGRAM_ID, provider)
   }, [provider])
 
-  const builtMint = useCallback(async (mintKeypair: Keypair, candyMachineAddress: PublicKey) => {
+  const builtMintTransaction = useCallback((mintKeypair: Keypair, candyMachineAddress: PublicKey) => {
     if (!program) {
       return Promise.reject('Program not ready')
     }
 
-    return await buildMintTransaction(program, mintKeypair, candyMachineAddress)
+    return buildMintTransaction(program, mintKeypair, candyMachineAddress)
   }, [program])
 
   return {
-    program, builtMint
+    program, builtMintTransaction
   }
 }
 

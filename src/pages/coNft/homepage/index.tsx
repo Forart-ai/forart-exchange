@@ -162,7 +162,7 @@ const Header: React.FC = () => {
                     painterData ? (
                       <div style={{ display: 'flex', alignItems: 'baseline' }}>
                         <StyledCountUp
-                          end={painterData?.mintedWallet ? painterData?.mintedWallet : '---'}
+                          end={painterData?.minter ? painterData?.minter : '---'}
                           duration={2}
                           separator=","
 
@@ -215,7 +215,7 @@ const Header: React.FC = () => {
                     hypeteenData ? (
                       <div style={{ display: 'flex', alignItems: 'baseline',  width:'200px' }}>
                         <StyledCountUp
-                          end={hypeteenData?.minted ? hypeteenData?.minted : '---'}
+                          end={hypeteenData?.created ? hypeteenData?.created : '---'}
                           duration={2}
                           separator=","
 
@@ -233,7 +233,7 @@ const Header: React.FC = () => {
                     hypeteenData ? (
                       <div style={{ display: 'flex', alignItems: 'baseline' }}>
                         <StyledCountUp
-                          end={hypeteenData?.mintedWallet ? hypeteenData?.mintedWallet : '---'}
+                          end={hypeteenData?.creator ? hypeteenData?.creator : '---'}
                           duration={2}
                           separator=","
 

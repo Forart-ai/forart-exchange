@@ -1,15 +1,26 @@
-import * as anchor from '@project-serum/anchor'
 import { Program } from '@project-serum/anchor'
-import { Keypair, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
+import {
+  Keypair,
+  PublicKey,
+  Signer,
+  SystemProgram,
+  SYSVAR_CLOCK_PUBKEY, SYSVAR_INSTRUCTIONS_PUBKEY, SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
+  SYSVAR_RENT_PUBKEY,
+  Transaction
+} from '@solana/web3.js'
 import { getAtaForMint, getCandyMachineCreator, getMasterEdition, getMetadata, getTokenWallet } from './accounts'
-import {  TOKEN_METADATA_PROGRAM_ID, TOKEN_PROGRAM_ID } from './constant'
-import { MintLayout, Token } from '@solana/spl-token'
+import {  TOKEN_METADATA_PROGRAM_ID } from './constant'
+// @ts-ignore
+import { createApproveInstruction, createRevokeInstruction, MintLayout, createMintToInstruction, createInitializeMintInstruction, TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import { createAssociatedTokenAccountInstruction } from './instructions'
 import { sendTransaction } from './transactions'
 
 export type MintResult = string
 
-export async function buildMintTransaction(program: Program, mint: Keypair, candyMachineAddress: PublicKey): Promise<Transaction> {
+export async function buildMintTransaction(program: Program, mint: Keypair, candyMachineAddress: PublicKey): Promise<{
+  transaction: Transaction,
+  signers: Signer[]
+}> {
   const minterPublicKey = program.provider.wallet.publicKey
   const toPublicKey = program.provider.wallet.publicKey
 
@@ -22,7 +33,7 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
   const cleanupInstructions = []
 
   const instructions = [
-    anchor.web3.SystemProgram.createAccount( {
+    SystemProgram.createAccount( {
       fromPubkey: minterPublicKey,
       newAccountPubkey: mint.publicKey,
       space: MintLayout.span,
@@ -30,7 +41,7 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
       programId: TOKEN_PROGRAM_ID
     }),
 
-    Token.createInitMintInstruction(TOKEN_PROGRAM_ID, mint.publicKey, 0, toPublicKey, toPublicKey),
+    createInitializeMintInstruction(mint.publicKey, 0, toPublicKey, toPublicKey),
 
     createAssociatedTokenAccountInstruction(
       userTokenAccountAddress,
@@ -39,18 +50,16 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
       mint.publicKey
     ),
 
-    Token.createMintToInstruction(
-      TOKEN_PROGRAM_ID,
+    createMintToInstruction(
       mint.publicKey,
       userTokenAccountAddress,
       toPublicKey,
-      [],
       1,
     ),
   ]
 
   if (candyMachine.data.whitelistMintSettings) {
-    const mint = new anchor.web3.PublicKey(candyMachine.data.whitelistMintSettings.mint)
+    const mint = new PublicKey(candyMachine.data.whitelistMintSettings.mint)
 
     const whitelistToken = (await getAtaForMint(mint, toPublicKey))[0]
     remainingAccounts.push({
@@ -60,7 +69,7 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
     })
 
     if (candyMachine.data.whitelistMintSettings.mode.burnEveryTime) {
-      const whitelistBurnAuthority = anchor.web3.Keypair.generate()
+      const whitelistBurnAuthority = Keypair.generate()
 
       remainingAccounts.push({
         pubkey: mint,
@@ -76,17 +85,15 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
       const exists = await program.provider.connection.getAccountInfo(whitelistToken)
       if (exists) {
         instructions.push(
-          Token.createApproveInstruction(
-            TOKEN_PROGRAM_ID,
+          createApproveInstruction(
             whitelistToken,
             whitelistBurnAuthority.publicKey,
             toPublicKey,
-            [],
             1,
           ),
         )
         cleanupInstructions.push(
-          Token.createRevokeInstruction(TOKEN_PROGRAM_ID, whitelistToken, toPublicKey, []),
+          createRevokeInstruction(whitelistToken, toPublicKey),
         )
       }
     }
@@ -94,7 +101,7 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
 
   let tokenAccount
   if (candyMachine.tokenMint) {
-    const transferAuthority = anchor.web3.Keypair.generate()
+    const transferAuthority = Keypair.generate()
 
     tokenAccount = await getTokenWallet(toPublicKey, candyMachine.tokenMint)
 
@@ -111,18 +118,16 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
     })
 
     instructions.push(
-      Token.createApproveInstruction(
-        TOKEN_PROGRAM_ID,
+      createApproveInstruction(
         tokenAccount,
         transferAuthority.publicKey,
         toPublicKey,
-        [],
         candyMachine.data.price.toNumber(),
       ),
     )
 
     signers.push(transferAuthority)
-    cleanupInstructions.push(Token.createRevokeInstruction(TOKEN_PROGRAM_ID, tokenAccount, toPublicKey, []))
+    cleanupInstructions.push(createRevokeInstruction(tokenAccount, toPublicKey))
   }
 
   const metadataAddress = await getMetadata(mint.publicKey)
@@ -146,26 +151,25 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
         tokenMetadataProgram: TOKEN_METADATA_PROGRAM_ID,
         tokenProgram: TOKEN_PROGRAM_ID,
         systemProgram: SystemProgram.programId,
-        rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-        clock: anchor.web3.SYSVAR_CLOCK_PUBKEY,
-        recentBlockhashes: anchor.web3.SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
-        instructionSysvarAccount: anchor.web3.SYSVAR_INSTRUCTIONS_PUBKEY,
+        rent: SYSVAR_RENT_PUBKEY,
+        clock: SYSVAR_CLOCK_PUBKEY,
+        recentBlockhashes: SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
+        instructionSysvarAccount: SYSVAR_INSTRUCTIONS_PUBKEY,
       },
       remainingAccounts: remainingAccounts.length > 0 ? remainingAccounts : undefined,
     }),
   )
 
-  const tx = new Transaction({
+  const transaction = new Transaction({
     feePayer: program.provider.wallet.publicKey,
     recentBlockhash: (await program.provider.connection.getLatestBlockhash()).blockhash
   })
 
-  tx.add(...instructions).add(...cleanupInstructions)
+  transaction.add(...[...instructions, ...cleanupInstructions].filter(i => !!i))
 
-  if (signers.length) {
-    tx.sign(...signers)
+  return {
+    transaction,
+    signers,
   }
-
-  return tx
   // return sendTransaction(program.provider, [...instructions, ...cleanupInstructions], signers)
 }

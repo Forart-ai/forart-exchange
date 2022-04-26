@@ -198,7 +198,7 @@ const IdentityInfo:React.FC = () => {
                 <img src={Cube} />
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
-                <div className={'value'}>{overviewData?.mintedWallet?? '0'}</div>
+                <div className={'value'}>{overviewData?.minter ?? '0'}</div>
                 <div className={'name'}>Minters</div>
               </Box>
             </DataItem>

@@ -57,7 +57,8 @@ export type LockNFTRequest = {
 export type NftMintRequest = {
  nft: string,
   wallet: string,
-  mintKey: string
+  mintKey: string,
+  series?: string | number
 }
 
 export type GetNftRequest = {

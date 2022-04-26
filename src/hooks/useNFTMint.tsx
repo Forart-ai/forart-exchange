@@ -1,24 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useModal } from '../contexts/modal'
 import { useSolanaWeb3 } from '../contexts/solana-web3'
-import {  Progress } from 'antd'
+import { Progress } from 'antd'
 import styled from 'styled-components'
 import CONFT_API from '../apis/co-nft'
 import { useHistory } from 'react-router-dom'
 import { NFTAttributesData } from '../types/coNFT'
-import { Alert, Box } from '@mui/material'
-import { Keypair, LAMPORTS_PER_SOL } from '@solana/web3.js'
+import { Alert } from '@mui/material'
+import { Keypair, LAMPORTS_PER_SOL, Transaction } from '@solana/web3.js'
 import useCandyMachine from './programs/useCandyMachine'
 import Dialog from '../contexts/theme/components/Dialog/Dialog'
 import { useRefreshController } from '../contexts/refresh-controller'
-import { ClipLoader, FadeLoader, MoonLoader } from 'react-spinners'
-import { createNFT } from '../apis/nft'
-import { sleep } from '../utils'
+import { ClipLoader } from 'react-spinners'
 import { useConnectionConfig } from '../contexts/solana-connection-config'
 import BigNumber from 'bignumber.js'
-import CustomizeButton from '../contexts/theme/components/Button'
-import { buildMintTransaction } from './programs/useCandyMachine/helpers/buildMintTransaction'
 import { PainterCandyMachineAddress } from './programs/useCandyMachine/helpers/constant'
+import useAnchorProvider from './useAnchorProvider'
+import { Minting } from './useStorageCheck'
 
 const TRANSACTION_FEE = new BigNumber('5000' )
 
@@ -35,114 +33,54 @@ const Message = styled.div`
   max-width: 98vw;
 `
 
-const WaitForMinting:React.FC = () => {
-  const [progress, setProgress] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 99) {
-          return prev
-        }
-
-        return prev + 1
-      })
-    }, 100)
-
-    return () => {
-      clearInterval(interval)
-    }
-
-  },[])
-
-  return (
-    <div>
-      <p>Waiting transfer transaction finished. This will take about several seconds...</p>
-      <Progress percent={progress} />
-    </div>
-  )
-}
-
-const MODAL_CONTENT = {
-  kitNotEnough: (
-    <Message> Choose at least a body, cloths, pants and background </Message>
-  ),
-  unconnectedToWallet: (
-    <Alert severity="error">This is an error alert — check it out!</Alert>
-
-  ),
-
-  checkStorage: (
-    <Message> Checking storage, please wait... </Message>
-  ),
-
-  nftLock : (
-    <Message>Oops, it seems that the nft is gone already</Message>
-  ),
-
-  transferComplete: (
-    <Message>
-      Create Complete!
-    </Message>
-  ),
-
-  waitForTransfer:(
-    <Dialog title={''} closeable>
-      <Message>
-        ✅ Please approve transfer transaction in your wallet
-      </Message>
-    </Dialog>
-  ),
-
-  waitForMinting: (
-    <Dialog title={'Infos'} closeable>
-      <Message> Start minting &nbsp; &nbsp; <ClipLoader  size={30} color={'white'}  /> </Message>
-    </Dialog>
-  ),
-
-  mintSuccess: (
-    <Dialog title={''} closeable>
-      <Message>
-        Transform successfully! Please wait for minting
-      </Message>
-    </Dialog>
-
-  ),
-  mintError: (
-    <Message>
-      There seems to be something wrong during loading metadata. <br />
-      {/*But don&apos;t worry, you can view you NFT in your wallet.*/}
-    </Message>
-  ),
-
-  opened: (
-    <>
-      So Hard
-    </>
-  )
-}
+type ExtractPromise<A> = A extends Promise<infer T> ? T : never
 
 const useNFTMint = () => {
-  const { account } = useSolanaWeb3()
-
-  const { openModal, closeModal } = useModal()
-
-  const { forceRefresh } = useRefreshController()
-
-  const { builtMint } = useCandyMachine()
-
-  const history = useHistory()
+  const { account, adapter } = useSolanaWeb3()
+  const { provider } = useAnchorProvider()
+  const { builtMintTransaction } = useCandyMachine()
 
   const [loading, setLoading] = useState<boolean>(false)
-
   const [message, setMessage] = useState<string>('')
+  const [remainTime, setRemainTime] = useState<number>()
 
   const { connection } = useConnectionConfig()
 
-  const mintNFT =  useCallback(
-    async (body: any, kit: NFTAttributesData[], mintKeypair: Keypair) => {
+  const [rawTransaction, setRawTransaction] = useState<Transaction>()
+  const [intervalId, setIntervalId] = useState<any>()
+  const [createResult, setCreateResult] = useState<ExtractPromise<ReturnType<typeof CONFT_API.core.nft.nftCreate>>>()
 
+  useEffect(() => {
+    if (!rawTransaction || !intervalId || !createResult || !account || remainTime === undefined) return
+
+    if (remainTime <= 0) {
+      setMessage('No time left. The transaction will not be sent')
+      setLoading(false)
+      return
+    }
+
+    clearInterval(intervalId)
+    setIntervalId(undefined)
+    connection.sendRawTransaction(rawTransaction.serialize())
+      .then(() => {
+        CONFT_API.core.nft.nftMint({ nft: createResult.nft, wallet: account.toBase58(), mintKey: createResult.mintKey })
+      })
+  }, [rawTransaction, remainTime, intervalId, createResult, account])
+
+  const mintNFT = useCallback(
+    async (body: NFTAttributesData, kit: NFTAttributesData[], mintKeypair: Keypair, minting?: Minting) => {
+      setMessage('')
       setLoading(true)
+
+      if (minting) {
+        if (!intervalId) setRemainTime(minting.mintRemainTime)
+
+        setCreateResult({
+          ...minting,
+          nft: minting.id,
+          remain: minting.mintRemainTime
+        })
+      }
 
       const components: number[] = []
 
@@ -153,16 +91,14 @@ const useNFTMint = () => {
       })
 
       if (!account) {
-        throw new Error(' Wallet unconnected ')
         setLoading(false)
-        return
+        throw new Error(' Wallet unconnected ')
       }
 
       const a = components.concat(body.id)
 
       if (a.length !== 8) {
         throw new Error(' Must choose all attributes ')
-        return
       }
 
       const solBalance = new BigNumber(await connection.getBalance(account))
@@ -175,24 +111,46 @@ const useNFTMint = () => {
 
       const secretKey = mintKeypair.secretKey
 
-      const end = false
-      const left = 0
-      const transaction = builtMint( mintKeypair, PainterCandyMachineAddress)
+      const { transaction, signers } = await builtMintTransaction(mintKeypair, PainterCandyMachineAddress)
 
-      console.log('transaction',transaction)
+      try {
+        if (!createResult && !minting) {
+          const createResult = await CONFT_API.core.nft.nftCreate({
+            series: 1024,
+            components: a,
+            wallet:account.toBase58(),
+            mintKey: mintKeypair.publicKey.toBase58(),
+            mintPrivateKey: Buffer.from(secretKey).toString('base64')
+          })
 
-      // CONFT_API.core.nft.nftCreate()
-      //   .then((leftTime: number) => {
-      //       left = leftTime
-      //       setInterval(() => { left >= 0 && left -= 1}, 1000)
-      //     setTimeout(() => { end = true }, leftTime)
-      //     return adapter.sign(tx)
-      //   })
-      //   .then(transaction => {
-      //     if (!end) {
-      //       connection.sendRawTransaction(transaction)
-      //     }
-      //   })
+          setCreateResult(createResult)
+          setRemainTime(createResult.remain)
+        }
+
+        if (!intervalId) {
+          const id = setInterval(() => {
+            setRemainTime(_prev => {
+              const prev = _prev as number
+
+              if (prev >= 1) return prev - 1
+
+              clearInterval(id)
+              return prev
+            })
+          }, 1000)
+
+          setIntervalId(id)
+        }
+
+        transaction.sign(...signers)
+
+        setRawTransaction(
+          await adapter?.signTransaction(transaction)
+        )
+      } catch (e: any) {
+        setLoading(false)
+        setMessage(`Failed to mint: ${e.toString()}`)
+      }
 
       //------------------------------------------------------
 
@@ -256,9 +214,10 @@ const useNFTMint = () => {
       //     )
       //   })
 
-    }, [account, connection]
+    }, [intervalId, account, connection, provider, createResult]
   )
-  return { mintNFT, loading, message }
+
+  return { mintNFT, loading, message, remainTime }
 }
 
 export default useNFTMint

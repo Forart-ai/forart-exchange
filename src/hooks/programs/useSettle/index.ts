@@ -1,10 +1,10 @@
 import useAnchorProvider from '../../useAnchorProvider'
 import { useCallback, useMemo } from 'react'
-import { Keypair, PublicKey, SystemProgram, Transaction, TransactionInstruction } from '@solana/web3.js'
-import { actions, programs, Wallet, NodeWallet } from '@metaplex/js'
+import { Keypair, PublicKey, Signer, SystemProgram, Transaction, TransactionInstruction } from '@solana/web3.js'
+import { programs } from '@metaplex/js'
 
 // @ts-ignore
-import  { getOrCreateAssociatedTokenAccount, TOKEN_PROGRAM_ID } from '@solana/spl-token'
+import { getOrCreateAssociatedTokenAccount, TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import { Program } from '@project-serum/anchor'
 import { ForartMintIDL } from './constant/idl'
 import { COLLECTION_ADDRESS, MINT_PROGRAM_ID, REWARD_TICKET_ATA, TICKET_MINT } from './constant'
@@ -44,8 +44,8 @@ const useSettle = () => {
     return new Program(ForartMintIDL, MINT_PROGRAM_ID, provider)
   }, [provider])
 
-  const settle = useCallback(
-    async (nftMint: PublicKey) => {
+  const buildSettleTransaction = useCallback(
+    async (nftMint: PublicKey): Promise<{ transaction: Transaction, signers: Signer[] }> => {
       const collection = COLLECTION_ADDRESS
       const nftOwner = program.provider.wallet.publicKey
       const ticketMint = TICKET_MINT
@@ -54,28 +54,45 @@ const useSettle = () => {
       let assetAta: PublicKey
       let ownerTicketAta: PublicKey
 
-      const tx = new Transaction({
-
+      const transaction = new Transaction({
+        feePayer: program.provider.wallet.publicKey,
+        recentBlockhash: (await program.provider.connection.getLatestBlockhash()).blockhash
       })
+      const signers: Signer[] = []
 
-      const [collectionSigner, ] = await PublicKey.findProgramAddress([Buffer.from('collection_signer'), collection.toBuffer()], program.programId)
-      const collectionInfo = await program.account.collection.fetch(collection)
+      const [collectionSigner, ] = await PublicKey.findProgramAddress(
+        [Buffer.from('collection_signer'), collection.toBuffer()],
+        program.programId
+      )
+
+      const collectionInfo = await program.account.collection.fetchNullable(collection)
       const assetMetadata = await programs.metadata.Metadata.findByMint(program.provider.connection, nftMint)
 
-      const getOrCreateOwnerTicketAta = (await getOrCreateTokenAccount(provider, ticketMint, nftOwner))
-      const getOrCreateAssetAta = (await getOrCreateTokenAccount(provider, nftMint, nftOwner))
+      if (!collectionInfo) throw new Error('Failed to fetch collection info')
+
+      const getOrCreateOwnerTicketAta = await getOrCreateTokenAccount(provider, ticketMint, nftOwner)
+      const getOrCreateAssetAta = await getOrCreateTokenAccount(provider, nftMint, nftOwner)
+
+      // const [asset,] = await PublicKey.findProgramAddress(
+      //   [
+      //     Buffer.from('asset'),
+      //     collection.toBuffer(),
+      //     Buffer.from(assetMetadata.data.data.name),
+      //   ],
+      //   program.programId
+      // )
 
       const [asset,] = await PublicKey.findProgramAddress(
         [
           Buffer.from('asset'),
           collection.toBuffer(),
-          Buffer.from(assetMetadata.data.data.name),
+          nftMint.toBuffer(),
         ],
         program.programId
       )
 
       if (!assetMetadata.data.data.creators) {
-        throw new Error()
+        throw new Error('Creators of NFT was not found')
       }
 
       const coplayer = new PublicKey(
@@ -84,22 +101,22 @@ const useSettle = () => {
 
       if ('instructions' in getOrCreateOwnerTicketAta) {
         ownerTicketAta = getOrCreateOwnerTicketAta.keypair.publicKey
-        tx.add(...getOrCreateOwnerTicketAta.instructions)
-        tx.sign(getOrCreateOwnerTicketAta.keypair)
+        transaction.add(...getOrCreateOwnerTicketAta.instructions)
+        signers.push(getOrCreateOwnerTicketAta.keypair)
       } else {
         ownerTicketAta = getOrCreateOwnerTicketAta.pubkey
       }
 
       if ('instructions' in getOrCreateAssetAta) {
         assetAta = getOrCreateAssetAta.keypair.publicKey
-        tx.add(...getOrCreateAssetAta.instructions)
-        tx.sign(getOrCreateAssetAta.keypair)
+        transaction.add(...getOrCreateAssetAta.instructions)
+        signers.push(getOrCreateAssetAta.keypair)
       } else {
         assetAta = getOrCreateAssetAta.pubkey
       }
 
-      tx.add(
-        await program.instruction.settle(assetMetadata.data.data.name, {
+      transaction.add(
+        await program.instruction.settle( {
           accounts: {
             collection, // refer to collection
             collectionSigner,// refer to collection
@@ -117,9 +134,14 @@ const useSettle = () => {
         })
       )
 
-      return tx
+      return { transaction, signers }
     },
     [provider],
   )
 
+  return {
+    buildSettleTransaction
+  }
 }
+
+export default useSettle

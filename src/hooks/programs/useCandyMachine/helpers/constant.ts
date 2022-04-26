@@ -3,13 +3,12 @@ import { Idl } from '@project-serum/anchor'
 
 const SOLANA_CLUSTER = (process.env.REACT_APP_SOLANA_CLUSTER) as Cluster
 const END_POINT = process.env.REACT_APP_SOLANA_END_POINT || clusterApiUrl(SOLANA_CLUSTER)
-const PAINTER_CANDY_MACHINE_ADDR = process.env.REACT_APP_CANDY_MACHINE_ADDR as string
+// const PAINTER_CANDY_MACHINE_ADDR = process.env.REACT_APP_CANDY_MACHINE_ADDR as string
 
 //devnet
-// const PAINTER_CANDY_MACHINE_ADDR ='AzyBxzWm3s4WZrh3MFksnDEPfSEfcTzKmDzt2L9L7ano'
+const PAINTER_CANDY_MACHINE_ADDR ='AzyBxzWm3s4WZrh3MFksnDEPfSEfcTzKmDzt2L9L7ano'
 const HYPETEEN_CANDY_MACHINE_ADDR = 'FaEuBjb9B6jN52y7uKBHVKu8eY8PkbH5Mq6L42TBFcEj'
-
-export const SolanaConnection = new Connection(END_POINT, { disableRetryOnRateLimit: true })
+const FAUCET_CANDY_MACHINE = '9Fx51FtgEkQwPQGdoe7kQvq1JFKqXUe3QKpkwnzwBcVH'
 
 export const CANDY_MACHINE_PROGRAM_IDL: Idl = require('../candy_machine_program_idl.json')
 
