@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import DefaultPageWrapper from '../../../../../components/default-page-wrapper'
 import { styled } from '@mui/material'
 import StageImage from '../../../../../assets/images/artistDetail/mint/stage.png'
@@ -11,6 +11,8 @@ import SmallBoxBlur1 from '../../../../../assets/images/artistDetail/mint/blur1.
 import SmallBoxBlur2 from '../../../../../assets/images/artistDetail/mint/blur2.png'
 import useOpenBlindBox from '../../../../../hooks/useOpenBlindBox'
 import { useGetOverview } from '../../../../../hooks/queries/useGetOverview'
+import Dialog from '../../../../../contexts/theme/components/Dialog/Dialog'
+import { useModal } from '../../../../../contexts/modal'
 
 const MintWrapper = styled('div')`
   position: relative;
@@ -116,9 +118,31 @@ const Operation = styled('div')`
   }
   
 `
+const BoxContainer = styled('div')`
+  min-height: 100px;
+  font-size: 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  font-family: Arial;
+
+`
+
+const MessageBox:React.FC<{ onNext?:(_?:any) => void}>= ({ onNext }) => {
+  const { openBlindBox } = useOpenBlindBox()
+
+  return (
+    <Dialog title={'Hypeteen Minting'} closeable={true}>
+      <BoxContainer>
+        <CustomizeButton onClick={openBlindBox }>Continue</CustomizeButton>
+      </BoxContainer>
+    </Dialog>
+  )
+}
 
 const HypeteenMintPage:React.FC = () => {
-  const { openBlindBox } = useOpenBlindBox()
+
+  const { openModal } = useModal()
   const { data: painterData } = useGetOverview(1024)
 
   return (
@@ -138,7 +162,7 @@ const HypeteenMintPage:React.FC = () => {
           <CustomizedProgressBars style={{ height:'30px' }}  percent={painterData?.minted}  />
           <p>{painterData?.minted} / 2000</p>
         </div>
-        <CustomizeButton onClick={ openBlindBox } color={'secondary'} variant={'contained'}>Mint</CustomizeButton>
+        <CustomizeButton onClick={ () => openModal(<MessageBox />) } color={'secondary'} variant={'contained'}>Mint</CustomizeButton>
       </Operation>
 
     </DefaultPageWrapper>

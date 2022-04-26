@@ -83,11 +83,6 @@ const useOpenBlindBox = () => {
   const { provider } = useAnchorProvider()
   const { connection } = useConnectionConfig()
   const { openModal, closeModal } = useModal()
-  const [nextStep, setNextStep] = useState<boolean>(false)
-
-  useEffect(() => {
-    console.log(nextStep)
-  },[nextStep])
 
   const openBlindBox = useCallback(
     async () => {
@@ -96,6 +91,7 @@ const useOpenBlindBox = () => {
       openModal(<MessageBox content={MODAL_CONTENT.ready} />)
 
       const mint = Keypair.generate()
+
       await mintFromCandyMachine(program, mint, HypeteenCandyMachineAddress)
         .then(() =>  openModal(<MessageBox content={MODAL_CONTENT.mintFinished} />))
         .catch(err => openModal(<MessageBox closable={true} content={err.toString()} />))
@@ -125,7 +121,7 @@ const useOpenBlindBox = () => {
         })
         .catch(err => openModal(<MessageBox closable={true} content={err.toString()} />))
 
-    },[program, provider, adapter, buildSettleTransaction, builtMintTransaction, nextStep, setNextStep]
+    },[program, provider, adapter, buildSettleTransaction, builtMintTransaction ]
   )
 
   return { openBlindBox }
