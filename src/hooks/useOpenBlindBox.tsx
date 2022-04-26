@@ -48,15 +48,14 @@ const MODAL_CONTENT = {
   ready: (
     <Message>
       <div className={'row'}>
-        There will be <strong>TWO</strong> transactions in total,
+        Requesting the wallet transaction, it&apos;ll take secs..
       </div>
-      <div>Each HypeTeen mint needs 1 SOL and will be airdropped 1 WL of Painter NFT</div>
       <SyncLoader size={14} color={'#ffffff'} />
     </Message>
   ),
 
   mintFinished: (
-    <Message>Requesting the wallet transaction, it&apos;ll take secs..</Message>
+    <Message>Mint successfully, please wait for the second transaction...</Message>
   ),
 
   tokenGiven: (

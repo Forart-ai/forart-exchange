@@ -120,11 +120,18 @@ const Operation = styled('div')`
 `
 const BoxContainer = styled('div')`
   min-height: 100px;
-  font-size: 20px;
-  color: white;
+ 
   display: flex;
   align-items: center;
+  flex-direction: column;
+  justify-content: center;
   font-family: Arial;
+  
+  .message {
+    font-size: 20px;
+    color: white;
+    margin-bottom: 20px;
+  }
 
 `
 
@@ -134,7 +141,8 @@ const MessageBox:React.FC<{ onNext?:(_?:any) => void}>= ({ onNext }) => {
   return (
     <Dialog title={'Hypeteen Minting'} closeable={true}>
       <BoxContainer>
-        <CustomizeButton onClick={openBlindBox }>Continue</CustomizeButton>
+        <div className={'message'}>Each HypeTeen mint needs 1 SOL and will be airdropped 1 WL of Painter NFT</div>
+        <CustomizeButton variant={'contained'} onClick={openBlindBox }>Continue</CustomizeButton>
       </BoxContainer>
     </Dialog>
   )
