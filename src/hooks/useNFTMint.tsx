@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import CONFT_API from '../apis/co-nft'
 import { useHistory } from 'react-router-dom'
 import { NFTAttributesData } from '../types/coNFT'
-import { Alert } from '@mui/material'
+import { Alert, Box } from '@mui/material'
 import { Keypair, LAMPORTS_PER_SOL, Transaction } from '@solana/web3.js'
 import useCandyMachine from './programs/useCandyMachine'
 import Dialog from '../contexts/theme/components/Dialog/Dialog'
@@ -17,6 +17,7 @@ import BigNumber from 'bignumber.js'
 import { PainterCandyMachineAddress } from './programs/useCandyMachine/helpers/constant'
 import useAnchorProvider from './useAnchorProvider'
 import { Minting } from './useStorageCheck'
+import CustomizeButton from '../contexts/theme/components/Button'
 
 const TRANSACTION_FEE = new BigNumber('5000' )
 
@@ -35,10 +36,34 @@ const Message = styled.div`
 
 type ExtractPromise<A> = A extends Promise<infer T> ? T : never
 
+const MintSuccessDialog = () => {
+  const { closeModal } = useModal()
+  const history = useHistory()
+
+  return (
+    <Dialog title={'Congratulations!'} closeable>
+      <Message>Mint successfully</Message>
+      <Box sx={{ width:'100%', display:'flex', justifyContent:'center', marginTop:'30px' }}>
+        <CustomizeButton variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
+        <CustomizeButton
+          variant={'contained'}
+          color={'secondary'}
+          onClick={() => {
+            history.push('/account')
+            closeModal()
+          }}
+        > Personal space
+        </CustomizeButton>
+      </Box>
+    </Dialog>
+  )
+}
+
 const useNFTMint = () => {
   const { account, adapter } = useSolanaWeb3()
   const { provider } = useAnchorProvider()
   const { builtMintTransaction } = useCandyMachine()
+  const { openModal, closeModal } = useModal()
 
   const [loading, setLoading] = useState<boolean>(false)
   const [message, setMessage] = useState<string>('')
@@ -49,6 +74,7 @@ const useNFTMint = () => {
   const [rawTransaction, setRawTransaction] = useState<Transaction>()
   const [intervalId, setIntervalId] = useState<any>()
   const [createResult, setCreateResult] = useState<ExtractPromise<ReturnType<typeof CONFT_API.core.nft.nftCreate>>>()
+  const [createdMint, setCreatedMint] = useState<Keypair>()
 
   useEffect(() => {
     if (!rawTransaction || !intervalId || !createResult || !account || remainTime === undefined) return
@@ -59,45 +85,35 @@ const useNFTMint = () => {
       return
     }
 
-    clearInterval(intervalId)
-    setIntervalId(undefined)
+    console.log('connection.sendRawTransaction(rawTransaction.serialize())\n')
     connection.sendRawTransaction(rawTransaction.serialize())
-      .then(() => {
-        CONFT_API.core.nft.nftMint({ nft: createResult.nft, wallet: account.toBase58(), mintKey: createResult.mintKey })
+      .then(signature => {
+        console.log('sendRawTransaction callback: ', signature)
+        clearInterval(intervalId)
+        setIntervalId(undefined)
+        return CONFT_API.core.nft.nftMint({ nft: createResult.nft, wallet: account.toBase58(), mintKey: createResult.mintKey })
+      })
+      .then(() => openModal(<MintSuccessDialog />))
+      .catch(e => {
+        setLoading(false)
+        setMessage(e.toString())
+        setRawTransaction(undefined)
       })
   }, [rawTransaction, remainTime, intervalId, createResult, account])
 
   const mintNFT = useCallback(
-    async (body: NFTAttributesData, kit: NFTAttributesData[], mintKeypair: Keypair, minting?: Minting) => {
+    async (body: NFTAttributesData, kit: NFTAttributesData[], minting?: Minting) => {
       setMessage('')
       setLoading(true)
 
-      if (minting) {
-        if (!intervalId) setRemainTime(minting.mintRemainTime)
-
-        setCreateResult({
-          ...minting,
-          nft: minting.id,
-          remain: minting.mintRemainTime
-        })
-      }
-
-      const components: number[] = []
-
-      kit.map(item => {
-        if (item) {
-          components.push(item?.id)
-        }
-      })
-
+      /* pre-check */
       if (!account) {
         setLoading(false)
         throw new Error(' Wallet unconnected ')
       }
 
-      const a = components.concat(body.id)
-
-      if (a.length !== 8) {
+      const components = kit.filter(o => !!o).map(o => o.id).concat(body.id)
+      if (components.length !== 8) {
         throw new Error(' Must choose all attributes ')
       }
 
@@ -108,21 +124,40 @@ const useNFTMint = () => {
         setLoading(false)
         return
       }
+      /* pre-check */
 
-      const secretKey = mintKeypair.secretKey
+      /* re-enter check */
+      if (minting) {
+        if (!intervalId) setRemainTime(minting.mintRemainTime)
+
+        setCreateResult({
+          ...minting,
+          nft: minting.id,
+          remain: minting.mintRemainTime
+        })
+      }
+      /* re-enter check */
+
+      const mintKeypair = minting
+        ? Keypair.fromSecretKey(new Buffer(minting.mintPrivateKey, 'base64'))
+        : (
+          createdMint || Keypair.generate()
+        )
 
       const { transaction, signers } = await builtMintTransaction(mintKeypair, PainterCandyMachineAddress)
 
       try {
+        // is NOT re-enter
         if (!createResult && !minting) {
           const createResult = await CONFT_API.core.nft.nftCreate({
             series: 1024,
-            components: a,
-            wallet:account.toBase58(),
+            components,
+            wallet: account.toBase58(),
             mintKey: mintKeypair.publicKey.toBase58(),
-            mintPrivateKey: Buffer.from(secretKey).toString('base64')
+            mintPrivateKey: Buffer.from(mintKeypair.secretKey).toString('base64')
           })
 
+          setCreatedMint(mintKeypair)
           setCreateResult(createResult)
           setRemainTime(createResult.remain)
         }
@@ -151,70 +186,7 @@ const useNFTMint = () => {
         setLoading(false)
         setMessage(`Failed to mint: ${e.toString()}`)
       }
-
-      //------------------------------------------------------
-
-      // await CONFT_API.core.nft.nftCreate({ series: 1024, components: a, wallet:account.toBase58(), mintKey: mintKeypair.publicKey.toBase58(), mintPrivateKey: Buffer.from(secretKey).toString('base64') }).then((res:any) => {
-      //   console.log(res)
-      //   setMessage('✅ Please approve transfer transaction in your wallet')
-      //   mint(mintKeypair)
-      //     .then(async _signature => {
-      //       console.log(mintKeypair.publicKey.toBase58(), _signature)
-      //       setMessage(' Transaction sent successfully! Please wait for confirming')
-      //       return connection.confirmTransaction(_signature)
-      //     })
-      //     .then(() => {
-      //       setLoading(false)
-      //       setMessage(' Transaction confirmed. The NFT has been mint ')
-      //     })
-      //     .then(() => {
-      //       CONFT_API.core.nft.nftMint({ nft: res.nft, wallet: account.toBase58(), mintKey: mintKeypair.publicKey.toBase58() })
-      //         .then(() =>sleep(1500))
-      //         .then(()=>forceRefresh)
-      //         .then(() =>   {
-      //           openModal(
-      //             <Dialog title={'Congratulations!'} closeable  >
-      //               <Message>Mint successfully</Message>
-      //               <Box sx={{ width:'100%', display:'flex', justifyContent:'center', marginTop:'30px' }}>
-      //                 <CustomizeButton variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
-      //                 <CustomizeButton variant={'contained'}
-      //                   color={'secondary'}
-      //                   onClick={() => {
-      //                     history.push('/account')
-      //                     closeModal()
-      //                   }}
-      //                 > Personal space
-      //                 </CustomizeButton>
-      //               </Box>
-      //             </Dialog>
-      //           )
-      //         })
-      //     })
-      //     .catch(err => {
-      //
-      //       openModal(
-      //         // <Dialog title={'Oops, Something is wrong'} closeable>
-      //         //   <Message>Mint Failed: {err.message || err.toString()}</Message>
-      //         // </Dialog>
-      //         <Dialog title={'Congratulations!'} closeable  >
-      //           <Message>Mint successfully</Message>
-      //           <CustomizeButton variant={'contained'} color={'secondary'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
-      //           <CustomizeButton variant={'contained'} onClick={() => history.push('/account')}> Personal space</CustomizeButton>
-      //         </Dialog>
-      //       )
-      //       setLoading(false)
-      //
-      //     })
-      // })
-      //   .catch(er => {
-      //     openModal(
-      //       <Dialog title={'Oops, Something is wrong'} closeable>
-      //         <Message>Mint Failed: {er.message || er.toString()}</Message>
-      //       </Dialog>
-      //     )
-      //   })
-
-    }, [intervalId, account, connection, provider, createResult]
+    }, [intervalId, account, connection, provider, createResult, createdMint]
   )
 
   return { mintNFT, loading, message, remainTime }

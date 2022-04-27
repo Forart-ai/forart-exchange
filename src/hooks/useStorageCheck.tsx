@@ -16,7 +16,6 @@ import { NFTAttributesData } from '../types/coNFT'
 import { Keypair } from '@solana/web3.js'
 import { useRefreshController } from '../contexts/refresh-controller'
 import { useHistory } from 'react-router-dom'
-import { PainterCandyMachineAddress } from './programs/useCandyMachine/helpers/constant'
 import AttrReviewDialog from '../pages/coNft/components/modals/create/attr-review'
 
 export interface Minting {
@@ -98,7 +97,6 @@ const MintItem: React.FC<{ minting: Minting }> = ({ minting }) => {
   const { connection } = useConnectionConfig()
   const history = useHistory()
   const { openModal, closeModal } = useModal()
-  const { mintNFT } = useNFTMint()
 
   const [body, setBody] = useState<NFTAttributesData>()
   const [attr, setAttr] = useState<NFTAttributesData[]>()
@@ -122,6 +120,7 @@ const MintItem: React.FC<{ minting: Minting }> = ({ minting }) => {
   const check = useCallback(
     async () => {
       const keypair = Keypair.fromSecretKey(new Buffer(minting.mintPrivateKey, 'base64'))
+      console.log(keypair)
       const account = await connection.getParsedAccountInfo(keypair.publicKey)
 
       if (!account.value) {
@@ -176,55 +175,22 @@ const MintItem: React.FC<{ minting: Minting }> = ({ minting }) => {
   const handleMint = useCallback(
     () => {
       if (!body || !attr || !minting) return
+      console.log(minting)
 
       openModal(
         <AttrReviewDialog
           body={body}
           attr={attr}
           minting={minting}
-          keypair={Keypair.fromSecretKey(new Buffer(minting.mintPrivateKey, 'base64'))}
         />
       )
 
-      // return mintNFT(
-      //   body,
-      //   attr,
-      //   ,
-      //   minting
-      // )
-
-      // const keypair = Keypair.fromSecretKey(new Buffer(item.mintPrivateKey, 'base64'))
-      //
-      // builtMint(keypair, PainterCandyMachineAddress)
-      //   .then(async _signature => {
-      //     return connection.confirmTransaction(_signature)
-      //   })
-      //   .then(() => {
-      //     setMessage('Start minting, Please wait for a moment.')
-      //     CONFT_API.core.nft.nftMint({ nft: item.id, wallet: item.mintWallet, mintKey: item.mintKey })
-      //       .then(() =>sleep(1500))
-      //       .then(() => {
-      //         setMessage('Start minting, you can see your nft in your wallet.')
-      //         openModal(
-      //           <Dialog title={'Congratulations!'} closeable  >
-      //             <Message>Mint successfully!</Message>
-      //             <Box sx={{ width:'100%', display:'flex', justifyContent:'space-around', marginTop:'30px' }}>
-      //               <CustomizeButton style={{ margin:'10px' }} variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
-      //               <CustomizeButton style={{ margin:'10px' }} variant={'contained'}  color={'secondary'} onClick={() => {history.push('/account'); closeModal()}}> Personal space</CustomizeButton>
-      //             </Box>
-      //           </Dialog>
-      //         )
-      //       })
-      //
-      //   })
-      //   .catch(console.error)
-
-    },[mintNFT, body, attr, minting])
+    }, [body, attr, minting])
 
   return (
     <Dialog title={'An unprocessed mint was detected'} closeable >
       <Content>
-        <span>Please give priority to this order</span>
+        <span>Please give priority to this order, or wait {minting?.mintRemainTime} seconds to release stock </span>
         <div>
           <Row >
             <PreviewArea>
@@ -232,7 +198,7 @@ const MintItem: React.FC<{ minting: Minting }> = ({ minting }) => {
             </PreviewArea>
 
             <div className={'operation'}>
-              <CustomizeButton style={{ backgroundColor:'#e53935' }} onClick={() => giveUp()}  variant={'contained'}>Give up</CustomizeButton>
+              {/*<CustomizeButton style={{ backgroundColor:'#e53935' }} onClick={() => giveUp()}  variant={'contained'}>Give up</CustomizeButton>*/}
               <CustomizeButton  onClick={() =>handleMint()} variant={'contained'}>Pay</CustomizeButton>
               <CustomizeButton onClick={() =>check()} color={'secondary'} variant={'contained'} disabled={notExisted}>I have purchased</CustomizeButton>
             </div>

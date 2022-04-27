@@ -6,10 +6,10 @@ import { GetNftRequest } from '../contract/service/exchange/types'
 
 export const useMintResultQuery = (params: GetNftRequest): UseQueryResult<any> => {
   const { account } = useSolanaWeb3()
-  const { quietRefreshFlag } = useRefreshController()
+  const { slowRefreshFlag } = useRefreshController()
 
   return useQuery(
-    ['MintResult', account, quietRefreshFlag, params],
+    ['MintResult', account, slowRefreshFlag, params],
     () => {
       if (!account) {
         return undefined

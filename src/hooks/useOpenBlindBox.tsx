@@ -3,7 +3,7 @@ import React from 'react'
 import useCandyMachine from './programs/useCandyMachine'
 import { mint as mintFromCandyMachine } from './programs/useCandyMachine/helpers/mint'
 import useSettle from './programs/useSettle'
-import { Keypair } from '@solana/web3.js'
+import { Keypair, PublicKey } from '@solana/web3.js'
 import { HypeteenCandyMachineAddress } from './programs/useCandyMachine/helpers/constant'
 import { useSolanaWeb3 } from '../contexts/solana-web3'
 import { useConnectionConfig } from '../contexts/solana-connection-config'
@@ -11,10 +11,11 @@ import useAnchorProvider from './useAnchorProvider'
 import { loadMetadata, MetadataResult } from '../utils/metaplex/metadata'
 import CONFT_API from '../apis/co-nft'
 import Dialog from '../contexts/theme/components/Dialog/Dialog'
-import { styled } from '@mui/material'
+import {  styled } from '@mui/material'
 import { useModal } from '../contexts/modal'
 import { SyncLoader } from 'react-spinners'
 import CustomizeButton from '../contexts/theme/components/Button'
+import { Link, useHistory } from 'react-router-dom'
 
 const BoxContainer = styled('div')`
   min-height: 100px;
@@ -43,6 +44,25 @@ const Message = styled('div')`
   }
 `
 
+const ImageContainer = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 400px;
+  
+  img {
+    width: 80%;
+    border-radius: 20px;
+    margin: 20px 0;
+  }
+  
+  .button {
+    display: flex;
+    justify-content: space-around;
+  }
+`
+
 const MODAL_CONTENT = {
 
   ready: (
@@ -55,12 +75,12 @@ const MODAL_CONTENT = {
   ),
 
   mintFinished: (
-    <Message>Mint successfully, please wait for the second transaction...</Message>
+    <Message>Mint successfully, WL airdrop is ongoing, please click approve in your wallet </Message>
   ),
 
   tokenGiven: (
     <Message>
-      <div className={'row'}>WL airdrop is ongoing, please click  Approve </div>
+      <div className={'row'}>Success!</div>
       <div>The dialog will automatically close after 3 seconds</div>
     </Message>
   ),
@@ -71,6 +91,27 @@ const MessageBox:React.FC<{ content : typeof MODAL_CONTENT[keyof typeof MODAL_CO
     <Dialog title={'Hypeteen Minting'} closeable={closable}>
       <BoxContainer>{content}</BoxContainer>
       {/*<CustomizeButton onClick={() => onNext && onNext(true) }>Continue</CustomizeButton>*/}
+    </Dialog>
+  )
+}
+
+const MetaDataContainer:React.FC<{metadata: MetadataResult}> = ({ metadata }) => {
+  const history = useHistory()
+
+  const toNftDetail = (mint?:string) => {
+    history.push(`/nft-detail?mint=${mint}`)
+  }
+  return (
+    <Dialog title={'New Hypeteen NFT'} closeable>
+      <ImageContainer>
+        <img src={metadata?.data?.image} />
+        <div className={'button'}>
+          <CustomizeButton onClick={() => toNftDetail(metadata.mint.toBase58())} variant={'contained'}>View Hypeteen Detail</CustomizeButton>
+          <a href={`https://solscan.io/token/${metadata?.mint.toBase58()}?cluster=devnet`} target={'_blank'} rel="noreferrer">
+            <CustomizeButton color={'secondary'} variant={'contained'}>View on Solscan</CustomizeButton>
+          </a>
+        </div>
+      </ImageContainer>
     </Dialog>
   )
 }
@@ -91,15 +132,20 @@ const useOpenBlindBox = () => {
 
       const mint = Keypair.generate()
 
-      await mintFromCandyMachine(program, mint, HypeteenCandyMachineAddress)
-        .then(() =>  openModal(<MessageBox content={MODAL_CONTENT.mintFinished} />))
-        .catch(err => openModal(<MessageBox closable={true} content={err.toString()} />))
+      const mintSignatureOrError = await mintFromCandyMachine(program, mint, HypeteenCandyMachineAddress)
+        .catch(err => new Error(err))
 
-      const metaData:MetadataResult | undefined  = await loadMetadata(connection, mint.publicKey)
+      if (typeof mintSignatureOrError === 'string') {
+        openModal(<MessageBox content={MODAL_CONTENT.mintFinished} />)
+        await connection.confirmTransaction(mintSignatureOrError)
+      } else {
+        return openModal(<MessageBox closable={true} content={mintSignatureOrError.toString()} />)
+      }
+
+      const metaData:MetadataResult | undefined = await loadMetadata(connection, mint.publicKey)
 
       if (!metaData?.data) {
-        console.log('no metadata')
-        return
+        return openModal(<MessageBox closable={true} content={'Error: NFT metadata not found'} />)
       }
 
       await CONFT_API.core.nft.nftMint({
@@ -111,14 +157,18 @@ const useOpenBlindBox = () => {
         console.log(res, 'alert success')
       })
 
+      console.log(metaData)
+
       const { transaction: settleTransaction, signers: settleSigners } = await buildSettleTransaction(mint.publicKey)
 
       await provider.send(settleTransaction, settleSigners)
         .then(() => {
-          openModal(<MessageBox content={MODAL_CONTENT.tokenGiven} />)
-          setTimeout(closeModal, 3000)
+          openModal(<MetaDataContainer metadata={metaData} />)
         })
-        .catch(err => openModal(<MessageBox closable={true} content={err.toString()} />))
+        .catch(err => {
+          console.error(err)
+          openModal(<MessageBox closable={true} content={err.toString()} />)
+        })
 
     },[program, provider, adapter, buildSettleTransaction, builtMintTransaction ]
   )

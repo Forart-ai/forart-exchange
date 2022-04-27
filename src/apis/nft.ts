@@ -1,5 +1,6 @@
 import forartRequest, { ForartApiPagingData, ForartApiResponseBody } from '../utils/request'
 import { NFTDetail, NftListItem } from '../types/NFTDetail'
+import { Service } from './service'
 
 export type ChainType = 'Ethereum' | 'Solana' | ''
 
@@ -51,30 +52,26 @@ export type ForartPersonalNftListQueryParams = {
 }
 
 export function createNFT(data: NftCreateForm) {
-  return forartRequest.post<ForartApiResponseBody<any>>('/marketplace/nft/create/', data)
+  return Service.post<ForartApiResponseBody<any>>('/marketplace/nft/create/', data)
 }
 
 export function forartNftList(data: ForartNftListQueryParams) {
-  return forartRequest.post<ForartApiResponseBody<ForartApiPagingData<NftListItem>>>('/marketplace/nft/query/list', data)
+  return Service.post<ForartApiResponseBody<ForartApiPagingData<NftListItem>>>('/marketplace/nft/query/list', data)
 }
 
 export function forartNftDetail(data: NFTDetailQueryRequest) {
-  return forartRequest.post<ForartApiResponseBody<NFTDetail>>('/marketplace/nft/detail', data)
+  return Service.post<ForartApiResponseBody<NFTDetail>>('/marketplace/nft/detail', data)
 }
 
 export function getNftFavoriteCount(uri: any) {
-  return forartRequest.get< ForartApiResponseBody<any>>(`/marketplace/view/info/${uri}`)
-}
-
-export function personalNftList(data: ForartPersonalNftListQueryParams) {
-  return forartRequest.post<ForartApiResponseBody<any>>('/marketplace/nft/personal/list', data)
+  return Service.get< ForartApiResponseBody<any>>(`/marketplace/view/info/${uri}`)
 }
 
 // type: 0 => style; 1 => content
 export function getContentList(type: number) {
-  return forartRequest.get<ForartApiResponseBody<any>>(`/style/list/${type}`)
+  return Service.get<ForartApiResponseBody<any>>(`/style/list/${type}`)
 }
 
 export function setNftFavorite(uri: string | undefined) {
-  return forartRequest.get<ForartApiResponseBody<any>>(`/marketplace/view/favorite/${uri}`)
+  return Service.get<ForartApiResponseBody<any>>(`/marketplace/view/favorite/${uri}`)
 }

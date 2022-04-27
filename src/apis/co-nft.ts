@@ -49,6 +49,9 @@ const CONFT_API = {
       },
       getUserMinting(wallet?: string) {
         return Service.get(`nft/minting/${wallet}`)
+      },
+      getUserCredit(wallet?: string) {
+        return Service.get(`credits/${wallet}`)
       }
 
     },

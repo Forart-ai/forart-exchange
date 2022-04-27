@@ -1,6 +1,9 @@
 import { NFTCreateForm } from '../pages/nftCreate'
 import { NFTMetadata } from '../types/NFTMetadatas'
 import { getUriByIpfsHash, pinFileToIPFS } from './ipfs'
+import { connection } from '@project-serum/common'
+import { AccountInfo, Connection, ParsedAccountData, PublicKey } from '@solana/web3.js'
+import { WHITELIST_TOKEN_ADDRESS } from '../hooks/programs/useWhiteList/constant'
 
 export function generateNftMetadata(form: NFTCreateForm): NFTMetadata {
   const { artworkName, briefIntroduction, assetIpfsHash } = form
@@ -58,3 +61,17 @@ export const b64toBlob = (b64Data: string, contentType='', sliceSize= 512) => {
   return blob
 }
 
+export const getBalanceLargestTokenAccount = async (connection: Connection, mint: PublicKey, owner: PublicKey): Promise<{
+  pubkey: PublicKey;
+  account: AccountInfo<ParsedAccountData>;
+} | undefined>=> {
+  const tokenAccounts = (await connection.getParsedTokenAccountsByOwner(owner, { mint })).value
+
+  if (!tokenAccounts.length) return undefined
+
+  const getAmount = (account: AccountInfo<ParsedAccountData>) => account.data.parsed.info.tokenAmount.uiAmount
+
+  tokenAccounts.sort((a, b) => getAmount(b.account) - getAmount(a.account))
+
+  return tokenAccounts[0]
+}

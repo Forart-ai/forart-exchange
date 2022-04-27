@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useWhiteList } from '../../../../../hooks/programs/useWhiteList'
+import { useWhiteListQuery } from '../../../../../hooks/programs/useWhiteList'
 import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
 import CharacterCustomize from '../../../../personal/modules/characterCustomize'
 import { NFTAttributesData } from '../../../../../types/coNFT'
@@ -29,17 +29,13 @@ const Operation = styled('div')`
 `
 
 const IdentifyCreate: React.FC = () => {
-  const { checkWhiteList }  = useWhiteList()
-
-  const { data, isFetching, error } = checkWhiteList
+  const { data, isFetching, error }  = useWhiteListQuery()
 
   const { openModal } = useModal()
 
   useStorageCheck()
 
   const { account } = useSolanaWeb3()
-
-  const [mintChance, setMintChance] = useState<number | undefined>(undefined)
 
   const [body, setBody] = useState<NFTAttributesData>()
 

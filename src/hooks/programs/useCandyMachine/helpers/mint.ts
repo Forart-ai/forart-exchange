@@ -21,7 +21,7 @@ import { createAssociatedTokenAccountInstruction } from './instructions'
 import { sendTransaction } from './transactions'
 import { TOKEN_METADATA_PROGRAM_ID } from './constant'
 
-export async function mint(program: Program, mint: Keypair, candyMachineAddress: PublicKey): Promise<any> {
+export async function mint(program: Program, mint: Keypair, candyMachineAddress: PublicKey): Promise<string> {
   const minterPublicKey = program.provider.wallet.publicKey
   const toPublicKey = program.provider.wallet.publicKey
 

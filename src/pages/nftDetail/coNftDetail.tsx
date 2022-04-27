@@ -289,7 +289,7 @@ const CONFTDetail:React.FC = () => {
                 </div>
               </SeriesTitle>
               <Rainbow>
-                <span>Owned by:</span>
+                <span>Co-Creator:</span>
                 {
                   !isMobile ?  <div className="wallet">{nftDetail?.wallet}</div> :  <div className="wallet">{shortenAddress(nftDetail?.wallet)}</div>
                 }

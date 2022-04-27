@@ -1,5 +1,5 @@
 export type ForartMint = {
-  'version': '0.1.0',
+  'version': '0.0.0',
   'name': 'forart_mint',
   'instructions': [
     {
@@ -47,6 +47,41 @@ export type ForartMint = {
         {
           'name': 'platformAmount',
           'type': 'u64'
+        }
+      ]
+    },
+    {
+      'name': 'init',
+      'accounts': [
+        {
+          'name': 'collection',
+          'isMut': false,
+          'isSigner': false
+        },
+        {
+          'name': 'asset',
+          'isMut': true,
+          'isSigner': false
+        },
+        {
+          'name': 'authority',
+          'isMut': true,
+          'isSigner': true
+        },
+        {
+          'name': 'systemProgram',
+          'isMut': false,
+          'isSigner': false
+        }
+      ],
+      'args': [
+        {
+          'name': 'name',
+          'type': 'string'
+        },
+        {
+          'name': 'coplayer',
+          'type': 'publicKey'
         }
       ]
     },
@@ -160,34 +195,44 @@ export type ForartMint = {
         'kind': 'struct',
         'fields': [
           {
+            'name': 'coplayer',
+            'type': 'publicKey'
+          },
+          {
             'name': 'bump',
             'type': 'u8'
+          },
+          {
+            'name': 'used',
+            'type': 'bool'
           }
         ]
       }
     }
   ],
-  'errors': [
+  'types': [
     {
-      'code': 6000,
-      'name': 'InvalidNFTAta',
-      'msg': 'invalid NFT ata'
-    },
-    {
-      'code': 6001,
-      'name': 'InvalidNFTMeta',
-      'msg': 'invalid NFT meta'
-    },
-    {
-      'code': 6002,
-      'name': 'InvalidCoplayer',
-      'msg': 'invalid coplayer'
+      'name': 'ErrorCode',
+      'type': {
+        'kind': 'enum',
+        'variants': [
+          {
+            'name': 'InvalidNFTAta'
+          },
+          {
+            'name': 'InvalidNFTMeta'
+          },
+          {
+            'name': 'InvalidCoplayer'
+          }
+        ]
+      }
     }
   ]
 };
 
 export const ForartMintIDL: ForartMint = {
-  'version': '0.1.0',
+  'version': '0.0.0',
   'name': 'forart_mint',
   'instructions': [
     {
@@ -235,6 +280,41 @@ export const ForartMintIDL: ForartMint = {
         {
           'name': 'platformAmount',
           'type': 'u64'
+        }
+      ]
+    },
+    {
+      'name': 'init',
+      'accounts': [
+        {
+          'name': 'collection',
+          'isMut': false,
+          'isSigner': false
+        },
+        {
+          'name': 'asset',
+          'isMut': true,
+          'isSigner': false
+        },
+        {
+          'name': 'authority',
+          'isMut': true,
+          'isSigner': true
+        },
+        {
+          'name': 'systemProgram',
+          'isMut': false,
+          'isSigner': false
+        }
+      ],
+      'args': [
+        {
+          'name': 'name',
+          'type': 'string'
+        },
+        {
+          'name': 'coplayer',
+          'type': 'publicKey'
         }
       ]
     },
@@ -348,28 +428,38 @@ export const ForartMintIDL: ForartMint = {
         'kind': 'struct',
         'fields': [
           {
+            'name': 'coplayer',
+            'type': 'publicKey'
+          },
+          {
             'name': 'bump',
             'type': 'u8'
+          },
+          {
+            'name': 'used',
+            'type': 'bool'
           }
         ]
       }
     }
   ],
-  'errors': [
+  'types': [
     {
-      'code': 6000,
-      'name': 'InvalidNFTAta',
-      'msg': 'invalid NFT ata'
-    },
-    {
-      'code': 6001,
-      'name': 'InvalidNFTMeta',
-      'msg': 'invalid NFT meta'
-    },
-    {
-      'code': 6002,
-      'name': 'InvalidCoplayer',
-      'msg': 'invalid coplayer'
+      'name': 'ErrorCode',
+      'type': {
+        'kind': 'enum',
+        'variants': [
+          {
+            'name': 'InvalidNFTAta'
+          },
+          {
+            'name': 'InvalidNFTMeta'
+          },
+          {
+            'name': 'InvalidCoplayer'
+          }
+        ]
+      }
     }
   ]
 }

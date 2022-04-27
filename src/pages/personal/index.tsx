@@ -3,8 +3,6 @@ import React, { useState } from 'react'
 import { Empty, TabPaneProps } from 'antd'
 import { useWeb3React } from '@web3-react/core'
 import { shortenAddress } from '../../utils'
-import { usePersonalNFTsQuery } from '../../hooks/queries/usePersonalNFTsQuery'
-import { ChainType } from '../../apis/nft'
 import NFTListItem from '../../components/NFTListItem'
 import { NftListItem } from '../../types/NFTDetail'
 import { useMintResultQuery } from '../../hooks/queries/useMintResultQuery'
@@ -22,6 +20,7 @@ import Identity from './modules/identity'
 import SettingIcon from '../../assets/images/siderIcon/setting.svg'
 import { useModal } from '../../contexts/modal'
 import UserProfileSetting from './components/user-profile-setting'
+import { useUserCredit } from '../../hooks/queries/useUserCredit'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -103,6 +102,12 @@ const UserInfo = styled('div')`
   align-items: center;
   position: relative;
   bottom: -50%;
+  
+  .amount {
+    color: ${({ theme }) => theme.palette.primary.main};
+    font-size: 18px;
+    font-family: Aldrich-Regular;
+  }
 
   .avatar {
     width: 128px;
@@ -224,20 +229,11 @@ const StyledTab = styled((props: StyledTabProps) => (
 }))
 
 const TabsContainer: React.FC = () => {
-  const { account } = useWeb3React()
-
   const { account: SolAccount } = useSolanaWeb3()
-
-  const [current] = useState<number>(1)
-  const [searchKey] = useState<any>()
 
   const theme = useTheme()
 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-
-  const [typeChain] = useState<ChainType>('Ethereum')
-
-  const { data: personalNft } = usePersonalNFTsQuery({ current, searchKey, typeChain, account })
 
   const { data: mintedNft } = useMintResultQuery({ wallet: SolAccount?.toBase58(), nft:'' } )
 
@@ -304,7 +300,7 @@ const PersonalCenterPage: React.FC = () => {
 
   const { account } = useSolanaWeb3()
 
-  const { openModal } = useModal()
+  const { data: credit } = useUserCredit()
 
   return (
     <Wrapper>
@@ -326,10 +322,11 @@ const PersonalCenterPage: React.FC = () => {
               <div className={'avatar'}>
                 <img src={AvatarIcon} />
               </div>
-              <div className="username">Painter
+              <div className="username">DePainter
                 {/*<img src={SettingIcon} onClick={() => openModal(<UserProfileSetting />)} /> */}
               </div>
               <div className="address">{ shortenAddress(account?.toString()) }</div>
+              <div className="amount">$FTA: {credit?.retain ?? '0'}</div>
             </UserInfo>
           </DataColumn>
 

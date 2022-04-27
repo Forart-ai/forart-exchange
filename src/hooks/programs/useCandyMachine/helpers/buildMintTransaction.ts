@@ -11,9 +11,10 @@ import {
 import { getAtaForMint, getCandyMachineCreator, getMasterEdition, getMetadata, getTokenWallet } from './accounts'
 import {  TOKEN_METADATA_PROGRAM_ID } from './constant'
 // @ts-ignore
-import { createApproveInstruction, createRevokeInstruction, MintLayout, createMintToInstruction, createInitializeMintInstruction, TOKEN_PROGRAM_ID } from '@solana/spl-token'
+import { createApproveInstruction, createRevokeInstruction, MintLayout, createMintToInstruction, createInitializeMintInstruction, TOKEN_PROGRAM_ID, getAssociatedTokenAddress } from '@solana/spl-token'
 import { createAssociatedTokenAccountInstruction } from './instructions'
 import { sendTransaction } from './transactions'
+import { getBalanceLargestTokenAccount } from '../../../../utils'
 
 export type MintResult = string
 
@@ -21,6 +22,8 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
   transaction: Transaction,
   signers: Signer[]
 }> {
+  console.log('buildMintTransaction', mint.publicKey.toBase58())
+
   const minterPublicKey = program.provider.wallet.publicKey
   const toPublicKey = program.provider.wallet.publicKey
 
@@ -76,11 +79,13 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
         isWritable: true,
         isSigner: false,
       })
+
       remainingAccounts.push({
         pubkey: whitelistBurnAuthority.publicKey,
         isWritable: false,
         isSigner: true,
       })
+
       signers.push(whitelistBurnAuthority)
       const exists = await program.provider.connection.getAccountInfo(whitelistToken)
       if (exists) {
@@ -141,7 +146,6 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
         candyMachine: candyMachineAddress,
         candyMachineCreator,
         payer: minterPublicKey,
-        //@ts-ignore
         wallet: candyMachine.wallet,
         mint: mint.publicKey,
         metadata: metadataAddress,
@@ -171,5 +175,4 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
     transaction,
     signers,
   }
-  // return sendTransaction(program.provider, [...instructions, ...cleanupInstructions], signers)
 }

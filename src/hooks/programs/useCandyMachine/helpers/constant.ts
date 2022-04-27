@@ -1,12 +1,10 @@
-import { Cluster, clusterApiUrl, Connection, PublicKey } from '@solana/web3.js'
+import { PublicKey } from '@solana/web3.js'
 import { Idl } from '@project-serum/anchor'
 
-const SOLANA_CLUSTER = (process.env.REACT_APP_SOLANA_CLUSTER) as Cluster
-const END_POINT = process.env.REACT_APP_SOLANA_END_POINT || clusterApiUrl(SOLANA_CLUSTER)
 // const PAINTER_CANDY_MACHINE_ADDR = process.env.REACT_APP_CANDY_MACHINE_ADDR as string
 
 //devnet
-const PAINTER_CANDY_MACHINE_ADDR ='AzyBxzWm3s4WZrh3MFksnDEPfSEfcTzKmDzt2L9L7ano'
+const PAINTER_CANDY_MACHINE_ADDR ='7D2pJfrhSMPdA3R1Po6KHxydbgheaTcGnv1JCjqSaMiy'
 const HYPETEEN_CANDY_MACHINE_ADDR = 'FaEuBjb9B6jN52y7uKBHVKu8eY8PkbH5Mq6L42TBFcEj'
 const FAUCET_CANDY_MACHINE = '9Fx51FtgEkQwPQGdoe7kQvq1JFKqXUe3QKpkwnzwBcVH'
 

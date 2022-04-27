@@ -69,8 +69,7 @@ const MainArea = styled('div')`
     }
     
     span {
-      margin-left: 20px;
-      font-family: arialBold;
+      font-family: KronaOne-Regular;
       color: #ffffff;
       font-size: 34px;
     }

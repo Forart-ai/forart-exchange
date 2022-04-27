@@ -36,11 +36,9 @@ const ImagePreview = styled('div')`
 `
 
 const AttrReviewDialog: React.FC<{
-  body?: NFTAttributesData, attr: NFTAttributesData[], keypair?: Keypair, minting?: Minting
-}> = ({ body, attr, keypair, minting }) => {
+  body?: NFTAttributesData, attr: NFTAttributesData[], minting?: Minting
+}> = ({ body, attr, minting }) => {
   const { openModal } = useModal()
-
-  const mintKeypair = Keypair.generate()
 
   const { mintNFT, message, loading, remainTime } = useNFTMint()
   const [executed, setExecuted] = useState(false)
@@ -49,19 +47,20 @@ const AttrReviewDialog: React.FC<{
     () => {
       if (!body || !attr.length) return
 
-      mintNFT(body, attr, mintKeypair, minting)
+      mintNFT(body, attr, minting)
         .catch(err => {
+          console.error(err)
           openModal(<MintMessageDialog message={err.toString()} />)
         })
-    },[mintNFT, body, attr, keypair, minting]
+    },[mintNFT, body, attr, minting]
   )
 
   useEffect(() => {
-    if (minting && keypair && !executed) {
+    if (minting && !executed) {
       setExecuted(true)
       handleMint()
     }
-  }, [handleMint, minting, keypair, executed])
+  }, [handleMint, minting, executed])
 
   return (
     <Dialog title={'Sure to mint this NFT?'} closeable={true}>

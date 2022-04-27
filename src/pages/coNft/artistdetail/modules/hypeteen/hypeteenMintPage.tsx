@@ -141,7 +141,7 @@ const MessageBox:React.FC<{ onNext?:(_?:any) => void}>= ({ onNext }) => {
   return (
     <Dialog title={'Hypeteen Minting'} closeable={true}>
       <BoxContainer>
-        <div className={'message'}>Each HypeTeen mint needs 1 SOL and will be airdropped 1 WL of Painter NFT</div>
+        <div className={'message'}>Each HypeTeen mint needs 1 SOL and will be airdropped 1 WL of DePainter NFT</div>
         <CustomizeButton variant={'contained'} onClick={openBlindBox }>Continue</CustomizeButton>
       </BoxContainer>
     </Dialog>
@@ -151,7 +151,7 @@ const MessageBox:React.FC<{ onNext?:(_?:any) => void}>= ({ onNext }) => {
 const HypeteenMintPage:React.FC = () => {
 
   const { openModal } = useModal()
-  const { data: painterData } = useGetOverview(1024)
+  const { data: hypeteenData } = useGetOverview(3312)
 
   return (
     <DefaultPageWrapper>
@@ -167,8 +167,8 @@ const HypeteenMintPage:React.FC = () => {
       </MintWrapper>
       <Operation>
         <div className={'progress'}>
-          <CustomizedProgressBars style={{ height:'30px' }}  percent={painterData?.minted}  />
-          <p>{painterData?.minted} / 2000</p>
+          <CustomizedProgressBars style={{ height:'30px' }}  percent={100 / ( 2000 / hypeteenData?.minted)}  />
+          <p>{hypeteenData?.minted} / 2000</p>
         </div>
         <CustomizeButton onClick={ () => openModal(<MessageBox />) } color={'secondary'} variant={'contained'}>Mint</CustomizeButton>
       </Operation>

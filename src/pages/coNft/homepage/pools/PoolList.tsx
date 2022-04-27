@@ -29,7 +29,7 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
 
   const identity = {
     'image': PainterAvatar,
-    'name': 'Painter',
+    'name': 'DePainter',
     'describe': 'HypeTeen is the first CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen.',
     'nfts': painterData?.minted,
     'minters': painterData?.minter,
