@@ -2,11 +2,11 @@ import { PublicKey } from '@solana/web3.js'
 import { Idl } from '@project-serum/anchor'
 
 const PAINTER_CANDY_MACHINE_ADDR = '4CPhsimB76MwkKjKAJhR1Zf12m1x2e8qGz8ncoD1svuw'
+const HYPETEEN_CANDY_MACHINE_ADDR = 'FstwedUvuMVfrhCGU1UwgfeoYaDXFYubQCqHY5TkX1zJ'
 
 //devnet
 // const PAINTER_CANDY_MACHINE_ADDR ='7D2pJfrhSMPdA3R1Po6KHxydbgheaTcGnv1JCjqSaMiy'
-const HYPETEEN_CANDY_MACHINE_ADDR = 'FaEuBjb9B6jN52y7uKBHVKu8eY8PkbH5Mq6L42TBFcEj'
-const FAUCET_CANDY_MACHINE = '9Fx51FtgEkQwPQGdoe7kQvq1JFKqXUe3QKpkwnzwBcVH'
+// const HYPETEEN_CANDY_MACHINE_ADDR = 'FaEuBjb9B6jN52y7uKBHVKu8eY8PkbH5Mq6L42TBFcEj'
 
 export const CANDY_MACHINE_PROGRAM_IDL: Idl = require('../candy_machine_program_idl.json')
 

@@ -135,7 +135,12 @@ const BoxContainer = styled('div')`
   .message {
     font-size: 20px;
     color: white;
-    margin-bottom: 20px;
+    margin: 20px 0;
+    
+    strong {
+      color: ${({ theme }) => theme.palette.primary.main};
+      font-family: arialBold;
+    }
   }
 
 `
@@ -143,7 +148,6 @@ const BoxContainer = styled('div')`
 const StyledCountdown = styled('div')`
   color: ${({ theme }) => theme.palette.primary.main};
   font-size: 28px;
-  font-family: Aldrich-Regular;
 `
 
 const MessageBox:React.FC<{ onNext?:(_?:any) => void}>= ({ onNext }) => {
@@ -152,7 +156,10 @@ const MessageBox:React.FC<{ onNext?:(_?:any) => void}>= ({ onNext }) => {
   return (
     <Dialog title={'Hypeteen Minting'} closeable={true}>
       <BoxContainer>
-        <div className={'message'}>Each HypeTeen mint needs 1 SOL and will be airdropped 1 Whitelist of DePainter NFT</div>
+        <div className={'message'}>
+          Hypeteen:<strong> 1 SOL </strong> <br />
+          Reward: 1 DePainter ticket (FPW) <br />
+        </div>
         <CustomizeButton variant={'contained'} onClick={openBlindBox }>Continue</CustomizeButton>
       </BoxContainer>
     </Dialog>
@@ -180,15 +187,21 @@ const HypeteenMintPage:React.FC = () => {
   const { account } = useSolanaWeb3()
   const { data: remainTime } = useRemainTimeQuery()
 
-  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true)
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
 
   const countdown = useMemo(() => {
-    if (!remainTime) return undefined
+    if (!remainTime ) {
+      return undefined
+    }
 
     return (remainTime * 1000) + Date.now()
   }, [remainTime])
 
-  useEffect(() => console.log(countdown), [countdown])
+  useEffect(() => {
+    if (remainTime <= 0) {
+      setButtonDisabled(false)
+    }
+  }, [countdown,remainTime])
 
   const handleMint = () => {
     if (account){

@@ -75,14 +75,19 @@ const MODAL_CONTENT = {
   ready: (
     <Message>
       <div className={'row'}>
-        Requesting the wallet transaction, it&apos;ll take secs..
+        Transaction ongoing, it may take few seconds...
       </div>
       <SyncLoader size={14} color={'#ffffff'} />
     </Message>
   ),
 
   mintFinished: (
-    <Message>Mint successfully, DePainter Whitelist airdrop is ongoing, please click approve in your wallet </Message>
+    <Message>
+      <div className={'row'}>
+        Mint successfully, DePainter ticket airdrop is ongoing, please click approve in your wallet
+      </div>
+      <SyncLoader size={14} color={'#ffffff'} />
+    </Message>
   ),
 
   tokenGiven: (
@@ -119,7 +124,7 @@ const MetaDataContainer:React.FC<{metadata: MetadataResult}> = ({ metadata }) =>
 
         <div className={'button'}>
           <CustomizeButton onClick={() => toNftDetail(metadata.mint.toBase58())} variant={'contained'}>View Hypeteen Detail</CustomizeButton>
-          <a href={`https://solscan.io/token/${metadata?.mint.toBase58()}?cluster=devnet`} target={'_blank'} rel="noreferrer">
+          <a href={`https://solscan.io/token/${metadata?.mint.toBase58()}`} target={'_blank'} rel="noreferrer">
             <CustomizeButton color={'secondary'} variant={'contained'}>View on Solscan</CustomizeButton>
           </a>
         </div>
@@ -145,7 +150,7 @@ const useOpenBlindBox = () => {
       const mint = Keypair.generate()
 
       const mintSignatureOrError = await mintFromCandyMachine(program, mint, HypeteenCandyMachineAddress)
-        .catch(err => new Error(err))
+        .catch(err => new Error(err.toString()))
 
       if (typeof mintSignatureOrError === 'string') {
         openModal(<MessageBox content={MODAL_CONTENT.mintFinished} />)
@@ -157,7 +162,7 @@ const useOpenBlindBox = () => {
       const metaData:MetadataResult | undefined = await loadMetadata(connection, mint.publicKey)
 
       if (!metaData?.data) {
-        return openModal(<MessageBox closable={true} content={'Error: NFT metadata not found'} />)
+        return openModal(<MessageBox closable={true} content={' NFT metadata not found'} />)
       }
 
       await CONFT_API.core.nft.nftMint({
