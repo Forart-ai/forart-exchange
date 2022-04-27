@@ -91,6 +91,9 @@ const CONFT_API = {
       },
       nftRemove(nft:string, wallet: string, mintKey: string) {
         return Service.post('nft/mint/remove', { nft, wallet, mintKey })
+      },
+      getTimeRemain() {
+        return Service.get('nft/remain')
       }
 
     }

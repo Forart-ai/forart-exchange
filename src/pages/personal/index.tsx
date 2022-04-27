@@ -255,7 +255,7 @@ const TabsContainer: React.FC = () => {
 
         >
           {/*<StyledTab label="Avatar" />*/}
-          <StyledTab label="Painter" />
+          <StyledTab label="DePainter" />
           <StyledTab  label="CO-NFT"  />
           <StyledTab label="NFTs" />
           {/*<StyledTab label="Post" />*/}

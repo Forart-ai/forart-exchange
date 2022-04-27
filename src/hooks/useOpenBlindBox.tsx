@@ -61,6 +61,13 @@ const ImageContainer = styled('div')`
     display: flex;
     justify-content: space-around;
   }
+  
+  .nft-name {
+    font-size: 20px;
+    color: ${({ theme }) => theme.palette.primary.main};
+   margin-bottom: 25px;
+    font-family: KronaOne-Regular;
+  }
 `
 
 const MODAL_CONTENT = {
@@ -75,7 +82,7 @@ const MODAL_CONTENT = {
   ),
 
   mintFinished: (
-    <Message>Mint successfully, WL airdrop is ongoing, please click approve in your wallet </Message>
+    <Message>Mint successfully, DePainter Whitelist airdrop is ongoing, please click approve in your wallet </Message>
   ),
 
   tokenGiven: (
@@ -97,14 +104,19 @@ const MessageBox:React.FC<{ content : typeof MODAL_CONTENT[keyof typeof MODAL_CO
 
 const MetaDataContainer:React.FC<{metadata: MetadataResult}> = ({ metadata }) => {
   const history = useHistory()
+  const {  closeModal } = useModal()
 
   const toNftDetail = (mint?:string) => {
     history.push(`/nft-detail?mint=${mint}`)
+    closeModal()
   }
+
   return (
     <Dialog title={'New Hypeteen NFT'} closeable>
       <ImageContainer>
         <img src={metadata?.data?.image} />
+        <div className={'nft-name'}> {metadata.data?.name}</div>
+
         <div className={'button'}>
           <CustomizeButton onClick={() => toNftDetail(metadata.mint.toBase58())} variant={'contained'}>View Hypeteen Detail</CustomizeButton>
           <a href={`https://solscan.io/token/${metadata?.mint.toBase58()}?cluster=devnet`} target={'_blank'} rel="noreferrer">
@@ -122,7 +134,7 @@ const useOpenBlindBox = () => {
   const { adapter,account } = useSolanaWeb3()
   const { provider } = useAnchorProvider()
   const { connection } = useConnectionConfig()
-  const { openModal, closeModal } = useModal()
+  const { openModal } = useModal()
 
   const openBlindBox = useCallback(
     async () => {

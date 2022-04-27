@@ -1,10 +1,10 @@
 import { PublicKey } from '@solana/web3.js'
 import { Idl } from '@project-serum/anchor'
 
-// const PAINTER_CANDY_MACHINE_ADDR = process.env.REACT_APP_CANDY_MACHINE_ADDR as string
+const PAINTER_CANDY_MACHINE_ADDR = '4CPhsimB76MwkKjKAJhR1Zf12m1x2e8qGz8ncoD1svuw'
 
 //devnet
-const PAINTER_CANDY_MACHINE_ADDR ='7D2pJfrhSMPdA3R1Po6KHxydbgheaTcGnv1JCjqSaMiy'
+// const PAINTER_CANDY_MACHINE_ADDR ='7D2pJfrhSMPdA3R1Po6KHxydbgheaTcGnv1JCjqSaMiy'
 const HYPETEEN_CANDY_MACHINE_ADDR = 'FaEuBjb9B6jN52y7uKBHVKu8eY8PkbH5Mq6L42TBFcEj'
 const FAUCET_CANDY_MACHINE = '9Fx51FtgEkQwPQGdoe7kQvq1JFKqXUe3QKpkwnzwBcVH'
 
