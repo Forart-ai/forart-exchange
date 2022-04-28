@@ -187,7 +187,7 @@ const HypeteenMintPage:React.FC = () => {
   const { account } = useSolanaWeb3()
   const { data: remainTime } = useRemainTimeQuery()
 
-  const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true)
 
   const countdown = useMemo(() => {
     if (!remainTime ) {
