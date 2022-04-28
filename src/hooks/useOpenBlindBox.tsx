@@ -34,7 +34,7 @@ const Message = styled('div')`
   flex-direction: column;
   
   .row {
-    margin-bottom: 20px;
+    margin: 20px 0;
   }
  
 
@@ -74,8 +74,9 @@ const MODAL_CONTENT = {
 
   ready: (
     <Message>
+      <div className={'row'} style={{ color:'#ffc107' }}> PLEASE DO NOT CLOSE / REFRESH THIS PAGE </div>
       <div className={'row'}>
-        Transaction ongoing, it may take few seconds...
+        Transaction ongoing, it may take few seconds，
       </div>
       <SyncLoader size={14} color={'#ffffff'} />
     </Message>
@@ -83,8 +84,10 @@ const MODAL_CONTENT = {
 
   mintFinished: (
     <Message>
+      <div className={'row'} style={{ color:'#ffc107' }}> PLEASE DO NOT CLOSE / REFRESH THIS PAGE </div>
+
       <div className={'row'}>
-        Mint successfully, DePainter ticket airdrop is ongoing, please click approve in your wallet
+        Mint successfully, DePainter ticket airdrop is ongoing, please click approve in your wallet.
       </div>
       <SyncLoader size={14} color={'#ffffff'} />
     </Message>
