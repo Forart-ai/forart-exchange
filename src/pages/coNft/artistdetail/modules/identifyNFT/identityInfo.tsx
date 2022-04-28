@@ -69,8 +69,7 @@ const MainArea = styled('div')`
     }
     
     span {
-      margin-left: 20px;
-      font-family: arialBold;
+      font-family: KronaOne-Regular;
       color: #ffffff;
       font-size: 34px;
     }
@@ -175,7 +174,7 @@ const IdentityInfo:React.FC = () => {
           </DonateArea>
           <MainArea>
             <img src={AvatarIcon} />
-            <span> Painter </span>
+            <span> DePainter </span>
             <div className="info-message">
               Forart.ai are searching for a limited number of 10000 innovative and creative painters to jointly explore its future.
 
@@ -198,7 +197,7 @@ const IdentityInfo:React.FC = () => {
                 <img src={Cube} />
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
-                <div className={'value'}>{overviewData?.mintedWallet?? '0'}</div>
+                <div className={'value'}>{overviewData?.minter ?? '0'}</div>
                 <div className={'name'}>Minters</div>
               </Box>
             </DataItem>

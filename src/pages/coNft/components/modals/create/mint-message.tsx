@@ -11,6 +11,7 @@ const Text = styled('div')`
   margin-top: 20px;
   height: fit-content;
 `
+
 const MintMessageDialog:React.FC<{message:string}> = ({ message }) => {
   return (
     <Dialog title={'Oops, something is wrong'} closeable={true}>

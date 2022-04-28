@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Dialog from '../../../../../contexts/theme/components/Dialog/Dialog'
 import { NFTAttributesData } from '../../../../../types/coNFT'
 import { styled } from '@mui/material'
@@ -11,6 +11,7 @@ import { useModal } from '../../../../../contexts/modal'
 import MintMessageDialog from './mint-message'
 import { ClipLoader } from 'react-spinners'
 import { Keypair } from '@solana/web3.js'
+import { Minting } from '../../../../../hooks/useStorageCheck'
 
 const Wrapper = styled('div')`
   width: 500px;
@@ -34,23 +35,32 @@ const ImagePreview = styled('div')`
 
 `
 
-const AttrReviewDialog:React.FC<{body?: NFTAttributesData, attr: NFTAttributesData[]}> = ({ body, attr }) => {
-  const { account } = useSolanaWeb3()
+const AttrReviewDialog: React.FC<{
+  body?: NFTAttributesData, attr: NFTAttributesData[], minting?: Minting
+}> = ({ body, attr, minting }) => {
+  const { openModal } = useModal()
 
-  const { openModal, closeModal } = useModal()
-
-  const mintKeypair = Keypair.generate()
-
-  const { mintNFT, message, loading } = useNFTMint()
+  const { mintNFT, message, loading, remainTime } = useNFTMint()
+  const [executed, setExecuted] = useState(false)
 
   const handleMint = useCallback(
     () => {
-      mintNFT(body, attr, mintKeypair)
+      if (!body || !attr.length) return
+
+      mintNFT(body, attr, minting)
         .catch(err => {
+          console.error(err)
           openModal(<MintMessageDialog message={err.toString()} />)
         })
-    },[body, attr, account]
+    },[mintNFT, body, attr, minting]
   )
+
+  useEffect(() => {
+    if (minting && !executed) {
+      setExecuted(true)
+      handleMint()
+    }
+  }, [handleMint, minting, executed])
 
   return (
     <Dialog title={'Sure to mint this NFT?'} closeable={true}>
@@ -59,15 +69,18 @@ const AttrReviewDialog:React.FC<{body?: NFTAttributesData, attr: NFTAttributesDa
           <NFTPreview body={body} attrList={attr} />
         </ImagePreview>
 
-        <CustomizeButton disabled={loading} onClick={handleMint} color={'secondary'} variant={'contained'}>
+        <CustomizeButton disabled={loading || (remainTime !== undefined && remainTime <= 0)} onClick={handleMint} color={'secondary'} variant={'contained'}>
           {
             loading ? (
-              <> Start minting... <ClipLoader  size={20} color={'#999999'}  /> </>
+              <> Start minting... <ClipLoader size={20} color={'#999999'} /> </>
             ) : (
               <>Yes</>
             )
           }
         </CustomizeButton>
+        {
+          remainTime !== undefined && <div className={'message'}>You have {remainTime} seconds to approve the transaction</div>
+        }
 
         <div className={'message'}> {message}</div>
       </Wrapper>

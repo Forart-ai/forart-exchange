@@ -252,7 +252,7 @@ const ModalProvider: React.FC = ({ children }) => {
   return (
     <ModalContext.Provider value={{ open, update, close, configModal, addEventListener, removeEventListener }}>
       <GlobalStyle />
-      <ModalWrapper isOpen={visible} contentStyle={config.contentStyle} contentWrapper={config.contentWrapper} shouldCloseOnOverlayClick={true} shouldCloseOnEsc={true} onRequestClose={close}>
+      <ModalWrapper isOpen={visible} contentStyle={config.contentStyle} contentWrapper={config.contentWrapper} shouldCloseOnOverlayClick={false} shouldCloseOnEsc={false} onRequestClose={close}>
         {/*<CloseButton show={config.closeable} onClose={close} />*/}
         {content}
       </ModalWrapper>

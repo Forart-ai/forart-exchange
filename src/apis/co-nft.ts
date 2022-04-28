@@ -49,6 +49,9 @@ const CONFT_API = {
       },
       getUserMinting(wallet?: string) {
         return Service.get(`nft/minting/${wallet}`)
+      },
+      getUserCredit(wallet?: string) {
+        return Service.get(`credits/${wallet}`)
       }
 
     },
@@ -71,14 +74,26 @@ const CONFT_API = {
       getNFTDetailById(id:string) {
         return Service.get(`/nft/detail/${ id }`)
       },
-      nftCreate(data: LockNFTRequest) {
-        return Service.post('nft/create', data)
+      /**
+       * {
+       *     "nft": "1024-80855c00f206e9d62a60c5f5bdb1562c",
+       *     "mintKey": "2NbrR5xXXxiBEoDk7rgcBebL47Bhoankw6EmudoT49Wh",
+       *     "createTime": "2022-04-26T09:58:43.133+0000",
+       *     "remain": 119
+       * }
+       * @param data
+       */
+      nftCreate(data: LockNFTRequest): Promise<{ nft: string, mintKey: string, createTime: string, remain: number }> {
+        return Service.post('nft/create', data, { timeout: 5000 })
       },
       nftMint(req: NftMintRequest) {
         return Service.post('nft/mint', req)
       },
       nftRemove(nft:string, wallet: string, mintKey: string) {
         return Service.post('nft/mint/remove', { nft, wallet, mintKey })
+      },
+      getTimeRemain() {
+        return Service.get('nft/remain')
       }
 
     }

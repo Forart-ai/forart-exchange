@@ -16,6 +16,34 @@ import { NFTAttributesData } from '../types/coNFT'
 import { Keypair } from '@solana/web3.js'
 import { useRefreshController } from '../contexts/refresh-controller'
 import { useHistory } from 'react-router-dom'
+import AttrReviewDialog from '../pages/coNft/components/modals/create/attr-review'
+
+export interface Minting {
+  id: string
+  series: number
+  components: number[]
+  previewUrl: string
+  wallet: string
+  chainStatus: string
+  chainError: any
+  chainNftName: any
+  chainImageUri: any
+  chainMetaUri: any
+  chainManifestUri: any
+  createTime: string
+  updateTime: string
+  discordId: string
+  tag: string
+  chainBlockMinted: boolean
+  mintWallet: string
+  mintDiscordId: any
+  rarity: any
+  rarityScore: any
+  mintKey: string
+  mintPrivateKey: string
+  chainBlockMintCheckRetryCount: number
+  mintRemainTime: number
+}
 
 const Content = styled('div')`
   width: 500px;
@@ -64,42 +92,35 @@ const PreviewArea = styled('div')`
   position: relative;
 `
 
-const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
+const MintItem: React.FC<{ minting: Minting }> = ({ minting }) => {
   const { account } = useSolanaWeb3()
-
-  const { mint } = useCandyMachine()
   const { connection } = useConnectionConfig()
+  const history = useHistory()
+  const { openModal, closeModal } = useModal()
 
   const [body, setBody] = useState<NFTAttributesData>()
   const [attr, setAttr] = useState<NFTAttributesData[]>()
-
-  const history = useHistory()
-
   const [message, setMessage] = useState<string>('')
-
-  const [open, setOpen] = React.useState(false)
-
-  const { openModal, closeModal } = useModal()
-
   const [notExisted, setNotExisted] = useState<boolean>(false)
 
   useEffect(() => {
-    CONFT_API.core.nft.findComponentsById(mintList[0].components)
-      .then((res: any) => {
-        console.log([...res])
-        const index = res.map((o: { bodyType: any }) => o.bodyType).indexOf('Body')
-        const body = (res as any[]).splice(index, 1)
-        const attr = res
+    if (minting) {
+      CONFT_API.core.nft.findComponentsById(minting.components.map(o => o.toString()))
+        .then((res: any) => {
+          const index = res.map((o: { bodyType: any }) => o.bodyType).indexOf('Body')
+          const body = (res as any[]).splice(index, 1)
+          const attr = res
 
-        setBody(body[0])
-        setAttr(attr)
-      })
-
-  }, [mintList?.[0]?.components])
+          setBody(body[0])
+          setAttr(attr)
+        })
+    }
+  }, [minting?.components])
 
   const check = useCallback(
-    async (item: any) => {
-      const keypair = Keypair.fromSecretKey(new Buffer(item.mintPrivateKey, 'base64'))
+    async () => {
+      const keypair = Keypair.fromSecretKey(new Buffer(minting.mintPrivateKey, 'base64'))
+      console.log(keypair)
       const account = await connection.getParsedAccountInfo(keypair.publicKey)
 
       if (!account.value) {
@@ -109,13 +130,14 @@ const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
       }
 
       CONFT_API.core.nft.nftMint({
-        nft: item.id,
-        wallet: item.mintWallet,
-        mintKey: item.mintKey
+        nft: minting.id,
+        wallet: minting.mintWallet,
+        mintKey: minting.mintKey,
+        series: 1024
       }).then(() => {
         setMessage('Start minting, you can see your nft in your wallet')
         openModal(
-          <Dialog title={'Congratulations!'} closeable  >
+          <Dialog title={'Congratulations!'} closeable>
             <Message>Mint successfully!</Message>
             <Box sx={{ width:'100%', display:'flex', justifyContent:'space-around', marginTop:'30px' }}>
               <CustomizeButton style={{ margin:'10px' }} variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
@@ -126,7 +148,8 @@ const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
                   history.push('/account')
                   closeModal()
                 }}
-              > Personal space
+              >
+                Personal space
               </CustomizeButton>
             </Box>
           </Dialog>
@@ -135,114 +158,89 @@ const MintItem: React.FC<{mintList: any[]}> = ({ mintList }) => {
         setMessage( err.message || err.toString())
       })
     },
-    [],
+    [minting],
   )
 
   const giveUp = useCallback(
-    async (item: any) => {
+    async () => {
 
-      CONFT_API.core.nft.nftRemove(item.id, item.mintWallet, item.mintKey).then(res => {
+      CONFT_API.core.nft.nftRemove(minting.id, minting.mintWallet, minting.mintKey).then(res => {
         setMessage('Give up this order successfully, you may close this dialog now.')
         closeModal()
       })
     },
-    [],
+    [minting],
   )
 
   const handleMint = useCallback(
-    (item: any) => {
-      const keypair = Keypair.fromSecretKey(new Buffer(item.mintPrivateKey, 'base64'))
+    () => {
+      if (!body || !attr || !minting) return
+      console.log(minting)
 
-      mint(keypair)
-        .then(async _signature => {
-          return connection.confirmTransaction(_signature)
-        })
-        .then(() => {
-          setMessage('Start minting, Please wait for a moment.')
-          CONFT_API.core.nft.nftMint({ nft: item.id, wallet: item.mintWallet, mintKey: item.mintKey })
-            .then(() =>sleep(1500))
-            .then(() => {
-              setMessage('Start minting, you can see your nft in your wallet.')
-              openModal(
-                <Dialog title={'Congratulations!'} closeable  >
-                  <Message>Mint successfully!</Message>
-                  <Box sx={{ width:'100%', display:'flex', justifyContent:'space-around', marginTop:'30px' }}>
-                    <CustomizeButton style={{ margin:'10px' }} variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
-                    <CustomizeButton style={{ margin:'10px' }} variant={'contained'}  color={'secondary'} onClick={() => {history.push('/account'); closeModal()}}> Personal space</CustomizeButton>
-                  </Box>
-                </Dialog>
-              )
-            })
+      openModal(
+        <AttrReviewDialog
+          body={body}
+          attr={attr}
+          minting={minting}
+        />
+      )
 
-        })
-        .catch(console.error)
-
-    },[account])
+    }, [body, attr, minting])
 
   return (
     <Dialog title={'An unprocessed mint was detected'} closeable >
-      <Content >
-        <span>Please give priority to this order</span>
+      <Content>
+        <span>Please give priority to this order, or wait {minting?.mintRemainTime} seconds to release stock </span>
         <div>
-          {
-            mintList?.map((item, index) => (
-              <Row key={index}>
-                <PreviewArea>
-                  <NFTPreview body={body} attrList={attr} />
-                </PreviewArea>
+          <Row >
+            <PreviewArea>
+              <NFTPreview body={body} attrList={attr} />
+            </PreviewArea>
 
-                <div className={'operation'}>
-                  <CustomizeButton style={{ backgroundColor:'#e53935' }} onClick={() => giveUp(item)}  variant={'contained'}>Give up</CustomizeButton>
-                  <CustomizeButton  onClick={() =>handleMint(item)} variant={'contained'}>Pay</CustomizeButton>
-                  <CustomizeButton onClick={() =>check(item)} color={'secondary'} variant={'contained'} disabled={notExisted}>I have purchased</CustomizeButton>
-                </div>
+            <div className={'operation'}>
+              {/*<CustomizeButton style={{ backgroundColor:'#e53935' }} onClick={() => giveUp()}  variant={'contained'}>Give up</CustomizeButton>*/}
+              <CustomizeButton  onClick={() =>handleMint()} variant={'contained'}>Pay</CustomizeButton>
+              <CustomizeButton onClick={() =>check()} color={'secondary'} variant={'contained'} disabled={notExisted}>I have purchased</CustomizeButton>
+            </div>
 
-                <span> {message}</span>
-              </Row>
-            ))
-          }
+            <span> {message}</span>
+          </Row>
         </div>
-
-        {/*<Snackbar open={open} autoHideDuration={9000} >*/}
-        {/*  <Alert severity="error">*/}
-        {/*    <AlertTitle>Error</AlertTitle>*/}
-        {/*    Sorry, you haven&apos;t paid yet*/}
-        {/*  </Alert>*/}
-        {/*</Snackbar>*/}
       </Content>
     </Dialog>
   )
 }
 
-const useMinting = (wallet?: string): UseQueryResult<any> => {
-  const { quietRefreshFlag } = useRefreshController()
+const useMinting = (): UseQueryResult<Minting[]> => {
+  const { account } = useSolanaWeb3()
 
   return useQuery(
-    ['USER_MINTING', wallet],
+    ['USER_MINTING', account],
     async () => {
-      return await CONFT_API.core.user.getUserMinting(wallet).then(res => res)
+      if (!account) return Promise.reject()
+
+      return await CONFT_API.core.user.getUserMinting(account.toBase58()).then(res => res)
     }
   )
 }
 
 const useStorageCheck = () => {
-  const { account } = useSolanaWeb3()
+  const { openModal } = useModal()
+  const { data, isLoading } = useMinting()
 
-  const { openModal, closeModal } = useModal()
-
-  const { data } = useMinting(account?.toBase58())
-
-  const [mintList, setMintList] = useState<any>()
+  const [shown, setShown] = useState(false)
 
   useEffect(() => {
-    if (data?.length) {
-      openModal(<MintItem mintList={data} />)
-    } else {
-      closeModal()
-    }
-  }, [account, data])
+    if (shown) return
 
-  return
+    if (!isLoading) {
+      setShown(true)
+
+      if (data?.length) {
+        openModal(<MintItem minting={data?.[0]} />)
+      }
+    }
+  }, [data, shown, isLoading])
 }
 
 export default useStorageCheck

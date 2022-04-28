@@ -20,8 +20,8 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'image': 'https://forart.mypinata.cloud/ipfs/QmSFo7w1m87FnSbcgWAsydWzsjKiExZCrt7ynxMJLQP2d4',
     'name': 'HypeTeen',
     'describe': 'HypeTeen is the first CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen.',
-    'nfts': overviewData?.minted,
-    'minters': overviewData?.mintedWallet,
+    'nfts': overviewData?.created,
+    'minters': overviewData?.creator,
     'status': 'living',
     'artistId': '3312',
     artistName: 'Monica'
@@ -29,10 +29,10 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
 
   const identity = {
     'image': PainterAvatar,
-    'name': 'Painter',
+    'name': 'DePainter',
     'describe': 'HypeTeen is the first CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen.',
     'nfts': painterData?.minted,
-    'minters': painterData?.mintedWallet,
+    'minters': painterData?.minter,
     'status': 'living',
     'artistId': '1024',
     artistName: 'Forart.ai'
@@ -67,9 +67,7 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
             />
           ))
         }
-
       </PoolListContainer>
-
     </PoolsContainer>
   )
 

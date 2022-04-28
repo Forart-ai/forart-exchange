@@ -69,8 +69,7 @@ const MainArea = styled('div')`
     }
     
     span {
-      margin-left: 20px;
-      font-family: arialBold;
+      font-family: KronaOne-Regular;
       color: #ffffff;
       font-size: 34px;
     }
@@ -188,7 +187,7 @@ const HypeteenInfo:React.FC = () => {
                 <img src={LightBulb} />
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
-                <div className={'value'}>{overviewData?.minted ?? '0'}</div>
+                <div className={'value'}>{overviewData?.created ?? '0'}</div>
                 <div className={'name'}>Created</div>
               </Box>
             </DataItem>
@@ -208,7 +207,7 @@ const HypeteenInfo:React.FC = () => {
                 <img src={Cube} />
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
-                <div className={'value'}>{overviewData?.mintedWallet ?? '0'}</div>
+                <div className={'value'}>{overviewData?.creator ?? '0'}</div>
                 <div className={'name'}>Creators</div>
               </Box>
             </DataItem>

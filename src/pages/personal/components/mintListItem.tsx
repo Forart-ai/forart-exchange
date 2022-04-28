@@ -15,7 +15,7 @@ import { BounceLoader, ClockLoader, MoonLoader } from 'react-spinners'
 
 const NftSeriesThumbnailMapper: { [key in NftSeriesType]?: string } = {
   '3312': 'HypeTeen',
-  '1024': 'Painter'
+  '1024': 'DePainter'
 }
 
 const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data, empty }) => {

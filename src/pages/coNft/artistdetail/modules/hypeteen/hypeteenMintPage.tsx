@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import DefaultPageWrapper from '../../../../../components/default-page-wrapper'
 import { styled } from '@mui/material'
 import StageImage from '../../../../../assets/images/artistDetail/mint/stage.png'
@@ -9,10 +9,19 @@ import SmallBox1 from '../../../../../assets/images/artistDetail/mint/Rectangle-
 import SmallBox2 from '../../../../../assets/images/artistDetail/mint/Rectangle.png'
 import SmallBoxBlur1 from '../../../../../assets/images/artistDetail/mint/blur1.png'
 import SmallBoxBlur2 from '../../../../../assets/images/artistDetail/mint/blur2.png'
+import useOpenBlindBox from '../../../../../hooks/useOpenBlindBox'
+import { useGetOverview } from '../../../../../hooks/queries/useGetOverview'
+import Dialog from '../../../../../contexts/theme/components/Dialog/Dialog'
+import { useModal } from '../../../../../contexts/modal'
+import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
+import WalletSelectionModal from '../../../../../components/wallet/WalletSelectionModal'
+import CONFT_API from '../../../../../apis/co-nft'
+import useRemainTimeQuery from '../../../../../hooks/queries/useRemainTimeQuery'
+import Countdown, { formatTimeDelta, CountdownRendererFn } from 'react-countdown'
 
 const MintWrapper = styled('div')`
   position: relative;
-  margin-top: 30px;
+  margin-top: 100px;
   width: 100%;
   height: 750px;
   display: flex;
@@ -113,28 +122,93 @@ const Operation = styled('div')`
     }
   }
   
+`
+const BoxContainer = styled('div')`
+  min-height: 100px;
+ 
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-family: Arial;
   
+  .message {
+    font-size: 20px;
+    color: white;
+    margin: 20px 0;
+    
+    strong {
+      color: ${({ theme }) => theme.palette.primary.main};
+      font-family: arialBold;
+    }
+  }
+
 `
 
+const StyledCountdown = styled('div')`
+  color: ${({ theme }) => theme.palette.primary.main};
+  font-size: 28px;
+`
+
+const MessageBox:React.FC<{ onNext?:(_?:any) => void}>= ({ onNext }) => {
+  const { openBlindBox } = useOpenBlindBox()
+
+  return (
+    <Dialog title={'Hypeteen Minting'} closeable={true}>
+      <BoxContainer>
+        <div className={'message'}>
+          Hypeteen:<strong> 1 SOL </strong> <br />
+          Reward: 1 DePainter ticket (FPW) <br />
+        </div>
+        <CustomizeButton variant={'contained'} onClick={openBlindBox }>Continue</CustomizeButton>
+      </BoxContainer>
+    </Dialog>
+  )
+}
+
+const renderer: CountdownRendererFn = ({ hours, minutes, seconds, completed }) => {
+  if (completed) {
+    // Render a complete state
+    return <StyledCountdown>Hypeteen mint starting!</StyledCountdown>
+  } else {
+    // Render a countdown
+    return (
+      <StyledCountdown>
+        {hours}:{minutes}:{seconds}
+      </StyledCountdown>
+    )
+  }
+}
+
 const HypeteenMintPage:React.FC = () => {
-  const [progress, setProgress] = useState(0)
+
+  const { openModal } = useModal()
+  const { data: hypeteenData } = useGetOverview(3312)
+  const { account } = useSolanaWeb3()
+  const { data: remainTime } = useRemainTimeQuery()
+
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true)
+
+  const countdown = useMemo(() => {
+    if (!remainTime ) {
+      return undefined
+    }
+
+    return (remainTime * 1000) + Date.now()
+  }, [remainTime])
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 99) {
-          return prev
-        }
-
-        return prev + 1
-      })
-    }, 150)
-
-    return () => {
-      clearInterval(interval)
+    if (remainTime <= 0) {
+      setButtonDisabled(false)
     }
-  }, [])
+  }, [countdown,remainTime])
 
+  const handleMint = () => {
+    if (account){
+      openModal(<MessageBox />)
+    }
+    else openModal(<WalletSelectionModal />)
+  }
   return (
     <DefaultPageWrapper>
       <MintWrapper>
@@ -147,12 +221,18 @@ const HypeteenMintPage:React.FC = () => {
           <img className={'blur-box2'} src={SmallBoxBlur2} />
         </div>
       </MintWrapper>
+
+      {
+        countdown && <Countdown renderer={renderer} onComplete={() => setButtonDisabled(false)} date={countdown} />
+      }
+
       <Operation>
         <div className={'progress'}>
-          <CustomizedProgressBars style={{ height:'30px' }}  percent={0}  />
-          <p>0 / 2000</p>
+          <CustomizedProgressBars style={{ height:'30px' }}  percent={(100 / ( 2000 / hypeteenData?.minted)) ?? '0'}  />
+          <p>{hypeteenData?.minted} / 2000</p>
         </div>
-        <CustomizeButton disabled={true} color={'secondary'} variant={'contained'}>Mint</CustomizeButton>
+        <CustomizeButton disabled={buttonDisabled} onClick={ () => handleMint() } color={'secondary'} variant={'contained'}>Mint</CustomizeButton>
+
       </Operation>
 
     </DefaultPageWrapper>

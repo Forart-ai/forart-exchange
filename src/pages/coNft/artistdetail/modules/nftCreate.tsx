@@ -10,7 +10,7 @@ import {
   MintWrapper,
 } from '../../artistMint.style'
 
-import { useWhiteList } from '../../../../hooks/programs/useWhiteList'
+import { useWhiteListQuery } from '../../../../hooks/programs/useWhiteList'
 import HypeteenCreate from './hypeteen/hypeteenCreate'
 import IdentifyCreate from './identifyNFT/identifyCreate'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'

@@ -183,27 +183,24 @@ const DrawerList:React.FC = () => {
         {
           routes.filter(route => !route.hidden).map((route: Route, index) => {
             return route.disable ? (
-              <MobileNavItem >
+              <MobileNavItem key={index}>
                 <div className={'disabled'}> {route.title} </div>
               </MobileNavItem>
-            ):
-              <>
-                {
-                  pathname === route.path ? (
-                    <MobileNavItem key={index} >
-                      <Link style={{ width:'100%' }}  to={route.path}>
-                        <div className={'selected'}  > {route.title}</div>
-                      </Link>
-                    </MobileNavItem>
-                  ): (
-                    <MobileNavItem key={index}>
-                      <Link to={route.path}>
-                        <div className={'normal'}> {route.title} </div>
-                      </Link>
-                    </MobileNavItem>
-                  )
-                }
-              </>
+            ): (
+              pathname === route.path ? (
+                <MobileNavItem key={index} >
+                  <Link style={{ width:'100%' }}  to={route.path}>
+                    <div className={'selected'}  > {route.title}</div>
+                  </Link>
+                </MobileNavItem>
+              ): (
+                <MobileNavItem key={index}>
+                  <Link to={route.path}>
+                    <div className={'normal'}> {route.title} </div>
+                  </Link>
+                </MobileNavItem>
+              )
+            )
           })
         }
 
@@ -273,11 +270,10 @@ const AppHeader:React.FC  = () => {
           {
             !isMobile && (
               <RouterContainer>
-
                 {
                   routes.filter(route => !route.hidden).map((route: Route, index) => {
                     return route.disable ? (
-                      <DisableNav style= {{ color: 'white' }}>
+                      <DisableNav style= {{ color: 'white' }} key={index}>
                         {route.title}
                       </DisableNav>
                     ) :

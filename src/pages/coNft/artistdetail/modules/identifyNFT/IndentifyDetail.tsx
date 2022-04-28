@@ -240,10 +240,10 @@ const IdentifyDetail: React.FC = () => {
                   </section>
 
                   <section className="item" >
-                    <h1 > Birth of Painter </h1>
+                    <h1 > Birth of DePainter </h1>
                     <p >
                       Forart.ai is a brand new AI technology-driven C2E world, which is full of imagination and adventure. <br />
-                      We&apos;re searching for a limited number of 10000 innovative and creative painters to jointly explore its future. <br />
+                      We&apos;re searching for a limited number of 10000 innovative and creative DePainters to jointly explore its future. <br />
                     </p>
                   </section>
                 </TabPanel>
@@ -294,7 +294,7 @@ const IdentifyDetail: React.FC = () => {
                     <h1 className="title">Roadmap</h1>
                     <p>
                       April - May: <br />
-                      1 Recruit more Painters <br />
+                      1 Recruit more DePainters <br />
                       2 Expand more CO-NFT Series<br />
                       3 Unlock new functions of Forart.ai<br /><br />
 

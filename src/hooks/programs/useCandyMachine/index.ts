@@ -1,9 +1,10 @@
 import useAnchorProvider from '../../useAnchorProvider'
 import { useCallback, useMemo } from 'react'
 import { Program } from '@project-serum/anchor'
-import { CANDY_MACHINE_PROGRAM_ID, CANDY_MACHINE_PROGRAM_IDL } from './helpers/constant'
-import { Keypair } from '@solana/web3.js'
-import { mint as mintFromCandyMachine } from './helpers/mint'
+import { CANDY_MACHINE_PROGRAM_ID, CANDY_MACHINE_PROGRAM_IDL, PainterCandyMachineAddress } from './helpers/constant'
+import { Keypair, PublicKey } from '@solana/web3.js'
+// import { mint as mintFromCandyMachine } from './helpers/mint'
+import { buildMintTransaction } from './helpers/buildMintTransaction'
 
 const useCandyMachine = () => {
   const { provider } = useAnchorProvider()
@@ -12,16 +13,16 @@ const useCandyMachine = () => {
     return new Program(CANDY_MACHINE_PROGRAM_IDL, CANDY_MACHINE_PROGRAM_ID, provider)
   }, [provider])
 
-  const mint = useCallback(async (mintKeypair: Keypair) => {
+  const builtMintTransaction = useCallback((mintKeypair: Keypair, candyMachineAddress: PublicKey) => {
     if (!program) {
       return Promise.reject('Program not ready')
     }
 
-    return await mintFromCandyMachine(program, mintKeypair)
+    return buildMintTransaction(program, mintKeypair, candyMachineAddress)
   }, [program])
 
   return {
-    program, mint
+    program, builtMintTransaction
   }
 }
 

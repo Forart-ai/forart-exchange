@@ -29,6 +29,7 @@ import  { Pagination, Autoplay } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/autoplay'
+import CustomizeButton from '../../../contexts/theme/components/Button'
 
 export const LeftTop = styled.div`
   width: 100%;
@@ -114,7 +115,7 @@ const Header: React.FC = () => {
             <LeftArea>
               <LeftTop>
                 <MainTitle>
-                  <div className="title1"> Painter  </div>
+                  <div className="title1"> DePainter  </div>
 
                   <div className={'title2'}> <span> The Unique Admin Ticket</span> To  Forart.ai</div>
                 </MainTitle>
@@ -126,14 +127,14 @@ const Header: React.FC = () => {
 
                 <ButtonArea>
                   <Link to={toPainterDetailUrl}>
-                    <Button sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Create Painter</Button>
+                    <CustomizeButton sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Create DePainter</CustomizeButton>
                   </Link>
 
-                  <RainbowButton>
-                    <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >
-                      Instruction
-                    </a>
-                  </RainbowButton>
+                  {/*<RainbowButton>*/}
+                  {/*  <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >*/}
+                  {/*    Instruction*/}
+                  {/*  </a>*/}
+                  {/*</RainbowButton>*/}
                 </ButtonArea>
 
               </LeftTop>
@@ -162,7 +163,7 @@ const Header: React.FC = () => {
                     painterData ? (
                       <div style={{ display: 'flex', alignItems: 'baseline' }}>
                         <StyledCountUp
-                          end={painterData?.mintedWallet ? painterData?.mintedWallet : '---'}
+                          end={painterData?.minter ? painterData?.minter : '---'}
                           duration={2}
                           separator=","
 
@@ -197,14 +198,14 @@ const Header: React.FC = () => {
 
                 <ButtonArea>
                   <Link to={toArtistDetailUrl}>
-                    <Button sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Create Hypeteen</Button>
+                    <CustomizeButton sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Mint Hypeteen</CustomizeButton>
                   </Link>
 
-                  <RainbowButton>
-                    <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >
-                      Instruction
-                    </a>
-                  </RainbowButton>
+                  {/*<RainbowButton>*/}
+                  {/*  <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >*/}
+                  {/*    Instruction*/}
+                  {/*  </a>*/}
+                  {/*</RainbowButton>*/}
                 </ButtonArea>
 
               </LeftTop>
@@ -215,7 +216,7 @@ const Header: React.FC = () => {
                     hypeteenData ? (
                       <div style={{ display: 'flex', alignItems: 'baseline',  width:'200px' }}>
                         <StyledCountUp
-                          end={hypeteenData?.minted ? hypeteenData?.minted : '---'}
+                          end={hypeteenData?.created ? hypeteenData?.created : '---'}
                           duration={2}
                           separator=","
 
@@ -233,7 +234,7 @@ const Header: React.FC = () => {
                     hypeteenData ? (
                       <div style={{ display: 'flex', alignItems: 'baseline' }}>
                         <StyledCountUp
-                          end={hypeteenData?.mintedWallet ? hypeteenData?.mintedWallet : '---'}
+                          end={hypeteenData?.creator ? hypeteenData?.creator : '---'}
                           duration={2}
                           separator=","
 

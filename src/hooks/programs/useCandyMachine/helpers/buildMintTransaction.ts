@@ -1,27 +1,29 @@
-import {
-  Keypair, PACKET_DATA_SIZE,
-  PublicKey,
-  SystemProgram,
-  SYSVAR_CLOCK_PUBKEY,
-  SYSVAR_INSTRUCTIONS_PUBKEY,
-  SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
-  SYSVAR_RENT_PUBKEY, TransactionInstruction
-} from '@solana/web3.js'
-import {
-  getAtaForMint,
-  getCandyMachineCreator,
-  getMasterEdition,
-  getMetadata,
-  getTokenWallet,
-} from './accounts'
 import { Program } from '@project-serum/anchor'
+import {
+  Keypair,
+  PublicKey,
+  Signer,
+  SystemProgram,
+  SYSVAR_CLOCK_PUBKEY, SYSVAR_INSTRUCTIONS_PUBKEY, SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
+  SYSVAR_RENT_PUBKEY,
+  Transaction
+} from '@solana/web3.js'
+import { getAtaForMint, getCandyMachineCreator, getMasterEdition, getMetadata, getTokenWallet } from './accounts'
+import {  TOKEN_METADATA_PROGRAM_ID } from './constant'
 // @ts-ignore
-import { createApproveInstruction, createInitializeMintInstruction, createMintToInstruction, createRevokeInstruction, MintLayout, TOKEN_PROGRAM_ID } from '@solana/spl-token'
+import { createApproveInstruction, createRevokeInstruction, MintLayout, createMintToInstruction, createInitializeMintInstruction, TOKEN_PROGRAM_ID, getAssociatedTokenAddress } from '@solana/spl-token'
 import { createAssociatedTokenAccountInstruction } from './instructions'
 import { sendTransaction } from './transactions'
-import { TOKEN_METADATA_PROGRAM_ID } from './constant'
+import { getBalanceLargestTokenAccount } from '../../../../utils'
 
-export async function mint(program: Program, mint: Keypair, candyMachineAddress: PublicKey): Promise<string> {
+export type MintResult = string
+
+export async function buildMintTransaction(program: Program, mint: Keypair, candyMachineAddress: PublicKey): Promise<{
+  transaction: Transaction,
+  signers: Signer[]
+}> {
+  console.log('buildMintTransaction', mint.publicKey.toBase58())
+
   const minterPublicKey = program.provider.wallet.publicKey
   const toPublicKey = program.provider.wallet.publicKey
 
@@ -32,13 +34,14 @@ export async function mint(program: Program, mint: Keypair, candyMachineAddress:
   const remainingAccounts = []
   const signers = [mint]
   const cleanupInstructions = []
+
   const instructions = [
-    SystemProgram.createAccount({
+    SystemProgram.createAccount( {
       fromPubkey: minterPublicKey,
       newAccountPubkey: mint.publicKey,
       space: MintLayout.span,
       lamports: await program.provider.connection.getMinimumBalanceForRentExemption(MintLayout.span),
-      programId: TOKEN_PROGRAM_ID,
+      programId: TOKEN_PROGRAM_ID
     }),
 
     createInitializeMintInstruction(mint.publicKey, 0, toPublicKey, toPublicKey),
@@ -47,7 +50,7 @@ export async function mint(program: Program, mint: Keypair, candyMachineAddress:
       userTokenAccountAddress,
       minterPublicKey,
       toPublicKey,
-      mint.publicKey,
+      mint.publicKey
     ),
 
     createMintToInstruction(
@@ -76,11 +79,13 @@ export async function mint(program: Program, mint: Keypair, candyMachineAddress:
         isWritable: true,
         isSigner: false,
       })
+
       remainingAccounts.push({
         pubkey: whitelistBurnAuthority.publicKey,
         isWritable: false,
         isSigner: true,
       })
+
       signers.push(whitelistBurnAuthority)
       const exists = await program.provider.connection.getAccountInfo(whitelistToken)
       if (exists) {
@@ -108,12 +113,13 @@ export async function mint(program: Program, mint: Keypair, candyMachineAddress:
     remainingAccounts.push({
       pubkey: tokenAccount,
       isWritable: true,
-      isSigner: false,
+      isSigner: false
     })
+
     remainingAccounts.push({
       pubkey: transferAuthority.publicKey,
       isWritable: false,
-      isSigner: true,
+      isSigner: true
     })
 
     instructions.push(
@@ -124,9 +130,11 @@ export async function mint(program: Program, mint: Keypair, candyMachineAddress:
         candyMachine.data.price.toNumber(),
       ),
     )
+
     signers.push(transferAuthority)
     cleanupInstructions.push(createRevokeInstruction(tokenAccount, toPublicKey))
   }
+
   const metadataAddress = await getMetadata(mint.publicKey)
   const masterEdition = await getMasterEdition(mint.publicKey)
 
@@ -156,8 +164,15 @@ export async function mint(program: Program, mint: Keypair, candyMachineAddress:
     }),
   )
 
-  return (
-    await sendTransaction(program.provider, [...instructions, ...cleanupInstructions], signers)
-  )
-}
+  const transaction = new Transaction({
+    feePayer: program.provider.wallet.publicKey,
+    recentBlockhash: (await program.provider.connection.getLatestBlockhash()).blockhash
+  })
 
+  transaction.add(...[...instructions, ...cleanupInstructions].filter(i => !!i))
+
+  return {
+    transaction,
+    signers,
+  }
+}
