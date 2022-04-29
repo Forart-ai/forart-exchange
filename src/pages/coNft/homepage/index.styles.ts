@@ -36,14 +36,9 @@ export const LeftArea = styled('div')(({ theme }) => ({
   width: '50%',
   height: '100%',
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   flexDirection: 'column',
   paddingRight:'30px',
-
-  [theme.breakpoints.down('sm')]: {
-    width: '100%',
-    padding: '0',
-  },
 
   [theme.breakpoints.down('md')]: {
     paddingRight:'20px',
@@ -53,11 +48,11 @@ export const LeftArea = styled('div')(({ theme }) => ({
 }))
 
 export const LeftBottom = styled('div')(({ theme }) => ({
-  width: '100%',
-  minWidth: '40%',
+  width: '60%',
   padding: '1px',
   fontFamily: 'Aldrich-Regular',
   display: 'flex',
+  justifyContent: 'space-between',
 
   '& .total-data': {
     fontSize: '1.2rem',
@@ -67,6 +62,10 @@ export const LeftBottom = styled('div')(({ theme }) => ({
   '& .label': {
     fontSize: '1rem',
     color: theme.palette.primary.light,
+  },
+
+  [theme.breakpoints.down('xl')]: {
+    width: '100%',
   }
 
 }))
@@ -81,7 +80,7 @@ export const MainTitle = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'flex-start',
   flexDirection: 'column',
-  fontSize: '3.2rem',
+  fontSize: '44px',
   color: theme.palette.text.primary,
   fontFamily: 'KronaOne-Regular',
   userSelect:'none',
@@ -100,12 +99,11 @@ export const MainTitle = styled('div')(({ theme }) => ({
   },
 
   [theme.breakpoints.down('sm')]: {
-    fontSize: '30px',
+    fontSize: '28px',
   },
 
-  [theme.breakpoints.between('sm','md')]: {
-    fontSize: '22px',
-
+  [theme.breakpoints.between('sm','xl')]: {
+    fontSize: '32px',
   }
 
 }))

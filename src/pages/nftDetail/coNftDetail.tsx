@@ -149,7 +149,7 @@ const CONFTDetail:React.FC = () => {
   const { data: a } = useFindComponent(nftDetail?.components)
 
   const attr = useMemo(() => {
-    return a?.map((v: any) => ({
+    return nftDetail?.componentMetas.map((v: any) => ({
       chainMeta: JSON.parse(v.chainMeta)
     }))
   }, [ nftDetail,a])
