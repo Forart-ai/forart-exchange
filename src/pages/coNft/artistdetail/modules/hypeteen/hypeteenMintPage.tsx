@@ -101,6 +101,10 @@ const MintWrapper = styled('div')`
       transform: translateY(0px);
     }
   }
+  
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    zoom: .6;
+  }
 `
 
 const Operation = styled('div')`
@@ -113,7 +117,8 @@ const Operation = styled('div')`
   color: white;
   
   .progress {
-    width: 50%;
+    width: 70%;
+    margin-right: 10px;
     
     p {
       position: absolute;

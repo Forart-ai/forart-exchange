@@ -30,6 +30,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/autoplay'
 import CustomizeButton from '../../../contexts/theme/components/Button'
+import Text from '../../../contexts/theme/components/Text/Text'
 
 export const LeftTop = styled.div`
   width: 100%;

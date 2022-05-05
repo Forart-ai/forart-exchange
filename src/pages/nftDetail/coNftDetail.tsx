@@ -131,18 +131,26 @@ export const LevelLabel = styled('div')<{ color: string, shine?: boolean }>`
   ` : ''}
 `
 
-const CONFTDetail:React.FC = () => {
+export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
   const { account } = useSolanaWeb3()
   const { openModal } = useModal()
+  const [nftId, setNftId] = useState<string>()
 
   const [open, setOpen] = React.useState(false)
 
-  const nftId = useLocationQuery('id') ?? ''
+  const nftIds = useLocationQuery('id')
 
   const handleCopy = (content: any) => {
     copy(content)
     setOpen(true)
   }
+
+  useEffect(() => {
+    if (nft) {
+      setNftId(nft)
+    }
+    else setNftId(nftIds)
+  }, [nftId, nftIds])
 
   const { data: nftDetail } = useNftDetail(nftId)
 

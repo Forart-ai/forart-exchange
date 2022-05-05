@@ -299,6 +299,7 @@ const TabsContainer: React.FC = () => {
 const PersonalCenterPage: React.FC = () => {
 
   const { account } = useSolanaWeb3()
+  const { openModal } = useModal()
 
   const { data: credit } = useUserCredit()
 
@@ -323,7 +324,7 @@ const PersonalCenterPage: React.FC = () => {
                 <img src={AvatarIcon} />
               </div>
               <div className="username">DePainter
-                {/*<img src={SettingIcon} onClick={() => openModal(<UserProfileSetting />)} /> */}
+                <img src={SettingIcon} onClick={() => openModal(<UserProfileSetting />)} />
               </div>
               <div className="address">{ shortenAddress(account?.toString()) }</div>
               <div className="amount">$FTA: {credit?.retain ?? '0'}</div>

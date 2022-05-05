@@ -3,7 +3,7 @@ import { useMediaQuery } from 'react-responsive'
 // import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
 // import { Navigation } from 'swiper'
 import { Checkbox, Image as AntdImage } from 'antd'
-import styled from '@emotion/styled'
+import styled from 'styled-components'
 
 const StyledImage = styled(AntdImage)`
   display: flex;

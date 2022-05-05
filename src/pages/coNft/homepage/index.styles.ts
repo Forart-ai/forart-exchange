@@ -11,7 +11,6 @@ export const HeaderContainer = styled('div')(({ theme }) => ({
 
   [theme.breakpoints.down('md')]: {
     flexDirection: 'column',
-    padding: '10px 0',
     height: 'fit-content',
     margin: '100px 0',
   },
@@ -33,9 +32,9 @@ export const Wrapper = styled('div')`
 `
 
 export const LeftArea = styled('div')(({ theme }) => ({
-  width: '50%',
   height: '100%',
   display: 'flex',
+  flex:'1 1 0%',
   alignItems: 'flex-start',
   flexDirection: 'column',
   paddingRight:'30px',
@@ -47,37 +46,70 @@ export const LeftArea = styled('div')(({ theme }) => ({
 
 }))
 
-export const LeftBottom = styled('div')(({ theme }) => ({
-  width: '60%',
-  padding: '1px',
-  fontFamily: 'Aldrich-Regular',
-  display: 'flex',
-  justifyContent: 'space-between',
+// export const LeftBottom = styled('div')(({ theme }) => ({
+//   width: '60%',
+//   padding: '1px',
+//   fontFamily: 'Aldrich-Regular',
+//   display: 'flex',
+//   justifyContent: 'space-between',
+//
+//   '& .total-data': {
+//     fontSize: '1.2rem',
+//     color: theme.palette.primary.light,
+//   },
+//
+//   '& .label': {
+//     fontSize: '1rem',
+//     color: theme.palette.primary.light,
+//   },
+//
+//   [theme.breakpoints.down('xl')]: {
+//     width: '100%',
+//   }
+//
+// }))
 
-  '& .total-data': {
-    fontSize: '1.2rem',
-    color: theme.palette.primary.light,
-  },
-
-  '& .label': {
-    fontSize: '1rem',
-    color: theme.palette.primary.light,
-  },
-
-  [theme.breakpoints.down('xl')]: {
-    width: '100%',
+export const LeftBottom = styled('div')`
+  width:  60%;
+  font-family: Aldrich-Regular;
+  display: flex;
+  justify-content: space-between;
+  
+  .total-data{
+    font-size: 20px;
+    color: ${({ theme }) => theme.palette.primary.light}
   }
 
-}))
+  .label {
+    font-size: 18px;
+    color:  ${({ theme }) => theme.palette.primary.light}
+  }
+  
+  ${({ theme }) => theme.breakpoints.down('xl')} {
+    width: 100%;
 
-export const StyledCountUp = styled(CountUp)(({ theme }) => ({
-  color: theme.palette.primary.light,
-  fontSize: '2.6rem',
-}))
+    .total-data{
+      font-size: 16px;
+    }
+    .label {
+      font-size: 14px;
+    }
+}
+
+
+`
+
+export const StyledCountUp = styled(CountUp)`
+  color:  ${({ theme }) => theme.palette.primary.light};
+  font-size: 38px;
+
+  ${({ theme }) => theme.breakpoints.down('xl')} {
+    font-size: 30px;
+`
 
 export const MainTitle = styled('div')(({ theme }) => ({
-  width: '100%',
   display: 'flex',
+  flex: '1 1 0%',
   justifyContent: 'flex-start',
   flexDirection: 'column',
   fontSize: '44px',
@@ -102,8 +134,8 @@ export const MainTitle = styled('div')(({ theme }) => ({
     fontSize: '28px',
   },
 
-  [theme.breakpoints.between('sm','xl')]: {
-    fontSize: '32px',
+  [theme.breakpoints.down('xl')]: {
+    fontSize: '30px',
   }
 
 }))
@@ -142,9 +174,9 @@ export const RightArea = styled('div')`
   display: flex;
   justify-content: center;
   height: 100%;
-  width: 50%;
   user-select: none;
-
+  flex: 1 1 0%;
+  
   ${({ theme }) => theme.breakpoints.down('sm')}{
     margin-top: 20px;
     width: 100%;

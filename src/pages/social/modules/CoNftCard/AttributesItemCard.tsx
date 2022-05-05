@@ -1,14 +1,10 @@
-import React, { useMemo } from 'react'
+import React from 'react'
+import { Attribute } from '../../../../utils/metaplex/metadata'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import { Skeleton, styled } from '@mui/material'
-import { Attribute } from '../utils/metaplex/metadata'
-
-export interface AttributesListItem {
-    chainMeta: any;
-}
 
 const Wrapper = styled('div')`
-  height: fit-content;
+  height: 100%;
   overflow: auto;
   width: 100%;
 
@@ -22,23 +18,23 @@ const Wrapper = styled('div')`
 
 const BoxContainer = styled('div')`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 23%));
+  grid-template-columns: repeat(4, 110px);
   justify-content: space-between;
-  grid-template-rows: repeat(3, auto);
-  grid-gap: 5px;
+  grid-gap: 10px;
   user-select: none;
   width: 100%;
 `
 
 const ItemBox = styled('div')`
-  height: 100px;
-  max-width: 210px;
-  border-radius: 10px;
+  height: 60px;
+  width: 100%;
+  border-radius: 5px;
   background: linear-gradient(60.95deg, #8246F5 2.09%, #5000B4 97.91%);
   display: flex;
+  align-items: flex-start;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
+  padding-left: 5px;
 
   .type, .value {
     font-weight: lighter;
@@ -46,68 +42,23 @@ const ItemBox = styled('div')`
   }
 
   .type {
-    font-family: arialBold;
     color: ${({ theme }) => theme.palette.primary.light};
-    font-size: 18px;
-    font-family: Aldrich-Regular;
-    font-weight: bolder;
+    font-size: 14px;
     //background: #341222;
   }
 
   .value {
-    font-family: Aldrich-Regular;
-    text-align: center;
     color: #fff;
-    font-size: 20px;
+    font-size: 12px;
   }
 
 
 
 `
 
-export const AttributesItem: React.FC<{ item?: AttributesListItem[] }> = ({ item }) => {
+const AttributesItemCard:React.FC<{item?: Attribute[]}> = ({ item }) => {
 
   console.log(item)
-
-  return (
-    <Wrapper>
-      <ScrollContainer className="scroll-container" hideScrollbars={false}>
-
-        {
-          item ? (
-            <BoxContainer>
-              {
-                item?.map(items => (
-                  <ItemBox key={items?.chainMeta.trait_type} >
-                    <div className="type"> {items?.chainMeta.trait_type}</div>
-                    <div className="value"> {items?.chainMeta.value}</div>
-                  </ItemBox>
-                ))
-              }
-            </BoxContainer>
-          ) :
-
-            <BoxContainer>
-              {
-                new Array(9).fill({}).map((_, index) => (
-                  <Skeleton variant={'rectangular'} animation="wave"  key={index} >
-                    <ItemBox />
-                  </Skeleton>
-
-                ))
-              }
-            </BoxContainer>
-
-        }
-      </ScrollContainer>
-
-    </Wrapper>
-
-  )
-}
-
-export const AttributesItemForWalletNft: React.FC<{ item?: Attribute[] }> = ({ item }) => {
-
   return (
     <Wrapper>
       <ScrollContainer className="scroll-container" hideScrollbars={false}>
@@ -140,6 +91,7 @@ export const AttributesItemForWalletNft: React.FC<{ item?: Attribute[] }> = ({ i
       </ScrollContainer>
 
     </Wrapper>
-
   )
 }
+
+export default AttributesItemCard

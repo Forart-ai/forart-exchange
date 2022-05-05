@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import styled from '@emotion/styled'
+import styled from 'styled-components'
 import { useStyledNFTsQuery } from '../../hooks/queries/useStyledNFTsQuery'
 
 // import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'

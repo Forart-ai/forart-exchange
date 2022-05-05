@@ -7,7 +7,6 @@ import { purple } from '@mui/material/colors'
 const StyledButton = styled(Button)({
   textTransform: 'none',
   fontSize: 16,
-  margin:'0 10px',
   fontFamily: [
     '-apple-system',
     '"Segoe UI"',

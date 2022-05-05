@@ -15,6 +15,9 @@ module.exports = {
         ...config,
         resolve: {
           ...resolve,
+          alias: {
+            '@material-ui/styled-engine': '@material-ui/styled-engine-sc',
+          },
           fallback: {
             ...fallback,
             assert: false,

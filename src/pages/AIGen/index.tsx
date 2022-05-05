@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import styled from '@emotion/styled'
+import styled from 'styled-components'
 import { Button, Radio } from 'antd'
 import ai1 from '../../assets/images/AIGen/ai1.png'
 import ai2 from '../../assets/images/AIGen/ai2.png'
