@@ -150,7 +150,10 @@ const DataIcon = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    width: 64px;
+    height: 64px;
+  }
 `
 
 const IdentityInfo:React.FC = () => {

@@ -1,24 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import CONFT_API from '../../../../apis/co-nft'
-import { ThemeInput } from '../../../../styles/ThemeInput'
-import { OrderBySelector, OrderSelector } from '../../../../components/NFTListSelectors'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import {  Divider, List, Skeleton } from 'antd'
-import styled from 'styled-components'
 import AllNftList from '../../../../components/nft-mint/allNftList'
-import { LoadingOutlined } from '@ant-design/icons'
 import { useWalletRankModal } from '../../../../hooks/modals/useWalletRankModal'
-import {
-  RedoOutlined
-} from '@ant-design/icons'
+
 import { useMediaQuery } from 'react-responsive'
-import { Box, Button, MenuItem } from '@mui/material'
-import StyledSelector from '../../../../contexts/theme/components/Selector'
+import { Box, Button, List, ListItem, MenuItem, styled } from '@mui/material'
 import { SelectPainterRankings, SelectRankings } from '../../components/filter-operations/selectors'
 import StyledTextField from '../../../../contexts/theme/components/TextField'
+import CustomizeButton from '../../../../contexts/theme/components/Button'
 
-const Filter = styled.div`
+const Filter = styled('div')`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -40,24 +33,21 @@ const Filter = styled.div`
     justify-content: space-between;
     margin-bottom: 20px;
   }
-  @media screen and (max-width: 1080px) {
-    justify-content: space-between;
-    height: fit-content;
-    
-  }
+
   
   
 `
 
-const AllNftWrapper = styled.div`
+const AllNftWrapper = styled('div')`
   width: 100%;
-  font-size: 2em;
+  font-size: 18px;
+  padding: 0 20px;
+
   color: #ffffff;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
-  padding: 0 30px;
 
   .infinite-container {
     height: 1000px;
@@ -67,37 +57,24 @@ const AllNftWrapper = styled.div`
      display: none;
     }
   }
-  
 
-  .ant-list-items {
-    //display: flex;
-    //flex-wrap: wrap;
-    //justify-content: space-between;
-    
-   
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 230px);
-    grid-template-rows: repeat(auto-fill, 300px);
-    grid-gap: 12px;
-    justify-content: space-between;
-    user-select: none;
- 
-  }
-  
-  
-  
-  @media screen and (max-width: 1080px) {
-    padding: 0;
-    .ant-list-items {
-      grid-template-columns: repeat(2, 175px);
-      grid-template-rows: repeat(auto-fill, 240px);
-    }
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+   padding: 0 5px;
   }
   
 `
-const ListItem = styled.div`
-  display: flex;
-  width: fit-content;
+
+const StyledList = styled(List)`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 260px);
+  grid-gap: 10px;
+  justify-content: space-between;
+  user-select: none;
+  
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    grid-template-columns: repeat(2, 170px);
+    grid-gap: 10px;
+  }
 `
 
 const AllNftContainer: React.FC = () => {
@@ -197,14 +174,11 @@ const AllNftContainer: React.FC = () => {
             onChange ={(res:any) => onChange(res)}
             variant={'outlined'}
           />
-          <Button sx={{ marginLeft: '20px' }} variant={'contained'} color={'secondary'}  onClick={ openWalletRankModal }>Creator Ranking</Button>
+          <CustomizeButton sx={{ marginLeft: '20px', padding:'0 5px' }} variant={'contained'} color={'secondary'}  onClick={ openWalletRankModal }>Creator Ranking</CustomizeButton>
         </Box>
       </Filter>
 
       <div className="infinite-container" id="scrollableDiv">
-        {
-          loading && (<LoadingOutlined spin style={{ color: '#ffffff', display:'flex', justifyContent: 'center' }} />)
-        }
 
         <InfiniteScroll
           next={loadMoreData}
@@ -212,18 +186,28 @@ const AllNftContainer: React.FC = () => {
           loader={<></>}
           dataLength={ data?.length }
           scrollableTarget="scrollableDiv"
-          endMessage={<Divider style={{ color:' #c2c2c2' }} plain> oops! there&apos;s nothong more 🤐</Divider>}
+          endMessage={<></>}
         >
-          <List dataSource={data}
-            renderItem={(item,index) => (
-              <>
-                <ListItem key={index}>
+          {/*<List dataSource={data}*/}
+          {/*  renderItem={(item,index) => (*/}
+          {/*    <>*/}
+          {/*      <ListItem key={index}>*/}
+          {/*        <AllNftList data={item} index={index} />*/}
+          {/*      </ListItem>*/}
+
+          {/*    </>*/}
+          {/*  )}*/}
+          {/*/>*/}
+
+          <StyledList dense >
+            {data.map((item,index) => {
+              return (
+                <ListItem key={index} sx={{ '&,MuiListItem-root': { width:'auto', padding:0 } }} >
                   <AllNftList data={item} index={index} />
                 </ListItem>
-
-              </>
-            )}
-          />
+              )
+            })}
+          </StyledList>
 
           <div className="empty" style={{ height: '600px' }}  />
 

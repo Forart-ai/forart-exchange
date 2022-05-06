@@ -317,7 +317,7 @@ const AppHeader:React.FC  = () => {
                   <DrawerList />
                 </Drawer>
 
-                <img onClick={toggleDrawer('left',true)} src={DrawerIcon} />
+                <img onClick={toggleDrawer('left',true)} src={DrawerIcon} style={{ marginLeft: '10px' }} />
               </>
             ) : (
               <div style={{ fontSize: '20px', marginLeft:'20px' }}   onClick={handleRedirect} >

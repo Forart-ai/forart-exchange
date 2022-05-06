@@ -3,11 +3,12 @@ import styled from 'styled-components'
 import { Popover } from 'antd'
 import { NFTAttributesData } from '../../types/coNFT'
 import src from '*.png'
+import Sticky from 'react-sticky-el'
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  
+
 `
 export const Title = styled.div`
   font-size: 2.5em;
@@ -144,5 +145,6 @@ export const NFTPreview: React.FC<{ body?: NFTAttributesData, attrList?: NFTAttr
         ))
       }
     </Wrapper>
+
   )
 }

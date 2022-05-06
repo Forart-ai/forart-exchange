@@ -16,15 +16,13 @@ export type DialogProps = CardProps & {
 }
 
 const Wrapper = styled('div')`
-  min-width: 400px;
-  max-width: 98vw;
-  border-radius: 30px;
+  min-width: 390px;
+  border-radius: 20px;
   position: relative;
   border: 2px solid ${({ theme }) => theme.palette.primary.main};
   background-color: #28005A ;
-  padding: 30px;
-  margin: 20px;
-
+  padding: 20px;
+  
 `
 
 const Title = styled('div')`

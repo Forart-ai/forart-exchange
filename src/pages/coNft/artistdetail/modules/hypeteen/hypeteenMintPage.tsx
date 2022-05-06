@@ -26,6 +26,7 @@ const MintWrapper = styled('div')`
   height: 750px;
   display: flex;
   justify-content: center;
+  overflow: hidden;
   
   .stage, .blind-box {
     position: absolute;
@@ -215,7 +216,7 @@ const HypeteenMintPage:React.FC = () => {
     else openModal(<WalletSelectionModal />)
   }
   return (
-    <DefaultPageWrapper>
+    <DefaultPageWrapper >
       <MintWrapper>
         <img className={'blind-box'} src={BlindBox} />
         <img className={'stage'} src={StageImage} />

@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
 import AllNftContainer from './modules/allNftContainer'
 
 import ArtistInfo from './modules/artistInfo'
 import { ArtDetail } from './modules/artistIntroduction'
-import { Tab, Tabs, ThemeProvider, useMediaQuery, useTheme } from '@mui/material'
+import { styled, Tab, Tabs, ThemeProvider, useMediaQuery, useTheme } from '@mui/material'
 import ForartTheme from '../../../contexts/theme/config/dark'
 import NftCreate from './modules/nftCreate'
 import { useLocationQuery } from '../../../hooks/useLocationQuery'
@@ -22,22 +21,28 @@ interface StyledTabProps {
 
 const StyledTab = styled((props: StyledTabProps) => (
   <Tab disableRipple {...props} />
-))(({ theme }) => ({
+))`
   // textTransform: 'none',
-  fontWeight: 600,
-  fontSize: '18px',
-  color: 'rgba(255, 255, 255, 0.7)',
-  minWidth: '170px',
-  minHeight: '42px',
-  backgroundColor:'#5000B4',
-  borderRadius:'40px',
-  margin:'0 20px',
-  transition: '.5s ease',
+  font-weight: 600;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  min-width: 120px;
+  min-height: 40px;
+  background-color: #5000B4;
+  border-radius: 40px;
+  margin: 0 20px; 
+  transition: .5s ease;
+  
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    font-size: 12px;
+    margin: 0 10px;
+  }
+ 
 
-  '&.Mui-selected': {
-    color: '#ffffff',
-  },
-}))
+  &.Mui-selected {
+    color: #ffffff;
+  }
+`
 
 const TabPanelAnimation = styled('div')`
   .anime {
@@ -92,7 +97,7 @@ export type KitProperties = {
   bodyType: string
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled('div')`
   width: 100%;
   max-width: 100vw;
   padding: 0 0 60px 0;
@@ -106,13 +111,13 @@ const Wrapper = styled.div`
  }  
 `
 
-const ContentArea = styled.div`
+const ContentArea = styled('div')`
  transition: 3s ease;
   padding: 0 10px;
 
 `
 
-const TabArea = styled.div`
+const TabArea = styled('div')`
   width: 100%;
   min-height: fit-content;
   margin: 30px 0;
@@ -147,7 +152,12 @@ const Index: React.FC = () => {
 
     '&. MuiTabs-flexContainer': {
       justifyContent:'center'
-    }
+    },
+
+    // [theme.breakpoints.down('sm')]: {
+    //   fontSize:'14px'
+    // }
+
   }))
 
   const [value, setValue] = React.useState(1)

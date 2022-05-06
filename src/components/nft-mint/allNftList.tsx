@@ -12,18 +12,16 @@ import { Link } from 'react-router-dom'
 import { styled } from '@mui/material'
 
 const Wrapper = styled('div')`
-  width: 220px;
-  height: 280px;
+  width: 100%;
+  height: 100%;
   border: 1px #999999 solid;
-  border-radius: 20px;
-  margin: 10px 9px;
+  border-radius: 10px;
   padding: 10px;
   display: flex; 
   background-color: rgba(153, 153, 153, .2);
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  //background-image: linear-gradient(to bottom, rgba(255, 31, 131, 0.6), rgba(241, 13, 192, 0.6));
   transition: transform 0.22s;
   
   :hover {
@@ -34,14 +32,10 @@ const Wrapper = styled('div')`
   img {
     width: 100%;
     object-fit: contain;
-    border-radius: 20px;
+    border-radius: 10px;
     cursor: pointer;
   }
-
-  @media screen and (max-width: 1080px) {
-    width: 165px;
-    height: 230px;
-  }
+  
 `
 
 const Info = styled('div')`
@@ -51,36 +45,38 @@ const Info = styled('div')`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding: 7px 8px;
-  
- 
+  margin-top: 10px;
   
   .row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 1em;
+    font-size: 16px;
     width: 100%;
     
-
     .name {
-      font-weight: bold;
       width: 100%;
     }
-
-   
   }
   
   .rank {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    font-size: .9em;
+    font-size: 14px;
     width: 100%;
+    font-family: Aldrich-Regular;
     
     img {
-      width: 1em;
+      width: 18px;
       margin-right: 10px;
+    }
+  }
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    .row {
+      font-size: 14px;
+      width: 100%;
     }
   }
 `

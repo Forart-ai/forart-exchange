@@ -25,49 +25,54 @@ const BoxContainer = styled('div')`
   grid-template-columns: repeat(auto-fill, minmax(150px, 23%));
   justify-content: space-between;
   grid-template-rows: repeat(3, auto);
-  grid-gap: 5px;
-  user-select: none;
+  grid-gap: 15px;
   width: 100%;
+  
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    grid-template-columns: repeat(3, 110px);
+  }
 `
 
 const ItemBox = styled('div')`
   height: 100px;
   max-width: 210px;
+  width: 100%;
   border-radius: 10px;
   background: linear-gradient(60.95deg, #8246F5 2.09%, #5000B4 97.91%);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  font-family: Arial;
 
-  .type, .value {
-    font-weight: lighter;
-
-  }
 
   .type {
-    font-family: arialBold;
     color: ${({ theme }) => theme.palette.primary.light};
     font-size: 18px;
-    font-family: Aldrich-Regular;
-    font-weight: bolder;
     //background: #341222;
   }
 
   .value {
-    font-family: Aldrich-Regular;
     text-align: center;
     color: #fff;
     font-size: 20px;
   }
 
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    height: 56px;
 
+    .type {
+      font-size: 12px;
+    }
+
+    .value {
+      font-size: 14px;
+    }
+  }
 
 `
 
 export const AttributesItem: React.FC<{ item?: AttributesListItem[] }> = ({ item }) => {
-
-  console.log(item)
 
   return (
     <Wrapper>

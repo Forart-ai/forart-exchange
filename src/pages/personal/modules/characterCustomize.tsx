@@ -5,15 +5,13 @@ import {
   AttrType,
   BodyContent,
   KitContent,
-  RandomHatsContainer,
   SelectedBody
 } from '../../coNft/artistMint.style'
 import { NFTPreview } from '../../../components/nft-mint/selectedList'
-import Background from '../../../assets/images/coPools/create-background.png'
-import RandomHats from '../../../assets/images/coPools/random-hat.png'
 import { SelectableKitList } from '../../../components/nft-mint/mintKit'
 import { NFTAttributesData } from '../../../types/coNFT'
 import { useArtistKitQuery } from '../../../hooks/queries/useArtistKitQuery'
+import Sticky from 'react-sticky-el'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -21,8 +19,7 @@ const Wrapper = styled('div')`
   margin: 60px 0;
   display: flex;
   justify-content: space-between;
-  flex-direction: column;
-  
+  flex-direction: column; 
 
 
 `
@@ -32,6 +29,7 @@ export const TopContainer = styled('div') `
   height: fit-content;
   display: flex;
   padding: 0 100px;
+
   justify-content: center;
   
   @media screen and (max-width: 1080px) {
@@ -59,7 +57,7 @@ const CharacterCustomize:React.FC<{artistId: string, selected: (_?: any, __?: an
   return (
     <Wrapper >
       <TopContainer>
-        <Box sx={{ display:'flex', justifyContent:'flex-start', flexDirection:'column' }}>
+        <Box sx={{ display:'flex', justifyContent:'flex-start', flexDirection:'column' }} >
           <BodyContent>
             <SelectedBody>
               {
@@ -71,9 +69,6 @@ const CharacterCustomize:React.FC<{artistId: string, selected: (_?: any, __?: an
               }
             </SelectedBody>
           </BodyContent>
-          {/*<Box sx={{ width: '100%', marginTop: '20px' }}>*/}
-          {/*  <Button variant={'contained'} sx={{ width: '200px' }}> Edit </Button>*/}
-          {/*</Box>*/}
         </Box>
 
         <KitContent >

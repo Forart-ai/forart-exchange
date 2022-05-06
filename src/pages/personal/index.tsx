@@ -106,6 +106,7 @@ const UserInfo = styled('div')`
   .amount {
     color: ${({ theme }) => theme.palette.primary.main};
     font-size: 18px;
+    margin-top: 20px;
     font-family: Aldrich-Regular;
   }
 
@@ -142,12 +143,22 @@ const UserInfo = styled('div')`
     font-size: 18px;
     color: ${({ theme }) => theme.palette.grey[400]};
   }
+  
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    .username {
+      font-size: 24px;
+    }
+
+    .address {
+      font-size: 14px;
+    }
+  }
 `
 
 const TabsWrapper = styled('div')`
   width: 100vw;
   position: relative;
-  margin-top: 50px;
+  margin-top: 80px;
 `
 
 interface StyledTabsProps {
@@ -166,6 +177,7 @@ const StyledTabs = styled((props: StyledTabsProps) => (
     TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
   />
 ))(({ theme }) => ({
+
   '& .MuiTabs-indicator': {
 
     display: 'flex',
@@ -177,6 +189,7 @@ const StyledTabs = styled((props: StyledTabsProps) => (
     // maxWidth: 40,
     width: '100%',
     backgroundColor: theme.palette.primary.main,
+
   },
 }))
 
@@ -220,6 +233,11 @@ const StyledTab = styled((props: StyledTabProps) => (
   fontSize: '20px',
   margin:'0 40px',
 
+  [theme.breakpoints.down('sm')] : {
+    fontSize:'14px',
+    margin:'0 10px',
+  },
+
   marginRight: theme.spacing(1),
   color:theme.palette.secondary.main,
 
@@ -247,8 +265,10 @@ const TabsContainer: React.FC = () => {
     <TabsWrapper >
       <Box sx={{ borderBottom: '1px #5000B4 solid', width:'auto' }}>
         <StyledTabs
-          variant={isMobile ? 'scrollable' : 'standard'}
-          centered={isMobile ? false : true}
+          // variant={isMobile ? 'scrollable' : 'standard'}
+          // centered={isMobile ? false : true}
+          variant={ 'standard'}
+          centered={ true}
           value={value}
           onChange={handleChange}
           aria-label="styled tabs example"

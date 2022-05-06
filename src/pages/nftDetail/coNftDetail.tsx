@@ -1,12 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
-  Alert,
+  Alert, keyframes,
   Snackbar,
-  Tooltip
 } from '@mui/material'
 import UploadIcon from '../../assets/images/coPools/download.svg'
-
-import CopyIcon from '../../assets/images/coPools/copy.png'
 
 import { AttributesItem } from '../../components/attributes-item'
 import { useFindComponent } from '../../hooks/queries/useFindComponent'
@@ -19,12 +16,9 @@ import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 import { HeartFilled, HeartOutlined } from '@ant-design/icons'
 import { useMediaQuery } from 'react-responsive'
 import { shortenAddress } from '../../utils'
-import { useLocation } from 'react-router-dom'
 import copy from 'copy-to-clipboard'
-import DefaultPageWrapper from '../../components/default-page-wrapper'
-import styled, {  keyframes } from 'styled-components'
 import html2canvas from 'html2canvas'
-import Button from '@mui/material/Button'
+import { styled } from '@mui/material'
 
 import { Wrapper, NFTInfo, Options, LeftArea, RightArea, Canvas, RightTopArea, RightBottomArea, TopTitle } from './index.style'
 
@@ -46,6 +40,10 @@ const Rainbow = styled('div')`
       background: -webkit-linear-gradient(90deg,#EB1482 50.04%,#CD19B9 50.01%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+  }
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    font-size: 14px;
   }
 `
 
@@ -79,7 +77,7 @@ export const ShineKeyFrame = keyframes`
   }
 `
 
-const HeartContainer = styled('div')<{heartStatus?: 'up' | 'down'}>`
+const HeartContainer = styled('div')<{heartstatus?: 'up' | 'down'}>`
   display: flex;
   align-items: center;
   user-select: none;
@@ -96,7 +94,7 @@ const HeartContainer = styled('div')<{heartStatus?: 'up' | 'down'}>`
     //}
   }
   
-  ${props => props.heartStatus === 'up' && `
+  ${props => props.heartstatus === 'up' && `
   
   .heart {
      color: #8246F5
@@ -104,7 +102,7 @@ const HeartContainer = styled('div')<{heartStatus?: 'up' | 'down'}>`
   `
 }
 
-  ${props => props.heartStatus === 'down' && `
+  ${props => props.heartstatus === 'down' && `
   .heart {
      color: #A197AA
      }
@@ -136,7 +134,7 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
   const { openModal } = useModal()
   const [nftId, setNftId] = useState<string>()
 
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState<boolean>(false)
 
   const nftIds = useLocationQuery('id')
 
@@ -165,7 +163,7 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
   const [heartNum, setHeartNum] = useState<number>(nftDetail?.star ?? 0)
   const [isHeart, setIsHeart] = useState<boolean>(false)
   const [heartNft, setHeartNft] = useState<string[]>()
-  const [heartStatus, setHeartStatus] = useState<'up' | 'down'>('down')
+  const [heartstatus, setHeartStatus] = useState<'up' | 'down'>('down')
 
   const handleLike = useCallback((nftId: string) => {
     if (!account) {
@@ -173,7 +171,7 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
       return
     }
 
-    if (nftDetail?.series && heartStatus === 'down') {
+    if (nftDetail?.series && heartstatus === 'down') {
       setIsHeart(true)
       setHeartNum(prev => prev + 1)
       setHeartStatus('up')
@@ -186,7 +184,7 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
         })
     }
 
-    if (nftDetail?.series  && heartStatus === 'up') {
+    if (nftDetail?.series  && heartstatus === 'up') {
       setIsHeart(false)
       setHeartNum(prev => prev - 1)
       setHeartStatus('down')
@@ -198,7 +196,7 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
         })
     }
 
-  },[account, nftDetail, heartStatus])
+  },[account, nftDetail, heartstatus])
 
   useEffect(() => {
 
@@ -262,12 +260,12 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
             <RightTopArea>
               <TopTitle>
                 <div style={{ display:'flex', alignItems: 'center' }}>
-                  <div className="name">{nftDetail?.chainNftName || `HypeTeen # ${nftDetail?.chainNftNameTmp}`}</div>
+                  <div className="name">{nftDetail?.chainNftName}</div>
 
                 </div>
 
                 <Options>
-                  <HeartContainer heartStatus = {heartStatus} >
+                  <HeartContainer heartstatus = {heartstatus} >
                     <span>{heartNum}</span>
                     <HeartOutlined onClick={() => handleLike(nftDetail?.id as string)} className="heart" />
                   </HeartContainer>

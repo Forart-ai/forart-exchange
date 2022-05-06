@@ -1,23 +1,23 @@
 import styled from 'styled-components'
 
-export const  NFTInfo = styled('div')`
-  width: 100%;
-  height:fit-content;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  margin: 60px 0;
-  
-  @media screen and (max-width: 1080px) {
-    flex-direction: column;
-    height: fit-content;
-  }
-`
 export const Wrapper = styled.div`
   background-color: rgb(13,14,45);
   height: 100%;
   width: 100%; 
-  min-height: 100vh;
+  min-height: 150vh;
+`
+export const  NFTInfo = styled('div')`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin: 60px 0;
+
+
+  @media screen and (max-width: 1080px) {
+    flex-direction: column;
+    height: fit-content;
+  }
 `
 
 export const Canvas = styled.div`
@@ -31,39 +31,39 @@ export const Canvas = styled.div`
   alig-items: center;
   margin: 0 auto;
 
-  @media screen and (max-width: 1080px) {
-    width: calc(100vw - 10px)
+  @media screen and (max-width: 420px) {
+    width: calc(100vw - 10px);
+    padding: 5px;
   }
 
 `
 
 export const LeftArea = styled('div')`
-  height: 480px;
-  width: 480px;
-  border: 1px rgba(153, 153, 153, .6) solid;
-  border-radius: 30px;
-  background-color: rgba(153, 153, 153, .15);
+  width: 460px;
+  height:  460px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
   object-fit: contain;
-
+  margin-right: 20px;
+  
 
   img {
-    height: 100%;
+    border: 1px rgba(153, 153, 153, .6) solid;
+    background-color: rgba(153, 153, 153, .15);
+    padding: 20px;
     width: 100%;
     border-radius: 30px;
   }
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1080px) {
     margin: 0 auto;
-    height: 100%;
-    width: 100%;
+    height: 80%;
+    width: 80%;
   }
 `
 export const RightArea = styled('div')`
-  width: calc(100% - 570px);
+  width: 60%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -1,10 +1,10 @@
 import { styled } from '@mui/material'
 
 export const Wrapper = styled('div')`
-  width: 260px;
+  width: 100%;
   //border-top-left-radius: 20px;
   //border-top-right-radius: 20px;
-  border-radius: 20px;
+  border-radius: 10px;
   position: relative;
   background-color: #28005A;
   font-family: Arial;
@@ -12,10 +12,12 @@ export const Wrapper = styled('div')`
   flex-direction: column;
   
   .nft-container {
-    height: 220px;
-    width: 220px;
+    height: 100%;
+    width: 100%;
     cursor: pointer;
     margin: 0 auto;
+    padding: 10px;
+
 
     .spin {
       position: absolute;
@@ -23,12 +25,11 @@ export const Wrapper = styled('div')`
     }
 
     img {
-      margin-top: 15px;
       object-fit: contain;
-      width: 95%;
-      height: 95%;
-      border-radius: 20px;
-    }
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    } 
   }
  
   
@@ -45,10 +46,11 @@ export const Wrapper = styled('div')`
 `
 
 export const NFTInfo = styled('div')`
-  padding: 10px;
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding: 10px;
+
 `
 
 export const Owner = styled('div')`
@@ -71,6 +73,15 @@ export const Owner = styled('div')`
   .solana-icon {
     width: 20px;
   }
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    .label {
+      font-size: 12px;
+    }
+    .username {
+      font-size: 14px;
+    }
+  }
 `
 
 export const Messages = styled('div')`
@@ -78,6 +89,13 @@ export const Messages = styled('div')`
   flex-direction: column;
   justify-content: space-between;
   margin-top: 10px;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    .label, .account {
+      font-size: 12px;
+    }
+   
+  }
 `
 
 export const Grid = styled('div')`

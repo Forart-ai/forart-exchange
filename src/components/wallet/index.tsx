@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { formatEther } from '@ethersproject/units'
-import styled from 'styled-components'
 // @ts-ignore
 import { Button, Dropdown, Menu, Modal } from 'antd'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
@@ -11,8 +10,9 @@ import useConnectedWallet from '../../hooks/useGetCurrentWallet'
 import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from './WalletSelectionModal'
 import WalletInfoModal from './modal/wallet-info-modal'
+import { styled } from '@mui/material'
 
-const StyledWallet = styled.div`
+const StyledWallet = styled('div')`
   height: 40px;
   color: #fff;
   display: flex;
@@ -22,8 +22,7 @@ const StyledWallet = styled.div`
   padding: 0 10px;
   //margin-right: 20px;
   cursor: pointer;
-  min-width: 170px;
-  width: 180px;
+  min-width: 120px;
 
   background-clip: padding-box, border-box;
   background-origin: padding-box, border-box;
@@ -34,48 +33,8 @@ const StyledWallet = styled.div`
     align-items: center;
   }
   
-`
-
-const MenuContainer = styled.div`
-  height: 200px;
-  width: 180px;
-
-
-  .ant-menu {
-    position: relative;
-    background-color: #1D222D;
-    border-radius: 10px;
-    border: 3px #271d28 solid;
-    height: 70px;
-    width: 100%;
-
-    top: 10px;
-  }
-
-  .menu-box {
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    padding: 10px 0;
-
-
-    .disconnect {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      width: 90%;
-      height: 40px;
-      font-size: 1.2em;
-      font-weight: bold;
-      color: white;
-      background-color: rgb(221, 52, 68);
-      border-radius: 8px;
-    }
-  }
-
-
+ 
+  
 `
 
 type CurrentAccountProps = {
@@ -91,59 +50,6 @@ const MetamaskIcon: React.FC = () => {
     <div>
       <div className="userIcon" style={{ display:'flex', marginRight:'15px' }} ref={ref as any} />
     </div>
-  )
-}
-
-const WalletContent: React.FC<CurrentAccountProps> =({
-  account
-}) => {
-  const { disconnect } = useSolanaWeb3()
-  const { deactivate } = useWeb3React()
-
-  const { library, chainId } = useWeb3React()
-
-  const [, setBalance] = useState()
-
-  useEffect(():any => {
-    if (!!account && !!library) {
-      let stale = false
-
-      // library.getBalance(account)
-      //   .then((balance:any) => {
-      //     if (!stale) {
-      //       setBalance(balance)
-      //       console.log(formatEther(balance))
-      //     }
-      //   })
-      //   .catch(() => {
-      //     if (!stale) {
-      //       // @ts-ignore
-      //       setBalance(null)
-      //     }
-      //   })
-
-      return () =>{
-        stale = true
-        setBalance(undefined)
-      }
-    }
-
-  },[account, library,chainId])
-
-  return (
-    <MenuContainer>
-      <Menu>
-        <div className="menu-box">
-          <div className= "disconnect" onClick={account ? deactivate : disconnect}  > Disconnect </div>
-        </div>
-      </Menu>
-    </MenuContainer>
-
-  // <BalanceContainer>
-  //   <div className="balance">{account}</div>
-  //   {/*<div>{balance !== undefined ? `${formatEther(balance)}` : ''}</div>*/}
-  // </BalanceContainer>
-
   )
 }
 

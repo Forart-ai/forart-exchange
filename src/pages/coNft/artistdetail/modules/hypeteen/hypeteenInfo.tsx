@@ -22,16 +22,14 @@ const Wrapper = styled('div')`
 const BackgroundImage = styled('div')`
   height: 520px;
   width: 100%;
-  background: url(${Background}) no-repeat;
+  background: url(${Background}) no-repeat center;
   position: relative;
   background-size: cover;
   text-align: center;
-
- 
   
 
   ${({ theme }) => theme.breakpoints.down('sm')} {
-    margin: 60px 0;
+    margin-top: 60px;
   }
 `
 
@@ -151,6 +149,14 @@ const DataIcon = styled('div')`
   justify-content: center;
   align-items: center;
   
+  img {
+    width: 50%;
+  }
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    width: 64px;
+    height: 64px;
+  }
 `
 
 const HypeteenInfo:React.FC = () => {

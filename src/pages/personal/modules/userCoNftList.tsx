@@ -13,7 +13,15 @@ const NFTListContainer = styled('div')`
   padding: 30px 20px;
   margin: 20px 0;
   
-  @media screen and (max-width: 1100px) {
+${({ theme }) => theme.breakpoints.down('sm')} {
+  grid-template-columns: repeat(2, 180px);
+  justify-content: center;
+  }
+
+
+  ${({ theme }) => theme.breakpoints.between('sm','md')} {
+    grid-template-columns: repeat(2, 260px);
+   
     justify-content: center;
   }
 `

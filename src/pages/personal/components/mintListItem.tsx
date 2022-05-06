@@ -117,7 +117,7 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
 
         <Messages >
           <Grid>
-            <div className={'label'}>Owned By</div>
+            <div className={'label'}>Owner</div>
             <div className={'account'}>{shortenAddress(account?.toBase58())}</div>
           </Grid>
           <Grid>
