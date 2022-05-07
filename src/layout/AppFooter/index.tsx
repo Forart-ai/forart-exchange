@@ -5,7 +5,13 @@ import TwitterIcon from '../../assets/images/socialIcons/twitter.png'
 import TelegramIcon from '../../assets/images/socialIcons/telegram.png'
 import DiscordIcon from '../../assets/images/socialIcons/discord.png'
 import EmailIcon from '../../assets/images/socialIcons/email.png'
-import { EXTERNAL_LINKS } from '../AppSideBar'
+
+export  const EXTERNAL_LINKS: Array<{ icon: string, link: string }> = [
+  { icon: TwitterIcon, link: 'https://twitter.com/forart_ai' },
+  { icon: TelegramIcon, link: 'https://t.me/forart_ai' },
+  { icon: DiscordIcon, link: 'https://discord.gg/RDaUkaW39S' },
+  // { icon: WebsiteIcon, link:'https://forart.co/' }
+]
 
 const Footer = styled('div')`
   height: 210px;

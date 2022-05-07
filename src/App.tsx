@@ -8,14 +8,9 @@ import AppHeader from './layout/AppHeader'
 import { Route, useLocation } from 'react-router-dom'
 import routes from './routes'
 import '../src/font/font.css'
-import { useDispatch } from 'react-redux'
-import { setSideBarCollapsed, useSideBarCollapsed } from './store/app'
 import { useMediaQuery } from 'react-responsive'
-import { BottomNavigation, BottomNavigationAction, Paper, styled } from '@mui/material'
-import { useSolanaWeb3 } from './contexts/solana-web3'
-import { useSignLogin } from './hooks/useSignLogin'
+import {  styled } from '@mui/material'
 import useEagerConnect from './hooks/useEagerConnect'
-import AppBottomNavigation from './layout/AppBottomNavigation'
 import AppFooter from './layout/AppFooter'
 
 export const BlueGlow = styled('div')`
@@ -59,52 +54,52 @@ const App: React.FC = () => {
     <Layout className="app">
       <div className="border" >
 
-        { !isMobile ? (
-          <>
-            <AppHeader  />
-            <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', zIndex: 0,  top:'60px' }}>
-              <PurpleGlow style={{ right: '0' }} />
-              <PurpleGlow style={{ left: '25%' }} />
-              <PurpleGlow style={{ top:'90vh', right: '0%', opacity:'.6', width:'600px', height: '600px' }} />
-              <BlueGlow style={{ right: '25%' }} />
-              <BlueGlow style={{ top:'60vh' }} />
-              <BlueGlow style={{ top:'80vh', right: '30%', opacity:'.6', width:'400px', height: '400px' }} />
-              {
+        {
+          !isMobile ? (
+            <>
+              <AppHeader  />
+              <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', zIndex: 0,  top:'60px' }}>
+                <PurpleGlow style={{ right: '0' }} />
+                <PurpleGlow style={{ left: '25%' }} />
+                <PurpleGlow style={{ top:'90vh', right: '0%', opacity:'.6', width:'600px', height: '600px' }} />
+                <BlueGlow style={{ right: '25%' }} />
+                <BlueGlow style={{ top:'60vh' }} />
+                <BlueGlow style={{ top:'80vh', right: '30%', opacity:'.6', width:'400px', height: '400px' }} />
+                {
+                  routes.map(({ exact = true, path, component }) => (
+                    <Route
+                      path={path}
+                      exact={exact}
+                      component={component}
+                      key={path}
+                    />
 
-                routes.map((router:any) => (
+                  ))
+                }
+                <BackTop />
+                <AppFooter />
+              </Content>
 
-                  <Route
-                    path={router.path}
-                    exact
-                    component={router.component}
-                    key={router.path}
-                  />
-
-                ))
-              }
-              <BackTop />
-              <AppFooter />
-            </Content>
-
-          </>
-        ) : (
-          <>
-            <AppHeader  />
-            <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', minHeight:'100vh', }}>
-              {
-                routes.map((router:any) => (
-                  <Route
-                    path={router.path}
-                    exact
-                    component={router.component}
-                    key={router.path}
-                  />
-                ))
-              }
-            </Content>
-            {/*<AppBottomNavigation />*/}
-          </>
-        )}
+            </>
+          ) : (
+            <>
+              <AppHeader />
+              <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', minHeight:'100vh', }}>
+                {
+                  routes.map(({ exact = true, path, component }) => (
+                    <Route
+                      exact={exact}
+                      path={path}
+                      component={component}
+                      key={path}
+                    />
+                  ))
+                }
+              </Content>
+              {/*<AppBottomNavigation />*/}
+            </>
+          )
+        }
       </div>
     </Layout>
   )

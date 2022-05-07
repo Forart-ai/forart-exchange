@@ -1,4 +1,3 @@
-import LevelUp from '../pages/LevelUp'
 import NFTCreate from '../pages/nftCreate'
 import Marketplace from '../pages/marketplace'
 import NFTDetailPage from '../pages/marketplace/nftDetail'
@@ -7,6 +6,8 @@ import PersonalCenterPage from '../pages/personal'
 import CoNftPage from '../pages/coNft/homepage'
 import ArtistDetail from '../pages/coNft/artistdetail'
 import Staking from '../pages/staking/index'
+import Game from '../pages/game/index'
+
 import { ReactComponent as GanIcon } from '../assets/images/siderIcon/f-idea.svg'
 import { ReactComponent as GeneratorIcon } from '../assets/images/siderIcon/generator.svg'
 import { ReactComponent as MarketplaceIcon } from '../assets/images/siderIcon/marketplace.svg'
@@ -16,16 +17,18 @@ import { ReactComponent as ChatIcon } from '../assets/images/siderIcon/chat.svg'
 import NftChatroom from '../pages/social'
 import CONFTDetail from '../pages/nftDetail/coNftDetail'
 import WalletNftDetail from '../pages/nftDetail/walletNftDetail'
+import AiArt from '../pages/game/modules/aiArt'
 
 export type Route = {
   path: string
   title: string
   icon?: any
+  exact?: boolean
   component: any
   hidden?: boolean
   match?: RegExp
-  pools?: boolean
   disable?: boolean
+  parent?:string
 }
 
 const routes: Route[] = [
@@ -76,14 +79,6 @@ const routes: Route[] = [
     disable: false,
     hidden: true
   },
-  // {
-  //   path: '/nftBreed',
-  //   title: 'Style Transformation',
-  //   icon: GeneratorIcon,
-  //   component: LevelUp,
-  //   disable: false,
-  //   hidden: true
-  // },
 
   {
     path: '/marketplace',
@@ -112,14 +107,12 @@ const routes: Route[] = [
     hidden: true
   },
   {
-    path:'/game',
+    path: '/game',
     title:'Game',
-    component: Staking,
+    exact: false,
+    component: Game,
     icon: MarketplaceIcon,
-    disable: true
-
-  }
-
+  },
 ]
 
 export default routes

@@ -202,7 +202,7 @@ const AllNftContainer: React.FC = () => {
           <StyledList dense >
             {data.map((item,index) => {
               return (
-                <ListItem key={index} sx={{ '&,MuiListItem-root': { width:'auto', padding:0 } }} >
+                <ListItem key={index} sx={{ '&.MuiListItem-root': { width:'auto', padding:0 } }} >
                   <AllNftList data={item} index={index} />
                 </ListItem>
               )
