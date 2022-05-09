@@ -13,6 +13,7 @@ import { Box, Divider, Drawer, List, ListItem, styled } from '@mui/material'
 import DrawerIcon from '../../assets/images/siderIcon/drawer.svg'
 import Button from '@mui/material/Button'
 import { Anchor } from 'antd'
+import Sticky from 'react-sticky-el'
 
 const AppHeaderContent = styled('div')`
   width: 100%;
@@ -20,10 +21,13 @@ const AppHeaderContent = styled('div')`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
-  position: fixed;
   background: #0A0523;
   border-bottom: 1px #8345f4 solid;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+ 
+ 
   //background-image: linear-gradient(to right, #B8316A, #601b7e);
 
 
@@ -258,7 +262,6 @@ const AppHeader:React.FC  = () => {
   return (
     <AppHeaderContent>
       <MainContent>
-
         <Logo>
           <Link to={ '/' }>
             <img src={ForartLogo}    />
@@ -329,6 +332,7 @@ const AppHeader:React.FC  = () => {
       </MainContent>
 
     </AppHeaderContent>
+
   )
 }
 

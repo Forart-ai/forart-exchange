@@ -3,17 +3,17 @@ import routes from '../../routes'
 import { MenuItem, MenuList, Paper, styled, Typography } from '@mui/material'
 import { Link, useLocation } from 'react-router-dom'
 import { gameRoutes } from './routes'
+import Sticky from 'react-sticky-el'
 
 export const MenuContainer = styled('div')`
-  min-height: 100vh;
-  max-width: 240px;
-  border-right: 1px ${({ theme }) => theme.palette.secondary.light} solid;
-  position: relative;
-  left: 0;
-
+   min-height: 100vh;
+   max-width: 240px;
+   border-right: 1px ${({ theme }) => theme.palette.secondary.light} solid;
+   position: relative;
+   left: 0;
 `
-export const StyledMenuList = styled(MenuList)`
 
+export const StyledMenuList = styled(MenuList)`
 &.MuiList-root {
   padding: 10px 20px;
   
@@ -58,36 +58,45 @@ export const GamePageSidebar: React.FC = () => {
   const { pathname }  = useLocation()
   console.log(pathname)
   return (
+
     <MenuContainer className={'sidebar'}>
+
       <MenuPaper sx={{ width: 230 }}>
-        {
-          gameRoutes.map((route, index) => {
-            return (
-              <Link to={`/game/${route.path}`}  key={index}>
-                <StyledMenuList>
+        <Sticky positionRecheckInterval={60} >
+          {
+            gameRoutes.map((route, index) => {
+              return (
 
-                  {
-                    pathname === `/game/${route.path}` ? (
-                      <SelectedMenuItem>
-                        <Typography  variant={'inherit'}>
-                          {route.title}
-                        </Typography>
-                      </SelectedMenuItem>
-                    ) :
-                      <StyledMenuItem>
-                        <Typography  variant={'inherit'}>
-                          {route.title}
-                        </Typography>
-                      </StyledMenuItem>
-                  }
+                <Link to={`/game/${route.path}`}  key={index}>
+                  <StyledMenuList>
 
-                </StyledMenuList>
-              </Link>
-            )
-          })
-        }
+                    {
+                      pathname === `/game/${route.path}` ? (
+                        <SelectedMenuItem>
+                          <Typography  variant={'inherit'}>
+                            {route.title}
+                          </Typography>
+                        </SelectedMenuItem>
+                      ) :
+                        <StyledMenuItem>
+                          <Typography  variant={'inherit'}>
+                            {route.title}
+                          </Typography>
+                        </StyledMenuItem>
+                    }
+
+                  </StyledMenuList>
+
+                </Link>
+
+              )
+            })
+          }
+        </Sticky>
       </MenuPaper>
+
     </MenuContainer>
+
   )
 }
 

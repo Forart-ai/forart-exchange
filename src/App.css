@@ -17,16 +17,6 @@ App {
   }
 }
 
-.App-header {
-  background-color: #04111D;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
 .App-link {
   color: #61dafb;
@@ -46,14 +36,7 @@ App {
   overflow-x: hidden;
 }
 
-.ant-image.ant-image-error {
-  background-color: #2A2E35 !important;
-  border-radius: 10px !important;
-}
 
-.ant-image.ant-image-error > img {
-  display: none !important;
-}
 
 /*::-webkit-scrollbar {*/
 /*  display: none;*/

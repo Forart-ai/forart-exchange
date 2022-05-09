@@ -9,9 +9,12 @@ import { Route, useLocation } from 'react-router-dom'
 import routes from './routes'
 import '../src/font/font.css'
 import { useMediaQuery } from 'react-responsive'
-import {  styled } from '@mui/material'
+import { Box, styled } from '@mui/material'
 import useEagerConnect from './hooks/useEagerConnect'
 import AppFooter from './layout/AppFooter'
+import Flex from './contexts/theme/components/Box/Flex'
+import Sticky from 'react-sticky-el'
+import { zIndex } from 'styled-system'
 
 export const BlueGlow = styled('div')`
   position: absolute;
@@ -22,7 +25,6 @@ export const BlueGlow = styled('div')`
   filter: blur(80px);
   border-radius: 50%;
   opacity: 0.8;
-  z-index: -1;
 `
 
 export const PurpleGlow = styled('div')`
@@ -33,7 +35,6 @@ export const PurpleGlow = styled('div')`
    border-radius: 50%;
    filter: blur(80px);
    opacity: 0.9;
-   z-index: -1;
 `
 
 const App: React.FC = () => {
@@ -56,9 +57,10 @@ const App: React.FC = () => {
 
         {
           !isMobile ? (
-            <>
-              <AppHeader  />
-              <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', zIndex: 0,  top:'60px' }}>
+            <Flex flexDirection={'column'} minHeight={'100vh'}>
+
+              <AppHeader />
+              <Box   sx={{  width:'100vw', backgroundColor:'rgb(13,14,45)', zIndex:'auto', position:'relative', top:'60px' }}>
                 <PurpleGlow style={{ right: '0' }} />
                 <PurpleGlow style={{ left: '25%' }} />
                 <PurpleGlow style={{ top:'90vh', right: '0%', opacity:'.6', width:'600px', height: '600px' }} />
@@ -78,13 +80,13 @@ const App: React.FC = () => {
                 }
                 <BackTop />
                 <AppFooter />
-              </Content>
+              </Box>
 
-            </>
+            </Flex>
           ) : (
             <>
               <AppHeader />
-              <Content  style={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', minHeight:'100vh', }}>
+              <Box  sx={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', minHeight:'100vh', }}>
                 {
                   routes.map(({ exact = true, path, component }) => (
                     <Route
@@ -95,7 +97,7 @@ const App: React.FC = () => {
                     />
                   ))
                 }
-              </Content>
+              </Box>
               {/*<AppBottomNavigation />*/}
             </>
           )

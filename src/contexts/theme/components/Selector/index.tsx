@@ -18,7 +18,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   // 'aria-label': 'Without label',
   minWidth:'200px',
   'label + &': {
-    marginTop: theme.spacing(2),
+
   },
   '& .MuiInputBase-input': {
     borderRadius: 4,
