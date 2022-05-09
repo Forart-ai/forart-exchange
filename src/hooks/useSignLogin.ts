@@ -20,9 +20,7 @@ export function useSignLogin() {
     (async () => {
       const a = randomString(150)
 
-      console.log(a)
-
-      const message = new TextEncoder().encode(a)
+      const message = new TextEncoder().encode('hello world')
 
       if (!adapter || !account ) {
         return
@@ -30,19 +28,17 @@ export function useSignLogin() {
 
       const signed = (await adapter.signMessage(message))!
 
-      // console.log(nacl.sign.detached.verify(message, signed, Uint8Array.from(account!.toBuffer())))
-
       const signature = Buffer.from(signed).toString('base64')
 
       // console.log(Buffer.from(signed).toString('base64'))
 
-      // await AUTH_API.userSignLogin({ wallet: account.toBase58(), toSign: randomMessage, signed: signature } ).then(res => {
-      //   console.log(res.data)
-      // })
+      console.log(signature)
 
-      setToken('MONICaaaAd')
+      AUTH_API.userSignLogin({ wallet:account.toBuffer().toString('base64'), toSign:'hello world', signed:signature }).then(res => {
+        console.log(res)
+      })
 
-      console.log(token)
+      console.log(nacl.sign.detached.verify(message, new Buffer(signature, 'base64'), Uint8Array.from(account!.toBuffer())))
 
       return signature
     })()

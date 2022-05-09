@@ -107,7 +107,7 @@ const routes: Route[] = [
     hidden: true
   },
   {
-    path: '/game',
+    path: '/game/aiArt',
     title:'Game',
     exact: false,
     component: Game,

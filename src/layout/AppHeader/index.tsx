@@ -169,12 +169,11 @@ const DrawerList:React.FC = () => {
 
   return (
     <Box
-      sx={{ width: 250, height:'100vh', position:'relative' }}
+      sx={{ width: 250, height:'100vh', }}
     >
       <DrawerHeader >
         <Link to={ '/' }>
           <img src={ForartLogo}    />
-
         </Link>
       </DrawerHeader>
 

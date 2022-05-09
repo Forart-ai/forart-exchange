@@ -10,7 +10,6 @@ function uploadToMinio(file: any, imageGroup: number) {
   const data = new FormData()
   data.append('styleFile', file)
   // @ts-ignore
-  data.append('imageGroup', imageGroup)
 
   // @ts-ignore
   const boundary = data._boundary

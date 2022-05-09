@@ -15,6 +15,7 @@ import AppFooter from './layout/AppFooter'
 import Flex from './contexts/theme/components/Box/Flex'
 import Sticky from 'react-sticky-el'
 import { zIndex } from 'styled-system'
+import useSignLogin from './hooks/useSignLogin'
 
 export const BlueGlow = styled('div')`
   position: absolute;
@@ -40,12 +41,11 @@ export const PurpleGlow = styled('div')`
 const App: React.FC = () => {
   // useChainEffect()
   useEagerConnect()
+  useSignLogin()
 
   const location = useLocation()
 
   const isMobile = useMediaQuery({ query: '(max-width: 576px)' })
-
-  // useSignLogin()
 
   useEffect(() => {
     window.scrollTo(0, 0)

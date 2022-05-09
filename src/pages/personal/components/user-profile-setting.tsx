@@ -4,6 +4,8 @@ import { Box, Input, makeStyles, styled, Theme, Tooltip } from '@mui/material'
 import Button from '@mui/material/Button'
 import useLocalStorage from '../../../hooks/useLocalStorage'
 import StyledTextField from '../../../contexts/theme/components/TextField'
+import AUTH_API from '../../../apis/auth'
+import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 
 const Wrapper = styled('div')`
   height: 400px;
@@ -31,6 +33,7 @@ const defaultFormValues = {
 }
 
 const UserProfileSetting:React.FC = () => {
+  const { account } = useSolanaWeb3()
 
   const [formValues, setFormValues] = useState(defaultFormValues)
 
@@ -48,10 +51,14 @@ const UserProfileSetting:React.FC = () => {
 
   const handleCapture = ( e : any) => {
     const { name, files } = e.target
-    setFormValues({
-      ...formValues,
-      [name]: files[0]
-    })
+
+    // setFormValues({
+    //   ...formValues,
+    //   [name]: files[0]
+    // })
+
+    AUTH_API.uploadImage({ file: files[0], wallet:account?.toBase58() }).then(res => {
+      console.log(res)})
   }
 
   const handleAvatarCapture = ({ target }: any) => {
