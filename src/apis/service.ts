@@ -14,6 +14,7 @@ function onResponseFulfilled(config: any) {
 }
 
 function onResponseRejected(error: any) {
+
   const responseData = error.response?.data
 
   if (!responseData) {
@@ -35,6 +36,20 @@ const API_HOST = 'https://dev-api.forart.ai/'
 const Service = axios.create({
   baseURL: `${API_HOST}`
 })
+
+Service.interceptors.request.use(
+  config => {
+    const token = localStorage.getItem('TOKEN')
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token.replace(/"/g, '')}`
+    }
+
+    return config
+  },
+  err => {
+    return Promise.reject(err)
+  }
+)
 
 Service.interceptors.response.use(
   onResponseFulfilled, onResponseRejected

@@ -183,14 +183,11 @@ const NFTBaseInfo: React.FC<{ nftDetail?: NFTDetail }> = ({ nftDetail }) => {
     return false
   },[nftDetail, account])
 
-  const { forceRefresh } = useRefreshController()
-
   const { sellingModal, openSellingModal, closeSellingModal } = useSellingModal({
     nftDetail,
     onSellingConfirmed() {
       closeSellingModal()
       closeAuthorizingModal()
-      forceRefresh()
     },
     onStart: openAuthorizingModal
   })

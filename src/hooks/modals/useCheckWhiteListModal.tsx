@@ -183,7 +183,6 @@ const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
 
 const BindingStatus: React.FC<StepProps> = ({ active }) => {
   const { account } = useSolanaWeb3()
-  const { forceRefresh } = useRefreshController()
   const { data: user } = useUserQuery()
   const discordAccessToken = useDiscordAccessToken()
   const userFromDiscord = useDiscordMeQuery()
@@ -222,7 +221,6 @@ const BindingStatus: React.FC<StepProps> = ({ active }) => {
           setRequesting(true)
           CONFT_API.core.user.bindingUser(discordAccessToken, account.toBase58())
             .then(() => {
-              forceRefresh()
               setRequesting(false)
               message.success('Connect Successfully')
             })

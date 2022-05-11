@@ -21,6 +21,7 @@ import SettingIcon from '../../assets/images/siderIcon/setting.svg'
 import { useModal } from '../../contexts/modal'
 import UserProfileSetting from './components/user-profile-setting'
 import { useUserCredit } from '../../hooks/queries/useUserCredit'
+import { useGetUserInfo } from '../../hooks/queries/useGetUserInfo'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -30,21 +31,25 @@ const Wrapper = styled('div')`
 
 `
 const BackgroundImage = styled('div')`
-  height: 400px;
+  height: 420px;
   width: 100%;
-  background: url(${Background}) center  no-repeat;
-  background-size: cover;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  margin-bottom: 150px;
-
-
-  ${({ theme }) => theme.breakpoints.down('sm')} {
-    margin: 60px 0;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
+  
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    height: 300px;
+  }
+
+  
 `
 
 const PersonalCenterContainer = styled('div')`
@@ -69,12 +74,14 @@ const UserInfoContainer = styled('div')`
 
 const DataColumn = styled('div')`
   max-width: 200px;
-  height: 100%;
   width: 20%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 27%;
+  border: 1px red solid;
 
 
   span {
@@ -95,26 +102,36 @@ const TabsArea = styled('div')`
   padding-bottom: 100px;
 `
 
-const UserInfo = styled('div')`
+const CoverMask = styled('div')`
+  width: 100%;
+  height: 100%;
+  background-color: #000c17;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  border-radius: 50%;
   display: flex;
-  justify-content: center;
-  flex-direction: column;
   align-items: center;
-  position: relative;
-  bottom: -50%;
+  justify-content: center;
   
-  .amount {
-    color: ${({ theme }) => theme.palette.primary.main};
-    font-size: 18px;
-    margin-top: 20px;
-    font-family: Aldrich-Regular;
+  img {
+    width: 32px;
+    height: 32px;
   }
+  
+  :hover {
+    transition: all .5s;
+    width: 100%;
+    height: 100%;
+    opacity: .8;
+  }
+`
 
-  .avatar {
-    width: 128px;
-    height: 128px;
-    border-radius: 50%;
-    box-shadow: 5px 5px 5px rgba(43, 10, 79, 0.62);
+const UserAvatar = styled('div')`
+  position: absolute;
+  top: 80%;
+  width: 128px;
+  height: 128px;
 
     img {
       width: 100%;
@@ -122,37 +139,62 @@ const UserInfo = styled('div')`
       object-fit: cover;
       border-radius: 50%;
     }
-  }
-
-
-  .username {
-    font-size: 30px;
-    color: ${({ theme }) => theme.palette.text.primary};
-    font-weight: bolder;
-    display: flex;
-    align-items: center;
-    
-    img {
-      margin-left: 10px;
-      width: 20px;
-      cursor: pointer;
-    }
-  }
-
-  .address {
-    font-size: 18px;
-    color: ${({ theme }) => theme.palette.grey[400]};
+  
+  
+  :hover {
+    opacity: .8;
+    cursor: pointer;
   }
   
-  ${({ theme }) => theme.breakpoints.down('sm')} {
+`
+
+const UserInfo = styled('div')`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  flex-direction: column;
+  margin-top: 70px;
+
+  .amount {
+    color: ${({ theme }) => theme.palette.primary.main};
+    font-size: 18px;
+    margin-top: 20px;
+    font-family: Aldrich-Regular;
+  }
+  
     .username {
-      font-size: 24px;
+      font-size: 30px;
+      color: ${({ theme }) => theme.palette.text.primary};
+      font-weight: bolder;
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      img {
+        margin-left: 10px;
+        width: 20px;
+        cursor: pointer;
+        position: absolute;
+        right: -30px;
+      }
     }
 
     .address {
-      font-size: 14px;
+      font-size: 18px;
+      color: ${({ theme }) => theme.palette.grey[400]};
     }
-  }
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+      .username {
+        font-size: 24px;
+      }
+
+      .address {
+        font-size: 14px;
+      }
+    }
 `
 
 const TabsWrapper = styled('div')`
@@ -179,13 +221,11 @@ const StyledTabs = styled((props: StyledTabsProps) => (
 ))(({ theme }) => ({
 
   '& .MuiTabs-indicator': {
-
     display: 'flex',
     justifyContent: 'center',
     backgroundColor: 'transparent',
   },
   '& .MuiTabs-indicatorSpan': {
-
     // maxWidth: 40,
     width: '100%',
     backgroundColor: theme.palette.primary.main,
@@ -212,7 +252,6 @@ function TabPanel(props: TabPanelProps) {
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
-
     >
       {value === index && (
 
@@ -231,7 +270,9 @@ const StyledTab = styled((props: StyledTabProps) => (
   fontFamily: 'arialBold',
   textTransform: 'none',
   fontSize: '20px',
-  margin:'0 40px',
+  padding: 0,
+  minWidth: '120px',
+  margin: 0,
 
   [theme.breakpoints.down('sm')] : {
     fontSize:'14px',
@@ -265,10 +306,8 @@ const TabsContainer: React.FC = () => {
     <TabsWrapper >
       <Box sx={{ borderBottom: '1px #5000B4 solid', width:'auto' }}>
         <StyledTabs
-          // variant={isMobile ? 'scrollable' : 'standard'}
-          // centered={isMobile ? false : true}
-          variant={ 'standard'}
-          centered={ true}
+          variant={isMobile ? 'scrollable' : 'standard'}
+          centered={isMobile ? false : true}
           value={value}
           onChange={handleChange}
           aria-label="styled tabs example"
@@ -318,10 +357,10 @@ const TabsContainer: React.FC = () => {
 
 const PersonalCenterPage: React.FC = () => {
 
-  const { account } = useSolanaWeb3()
   const { openModal } = useModal()
 
   const { data: credit } = useUserCredit()
+  const { data: userInfo } = useGetUserInfo()
 
   return (
     <Wrapper>
@@ -337,35 +376,35 @@ const PersonalCenterPage: React.FC = () => {
           {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
           {/*    <div className={'label'}>Post</div>*/}
           {/*  </DataColumn>*/}
+          <img src={userInfo?.banneruri} />
 
-          <DataColumn>
-            <UserInfo>
-              <div className={'avatar'}>
-                <img src={AvatarIcon} />
-              </div>
-              <div className="username">DePainter
-                <img src={SettingIcon} onClick={() => openModal(<UserProfileSetting />)} />
-              </div>
-              <div className="address">{ shortenAddress(account?.toString()) }</div>
-              <div className="amount">$FTA: {credit?.retain ?? '0'}</div>
-            </UserInfo>
-          </DataColumn>
-
-          {/*  <DataColumn>*/}
-          {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
-          {/*    <div className={'label'}>Followers</div>*/}
-          {/*  </DataColumn>*/}
-
-          {/*  <DataColumn>*/}
-          {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
-          {/*    <div className={'label'}>Following</div>*/}
-          {/*  </DataColumn>*/}
-          {/*</UserInfoContainer>*/}
+          <UserAvatar  onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)}>
+            <CoverMask > <img src={SettingIcon} /> </CoverMask>
+            <img src={userInfo?.avataruri} />
+          </UserAvatar>
         </BackgroundImage>
+
+        <UserInfo>
+          <div className="username">{userInfo?.username}
+            {/*<img src={SettingIcon} onClick={() => openModal(<UserProfileSetting />)} />*/}
+          </div>
+          <div className="address">{ userInfo?.slogan }</div>
+          <div className="amount">$FTA: {credit?.retain ?? '0'}</div>
+        </UserInfo>
+
+        {/*  <DataColumn>*/}
+        {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
+        {/*    <div className={'label'}>Followers</div>*/}
+        {/*  </DataColumn>*/}
+
+        {/*  <DataColumn>*/}
+        {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
+        {/*    <div className={'label'}>Following</div>*/}
+        {/*  </DataColumn>*/}
+        {/*</UserInfoContainer>*/}
 
       </PersonalCenterContainer>
       <TabsContainer />
-
     </Wrapper>
   )
 }

@@ -1,8 +1,19 @@
 import { Service } from './service'
+import { useSolanaWeb3 } from '../contexts/solana-web3'
 
 export type UploadImageParam = {
   file: any,
   wallet?: string
+}
+
+export type UserInfoParam = {
+  banneruri?: string,
+  username?: string,
+  avataruri?: string
+  slogan?:string
+  wallet?:string,
+  createTime?: string,
+  updateTime?: string
 }
 
 const AUTH_API = {
@@ -10,9 +21,18 @@ const AUTH_API = {
     return Service.post('/login', params)
   },
 
-  uploadImage(file: any, wallet?: string) {
+  getUserInfo(id?: string) {
+    return Service.get(`account/${id}`)
+  },
+
+  updateUserInfo(param: UserInfoParam){
+    return Service.post('account/edit', param)
+  },
+
+  uploadImage(param: UploadImageParam) {
     const data = new FormData()
-    data.append('file', file)
+    data.append('file', param.file)
+    data.append('wallet', param.wallet!)
 
     // @ts-ignore
     const boundary = data._boundary
@@ -22,7 +42,7 @@ const AUTH_API = {
       }
     }
 
-    return Service.post('/avatar/upload',{ file, wallet }, config)
+    return Service.post('/account/avatar/upload', data, config)
   }
 }
 

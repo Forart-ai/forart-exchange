@@ -34,11 +34,13 @@ export function useSignLogin() {
 
       console.log(signature)
 
-      AUTH_API.userSignLogin({ wallet:account.toBuffer().toString('base64'), toSign:'hello world', signed:signature }).then(res => {
+      AUTH_API.userSignLogin({ wallet:account.toBuffer().toString('base64'), toSign:'hello world', signed:signature }).then((res:any) => {
         console.log(res)
+        setToken(res)
+
       })
 
-      console.log(nacl.sign.detached.verify(message, new Buffer(signature, 'base64'), Uint8Array.from(account!.toBuffer())))
+      // console.log(nacl.sign.detached.verify(message, new Buffer(signature, 'base64'), Uint8Array.from(account!.toBuffer())))
 
       return signature
     })()
