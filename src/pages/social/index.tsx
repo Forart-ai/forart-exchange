@@ -11,6 +11,7 @@ import Blogs from './modules/blogs'
 import { useMintResultQuery } from '../../hooks/queries/useMintResultQuery'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import UserCoNftList from './modules/UserCoNftList'
+import CustomizeButton from '../../contexts/theme/components/Button'
 
 const SocialPageWrapper = styled('div')`
   width: 100%;
@@ -21,17 +22,21 @@ const SocialPageWrapper = styled('div')`
 `
 
 const MainMessageArea = styled('div')`
-  width: 60%;
-  max-width: 820px;
+  width: 70%;
   height: auto;
 `
 
 const Header = styled('div')`
   width: 100%;
   height: 410px;
-  background: url(${Background}) no-repeat;
-  border-radius: 20px;
   margin-bottom: 30px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+  }
 `
 
 const PostArea = styled('div')`
@@ -68,21 +73,23 @@ const NftChatroom: React.FC = () => {
     <DefaultPageWrapper>
       <SocialPageWrapper>
         <MainMessageArea>
-          <Header />
+          <Header>
+            <img src={Background} />
+          </Header>
           <PostArea>
             <RainbowButton onClick={() => setPostNft(!postNft)}> {!postNft? 'Post CO-NFT' : 'Post blog'} </RainbowButton>
             {
               postNft  ?
                 <UserCoNftList />
                 :
-                <StyledTextarea minRows={5}  onChange={() => {}} placeholder={'something to say?'}  />
+                <StyledTextarea minRows={5}  onChange={() => {}} placeholder={'Something to say?'}  />
             }
-            <Button variant={'contained'}> Post </Button>
+            <CustomizeButton variant={'contained'}> Post </CustomizeButton>
           </PostArea>
 
-          {
-            <Blogs />
-          }
+          {/*{*/}
+          {/*  <Blogs />*/}
+          {/*}*/}
         </MainMessageArea>
       </SocialPageWrapper>
     </DefaultPageWrapper>

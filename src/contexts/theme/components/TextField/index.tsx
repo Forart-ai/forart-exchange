@@ -12,12 +12,14 @@ interface StyledTextFieldProps {
   size?: 'small' | 'medium'
   multiline?: boolean
   maxRows?: number
+  defaultValue?: string
+  required?: boolean
 }
 
 const StyledInput = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
     minWidth: '200px',
-
+    padding:'8px',
     borderRadius: 4,
     position: 'relative',
     backgroundColor: theme.palette.secondary.dark,
@@ -55,7 +57,7 @@ const StyledTextField:React.FC<StyledTextFieldProps> = (props:StyledTextFieldPro
       maxRows={props.maxRows}
       {...props}
       placeholder={props.placeholder ?? ''}
-
+      defaultValue={props.defaultValue}
     />
   )
 }

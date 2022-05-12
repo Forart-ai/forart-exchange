@@ -22,7 +22,6 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
   transaction: Transaction,
   signers: Signer[]
 }> {
-  console.log('buildMintTransaction', mint.publicKey.toBase58())
 
   const minterPublicKey = program.provider.wallet.publicKey
   const toPublicKey = program.provider.wallet.publicKey

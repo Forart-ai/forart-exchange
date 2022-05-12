@@ -3,6 +3,12 @@
     src: url("./Kanit-Regular.ttf");
 }
 
+@font-face {
+    font-family:'Kanit-Light';
+    src: url("./Kanit-Light.ttf");
+}
+
+
 
 @font-face {
     font-family:'Aldrich-Regular';

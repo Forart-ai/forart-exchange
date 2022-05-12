@@ -85,10 +85,8 @@ const useNFTMint = () => {
       return
     }
 
-    console.log('connection.sendRawTransaction(rawTransaction.serialize())\n')
     connection.sendRawTransaction(rawTransaction.serialize())
       .then(signature => {
-        console.log('sendRawTransaction callback: ', signature)
         clearInterval(intervalId)
         setIntervalId(undefined)
         return CONFT_API.core.nft.nftMint({ nft: createResult.nft, wallet: account.toBase58(), mintKey: createResult.mintKey })

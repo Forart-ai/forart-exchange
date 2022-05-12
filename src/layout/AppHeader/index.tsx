@@ -261,8 +261,6 @@ const AppHeader:React.FC  = () => {
           setState({ ...state, ['left']: open })
         }
 
-  console.log(   pathname)
-
   return (
     <AppHeaderContent>
       <MainContent>

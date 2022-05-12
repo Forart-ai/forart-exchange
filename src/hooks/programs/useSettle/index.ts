@@ -38,7 +38,6 @@ const useSettle = () => {
 
   const buildSettleTransaction = useCallback(
     async (nftMint: PublicKey): Promise<{ transaction: Transaction, signers: Signer[] }> => {
-      console.log('settle for mint: ', nftMint.toBase58())
 
       const collection = COLLECTION_ADDRESS
       const nftOwner = program.provider.wallet.publicKey

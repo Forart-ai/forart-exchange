@@ -19,17 +19,19 @@ const Wrapper = styled('div')`
   min-width: 390px;
   border-radius: 20px;
   position: relative;
-  border: 2px solid ${({ theme }) => theme.palette.primary.main};
-  background-color: #28005A ;
-  padding: 20px;
-  
+  border: 1px solid ${({ theme }) => theme.palette.primary.main};
+  background-color: rgb(40,0,89);
+
+
 `
 
 const Title = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: inter-extraBold;
+  font-family: Kanit-Regular;
+  font-size: 24px;
+  padding: 10px 18px;
   color: #f2f2f2;
  
 `
@@ -38,13 +40,15 @@ const Header = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 10px;
   border-bottom: 1px ${({ theme }) => theme.palette.primary.main} solid;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
 `
 
 const CloseButton = styled('div')`
   cursor: pointer;
-  
+  position: relative;
+  right: 10px;
   img {
     width: 25px;
   }
@@ -54,7 +58,12 @@ const Footer = styled('div')`
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; 
+  margin: 10px 0;
+`
+
+const Content = styled('div')` 
+  padding: 16px 20px;
 `
 
 const Dialog: React.FC<DialogProps> =({
@@ -91,8 +100,10 @@ const Dialog: React.FC<DialogProps> =({
           </Header>
         )
       }
+      <Content>
+        {children}
 
-      {children}
+      </Content>
       <Footer >
         {
           onCancel && (

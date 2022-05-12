@@ -104,84 +104,84 @@ const Header: React.FC = () => {
         loop={true}
       >
 
-        {/*<SwiperSlide >*/}
-        {/*  <Wrapper>*/}
+        <SwiperSlide >
+          <Wrapper>
 
-        {/*    <RightArea>*/}
-        {/*      <Banner>*/}
-        {/*        <img src={PainterBanner}  />*/}
-        {/*      </Banner>*/}
-        {/*    </RightArea>*/}
+            <RightArea>
+              <Banner>
+                <img src={PainterBanner}  />
+              </Banner>
+            </RightArea>
 
-        {/*    <LeftArea>*/}
-        {/*      <LeftTop>*/}
-        {/*        <MainTitle>*/}
-        {/*          <div className="title1"> DePainter  </div>*/}
+            <LeftArea>
+              <LeftTop>
+                <MainTitle>
+                  <div className="title1"> DePainter  </div>
 
-        {/*          <div className={'title2'}> <span> The Unique Admin Ticket</span> To  Forart.ai</div>*/}
-        {/*        </MainTitle>*/}
+                  <div className={'title2'}> <span> The Unique Admin Ticket</span> To  Forart.ai</div>
+                </MainTitle>
 
-        {/*        <DescriptionText>*/}
-        {/*          Forart.ai is an AI-Powered C2E platform with Social-Fi and Game-Fi elements.*/}
-        {/*          We&apos;re searching for 10000 innovative and creative painters to jointly explore the adventure trip.*/}
-        {/*        </DescriptionText>*/}
+                <DescriptionText>
+                  Forart.ai is an AI-Powered C2E platform with Social-Fi and Game-Fi elements.
+                  We&apos;re searching for 10000 innovative and creative painters to jointly explore the adventure trip.
+                </DescriptionText>
 
-        {/*        <ButtonArea>*/}
-        {/*          <Link to={toPainterDetailUrl}>*/}
-        {/*            <CustomizeButton sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Create DePainter</CustomizeButton>*/}
-        {/*          </Link>*/}
+                <ButtonArea>
+                  <Link to={toPainterDetailUrl}>
+                    <CustomizeButton sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Create DePainter</CustomizeButton>
+                  </Link>
 
-        {/*          /!*<RainbowButton>*!/*/}
-        {/*          /!*  <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >*!/*/}
-        {/*          /!*    Instruction*!/*/}
-        {/*          /!*  </a>*!/*/}
-        {/*          /!*</RainbowButton>*!/*/}
-        {/*        </ButtonArea>*/}
+                  {/*<RainbowButton>*/}
+                  {/*  <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >*/}
+                  {/*    Instruction*/}
+                  {/*  </a>*/}
+                  {/*</RainbowButton>*/}
+                </ButtonArea>
 
-        {/*      </LeftTop>*/}
+              </LeftTop>
 
-        {/*      <LeftBottom>*/}
-        {/*        <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center',  }}>*/}
-        {/*          {*/}
-        {/*            painterData ? (*/}
-        {/*              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent:'center' }}>*/}
-        {/*                <StyledCountUp*/}
-        {/*                  end={painterData?.minted ? painterData?.minted : '---'}*/}
-        {/*                  duration={2}*/}
-        {/*                  separator=","*/}
+              <LeftBottom>
+                <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center',  }}>
+                  {
+                    painterData ? (
+                      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent:'center' }}>
+                        <StyledCountUp
+                          end={painterData?.minted ? painterData?.minted : '---'}
+                          duration={2}
+                          separator=","
 
-        {/*                />*/}
-        {/*                <div className={'total-data'}> /10000</div>*/}
-        {/*              </div>*/}
-        {/*            ) :*/}
-        {/*              <StyledCountUp end={0} />*/}
-        {/*          }*/}
-        {/*          <div className={'label'}>Total create</div>*/}
-        {/*        </Box>*/}
+                        />
+                        <div className={'total-data'}> /10000</div>
+                      </div>
+                    ) :
+                      <StyledCountUp end={0} />
+                  }
+                  <div className={'label'}>Total create</div>
+                </Box>
 
-        {/*        <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center' }}>*/}
-        {/*          {*/}
-        {/*            painterData ? (*/}
-        {/*              <div style={{ display: 'flex', alignItems: 'baseline' }}>*/}
-        {/*                <StyledCountUp*/}
-        {/*                  end={painterData?.minter ? painterData?.minter : '---'}*/}
-        {/*                  duration={2}*/}
-        {/*                  separator=","*/}
+                <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center' }}>
+                  {
+                    painterData ? (
+                      <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <StyledCountUp
+                          end={painterData?.minter ? painterData?.minter : '---'}
+                          duration={2}
+                          separator=","
 
-        {/*                />*/}
-        {/*                <div className={'total-data'}> </div>*/}
-        {/*              </div>*/}
-        {/*            ) :*/}
-        {/*              <StyledCountUp end={0} />*/}
-        {/*          }*/}
-        {/*          <div className={'label'}>Creators</div>*/}
-        {/*        </Box>*/}
-        {/*      </LeftBottom>*/}
+                        />
+                        <div className={'total-data'}> </div>
+                      </div>
+                    ) :
+                      <StyledCountUp end={0} />
+                  }
+                  <div className={'label'}>Creators</div>
+                </Box>
+              </LeftBottom>
 
-        {/*    </LeftArea>*/}
+            </LeftArea>
 
-        {/*  </Wrapper>*/}
-        {/*</SwiperSlide>*/}
+          </Wrapper>
+        </SwiperSlide>
 
         <SwiperSlide>
           <Wrapper>

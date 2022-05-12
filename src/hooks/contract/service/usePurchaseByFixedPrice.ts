@@ -114,8 +114,6 @@ const usePurchaseByFixedPrice = () => {
 
       onAuthorized()
 
-      console.log(signature)
-
       await matchSingle(sellOrder,
         buyData.signature,
         buyOrder,

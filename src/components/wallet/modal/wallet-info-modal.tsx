@@ -12,13 +12,12 @@ const Wrapper = styled('div')`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 120px;
+  font-family: Kanit-Light;
 `
 
 const Message = styled('div')`
-  font-size: 16px;
+  font-size: 18px;
   color: #ffffff;
-  margin-bottom: 16px;
 `
 
 const WalletInfoModal:React.FC<{ account?: string; disconnect: VoidFunction }> = ({ account, disconnect }) => {

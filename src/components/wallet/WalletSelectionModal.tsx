@@ -52,7 +52,6 @@ const ChosenArea = styled('div')`
   //display: grid;
   //grid-template-columns: 100px 100px 100px;
   //justify-content: space-around;
-  margin-top: 30px;
   display: flex;
   justify-content: center;
 
@@ -206,7 +205,7 @@ const WalletSelectionModal:React.FC = () => {
 
   return (
 
-    <Dialog title={'Connect to wallet'} closeable>
+    <Dialog title={'Connect Wallet'} closeable>
       <Wrapper>
         {/*<TopArea>*/}
         {/*  <TextRow >*/}

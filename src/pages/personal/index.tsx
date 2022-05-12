@@ -28,7 +28,7 @@ const Wrapper = styled('div')`
   width: 100%;
   min-height: 100vh;
   text-align: center;
-
+font-family: Kanit-Regular;
 
 `
 const BackgroundImage = styled('div')`

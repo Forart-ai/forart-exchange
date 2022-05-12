@@ -12,6 +12,9 @@ import { useGetUserInfo } from '../../../hooks/queries/useGetUserInfo'
 import wallet from '../../../components/wallet'
 import { useRefreshController } from '../../../contexts/refresh-controller'
 import { useModal } from '../../../contexts/modal'
+import { useSnackbar } from 'notistack'
+import CustomizeButton from '../../../contexts/theme/components/Button'
+import { SyncLoader } from 'react-spinners'
 
 const Wrapper = styled('div')`
   width: 400px;
@@ -26,9 +29,13 @@ const Item = styled('div')`
 const Title = styled('div')`
   color: ${({ theme }) => theme.palette.secondary.main};
   font-size: 18px;
+  font-family: Kanit-Regular;
 `
 
 const DefaultBanner = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 130px;
   
@@ -47,8 +54,9 @@ const DefaultBanner = styled('div')`
 `
 
 const DefaultAvatar = styled('div')`
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
   
   :hover {
     opacity: .7;
@@ -60,7 +68,8 @@ const DefaultAvatar = styled('div')`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 50%;
+
   }
 `
 
@@ -76,6 +85,8 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
   // const { data: userInfo } = useGetUserInfo()
   const { closeModal } = useModal()
   const { forceRefresh } = useRefreshController()
+  const { enqueueSnackbar } = useSnackbar()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [formValues, setFormValues] = useState(defaultFormValues)
 
@@ -101,12 +112,14 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
 
   const handleCapture = ( e : any) => {
     const { name, files } = e.target
+    setLoading(true)
 
     AUTH_API.uploadImage({ file: files[0], wallet: account?.toBase58() }).then(res => {
       setFormValues({
         ...formValues,
         [name]:res
       })
+      setLoading(false)
     })
 
   }
@@ -116,6 +129,7 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
     AUTH_API.updateUserInfo(formValues).then(res => {
       console.log(res)
       forceRefresh()
+      enqueueSnackbar('Edit successfully', { variant:'success' })
       closeModal()
     })
   }, [formValues])
@@ -132,7 +146,10 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
               <Input name={'banneruri'} onChange={handleCapture}  id="contained-button-file"  type="file" hidden />
               <DefaultBanner>
                 {
-                  formValues.banneruri ? <img src={formValues.banneruri} /> : <img src={DefaultBannerImg} />
+                  loading ?
+                    <SyncLoader size={16} color={'#e0e0e0'} />
+                    :
+                    formValues.banneruri ? <img src={formValues.banneruri} /> : <img src={DefaultBannerImg} />
                 }
               </DefaultBanner>
             </label>
@@ -145,9 +162,14 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
             <label htmlFor="avatar-contained-button-file">
               <Input name={'avataruri'} onChange={handleCapture}  id="avatar-contained-button-file"  type="file" hidden />
               <DefaultAvatar>
+
                 {
-                  formValues.avataruri ? <img src={formValues.avataruri} /> : <img src={DefaultAvatarImg} />
+                  loading ?
+                    <SyncLoader size={16} color={'#e0e0e0'} />
+                    :
+                    formValues.avataruri ? <img src={formValues.avataruri} /> : <img src={DefaultAvatarImg} />
                 }
+
               </DefaultAvatar>
 
             </label>
@@ -162,6 +184,8 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
               onChange ={(res:any) => {handleInputChange(res)}}
               variant={'outlined'}
               name={'username'}
+              defaultValue={userInfo?.username}
+              required
             />
           </Item>
 
@@ -174,13 +198,15 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
               onChange ={(res:any) => {handleInputChange(res)}}
               variant={'outlined'}
               name={'slogan'}
+              defaultValue={userInfo?.slogan}
+              required
             />
           </Item>
 
           <Box sx={{ width: '100%', display:'center', justifyContent: 'center', marginTop:'40px' }}>
-            <Button variant="contained" color="secondary" type="submit">
-              Submit
-            </Button>
+            <CustomizeButton variant="contained" color="secondary" type="submit">
+              Save
+            </CustomizeButton>
           </Box>
         </form>
 

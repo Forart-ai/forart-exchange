@@ -97,7 +97,6 @@ const useCreateNft = () => {
           })
           history.push('/marketplace')
         })
-        console.log(createForm)
 
       })
 

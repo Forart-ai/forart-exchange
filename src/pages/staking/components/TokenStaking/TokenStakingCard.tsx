@@ -8,7 +8,6 @@ import { Box, Button } from '@mui/material'
 import { WalletRequiredArea } from '../../../../components/wallet-required-area'
 
 const TokenStakingCard:React.FC<TokenStakingPoolConfig> = props => {
-  console.log(props)
   const { currency, rewardTokenName } = props
 
   const poolName = currency[0].name

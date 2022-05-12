@@ -133,7 +133,6 @@ export const useWalletRankModal = () => {
   }
 
   useEffect(() => {
-    console.log(data)
   },[data])
 
   useEffect(() => {
@@ -145,7 +144,6 @@ export const useWalletRankModal = () => {
 
   const onScrollCapture = (e:any) => {
     if (Math.round(scrollRef.scrollTop) + scrollRef.clientHeight == scrollRef.scrollHeight) {
-      console.log('more')
       setPage(prev => prev + 1)
       getData()
       if (Math.ceil(total / 10) == page) {

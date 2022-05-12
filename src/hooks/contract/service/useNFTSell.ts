@@ -123,7 +123,6 @@ const useNFTSell = () => {
       }
 
       await sellOrder(sellingOrder).then(res => {
-        console.log(res)
 
       })
 

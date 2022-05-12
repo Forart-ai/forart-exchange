@@ -233,7 +233,6 @@ export const usePurchaseCheckoutModal = (nftDetail: any, checkoutPassed: () => v
 
       })
       .catch(e => {
-        console.log(e)
         message.warn(e?.toString() ?? 'Error occurred while checking balance')
         setChecking(false)
         checkoutFailed()
