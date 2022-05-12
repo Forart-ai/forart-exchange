@@ -87,9 +87,9 @@ const NftChatroom: React.FC = () => {
             <CustomizeButton variant={'contained'}> Post </CustomizeButton>
           </PostArea>
 
-          {/*{*/}
-          {/*  <Blogs />*/}
-          {/*}*/}
+          {
+            <Blogs />
+          }
         </MainMessageArea>
       </SocialPageWrapper>
     </DefaultPageWrapper>

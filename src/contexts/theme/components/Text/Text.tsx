@@ -18,10 +18,11 @@ const Text = styled('div')<TextProps> `
   line-height: 1.5;
   ${({ textTransform }) => textTransform && `text-transform: ${textTransform};`}
   ${({ ellipsis }) =>
-    ellipsis && 
-          `white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;`}
+    ellipsis ?
+      `white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;` : ''
+}
 
   ${space}
   ${typography}

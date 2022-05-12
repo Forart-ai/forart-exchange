@@ -24,7 +24,7 @@ const Blogs:React.FC = () => {
   return (
     <BlogsContainer>
       <StyledAvatar variant={'square'}>N</StyledAvatar>
-      <CoNftCard nftId={'44d183fa206f0ea97a0a100a8e714d96'} />
+      <CoNftCard nftId={'1024-e3a5f2d7356084684c212552cc2c4115'} />
     </BlogsContainer>
   )
 }

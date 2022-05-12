@@ -44,12 +44,15 @@ const ItemBox = styled('div')`
   .type {
     color: ${({ theme }) => theme.palette.primary.light};
     font-size: 14px;
+    font-family: Kanit-Light;
     //background: #341222;
   }
 
   .value {
     color: #fff;
-    font-size: 12px;
+    font-size: 14px;
+    font-family: Kanit-Regular;
+
   }
 
 
@@ -58,7 +61,6 @@ const ItemBox = styled('div')`
 
 const AttributesItemCard:React.FC<{item?: Attribute[]}> = ({ item }) => {
 
-  console.log(item)
   return (
     <Wrapper>
       <ScrollContainer className="scroll-container" hideScrollbars={false}>

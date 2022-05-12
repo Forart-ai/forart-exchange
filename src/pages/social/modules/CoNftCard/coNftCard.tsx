@@ -46,13 +46,13 @@ const CoNftCard:React.FC<{nftId: string}> = ({ nftId }) => {
   return (
     <>
       <Wrapper>
-        <Flex justifyContent={'space-between'}  >
+        <Flex justifyContent={'space-between'} alignItems={'center'}  >
           <ImageWrapper>
             <img src={nftDetail?.previewUrl} />
           </ImageWrapper>
           <Flex flexDirection={'column'}>
             <Text fontSize={'20px'} fontFamily={'Aldrich-Regular'}>{nftDetail?.chainNftName}</Text>
-            <Text letterSpacing={'.4px'} fontSize={'14px'} marginBottom={'5px'} >Owned by: &nbsp;{shortenAddress(nftDetail?.wallet)}</Text>
+            <Text letterSpacing={'.4px'} fontFamily={'Kanit-Regular'} fontSize={'14px'} mb={'5px'} >Owned by: &nbsp;{shortenAddress(nftDetail?.wallet)}</Text>
             <AttributesItemCard item={attr} />
           </Flex>
         </Flex>
