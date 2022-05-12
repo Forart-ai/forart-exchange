@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import ForartLogo from '../../assets/logo.png'
 import UserIcon from '../../assets/images/header/avatar.png'
 import { useHistory, Link, useLocation } from 'react-router-dom'
@@ -22,7 +22,7 @@ const AppHeaderContent = styled('div')`
   align-items: center;
   justify-content: center;
   background: #0A0523;
-  border-bottom: 1px #8345f4 solid;
+  border-bottom: 1px rgba(131, 69, 244,.7) solid;
   position: fixed;
   top: 0;
   z-index: 100;
@@ -35,9 +35,12 @@ const AppHeaderContent = styled('div')`
 
 const MainContent = styled('div')`
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  width: 80%;
+  width: 100%;
+  transform: translate3d(0px, 0px, 0px);
   maxWidth: '1870px';
+  padding: 0 16px;
   
   ${({ theme }) => theme.breakpoints.down('md')} {
     width: 90%;
@@ -45,15 +48,11 @@ const MainContent = styled('div')`
 
 `
 
-const Logo = styled('div')`
-  height: 68px;
-  width: 15%;
+const LeftArea = styled('div')`
   display: flex;
-  justify-content: flex-start;
   align-items: center;
 
-  img{
-    position: relative;
+  img {
     width: 100px;
   }
 `
@@ -72,14 +71,23 @@ const Operator = styled('div')`
 `
 
 export const NavLinkText = styled('div')`
-  transition: color 0.38s;
-  font-family: 'arial';
+  text-align: center;
+  transition: all 0.38s;
+  font-family: Kanit-Regular;
   font-size: 16px;
   letter-spacing: 1px;
+  padding: 5px 12px;
+  margin: 0 10px;
+  min-width: 120px;
 
+  .selected {
+    color: #85fcd0;
+  }
 
   :hover:not(.active) {
     color: #4fc89f;
+    background-color: rgb(53, 8, 108);
+    border-radius: 10px;
   }
 `
 
@@ -87,14 +95,14 @@ export const DisableNav = styled('div')`
   cursor: not-allowed ;
   user-select: none;
   color: #999999;
+  padding: 0 20px;
 `
 
 const RouterContainer = styled('div')`
+  margin-left: 42px;
   display: flex;
   justify-content: space-between;
-  margin-right: 20px;
-  width: 40%;
-  
+  width: fit-content;  
 `
 
 const DrawerHeader = styled('div')`
@@ -129,12 +137,7 @@ const MobileNavItem = styled('div')`
     color: #ffffff;
     width: 100%;
   }
-  
 
-  //a  {
-  //  color: red;
-  //  border: 1px red solid;
-  //}
 `
 
 const PersonalArea = styled('div')`
@@ -192,7 +195,7 @@ const DrawerList:React.FC = () => {
             ): (
               pathname === route.path ? (
                 <MobileNavItem key={index} >
-                  <Link style={{ width:'100%' }}  to={route.path}>
+                  <Link  to={route.path}>
                     <div className={'selected'}  > {route.title}</div>
                   </Link>
                 </MobileNavItem>
@@ -258,17 +261,15 @@ const AppHeader:React.FC  = () => {
           setState({ ...state, ['left']: open })
         }
 
+  console.log(   pathname)
+
   return (
     <AppHeaderContent>
       <MainContent>
-        <Logo>
+        <LeftArea>
           <Link to={ '/' }>
             <img src={ForartLogo}    />
           </Link>
-
-        </Logo>
-
-        <Operator>
           {
             !isMobile && (
               <RouterContainer>
@@ -285,9 +286,9 @@ const AppHeader:React.FC  = () => {
                           to={route.path}
                         >
                           {
-                            pathname === route.path ? (
-                              <NavLinkText  style={{ color: '#85fcd0' }}>
-                                {route.title}
+                            pathname === route.path? (
+                              <NavLinkText >
+                                <div className={'selected'}> {route.title}</div>
                               </NavLinkText>
                             ):
                               (
@@ -304,6 +305,9 @@ const AppHeader:React.FC  = () => {
               </RouterContainer>
             )
           }
+        </LeftArea>
+
+        <Operator>
 
           <Wallet />
 

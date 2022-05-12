@@ -16,6 +16,7 @@ import Flex from './contexts/theme/components/Box/Flex'
 import Sticky from 'react-sticky-el'
 import { zIndex } from 'styled-system'
 import useSignLogin from './hooks/useSignLogin'
+import { SnackbarProvider } from 'notistack'
 
 export const BlueGlow = styled('div')`
   position: absolute;
@@ -52,7 +53,7 @@ const App: React.FC = () => {
   }, [location.pathname])
 
   return (
-    <Layout className="app">
+    <div className="app">
       <div className="border" >
 
         {
@@ -60,13 +61,13 @@ const App: React.FC = () => {
             <Flex flexDirection={'column'} minHeight={'100vh'}>
 
               <AppHeader />
-              <Box   sx={{  width:'100vw', backgroundColor:'rgb(13,14,45)', zIndex:'auto', position:'relative', top:'60px' }}>
-                <PurpleGlow style={{ right: '0' }} />
-                <PurpleGlow style={{ left: '25%' }} />
-                <PurpleGlow style={{ top:'90vh', right: '0%', opacity:'.6', width:'600px', height: '600px' }} />
-                <BlueGlow style={{ right: '25%' }} />
-                <BlueGlow style={{ top:'60vh' }} />
-                <BlueGlow style={{ top:'80vh', right: '30%', opacity:'.6', width:'400px', height: '400px' }} />
+              <Box   sx={{  width:'100vw', backgroundColor:'rgb(29,22,48)', zIndex:'auto', position:'relative', top:'60px' }}>
+                {/*<PurpleGlow style={{ right: '0' }} />*/}
+                {/*<PurpleGlow style={{ left: '25%' }} />*/}
+                {/*<PurpleGlow style={{ top:'90vh', right: '0%', opacity:'.6', width:'600px', height: '600px' }} />*/}
+                {/*<BlueGlow style={{ right: '25%' }} />*/}
+                {/*<BlueGlow style={{ top:'60vh' }} />*/}
+                {/*<BlueGlow style={{ top:'80vh', right: '30%', opacity:'.6', width:'400px', height: '400px' }} />*/}
                 {
                   routes.map(({ exact = true, path, component }) => (
                     <Route
@@ -86,7 +87,7 @@ const App: React.FC = () => {
           ) : (
             <>
               <AppHeader />
-              <Box  sx={{ width:'100vw', backgroundColor:'rgb(13,14,45)', position:'relative', minHeight:'100vh', }}>
+              <Box  sx={{ width:'100vw', backgroundColor:'rgb(29,22,48)', position:'relative', minHeight:'100vh', }}>
                 {
                   routes.map(({ exact = true, path, component }) => (
                     <Route
@@ -103,7 +104,7 @@ const App: React.FC = () => {
           )
         }
       </div>
-    </Layout>
+    </div>
   )
 }
 

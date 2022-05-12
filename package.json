@@ -56,6 +56,7 @@
     "html2canvas": "^1.4.1",
     "https-browserify": "^1.0.0",
     "moment": "^2.29.2",
+    "notistack": "^2.0.5",
     "rc-virtual-list": "^3.4.2",
     "react": "^17.0.2",
     "react-countdown": "^2.3.2",

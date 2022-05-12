@@ -13,7 +13,7 @@ import WalletInfoModal from './modal/wallet-info-modal'
 import { styled } from '@mui/material'
 
 const StyledWallet = styled('div')`
-  height: 40px;
+  height: 38px;
   color: #fff;
   display: flex;
   justify-content: center; 
@@ -23,7 +23,9 @@ const StyledWallet = styled('div')`
   //margin-right: 20px;
   cursor: pointer;
   min-width: 120px;
-
+  padding: 0 10px;
+font-family: Kanit-Regular;
+  font-size: 16px;
   background-clip: padding-box, border-box;
   background-origin: padding-box, border-box;
   background-image:  linear-gradient(90deg, #50DCB4, #8246F5, #C86EFF);
@@ -40,17 +42,6 @@ const StyledWallet = styled('div')`
 type CurrentAccountProps = {
   account: string | null | undefined
   solanaAccount: undefined | PublicKey
-}
-
-const MetamaskIcon: React.FC = () => {
-  const ref =useRef<HTMLDivElement>()
-  const { account } = useWeb3React()
-
-  return (
-    <div>
-      <div className="userIcon" style={{ display:'flex', marginRight:'15px' }} ref={ref as any} />
-    </div>
-  )
 }
 
 const CurrentAccount: React.FC<CurrentAccountProps> = ({ account, solanaAccount }) => {

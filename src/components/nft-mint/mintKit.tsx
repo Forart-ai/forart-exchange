@@ -2,6 +2,7 @@ import React, {  useState } from 'react'
 import { KitImageBorder, KitListContainer } from '../../pages/coNft/artistMint.style'
 import { KitProperties } from '../../pages/coNft/artistdetail'
 import { Checkbox, styled } from '@mui/material'
+import Image from '../../contexts/theme/components/Image'
 
 const StyledFlag = styled('div')`
   position: absolute;
@@ -33,7 +34,6 @@ export const ImageContainer = styled('div')`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: #28005A;
   border: 1px  #50DCB4 solid;
   border-radius: 10px;
 
@@ -131,9 +131,8 @@ export const SelectableKitItem: React.FC<{ src: any, checked?: boolean, onSelect
       </div>
 
       <ImageContainer>
-        <img className={src.bodyType}  src={src.url}  />
+        <Image width={'100%'} height={'100%'} src={src.url} variant={'rectangular'} />
       </ImageContainer>
-
     </KitImageBorder>
   )
 }

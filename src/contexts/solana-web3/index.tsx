@@ -7,6 +7,7 @@ import useLocalStorage, { LOCAL_STORAGE_WALLET_KEY } from '../../hooks/useLocalS
 import { shortenAddress } from '../../utils'
 import notify from '../../utils/notify'
 import { BaseMessageSignerWalletAdapter } from '@solana/wallet-adapter-base'
+import {  useSnackbar } from 'notistack'
 
 export type SupportWalletNames =
     | 'Phantom'
@@ -49,6 +50,7 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
   const [, setLocalStoredWallet] = useLocalStorage<SupportWalletNames>(LOCAL_STORAGE_WALLET_KEY)
   const [wallet, setWallet] = useState<SolanaWallet>()
   const [connected, setConnected] = useState(false)
+  const { enqueueSnackbar } = useSnackbar()
 
   const { eagerConnected } = useEagerConnect()
 
@@ -82,10 +84,12 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
                 : walletPublicKey
 
           setConnected(true)
-          notify({
-            message: 'Wallet update',
-            description: 'Connected to wallet ' + keyToDisplay
-          })
+          // notify({
+          //   message: 'Wallet update',
+          //   description: 'Connected to wallet ' + keyToDisplay
+          // })
+          enqueueSnackbar(`Connected to wallet   ${keyToDisplay}`, { variant:'success' })
+
           setLocalStoredWallet(wallet.name)
         })
         .catch(() => {
@@ -115,11 +119,11 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
     setWallet(undefined)
     setLocalStoredWallet(undefined)
     setConnected(false)
-
-    notify({
-      message: 'Wallet update',
-      description: 'Disconnected from wallet'
-    })
+    // notify({
+    //   message: 'Wallet update',
+    //   description: 'Disconnected from wallet'
+    // })
+    enqueueSnackbar('Disconnected from wallet', { variant:'success' })
   } , [adapter])
 
   return (
@@ -133,9 +137,11 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
         disconnect
       }}
     >
+
       {children}
 
     </SolanaWeb3Context.Provider>
+
   )
 }
 

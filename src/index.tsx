@@ -19,6 +19,7 @@ import { ModalProvider } from './contexts/modal'
 import ForartTheme from './contexts/theme/config/dark'
 import { ThemeProvider } from '@mui/material'
 import { useSignLogin } from './hooks/useSignLogin'
+import { SnackbarProvider } from 'notistack'
 
 const { store } = configureStore()
 
@@ -27,25 +28,27 @@ const queryClient = new QueryClient()
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={ForartTheme}>
-      <Web3ReactProvider getLibrary={getLibrary}>
-        <QueryClientProvider client={queryClient}>
-          <RefreshControllerProvider>
-            <Router>
-              <DAppProvider config={{}}>
-                <SolanaConnectionConfigProvider>
-                  <SolanaWeb3Provider>
-                    <ModalProvider>
-                      <App />
-                    </ModalProvider>
-                  </SolanaWeb3Provider>
-                </SolanaConnectionConfigProvider>
-              </DAppProvider>
-            </Router>
-          </RefreshControllerProvider>
+      <SnackbarProvider autoHideDuration={3000}>
+        <Web3ReactProvider getLibrary={getLibrary}>
+          <QueryClientProvider client={queryClient}>
+            <RefreshControllerProvider>
+              <Router>
+                <DAppProvider config={{}}>
+                  <SolanaConnectionConfigProvider>
+                    <SolanaWeb3Provider>
+                      <ModalProvider>
+                        <App />
+                      </ModalProvider>
+                    </SolanaWeb3Provider>
+                  </SolanaConnectionConfigProvider>
+                </DAppProvider>
+              </Router>
+            </RefreshControllerProvider>
 
-        </QueryClientProvider>
+          </QueryClientProvider>
 
-      </Web3ReactProvider>
+        </Web3ReactProvider>
+      </SnackbarProvider>
     </ThemeProvider>
   </Provider>
   ,

@@ -9,7 +9,7 @@ import { useMintResultQuery } from '../../hooks/queries/useMintResultQuery'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { MintedNFTItem } from '../../types/coNFT'
 import MintListItem from './components/mintListItem'
-import { Box, styled, Tab, Tabs, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Skeleton, styled, Tab, Tabs, useMediaQuery, useTheme } from '@mui/material'
 import Background from '../../assets/images/home/default-user-background.webp'
 import AvatarIcon from '../../assets/images/coPools/rocket.png'
 import { ArtDetail } from '../coNft/artistdetail/modules/artistIntroduction'
@@ -22,6 +22,7 @@ import { useModal } from '../../contexts/modal'
 import UserProfileSetting from './components/user-profile-setting'
 import { useUserCredit } from '../../hooks/queries/useUserCredit'
 import { useGetUserInfo } from '../../hooks/queries/useGetUserInfo'
+import Image from '../../contexts/theme/components/Image'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -117,6 +118,7 @@ const CoverMask = styled('div')`
   img {
     width: 32px;
     height: 32px;
+
   }
   
   :hover {
@@ -178,6 +180,7 @@ const UserInfo = styled('div')`
         cursor: pointer;
         position: absolute;
         right: -30px;
+      
       }
     }
 
@@ -358,6 +361,7 @@ const TabsContainer: React.FC = () => {
 const PersonalCenterPage: React.FC = () => {
 
   const { openModal } = useModal()
+  const [loading, setLoading] = useState<boolean>(true)
 
   const { data: credit } = useUserCredit()
   const { data: userInfo } = useGetUserInfo()
@@ -376,12 +380,22 @@ const PersonalCenterPage: React.FC = () => {
           {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
           {/*    <div className={'label'}>Post</div>*/}
           {/*  </DataColumn>*/}
-          <img src={userInfo?.banneruri} />
+
+          {/*{*/}
+          {/*  loading ?*/}
+          {/*    <Skeleton sx={{ backgroundColor: '#0e1833' }} animation={'wave'} variant={'rectangular'} width={'100%'} height={'100%'} />*/}
+          {/*    :*/}
+          {/*    <img src={userInfo?.banneruri} />*/}
+          {/*}*/}
+
+          <Image width={'100%'} height={'100%'} src={userInfo?.banneruri} variant={'rectangular'} />
 
           <UserAvatar  onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)}>
             <CoverMask > <img src={SettingIcon} /> </CoverMask>
+            {/*<Image width={128} height={128}  src={userInfo?.avataruri} variant={'rectangular'} />*/}
             <img src={userInfo?.avataruri} />
           </UserAvatar>
+
         </BackgroundImage>
 
         <UserInfo>
