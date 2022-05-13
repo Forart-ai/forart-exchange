@@ -4,15 +4,17 @@ import { Skeleton, styled } from '@mui/material'
 import observerOptions from './options'
 import Wrapper from './Wrapper'
 
-const StyledImage = styled('img')`
+const StyledImage = styled('img')<{$borderRadius: number}>`
   height: 100%;
   left: 0;
-  position: absolute;
+  position: relative;
   top: 0;
   width: 100%;
+  border-radius: ${({ $borderRadius }) => $borderRadius}px;
+  
 `
 
-const Image: React.FC<ImageProps> = ({ src, alt, width, height,variant, ...props }) => {
+const Image: React.FC<ImageProps> = ({ src, alt, width, height,variant, borderRadius,...props }) => {
   const imgRef = useRef<HTMLDivElement>(null)
   const [isLoaded, setIsLoaded] = useState(false)
 
@@ -47,7 +49,7 @@ const Image: React.FC<ImageProps> = ({ src, alt, width, height,variant, ...props
     <Wrapper ref={imgRef} height={height} width={width} {...props}>
       {
         isLoaded ?
-          <StyledImage src={src} alt={alt} />
+          <StyledImage src={src} alt={alt} $borderRadius={ borderRadius ?? 0} />
           :
           <Skeleton sx={{ backgroundColor: '#0e1833' }} animation={'wave'} variant={variant} width={'100%'} height={'100%'}  />
       }

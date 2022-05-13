@@ -342,7 +342,7 @@ const AiArt:React.FC = () => {
           <SelectableNFTList
             selectedValue={content}
             onSelect={v=> setContent(v)}
-            list={ list}
+            list={list}
           />
 
         </Box>

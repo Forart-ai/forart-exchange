@@ -1,17 +1,35 @@
-import React from 'react'
-import { Avatar, styled } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Avatar, styled, TextField, Typography } from '@mui/material'
 import CONFTDetail from '../../nftDetail/coNftDetail'
 import CoNftCard from './CoNftCard/coNftCard'
+import { usePostQuery } from '../../../hooks/queries/usePostQuery'
+import { useLocationQuery } from '../../../hooks/useLocationQuery'
+import { useSolanaWeb3 } from '../../../contexts/solana-web3'
+import { PostListItem } from '../../../types/social'
+import Flex from '../../../contexts/theme/components/Box/Flex'
+import moment from 'moment'
+import Text from '../../../contexts/theme/components/Text/Text'
+import StyledTextField from '../../../contexts/theme/components/TextField'
 
 const BlogsContainer = styled('div')`
   min-height: 300px;
   border: 1px ${({ theme }) => theme.palette.primary.main} solid;
-  padding: 20px 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   margin-top: 30px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  flex-direction: column;
+`
+
+const UserInfoRow = styled('div')`
+  display: flex;
+  width: calc(100% - 64px);
+  flex-direction: column;
+  font-family: Kanit-Regular;
+  color: white;
+  font-size: 20px;
+  margin-left: 10px;
 `
 
 const StyledAvatar = styled(Avatar)`
@@ -20,11 +38,47 @@ const StyledAvatar = styled(Avatar)`
   border-radius: 10px;
 `
 
-const Blogs:React.FC = () => {
+const DateText = styled(Typography)`
+font-family: Kanit-Light;
+  font-size: 14px;
+  color: #999999;
+`
+
+const CommentTextField = styled(TextField)`
+  
+   .Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-width: 0;
+    border-color: transparent; 
+  }
+
+  
+
+   .MuiOutlinedInput-notchedOutline {
+     border: none;
+   
+  }
+
+  
+`
+
+const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
+
   return (
     <BlogsContainer>
-      <StyledAvatar variant={'square'}>N</StyledAvatar>
-      <CoNftCard nftId={'1024-e3a5f2d7356084684c212552cc2c4115'} />
+      <Flex width={'100%'} p={'20px'} borderBottom={'1px #4fc89f solid'}  >
+        <StyledAvatar variant={'square'}>N</StyledAvatar>
+        <UserInfoRow>
+          <span>{item?.username}</span>
+          <CoNftCard nftId={item?.nft} />
+          <Flex width={'100%'} mt={'20px'}>
+            <DateText>{ moment(item.createAt).format('MMMM'+' DD,'+ ' YYYY' )}</DateText>
+          </Flex>
+        </UserInfoRow>
+      </Flex>
+      <Flex alignItems={'center'} width={'100%'}padding={'0 20px'} >
+        <Avatar variant={'circular'}>N</Avatar>
+        <CommentTextField placeholder={'Say something today'}   fullWidth  id="fullWidth"  />
+      </Flex>
     </BlogsContainer>
   )
 }

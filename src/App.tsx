@@ -19,7 +19,7 @@ import useSignLogin from './hooks/useSignLogin'
 import { SnackbarProvider } from 'notistack'
 
 export const BlueGlow = styled('div')`
-  position: absolute;
+  position: fixed;
   width: 500px;
   height: 500px;
   mix-blend-mode: screen;
@@ -27,16 +27,21 @@ export const BlueGlow = styled('div')`
   filter: blur(80px);
   border-radius: 50%;
   opacity: 0.8;
+  z-index: 0;
+
 `
 
 export const PurpleGlow = styled('div')`
-   position: absolute;
+   position: fixed;
    width: 400px;
    height: 400px;
    background: radial-gradient(circle, #5a1993 0%, rgba(63, 21, 99, 0) 100%);
    border-radius: 50%;
    filter: blur(80px);
    opacity: 0.9;
+  z-index: 0;
+  mix-blend-mode: screen;
+
 `
 
 const App: React.FC = () => {
@@ -68,17 +73,19 @@ const App: React.FC = () => {
                 {/*<BlueGlow style={{ right: '25%' }} />*/}
                 {/*<BlueGlow style={{ top:'60vh' }} />*/}
                 {/*<BlueGlow style={{ top:'80vh', right: '30%', opacity:'.6', width:'400px', height: '400px' }} />*/}
-                {
-                  routes.map(({ exact = true, path, component }) => (
-                    <Route
-                      path={path}
-                      exact={exact}
-                      component={component}
-                      key={path}
-                    />
+                <Box>
+                  {
+                    routes.map(({ exact = true, path, component }) => (
+                      <Route
+                        path={path}
+                        exact={exact}
+                        component={component}
+                        key={path}
+                      />
 
-                  ))
-                }
+                    ))
+                  }
+                </Box>
                 <BackTop />
                 <AppFooter />
               </Box>

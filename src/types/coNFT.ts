@@ -28,11 +28,11 @@ export interface MintedNFTItem {
   updateTime: string | number,
   rarity: string
   chainNftName: string
-  chainNftNameTmp: string | number
-  componentMetas: any
-  rank: number | string
+  chainNftNameTmp?: string | number
+  componentMetas?: any
+  rank: number | string | null
   star: number
-  mintKey: string
+  mintKey?: string | null
 }
 
 export interface NFTAttributesData {

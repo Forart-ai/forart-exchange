@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { styled } from '@mui/material'
+import { styled, useMediaQuery, useTheme } from '@mui/material'
 import { useNftDetail } from '../../../../hooks/queries/useNftDetail'
 import { useFindComponent } from '../../../../hooks/queries/useFindComponent'
 import Flex from '../../../../contexts/theme/components/Box/Flex'
@@ -10,13 +10,29 @@ import AttributesItemCard from './AttributesItemCard'
 
 const Wrapper = styled('div')`
   width: 100%;
-  height: 320px;
   background-color: rgb(13,14,45);
   border-radius: 10px;
-  margin: 0 8px;
   padding: 15px;
   display: flex;
   align-items: center;
+  height: auto;
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    height: auto;
+
+  }
+ 
+`
+
+const Container = styled('div')`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    flex-direction: column;
+  }
 `
 
 const ImageWrapper = styled('div')`
@@ -32,6 +48,7 @@ const ImageWrapper = styled('div')`
 `
 
 const CoNftCard:React.FC<{nftId: string}> = ({ nftId }) => {
+  const ForartTheme = useTheme()
 
   const { data: nftDetail } = useNftDetail(nftId)
 
@@ -43,21 +60,21 @@ const CoNftCard:React.FC<{nftId: string}> = ({ nftId }) => {
     ))
   }, [ nftDetail,a])
 
+  const isMobile = useMediaQuery(ForartTheme.breakpoints.down('md'))
+
   return (
-    <>
-      <Wrapper>
-        <Flex justifyContent={'space-between'} alignItems={'center'}  >
-          <ImageWrapper>
-            <img src={nftDetail?.previewUrl} />
-          </ImageWrapper>
-          <Flex flexDirection={'column'}>
-            <Text fontSize={'20px'} fontFamily={'Aldrich-Regular'}>{nftDetail?.chainNftName}</Text>
-            <Text letterSpacing={'.4px'} fontFamily={'Kanit-Regular'} fontSize={'14px'} mb={'5px'} >Owned by: &nbsp;{shortenAddress(nftDetail?.wallet)}</Text>
-            <AttributesItemCard item={attr} />
-          </Flex>
+    <Wrapper>
+      <Container  >
+        <ImageWrapper>
+          <img src={nftDetail?.previewUrl} />
+        </ImageWrapper>
+        <Flex flexDirection={'column'} width={isMobile ? '100%' : 'calc(100% - 200px)'}  >
+          <Text fontSize={'20px'} fontFamily={'Aldrich-Regular'}>{nftDetail?.chainNftName}</Text>
+          <Text letterSpacing={'.4px'} fontFamily={'Kanit-Regular'} fontSize={'14px'} mb={'5px'} >Owned by: &nbsp;{shortenAddress(nftDetail?.wallet)}</Text>
+          <AttributesItemCard item={attr} />
         </Flex>
-      </Wrapper>
-    </>
+      </Container>
+    </Wrapper>
   )
 }
 

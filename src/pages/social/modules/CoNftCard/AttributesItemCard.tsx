@@ -5,8 +5,9 @@ import { Skeleton, styled } from '@mui/material'
 
 const Wrapper = styled('div')`
   height: 100%;
-  overflow: auto;
   width: 100%;
+  overflow: auto;
+  min-width: 200px;
 
   .scroll-container {
     ::-webkit-scrollbar {
@@ -18,11 +19,15 @@ const Wrapper = styled('div')`
 
 const BoxContainer = styled('div')`
   display: grid;
-  grid-template-columns: repeat(4, 110px);
+  grid-template-columns: repeat(auto-fill, 110px);
   justify-content: space-between;
   grid-gap: 10px;
   user-select: none;
   width: 100%;
+  
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    grid-template-columns: repeat(4, 110px);
+  }
 `
 
 const ItemBox = styled('div')`
@@ -91,7 +96,6 @@ const AttributesItemCard:React.FC<{item?: Attribute[]}> = ({ item }) => {
 
         }
       </ScrollContainer>
-
     </Wrapper>
   )
 }

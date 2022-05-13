@@ -1,7 +1,7 @@
 import { useSolanaWeb3 } from '../contexts/solana-web3'
 import { useCallback, useEffect } from 'react'
 import nacl from 'tweetnacl'
-import AUTH_API from '../apis/auth'
+import { AUTH_API } from '../apis/auth'
 import useLocalStorage from './useLocalStorage'
 import useEagerConnect from './useEagerConnect'
 
