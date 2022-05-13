@@ -18,11 +18,11 @@ const Text = styled('div')<TextProps> `
   line-height: 1.5;
   ${({ textTransform }) => textTransform && `text-transform: ${textTransform};`}
   ${({ ellipsis }) =>
-    ellipsis ?
-      `white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;` : ''
-}
+    ellipsis && `
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+  `}
 
   ${space}
   ${typography}
@@ -32,9 +32,7 @@ const Text = styled('div')<TextProps> `
 
 Text.defaultProps = {
   color: 'primary.main',
-  small: false,
   fontSize: '16px',
-  ellipsis: false,
 }
 
 export default Text
