@@ -4,6 +4,8 @@ import nacl from 'tweetnacl'
 import { AUTH_API } from '../apis/auth'
 import useLocalStorage from './useLocalStorage'
 import useEagerConnect from './useEagerConnect'
+import Cookies from 'js-cookie'
+import jwt_decode from 'jwt-decode'
 
 const randomString = (len: number) => {
   const p = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -14,40 +16,37 @@ export function useSignLogin() {
   const { adapter, account } = useSolanaWeb3()
   const { eagerConnected } = useEagerConnect()
 
-  const [token, setToken] = useLocalStorage<string>('TOKEN','')
-
   useEffect( () => {
     (async () => {
-      const a = randomString(150)
+      if (!Cookies.get('USER_TOKEN')) {
+        const a = randomString(150)
 
-      const message = new TextEncoder().encode('hello world')
+        const message = new TextEncoder().encode('hello world')
 
-      if (!adapter || !account ) {
-        return
+        if (!adapter || !account ) {
+          return
+        }
+
+        const signed = (await adapter.signMessage(message))!
+
+        const signature = Buffer.from(signed).toString('base64')
+
+        // console.log(Buffer.from(signed).toString('base64'))
+
+        AUTH_API.userSignLogin({ wallet:account.toBuffer().toString('base64'), toSign:'hello world', signed:signature }).then((res:any) => {
+          const decoded:any = jwt_decode(res)
+          const expDate = new Date(decoded.exp * 1000)
+
+          // const inFifteenMinutes = new Date(new Date().getTime() + 1 * 60 * 1000)
+          Cookies.set('USER_TOKEN', res,{ expires: expDate })
+        })
+
+        // console.log(nacl.sign.detached.verify(message, new Buffer(signature, 'base64'), Uint8Array.from(account!.toBuffer())))
+
+        return signature
       }
-
-      const signed = (await adapter.signMessage(message))!
-
-      const signature = Buffer.from(signed).toString('base64')
-
-      // console.log(Buffer.from(signed).toString('base64'))
-
-      console.log(signature)
-
-      AUTH_API.userSignLogin({ wallet:account.toBuffer().toString('base64'), toSign:'hello world', signed:signature }).then((res:any) => {
-        console.log(res)
-        setToken(res)
-
-      })
-
-      // console.log(nacl.sign.detached.verify(message, new Buffer(signature, 'base64'), Uint8Array.from(account!.toBuffer())))
-
-      return signature
     })()
-
   },[account, adapter])
-
-  return { token }
 }
 
 export default useSignLogin

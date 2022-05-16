@@ -17,6 +17,7 @@ import Sticky from 'react-sticky-el'
 import { zIndex } from 'styled-system'
 import useSignLogin from './hooks/useSignLogin'
 import { SnackbarProvider } from 'notistack'
+import Cookies from 'js-cookie'
 
 export const BlueGlow = styled('div')`
   position: fixed;
@@ -47,6 +48,8 @@ export const PurpleGlow = styled('div')`
 const App: React.FC = () => {
   // useChainEffect()
   useEagerConnect()
+  console.log(Cookies.get('USER_TOKEN'))
+
   useSignLogin()
 
   const location = useLocation()

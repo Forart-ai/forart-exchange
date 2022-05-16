@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 function onResponseFulfilled(config: any) {
   const { data: responseBody } = config
@@ -39,7 +40,10 @@ const Service = axios.create({
 
 Service.interceptors.request.use(
   config => {
-    const token = localStorage.getItem('TOKEN')
+    // const token = localStorage.getItem('TOKEN')
+    const token = Cookies.get('USER_TOKEN')
+    console.log(token)
+
     if (token) {
       config.headers['Authorization'] = `Bearer ${token.replace(/"/g, '')}`
     }

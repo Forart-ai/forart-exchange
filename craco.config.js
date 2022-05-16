@@ -29,6 +29,7 @@ module.exports = {
             'stream': require.resolve('stream-browserify'),
             'crypto': require.resolve('crypto-browserify'),
             'buffer': require.resolve('buffer'),
+            'zlib': require.resolve('browserify-zlib'),
 
             // TODO: fix me !!!!!!!!
             'http': require.resolve('stream-http'),

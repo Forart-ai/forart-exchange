@@ -1,20 +1,18 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Dialog from '../../../contexts/theme/components/Dialog/Dialog'
 import { Box, Input, makeStyles, styled, Theme, Tooltip } from '@mui/material'
-import Button from '@mui/material/Button'
-import useLocalStorage from '../../../hooks/useLocalStorage'
 import StyledTextField from '../../../contexts/theme/components/TextField'
 import { AUTH_API, UserInfoParam } from '../../../apis/auth'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 import DefaultBannerImg from '../../../assets/images/home/default-user-background.webp'
 import DefaultAvatarImg from '../../../assets/images/header/avatar.png'
-import { useGetUserInfo } from '../../../hooks/queries/useGetUserInfo'
-import wallet from '../../../components/wallet'
 import { useRefreshController } from '../../../contexts/refresh-controller'
 import { useModal } from '../../../contexts/modal'
 import { useSnackbar } from 'notistack'
 import CustomizeButton from '../../../contexts/theme/components/Button'
 import { SyncLoader } from 'react-spinners'
+import * as nsfwjs from 'nsfwjs'
+import useNSFW from '../../../hooks/useNSFW'
 
 const Wrapper = styled('div')`
   width: 400px;
@@ -87,6 +85,7 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
   const { forceRefresh } = useRefreshController()
   const { enqueueSnackbar } = useSnackbar()
   const [loading, setLoading] = useState<boolean>(false)
+  const { isPornImage }  = useNSFW()
 
   const [formValues, setFormValues] = useState(defaultFormValues)
 
@@ -110,9 +109,9 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
     })
   }
 
-  const handleCapture = ( e : any) => {
+  const handleCapture = async ( e : any) => {
     const { name, files } = e.target
-    console.log(files[0])
+
     if ((files[0].size / 1024) / 1024 > 3) {
       enqueueSnackbar('Sorry, image must smaller than 3MB', { variant:'warning' })
       return
@@ -126,15 +125,23 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
     const reader = new FileReader()
     reader.readAsDataURL(files[0])
     reader.onload = function (v) {
+
       if (v.target && typeof v.target.result === 'string') {
         (document.getElementById(`${name}`) as any).src = v.target.result
+        //check porn
+        isPornImage(document.getElementById(`${name}`) as HTMLImageElement).then(res => {
+          if (res > 20) {
+            enqueueSnackbar('Sorry, the picture is not so healthy', { variant: 'warning' })
+            return
+          }
+          setFormValues({
+            ...formValues,
+            [name]: files[0]
+          })
+        })
       }
-    }
 
-    setFormValues({
-      ...formValues,
-      [name]:files[0]
-    })
+    }
 
   }
 

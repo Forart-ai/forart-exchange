@@ -5,7 +5,6 @@ import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { useWeb3React } from '@web3-react/core'
 import { message } from 'antd'
 import SolanaLogo from '../../assets/images/wallets/solanaLogoMark.svg'
-import { useSignLogin } from '../../hooks/useSignLogin'
 import Dialog from '../../contexts/theme/components/Dialog/Dialog'
 import { styled } from '@mui/material'
 
