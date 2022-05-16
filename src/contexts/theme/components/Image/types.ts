@@ -11,5 +11,5 @@ export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement>, SpacePr
   height: number | string;
   wrapperProps?: WrapperProps;
   variant?: 'rectangular' | 'circular',
-  borderRadius?: number
+  borderRadius?: number,
 }

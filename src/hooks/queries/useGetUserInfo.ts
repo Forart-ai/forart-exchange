@@ -9,9 +9,9 @@ export const useGetUserInfo = (): UseQueryResult<UserInfoParam> => {
   const { quietRefreshFlag } = useRefreshController()
 
   return useQuery(
-    ['USER_ACCOUNT_INFO', account, quietRefreshFlag],
+    ['USER_ACCOUNT_INFO', account?.toBase58(), quietRefreshFlag],
     async () => {
-      return await AUTH_API.getUserInfo(account?.toBase58()).then(res=>res)
+      return await AUTH_API.getUserInfo(account?.toBase58()).then(res=> ({ ...res }))
     },{
       refetchOnWindowFocus:false,
       refetchInterval:false

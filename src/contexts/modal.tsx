@@ -111,9 +111,8 @@ const ModalWrapper: React.FC<{ contentStyle?: React.CSSProperties; isOpen: boole
       appElement={document.getElementById('app')!}
       style={{
         overlay: {
-          background: 'rgba(26,26,28,0.5)',
-          backdropFilter: 'blur(1px)',
-          zIndex: 99999,
+          background: 'rgba(26,26,28,0.6)',
+          zIndex: 100,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

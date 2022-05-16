@@ -112,23 +112,51 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
 
   const handleCapture = ( e : any) => {
     const { name, files } = e.target
-    setLoading(true)
+    console.log(files[0])
+    if ((files[0].size / 1024) / 1024 > 3) {
+      enqueueSnackbar('Sorry, image must smaller than 3MB', { variant:'warning' })
+      return
+    }
 
-    AUTH_API.uploadImage({ file: files[0], wallet: account?.toBase58() }).then(res => {
-      setFormValues({
-        ...formValues,
-        [name]:res
-      })
-      setLoading(false)
+    if (!files[0].type.includes('image')) {
+      enqueueSnackbar('Sorry, it must be an image type', { variant:'warning' })
+      return
+    }
+
+    const reader = new FileReader()
+    reader.readAsDataURL(files[0])
+    reader.onload = function (v) {
+      if (v.target && typeof v.target.result === 'string') {
+        (document.getElementById(`${name}`) as any).src = v.target.result
+      }
+    }
+
+    setFormValues({
+      ...formValues,
+      [name]:files[0]
     })
 
   }
 
-  const handleSubmit = useCallback((e:any) => {
+  const handleSubmit = useCallback(async (e:any) => {
     e.preventDefault()
-    AUTH_API.updateUserInfo(formValues).then(res => {
-      console.log(res)
+    setLoading(true)
+
+    if (typeof formValues.banneruri !=='string') {
+      await  AUTH_API.uploadBannerImage({ wallet:account?.toBase58(), file:formValues.banneruri }).then((res:any) => {
+        formValues.banneruri = res
+      })
+    }
+
+    if (typeof formValues.avataruri !== 'string') {
+      await AUTH_API.uploadAvatarImage({ wallet:account?.toBase58(), file:formValues.avataruri }).then((res:any) => {
+        formValues.avataruri = res
+      })
+    }
+
+    AUTH_API.updateUserInfo(formValues).then(() => {
       forceRefresh()
+      setLoading(false)
       enqueueSnackbar('Edit successfully', { variant:'success' })
       closeModal()
     })
@@ -142,14 +170,11 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
             <Title>
               Profile Banner
             </Title>
-            <label htmlFor="contained-button-file">
-              <Input name={'banneruri'} onChange={handleCapture}  id="contained-button-file"  type="file" hidden />
+            <label htmlFor="banner-file">
+              <input accept={'image/*'}  name={'banneruri'} onChange={handleCapture}  id="banner-file"  type="file" hidden />
               <DefaultBanner>
                 {
-                  loading ?
-                    <SyncLoader size={16} color={'#e0e0e0'} />
-                    :
-                    formValues.banneruri ? <img src={formValues.banneruri} /> : <img src={DefaultBannerImg} />
+                  userInfo?.banneruri ? <img  id={'banneruri'} src={userInfo.banneruri} /> : <img id={'banneruri'}  src={DefaultBannerImg} />
                 }
               </DefaultBanner>
             </label>
@@ -160,18 +185,13 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
               Profile Avatar
             </Title>
             <label htmlFor="avatar-contained-button-file">
-              <Input name={'avataruri'} onChange={handleCapture}  id="avatar-contained-button-file"  type="file" hidden />
+              <Input name={'avataruri'} onChange={handleCapture} id="avatar-contained-button-file"  type="file" hidden />
               <DefaultAvatar>
-
                 {
-                  loading ?
-                    <SyncLoader size={16} color={'#e0e0e0'} />
-                    :
-                    formValues.avataruri ? <img src={formValues.avataruri} /> : <img src={DefaultAvatarImg} />
+                  userInfo?.banneruri ? <img  id={'avataruri'} src={userInfo.avataruri} /> :   <img id={'avataruri'} src={DefaultAvatarImg} />
                 }
 
               </DefaultAvatar>
-
             </label>
           </Item>
 
@@ -204,12 +224,14 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
           </Item>
 
           <Box sx={{ width: '100%', display:'center', justifyContent: 'center', marginTop:'40px' }}>
-            <CustomizeButton variant="contained" color="secondary" type="submit">
+            <CustomizeButton disabled={loading} variant="contained" color="secondary" type="submit">
               Save
+              {
+                loading && <SyncLoader size={6} color={'white'} />
+              }
             </CustomizeButton>
           </Box>
         </form>
-
       </Wrapper>
     </Dialog>
   )

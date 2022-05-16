@@ -6,6 +6,7 @@ import { shortenAddress } from '../../../utils'
 import { DEFAULT_CLUSTER } from '../../../contexts/solana-connection-config'
 import { useModal } from '../../../contexts/modal'
 import { disconnect } from 'cluster'
+import { useHistory } from 'react-router-dom'
 
 const Wrapper = styled('div')`
   display: flex;
@@ -22,11 +23,13 @@ const Message = styled('div')`
 
 const WalletInfoModal:React.FC<{ account?: string; disconnect: VoidFunction }> = ({ account, disconnect }) => {
 
+  const history = useHistory()
   const { closeModal } = useModal()
 
   const disconnectWallet = () => {
     disconnect()
     closeModal()
+    history.push('/')
   }
 
   return (

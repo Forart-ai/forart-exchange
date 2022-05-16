@@ -30,7 +30,7 @@ export const AUTH_API = {
     return Service.post('account/edit', param)
   },
 
-  uploadImage(param: UploadImageParam) {
+  uploadAvatarImage(param: UploadImageParam) {
     const data = new FormData()
     data.append('file', param.file)
     data.append('wallet', param.wallet!)
@@ -44,6 +44,22 @@ export const AUTH_API = {
     }
 
     return Service.post('/account/avatar/upload', data, config)
+  },
+
+  uploadBannerImage(param: UploadImageParam) {
+    const data = new FormData()
+    data.append('file', param.file)
+    data.append('wallet', param.wallet!)
+
+    // @ts-ignore
+    const boundary = data._boundary
+    const config = {
+      headers:{
+        'Content-Type': `multipart/form-data; boundary = ${boundary}`,
+      }
+    }
+
+    return Service.post('/account/banner/upload', data, config)
   }
 }
 

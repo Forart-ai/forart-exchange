@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // @ts-ignore
 import { Empty, TabPaneProps } from 'antd'
 import { useWeb3React } from '@web3-react/core'
@@ -366,6 +366,10 @@ const PersonalCenterPage: React.FC = () => {
   const { data: credit } = useUserCredit()
   const { data: userInfo } = useGetUserInfo()
 
+  useEffect(() => {
+    console.log(userInfo)
+  }, [userInfo])
+
   return (
     <Wrapper>
       <PersonalCenterContainer>
@@ -388,20 +392,18 @@ const PersonalCenterPage: React.FC = () => {
           {/*    <img src={userInfo?.banneruri} />*/}
           {/*}*/}
 
-          <Image width={'100%'} height={'100%'} src={userInfo?.banneruri} variant={'rectangular'} />
+          <Image width={'100%'} height={'100%'} src={`${userInfo?.banneruri}?a=${userInfo?.updateTime}`} variant={'rectangular'} />
 
           <UserAvatar  onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)}>
             <CoverMask > <img src={SettingIcon} /> </CoverMask>
             {/*<Image width={128} height={128}  src={userInfo?.avataruri} variant={'rectangular'} />*/}
-            <img src={userInfo?.avataruri} />
+            <img src={`${userInfo?.avataruri}?a=${userInfo?.updateTime}`} />
           </UserAvatar>
 
         </BackgroundImage>
 
         <UserInfo>
-          <div className="username">{userInfo?.username}
-            {/*<img src={SettingIcon} onClick={() => openModal(<UserProfileSetting />)} />*/}
-          </div>
+          <div className="username">{userInfo?.username}</div>
           <div className="address">{ userInfo?.slogan }</div>
           <div className="amount">$FTA: {credit?.retain ?? '0'}</div>
         </UserInfo>
