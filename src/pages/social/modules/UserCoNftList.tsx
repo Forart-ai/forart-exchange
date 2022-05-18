@@ -50,7 +50,6 @@ export const NFTItem: React.FC<{ src: ShowCoNftParams, checked?: boolean, onSele
 
 const UserCoNftList:React.FC<{selectedValue?:ShowCoNftParams, onSelect:(_: ShowCoNftParams) => void, list?: MintedNFTItem[]}> =({ selectedValue,onSelect,list }) => {
   const { account } = useSolanaWeb3()
-  // const { data: mintedNft } = useMintResultQuery({ wallet: account?.toBase58(), nft:'' } )
 
   const coNftList = useMemo(() => {
 
@@ -69,7 +68,7 @@ const UserCoNftList:React.FC<{selectedValue?:ShowCoNftParams, onSelect:(_: ShowC
     >
       {
         coNftList?.map((item,index) => (
-          <SwiperSlide key={index} >
+          <SwiperSlide key={index} style={{ display:'flex', justifyContent:'center' }} >
             <NFTItem src={item} onSelect={onSelect} checked={selectedValue?.nft === item.nft} />
           </SwiperSlide>
 

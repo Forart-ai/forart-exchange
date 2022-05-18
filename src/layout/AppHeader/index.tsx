@@ -11,7 +11,6 @@ import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 import { Box, Divider, Drawer, List, ListItem, styled } from '@mui/material'
 import DrawerIcon from '../../assets/images/siderIcon/drawer.svg'
 import Button from '@mui/material/Button'
-import { Anchor } from 'antd'
 import Sticky from 'react-sticky-el'
 
 const AppHeaderContent = styled('div')`
@@ -81,6 +80,8 @@ export const NavLinkText = styled('div')`
 
   .selected {
     color: #85fcd0;
+    
+  
   }
 
   :hover:not(.active) {

@@ -1,6 +1,4 @@
-import NFTCreate from '../pages/nftCreate'
-import Marketplace from '../pages/marketplace'
-import NFTDetailPage from '../pages/marketplace/nftDetail'
+
 import AIGen from '../pages/AIGen'
 import PersonalCenterPage from '../pages/personal'
 import CoNftPage from '../pages/coNft/homepage'
@@ -77,27 +75,6 @@ const routes: Route[] = [
     icon: GanIcon,
     component: AIGen,
     disable: false,
-    hidden: true
-  },
-
-  {
-    path: '/marketplace',
-    title: 'Marketplace',
-    component: Marketplace,
-    icon: MarketplaceIcon,
-    disable: false,
-    hidden: true
-  },
-  {
-    path: '/marketplace/:id',
-    title: 'Collectible',
-    component: NFTDetailPage,
-    hidden: true
-  },
-  {
-    path: '/NFTCreate',
-    title: 'NFT Create',
-    component: NFTCreate,
     hidden: true
   },
   {

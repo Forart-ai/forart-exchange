@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useStyledNFTsQuery } from '../../../../hooks/queries/useStyledNFTsQuery'
 
-import { Button, Image as AntdImage } from 'antd'
-
 import BannerImage from '../../../../assets/images/AIGen/ai-gen-banner.jpg'
 import Merge from '../../../../assets/images/aiGenerator/merge.png'
 import Add from '../../../../assets/images/aiGenerator/add.png'
@@ -11,7 +9,6 @@ import StyleEx from '../../../../assets/images/aiGenerator/styleEx.png'
 import ContentEx from '../../../../assets/images/aiGenerator/contentEx.png'
 import ResultEx from '../../../../assets/images/aiGenerator/resultEx.png'
 import Shadow from '../../../../assets/images/aiGenerator/shadow.png'
-import { CaretRightOutlined, LoadingOutlined } from '@ant-design/icons'
 import { aiGeneratorStyle } from '../../../../apis/ai'
 import { base64ToIPfsUri } from '../../../../utils'
 import { useHistory } from 'react-router-dom'

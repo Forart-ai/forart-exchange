@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "craco start",
+    "start:prod": "cross-env NODE_ENV=PRODUCTION craco start",
     "build": "craco build",
     "test": "craco test"
   },
@@ -47,7 +48,6 @@
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/network-connector": "^6.1.9",
     "@web3-react/walletconnect-connector": "^6.2.8",
-    "antd": "^4.16.13",
     "bignumber.js": "^9.0.1",
     "buffer": "^6.0.3",
     "clsx": "^1.1.1",
@@ -115,6 +115,8 @@
   "devDependencies": {
     "@craco/craco": "^6.4.3",
     "@types/styled-components": "^5.1.18",
+    "browserify-zlib": "^0.2.0",
+    "cross-env": "^7.0.3",
     "sass": "^1.49.7"
   }
 }

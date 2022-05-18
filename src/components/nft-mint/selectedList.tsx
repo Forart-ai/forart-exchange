@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Popover } from 'antd'
 import { NFTAttributesData } from '../../types/coNFT'
 import src from '*.png'
 import Sticky from 'react-sticky-el'
@@ -14,7 +13,7 @@ export const Title = styled.div`
   font-size: 2.5em;
   color: #ffffff;
 `
-const Container = styled.div`
+const Container = styled.div` 
   width: 100%;
   display: flex;
   flex-wrap: wrap;

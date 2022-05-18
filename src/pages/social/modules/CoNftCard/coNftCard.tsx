@@ -7,9 +7,9 @@ import Text from '../../../../contexts/theme/components/Text/Text'
 import { shortenAddress } from '../../../../utils'
 import { AttributesItem } from '../../../../components/attributes-item'
 import AttributesItemCard from './AttributesItemCard'
+import { MintedNFTItem } from '../../../../types/coNFT'
 
 const Wrapper = styled('div')`
-  width: 100%;
   background-color: rgb(13,14,45);
   border-radius: 10px;
   padding: 15px;
@@ -47,18 +47,14 @@ const ImageWrapper = styled('div')`
   }
 `
 
-const CoNftCard:React.FC<{nftId: string}> = ({ nftId }) => {
+const CoNftCard:React.FC<{nftDetail: MintedNFTItem}> = ({ nftDetail }) => {
   const ForartTheme = useTheme()
-
-  const { data: nftDetail } = useNftDetail(nftId)
-
-  const { data: a } = useFindComponent(nftDetail?.components)
 
   const attr = useMemo(() => {
     return nftDetail?.componentMetas.map((v: any) => (
       JSON.parse(v.chainMeta)
     ))
-  }, [ nftDetail,a])
+  }, [ nftDetail])
 
   const isMobile = useMediaQuery(ForartTheme.breakpoints.down('md'))
 

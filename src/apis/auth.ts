@@ -18,7 +18,7 @@ export type UserInfoParam = {
 }
 
 export const AUTH_API = {
-  userSignLogin(params: {wallet: string, toSign: string, signed: string}) {
+  userSignLogin(params: {wallet: string, toSign: string, signed: string, walletInBase64:string}) {
     return Service.post('/login', params)
   },
 

@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { Contract } from 'ethers'
-import { message } from 'antd'
 import useSigner from '../useSigner'
 
 const contractAddress = '0x36c3Fd5e4772e15716597D05BD462CB45a605fDe'
@@ -24,7 +23,6 @@ const usePlanetItemContract = () => {
   const awardItem = useCallback(
     async(tokenUri: string) => {
       if (!contract) {
-        message.warn('contract is not loaded')
         return
       }
 
@@ -36,7 +34,6 @@ const usePlanetItemContract = () => {
   const isApprovedForAll = useCallback(
     async (owner: string, operator: string) => {
       if (!contract) {
-        message.warn('contract is not loaded')
         return
       }
       return await contract!.isApprovedForAll(owner, operator)
@@ -47,7 +44,6 @@ const usePlanetItemContract = () => {
   const setApprovalForAll = useCallback(
     async (operator: string, approved: boolean) => {
       if (!contract) {
-        message.warn('contract is not loaded')
         return
       }
 

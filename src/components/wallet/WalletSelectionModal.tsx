@@ -3,7 +3,6 @@ import { CloseButton, useModal } from '../../contexts/modal'
 import { networkConf, NetworkKeys, NetworkType, supportNetwork, supportWallets, WalletType } from '../../web3/connectors'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { useWeb3React } from '@web3-react/core'
-import { message } from 'antd'
 import SolanaLogo from '../../assets/images/wallets/solanaLogoMark.svg'
 import Dialog from '../../contexts/theme/components/Dialog/Dialog'
 import { styled } from '@mui/material'
@@ -105,7 +104,7 @@ const WalletList: React.FC<{network: string, wallet: WalletType, onSelect:(_:Wal
   const connectToWallet =  useCallback(async () => {
     const provider = await connector?.getProvider()
     if ((wallet.chainType === 'eth' || wallet.chainType === 'celo' ) && !provider ) {
-      message.warn(`Please install ${name} wallet first.`)
+      // message.warn(`Please install ${name} wallet first.`)
       return
     }
     onSelect(wallet)

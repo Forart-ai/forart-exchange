@@ -1,6 +1,5 @@
-@import '~antd/dist/antd.css';
-@import "./styles/override-antd-select-dropdown";
 @import "./styles/override-pagination";
+@import "index.css";
 
 
 .app {
@@ -58,51 +57,4 @@
 
 .swiper-pagination-bullet-active-next {
   background-color: #8246F5 !important;
-}
-
-.ant-image-preview-img-wrapper {
-  position: static !important;
-}
-.ant-image-preview-img {
-  margin: auto;
-}
-
-.ant-btn {
-  height: 100%;
-  background-color: #E42575;
-  color: white;
-  border: none;
-  border-radius: .2em;
-  //transition: filter 0.5s;
-
-  &:hover, &:focus {
-    background-color: #E42575;
-    opacity: .8;
-    color: white;
-    transition-duration: 0.2s;
-
-    //background-image: linear-gradient(to right, #fa628e, #ff005e);
-    //filter: brightness(120%);
-  }
-}
-
-.ant-modal-close-icon {
-  color: white;
-}
-
-.ant-modal-content {
-  border-radius: 10px;
-  background-color: #1D222D !important;
-}
-.ant-modal-title {
-  color: white;
-  font-weight: 550;
-  font-size: 1.6rem;
-}
-
-.ant-modal-header {
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  border-bottom: none;
-  background-color: #1D222D !important;
 }

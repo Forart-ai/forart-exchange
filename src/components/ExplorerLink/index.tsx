@@ -1,5 +1,4 @@
 import React from 'react'
-import { Typography } from 'antd'
 import { shortenAddress } from '../../utils'
 import { PublicKey } from '@solana/web3.js'
 
@@ -33,9 +32,9 @@ export const ExplorerLink = (props: {
       rel="noreferrer"
     >
       {code ? (
-        <Typography.Text style={props.style} code>
+        <span>
           {shortenAddress(address, length)}
-        </Typography.Text>
+        </span>
       ) : (
         shortenAddress(address, length)
       )}

@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import './App.css'
 import './app.scss'
-import { BackTop, Layout } from 'antd'
-import { Content } from 'antd/es/layout/layout'
 import AppHeader from './layout/AppHeader'
 // @ts-ignore
 import { Route, useLocation } from 'react-router-dom'
@@ -16,7 +14,6 @@ import Flex from './contexts/theme/components/Box/Flex'
 import Sticky from 'react-sticky-el'
 import { zIndex } from 'styled-system'
 import useSignLogin from './hooks/useSignLogin'
-import { SnackbarProvider } from 'notistack'
 import Cookies from 'js-cookie'
 
 export const BlueGlow = styled('div')`
@@ -48,7 +45,6 @@ export const PurpleGlow = styled('div')`
 const App: React.FC = () => {
   // useChainEffect()
   useEagerConnect()
-  console.log(Cookies.get('USER_TOKEN'))
 
   useSignLogin()
 
@@ -89,7 +85,6 @@ const App: React.FC = () => {
                     ))
                   }
                 </Box>
-                <BackTop />
                 <AppFooter />
               </Box>
 

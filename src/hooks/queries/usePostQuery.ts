@@ -14,7 +14,8 @@ export const usePostQuery = (params: UserPostListQueryParams): UseQueryResult<Ar
       return await SOCIAL_API.getUserPostList(params).then(res => res)
     },{
       refetchOnWindowFocus:false,
-      refetchInterval:false
+      refetchInterval:false,
+      keepPreviousData: true
     }
   )
 }

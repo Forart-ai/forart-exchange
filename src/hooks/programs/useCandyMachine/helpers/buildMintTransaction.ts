@@ -5,7 +5,7 @@ import {
   Signer,
   SystemProgram,
   SYSVAR_CLOCK_PUBKEY, SYSVAR_INSTRUCTIONS_PUBKEY, SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
-  SYSVAR_RENT_PUBKEY,
+  SYSVAR_RENT_PUBKEY, SYSVAR_SLOT_HASHES_PUBKEY,
   Transaction
 } from '@solana/web3.js'
 import { getAtaForMint, getCandyMachineCreator, getMasterEdition, getMetadata, getTokenWallet } from './accounts'
@@ -156,7 +156,7 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
         systemProgram: SystemProgram.programId,
         rent: SYSVAR_RENT_PUBKEY,
         clock: SYSVAR_CLOCK_PUBKEY,
-        recentBlockhashes: SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
+        recentBlockhashes: SYSVAR_SLOT_HASHES_PUBKEY,
         instructionSysvarAccount: SYSVAR_INSTRUCTIONS_PUBKEY,
       },
       remainingAccounts: remainingAccounts.length > 0 ? remainingAccounts : undefined,

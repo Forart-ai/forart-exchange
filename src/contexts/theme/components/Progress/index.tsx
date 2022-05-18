@@ -5,8 +5,7 @@ import CircularProgress, {
   circularProgressClasses,
   CircularProgressProps,
 } from '@mui/material/CircularProgress'
-import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress'
-import { ProgressProps } from 'antd'
+import LinearProgress, { linearProgressClasses, LinearProgressProps } from '@mui/material/LinearProgress'
 
 // const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 //   height: 20,
@@ -28,7 +27,7 @@ const BorderLinearProgress = styled(LinearProgress)`
   border: 1px ${({ theme }) => theme.palette.primary.main} solid;
 
 
-   &.${linearProgressClasses.colorPrimary}  {
+   &.${linearProgressClasses.colorPrimary}  { 
   background-color: transparent;
 }
   
@@ -40,10 +39,10 @@ const BorderLinearProgress = styled(LinearProgress)`
 }
 `
 
-const CustomizedProgressBars:React.FC<ProgressProps> = (props:ProgressProps) => {
+const CustomizedProgressBars:React.FC<LinearProgressProps> = (props:LinearProgressProps) => {
   return (
 
-    <BorderLinearProgress variant="determinate" value={props.percent} />
+    <BorderLinearProgress variant="determinate" value={props.value} />
   )
 }
 

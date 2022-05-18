@@ -3,11 +3,9 @@ import styled from 'styled-components'
 import { CloseButton, useModal } from '../../../../../contexts/modal'
 import WarningIcon from '../../../../../assets/images/modalImages/warning.svg'
 import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
-import { Button, InputNumber, notification } from 'antd'
 import { useDonation } from '../../../../../hooks/programs/useDonation'
 import WalletSelectionModal from '../../../../../components/wallet/WalletSelectionModal'
 import { shortenAddress } from '../../../../../utils'
-import notify from '../../../../../utils/notify'
 import Dialog from '../../../../../contexts/theme/components/Dialog/Dialog'
 import { DonationError, DonationSuccess } from './donation-info'
 import Rocket from '../../../../../assets/images/coPools/rocket.png'
@@ -161,10 +159,10 @@ const DonateDialog: React.FC = () => {
   const handleDonate = () => {
     setLoading(true)
     if (!account) {
-      notify({
-        message:'Oops!',
-        description:'Please connect to Solana wallet',
-      })
+      // notify({
+      //   message:'Oops!',
+      //   description:'Please connect to Solana wallet',
+      // })
       return
     }
 

@@ -1,20 +1,20 @@
-import { NFTCreateForm } from '../pages/nftCreate'
 import { NFTMetadata } from '../types/NFTMetadatas'
 import { getUriByIpfsHash, pinFileToIPFS } from './ipfs'
 import { connection } from '@project-serum/common'
 import { AccountInfo, Connection, ParsedAccountData, PublicKey } from '@solana/web3.js'
 import { WHITELIST_TOKEN_ADDRESS } from '../hooks/programs/useWhiteList/constant'
 
-export function generateNftMetadata(form: NFTCreateForm): NFTMetadata {
-  const { artworkName, briefIntroduction, assetIpfsHash } = form
-  console.log(assetIpfsHash)
-
-  return {
-    name: artworkName,
-    description: briefIntroduction,
-    image: getUriByIpfsHash(assetIpfsHash)
-  }
-}
+//
+// export function generateNftMetadata(form: NFTCreateForm): NFTMetadata {
+//   const { artworkName, briefIntroduction, assetIpfsHash } = form
+//   console.log(assetIpfsHash)
+//
+//   return {
+//     name: artworkName,
+//     description: briefIntroduction,
+//     image: getUriByIpfsHash(assetIpfsHash)
+//   }
+// }
 
 export const shortenAddress = (address?: string, length = 6) => {
   return address ? `${address.substring(0, length)}...${address.slice(-length)}` : '-'

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useModal } from '../contexts/modal'
 import { useSolanaWeb3 } from '../contexts/solana-web3'
-import { Progress } from 'antd'
 import styled from 'styled-components'
 import CONFT_API from '../apis/co-nft'
 import { useHistory } from 'react-router-dom'

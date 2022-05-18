@@ -5,7 +5,6 @@ import useEagerConnect from '../../hooks/useEagerConnect'
 import { SUPPORT_WALLETS } from '../../utils/constant'
 import useLocalStorage, { LOCAL_STORAGE_WALLET_KEY } from '../../hooks/useLocalStorage'
 import { shortenAddress } from '../../utils'
-import notify from '../../utils/notify'
 import { BaseMessageSignerWalletAdapter } from '@solana/wallet-adapter-base'
 import {  useSnackbar } from 'notistack'
 

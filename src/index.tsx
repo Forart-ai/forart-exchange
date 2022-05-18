@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
 import App from './App'
-import 'antd/dist/antd.css'
 import { getLibrary } from './web3/connectors'
 import reportWebVitals from './reportWebVitals'
 import { DAppProvider } from '@usedapp/core'

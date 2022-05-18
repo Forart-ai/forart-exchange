@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { MintedNFTItem } from '../../types/coNFT'
 import { useModal } from '../../contexts/modal'
 import AttributesDialog from '../attributes-dialog'
-import {   HeartFilled   } from '@ant-design/icons'
 import CrownIcon from '../../assets/images/coPools/ic_crown.svg'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
@@ -208,11 +207,14 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
 
           <HeartContainer heartstatus = {heartstatus} >
             <span>{heartNum}</span>
+            todo:Fix
             {
               account ? (
-                <HeartFilled  onClick={() => handleLike(data?.id)}  className="heart" />
+                // <HeartFilled  onClick={() => handleLike(data?.id)}  className="heart" />
+                <></>
               ) :
-                <HeartFilled  onClick={() => openModal(<WalletSelectionModal />)}  className="heart" />
+                // <HeartFilled  onClick={() => openModal(<WalletSelectionModal />)}  className="heart" />
+                <></>
             }
           </HeartContainer>
 

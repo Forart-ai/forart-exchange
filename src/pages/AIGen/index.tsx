@@ -1,13 +1,11 @@
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { Button, Radio } from 'antd'
 import ai1 from '../../assets/images/AIGen/ai1.png'
 import ai2 from '../../assets/images/AIGen/ai2.png'
 import ai3 from '../../assets/images/AIGen/ai3.png'
 import ai4 from '../../assets/images/AIGen/ai4.png'
 import ai5 from '../../assets/images/AIGen/ai5.png'
 import BannerImage from '../../assets/images/AIGen/ai-gen-banner.jpg'
-import { LoadingOutlined } from '@ant-design/icons'
 import { aiGeneratorImage } from '../../apis/ai'
 import { dictionaryToBase64 } from '../../utils'
 
@@ -278,24 +276,24 @@ const AIContentContainer = styled.div`
   margin-bottom: 30px;
 `
 
-const StyledRadioGroup = styled(Radio.Group)`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`
-
-const StyledRadio = styled(Radio)`
-  background-color: #282c34;
-  padding: 5px;
-  border-radius: 10px;
-  margin-top: 10px;
-  
-  
-span {
-  font-size: 18px;
-  color: white;!important;
-}
-`
+// const StyledRadioGroup = styled(Radio.Group)`
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+// `
+//
+// const StyledRadio = styled(Radio)`
+//   background-color: #282c34;
+//   padding: 5px;
+//   border-radius: 10px;
+//   margin-top: 10px;
+//
+//
+// span {
+//   font-size: 18px;
+//   color: white;!important;
+// }
+// `
 
 const ButtonContainer = styled.div`
   width: 100%;
@@ -316,15 +314,15 @@ const ObjectItems: React.FC<{objectItems: objectItem[], onSelect:(_:string) => v
   return (
     <AIContentContainer>
       <SubTitle> Choose an object </SubTitle>
-      <StyledRadioGroup  >
-        {
-          objectItems?.map(item => (
-            <div key={item.object} onClick={() => onSelect(item.object)}>
-              <StyledRadio value={item.object}>{item.object}</StyledRadio>
-            </div>
-          ))
-        }
-      </StyledRadioGroup>
+      {/*<StyledRadioGroup  >*/}
+      {/*  {*/}
+      {/*    objectItems?.map(item => (*/}
+      {/*      <div key={item.object} onClick={() => onSelect(item.object)}>*/}
+      {/*        <StyledRadio value={item.object}>{item.object}</StyledRadio>*/}
+      {/*      </div>*/}
+      {/*    ))*/}
+      {/*  }*/}
+      {/*</StyledRadioGroup>*/}
     </AIContentContainer>
 
   )
@@ -338,15 +336,15 @@ const AccessoriesItems: React.FC<{ accessoriesItems: accessoriesItem[], onSelect
   return (
     <AIContentContainer>
       <SubTitle> Choose an accessories </SubTitle>
-      <StyledRadioGroup >
-        {
-          accessoriesItems?.map(item => (
-            <div key={item.accessories} onClick={() => onSelect(item.accessories)}>
-              <StyledRadio value={item.accessories}>{item.accessories}</StyledRadio>
-            </div>
-          ))
-        }
-      </StyledRadioGroup>
+      {/*<StyledRadioGroup >*/}
+      {/*  {*/}
+      {/*    accessoriesItems?.map(item => (*/}
+      {/*      <div key={item.accessories} onClick={() => onSelect(item.accessories)}>*/}
+      {/*        <StyledRadio value={item.accessories}>{item.accessories}</StyledRadio>*/}
+      {/*      </div>*/}
+      {/*    ))*/}
+      {/*  }*/}
+      {/*</StyledRadioGroup>*/}
     </AIContentContainer>
 
   )
@@ -360,15 +358,15 @@ const BehaviorItems: React.FC<{ behaviorItems: behaviorItem[], onSelect:(_:strin
   return (
     <AIContentContainer>
       <SubTitle> Choose an behavior </SubTitle>
-      <StyledRadioGroup     >
-        {
-          behaviorItems?.map(item => (
-            <div key={item.behavior} onClick={() => onSelect(item.behavior)}>
-              <StyledRadio value={item.behavior}>{item.behavior}</StyledRadio>
-            </div>
-          ))
-        }
-      </StyledRadioGroup>
+      {/*<StyledRadioGroup     >*/}
+      {/*  {*/}
+      {/*    behaviorItems?.map(item => (*/}
+      {/*      <div key={item.behavior} onClick={() => onSelect(item.behavior)}>*/}
+      {/*        <StyledRadio value={item.behavior}>{item.behavior}</StyledRadio>*/}
+      {/*      </div>*/}
+      {/*    ))*/}
+      {/*  }*/}
+      {/*</StyledRadioGroup>*/}
     </AIContentContainer>
 
   )
@@ -380,7 +378,7 @@ const AIGeneratorResultContainer: React.FC<{ resultImageSrc: any[], generating: 
   return (
     <ResultContainer>
       {
-        generating && ( <LoadingOutlined className="loading" />)
+        generating && ( <></>)
       }
       <div className="nft-border">
         {
@@ -523,12 +521,12 @@ const AIGen:React.FC = () => {
         <BehaviorItems behaviorItems={behaviorMap} onSelect={ v => setBehavior(v) } />
 
         <ButtonContainer>
-          <Button onClick={ generate } >
-            {
-              !generating ? 'Generate Now!' :
-                'Generating...'
-            }
-          </Button>
+          {/*<Button onClick={ generate } >*/}
+          {/*  {*/}
+          {/*    !generating ? 'Generate Now!' :*/}
+          {/*      'Generating...'*/}
+          {/*  }*/}
+          {/*</Button>*/}
         </ButtonContainer>
 
         {/*<StyledButton onClick={ generate } >*/}

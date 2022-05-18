@@ -50,7 +50,7 @@ const IdentityGrade:React.FC = () => {
           <div className={'value'}> 2700/3600</div>
         </Box>
         <Box >
-          <CustomizedProgressBars percent={20} />
+          <CustomizedProgressBars value={20} />
         </Box>
       </ProgressContainer>
       <div className={'level'}>Level.23</div>

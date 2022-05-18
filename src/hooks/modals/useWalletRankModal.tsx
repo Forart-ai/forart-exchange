@@ -1,24 +1,19 @@
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
-import { useModal } from '../useModal'
 import styled from 'styled-components'
-import { Divider, List, Modal, Skeleton, Table } from 'antd'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useLocationQuery } from '../useLocationQuery'
 import CONFT_API from '../../apis/co-nft'
 import { Simulate } from 'react-dom/test-utils'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import useLocationHash from '../useLocationHash'
-import ThemeTable from '../../styles/ThemeTable'
-import { ThemeInput } from '../../styles/ThemeInput'
-import { SearchOutlined } from '@ant-design/icons'
-
-const RankingModal = styled(Modal)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 900px !important;
-
-`
+//
+// const RankingModal = styled(Modal)`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 900px !important;
+//
+// `
 
 const Content = styled.div`
   width: 100%;
@@ -33,7 +28,7 @@ const Filter = styled.div`
   
   .btn {
     font-size: .7em;
-    background-color: #E42575;
+    background-color: #E42575; 
     padding: 5px 14px;
     border-radius: 10px;
     margin-left: 10px;
@@ -43,7 +38,6 @@ const Filter = styled.div`
 `
 
 export const useWalletRankModal = () => {
-  const { account } = useSolanaWeb3()
 
   const [loading, setLoading] = useState<boolean>(false)
   const [total, setTotal] = useState<number>(1)
@@ -161,40 +155,40 @@ export const useWalletRankModal = () => {
     setPage(1)
   }
 
-  const { modal, open, close } = useModal((_open, close, visible) => (
-    <RankingModal
-      visible = {visible}
-      onCancel = {close}
-      footer = { null }
-      title={'Create Ranking'}
-    >
-      <Content >
-        <div onScrollCapture={onScrollCapture}
-          style={{ height: 500, overflowY: 'scroll', width:'100%' }}
-          ref={c => {
-            scrollRef = c
-          }}
-        >
-          <Filter>
-            <ThemeInput
-              placeholder={'Please input token ID'}
-              // onChange ={(res:any) =>onChange(res)}
-              onBlur = { e => onChange(e)}
-              prefix={<SearchOutlined style={{ color: 'white', width: '15px' }} />}
-              defaultValue={searchKey}
-              style={{ width:'200px', marginRight: '20px' }}
-            />
-            {/*<OrderSelector onChange={ e => { setSelectedOrder(e) }} />*/}
-          </Filter>
-          <ThemeTable columns= {column} dataSource={data} pagination={false}  />
-
-        </div>
-      </Content>
-    </RankingModal>
-  ))
+  // const { modal, open, close } = useModal((_open, close, visible) => (
+  //   <RankingModal
+  //     visible = {visible}
+  //     onCancel = {close}
+  //     footer = { null }
+  //     title={'Create Ranking'}
+  //   >
+  //     <Content >
+  //       <div onScrollCapture={onScrollCapture}
+  //         style={{ height: 500, overflowY: 'scroll', width:'100%' }}
+  //         ref={c => {
+  //           scrollRef = c
+  //         }}
+  //       >
+  //         <Filter>
+  //           <ThemeInput
+  //             placeholder={'Please input token ID'}
+  //             // onChange ={(res:any) =>onChange(res)}
+  //             onBlur = { e => onChange(e)}
+  //             prefix={<SearchOutlined style={{ color: 'white', width: '15px' }} />}
+  //             defaultValue={searchKey}
+  //             style={{ width:'200px', marginRight: '20px' }}
+  //           />
+  //           {/*<OrderSelector onChange={ e => { setSelectedOrder(e) }} />*/}
+  //         </Filter>
+  //         <ThemeTable columns= {column} dataSource={data} pagination={false}  />
+  //
+  //       </div>
+  //     </Content>
+  //   </RankingModal>
+  // ))
 
   return {
-    walletRankModal: modal,
+    // walletRankModal: modal,
     openWalletRankModal: open,
     closeWalletRankModal: close
   }

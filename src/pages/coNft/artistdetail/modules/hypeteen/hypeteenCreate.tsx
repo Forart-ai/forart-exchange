@@ -17,7 +17,6 @@ import { useArtistKitQuery } from '../../../../../hooks/queries/useArtistKitQuer
 import { NFTAttributesData } from '../../../../../types/coNFT'
 import useUserQuery from '../../../../../hooks/queries/useUserQuery'
 import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
-import { Modal } from 'antd'
 import useNFTMint from '../../../../../hooks/useNFTMint'
 
 const HypeteenCreate:React.FC = () => {

@@ -6,8 +6,9 @@ import useLocalStorage from './useLocalStorage'
 import useEagerConnect from './useEagerConnect'
 import Cookies from 'js-cookie'
 import jwt_decode from 'jwt-decode'
+import wallet from '../components/wallet'
 
-const randomString = (len: number) => {
+export const randomString = (len: number) => {
   const p = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   return [...Array(len)].reduce(a=>a+p[~~(Math.random()*p.length)],'')
 }
@@ -19,9 +20,12 @@ export function useSignLogin() {
   useEffect( () => {
     (async () => {
       if (!Cookies.get('USER_TOKEN')) {
-        const a = randomString(150)
 
-        const message = new TextEncoder().encode('hello world')
+        const a = randomString(66)
+
+        const message = new TextEncoder().encode(`hello world: ${a}`)
+
+        const decodeMessage = new TextDecoder().decode(message)
 
         if (!adapter || !account ) {
           return
@@ -33,7 +37,7 @@ export function useSignLogin() {
 
         // console.log(Buffer.from(signed).toString('base64'))
 
-        AUTH_API.userSignLogin({ wallet:account.toBuffer().toString('base64'), toSign:'hello world', signed:signature }).then((res:any) => {
+        AUTH_API.userSignLogin({ wallet:account.toBase58(), walletInBase64: account.toBuffer().toString('base64'), toSign: decodeMessage, signed:signature }).then((res:any) => {
           const decoded:any = jwt_decode(res)
           const expDate = new Date(decoded.exp * 1000)
 

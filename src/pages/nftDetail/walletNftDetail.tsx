@@ -1,7 +1,6 @@
 import { Wrapper, NFTInfo, Options, LeftArea, RightArea, Canvas, RightTopArea, RightBottomArea,
   TopTitle, SeriesTitle, Rainbow } from './index.style'
 import React from 'react'
-import { HeartOutlined } from '@ant-design/icons'
 import { Alert, Snackbar, Tooltip } from '@mui/material'
 import UploadIcon from '../../assets/images/coPools/download.svg'
 import { shortenAddress } from '../../utils'

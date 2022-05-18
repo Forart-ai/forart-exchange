@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { MintedNFTItem } from '../../../types/coNFT'
 import { useModal } from '../../../contexts/modal'
 import AttributesDialog from '../../../components/attributes-dialog'
-import { Progress } from 'antd'
 import { Link } from 'react-router-dom'
 import { Box, styled } from '@mui/material'
 import SolanaIcon from '../../../assets/images/wallets/solanaLogoMark.svg'
@@ -26,31 +25,31 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
     return url
   }, [data])
 
-  const [progress, setProgress] = useState(0)
+  // const [progress, setProgress] = useState(0)
 
   const { account } = useSolanaWeb3()
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (data?.chainStatus === 'MIXING' && prev >= 97) {
-          return prev
-        }
-
-        if (data?.chainStatus === 'UPDATING'  && prev >= 98) {
-          return prev
-        }
-
-        return prev + 1
-
-      })
-    }, 150)
-
-    return () => {
-      clearInterval(interval)
-    }
-
-  },[])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setProgress(prev => {
+  //       if (data?.chainStatus === 'MIXING' && prev >= 97) {
+  //         return prev
+  //       }
+  //
+  //       if (data?.chainStatus === 'UPDATING'  && prev >= 98) {
+  //         return prev
+  //       }
+  //
+  //       return prev + 1
+  //
+  //     })
+  //   }, 150)
+  //
+  //   return () => {
+  //     clearInterval(interval)
+  //   }
+  //
+  // },[])
 
   useEffect(() => {
     if (!loading) {
@@ -98,9 +97,6 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
                   <div>  {data?.chainStatus}  </div>
                   <div> DONT WORRY, IT WILL TRY TO UPDATE AGAIN </div>
 
-                  <div>
-                    <Progress percent={10} size="small" status="exception" />
-                  </div>
                 </div>
               </>
           }

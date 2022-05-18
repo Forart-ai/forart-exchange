@@ -19,6 +19,7 @@ const Wrapper = styled('div')`
 
 const BoxContainer = styled('div')`
   display: grid;
+  overflow: hidden;
   grid-template-columns: repeat(auto-fill, 110px);
   justify-content: space-between;
   grid-gap: 10px;
@@ -27,11 +28,12 @@ const BoxContainer = styled('div')`
   
   ${({ theme }) => theme.breakpoints.down('md')} {
     grid-template-columns: repeat(4, 110px);
+    overflow: visible;
   }
 `
 
 const ItemBox = styled('div')`
-  height: 60px;
+  height: 60px; 
   width: 100%;
   border-radius: 5px;
   background: linear-gradient(60.95deg, #8246F5 2.09%, #5000B4 97.91%);
@@ -39,7 +41,7 @@ const ItemBox = styled('div')`
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-  padding-left: 5px;
+  padding-left: 4px;
 
   .type, .value {
     font-weight: lighter;

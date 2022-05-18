@@ -82,7 +82,6 @@ const DataColumn = styled('div')`
   align-items: center;
   position: absolute;
   top: 27%;
-  border: 1px red solid;
 
 
   span {

@@ -13,7 +13,6 @@ import CONFT_API from '../../apis/co-nft'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
-import { HeartFilled, HeartOutlined } from '@ant-design/icons'
 import { useMediaQuery } from 'react-responsive'
 import { shortenAddress } from '../../utils'
 import copy from 'copy-to-clipboard'
@@ -267,7 +266,8 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
                 <Options>
                   <HeartContainer heartstatus = {heartstatus} >
                     <span>{heartNum}</span>
-                    <HeartOutlined onClick={() => handleLike(nftDetail?.id as string)} className="heart" />
+                    {/*TODO: fix me !!!!!!!!*/}
+                    {/*<HeartOutlined onClick={() => handleLike(nftDetail?.id as string)} className="heart" />*/}
                   </HeartContainer>
                   <img src={UploadIcon} onClick={() => exportImage(nftDetail?.chainNftName)} />
                 </Options>

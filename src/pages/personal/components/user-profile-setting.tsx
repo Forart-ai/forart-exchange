@@ -13,6 +13,9 @@ import CustomizeButton from '../../../contexts/theme/components/Button'
 import { SyncLoader } from 'react-spinners'
 import * as nsfwjs from 'nsfwjs'
 import useNSFW from '../../../hooks/useNSFW'
+import useSignLogin, { randomString } from '../../../hooks/useSignLogin'
+import jwt_decode from 'jwt-decode'
+import Cookies from 'js-cookie'
 
 const Wrapper = styled('div')`
   width: 400px;
@@ -79,7 +82,7 @@ const defaultFormValues:UserInfoParam = {
 }
 
 const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) => {
-  const { account } = useSolanaWeb3()
+  const { account, adapter } = useSolanaWeb3()
   // const { data: userInfo } = useGetUserInfo()
   const { closeModal } = useModal()
   const { forceRefresh } = useRefreshController()
@@ -167,6 +170,31 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
       enqueueSnackbar('Edit successfully', { variant:'success' })
       closeModal()
     })
+
+    const a = randomString(66)
+
+    const message = new TextEncoder().encode(`hello world: ${a}`)
+
+    const decodeMessage = new TextDecoder().decode(message)
+
+    if (!adapter || !account ) {
+      return
+    }
+
+    const signed = (await adapter.signMessage(message))!
+
+    const signature = Buffer.from(signed).toString('base64')
+
+    // console.log(Buffer.from(signed).toString('base64'))
+
+    AUTH_API.userSignLogin({ wallet:account.toBase58(), walletInBase64:account.toBuffer().toString('base64'), toSign: decodeMessage , signed:signature }).then((res:any) => {
+      const decoded:any = jwt_decode(res)
+      const expDate = new Date(decoded.exp * 1000)
+
+      // const inFifteenMinutes = new Date(new Date().getTime() + 1 * 60 * 1000)
+      Cookies.set('USER_TOKEN', res,{ expires: expDate })
+    })
+
   }, [formValues])
 
   return (
@@ -192,7 +220,7 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
               Profile Avatar
             </Title>
             <label htmlFor="avatar-contained-button-file">
-              <Input name={'avataruri'} onChange={handleCapture} id="avatar-contained-button-file"  type="file" hidden />
+              <input  accept={'image/*'} name={'avataruri'} onChange={handleCapture} id="avatar-contained-button-file"  type="file" hidden />
               <DefaultAvatar>
                 {
                   userInfo?.banneruri ? <img  id={'avataruri'} src={userInfo.avataruri} /> :   <img id={'avataruri'} src={DefaultAvatarImg} />

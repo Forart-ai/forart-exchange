@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { NftListItem } from '../types/NFTDetail'
 import { Link } from 'react-router-dom'
-import { Spin } from 'antd'
 import { ChainType } from '../apis/nft'
-import { HeartFilled, HeartOutlined } from '@ant-design/icons'
 import PriceIcon from '../images/wallet/celo.svg'
 
 // @ts-ignore
 import styled from 'styled-components'
+import { SyncLoader } from 'react-spinners'
 
 const NFTCardContainer = styled.div<{$empty?:boolean}>`
   color: #7c6deb;
@@ -29,10 +28,7 @@ const NFTCardContainer = styled.div<{$empty?:boolean}>`
     margin-bottom: 10px;
     position: relative;
     
-    .spin {
-      position: absolute;
-      top: 50%;
-    }
+    
   }
   
   img {
@@ -184,7 +180,7 @@ const NFTListItem: React.FC<{ data?: NftListItem, type?: 'nftList' | 'own', empt
               src={getImageUrl()}
             />
             {
-              loading && data && <Spin className="spin" />
+              loading && data && <SyncLoader size={8}  />
             }
           </div>
           <div className="nft-detail">
@@ -199,9 +195,11 @@ const NFTListItem: React.FC<{ data?: NftListItem, type?: 'nftList' | 'own', empt
                 {
                   data && (
                     isHeart ?
-                      <HeartFilled className="heart" />
+                      // <HeartFilled className="heart" />
+                      <></>
                       :
-                      <HeartOutlined className="heart" />
+                      // <HeartOutlined className="heart" />
+                      <></>
                   )
                 }
                 {data && (favorite? favorite : 0)}

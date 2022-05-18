@@ -3,7 +3,6 @@ import { useCallback, useMemo } from 'react'
 import useSigner from '../useSigner'
 import { Contract } from 'ethers'
 import { ExchangeOrder } from './service/exchange/types'
-import { message } from 'antd'
 
 const contractAddress = '0xad638567AE7560b75b0ee6AbCe094EEec3B76E19'
 
@@ -23,7 +22,7 @@ const useExchangeContract = () => {
   const matchSingle = useCallback(
     async (sellOrder: ExchangeOrder, sellSign: string, buyOrder: ExchangeOrder, buySign: string, value: string) => {
       if (!contract) {
-        message.warn('contract is not loaded')
+        // message.warn('contract is not loaded')
         return
       }
 

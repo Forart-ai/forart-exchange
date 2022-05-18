@@ -20,6 +20,9 @@ const BlogsContainer = styled('div')`
   justify-content: space-between;
   align-items: flex-start;
   flex-direction: column;
+  width: 100%;
+  padding: 20px;
+  
 `
 
 const UserInfoRow = styled('div')`
@@ -30,6 +33,7 @@ const UserInfoRow = styled('div')`
   color: white;
   font-size: 20px;
   margin-left: 10px;
+  
 `
 
 const StyledAvatar = styled(Avatar)`
@@ -65,17 +69,18 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
 
   return (
     <BlogsContainer>
-      <Flex width={'100%'} p={'20px'} borderBottom={'1px #4fc89f solid'}  >
+      <Flex width={'100%'}  borderBottom={'1px #4fc89f solid'}   >
         <StyledAvatar variant={'square'}>N</StyledAvatar>
         <UserInfoRow>
           <span>{item?.username}</span>
-          <CoNftCard nftId={item?.nft} />
+          <CoNftCard nftDetail={item?.detail} />
+
           <Flex width={'100%'} mt={'20px'}>
             <DateText>{ moment(item.createAt).format('MMMM'+' DD,'+ ' YYYY' )}</DateText>
           </Flex>
         </UserInfoRow>
       </Flex>
-      <Flex alignItems={'center'} width={'100%'}padding={'0 20px'} >
+      <Flex alignItems={'center'} width={'100%'}>
         <Avatar variant={'circular'}>N</Avatar>
         <CommentTextField placeholder={'Say something today'}   fullWidth  id="fullWidth"  />
       </Flex>

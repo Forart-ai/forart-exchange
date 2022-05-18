@@ -1,36 +1,8 @@
 import styled from 'styled-components'
 import { SolanaWallet, SupportWalletNames } from './index'
-import { message, Modal } from 'antd'
 import React, { useCallback } from 'react'
 import { WalletType } from '../../web3/connectors'
 import { useWeb3React } from '@web3-react/core'
-
-export const SolanaWalletSelectionModal = styled(Modal)`
-  .ant-modal-content {
-    border-radius: 1rem;
-  }
-
-  .ant-modal-body,
-  .ant-modal-header {
-    background-color: #1D222D !important;
-  }
-
-  .ant-modal-header {
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
-    border-bottom: none;
-  }
-
-  .ant-modal-title {
-    color: white;
-    font-weight: 550;
-    font-size: 1.6rem;
-  }
-
-  .ant-modal-close-icon {
-    color: white;
-  }
-`
 
 export const WalletItemContainer = styled.div`
   display: flex;
@@ -116,7 +88,7 @@ export const WalletCard: React.FC<{wallet: WalletType, onSelect:(_: WalletType) 
   const connectToWallet =  useCallback(async () => {
     const provider = await connector?.getProvider()
     if (chainType === 'eth' && !provider) {
-      message.warn(`Please install ${name} wallet first.`)
+      // message.warn(`Please install ${name} wallet first.`)
       return
     }
     onSelect(wallet)

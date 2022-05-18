@@ -90,8 +90,6 @@ const AllNftContainer: React.FC = () => {
 
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
-  const { walletRankModal, openWalletRankModal } = useWalletRankModal()
-
   const [flag, setFlag] = useState(true)
 
   const loadMoreData = useCallback( () => {
@@ -174,7 +172,7 @@ const AllNftContainer: React.FC = () => {
             onChange ={(res:any) => onChange(res)}
             variant={'outlined'}
           />
-          <CustomizeButton sx={{ marginLeft: '20px', padding:'0 5px' }} variant={'contained'} color={'secondary'}  onClick={ openWalletRankModal }>Creator Ranking</CustomizeButton>
+          <CustomizeButton sx={{ marginLeft: '20px', padding:'0 5px' }} variant={'contained'} color={'secondary'}  onClick={ ()=>{} }>Creator Ranking</CustomizeButton>
         </Box>
       </Filter>
 
@@ -213,7 +211,6 @@ const AllNftContainer: React.FC = () => {
 
         </InfiniteScroll>
       </div>
-      {walletRankModal}
     </AllNftWrapper>
   )
 }

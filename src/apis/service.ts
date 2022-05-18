@@ -42,7 +42,6 @@ Service.interceptors.request.use(
   config => {
     // const token = localStorage.getItem('TOKEN')
     const token = Cookies.get('USER_TOKEN')
-    console.log(token)
 
     if (token) {
       config.headers['Authorization'] = `Bearer ${token.replace(/"/g, '')}`

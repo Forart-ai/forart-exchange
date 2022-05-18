@@ -1,6 +1,4 @@
-import { useModal } from '../useModal'
 import styled from 'styled-components'
-import { Avatar, Button, message, Modal, Steps } from 'antd'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { shortenAddress } from '../../utils'
@@ -18,58 +16,58 @@ type StepProps = {
   active?: boolean
 }
 
-const BindingModal = styled(Modal)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw !important;
-  
-  .ant-modal-content {
-    min-width: 80%;
-  }
-  
-  .ant-steps {
-    .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-icon {
-      background: #FF468B;
-    }
-
-    .ant-steps-item-finish .ant-steps-item-icon {
-      background-color: #FF468B;
-      border-color: transparent;
-    }
-
-    .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
-      color: #ffffff;
-    }
-    
-    .ant-steps-item-process .ant-steps-item-icon {
-      border: none;
-    }
-    .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
-      color: rgba(255, 255, 255, 0.85);
-    }
-    .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
-      color: rgba(255, 255, 255, 0.85);
-    }
-    .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after {
-      background-color:  rgb(255, 255, 255);
-    }
-    .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
-      color: rgba(255, 255, 255, 0.45);
-    }
-    .ant-steps-item-wait .ant-steps-item-icon > .ant-steps-icon {
-      color: #ffffff;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .ant-steps-item-wait .ant-steps-item-icon {
-       background-color: transparent; 
-       border: 2px #FF468B solid;
-    }
-  }
-`
+// const BindingModal = styled(Modal)`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 100vw !important;
+//
+//   .ant-modal-content {
+//     min-width: 80%;
+//   }
+//
+//   .ant-steps {
+//     .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-icon {
+//       background: #FF468B;
+//     }
+//
+//     .ant-steps-item-finish .ant-steps-item-icon {
+//       background-color: #FF468B;
+//       border-color: transparent;
+//     }
+//
+//     .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
+//       color: #ffffff;
+//     }
+//
+//     .ant-steps-item-process .ant-steps-item-icon {
+//       border: none;
+//     }
+//     .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
+//       color: rgba(255, 255, 255, 0.85);
+//     }
+//     .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
+//       color: rgba(255, 255, 255, 0.85);
+//     }
+//     .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after {
+//       background-color:  rgb(255, 255, 255);
+//     }
+//     .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
+//       color: rgba(255, 255, 255, 0.45);
+//     }
+//     .ant-steps-item-wait .ant-steps-item-icon > .ant-steps-icon {
+//       color: #ffffff;
+//       height: 100%;
+//       display: flex;
+//       justify-content: center;
+//       align-items: center;
+//     }
+//     .ant-steps-item-wait .ant-steps-item-icon {
+//        background-color: transparent;
+//        border: 2px #FF468B solid;
+//     }
+//   }
+// `
 
 const Content = styled.div`
   display: flex;
@@ -96,20 +94,20 @@ const StepContent = styled.div`
   }
 `
 
-const ConnectButton = styled(Button)<{status?: string}>`
-  height: fit-content;
-  border-radius: 20px;
-  margin-top: 10px;
-  
-    ${props => props.status === 'primary' && `
-      background: #FF468B;
-  `}
-  
-    ${props => props.status === 'success' && `
-      background: #12dbe4;
-  `}
-  
-  `
+// const ConnectButton = styled(Button)<{status?: string}>`
+//   height: fit-content;
+//   border-radius: 20px;
+//   margin-top: 10px;
+//
+//     ${props => props.status === 'primary' && `
+//       background: #FF468B;
+//   `}
+//
+//     ${props => props.status === 'success' && `
+//       background: #12dbe4;
+//   `}
+//
+//   `
 
 const WalletStatus: React.FC<StepProps> = () => {
   const   account  = useGetCurrentWallet()
@@ -129,130 +127,130 @@ const WalletStatus: React.FC<StepProps> = () => {
   )
 }
 
-const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
-  const artistId = useLocationQuery('artistId')
-  const account = useGetCurrentWallet()
+// const DiscordIdentity: React.FC<StepProps> = ({ active }) => {
+//   const artistId = useLocationQuery('artistId')
+//   const account = useGetCurrentWallet()
+//
+//   const redirectUri = 'https://app.forart.ai/artistDetail?artistId=3312'
+//   const discordLoginUrl = `https://discord.com/oauth2/authorize?response_type=token&client_id=942705935221157978&state=15773059ghq9183habn&scope=identify&redirect_uri=${redirectUri}`
+//
+//   const { data: user } = useUserQuery()
+//
+//   const userFromDiscord = useDiscordMeQuery()
+//
+//   const userData = useMemo(() => {
+//     if (!account) {
+//       return undefined
+//     }
+//
+//     if (!user?.byWallet && userFromDiscord) {
+//       return userFromDiscord.data?.user
+//     }
+//
+//     if (user?.byWallet !== null) {
+//       return user
+//     }
+//
+//     return undefined
+//   }, [userFromDiscord, user, account])
+//
+//   if (!userData ) {
+//     return (
+//       <StepContent>
+//         <ConnectButton  disabled={!active} status={'success'} onClick={()=>window.open(discordLoginUrl)}>Login Discord</ConnectButton>
+//       </StepContent>
+//     )
+//   }
+//
+//   return (
+//     <StepContent>
+//       <p>
+//         Hello&nbsp;&nbsp;&nbsp;
+//         {
+//           userData.avatar && <Avatar src={ `https://cdn.discordapp.com/avatars/${ (userData as any).id }/e44a2870accc5915aae48c251a156d02.png`} />
+//         }
+//         {
+//           userData.byWallet && <Avatar src={  user?.byWallet.avatar } />
+//         }
+//         &nbsp;<span style={{ color: 'white', fontWeight: 'bold' }}> { userData?.byWallet?.username || userData?.username  } </span> !
+//       </p>
+//
+//     </StepContent>
+//   )
+// }
 
-  const redirectUri = 'https://app.forart.ai/artistDetail?artistId=3312'
-  const discordLoginUrl = `https://discord.com/oauth2/authorize?response_type=token&client_id=942705935221157978&state=15773059ghq9183habn&scope=identify&redirect_uri=${redirectUri}`
-
-  const { data: user } = useUserQuery()
-
-  const userFromDiscord = useDiscordMeQuery()
-
-  const userData = useMemo(() => {
-    if (!account) {
-      return undefined
-    }
-
-    if (!user?.byWallet && userFromDiscord) {
-      return userFromDiscord.data?.user
-    }
-
-    if (user?.byWallet !== null) {
-      return user
-    }
-
-    return undefined
-  }, [userFromDiscord, user, account])
-
-  if (!userData ) {
-    return (
-      <StepContent>
-        <ConnectButton  disabled={!active} status={'success'} onClick={()=>window.open(discordLoginUrl)}>Login Discord</ConnectButton>
-      </StepContent>
-    )
-  }
-
-  return (
-    <StepContent>
-      <p>
-        Hello&nbsp;&nbsp;&nbsp;
-        {
-          userData.avatar && <Avatar src={ `https://cdn.discordapp.com/avatars/${ (userData as any).id }/e44a2870accc5915aae48c251a156d02.png`} />
-        }
-        {
-          userData.byWallet && <Avatar src={  user?.byWallet.avatar } />
-        }
-        &nbsp;<span style={{ color: 'white', fontWeight: 'bold' }}> { userData?.byWallet?.username || userData?.username  } </span> !
-      </p>
-
-    </StepContent>
-  )
-}
-
-const BindingStatus: React.FC<StepProps> = ({ active }) => {
-  const { account } = useSolanaWeb3()
-  const { data: user } = useUserQuery()
-  const discordAccessToken = useDiscordAccessToken()
-  const userFromDiscord = useDiscordMeQuery()
-  const [, setRequesting] = useState(false)
-
-  const handleBinding = useCallback(
-    () => {
-
-      if (!account  || !discordAccessToken) {
-        return
-      }
-
-      Modal.confirm({
-        width: 500,
-        title: (
-          <div style={{ color: '#fff' }}>
-            Binding Account
-          </div>
-        ),
-        content: (
-          <div style={{ fontFamily: 'gilroy', color: '#fff' }} >
-            <div>
-              Solana wallet address {shortenAddress(account.toBase58())}.
-              Discord:
-              {
-                !user?.byWallet
-                  ? <> {userFromDiscord.data?.user.username}</>
-                  : <> {user.username} </>
-              }
-
-            </div>
-            <div style={{ color: 'orangered' }}>Warning: this operation is irreversible!</div>
-          </div>
-        ),
-        onOk: () => {
-          setRequesting(true)
-          CONFT_API.core.user.bindingUser(discordAccessToken, account.toBase58())
-            .then(() => {
-              setRequesting(false)
-              message.success('Connect Successfully')
-            })
-            .catch(e => {
-              setRequesting(false)
-              Modal.error({
-                title:(
-                  <div style={{ color: '#fff' }}>
-                    {e}
-                  </div>
-                )
-              })
-            })
-        }
-      })
-    },[account,discordAccessToken, userFromDiscord]
-  )
-
-  return (
-    <StepContent>
-      {
-        !user?.byWallet ? (
-          <ConnectButton disabled={!active} onClick={handleBinding} > Connect <br />Discord & wallet</ConnectButton>
-        ) : (
-          <p  >The Discord account has been connected with <br />
-            <span>{shortenAddress(user.byWallet?.wallet)}</span>
-          </p>
-        )
-      }
-    </StepContent>
-  )
-}
+// const BindingStatus: React.FC<StepProps> = ({ active }) => {
+//   const { account } = useSolanaWeb3()
+//   const { data: user } = useUserQuery()
+//   const discordAccessToken = useDiscordAccessToken()
+//   const userFromDiscord = useDiscordMeQuery()
+//   const [, setRequesting] = useState(false)
+//
+//   const handleBinding = useCallback(
+//     () => {
+//
+//       if (!account  || !discordAccessToken) {
+//         return
+//       }
+//
+//       Modal.confirm({
+//         width: 500,
+//         title: (
+//           <div style={{ color: '#fff' }}>
+//             Binding Account
+//           </div>
+//         ),
+//         content: (
+//           <div style={{ fontFamily: 'gilroy', color: '#fff' }} >
+//             <div>
+//               Solana wallet address {shortenAddress(account.toBase58())}.
+//               Discord:
+//               {
+//                 !user?.byWallet
+//                   ? <> {userFromDiscord.data?.user.username}</>
+//                   : <> {user.username} </>
+//               }
+//
+//             </div>
+//             <div style={{ color: 'orangered' }}>Warning: this operation is irreversible!</div>
+//           </div>
+//         ),
+//         onOk: () => {
+//           setRequesting(true)
+//           CONFT_API.core.user.bindingUser(discordAccessToken, account.toBase58())
+//             .then(() => {
+//               setRequesting(false)
+//               message.success('Connect Successfully')
+//             })
+//             .catch(e => {
+//               setRequesting(false)
+//               Modal.error({
+//                 title:(
+//                   <div style={{ color: '#fff' }}>
+//                     {e}
+//                   </div>
+//                 )
+//               })
+//             })
+//         }
+//       })
+//     },[account,discordAccessToken, userFromDiscord]
+//   )
+//
+//   return (
+//     <StepContent>
+//       {
+//         !user?.byWallet ? (
+//           <ConnectButton disabled={!active} onClick={handleBinding} > Connect <br />Discord & wallet</ConnectButton>
+//         ) : (
+//           <p  >The Discord account has been connected with <br />
+//             <span>{shortenAddress(user.byWallet?.wallet)}</span>
+//           </p>
+//         )
+//       }
+//     </StepContent>
+//   )
+// }
 
 export const useCheckWhiteListModal = () => {
   const account = useGetCurrentWallet()
@@ -279,38 +277,38 @@ export const useCheckWhiteListModal = () => {
 
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
-  const { modal, open, close } = useModal((_open, close, visible) => (
-    <BindingModal
-      visible = {visible}
-      onCancel = {close}
-      footer = { null }
-    >
-      <Content >
-        <TipsCard>
-          <p > 😺  Accesses left: <b>{user?.getQualification}</b> </p>
-
-          <p>👉🏻 1. Each member whose first time binding her/his wallet to our Discord community will acquire one creation access.</p>
-
-          <p>👉🏻 2. Vote for Forart.ai in Hackathon, The Discord administrator checks the votes and assigns roles</p>
-
-          <p>👉🏻 3.  Invite friends to join Discord and contact your administrator to assign roles</p>
-
-          <p>👉🏻 4. Donate for this artist  </p>
-
-          <p> You can also <a href={'https://medium.com/@Forart.ai/how-to-acquire-creation-access-f6e9d63729a3'} target={'_blank'} rel={'noreferrer'}>view the guide {'>'}</a></p>
-
-          <Steps current={currentStep} direction={isMobile ? 'vertical' : 'horizontal'}>
-            <Steps.Step title={'Connect to wallet'} description={<WalletStatus active={currentStep === 0} />}  />
-            <Steps.Step title={'Login via Discord'} description={<DiscordIdentity active={currentStep === 1} />}  />
-            <Steps.Step title={'Connect Discord and wallet'} description={<BindingStatus active={currentStep === 2}  />}  />
-          </Steps>
-        </TipsCard>
-      </Content>
-    </BindingModal>
-  ))
+  // const { modal, open, close } = useModal((_open, close, visible) => (
+  //   <BindingModal
+  //     visible = {visible}
+  //     onCancel = {close}
+  //     footer = { null }
+  //   >
+  //     <Content >
+  //       <TipsCard>
+  //         <p > 😺  Accesses left: <b>{user?.getQualification}</b> </p>
+  //
+  //         <p>👉🏻 1. Each member whose first time binding her/his wallet to our Discord community will acquire one creation access.</p>
+  //
+  //         <p>👉🏻 2. Vote for Forart.ai in Hackathon, The Discord administrator checks the votes and assigns roles</p>
+  //
+  //         <p>👉🏻 3.  Invite friends to join Discord and contact your administrator to assign roles</p>
+  //
+  //         <p>👉🏻 4. Donate for this artist  </p>
+  //
+  //         <p> You can also <a href={'https://medium.com/@Forart.ai/how-to-acquire-creation-access-f6e9d63729a3'} target={'_blank'} rel={'noreferrer'}>view the guide {'>'}</a></p>
+  //
+  //         <Steps current={currentStep} direction={isMobile ? 'vertical' : 'horizontal'}>
+  //           <Steps.Step title={'Connect to wallet'} description={<WalletStatus active={currentStep === 0} />}  />
+  //           <Steps.Step title={'Login via Discord'} description={<DiscordIdentity active={currentStep === 1} />}  />
+  //           <Steps.Step title={'Connect Discord and wallet'} description={<BindingStatus active={currentStep === 2}  />}  />
+  //         </Steps>
+  //       </TipsCard>
+  //     </Content>
+  //   </BindingModal>
+  // ))
 
   return {
-    checkWhiteListModal: modal,
+    // checkWhiteListModal: modal,
     openCheckWhiteListModal: open,
     closeCheckWhiteListModal: close,
   }
