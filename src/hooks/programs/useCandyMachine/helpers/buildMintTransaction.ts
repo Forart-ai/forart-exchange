@@ -5,7 +5,7 @@ import {
   Signer,
   SystemProgram,
   SYSVAR_CLOCK_PUBKEY, SYSVAR_INSTRUCTIONS_PUBKEY, SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
-  SYSVAR_RENT_PUBKEY,
+  SYSVAR_RENT_PUBKEY, SYSVAR_SLOT_HASHES_PUBKEY,
   Transaction
 } from '@solana/web3.js'
 import { getAtaForMint, getCandyMachineCreator, getMasterEdition, getMetadata, getTokenWallet } from './accounts'
@@ -18,12 +18,7 @@ import { getBalanceLargestTokenAccount } from '../../../../utils'
 
 export type MintResult = string
 
-export async function buildMintTransaction(program: Program, mint: Keypair, candyMachineAddress: PublicKey): Promise<{
-  transaction: Transaction,
-  signers: Signer[]
-}> {
-  console.log('buildMintTransaction', mint.publicKey.toBase58())
-
+export async function buildMintTransaction(program: Program, mint: Keypair, candyMachineAddress: PublicKey): Promise<Transaction[]> {
   const minterPublicKey = program.provider.wallet.publicKey
   const toPublicKey = program.provider.wallet.publicKey
 
@@ -157,22 +152,25 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
         systemProgram: SystemProgram.programId,
         rent: SYSVAR_RENT_PUBKEY,
         clock: SYSVAR_CLOCK_PUBKEY,
-        recentBlockhashes: SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
+        recentBlockhashes: SYSVAR_SLOT_HASHES_PUBKEY,
         instructionSysvarAccount: SYSVAR_INSTRUCTIONS_PUBKEY,
       },
       remainingAccounts: remainingAccounts.length > 0 ? remainingAccounts : undefined,
     }),
   )
 
-  const transaction = new Transaction({
-    feePayer: program.provider.wallet.publicKey,
-    recentBlockhash: (await program.provider.connection.getLatestBlockhash()).blockhash
-  })
+  const feePayer = program.provider.wallet.publicKey
+  const recentBlockhash = (await program.provider.connection.getLatestBlockhash()).blockhash
 
-  transaction.add(...[...instructions, ...cleanupInstructions].filter(i => !!i))
+  const transaction = new Transaction({ feePayer, recentBlockhash })
+  transaction.add(...instructions)
+  transaction.sign(...signers)
 
-  return {
+  const cleanUpTransaction = new Transaction({ feePayer, recentBlockhash })
+  cleanUpTransaction.add(...cleanupInstructions)
+
+  return [
     transaction,
-    signers,
-  }
+    cleanUpTransaction
+  ]
 }
