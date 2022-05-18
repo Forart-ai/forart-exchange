@@ -10,7 +10,7 @@ import AttributesItemCard from './AttributesItemCard'
 import { MintedNFTItem } from '../../../../types/coNFT'
 
 const Wrapper = styled('div')`
-  background-color: rgb(13,14,45);
+  background-color: rgb(10,5,35);
   border-radius: 10px;
   padding: 15px;
   display: flex;
@@ -65,8 +65,8 @@ const CoNftCard:React.FC<{nftDetail: MintedNFTItem}> = ({ nftDetail }) => {
           <img src={nftDetail?.previewUrl} />
         </ImageWrapper>
         <Flex flexDirection={'column'} width={isMobile ? '100%' : 'calc(100% - 200px)'}  >
-          <Text fontSize={'20px'} fontFamily={'Aldrich-Regular'}>{nftDetail?.chainNftName}</Text>
-          <Text letterSpacing={'.4px'} fontFamily={'Kanit-Regular'} fontSize={'14px'} mb={'5px'} >Owned by: &nbsp;{shortenAddress(nftDetail?.wallet)}</Text>
+          <Text color={'secondary.light'} fontSize={'20px'} fontFamily={'Aldrich-Regular'}>{nftDetail?.chainNftName}</Text>
+          <Text color={'secondary.light'} letterSpacing={'.4px'} fontFamily={'Kanit-Regular'} fontSize={'14px'} mb={'5px'} >Owned by: &nbsp;{shortenAddress(nftDetail?.wallet)}</Text>
           <AttributesItemCard item={attr} />
         </Flex>
       </Container>

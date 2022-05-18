@@ -65,7 +65,7 @@ const App: React.FC = () => {
             <Flex flexDirection={'column'} minHeight={'100vh'}>
 
               <AppHeader />
-              <Box   sx={{  width:'100vw', backgroundColor:'rgb(29,22,48)', zIndex:'auto', position:'relative', top:'60px' }}>
+              <Box   sx={{  width:'100vw', backgroundColor:'rgb(10,5,35)', zIndex:'auto', position:'relative', top:'60px' }}>
                 {/*<PurpleGlow style={{ right: '0' }} />*/}
                 {/*<PurpleGlow style={{ left: '25%' }} />*/}
                 {/*<PurpleGlow style={{ top:'90vh', right: '0%', opacity:'.6', width:'600px', height: '600px' }} />*/}
@@ -92,7 +92,7 @@ const App: React.FC = () => {
           ) : (
             <>
               <AppHeader />
-              <Box  sx={{ width:'100vw', backgroundColor:'rgb(29,22,48)', position:'relative', minHeight:'100vh', }}>
+              <Box  sx={{ width:'100vw', backgroundColor:'rgb(10,5,35)', position:'relative', minHeight:'100vh', }}>
                 {
                   routes.map(({ exact = true, path, component }) => (
                     <Route

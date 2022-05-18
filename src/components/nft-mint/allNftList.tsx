@@ -8,7 +8,8 @@ import { useLocationQuery } from '../../hooks/useLocationQuery'
 import CONFT_API from '../../apis/co-nft'
 import WalletSelectionModal from '../wallet/WalletSelectionModal'
 import { Link } from 'react-router-dom'
-import { styled } from '@mui/material'
+import { styled, SvgIcon } from '@mui/material'
+import { Heart_Outline } from '../../contexts/svgIcons'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -207,14 +208,16 @@ const AllNftList: React.FC<{data: MintedNFTItem, index: number}> = ({ data ,inde
 
           <HeartContainer heartstatus = {heartstatus} >
             <span>{heartNum}</span>
-            todo:Fix
             {
               account ? (
-                // <HeartFilled  onClick={() => handleLike(data?.id)}  className="heart" />
-                <></>
+                <SvgIcon style={{ cursor:'pointer' }} onClick={() => handleLike(data?.id)}  className="heart">
+                  <path fill="currentColor" d={Heart_Outline} />
+                </SvgIcon>
               ) :
-                // <HeartFilled  onClick={() => openModal(<WalletSelectionModal />)}  className="heart" />
-                <></>
+                <SvgIcon style={{ cursor:'pointer' }}  onClick={() => openModal(<WalletSelectionModal />)}  className="heart">
+                  <path fill="currentColor" d={Heart_Outline} />
+                </SvgIcon>
+
             }
           </HeartContainer>
 

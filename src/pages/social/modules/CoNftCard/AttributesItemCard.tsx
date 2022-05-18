@@ -37,6 +37,8 @@ const ItemBox = styled('div')`
   width: 100%;
   border-radius: 5px;
   background: linear-gradient(60.95deg, #8246F5 2.09%, #5000B4 97.91%);
+  //background: linear-gradient(60.95deg, rgb(42, 39, 58) 2.09%, rgb(28, 25, 41) 97.91%);
+
   display: flex;
   align-items: flex-start;
   justify-content: center;
