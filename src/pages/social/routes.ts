@@ -1,5 +1,5 @@
 import { Route } from '../../routes'
-import SocialList from '../nftDetail/socialList'
+import ReplyList from './modules/detail/replyList'
 import SocialHomepage from './modules/home'
 
 export const socialRoutes:Route[] = [
@@ -11,7 +11,7 @@ export const socialRoutes:Route[] = [
   {
     path: 'post',
     title: 'Social List',
-    component: SocialList,
+    component: ReplyList,
 
   }
 ]

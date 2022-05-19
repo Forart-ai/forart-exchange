@@ -8,12 +8,14 @@ import CustomizeButton from '../../../../contexts/theme/components/Button'
 import Blogs from '../blogs/blogs'
 import { useMintResultQuery } from '../../../../hooks/queries/useMintResultQuery'
 import RainbowButton from '../../../../contexts/theme/components/RainbowButton'
-import { ShowCoNftParams } from '../../../../types/social'
+import { PostListItem, ShowCoNftParams } from '../../../../types/social'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import { usePostQuery } from '../../../../hooks/queries/usePostQuery'
 import { useRefreshController } from '../../../../contexts/refresh-controller'
 import Background from '../../../../assets/images/social/social-banner.png'
 import UserCoNftList from '../UserCoNftList'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import CONFT_API from '../../../../apis/co-nft'
 
 const SocialPageWrapper = styled('div')`
   width: 100%;
@@ -76,6 +78,7 @@ const StyledTextarea = styled(TextareaAutosize)`
 
 const SocialHomepage: React.FC = () => {
   const { account } = useSolanaWeb3()
+  const [data, setData] = useState<PostListItem[]>([])
 
   const [postNft, setPostNft] = useState<boolean>(true)
   const [selectedNFt, setSelectedNFt] = useState<ShowCoNftParams | undefined>()
@@ -85,18 +88,6 @@ const SocialHomepage: React.FC = () => {
   const [size, setSize] = useState(20)
   const current = parseInt(useLocationQuery('page') ?? '1')
   const { forceRefresh } = useRefreshController()
-
-  const { data:pagingData, isLoading } = usePostQuery({
-    size,
-    current,
-    orders: [{ field:'', order:'' }],
-    wallet: '',
-    createDay: undefined
-  })
-
-  useEffect(() => {
-    console.log(pagingData)
-  },[pagingData, isLoading])
 
   const handleNftPost = useCallback(() => {
     setLoading(true)
@@ -109,6 +100,13 @@ const SocialHomepage: React.FC = () => {
   },
   [selectedNFt],
   )
+  const { data: pagingData, isLoading } = usePostQuery({
+    size,
+    current,
+    orders: [{ field:'', order:'' }],
+    wallet: '',
+    createDay: undefined
+  })
 
   return (
     <DefaultPageWrapper>
@@ -135,6 +133,7 @@ const SocialHomepage: React.FC = () => {
               item.nft && <Blogs key={index} item={item} />
             ))
           }
+
         </MainMessageArea>
 
       </SocialPageWrapper>

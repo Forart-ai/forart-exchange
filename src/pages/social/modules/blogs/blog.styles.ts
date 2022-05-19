@@ -22,7 +22,9 @@ export const UserInfoRow = styled('div')`
   font-family: Kanit-Regular;
   color: white;
   font-size: 20px;
-  margin-left: 10px;
+  margin-left: 30px;
+  justify-content: space-between;
+  height: 100%;
   
 `
 
@@ -33,7 +35,7 @@ export const StyledAvatar = styled(Avatar)`
 `
 
 export const DateText = styled(Typography)`
-font-family: Kanit-Light;
+  font-family: Kanit-Light;
   font-size: 14px;
   color: #999999;
 `

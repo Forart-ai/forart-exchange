@@ -65,7 +65,6 @@
     "notistack": "^2.0.5",
     "nsfwjs": "^2.4.1",
     "rc-virtual-list": "^3.4.2",
-    "react": "^17.0.2",
     "react-countdown": "^2.3.2",
     "react-countup": "^6.1.0",
     "react-dom": "^17.0.2",

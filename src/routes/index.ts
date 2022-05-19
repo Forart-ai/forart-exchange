@@ -66,9 +66,9 @@ const routes: Route[] = [
   {
     path: '/social',
     title: 'Social NFT',
+    exact: false,
     icon: ChatIcon,
     component: NftChatroom,
-    disable: false
   },
   {
     path: '/Text-to-NFT',

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Route, Switch, useHistory } from 'react-router-dom'
 import { GamePageSidebar } from './sidebar'
 import { gameRoutes } from './routes'
 import { styled } from '@mui/material'
@@ -14,6 +14,13 @@ const MainContainer = styled('div')`
 `
 
 const Game: React.FC = () => {
+
+  const history = useHistory()
+
+  useEffect(() => {
+    history.push('/game/aiArt')
+  }, [history])
+
   return (
     <GamePageWrapper>
       <GamePageSidebar />

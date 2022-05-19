@@ -107,7 +107,7 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
               </IconButton>
               <Text fontSize={'16px'} color={'#999999'}> {heartNum} </Text>
 
-              <IconButton color="secondary" onClick={()=>history.push('post')}   style={{ marginLeft:'10px' }}>
+              <IconButton color="secondary" onClick={()=>history.push(`post?id=${item.id}`)}   style={{ marginLeft:'10px' }}>
                 <SvgIcon style={{ cursor:'pointer' }}  >
                   <path fill="currentColor" d={Comment_Outline} /> :
                 </SvgIcon>

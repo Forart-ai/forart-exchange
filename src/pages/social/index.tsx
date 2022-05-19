@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import DefaultPageWrapper from '../../components/default-page-wrapper'
 import { Box } from '@mui/material'
-import { Route, Switch, useHistory } from 'react-router-dom'
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 import { socialRoutes } from './routes'
 import Flex from '../../contexts/theme/components/Box/Flex'
 import { styled } from '@mui/system'
@@ -13,11 +13,12 @@ const SocialContainer = styled('div')`
 `
 
 const NftChatroom: React.FC = () => {
+  const { pathname } = useLocation()
   const history = useHistory()
 
   useEffect(() => {
-    history.push('home')
-  }, [history])
+    if (pathname === '/social') history.push('/social/home')
+  }, [pathname])
 
   return (
     <SocialContainer>
