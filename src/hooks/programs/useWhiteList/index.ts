@@ -13,18 +13,16 @@ const useWhiteListQuery = () => {
 
   const { quietRefreshFlag } = useRefreshController()
 
-  return useQuery(['USER_MINT_CHANCE', account?.toBase58(), quietRefreshFlag], async () => {
+  return useQuery<string | undefined>(['USER_MINT_CHANCE', account?.toBase58(), quietRefreshFlag], async () => {
     if (!account) {
-      return
+      return undefined
     }
 
     const ata = await getAssociatedTokenAddress(WHITELIST_TOKEN_ADDRESS, account)
 
     const tokenAccount = await connection.getParsedAccountInfo(ata)
 
-    if (tokenAccount.value === null) {
-      throw new Error('Whitelist token not found')
-    }
+    if (tokenAccount.value === null) return undefined
 
     return (tokenAccount.value.data as ParsedAccountData).parsed.info.tokenAmount.uiAmountString
   }, { refetchOnWindowFocus: true })

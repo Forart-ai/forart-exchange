@@ -36,7 +36,7 @@ const ImagePreview = styled('div')`
 `
 
 const AttrReviewDialog: React.FC<{
-  body?: NFTAttributesData, attr: NFTAttributesData[], minting?: Minting
+  body?: NFTAttributesData, attr?: NFTAttributesData[], minting?: Minting
 }> = ({ body, attr, minting }) => {
   const { openModal } = useModal()
 
@@ -45,7 +45,7 @@ const AttrReviewDialog: React.FC<{
 
   const handleMint = useCallback(
     () => {
-      if (!body || !attr.length) return
+      if (!body || !attr?.length) return
 
       mintNFT(body, attr, minting)
         .catch(err => {

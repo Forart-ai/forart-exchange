@@ -13,7 +13,7 @@ import Background from '../../../../../assets/images/coPools/create-background.p
 import RandomHats from '../../../../../assets/images/coPools/random-hat.png'
 import { SelectableKitList } from '../../../../../components/nft-mint/mintKit'
 import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
-import { useArtistKitQuery } from '../../../../../hooks/queries/useArtistKitQuery'
+import { ArtistKit, useArtistKitsQuery } from '../../../../../hooks/queries/useArtistKitsQuery'
 import { NFTAttributesData } from '../../../../../types/coNFT'
 import useUserQuery from '../../../../../hooks/queries/useUserQuery'
 import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
@@ -21,14 +21,13 @@ import { Modal } from 'antd'
 import useNFTMint from '../../../../../hooks/useNFTMint'
 
 const HypeteenCreate:React.FC = () => {
-
   const { account } = useSolanaWeb3()
 
   const artistId = useLocationQuery('artistId')
 
-  const { data: artistKit } = useArtistKitQuery(artistId?.toString())
+  const { data: artistKit } = useArtistKitsQuery(artistId?.toString())
 
-  const [body, setBody] = useState<NFTAttributesData>(artistKit?.Body[0])
+  const [body, setBody] = useState<ArtistKit>()
 
   const { data: userData } = useUserQuery()
 
@@ -36,7 +35,7 @@ const HypeteenCreate:React.FC = () => {
     setBody(artistKit?.Body[0])
   }, [artistKit])
 
-  const [attr, setAttr] = useState<NFTAttributesData[]>([])
+  const [attr, setAttr] = useState<ArtistKit[]>([])
 
   useEffect(() => {
     console.log(body, attr)
@@ -92,7 +91,9 @@ const HypeteenCreate:React.FC = () => {
                       <SelectableKitList
                         onSelect={v => setAttr(prev => {
                           const cloned = [...prev]
-                          cloned[index] = v
+                          if (v) {
+                            cloned[index] = v
+                          }
                           return cloned
                         })}
                         list={artistKit[type]}

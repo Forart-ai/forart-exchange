@@ -1,7 +1,9 @@
-import React, {  useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { KitImageBorder, KitListContainer } from '../../pages/coNft/artistMint.style'
 import { KitProperties } from '../../pages/coNft/artistdetail'
 import { Checkbox, styled } from '@mui/material'
+import { NFTAttributesData } from '../../types/coNFT'
+import { ArtistKit } from '../../hooks/queries/useArtistKitsQuery'
 
 const StyledFlag = styled('div')`
   position: absolute;
@@ -101,49 +103,43 @@ const CornerRemainFlag: React.FC<{remain: string}> = ({ remain }) => {
   )
 }
 
-export const SelectableKitItem: React.FC<{ src: any, checked?: boolean, onSelect:(_?: string) => void }> = ({
-  src,
-  checked,
-  onSelect,
-}) => {
-
-  const SelectBtn: React.FC = () => {
-    return (
-      <div style={{
+const SelectBtn: React.FC<{ checked?: boolean }> = ({ checked }) => {
+  return (
+    <div
+      style={{
         position:'absolute',
         top: '0px',
         left: '0px',
       }}
-      >
-        <Checkbox checked={checked} />
-      </div>
-    )
-  }
-
-  return (
-    <KitImageBorder
-      onClick={() => onSelect(!checked ? src : undefined)}
     >
-      <div  style={{ position: 'relative', height: 'fit-content' }}>
-        {
-          <SelectBtn />
-        }
+      <Checkbox checked={checked} />
+    </div>
+  )
+}
+
+export const SelectableKitItem: React.FC<{ src: any, checked?: boolean, onSelect:(_?: any) => void }> = ({
+  src,
+  checked,
+  onSelect,
+}) => {
+  return (
+    <KitImageBorder onClick={() => onSelect(!checked ? src : undefined)}>
+      <div style={{ position: 'relative', height: 'fit-content' }}>
+        <SelectBtn checked={checked} />
       </div>
 
       <ImageContainer>
-        <img className={src.bodyType}  src={src.url}  />
+        <img className={src.bodyType} src={src.url} />
       </ImageContainer>
-
     </KitImageBorder>
   )
 }
 
-export const SelectableKitList: React.FC<{selectedValue?: any, onSelect: (_?: any) => void, list?: KitProperties[]}> =({
+export const SelectableKitList: React.FC<{ selectedValue?: ArtistKit, onSelect: (_?: ArtistKit) => void, list?: ArtistKit[] }> =({
+  selectedValue,
   onSelect,
   list,
 }) => {
-  const [state, setState] = useState<any>()
-
   return (
     <KitListContainer>
       {
@@ -152,15 +148,13 @@ export const SelectableKitList: React.FC<{selectedValue?: any, onSelect: (_?: an
             <SelectableKitItem
               src={item}
               onSelect={v => {
-                setState(v)
                 onSelect(v)
               }}
-              checked={state?.url === item?.url}
+              checked={selectedValue?.url === item?.url}
             />
           </KitItemContainer>
         ))
       }
     </KitListContainer>
   )
-
 }

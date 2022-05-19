@@ -56,6 +56,22 @@ const MintSuccessDialog = () => {
   )
 }
 
+function serialExecute(tasks: Array<Promise<any>>): Promise<any> {
+  return tasks.reduce(
+    (previousPromise, currentPromise) => previousPromise.then(resultList => {
+      return new Promise(resolve => {
+        currentPromise.then(result => {
+          console.log(result)
+          resolve(resultList.concat(result))
+        }).catch(() => {
+          resolve(resultList.concat(null))
+        })
+      })
+    }),
+    Promise.resolve([])
+  )
+}
+
 const useNFTMint = () => {
   const { account, adapter } = useSolanaWeb3()
   const { provider } = useAnchorProvider()
@@ -82,7 +98,7 @@ const useNFTMint = () => {
       return
     }
 
-    Promise.all(rawTransactions.map(raw => connection.sendRawTransaction(raw.serialize())))
+    serialExecute(rawTransactions.map(raw => connection.sendRawTransaction(raw.serialize())))
       .then(() => {
         clearInterval(intervalId)
         setIntervalId(undefined)

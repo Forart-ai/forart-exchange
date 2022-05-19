@@ -2,7 +2,7 @@ import React from 'react'
 import { styled, Tab, Tabs } from '@mui/material'
 import { useMediaQuery } from 'react-responsive'
 import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
-import { useArtistKitQuery } from '../../../../../hooks/queries/useArtistKitQuery'
+import { ArtistKit, useArtistKitsQuery } from '../../../../../hooks/queries/useArtistKitsQuery'
 import ArtistBanner from '../../../../../assets/images/coPools/ticket.png'
 import { KitProperties } from '../../index'
 
@@ -207,14 +207,13 @@ const ComponentsContainer = styled('div')`
   overflow: hidden;
 `
 
-const ComponentsItem:React.FC<{list?:KitProperties[]}> = ({ list }) => {
-
+const ComponentsItem:React.FC<{ list?: ArtistKit[] }> = ({ list }) => {
   return (
     <ComponentWrapper>
       {
         list?.map((item, index) => (
           <div key={index} className={'container'}>
-            <img className={item.bodyType}  src={item.url} />
+            <img className={item.bodyType} src={item.url} />
           </div>
         ))
       }
@@ -234,7 +233,7 @@ const HypeteenDetail:React.FC = () => {
   }
   const artistId = useLocationQuery('artistId')
 
-  const { data: artistKit } = useArtistKitQuery(artistId?.toString())
+  const { data: artistKit } = useArtistKitsQuery(artistId?.toString())
 
   return (
     <>

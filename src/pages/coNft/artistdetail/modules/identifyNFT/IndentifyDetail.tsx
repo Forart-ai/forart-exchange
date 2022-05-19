@@ -2,7 +2,7 @@ import React from 'react'
 import { styled, Tab, Tabs } from '@mui/material'
 import { useMediaQuery } from 'react-responsive'
 import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
-import { useArtistKitQuery } from '../../../../../hooks/queries/useArtistKitQuery'
+import { useArtistKitsQuery } from '../../../../../hooks/queries/useArtistKitsQuery'
 import ArtistBanner from '../../../../../assets/images/artistDetail/painter-poster.jpg'
 import { KitProperties } from '../../index'
 

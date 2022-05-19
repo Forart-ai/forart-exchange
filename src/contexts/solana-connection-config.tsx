@@ -23,7 +23,7 @@ export type Endpoint = {
 export const ENDPOINTS: Record<Cluster, Endpoint> = {
   'mainnet-beta': {
     name: 'mainnet-beta',
-    endpointUrl: 'https://solana-api.projectserum.com/',
+    endpointUrl: 'https://mango.rpcpool.com/',
     chainID: ChainID.MainnetBeta
   },
   'testnet': {
