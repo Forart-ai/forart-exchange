@@ -56,7 +56,6 @@ export const MenuPaper = styled(Paper)`
 export const GamePageSidebar: React.FC = () => {
 
   const { pathname }  = useLocation()
-  console.log(pathname)
   return (
 
     <MenuContainer className={'sidebar'}>

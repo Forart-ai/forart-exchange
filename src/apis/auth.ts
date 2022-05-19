@@ -1,6 +1,12 @@
 import { Service } from './service'
 import { useSolanaWeb3 } from '../contexts/solana-web3'
-import { ReplyPostRequest, ShowCoNftParams, StarPostRequestParam, UserPostListQueryParams } from '../types/social'
+import {
+  ReplyPostRequest,
+  ShowCoNftParams,
+  StarPostRequestParam,
+  UserPostListQueryParams,
+  UserPostReplyListQueryParams
+} from '../types/social'
 
 export type UploadImageParam = {
   file: any,
@@ -73,8 +79,15 @@ export const SOCIAL_API = {
   StarPost(param: StarPostRequestParam) {
     return Service.post('post/star', param)
   },
+  UndoStarPost(param: StarPostRequestParam) {
+    return Service.post('post/star/undo', param)
+  },
   ReplyPost(param: ReplyPostRequest) {
     return Service.post('post/reply/create', param)
+  },
+  getPostReplyList(param:UserPostReplyListQueryParams) {
+    return Service.post('post/reply/page', param)
+
   }
 }
 

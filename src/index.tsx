@@ -18,6 +18,7 @@ import ForartTheme from './contexts/theme/config/dark'
 import { ThemeProvider } from '@mui/material'
 import { useSignLogin } from './hooks/useSignLogin'
 import { SnackbarProvider } from 'notistack'
+import { Snackbar } from './contexts/theme/components/Snackbar/snackbar'
 
 const { store } = configureStore()
 

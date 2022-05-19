@@ -1,145 +1,40 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import DefaultPageWrapper from '../../components/default-page-wrapper'
-import Background from '../../assets/images/social/social-banner.png'
-import { Avatar, Box, styled, TextareaAutosize, TextField } from '@mui/material'
-import RainbowButton from '../../contexts/theme/components/RainbowButton'
-import StyledTextField from '../../contexts/theme/components/TextField'
-import Button from '@mui/material/Button'
-import Blogs from './modules/blogs'
-import { useMintResultQuery } from '../../hooks/queries/useMintResultQuery'
-import { useSolanaWeb3 } from '../../contexts/solana-web3'
-import UserCoNftList from './modules/UserCoNftList'
-import CustomizeButton from '../../contexts/theme/components/Button'
-import { ShowCoNftParams } from '../../types/social'
-import { SOCIAL_API } from '../../apis/auth'
-import { useLocationQuery } from '../../hooks/useLocationQuery'
-import { usePostQuery } from '../../hooks/queries/usePostQuery'
-import { useRefreshController } from '../../contexts/refresh-controller'
+import { Box } from '@mui/material'
+import { Route, Switch, useHistory } from 'react-router-dom'
+import { socialRoutes } from './routes'
+import Flex from '../../contexts/theme/components/Box/Flex'
+import { styled } from '@mui/system'
+import SocialHomepage from './modules/home'
 
-const SocialPageWrapper = styled('div')`
-  width: 100%;
+const SocialContainer = styled('div')`
   display: flex;
-  justify-content: space-between;
-  padding: 60px 0;
-
-`
-
-const MainMessageArea = styled('div')`
-  width: 70%;
-  height: auto;
-
-
-  ${({ theme }) => theme.breakpoints.down('md')} {
-    width: 100%;
-  }
-`
-
-const Header = styled('div')`
-  width: 100%;
-  height: 410px;
-  margin-bottom: 30px;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 20px;
-  }
-`
-
-const CoNftContainer = styled('div')`
-  width: 100%;
-`
-
-const PostArea = styled('div')`
-  height: 270px;
-  border: 1px ${({ theme }) => theme.palette.primary.main} solid;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 10px 20px;
-`
-
-const StyledTextarea = styled(TextareaAutosize)`
-  width: 100%;
-  background-color: ${({ theme }) => theme.palette.secondary.dark};
-  border: none;
-  border-radius: 10px;
-  color: white;
-  padding: 10px;
-  
-  &:focus {
-    //border: ;
-    outline: 1px ${({ theme }) => theme.palette.secondary.main} solid;
-  }
+  border: 1px red solid;
 `
 
 const NftChatroom: React.FC = () => {
-  const { account } = useSolanaWeb3()
-
-  const [postNft, setPostNft] = useState<boolean>(true)
-  const [selectedNFt, setSelectedNFt] = useState<ShowCoNftParams | undefined>()
-  const { data: mintedNft } = useMintResultQuery({ wallet: account?.toBase58(), nft:'' } )
-  const [loading, setLoading] = useState(false)
-
-  const [size, setSize] = useState(20)
-  const current = parseInt(useLocationQuery('page') ?? '1')
-  const { forceRefresh } = useRefreshController()
-
-  const { data:pagingData, isLoading } = usePostQuery({
-    size,
-    current,
-    orders: [{ field:'', order:'' }],
-    wallet: '',
-    createDay: undefined
-  })
+  const history = useHistory()
 
   useEffect(() => {
-    console.log(pagingData)
-  },[pagingData, isLoading])
-
-  const handleNftPost = useCallback(() => {
-    setLoading(true)
-    if (selectedNFt) {
-      SOCIAL_API.postNft(selectedNFt).then(() => {
-        forceRefresh()
-        setLoading(false)
-      })
-    }
-  },
-  [selectedNFt],
-  )
+    history.push('home')
+  }, [history])
 
   return (
-    <DefaultPageWrapper>
-      <SocialPageWrapper>
-        <MainMessageArea>
-          <Header>
-            <img src={Background} />
-          </Header>
-          <PostArea>
-            <RainbowButton onClick={() => setPostNft(!postNft)}> {!postNft? 'Post CO-NFT' : 'Post blog'} </RainbowButton>
-            {
-              postNft  ?
-                <CoNftContainer>
-                  <UserCoNftList list={mintedNft} selectedValue={selectedNFt} onSelect={v => setSelectedNFt(v)} />
-                </CoNftContainer>
-                :
-                <StyledTextarea minRows={5}  onChange={() => {}} placeholder={'Something to say?'}  />
-            }
-            <CustomizeButton disabled={loading} variant={'contained'} onClick={handleNftPost}> Post </CustomizeButton>
-          </PostArea>
+    <SocialContainer>
+      <Switch>
+        {
+          socialRoutes.map(({ path, component }) => (
+            <Route
+              path={`/social/${path}`}
+              component={component}
+              key={path}
+            />
+          ))
+        }
+      </Switch>
 
-          {
-            pagingData?.map((item, index) => (
-              item.nft && <Blogs key={index} item={item} />
-            ))
-          }
-        </MainMessageArea>
-      </SocialPageWrapper>
-    </DefaultPageWrapper>
+      <Box sx={{ width:'200px' ,height:'100px', border:'1px aqua solid' }} />
+    </SocialContainer>
   )
 }
 

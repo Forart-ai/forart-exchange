@@ -25,6 +25,25 @@ const ForartTheme = createTheme({
       dark: '#5000B4',
       contrastText: '#fff',
     },
+    success: {
+      main: '#50dcb5',
+      light: '#da6060',
+      dark: '#880a0a',
+      contrastText: '#fff',
+    },
+    error: {
+      main: '#d32f2f',
+      light: '#da6060',
+      dark: '#880a0a',
+      contrastText: '#fff',
+    },
+    warning: {
+      main: '#ff6a00',
+      light: '#ffb500',
+      dark: '#880a0a',
+      contrastText: '#fff',
+    },
+
     text:{
       primary: '#fff',
       secondary: '#A197AA',

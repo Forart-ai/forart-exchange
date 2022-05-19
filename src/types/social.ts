@@ -17,6 +17,16 @@ export interface UserPostListQueryParams{
   createDay?: number
 }
 
+export interface UserPostReplyListQueryParams{
+  size: number
+  current: number
+  orders?: Order[]
+  wallet?: string
+  createDay?: number
+  post: string,
+  replyTo: string
+}
+
 export interface StarPostRequestParam {
   wallet: string,
   post: string
@@ -44,4 +54,19 @@ export interface PostListItem {
   createTime: string
   updateTime: string
   detail: any
+}
+
+export interface ReplyListItem {
+  id: string
+  post: string
+  replyTo: string
+  replyToWallet: string
+  replyToUsername: string
+  wallet: string
+  username: string
+  avatar: string
+  wysiwyg: string
+  createAt: number
+  createTime: string
+  updateTime: string
 }

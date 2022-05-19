@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   Alert, keyframes,
-  Snackbar,
+  Snackbar, SvgIcon,
 } from '@mui/material'
 import UploadIcon from '../../assets/images/coPools/download.svg'
 
@@ -20,6 +20,7 @@ import html2canvas from 'html2canvas'
 import { styled } from '@mui/material'
 
 import { Wrapper, NFTInfo, Options, LeftArea, RightArea, Canvas, RightTopArea, RightBottomArea, TopTitle } from './index.style'
+import { Heart_Outline } from '../../contexts/svgIcons'
 
 const Rainbow = styled('div')`
   display: flex;
@@ -174,7 +175,6 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
       setIsHeart(true)
       setHeartNum(prev => prev + 1)
       setHeartStatus('up')
-      console.log('down')
       CONFT_API.core.nft.starNft(nftDetail?.series, nftId, account.toBase58()).then(() => {
 
       })
@@ -187,7 +187,6 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
       setIsHeart(false)
       setHeartNum(prev => prev - 1)
       setHeartStatus('down')
-      console.log('up')
       CONFT_API.core.nft.unstarNft(nftDetail?.series, nftId, account.toBase58()).then(() => {
       })
         .catch(() => {
@@ -224,14 +223,6 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
     }
   }, [nftDetail])
 
-  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setOpen(false)
-  }
-
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
   const exportImage = (fileName?: string) => {
@@ -266,8 +257,9 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
                 <Options>
                   <HeartContainer heartstatus = {heartstatus} >
                     <span>{heartNum}</span>
-                    {/*TODO: fix me !!!!!!!!*/}
-                    {/*<HeartOutlined onClick={() => handleLike(nftDetail?.id as string)} className="heart" />*/}
+                    <SvgIcon style={{ cursor:'pointer' }} onClick={() => handleLike(nftDetail?.id as string)}  className="heart">
+                      <path fill="currentColor" d={Heart_Outline} />
+                    </SvgIcon>
                   </HeartContainer>
                   <img src={UploadIcon} onClick={() => exportImage(nftDetail?.chainNftName)} />
                 </Options>
@@ -308,14 +300,7 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
 
         </NFTInfo>
 
-        <Snackbar  open={open} autoHideDuration={12000} onClose={handleClose} anchorOrigin={{ vertical:'bottom',horizontal:'left' }}>
-          <Alert onClose={handleClose} severity="success" sx={{ width: '100%','& .MuiSnackbar-root':{ zIndex: 1500 }  }}>
-            Copy success!
-          </Alert>
-        </Snackbar>
-
       </Canvas>
-      {/*<Button variant={'contained'} onClick={() => exportImage()}>Click</Button>*/}
 
     </Wrapper>
 

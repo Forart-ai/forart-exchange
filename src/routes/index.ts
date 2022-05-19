@@ -16,6 +16,7 @@ import NftChatroom from '../pages/social'
 import CONFTDetail from '../pages/nftDetail/coNftDetail'
 import WalletNftDetail from '../pages/nftDetail/walletNftDetail'
 import AiArt from '../pages/game/modules/aiArt'
+import SocialHomepage from '../pages/social/modules/home'
 
 export type Route = {
   path: string
@@ -84,7 +85,7 @@ const routes: Route[] = [
     hidden: true
   },
   {
-    path: '/game/aiArt',
+    path: '/game',
     title:'Game',
     exact: false,
     component: Game,
