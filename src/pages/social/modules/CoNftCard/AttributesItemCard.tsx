@@ -26,7 +26,7 @@ const BoxContainer = styled('div')`
   user-select: none;
   width: 100%;
   
-  ${({ theme }) => theme.breakpoints.down('md')} {
+  ${({ theme }) => theme.breakpoints.down('xl')} {
     grid-template-columns: repeat(4, 110px);
     overflow: visible;
   }

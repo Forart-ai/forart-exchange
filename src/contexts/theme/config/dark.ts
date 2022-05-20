@@ -8,7 +8,7 @@ const ForartTheme = createTheme({
       sm: 576,
       md: 852,
       lg: 968,
-      xl: 1080,
+      xl: 1560,
     },
   },
   palette: {

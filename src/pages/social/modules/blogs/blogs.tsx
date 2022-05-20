@@ -17,6 +17,7 @@ import { useModal } from '../../../../contexts/modal'
 import { useEnqueueSnackbar } from '../../../../contexts/theme/components/Snackbar'
 import { useHistory } from 'react-router-dom'
 import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField } from './blog.styles'
+import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 
 const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   const { account } = useSolanaWeb3()
@@ -26,6 +27,7 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   const [heartNum, setHeartNum] = useState<number>(item.starCount ?? 0)
   const enqueueSnackbar = useEnqueueSnackbar()
   const history = useHistory()
+  const postId = useLocationQuery('id')
 
   const { forceRefresh } = useRefreshController()
   const { openModal } = useModal()
@@ -85,50 +87,55 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
 
   return (
     <BlogsContainer>
-      <Flex width={'100%'}  borderBottom={'1px #8246F5 solid'}   >
-        <StyledAvatar src={item?.avatar} variant={'square'} />
+      <Flex width={'100%'} flexDirection={'column'}    >
         <UserInfoRow>
-          <Text color={'primary.light'} fontSize={22}>{item?.username}</Text>
-          <CoNftCard nftDetail={item?.detail} />
-
-          <Flex width={'100%'} mt={'20px'} alignItems={'center'} justifyContent={'space-between'}>
-            <DateText>{ moment(item.createAt).format('MMMM'+' DD,'+ ' YYYY' )}</DateText>
-
-            <Flex  alignItems={'center'}>
-
-              <IconButton color="secondary"  onClick={() => handleLike()}>
-                <SvgIcon style={{ cursor:'pointer' }}  >
-                  {
-                    heartStatus === 'up' ?
-                      <path fill="currentColor" d={Heart_Filled} /> :
-                      <path fill="currentColor" d={Heart_Outline} />
-                  }
-                </SvgIcon>
-              </IconButton>
-              <Text fontSize={'16px'} color={'#999999'}> {heartNum} </Text>
-
-              <IconButton color="secondary" onClick={()=>history.push(`post?id=${item.id}`)}   style={{ marginLeft:'10px' }}>
-                <SvgIcon style={{ cursor:'pointer' }}  >
-                  <path fill="currentColor" d={Comment_Outline} /> :
-                </SvgIcon>
-              </IconButton>
-              <Text color={'#999999'}> {item.msgCount}</Text>
-            </Flex>
-          </Flex>
+          <StyledAvatar src={item?.avatar} variant={'square'} />
+          <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
         </UserInfoRow>
+
+        <CoNftCard nftDetail={item?.detail} />
+
+        <Flex width={'100%'} mt={'20px'} alignItems={'center'} justifyContent={'space-between'}>
+          <DateText>{ moment(item.createAt).format('MMMM'+' DD,'+ ' YYYY' )}</DateText>
+          <Flex  alignItems={'center'}>
+
+            <IconButton color="secondary"  onClick={() => handleLike()}>
+              <SvgIcon style={{ cursor:'pointer' }}  >
+                {
+                  heartStatus === 'up' ?
+                    <path fill="currentColor" d={Heart_Filled} /> :
+                    <path fill="currentColor" d={Heart_Outline} />
+                }
+              </SvgIcon>
+            </IconButton>
+            <Text fontSize={'16px'} color={'#999999'}> {heartNum} </Text>
+
+            <IconButton color="secondary" onClick={()=>history.push(`post?id=${item.id}`)}   style={{ marginLeft:'10px' }}>
+              <SvgIcon style={{ cursor:'pointer' }}  >
+                <path fill="currentColor" d={Comment_Outline} /> :
+              </SvgIcon>
+            </IconButton>
+            <Text color={'#999999'}> {item.msgCount}</Text>
+          </Flex>
+        </Flex>
       </Flex>
 
-      <Flex alignItems={'center'} width={'100%'}>
-        <Avatar src={userInfo?.avataruri} variant={'circular'}>N</Avatar>
-        <CommentTextField
-          placeholder={'Say something today'}
-          fullWidth
-          onChange={e => {
-            setValue(e.target.value)
-          }}
-          onKeyPress={e => onKeyPress(e)}
-        />
-      </Flex>
+      {
+        postId && (
+          <Flex alignItems={'center'} width={'100%'}  borderTop={'1px #8246F5 solid'}>
+            <Avatar src={userInfo?.avataruri} variant={'circular'}>N</Avatar>
+            <CommentTextField
+              placeholder={'Say something today'}
+              fullWidth
+              onChange={e => {
+                setValue(e.target.value)
+              }}
+              onKeyPress={e => onKeyPress(e)}
+            />
+          </Flex>
+        )
+      }
+
     </BlogsContainer>
   )
 }

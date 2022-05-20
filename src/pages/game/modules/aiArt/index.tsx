@@ -27,6 +27,8 @@ import { useOwnedNFTsQuery } from '../../../../hooks/queries/useOwnedNFTsQuery'
 import { MetadataResult } from '../../../../utils/metaplex/metadata'
 import CustomizeButton from '../../../../contexts/theme/components/Button'
 import { PulseLoader, SyncLoader } from 'react-spinners'
+import CustomizedProgressBars from '../../../../contexts/theme/components/Progress'
+import CustomizedSlider from '../../../../contexts/theme/components/Slider'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -102,7 +104,7 @@ const SelectedNftContainer = styled('div')`
   border-radius: 20px;
   background-color: rgba(255,255,255,.1);
   padding: 10px;
-  margin: 0 30px;
+  margin: 10px 0;
   
   img {
     width: 100%;
@@ -190,6 +192,26 @@ const ExampleContainer =styled('div')`
   }
 `
 
+const Operation = styled('div')`
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+
+  .progress {
+    width: 300px;
+    margin-right: 10px;
+
+    p {
+      position: absolute;
+      bottom: -5px;
+      right: 50%;
+    }
+  }`
+
 const Example: React.FC = () =>{
   return (
     <ExampleContainer>
@@ -275,6 +297,7 @@ const AiArt:React.FC = () => {
   const [content, setContent] = useState<string>('')
   const [contentType, setContentType] = useState('co-nft')
   const [list, setList] = useState<string[] | undefined>( undefined)
+  const [threshold, setThreshold] = useState<number>(50)
 
   const userNftContent = useMemo(() => {
     return  ownedNftList?.map( (item:MetadataResult) => ({
@@ -299,12 +322,12 @@ const AiArt:React.FC = () => {
   const generate = useCallback(async () => {
     setAiNft('')
     setLoading(true)
-    const result = await aiGeneratorStyle(style,content)
+    const result = await aiGeneratorStyle(style,content,threshold)
     const uri = await base64ToIPfsUri(result.data)
     setAiNft(uri)
     setLoading(false)
     return uri
-  },[style, content])
+  },[style, content, threshold])
 
   return (
 
@@ -357,16 +380,25 @@ const AiArt:React.FC = () => {
 
         </Box>
 
-        <Flex alignItems={'center'} justifyContent={'center'} >
+        <Flex alignItems={'center'} justifyContent={'space-between'} >
           <Flex flexDirection={'column'}>
-            <Flex marginBottom={'20px'}>
-              <SelectedNFT content={content} />
-              <SelectedNFT content={style} />
-            </Flex>
-            <CustomizeButton onClick={generate} variant={'contained'}>Generate</CustomizeButton>
+            <SelectedNFT content={content} />
+            <SelectedNFT content={style} />
           </Flex>
           <NewNFTContainer aiNftUri={aiNft} generating={loading} />
         </Flex>
+
+        <Operation>
+          <div className={'progress'}>
+            <CustomizedSlider
+              value={50}
+              onChange={(e, newValue) => setThreshold(newValue as number)}
+            />
+
+          </div>
+          <CustomizeButton sx={{ width:'200px' }} onClick={generate} variant={'contained'}>Generate Now</CustomizeButton>
+
+        </Operation>
 
       </PageWrapper>
 

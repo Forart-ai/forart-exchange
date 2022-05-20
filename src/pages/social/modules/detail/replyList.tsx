@@ -8,6 +8,9 @@ import DefaultPageWrapper from '../../../../components/default-page-wrapper'
 import { usePostReplyQuery } from '../../../../hooks/queries/usePostReplyQuery'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import { styled } from '@mui/material'
+import { usePostDetailQuery } from '../../../../hooks/queries/usePostDetailQuery'
+import Blogs from '../blogs/blogs'
+import { MainMessageArea, SocialPageWrapper } from '../home'
 
 const ReplyContainer = styled('div')`
   min-height: 200px;
@@ -29,6 +32,7 @@ const ReplyList: React.FC= () => {
   const [size, setSize] = useState(20)
   const current = parseInt(useLocationQuery('page') ?? '1')
   const postId = useLocationQuery('id')
+  const { data: postDetail } = usePostDetailQuery(postId)
 
   const { data: replyList } = usePostReplyQuery({
     size,
@@ -40,11 +44,10 @@ const ReplyList: React.FC= () => {
     createDay: undefined
   })
 
-  console.log(replyList)
-
   return (
-    <DefaultPageWrapper>
 
+    <>
+      {postDetail && <Blogs item={postDetail} />}
       {
         replyList?.map((item, index) => (
           <ReplyContainer key={index}>
@@ -64,7 +67,7 @@ const ReplyList: React.FC= () => {
           </ReplyContainer>
         ))
       }
-    </DefaultPageWrapper>
+    </>
 
   )
 }

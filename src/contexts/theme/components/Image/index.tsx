@@ -12,7 +12,7 @@ const StyledImage = styled('img')<{ $borderRadius: number }>`
   top: 0;
   width: 100%;
   border-radius: ${({ $borderRadius }) => $borderRadius}px; 
-  
+  object-fit: cover;
 `
 
 const Image: React.FC<ImageProps> = ({ src, alt, width, height,variant,...props }) => {

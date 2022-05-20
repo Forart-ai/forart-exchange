@@ -51,13 +51,10 @@ const ChosenArea = styled('div')`
   //grid-template-columns: 100px 100px 100px;
   //justify-content: space-around;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 
-  :hover {
-    background-color: rgb(20, 0, 44);
-    border-radius: 20px;
-    cursor: pointer;
-  }
+  
 
   .col-3 {
 
@@ -89,6 +86,12 @@ const ChosenArea = styled('div')`
     justify-content: center;
     width: 100%;
     padding: 7px 10px;
+    
+    :hover {
+      background-color: rgb(20, 0, 44);
+      border-radius: 20px;
+      cursor: pointer;
+    }
 
     img {
       width: 40px;
@@ -142,6 +145,7 @@ const WalletSelectionModal:React.FC = () => {
   }
 
   const onClick = useCallback( (wallet: WalletType) => {
+    console.log(wallet)
 
     if (wallet.chainType === 'eth' && wallet.connector) {
       activate(wallet.connector)

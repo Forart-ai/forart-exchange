@@ -16,18 +16,19 @@ import Background from '../../../../assets/images/social/social-banner.png'
 import UserCoNftList from '../UserCoNftList'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import CONFT_API from '../../../../apis/co-nft'
+import { useInfiniteQuery } from 'react-query'
 
-const SocialPageWrapper = styled('div')`
+export const SocialPageWrapper = styled('div')`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  position: relative;
   padding: 60px 0;
 `
 
-const MainMessageArea = styled('div')`
-  width: 70%;
+export const MainMessageArea = styled('div')`
   height: auto;
-
+  width: 860px;
 
   ${({ theme }) => theme.breakpoints.down('md')} {
     width: 100%;
@@ -36,14 +37,14 @@ const MainMessageArea = styled('div')`
 
 const Header = styled('div')`
   width: 100%;
-  height: 410px;
+  height: 310px;
   margin-bottom: 30px;
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: 10px;
   }
 `
 
@@ -54,7 +55,7 @@ const CoNftContainer = styled('div')`
 const PostArea = styled('div')`
   height: 270px;
   border: 1px ${({ theme }) => theme.palette.primary.main} solid;
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -78,15 +79,14 @@ const StyledTextarea = styled(TextareaAutosize)`
 
 const SocialHomepage: React.FC = () => {
   const { account } = useSolanaWeb3()
-  const [data, setData] = useState<PostListItem[]>([])
 
   const [postNft, setPostNft] = useState<boolean>(true)
   const [selectedNFt, setSelectedNFt] = useState<ShowCoNftParams | undefined>()
   const { data: mintedNft } = useMintResultQuery({ wallet: account?.toBase58(), nft:'' } )
   const [loading, setLoading] = useState(false)
 
-  const [size, setSize] = useState(20)
-  const current = parseInt(useLocationQuery('page') ?? '1')
+  const [size, ] = useState(20)
+  const [, setCurrent] = useState(1)
   const { forceRefresh } = useRefreshController()
 
   const handleNftPost = useCallback(() => {
@@ -97,48 +97,55 @@ const SocialHomepage: React.FC = () => {
         setLoading(false)
       })
     }
-  },
-  [selectedNFt],
-  )
-  const { data: pagingData, isLoading } = usePostQuery({
+  }, [selectedNFt])
+
+  const { data: pagingData, fetchNextPage, hasNextPage } = usePostQuery({
     size,
-    current,
     orders: [{ field:'', order:'' }],
     wallet: '',
     createDay: undefined
   })
 
+  const handleNextPage = useCallback(() => {
+    if (!hasNextPage) return
+
+    setCurrent(prev => {
+      fetchNextPage({ pageParam: prev + 1 })
+      return prev + 1
+    })
+  }, [fetchNextPage, hasNextPage])
+
   return (
-    <DefaultPageWrapper>
-      <SocialPageWrapper>
-        <MainMessageArea>
-          <Header>
-            <img src={Background} />
-          </Header>
-          <PostArea>
-            <RainbowButton onClick={() => setPostNft(!postNft)}> {!postNft? 'Post CO-NFT' : 'Post blog'} </RainbowButton>
-            {
-              postNft  ?
-                <CoNftContainer>
-                  <UserCoNftList list={mintedNft} selectedValue={selectedNFt} onSelect={v => setSelectedNFt(v)} />
-                </CoNftContainer>
-                :
-                <StyledTextarea minRows={5}  onChange={() => {}} placeholder={'Something to say?'}  />
-            }
-            <CustomizeButton disabled={loading} variant={'contained'} onClick={handleNftPost}> Post </CustomizeButton>
-          </PostArea>
+    <>
+      <Header>
+        <img src={Background} />
+      </Header>
+      <PostArea>
+        <RainbowButton onClick={() => setPostNft(!postNft)}> {!postNft? 'Post CO-NFT' : 'Post blog'} </RainbowButton>
+        {
+          postNft  ?
+            <CoNftContainer>
+              <UserCoNftList list={mintedNft} selectedValue={selectedNFt} onSelect={v => setSelectedNFt(v)} />
+            </CoNftContainer>
+            :
+            <StyledTextarea minRows={5}  onChange={() => {}} placeholder={'Something to say?'}  />
+        }
+        <CustomizeButton disabled={loading} variant={'contained'} onClick={handleNftPost}> Post </CustomizeButton>
+      </PostArea>
 
-          {
-            pagingData?.map((item, index) => (
-              item.nft && <Blogs key={index} item={item} />
-            ))
-          }
+      {
+        pagingData?.pages.flat(1).map((item, index) => (
+          item.nft && <Blogs key={index} item={item} />
+        ))
+      }
+      <CustomizeButton
+        variant={'contained'}
+        onClick={handleNextPage}
+      >
+        More
+      </CustomizeButton>
+    </>
 
-        </MainMessageArea>
-
-      </SocialPageWrapper>
-
-    </DefaultPageWrapper>
   )
 }
 

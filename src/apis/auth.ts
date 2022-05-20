@@ -70,6 +70,9 @@ export const AUTH_API = {
 }
 
 export const SOCIAL_API = {
+  getPostById(id?: string) {
+    return Service.get(`post/${id}`)
+  },
   postNft(param:ShowCoNftParams) {
     return Service.post('/post/nft', param)
   },

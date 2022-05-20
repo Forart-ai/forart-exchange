@@ -5,10 +5,13 @@ export function mergeImage(obj: any) {
   return request.post('genNftInfo/mergeImage', obj)
 }
 
-export function aiGeneratorStyle(style: string, content: string) {
+export function aiGeneratorStyle(style: string, content: string, threshold: number) {
   const data = {
     style: style,
-    content: content
+    content: content,
+    iteration: 500,
+    imageSize: 512,
+    threshold: threshold / 10000
   }
 
   return aiDriverRequest.post('tranforImage', data, {

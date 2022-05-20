@@ -36,8 +36,8 @@ const Container = styled('div')`
 `
 
 const ImageWrapper = styled('div')`
-  height: 200px;
-  width: 200px;
+  height: 250px;
+  width: 250px;
   margin-right: 20px;
   
   img {
@@ -64,7 +64,7 @@ const CoNftCard:React.FC<{nftDetail: MintedNFTItem}> = ({ nftDetail }) => {
         <ImageWrapper>
           <img src={nftDetail?.previewUrl} />
         </ImageWrapper>
-        <Flex flexDirection={'column'} width={isMobile ? '100%' : 'calc(100% - 200px)'}  >
+        <Flex flexDirection={'column'} width={isMobile ? '100%' : 'calc(100% - 250px)'}  >
           <Text color={'secondary.light'} fontSize={'20px'} fontFamily={'Aldrich-Regular'}>{nftDetail?.chainNftName}</Text>
           <Text color={'secondary.light'} letterSpacing={'.4px'} fontFamily={'Kanit-Regular'} fontSize={'14px'} mb={'5px'} >Owned by: &nbsp;{shortenAddress(nftDetail?.wallet)}</Text>
           <AttributesItemCard item={attr} />

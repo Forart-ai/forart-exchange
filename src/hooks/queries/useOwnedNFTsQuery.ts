@@ -8,7 +8,6 @@ import { ParsedAccountData, PublicKey, TokenAmount } from '@solana/web3.js'
 
 const belongsToCollection = (data: MetadataResult, creator?: PublicKey) => {
   if (!creator) return true
-
   return data?.creators?.[0]?.address === creator.toBase58()
 }
 
@@ -39,7 +38,7 @@ export const useOwnedNFTsQuery = (creator?: PublicKey): UseQueryResult<MetadataR
 
       const tokens: MetadataResult[] = (await Promise.all(mints.map(mint => loadMetadata(connection, mint)))).filter(o => o !== undefined) as MetadataResult[]
 
-      return tokens.filter(token => belongsToCollection(token, creator))
+      return tokens.filter(token => !!token.data && belongsToCollection(token, creator))
     },
     {
       refetchOnWindowFocus: false,

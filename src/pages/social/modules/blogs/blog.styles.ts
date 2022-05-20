@@ -17,14 +17,10 @@ export const BlogsContainer = styled('div')`
 
 export const UserInfoRow = styled('div')`
   display: flex;
-  width: calc(100% - 64px);
-  flex-direction: column;
+  align-items: center;
+  width: 100%;
   font-family: Kanit-Regular;
-  color: white;
-  font-size: 20px;
-  margin-left: 30px;
-  justify-content: space-between;
-  height: 100%;
+  margin-bottom: 20px;
   
 `
 

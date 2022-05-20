@@ -11,7 +11,7 @@ export interface Order {
 
 export interface UserPostListQueryParams{
   size: number
-  current: number
+  current?: number
   orders?: Order[]
   wallet?: string
   createDay?: number
@@ -70,3 +70,4 @@ export interface ReplyListItem {
   createTime: string
   updateTime: string
 }
+

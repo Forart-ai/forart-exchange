@@ -10,7 +10,7 @@ import { CeloConnector } from './celo-connector'
 import SolanaLogo from '../assets/images/wallets/solanaLogoMark.svg'
 import AvalancheLogo from '../assets/images/wallets/avalanche.png'
 import { BaseMessageSignerWalletAdapter } from '@solana/wallet-adapter-base'
-import { PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
+import { PhantomWalletAdapter, SlopeWalletAdapter } from '@solana/wallet-adapter-wallets'
 
 export const injected = new InjectedConnector({})
 
@@ -61,6 +61,12 @@ export const supportWallets: WalletType[] = [
     adapter: PhantomWalletAdapter,
     chainType: 'solana'
   },
+  {
+    name: 'Slop',
+    icon: PhantomLogo,
+    adapter: SlopeWalletAdapter,
+    chainType: 'solana'
+  },
 ]
 
 export type NetworkType = {
@@ -75,7 +81,7 @@ export const supportNetwork: NetworkType[] = [
   {
     key: NetworkKeys.Solana,
     name: 'Solana',
-    icon:SolanaLogo,
+    icon: SolanaLogo,
     supportedWallet: supportWallets.filter(v => v.chainType === 'solana')
   },
   {

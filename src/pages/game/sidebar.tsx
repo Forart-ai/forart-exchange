@@ -61,7 +61,7 @@ export const GamePageSidebar: React.FC = () => {
     <MenuContainer className={'sidebar'}>
 
       <MenuPaper sx={{ width: 230 }}>
-        <Sticky positionRecheckInterval={60} >
+        <Sticky>
           {
             gameRoutes.map((route, index) => {
               return (
