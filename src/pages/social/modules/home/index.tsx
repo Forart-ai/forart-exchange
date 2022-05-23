@@ -17,6 +17,7 @@ import UserCoNftList from '../UserCoNftList'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import CONFT_API from '../../../../apis/co-nft'
 import { useInfiniteQuery } from 'react-query'
+import Flex from '../../../../contexts/theme/components/Box/Flex'
 
 export const SocialPageWrapper = styled('div')`
   width: 100%;
@@ -106,6 +107,10 @@ const SocialHomepage: React.FC = () => {
     createDay: undefined
   })
 
+  useEffect(() => {
+    console.log( pagingData)
+  }, [pagingData])
+
   const handleNextPage = useCallback(() => {
     if (!hasNextPage) return
 
@@ -138,12 +143,16 @@ const SocialHomepage: React.FC = () => {
           item.nft && <Blogs key={index} item={item} />
         ))
       }
-      <CustomizeButton
-        variant={'contained'}
-        onClick={handleNextPage}
-      >
-        More
-      </CustomizeButton>
+      <Flex flexDirection={'column'} alignItems={'center'}>
+        <CustomizeButton
+          onClick={handleNextPage}
+          color={'secondary'}
+          sx={{ mt: 2 }}
+        >
+          Load more
+        </CustomizeButton>
+      </Flex>
+
     </>
 
   )

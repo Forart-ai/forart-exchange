@@ -11,7 +11,13 @@ export const useGetUserInfo = (): UseQueryResult<UserInfoParam> => {
   return useQuery(
     ['USER_ACCOUNT_INFO', account?.toBase58(), quietRefreshFlag],
     async () => {
-      return await AUTH_API.getUserInfo(account?.toBase58()).then(res=> ({ ...res }))
+      return await AUTH_API.getUserInfo(account?.toBase58()).then((res: any)=> ({
+        ...res ,
+        avataruri:`${res.avataruri}?a=${new Date().getTime()}`,
+        banneruri:`${res.banneruri}?a=${new Date().getTime()}`
+      }))
+      // return await AUTH_API.getUserInfo(account?.toBase58()).then((res:any) => {
+      //   console.log(res, res.avataruri)})
     },{
       refetchOnWindowFocus:false,
       refetchInterval:false

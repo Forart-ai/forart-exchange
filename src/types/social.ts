@@ -41,6 +41,7 @@ export interface ReplyPostRequest {
 
 export interface PostListItem {
   avatar: string
+  data: any,
   id: string
   wallet: string
   username: string

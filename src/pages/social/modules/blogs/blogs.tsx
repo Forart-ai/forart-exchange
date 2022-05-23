@@ -69,11 +69,16 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   },[account, item, heartStatus])
 
   useEffect(() => {
-    if (token) {
-      setUserInfo(jwt_decode(token))
-    }
+    console.log(item)
+  }, [item])
 
-  }, [token,account])
+  // useEffect(() => {
+  //
+  //   if (token) {
+  //     setUserInfo(jwt_decode(token))
+  //   }
+  //
+  // }, [token,account])
 
   const onKeyPress = (key: any) => {
     if (key.key === 'Enter'){
@@ -89,7 +94,7 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
     <BlogsContainer>
       <Flex width={'100%'} flexDirection={'column'}    >
         <UserInfoRow>
-          <StyledAvatar src={item?.avatar} variant={'square'} />
+          <StyledAvatar src={`${item?.avatar}?a=${item.updateTime}`} variant={'square'} />
           <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
         </UserInfoRow>
 
@@ -123,7 +128,7 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
       {
         postId && (
           <Flex alignItems={'center'} width={'100%'}  borderTop={'1px #8246F5 solid'}>
-            <Avatar src={userInfo?.avataruri} variant={'circular'}>N</Avatar>
+            <Avatar src={item?.avatar} variant={'circular'}>N</Avatar>
             <CommentTextField
               placeholder={'Say something today'}
               fullWidth

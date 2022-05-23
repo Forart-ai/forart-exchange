@@ -395,7 +395,6 @@ const PersonalCenterPage: React.FC = () => {
 
           <UserAvatar  onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)}>
             <CoverMask > <img src={SettingIcon} /> </CoverMask>
-            {/*<Image width={128} height={128}  src={userInfo?.avataruri} variant={'rectangular'} />*/}
             <img src={`${userInfo?.avataruri}?a=${userInfo?.updateTime}`} />
           </UserAvatar>
 

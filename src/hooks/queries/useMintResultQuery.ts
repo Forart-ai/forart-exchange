@@ -16,7 +16,9 @@ export const useMintResultQuery = (params: GetNftRequest): UseQueryResult<any> =
       }
 
       return CONFT_API.core.kits.getNFTQuery(params).then(res => res)
-    },{ keepPreviousData:true }
+    },
+    { keepPreviousData:true,
+      refetchInterval: false }
   )
 }
 

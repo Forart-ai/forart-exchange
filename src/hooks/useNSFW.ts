@@ -16,7 +16,6 @@ const useNSFW = () => {
 
       predictions.map((item, index) => {
         if (unseemly.includes(item.className)) {
-          console.log(item.probability)
           unseenRate = unseenRate + item.probability
         }
       })
