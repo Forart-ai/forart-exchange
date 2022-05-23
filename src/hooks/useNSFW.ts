@@ -12,7 +12,7 @@ const useNSFW = () => {
 
       // Classify the image
       const predictions = await model.classify(img)
-      console.log(img)
+      console.log(img, predictions)
 
       predictions.map((item, index) => {
         if (unseemly.includes(item.className)) {

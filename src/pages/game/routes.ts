@@ -6,7 +6,7 @@ import { Route } from 'src/routes'
 export const gameRoutes: Route[] = [
   {
     path: 'aiArt',
-    title: 'Style Transformation',
+    title: 'Aiart',
     icon: '',
     component: AiArt,
     disable: false,

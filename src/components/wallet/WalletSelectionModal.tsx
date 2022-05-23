@@ -52,7 +52,7 @@ const ChosenArea = styled('div')`
   //justify-content: space-around;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
 
   
 
@@ -83,7 +83,7 @@ const ChosenArea = styled('div')`
     align-items: center;
     color: white;
     font-family: Aldrich-Regular;
-    justify-content: center;
+    justify-content: flex-start;
     width: 100%;
     padding: 7px 10px;
     
@@ -96,6 +96,7 @@ const ChosenArea = styled('div')`
     img {
       width: 40px;
       margin-right: 20px;
+      border-radius: 50%;
 
     }
   }
@@ -122,7 +123,7 @@ const WalletList: React.FC<{network: string, wallet: WalletType, onSelect:(_:Wal
   //---------------------------------------------------
 
     <div className="row" key={wallet.name} onClick={ connectToWallet }  >
-      <img src={wallet.icon} />
+      <img  src={wallet.icon} />
       <span>{wallet.name}</span>
     </div>
   )

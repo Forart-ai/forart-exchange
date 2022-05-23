@@ -391,11 +391,11 @@ const PersonalCenterPage: React.FC = () => {
           {/*    <img src={userInfo?.banneruri} />*/}
           {/*}*/}
 
-          <Image width={'100%'} height={'100%'} src={`${userInfo?.banneruri}?a=${userInfo?.updateTime}`} variant={'rectangular'} />
+          <Image width={'100%'} height={'100%'} src={userInfo?.banneruri ? `${userInfo?.banneruri}?a=${userInfo?.updateTime}` : Background} variant={'rectangular'} />
 
           <UserAvatar  onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)}>
             <CoverMask > <img src={SettingIcon} /> </CoverMask>
-            <img src={`${userInfo?.avataruri}?a=${userInfo?.updateTime}`} />
+            <img src={userInfo?.avataruri ? `${userInfo?.avataruri}?a=${userInfo?.updateTime}` : AvatarIcon} />
           </UserAvatar>
 
         </BackgroundImage>

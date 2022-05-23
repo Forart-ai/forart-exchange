@@ -94,7 +94,6 @@ const Wallet: React.FC = () => {
       { (!account && !solanaAccount ) && <ConnectToWallet /> }
       { (!!account || !!solanaAccount) && <CurrentAccount account={account} solanaAccount={ solanaAccount } /> }
     </>
-
   )
 }
 

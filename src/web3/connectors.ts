@@ -2,6 +2,8 @@ import { InjectedConnector } from '@web3-react/injected-connector'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import MetaMaskIcon from '../images/wallet/metamask.png'
 import CeloLogo from '../images/wallet/celo.svg'
+import SlopeWallet from '../images/wallet/slope.jpg'
+
 import PhantomLogo from '../assets/images/wallets/phantomLogo.png'
 
 import { Web3Provider } from '@ethersproject/providers'
@@ -63,7 +65,7 @@ export const supportWallets: WalletType[] = [
   },
   {
     name: 'Slop',
-    icon: PhantomLogo,
+    icon: SlopeWallet,
     adapter: SlopeWalletAdapter,
     chainType: 'solana'
   },
