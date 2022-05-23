@@ -331,7 +331,6 @@ const AppHeader:React.FC  = () => {
           }
         </Operator>
       </MainContent>
-
     </AppHeaderContent>
 
   )

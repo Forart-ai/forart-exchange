@@ -14,12 +14,11 @@ export  const EXTERNAL_LINKS: Array<{ icon: string, link: string }> = [
 ]
 
 const Footer = styled('div')`
-  height: 210px;
   position: relative;
-  bottom: 60px;
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  background-color: rgb(10,5,35);
+  top: 60px;
 `
 
 const FooterContainer = styled('div')`

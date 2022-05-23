@@ -3,7 +3,8 @@ import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 import { socialRoutes } from './routes'
 import { styled } from '@mui/system'
 import SocialHomepage, { MainMessageArea, SocialPageWrapper } from './modules/home'
-import GallerySwiper from './modules/gallerySwiper'
+import GallerySwiper from './modules/ranking/gallerySwiper'
+import { StickyContainer, Sticky } from 'react-sticky'
 
 const PageWrapper = styled('div')(({ theme }) => ({
   maxWidth: '90rem',
@@ -22,11 +23,10 @@ const PageWrapper = styled('div')(({ theme }) => ({
 
 }))
 
-const Fixed = styled('div')`
+const RankingContent = styled('div')`
   position: absolute;
   right: 0;
   width: 500px;
-  height: auto;
 `
 
 const NftChatroom: React.FC = () => {
@@ -38,26 +38,39 @@ const NftChatroom: React.FC = () => {
   }, [pathname])
 
   return (
-    <PageWrapper>
-      <SocialPageWrapper>
-        <MainMessageArea>
-          <Switch>
-            {
-              socialRoutes.map(({ path, component }) => (
-                <Route
-                  path={`/social/${path}`}
-                  component={component}
-                  key={path}
-                />
-              ))
-            }
-          </Switch>
-        </MainMessageArea>
-        <Fixed>
-          <GallerySwiper />
-        </Fixed>
-      </SocialPageWrapper>
-    </PageWrapper>
+    <StickyContainer>
+
+      <PageWrapper>
+
+        <SocialPageWrapper>
+          <MainMessageArea>
+            <Switch>
+              {
+                socialRoutes.map(({ path, component }) => (
+                  <Route
+                    path={`/social/${path}`}
+                    component={component}
+                    key={path}
+                  />
+                ))
+              }
+            </Switch>
+          </MainMessageArea>
+          <RankingContent>
+            <Sticky >
+              {
+                ({ style, isSticky = true }) => (
+                  <div style={{ ...style, marginTop: isSticky ? '60px' : 0 }}>
+                    <GallerySwiper />
+                  </div>)
+              }
+            </Sticky>
+          </RankingContent>
+        </SocialPageWrapper>
+
+      </PageWrapper>
+    </StickyContainer>
+
   )
 }
 

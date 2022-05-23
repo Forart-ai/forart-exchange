@@ -85,8 +85,8 @@ const App: React.FC = () => {
                     ))
                   }
                 </Box>
-                <AppFooter />
               </Box>
+              {/*<AppFooter />*/}
 
             </Flex>
           ) : (
