@@ -16,7 +16,7 @@ const getStyleByPath = ({  $path }: any) => {
 
   case 'Transformation':
     return {
-      background:'linear-gradient(98deg, #E91383  2.09%, #CE17B7 97.91%)',
+      background:'linear-gradient(98deg, #EB1482  2.09%, #CD19B9 97.91%)',
     }
 
   default:{
@@ -42,8 +42,7 @@ export const StyledMenuList = styled('div')`
 
 `
 
-export const StyledMenuItem = styled('div')`
-  background-color: rgb(26,26,26);
+export const StyledMenuItem = styled('div')<{$path?: string}>`
   height: 100%;
   width: 100%;
   border-radius: 28px;
@@ -51,7 +50,8 @@ export const StyledMenuItem = styled('div')`
   align-items: center;
   justify-content: flex-start;
   padding-left: 20px;
-  
+  opacity: .34;
+  ${getStyleByPath}
 
   
 `
@@ -68,6 +68,7 @@ export const SelectedMenuItem = styled('div')<{$path?: string}>`
   animation-name: rubberBand;
   animation-duration: 1s;
   animation-fill-mode: both;
+  
   
   @keyframes rubberBand {
     from {
@@ -119,14 +120,17 @@ export const MenuPaper = styled(Paper)`
   }
 `
 
-const StyledSvgIcon = styled(SvgIcon)`
-  width: 40px;
-  height: 40px;
-  padding: 6px;
+const StyledSvgIcon = styled('div')`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
   margin-right: 10px;
-  background-color: rgba(54,58,68,.4);
-  border-radius: 50%;
   color: white;
+  background: rgba(42, 46, 53, 0.42);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
 `
 
 export const GamePageSidebar: React.FC = () => {
@@ -151,12 +155,12 @@ export const GamePageSidebar: React.FC = () => {
                             {
                               pathname === `/game/${route.path}` ? (
                                 <SelectedMenuItem $path={route.title.toString()}>
-                                  <StyledSvgIcon > <path fill="currentColor" d={Robot_Outline} /> </StyledSvgIcon>
+                                  <StyledSvgIcon>{route.icon && <route.icon />}</StyledSvgIcon>
                                   <Text fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>{route.title}</Text>
                                 </SelectedMenuItem>
                               ) :
-                                <StyledMenuItem >
-                                  <StyledSvgIcon> <path fill="currentColor" d={Robot_Outline} /> </StyledSvgIcon>
+                                <StyledMenuItem $path={route.title} >
+                                  <StyledSvgIcon>{route.icon && <route.icon />}</StyledSvgIcon>
                                   <Text fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>{route.title}</Text>
                                 </StyledMenuItem>
                             }

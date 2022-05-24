@@ -3,7 +3,6 @@ import AIGen from '../pages/AIGen'
 import PersonalCenterPage from '../pages/personal'
 import CoNftPage from '../pages/coNft/homepage'
 import ArtistDetail from '../pages/coNft/artistdetail'
-import Staking from '../pages/staking/index'
 import Game from '../pages/game/index'
 
 import { ReactComponent as GanIcon } from '../assets/images/siderIcon/f-idea.svg'

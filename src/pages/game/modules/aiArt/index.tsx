@@ -391,7 +391,6 @@ const AiArt:React.FC = () => {
         <Operation>
           <div className={'progress'}>
             <CustomizedSlider
-              value={50}
               onChange={(e, newValue) => setThreshold(newValue as number)}
             />
 

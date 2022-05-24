@@ -50,7 +50,6 @@ const CustomizeSlider = styled(Slider)`
 const CustomizedSlider:React.FC<SliderProps> = (props: SliderProps) => {
   return (
     <CustomizeSlider
-      valueLabelDisplay="auto"
       {...props}
     />
 
