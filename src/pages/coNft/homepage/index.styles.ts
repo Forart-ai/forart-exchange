@@ -1,34 +1,35 @@
 import { Button, styled } from '@mui/material'
 import CountUp from 'react-countup'
+import BackgroundImage from '../../../assets/images/coPools/homepage-background.png'
 
-export const HeaderContainer = styled('div')(({ theme }) => ({
-  width: '100%',
-  height: 'fit-content',
-  position: 'relative',
-  display: 'flex',
-  overflow: 'auto',
-  alignItems:'center',
-
-  [theme.breakpoints.down('md')]: {
-    flexDirection: 'column',
-    height: 'fit-content',
-    margin: '100px 0',
-  },
-
-}))
-
-export const Wrapper = styled('div')`
-  width: 100%;
+export const HeaderContainer = styled('div')`
+  height: 100vh;
+  width: 80%;
+  max-width: 1870px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  min-height: 90vh;
-  
- 
+  align-items: center;
+  margin: 0 auto;
 
   ${({ theme }) => theme.breakpoints.down('md')} {
     flex-direction: column;
+    margin: unset;
   }
+`
+
+export const Wrapper = styled('div')`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    flex-direction: column;
+    padding: 20px 14px;
+    margin-top: 30px;
+  }
+  
 `
 
 export const LeftArea = styled('div')(({ theme }) => ({
@@ -37,6 +38,7 @@ export const LeftArea = styled('div')(({ theme }) => ({
   flex:'1 1 0%',
   alignItems: 'flex-start',
   flexDirection: 'column',
+  justifyContent:'center',
   paddingRight:'30px',
 
   [theme.breakpoints.down('md')]: {
@@ -187,5 +189,15 @@ export const RightArea = styled('div')`
   //  width: 100%;
   //  margin-top: 20px;
   //}
+`
+
+export const Background = styled('div')`
+  width: 100%;
+  min-height: calc(100vh - 60px);
+  height: 100%;
+  background: url(${BackgroundImage}) no-repeat;
+  background-size: cover;
+  
+  
 `
 

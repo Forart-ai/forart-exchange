@@ -21,13 +21,7 @@ const AppHeaderContent = styled('div')`
   justify-content: center;
   background: #0A0523;
   border-bottom: 1px rgba(131, 69, 244,.7) solid;
-  position: fixed;
-  top: 0;
-  z-index: 100;
- 
- 
   //background-image: linear-gradient(to right, #B8316A, #601b7e);
-
 
 `
 

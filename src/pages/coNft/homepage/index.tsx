@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
-import { useCoNFTDataQuery } from '../../../hooks/queries/useCoNftDataQuery'
 import { usePoolsQuery } from '../../../hooks/queries/usePoolsQuery'
 import { useGetOverview } from '../../../hooks/queries/useGetOverview'
-import { useMediaQuery } from 'react-responsive'
 import { Link } from 'react-router-dom'
+import ComingSoonBackground from '../../../assets/images/home/coming-soon.png'
+
 import {
   DescriptionText,
   HeaderContainer,
@@ -14,7 +14,8 @@ import {
   RainbowButton,
   StyledCountUp,
   RightArea,
-  Wrapper
+  Wrapper,
+  Background
 } from './index.styles'
 import { Box, Button } from '@mui/material'
 import DefaultPageWrapper from '../../../components/default-page-wrapper'
@@ -31,6 +32,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/autoplay'
 import CustomizeButton from '../../../contexts/theme/components/Button'
 import Text from '../../../contexts/theme/components/Text/Text'
+import { PoolsListData } from '../../../types/coNFT'
 
 export const LeftTop = styled.div`
   width: 100%;
@@ -47,14 +49,12 @@ export const Banner = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   
   img {
     width: 100%;
     height: 90%;
     object-fit: contain;
     border-radius: 10px;
-    position: relative;
   } 
   
 `
@@ -95,7 +95,6 @@ const Header: React.FC = () => {
       <Swiper
         pagination={{ dynamicBullets: true }}
         modules={[Pagination, Autoplay]}
-        className={'styled-swiper'}
         autoplay={{
           delay: 8000,
           disableOnInteraction: false,
@@ -215,7 +214,7 @@ const Header: React.FC = () => {
                 <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center', }}>
                   {
                     hypeteenData ? (
-                      <div style={{ display: 'flex', alignItems: 'baseline',   }}>
+                      <div style={{ display: 'flex', alignItems: 'baseline',  justifyContent:'center'  }}>
                         <StyledCountUp
                           end={hypeteenData?.created ? hypeteenData?.created : '---'}
                           duration={2}
@@ -272,11 +271,38 @@ const CoNftPage: React.FC = () => {
     current: 1
   })
 
+  const mockComingSoon = [
+    {
+      'image': ComingSoonBackground,
+      'name': 'Coming soon',
+      'describe': 'HypeTeen is the first CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen.',
+      'nfts': '0',
+      'minters': '0',
+      'status': 'Coming soon',
+      'artistId': '0',
+      artistName: '----'
+    },
+    {
+      'image': ComingSoonBackground,
+      'name': 'Coming soon',
+      'describe': 'HypeTeen is the first CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen.',
+      'nfts': '0',
+      'minters': '0',
+      'status': 'Coming soon',
+      'artistId': '0',
+      artistName: '----'
+    }
+  ]
+
   return (
-    <DefaultPageWrapper>
-      <Header  />
-      <PoolList poolsList={poolsList?.records} />
-    </DefaultPageWrapper>
+    <>
+      <Background>
+        <Header  />
+      </Background>
+      <DefaultPageWrapper>
+        <PoolList poolsList={mockComingSoon} />
+      </DefaultPageWrapper>
+    </>
   )
 
 }

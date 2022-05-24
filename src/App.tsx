@@ -11,10 +11,10 @@ import { Box, styled } from '@mui/material'
 import useEagerConnect from './hooks/useEagerConnect'
 import AppFooter from './layout/AppFooter'
 import Flex from './contexts/theme/components/Box/Flex'
-import Sticky from 'react-sticky-el'
 import { zIndex } from 'styled-system'
 import useSignLogin from './hooks/useSignLogin'
 import Cookies from 'js-cookie'
+import { StickyContainer,Sticky } from 'react-sticky'
 
 export const BlueGlow = styled('div')`
   position: fixed;
@@ -57,59 +57,47 @@ const App: React.FC = () => {
   }, [location.pathname])
 
   return (
-    <div className="app">
-      <div className="border" >
+    <StickyContainer>
+      <div className="app">
+        <div className="border" >
 
-        {
-          !isMobile ? (
+          <>
+            <Sticky>
+              {({ style, isSticky }) => (
+                <div style={{ ...style, zIndex:20 }}>
+                  <AppHeader />
+                </div>
+              )}
+            </Sticky>
             <Flex flexDirection={'column'} minHeight={'100vh'}>
 
-              <AppHeader />
-              <Box   sx={{  width:'100vw', backgroundColor:'rgb(10,5,35)', zIndex:'auto', position:'relative', top:'60px' }}>
+              <Box   sx={{  width:'100vw', backgroundColor:'rgb(10,5,35)' }}>
                 {/*<PurpleGlow style={{ right: '0' }} />*/}
                 {/*<PurpleGlow style={{ left: '25%' }} />*/}
                 {/*<PurpleGlow style={{ top:'90vh', right: '0%', opacity:'.6', width:'600px', height: '600px' }} />*/}
                 {/*<BlueGlow style={{ right: '25%' }} />*/}
                 {/*<BlueGlow style={{ top:'60vh' }} />*/}
                 {/*<BlueGlow style={{ top:'80vh', right: '30%', opacity:'.6', width:'400px', height: '400px' }} />*/}
-                <Box>
-                  {
-                    routes.map(({ exact = true, path, component }) => (
-                      <Route
-                        path={path}
-                        exact={exact}
-                        component={component}
-                        key={path}
-                      />
+                {
+                  routes.map(({ exact = true, path, component }) => (
+                    <Route
+                      path={path}
+                      exact={exact}
+                      component={component}
+                      key={path}
+                    />
 
-                    ))
-                  }
-                </Box>
+                  ))
+                }
               </Box>
               {/*<AppFooter />*/}
 
             </Flex>
-          ) : (
-            <>
-              <AppHeader />
-              <Box  sx={{ width:'100vw', backgroundColor:'rgb(10,5,35)', position:'relative', minHeight:'100vh', }}>
-                {
-                  routes.map(({ exact = true, path, component }) => (
-                    <Route
-                      exact={exact}
-                      path={path}
-                      component={component}
-                      key={path}
-                    />
-                  ))
-                }
-              </Box>
-              {/*<AppBottomNavigation />*/}
-            </>
-          )
-        }
+          </>
+
+        </div>
       </div>
-    </div>
+    </StickyContainer>
   )
 }
 

@@ -5,14 +5,14 @@ export const BlogsContainer = styled('div')`
   border: 1px ${({ theme }) => theme.palette.secondary.main} solid;
   background-color: ${({ theme }) => theme.palette.background.paper} ;
   border-radius: 10px;
-  margin-top: 30px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   flex-direction: column;
   width: 100%;
   padding: 20px;
-  
+  margin-bottom: 30px;
+
 `
 
 export const UserInfoRow = styled('div')`

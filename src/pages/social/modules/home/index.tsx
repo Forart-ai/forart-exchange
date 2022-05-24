@@ -62,6 +62,7 @@ const PostArea = styled('div')`
   justify-content: space-between;
   align-items: flex-end;
   padding: 10px 20px;
+  margin-bottom: 30px;
 `
 
 const StyledTextarea = styled(TextareaAutosize)`
