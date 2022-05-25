@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useWhiteListQuery } from '../../../../../hooks/programs/useWhiteList'
 import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
 import CharacterCustomize from '../../../../personal/modules/characterCustomize'
@@ -14,6 +14,7 @@ import useStorageCheck from '../../../../../hooks/useStorageCheck'
 import { Keypair } from '@solana/web3.js'
 import { ArtistKit, useArtistKitsQuery } from '../../../../../hooks/queries/useArtistKitsQuery'
 import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
+import Countdown, { CountdownRendererFn } from 'react-countdown'
 
 const Operation = styled('div')`
   width: 100%;
@@ -30,10 +31,49 @@ const Operation = styled('div')`
   }
 `
 
+const StyledCountdown = styled('div')`
+  color: ${({ theme }) => theme.palette.secondary.light};
+  font-size: 22px;
+  font-family: Aldrich-Regular;
+  margin-top: 30px;
+`
+
+const renderer: CountdownRendererFn = ({ hours, minutes, seconds, completed }) => {
+  if (completed) {
+    // Render a complete state
+    return <StyledCountdown />
+  } else {
+    // Render a countdown
+    return (
+      <StyledCountdown>
+        {hours}:{minutes}:{seconds}
+      </StyledCountdown>
+    )
+  }
+}
+
 const IdentifyCreate: React.FC = () => {
   const artistId = useLocationQuery('artistId')
   const { data, isFetching, error } = useWhiteListQuery()
   const { data: artistKit } = useArtistKitsQuery(artistId)
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
+
+  const endTime = 1653472800000
+
+  const countdown = useMemo(() => {
+    if (Date.now() > endTime ) {
+      console.log('later')
+      return undefined
+    }
+
+    return endTime
+  }, [data])
+
+  useEffect(() => {
+    if (Date.now() > endTime) {
+      setButtonDisabled(true)
+    }
+  }, [countdown,data])
 
   const { openModal } = useModal()
 
@@ -120,7 +160,7 @@ const IdentifyCreate: React.FC = () => {
           {
             data !== '0' ? (
               <CustomizeButton
-                disabled={!data}
+                disabled={!data || buttonDisabled}
                 size={'large'}
                 variant={'contained'}
                 color={'secondary'}
@@ -135,6 +175,9 @@ const IdentifyCreate: React.FC = () => {
             )
           }
         </Box>
+        {
+          countdown && <Countdown renderer={renderer} onComplete={() => setButtonDisabled(true)} date={countdown} />
+        }
       </Operation>
     </Box>
 
