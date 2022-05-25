@@ -27,6 +27,10 @@ const RankingContent = styled('div')`
   position: absolute;
   right: 0;
   width: 500px;
+  
+  ${({ theme }) => theme.breakpoints.down('xl')} {
+    display: none;
+  }
 `
 
 const NftChatroom: React.FC = () => {

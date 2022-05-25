@@ -31,8 +31,8 @@ export const MenuContainer = styled('div')`
    min-height: 100vh;
    width: 300px;
    border-right: 1px ${({ theme }) => theme.palette.secondary.light} solid;
-   position: relative;
    left: 0;
+  height: 100%;
 `
 
 export const StyledMenuList = styled('div')`

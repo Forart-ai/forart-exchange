@@ -22,10 +22,12 @@ const BoxContainer = styled('div')`
   overflow: hidden;
   grid-template-columns: repeat(auto-fill, 110px);
   justify-content: space-between;
-  grid-gap: 10px;
   user-select: none;
+  grid-gap: 10px;
   width: 100%;
-  
+  min-height: 150px;
+
+
   ${({ theme }) => theme.breakpoints.down('xl')} {
     grid-template-columns: repeat(4, 110px);
     overflow: visible;

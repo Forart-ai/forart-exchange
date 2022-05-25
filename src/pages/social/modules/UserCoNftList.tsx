@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination } from 'swiper'
 import { MintedNFTItem } from '../../../types/coNFT'
 import Wrapper from '../../../contexts/theme/components/Image/Wrapper'
-import { Checkbox } from '@mui/material'
+import { Checkbox, useMediaQuery, useTheme } from '@mui/material'
 import Image from '../../../contexts/theme/components/Image'
 import Flex from '../../../contexts/theme/components/Box/Flex'
 import { styled } from '@mui/system'
@@ -50,7 +50,8 @@ export const NFTItem: React.FC<{ src: ShowCoNftParams, checked?: boolean, onSele
 
 const UserCoNftList:React.FC<{selectedValue?:ShowCoNftParams, onSelect:(_: ShowCoNftParams) => void, list?: MintedNFTItem[]}> =({ selectedValue,onSelect,list }) => {
   const { account } = useSolanaWeb3()
-
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('xl'))
   const coNftList = useMemo(() => {
 
     return list?.map((item:MintedNFTItem) => ({
@@ -61,7 +62,7 @@ const UserCoNftList:React.FC<{selectedValue?:ShowCoNftParams, onSelect:(_: ShowC
   }, [list])
   return (
     <Swiper
-      slidesPerView={5}
+      slidesPerView={isMobile ? 2 : 5}
       spaceBetween={10}
       pagination={{ clickable: true }}
       modules={[Pagination]}

@@ -15,11 +15,9 @@ const Wrapper = styled('div')`
   padding: 15px;
   display: flex;
   align-items: center;
-  height: auto;
 
   ${({ theme }) => theme.breakpoints.down('md')} {
     height: auto;
-
   }
  
 `

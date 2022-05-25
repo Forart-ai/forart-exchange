@@ -1,5 +1,5 @@
 import { styled } from '@mui/system'
-import { Box, TextareaAutosize } from '@mui/material'
+import { Box, TextareaAutosize, useMediaQuery, useTheme } from '@mui/material'
 import { useSolanaWeb3 } from '../../../../contexts/solana-web3'
 import React, { useCallback, useEffect, useState } from 'react'
 import { SOCIAL_API } from '../../../../apis/auth'
@@ -25,6 +25,11 @@ export const SocialPageWrapper = styled('div')`
   justify-content: space-between;
   position: relative;
   padding: 60px 0;
+
+  ${({ theme }) => theme.breakpoints.down('xl')} {
+    justify-content: center 
+  }
+  
 `
 
 export const MainMessageArea = styled('div')`

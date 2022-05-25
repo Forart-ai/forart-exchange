@@ -41,8 +41,9 @@ export const useWalletRankModal = () => {
 
   const [loading, setLoading] = useState<boolean>(false)
   const [total, setTotal] = useState<number>(1)
-  const [page, setPage] = useState<number>(1)
   const [data, setData] = useState<any[]>([])
+
+  const [page, setPage] = useState<number>(1)
   const [searchKey, setSearchKey] = useState<string | number>('')
   const [hasMore, setHasMore] = useState<boolean>(true)
   const [flag, setFlag] = useState(true)

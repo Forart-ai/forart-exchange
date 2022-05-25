@@ -51,19 +51,19 @@ const ReplyList: React.FC= () => {
       {
         replyList?.map((item, index) => (
           <ReplyContainer key={index}>
-            <Flex height={'100%'} width={'100%'} justifyContent={'space-between'} >
-              <StyledAvatar src={item?.avatar} variant={'square'} />
+            <Flex height={'100%'} width={'100%'} justifyContent={'space-between'} flexDirection={'column'} >
               <UserInfoRow>
-                <Flex flexDirection={'column'}>
-                  <Text color={'primary.light'} fontSize={22}>{item?.username}</Text>
-                  <Text color={'secondary.light'} fontSize={18}> {item?.wysiwyg} </Text>
-                </Flex>
+                <StyledAvatar src={item?.avatar} variant={'square'} />
 
-                <Flex width={'100%'} mt={'20px'} alignItems={'center'} justifyContent={'space-between'}>
-                  <DateText>{ moment(item.createAt).format('MMMM'+' DD,'+ ' YYYY' )}</DateText>
-                </Flex>
+                <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
+
               </UserInfoRow>
+
+              <Text color={'secondary.light'} fontSize={18}> {item?.wysiwyg} </Text>
+
             </Flex>
+            <DateText>{ moment(item.createAt).format('MMMM'+' DD,'+ ' YYYY' )}</DateText>
+
           </ReplyContainer>
         ))
       }

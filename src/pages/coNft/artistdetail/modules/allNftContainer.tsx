@@ -10,6 +10,8 @@ import { Box, Button, List, ListItem, MenuItem, styled } from '@mui/material'
 import { SelectPainterRankings, SelectRankings } from '../../components/filter-operations/selectors'
 import StyledTextField from '../../../../contexts/theme/components/TextField'
 import CustomizeButton from '../../../../contexts/theme/components/Button'
+import CreateRankModal from '../../components/modals/rank/create-rank-modal'
+import { useModal } from '../../../../contexts/modal'
 
 const Filter = styled('div')`
   display: flex;
@@ -87,6 +89,7 @@ const AllNftContainer: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const series = useLocationQuery('artistId')
   const [hasMore, setHasMore] = useState<boolean>(true)
+  const { openModal } =   useModal()
 
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
@@ -172,7 +175,7 @@ const AllNftContainer: React.FC = () => {
             onChange ={(res:any) => onChange(res)}
             variant={'outlined'}
           />
-          <CustomizeButton sx={{ marginLeft: '20px', padding:'0 5px' }} variant={'contained'} color={'secondary'}  onClick={ ()=>{} }>Creator Ranking</CustomizeButton>
+          <CustomizeButton sx={{ marginLeft: '20px', padding:'0 5px' }} variant={'contained'} color={'secondary'}  onClick={ ()=>{openModal(<CreateRankModal />)} }>Creator Ranking</CustomizeButton>
         </Box>
       </Filter>
 
