@@ -51,6 +51,9 @@ export const StyledMenuItem = styled('div')<{$path?: string}>`
   justify-content: flex-start;
   padding-left: 20px;
   opacity: .34;
+  position: relative;
+  overflow: hidden;
+  
   ${getStyleByPath}
 
   
@@ -68,8 +71,10 @@ export const SelectedMenuItem = styled('div')<{$path?: string}>`
   animation-name: rubberBand;
   animation-duration: 1s;
   animation-fill-mode: both;
-  
-  
+  position: relative;
+  overflow: hidden;
+
+
   @keyframes rubberBand {
     from {
       transform: scale3d(1, 1, 1);
@@ -127,10 +132,17 @@ const StyledSvgIcon = styled('div')`
   font-size: 40px;
   margin-right: 10px;
   color: white;
-  background: rgba(42, 46, 53, 0.42);
+  background: rgba(0, 0, 0, 0.2);
   width: 42px;
   height: 42px;
   border-radius: 50%;
+`
+
+const BlurredIcon = styled('div')`
+  position: absolute;
+  opacity: .6;
+  right: -10px;
+  top: 4px;
 `
 
 export const GamePageSidebar: React.FC = () => {
@@ -144,36 +156,47 @@ export const GamePageSidebar: React.FC = () => {
           <Sticky>
             {
               ({ style, isSticky=true }) => (
-
                 <div style={{ ...style, marginTop: isSticky ? '60px' : 0  }}>
                   {
                     gameRoutes.map((route, index) => {
                       return (
-
                         <Link to={`/game/${route.path}`}  key={index}>
                           <StyledMenuList >
                             {
                               pathname === `/game/${route.path}` ? (
                                 <SelectedMenuItem $path={route.title.toString()}>
-                                  <StyledSvgIcon>{route.icon && <route.icon />}</StyledSvgIcon>
-                                  <Text fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>{route.title}</Text>
+                                  <StyledSvgIcon>
+                                    { route.icon && <route.icon height={20} width={20} /> }
+                                  </StyledSvgIcon>
+
+                                  <Text fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>
+                                    { route.title }
+                                  </Text>
+                                  <BlurredIcon >
+                                    { route.icon && <route.icon height={64} width={64} /> }
+                                  </BlurredIcon>
                                 </SelectedMenuItem>
                               ) :
                                 <StyledMenuItem $path={route.title} >
-                                  <StyledSvgIcon>{route.icon && <route.icon />}</StyledSvgIcon>
-                                  <Text fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>{route.title}</Text>
+                                  <StyledSvgIcon>
+                                    { route.icon && <route.icon height={20} width={20} /> }
+                                  </StyledSvgIcon>
+
+                                  <Text fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>
+                                    { route.title }
+                                  </Text>
+
+                                  <BlurredIcon >
+                                    { route.icon && <route.icon height={64} width={64} /> }
+                                  </BlurredIcon>
                                 </StyledMenuItem>
                             }
-
                           </StyledMenuList >
-
                         </Link>
-
                       )
                     })
                   }
                 </div>
-
               )
             }
 

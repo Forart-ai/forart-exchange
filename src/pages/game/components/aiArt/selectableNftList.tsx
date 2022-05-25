@@ -65,8 +65,8 @@ const SelectableNFTList: React.FC<{selectedValue:string, onSelect:(_: string) =>
 
     <Swiper
       modules={[Pagination]}
-      slidesPerView={isMobile? 1 : 6}
-      spaceBetween={20}
+      slidesPerView={isMobile? 1 : 5}
+      spaceBetween={4}
       pagination={{
         clickable: true,
       }}

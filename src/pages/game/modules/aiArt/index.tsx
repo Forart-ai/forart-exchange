@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useStyledNFTsQuery } from '../../../../hooks/queries/useStyledNFTsQuery'
 
-import BannerImage from '../../../../assets/images/AIGen/ai-gen-banner.jpg'
+import BannerImage from '../../../../assets/images/game/aiart-banner.webp'
 import Merge from '../../../../assets/images/aiGenerator/merge.png'
 import Add from '../../../../assets/images/aiGenerator/add.png'
 import RightArrow from '../../../../assets/images/aiGenerator/arrow-right.png'
 import StyleEx from '../../../../assets/images/aiGenerator/styleEx.png'
 import ContentEx from '../../../../assets/images/aiGenerator/contentEx.png'
 import ResultEx from '../../../../assets/images/aiGenerator/resultEx.png'
-import Shadow from '../../../../assets/images/aiGenerator/shadow.png'
+import GenerateBackground from '../../../../assets/images/game/generate-background.png'
 import { aiGeneratorStyle } from '../../../../apis/ai'
 import { base64ToIPfsUri } from '../../../../utils'
 import { useHistory } from 'react-router-dom'
@@ -32,15 +32,14 @@ import CustomizedSlider from '../../../../contexts/theme/components/Slider'
 
 const Wrapper = styled('div')`
   width: 100%;
- 
   margin-bottom: 300px;
 
 `
 
 const PageWrapper = styled('div')`
-  max-width: 1870px;
+  max-width: 1820px;
   width: 95%;
-  min-height: 100vh;
+  min-height: 100vh; 
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -71,7 +70,7 @@ const Introduction = styled('div')`
 
 const Banner = styled('div')`
   width: 100%;
-  height: 250px;
+  height: 340px;
   border-radius: 10px;
   
   img {
@@ -307,10 +306,6 @@ const AiArt:React.FC = () => {
   },[coNftList])
 
   useEffect(() => {
-    console.log(styleContent)
-  }, [styleContent])
-
-  useEffect(() => {
     if (contentType === 'co-nft'){
       setList( coNftContent?.map((item: { image: any}) => item?.image))
     }
@@ -380,11 +375,12 @@ const AiArt:React.FC = () => {
 
         </Box>
 
-        <Flex alignItems={'center'} justifyContent={'space-between'} >
+        <Flex alignItems={'center'} justifyContent={'center'} >
           <Flex flexDirection={'column'}>
             <SelectedNFT content={content} />
             <SelectedNFT content={style} />
           </Flex>
+          <img   src={GenerateBackground} />
           <NewNFTContainer aiNftUri={aiNft} generating={loading} />
         </Flex>
 
