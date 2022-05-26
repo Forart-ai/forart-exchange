@@ -11,18 +11,16 @@ const useEagerConnect = () => {
 
   useEffect(() => {
     (async () => {
-
       if (wallet === SUPPORT_WALLETS.Phantom.name) {
         await sleep(1000)
-
         const solana = (window as any).solana
-
         solana?.connect({ onlyIfTrusted: true })
           .then(() => {
             setEagerConnected(true)
           })
           .catch(() => {})
       }
+
     })()
   }, [wallet])
 

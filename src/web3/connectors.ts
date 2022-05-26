@@ -64,7 +64,7 @@ export const supportWallets: WalletType[] = [
     chainType: 'solana'
   },
   {
-    name: 'Slop',
+    name: 'Slope',
     icon: SlopeWallet,
     adapter: SlopeWalletAdapter,
     chainType: 'solana'

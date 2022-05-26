@@ -54,7 +54,6 @@ const CreateRankModal:React.FC = () => {
     }
     CONFT_API.core.nft.getWalletRank(series, page, searchKey )
       .then((res:any) => {
-        console.log(res)
         setData( res.map((item:any, index: number) => ({
           key: index,
           wallet: item.wallet,

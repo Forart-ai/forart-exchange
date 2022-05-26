@@ -18,13 +18,13 @@ const Footer = styled('div')`
   display: flex;
   justify-content: center;
   background-color: rgb(10,5,35);
-  top: 60px;
+  padding: 10px 0;
 `
 
 const FooterContainer = styled('div')`
   height: 100%;
   background-color: #5000B4;
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,6 +37,11 @@ const FooterContainer = styled('div')`
     margin-top: 20px;
     color: #999999;
   }
+  
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    padding: 0 10px;
+    width: 95vw;
+  }
 `
 
 const Info = styled('div')`
@@ -46,24 +51,42 @@ const Info = styled('div')`
   align-items: center;
   padding: 25px 0;
   border-bottom: 1px #8246F5 solid;
+  
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    flex-direction: column;
+  }
 `
 
 const LeftArea = styled('div')`
-    display: flex;
+  display: flex;
   justify-content: center;
   flex-direction: column;
   height: 100px;
-  width: 50%;
   
-  img {
+  .logo {
     width: 140px;
-    margin-bottom: 10px;
+    img {
+      width: 100%;
+      margin-bottom: 10px;
+    }
   }
   
   span {
     color: #50DCB4;
     font-size: 16px;
     font-family: KronaOne-Regular;
+  }
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    flex-direction: row;
+    justify-content: space-between;
+    height: 80px;
+
+
+    span {
+      font-size: 14px;
+      text-align: right;
+    }
   }
 `
 
@@ -72,6 +95,9 @@ const RightArea = styled('div')`
   display: flex;
   justify-content: flex-end;
   
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    justify-content: center;
+  }
 `
 
 const SCExternalLink = styled('a')`
@@ -93,7 +119,7 @@ const AppFooter:React.FC = () => {
       <FooterContainer>
         <Info >
           <LeftArea >
-            <img src={Logo} />
+            <div className={'logo'}> <img src={Logo} /></div>
             <span>The First AI-powered Social NFT</span>
           </LeftArea>
           <RightArea >

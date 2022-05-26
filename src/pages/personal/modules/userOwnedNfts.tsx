@@ -24,12 +24,13 @@ const NFTItemsContainer = styled('div')`
   height: 300px;
   border-radius: 20px;
   position: relative;
-  background-color: #28005A;
+  background-color: rgba(255,255,255,0.1);
   font-family: Arial;
   display: flex;
   align-items: center;
   flex-direction: column;
   padding: 20px;
+  border: 1px #999999 solid;
 `
 
 const ImageContainer = styled('div')`

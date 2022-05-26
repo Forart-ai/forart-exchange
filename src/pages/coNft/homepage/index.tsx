@@ -33,6 +33,7 @@ import 'swiper/css/autoplay'
 import CustomizeButton from '../../../contexts/theme/components/Button'
 import Text from '../../../contexts/theme/components/Text/Text'
 import { PoolsListData } from '../../../types/coNFT'
+import AppFooter from '../../../layout/AppFooter'
 
 export const LeftTop = styled.div`
   width: 100%;
@@ -302,6 +303,8 @@ const CoNftPage: React.FC = () => {
       <DefaultPageWrapper>
         <PoolList poolsList={mockComingSoon} />
       </DefaultPageWrapper>
+      <AppFooter />
+
     </>
   )
 

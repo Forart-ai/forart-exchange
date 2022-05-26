@@ -64,6 +64,7 @@ const routes: Route[] = [
   },
   {
     path: '/social',
+    match: /^\/social/,
     title: 'Social NFT',
     exact: false,
     icon: ChatIcon,
@@ -86,6 +87,7 @@ const routes: Route[] = [
   {
     path: '/game',
     title:'Game',
+    match: /^\/game/,
     exact: false,
     component: Game,
     icon: MarketplaceIcon,

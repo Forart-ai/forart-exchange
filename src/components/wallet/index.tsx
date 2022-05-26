@@ -20,7 +20,7 @@ const StyledWallet = styled('div')`
   padding: 0 10px;
   //margin-right: 20px;
   cursor: pointer;
-  min-width: 120px;
+  min-width: 160px;
   padding: 0 10px;
 font-family: Kanit-Regular;
   font-size: 16px;

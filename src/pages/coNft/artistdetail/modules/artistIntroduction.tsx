@@ -3,7 +3,7 @@ import { useMediaQuery } from 'react-responsive'
 
 import {  ThemeProvider } from '@mui/material'
 import ForartTheme from '../../../../contexts/theme/config/dark'
-import { useArtistKitQuery } from '../../../../hooks/queries/useArtistKitQuery'
+import { useArtistKitsQuery } from '../../../../hooks/queries/useArtistKitsQuery'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 
 import HypeteenDetail from './hypeteen/hypeteenDetail'

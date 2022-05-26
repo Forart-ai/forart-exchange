@@ -14,6 +14,7 @@ export const HeaderContainer = styled('div')`
   ${({ theme }) => theme.breakpoints.down('md')} {
     flex-direction: column;
     margin: unset;
+    height: fit-content;
   }
 `
 

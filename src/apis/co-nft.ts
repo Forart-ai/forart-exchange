@@ -14,7 +14,7 @@ const CONFT_API = {
       getBodyComponent(param: NFTComponentRequest){
         return Service.post('nft/component/find', param)
       },
-      getArtistAssembler(id:number | string | undefined) {
+      getArtistAssembler(id: number | string | undefined) {
         return Service.post(`nft/component/find/series/${id}`)
       },
 

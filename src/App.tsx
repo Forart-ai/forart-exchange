@@ -90,7 +90,6 @@ const App: React.FC = () => {
                   ))
                 }
               </Box>
-              {/*<AppFooter />*/}
 
             </Flex>
           </>

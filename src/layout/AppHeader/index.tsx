@@ -12,6 +12,7 @@ import { Box, Divider, Drawer, List, ListItem, styled } from '@mui/material'
 import DrawerIcon from '../../assets/images/siderIcon/drawer.svg'
 import Button from '@mui/material/Button'
 import Sticky from 'react-sticky-el'
+import { RouterArrow_Filled } from './svgs'
 
 const AppHeaderContent = styled('div')`
   width: 100%;
@@ -68,21 +69,25 @@ export const NavLinkText = styled('div')`
   font-family: Kanit-Regular;
   font-size: 16px;
   letter-spacing: 1px;
-  padding: 5px 12px;
   margin: 0 10px;
   min-width: 120px;
+  position: relative;
 
   .selected {
     color: #85fcd0;
-    
+  }
   
+  .icon {
+    position: absolute;
+    left: calc(50% - 7px);
+    top: 18px;
   }
 
-  :hover:not(.active) {
-    color: #4fc89f;
-    background-color: rgb(53, 8, 108);
-    border-radius: 10px;
-  }
+  //:hover:not(.active) {
+  //  color: #4fc89f;
+  //  background-color: rgb(53, 8, 108);
+  //  border-radius: 10px;
+  //}
 `
 
 export const DisableNav = styled('div')`
@@ -110,27 +115,32 @@ const DrawerHeader = styled('div')`
     height: 100%;
   }
 `
-const MobileNavItem = styled('div')`
+
+const SidebarListContainer  = styled('div')`
+  height: 50px;
+  margin-bottom: 20px;
+  width: 100%;
+  color: white;
+  font-family: Kanit-Regular;
+`
+
+const SelectedMobileNavItem = styled('div')`
   font-size: 16px;
   width: 100%;
-  margin-bottom: 35px;
-
-  .selected {
     border: 1px #8246F5 solid;
     border-radius: 30px;
     background-color: rgba(91, 3, 192, 0.27);
     padding: 10px;
-    color: #ffffff;
-  }
+    color: white;
+  font-family: Kanit-Regular;
+`
 
-  .disabled {
-    color: #999999;
+const MobileNavItem = styled('div')`
+  font-size: 16px;
+  width: 100%;
+  border-radius: 30px;
+  padding: 10px;
 
- }
-  .normal {
-    color: #ffffff;
-    width: 100%;
-  }
 
 `
 
@@ -182,26 +192,21 @@ const DrawerList:React.FC = () => {
       <List sx={{ padding:'30px 20px', width: '100%' }}>
         {
           routes.filter(route => !route.hidden).map((route: Route, index) => {
-            return route.disable ? (
-              <MobileNavItem key={index}>
-                <div className={'disabled'}> {route.title} </div>
-              </MobileNavItem>
-            ): (
-              pathname === route.path ? (
-                <MobileNavItem key={index} >
-                  <Link  to={route.path}>
-                    <div className={'selected'}  > {route.title}</div>
-                  </Link>
-                </MobileNavItem>
-              ): (
-                <MobileNavItem key={index}>
-                  <Link to={route.path}>
-                    <div className={'normal'}> {route.title} </div>
-                  </Link>
-                </MobileNavItem>
-              )
-            )
-          })
+            return (
+              <Link to={route.path} key={index}>
+                <SidebarListContainer>
+                  {
+                    pathname === route.path || route.match?.test(pathname) ? (
+                      <SelectedMobileNavItem> { route.title }</SelectedMobileNavItem>
+                    ) : (
+                      <MobileNavItem> {route.title} </MobileNavItem>
+                    )
+                  }
+                </SidebarListContainer>
+              </Link>
+
+            )}
+          )
         }
 
       </List>
@@ -278,9 +283,10 @@ const AppHeader:React.FC  = () => {
                           to={route.path}
                         >
                           {
-                            pathname === route.path? (
+                            pathname === route.path || route.match?.test(pathname) ? (
                               <NavLinkText >
                                 <div className={'selected'}> {route.title}</div>
+                                <div className={'icon'}><RouterArrow_Filled /></div>
                               </NavLinkText>
                             ):
                               (
