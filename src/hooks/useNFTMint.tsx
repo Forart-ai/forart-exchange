@@ -5,12 +5,10 @@ import styled from 'styled-components'
 import CONFT_API from '../apis/co-nft'
 import { useHistory } from 'react-router-dom'
 import { NFTAttributesData } from '../types/coNFT'
-import { Alert, Box } from '@mui/material'
+import { Box } from '@mui/material'
 import { Keypair, LAMPORTS_PER_SOL, Transaction } from '@solana/web3.js'
 import useCandyMachine from './programs/useCandyMachine'
 import Dialog from '../contexts/theme/components/Dialog/Dialog'
-import { useRefreshController } from '../contexts/refresh-controller'
-import { ClipLoader } from 'react-spinners'
 import { useConnectionConfig } from '../contexts/solana-connection-config'
 import BigNumber from 'bignumber.js'
 import { PainterCandyMachineAddress } from './programs/useCandyMachine/helpers/constant'
@@ -58,11 +56,27 @@ const MintSuccessDialog = () => {
   )
 }
 
+function serialExecute(tasks: Array<Promise<any>>): Promise<any> {
+  return tasks.reduce(
+    (previousPromise, currentPromise) => previousPromise.then(resultList => {
+      return new Promise(resolve => {
+        currentPromise.then(result => {
+          console.log(result)
+          resolve(resultList.concat(result))
+        }).catch(() => {
+          resolve(resultList.concat(null))
+        })
+      })
+    }),
+    Promise.resolve([])
+  )
+}
+
 const useNFTMint = () => {
   const { account, adapter } = useSolanaWeb3()
   const { provider } = useAnchorProvider()
   const { builtMintTransaction } = useCandyMachine()
-  const { openModal, closeModal } = useModal()
+  const { openModal } = useModal()
 
   const [loading, setLoading] = useState<boolean>(false)
   const [message, setMessage] = useState<string>('')
@@ -70,13 +84,13 @@ const useNFTMint = () => {
 
   const { connection } = useConnectionConfig()
 
-  const [rawTransaction, setRawTransaction] = useState<Transaction>()
+  const [rawTransactions, setRawTransactions] = useState<Transaction[]>()
   const [intervalId, setIntervalId] = useState<any>()
   const [createResult, setCreateResult] = useState<ExtractPromise<ReturnType<typeof CONFT_API.core.nft.nftCreate>>>()
   const [createdMint, setCreatedMint] = useState<Keypair>()
 
   useEffect(() => {
-    if (!rawTransaction || !intervalId || !createResult || !account || remainTime === undefined) return
+    if (!rawTransactions || !intervalId || !createResult || !account || remainTime === undefined) return
 
     if (remainTime <= 0) {
       setMessage('No time left. The transaction will not be sent')
@@ -84,19 +98,20 @@ const useNFTMint = () => {
       return
     }
 
-    connection.sendRawTransaction(rawTransaction.serialize())
-      .then(signature => {
+    serialExecute(rawTransactions.map(raw => connection.sendRawTransaction(raw.serialize())))
+      .then(() => {
         clearInterval(intervalId)
         setIntervalId(undefined)
         return CONFT_API.core.nft.nftMint({ nft: createResult.nft, wallet: account.toBase58(), mintKey: createResult.mintKey })
       })
       .then(() => openModal(<MintSuccessDialog />))
       .catch(e => {
+        console.error(e)
         setLoading(false)
         setMessage(e.toString())
-        setRawTransaction(undefined)
+        setRawTransactions(undefined)
       })
-  }, [rawTransaction, remainTime, intervalId, createResult, account])
+  }, [rawTransactions, remainTime, intervalId, createResult, account])
 
   const mintNFT = useCallback(
     async (body: NFTAttributesData, kit: NFTAttributesData[], minting?: Minting) => {
@@ -104,7 +119,7 @@ const useNFTMint = () => {
       setLoading(true)
 
       /* pre-check */
-      if (!account) {
+      if (!account || !adapter) {
         setLoading(false)
         throw new Error(' Wallet unconnected ')
       }
@@ -141,7 +156,7 @@ const useNFTMint = () => {
           createdMint || Keypair.generate()
         )
 
-      const { transaction, signers } = await builtMintTransaction(mintKeypair, PainterCandyMachineAddress)
+      const transactions = await builtMintTransaction(mintKeypair, PainterCandyMachineAddress)
 
       try {
         // is NOT re-enter
@@ -174,16 +189,15 @@ const useNFTMint = () => {
           setIntervalId(id)
         }
 
-        transaction.sign(...signers)
-
-        setRawTransaction(
-          await adapter?.signTransaction(transaction)
+        setRawTransactions(
+          await adapter.signAllTransactions(transactions)
         )
       } catch (e: any) {
+        console.error(e)
         setLoading(false)
         setMessage(`Failed to mint: ${e.toString()}`)
       }
-    }, [intervalId, account, connection, provider, createResult, createdMint]
+    }, [adapter, intervalId, account, connection, provider, createResult, createdMint]
   )
 
   return { mintNFT, loading, message, remainTime }

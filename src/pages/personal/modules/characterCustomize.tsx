@@ -10,8 +10,7 @@ import {
 import { NFTPreview } from '../../../components/nft-mint/selectedList'
 import { SelectableKitList } from '../../../components/nft-mint/mintKit'
 import { NFTAttributesData } from '../../../types/coNFT'
-import { useArtistKitQuery } from '../../../hooks/queries/useArtistKitQuery'
-import Sticky from 'react-sticky-el'
+import { ArtistKit, useArtistKitsQuery } from '../../../hooks/queries/useArtistKitsQuery'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -39,20 +38,8 @@ export const TopContainer = styled('div') `
   }
 `
 
-const CharacterCustomize:React.FC<{artistId: string, selected: (_?: any, __?: any) => void}> = ({ artistId, selected }) => {
-  const { data: artistKit } = useArtistKitQuery(artistId)
-
-  const [body, setBody] = useState<NFTAttributesData>(artistKit?.Body[0])
-
-  const [attr, setAttr] = useState<NFTAttributesData[]>([])
-
-  useEffect(()=> {
-    setBody(artistKit?.Body[0])
-  }, [artistKit])
-
-  useEffect(() => {
-    selected(body, attr)
-  },[attr,body])
+const CharacterCustomize: React.FC<{ artistId: string, selected: (body?: ArtistKit, attr?: ArtistKit[]) => void, body?: ArtistKit, attr?: ArtistKit[] }> = ({ artistId, selected, body, attr }) => {
+  const { data: artistKit } = useArtistKitsQuery(artistId)
 
   return (
     <Wrapper >
@@ -75,28 +62,30 @@ const CharacterCustomize:React.FC<{artistId: string, selected: (_?: any, __?: an
           {
             artistKit && (
               <>
-                {
-                  Object.keys(artistKit).filter(item => item === 'Body').map((type,index) => (
-                    <AttrContent key={index}>
-                      <AttrType> {type} </AttrType>
-                      <SelectableKitList
-                        onSelect={v => setBody(v)}
-                        list={artistKit[type]}
-                      />
-                    </AttrContent>
-                  ))
-                }
+                <AttrContent>
+                  <AttrType>Body</AttrType>
+                  <SelectableKitList
+                    selectedValue={body}
+                    onSelect={v => selected(v)}
+                    list={artistKit.Body}
+                  />
+                </AttrContent>
 
                 {
-                  Object.keys(artistKit).filter(item => (item !== 'Body') && (item !== 'Hat') ).map((type,index) => (
+                  Object.keys(artistKit).filter(item => (item !== 'Body') && (item !== 'Hat')).map((type,index) => (
                     <AttrContent key={index}>
                       <AttrType> {type} </AttrType>
                       <SelectableKitList
-                        onSelect={v => setAttr(prev => {
-                          const cloned = [...prev]
-                          cloned[index] = v
-                          return cloned
-                        })}
+                        selectedValue={attr?.[index]}
+                        onSelect={v => {
+                          const cloned = attr ? [...attr] : []
+                          if (v) {
+                            cloned[index] = v
+                          } else {
+                            cloned.splice(index, 1)
+                          }
+                          selected(body, cloned)
+                        }}
                         list={artistKit[type]}
                       />
                     </AttrContent>

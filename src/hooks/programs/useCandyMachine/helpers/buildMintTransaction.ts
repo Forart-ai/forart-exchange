@@ -18,11 +18,7 @@ import { getBalanceLargestTokenAccount } from '../../../../utils'
 
 export type MintResult = string
 
-export async function buildMintTransaction(program: Program, mint: Keypair, candyMachineAddress: PublicKey): Promise<{
-  transaction: Transaction,
-  signers: Signer[]
-}> {
-
+export async function buildMintTransaction(program: Program, mint: Keypair, candyMachineAddress: PublicKey): Promise<Transaction[]> {
   const minterPublicKey = program.provider.wallet.publicKey
   const toPublicKey = program.provider.wallet.publicKey
 
@@ -163,15 +159,18 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
     }),
   )
 
-  const transaction = new Transaction({
-    feePayer: program.provider.wallet.publicKey,
-    recentBlockhash: (await program.provider.connection.getLatestBlockhash()).blockhash
-  })
+  const feePayer = program.provider.wallet.publicKey
+  const recentBlockhash = (await program.provider.connection.getLatestBlockhash()).blockhash
 
-  transaction.add(...[...instructions, ...cleanupInstructions].filter(i => !!i))
+  const transaction = new Transaction({ feePayer, recentBlockhash })
+  transaction.add(...instructions)
+  transaction.sign(...signers)
 
-  return {
+  const cleanUpTransaction = new Transaction({ feePayer, recentBlockhash })
+  cleanUpTransaction.add(...cleanupInstructions)
+
+  return [
     transaction,
-    signers,
-  }
+    cleanUpTransaction
+  ]
 }
