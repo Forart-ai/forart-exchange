@@ -72,12 +72,6 @@ const App: React.FC = () => {
             <Flex flexDirection={'column'} minHeight={'100vh'}>
 
               <Box   sx={{  width:'100vw', backgroundColor:'rgb(10,5,35)' }}>
-                {/*<PurpleGlow style={{ right: '0' }} />*/}
-                {/*<PurpleGlow style={{ left: '25%' }} />*/}
-                {/*<PurpleGlow style={{ top:'90vh', right: '0%', opacity:'.6', width:'600px', height: '600px' }} />*/}
-                {/*<BlueGlow style={{ right: '25%' }} />*/}
-                {/*<BlueGlow style={{ top:'60vh' }} />*/}
-                {/*<BlueGlow style={{ top:'80vh', right: '30%', opacity:'.6', width:'400px', height: '400px' }} />*/}
                 {
                   routes.map(({ exact = true, path, component }) => (
                     <Route

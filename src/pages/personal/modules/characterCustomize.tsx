@@ -18,9 +18,7 @@ const Wrapper = styled('div')`
   margin: 60px 0;
   display: flex;
   justify-content: space-between;
-  flex-direction: column; 
-
-
+  flex-direction: column;
 `
 
 export const TopContainer = styled('div') `

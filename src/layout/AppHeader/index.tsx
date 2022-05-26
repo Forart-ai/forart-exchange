@@ -295,7 +295,6 @@ const AppHeader:React.FC  = () => {
                                 </NavLinkText>
                               )
                           }
-
                         </Link>
                       )
                   })
@@ -307,7 +306,7 @@ const AppHeader:React.FC  = () => {
 
         <Operator>
 
-          <Wallet />
+          { !isMobile && <Wallet />}
 
           {
             isMobile ? (

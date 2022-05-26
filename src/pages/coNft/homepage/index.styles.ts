@@ -138,7 +138,7 @@ export const MainTitle = styled('div')(({ theme }) => ({
   },
 
   [theme.breakpoints.down('xl')]: {
-    fontSize: '30px',
+    fontSize: '28px',
   }
 
 }))

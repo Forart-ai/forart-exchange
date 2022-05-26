@@ -30,27 +30,6 @@ const Operation = styled('div')`
   }
 `
 
-const StyledCountdown = styled('div')`
-  color: ${({ theme }) => theme.palette.secondary.light};
-  font-size: 22px;
-  font-family: Aldrich-Regular;
-  margin-top: 30px;
-`
-
-const renderer: CountdownRendererFn = ({ hours, minutes, seconds, completed }) => {
-  if (completed) {
-    // Render a complete state
-    return <StyledCountdown />
-  } else {
-    // Render a countdown
-    return (
-      <StyledCountdown>
-        {hours}:{minutes}:{seconds}
-      </StyledCountdown>
-    )
-  }
-}
-
 const IdentifyCreate: React.FC = () => {
   const artistId = useLocationQuery('artistId')
   const { data, isFetching, error } = useWhiteListQuery()

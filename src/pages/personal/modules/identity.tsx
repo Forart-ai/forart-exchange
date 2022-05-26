@@ -19,13 +19,20 @@ const Wrapper = styled('div')`
   display: grid;
   justify-content: space-between;
   grid-template-columns: repeat(auto-fill, 260px);
-  grid-template-rows: repeat(auto-fill,  400px);
+  grid-template-rows: repeat(auto-fill, auto);
   grid-gap: 16px;
   padding: 30px 20px;
   margin: 20px 0;
-  min-height: 70vh; 
 
-  @media screen and (max-width: 1100px) {
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    grid-template-columns: repeat(2, 180px);
+    justify-content: center;
+  }
+
+
+  ${({ theme }) => theme.breakpoints.between('sm','md')} {
+    grid-template-columns: repeat(2, 260px);
+
     justify-content: center;
   }
   
@@ -92,11 +99,10 @@ const HistoryContainer = styled('div')`
 `
 
 const NFTItemsContainer = styled('div')`
-  width: 260px;
-  min-height: 350px;
+  width: 100%;
   //border-top-left-radius: 20px;
   //border-top-right-radius: 20px;
-  border-radius: 20px;
+  border-radius: 10px;
   position: relative;
   background-color: #28005A;
   font-family: Arial;
