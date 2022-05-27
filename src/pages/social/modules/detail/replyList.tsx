@@ -53,12 +53,12 @@ const ReplyList: React.FC= () => {
 
     <>
       <Helmet >
-        <meta property="og:title" content="Forart - social co-nft1" />
+        <meta property="og:title" content="Forart - social co-nft2" />
         <meta
           property="og:description"
           content="Forart - monica yehhhh"
         />
-        <meta property="og:url" content={`${process.env.REACT_APP_SITE_URL + history.location.pathname + history.location.search}`} />
+        <meta property="og:url" content={'http://localhost:3000/social/post?id=CMN8qqLutGUnss4xhyYbA7YoLrGbVLrcHQ1JwzwfKKgM_1653637957950'} />
         <meta property="og:image" content={postDetail?.detail?.previewUrl} />
         <meta property="og:site_name" content="Forart" />
         <meta
@@ -77,27 +77,30 @@ const ReplyList: React.FC= () => {
           content="Forart - NFT SaaS For Social"
         />
 
+        <body>
+          {
+            replyList?.map((item, index) => (
+              <ReplyContainer key={index}>
+                <Flex height={'100%'} width={'100%'} justifyContent={'space-between'} flexDirection={'column'} >
+                  <UserInfoRow>
+                    <StyledAvatar src={item?.avatar} variant={'square'} />
+
+                    <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
+
+                  </UserInfoRow>
+
+                  <Text color={'secondary.light'} fontSize={18}> {item?.wysiwyg} </Text>
+
+                </Flex>
+                <DateText>{ moment(item.createAt).format('MMMM'+' DD,'+ ' YYYY' )}</DateText>
+
+              </ReplyContainer>
+            ))
+          }
+        </body>
       </Helmet>
       {postDetail && <Blogs item={postDetail} />}
-      {
-        replyList?.map((item, index) => (
-          <ReplyContainer key={index}>
-            <Flex height={'100%'} width={'100%'} justifyContent={'space-between'} flexDirection={'column'} >
-              <UserInfoRow>
-                <StyledAvatar src={item?.avatar} variant={'square'} />
 
-                <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
-
-              </UserInfoRow>
-
-              <Text color={'secondary.light'} fontSize={18}> {item?.wysiwyg} </Text>
-
-            </Flex>
-            <DateText>{ moment(item.createAt).format('MMMM'+' DD,'+ ' YYYY' )}</DateText>
-
-          </ReplyContainer>
-        ))
-      }
     </>
 
   )
