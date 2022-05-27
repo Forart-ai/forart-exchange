@@ -58,7 +58,7 @@ const ReplyList: React.FC= () => {
           property="og:description"
           content="Forart - monica yehhhh"
         />
-        <meta property="og:url" content={'http://localhost:3000/social/post?id=CMN8qqLutGUnss4xhyYbA7YoLrGbVLrcHQ1JwzwfKKgM_1653637957950'} />
+        <meta property="og:url" content={'https://v1.forart-exchange.pages.dev/social/post?id=CMN8qqLutGUnss4xhyYbA7YoLrGbVLrcHQ1JwzwfKKgM_1653637957950'} />
         <meta property="og:image" content={postDetail?.detail?.previewUrl} />
         <meta property="og:site_name" content="Forart" />
         <meta
