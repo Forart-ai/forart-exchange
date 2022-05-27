@@ -40,7 +40,7 @@ const IdentityPrice:React.FC = () => {
         </Box>
 
         <Box>
-          <RainbowButton disabled={true}>Buy Now</RainbowButton>
+          <RainbowButton disabled={true}>Buy Now!</RainbowButton>
         </Box>
       </Box>
     </Wrapper>
