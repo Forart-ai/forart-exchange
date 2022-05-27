@@ -23,10 +23,11 @@ import 'swiper/css/navigation'
 import { Navigation } from 'swiper'
 import ReactECharts from 'echarts-for-react'
 import { EChartsOption } from 'echarts'
+import { SyncLoader } from 'react-spinners'
 
 const Wrapper = styled('div')`
   width: 100%; 
-  height: 840px;
+  height: auto;
   
 `
 
@@ -40,7 +41,7 @@ const RainbowText = styled('div')`
     font-family: KronaOne-Regular;
   }
 
-  ${({ theme }) => theme.breakpoints.down('sm')} {
+  ${({ theme }) => theme.breakpoints.down('md')} {
     span {
       font-size: 36px;
     }
@@ -48,13 +49,13 @@ const RainbowText = styled('div')`
 `
 
 const LeftContainer = styled('div')`
-  width: 480px;
+  width: 40%;
   margin: 20px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  
-  img {
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
     width: 100%;
   }
 `
@@ -105,10 +106,11 @@ const IdentityContainer = styled('div')`
   height: 100%;
   background-color: ${({ theme }) => theme.palette.background.paper};
   border-radius: 20px;
+  margin-top: 30px;
 
-  ${({ theme }) => theme.breakpoints.down('sm')} {
-   
-  @media screen and (max-width: 1100px) {
+  ${({ theme }) => theme.breakpoints.down('md')} {
+
+    flex-direction: column;
   }
   
 `
@@ -119,7 +121,11 @@ const InfoContainer = styled('div')`
   justify-content: flex-start;
   height: 100%;
   width: 50%;
-  
+
+  ${({ theme }) => theme.breakpoints.down('md')} {
+
+    width: 100%;
+  }
 `
 
 const NFTItem:React.FC<{item?: MetadataResult }> = ({ item }) => {
@@ -138,14 +144,6 @@ const NFTItem:React.FC<{item?: MetadataResult }> = ({ item }) => {
     })
   }, [])
 
-  useEffect(() => {
-    console.log(item)
-  }, [item])
-
-  const { account } = useSolanaWeb3()
-
-  const toDetailUrl = '/nft-detail?mint=' +item?.mint
-
   return (
     <IdentityContainer>
       <LeftContainer>
@@ -157,23 +155,23 @@ const NFTItem:React.FC<{item?: MetadataResult }> = ({ item }) => {
 
       <InfoContainer>
         <TopTitle>
-          <Text fontFamily={'KronaOne-Regular'} fontSize={42} color={'white'}>{item?.data?.name}</Text>
+          <Text  fontFamily={'KronaOne-Regular'} fontSize={'20px'} color={'white'}>{item?.data?.name}</Text>
           <RainbowText > <span>{item?.data?.collection.name}</span> </RainbowText>
         </TopTitle>
 
-        <Box sx={{ margin: 1.4 }}>
+        <Box sx={{ margin: '10px 0',  }}>
           <CustomizedAccordions  expanded={true} title={'Price'}>
             <IdentityPrice />
           </CustomizedAccordions>
         </Box>
 
-        <Box sx={{ margin: 1.4 }}>
+        <Box sx={{ margin: '10px 0' }}>
           <CustomizedAccordions expanded={true} title={'Grade'}>
             <IdentityGrade />
           </CustomizedAccordions>
         </Box>
 
-        <Box sx={{ margin: 1.4 }}>
+        <Box sx={{ margin: '10px 0' }}>
           <CustomizedAccordions expanded={true} title={'Attributes'}>
             <AttributesItemForWalletNft item={item?.data?.attributes } />
           </CustomizedAccordions>
@@ -190,18 +188,30 @@ const Identity:React.FC = () => {
 
   const holds = useOwnedNFTsQuery(new PublicKey('7Gdgp25ghYQyNf6m5nVaxQbCMf2igDVHGStEz7B7vXUM'))
   const { data, isLoading } = holds
-  console.log(data)
+
+  useEffect(() => {
+    console.log(isLoading)
+  }, [isLoading])
 
   return (
     <Wrapper >
       <Swiper navigation={true} modules={[Navigation]}>
 
         {
-          data?.map((nft: any, index: number) => (
-            <SwiperSlide  key={index} >
-              <NFTItem item={nft} />
-            </SwiperSlide>
-          ))
+          isLoading ?
+            (<Box sx={{ marginTop:'30px' }}><SyncLoader size={16} color={'white'} /></Box>)
+            :
+            (
+              <>
+                {
+                  data?.map((nft: any, index: number) => (
+                    <SwiperSlide  key={index} >
+                      <NFTItem item={nft} />
+                    </SwiperSlide>
+                  ))
+                }
+              </>
+            )
         }
 
       </Swiper>

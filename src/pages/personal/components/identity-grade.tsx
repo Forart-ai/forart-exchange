@@ -47,13 +47,13 @@ const IdentityGrade:React.FC = () => {
       <ProgressContainer>
         <Box sx={{ display:'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div className={'label'}> Experience</div>
-          <div className={'value'}> 2700/3600</div>
+          <div className={'value'}> ---/3600</div>
         </Box>
         <Box >
-          <CustomizedProgressBars value={20} />
+          <CustomizedProgressBars value={0} />
         </Box>
       </ProgressContainer>
-      <div className={'level'}>Level.23</div>
+      <div className={'level'}>Level.-</div>
     </Wrapper>
   )
 }

@@ -9,32 +9,27 @@ export interface AttributesListItem {
 
 const Wrapper = styled('div')`
   height: fit-content;
-  overflow: auto;
+  overflow: hidden;
   width: 100%;
 
-  .scroll-container {
-    ::-webkit-scrollbar {
-      display: flex !important;
-      height: 5px;
-    }
-  }
+ 
 `
 
 const BoxContainer = styled('div')`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 145px));
+  grid-template-columns: repeat(auto-fill, 140px);
   justify-content: space-between;
-  grid-template-rows: repeat(3, 80px);
+  grid-template-rows: repeat(auto-fill,   80px);
   grid-gap: 10px;
   width: 100%;
   
-  ${({ theme }) => theme.breakpoints.down('sm')} {
-    grid-template-columns: repeat(3, 110px);
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    grid-template-columns: repeat(auto-fill, 110px);
   }
 `
 
 const ItemBox = styled('div')`
-  height: 100%;
+  height: 80px;
   width: 100%;
   border-radius: 10px;
   background: linear-gradient(60.95deg, #8246F5 2.09%, #5000B4 97.91%);
@@ -113,34 +108,32 @@ export const AttributesItemForWalletNft: React.FC<{ item?: Attribute[] }> = ({ i
 
   return (
     <Wrapper>
-      <ScrollContainer className="scroll-container" hideScrollbars={false}>
-        {
-          item ? (
-            <BoxContainer>
-              {
-                item?.map((items,index) => (
-                  <ItemBox key={index} >
-                    <div className="type"> {items?.trait_type}</div>
-                    <div className="value"> {items?.value}</div>
-                  </ItemBox>
-                ))
-              }
-            </BoxContainer>
-          ) :
+      {
+        item ? (
+          <BoxContainer>
+            {
+              item?.map((items,index) => (
+                <ItemBox key={index} >
+                  <div className="type"> {items?.trait_type}</div>
+                  <div className="value"> {items?.value}</div>
+                </ItemBox>
+              ))
+            }
+          </BoxContainer>
+        ) :
 
-            <BoxContainer>
-              {
-                new Array(9).fill({}).map((_, index) => (
-                  <Skeleton variant={'rectangular'} animation="wave"  key={index} >
-                    <ItemBox />
-                  </Skeleton>
+          <BoxContainer>
+            {
+              new Array(9).fill({}).map((_, index) => (
+                <Skeleton variant={'rectangular'} animation="wave"  key={index} >
+                  <ItemBox />
+                </Skeleton>
 
-                ))
-              }
-            </BoxContainer>
+              ))
+            }
+          </BoxContainer>
 
-        }
-      </ScrollContainer>
+      }
 
     </Wrapper>
 
