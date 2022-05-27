@@ -53,7 +53,7 @@ const ReplyList: React.FC= () => {
 
     <>
       <Helmet >
-        <meta property="og:title" content="Forart - social co-nft2" />
+        <meta property="og:title" content="Forart - social co-nft2.1" />
         <meta
           property="og:description"
           content="Forart - monica yehhhh"
