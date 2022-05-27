@@ -12,7 +12,7 @@ import { usePostDetailQuery } from '../../../../hooks/queries/usePostDetailQuery
 import Blogs from '../blogs/blogs'
 import { MainMessageArea, SocialPageWrapper } from '../home'
 import { Helmet } from 'react-helmet'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 const ReplyContainer = styled('div')`
   min-height: 200px;
@@ -35,7 +35,7 @@ const ReplyList: React.FC= () => {
   const current = parseInt(useLocationQuery('page') ?? '1')
   const postId = useLocationQuery('id')
   const { data: postDetail } = usePostDetailQuery(postId)
-  const history = useLocation()
+  const history = useHistory()
 
   const { data: replyList } = usePostReplyQuery({
     size,
@@ -47,18 +47,18 @@ const ReplyList: React.FC= () => {
     createDay: undefined
   })
 
-  console.log()
+  console.log(`${process.env.REACT_APP_SITE_URL + history.location.pathname + history.location.search}`)
 
   return (
 
     <>
       <Helmet >
-        <meta property="og:title" content="Forart - social co-nft" />
+        <meta property="og:title" content="Forart - social co-nft1" />
         <meta
           property="og:description"
           content="Forart - monica yehhhh"
         />
-        <meta property="og:url" content={`${process.env.REACT_APP_SITE_URL + history.pathname}`} />
+        <meta property="og:url" content={`${process.env.REACT_APP_SITE_URL + history.location.pathname + history.location.search}`} />
         <meta property="og:image" content={postDetail?.detail?.previewUrl} />
         <meta property="og:site_name" content="Forart" />
         <meta
