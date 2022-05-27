@@ -91,9 +91,6 @@ const Header: React.FC = () => {
     artistId: '1024'
   }).toString()
 
-  // const token = useLocalStorage('TOKEN')
-  console.log(history)
-
   return (
 
     <HeaderContainer>

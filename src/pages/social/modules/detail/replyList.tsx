@@ -11,6 +11,8 @@ import { styled } from '@mui/material'
 import { usePostDetailQuery } from '../../../../hooks/queries/usePostDetailQuery'
 import Blogs from '../blogs/blogs'
 import { MainMessageArea, SocialPageWrapper } from '../home'
+import { Helmet } from 'react-helmet'
+import { useLocation } from 'react-router-dom'
 
 const ReplyContainer = styled('div')`
   min-height: 200px;
@@ -33,6 +35,7 @@ const ReplyList: React.FC= () => {
   const current = parseInt(useLocationQuery('page') ?? '1')
   const postId = useLocationQuery('id')
   const { data: postDetail } = usePostDetailQuery(postId)
+  const history = useLocation()
 
   const { data: replyList } = usePostReplyQuery({
     size,
@@ -44,9 +47,37 @@ const ReplyList: React.FC= () => {
     createDay: undefined
   })
 
+  console.log()
+
   return (
 
     <>
+      <Helmet >
+        <meta property="og:title" content="Forart - social co-nft" />
+        <meta
+          property="og:description"
+          content="Forart - monica yehhhh"
+        />
+        <meta property="og:url" content={`${process.env.REACT_APP_SITE_URL + history.pathname}`} />
+        <meta property="og:image" content={postDetail?.detail?.previewUrl} />
+        <meta property="og:site_name" content="Forart" />
+        <meta
+          name="twitter:site"
+          content="@momosama_404"
+        />
+        <meta
+          name="twitter:card"
+          content="summary_large_image"
+        />
+        <meta name="twitter:creator" content="@momosama_404" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta
+          name="description"
+          content="Forart - NFT SaaS For Social"
+        />
+
+      </Helmet>
       {postDetail && <Blogs item={postDetail} />}
       {
         replyList?.map((item, index) => (

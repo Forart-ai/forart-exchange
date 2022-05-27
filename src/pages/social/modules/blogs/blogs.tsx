@@ -15,9 +15,10 @@ import { useRefreshController } from '../../../../contexts/refresh-controller'
 import WalletSelectionModal from '../../../../components/wallet/WalletSelectionModal'
 import { useModal } from '../../../../contexts/modal'
 import { useEnqueueSnackbar } from '../../../../contexts/theme/components/Snackbar'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField } from './blog.styles'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
+import { Helmet } from 'react-helmet'
 
 const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   const { account } = useSolanaWeb3()
@@ -27,6 +28,7 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   const [heartNum, setHeartNum] = useState<number>(item.starCount ?? 0)
   const enqueueSnackbar = useEnqueueSnackbar()
   const history = useHistory()
+
   const postId = useLocationQuery('id')
 
   const { forceRefresh } = useRefreshController()
@@ -91,7 +93,9 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   }
 
   return (
+
     <BlogsContainer>
+
       <Flex width={'100%'} flexDirection={'column'}    >
         <UserInfoRow>
           <StyledAvatar src={`${item?.avatar}?a=${item.updateTime}`} variant={'square'} />
