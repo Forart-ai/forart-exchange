@@ -94,32 +94,7 @@ const Header: React.FC = () => {
   return (
 
     <HeaderContainer>
-      <Helmet >
-        <meta property="og:title" content="Forart - ok" />
-        <meta
-          property="og:description"
-          content="Forart - momosama yehhhh"
-        />
-        <meta property="og:url" content={process.env.REACT_APP_SITE_URL + history.pathname} />
-        <meta property="og:image" content="https://v1.forart-exchange.pages.dev/static/media/painter-poster.f74bd84ac8433b606896.jpg" />
-        <meta property="og:site_name" content="Forart" />
-        <meta
-          name="twitter:site"
-          content="@momosama_404"
-        />
-        <meta
-          name="twitter:card"
-          content="summary_large_image"
-        />
-        <meta name="twitter:creator" content="@momosama_404" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta
-          name="description"
-          content="Forart - NFT SaaS For Social"
-        />
 
-      </Helmet>
       <Swiper
         pagination={{ dynamicBullets: true }}
         modules={[Pagination, Autoplay]}
