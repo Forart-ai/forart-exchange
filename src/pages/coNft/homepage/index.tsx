@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { usePoolsQuery } from '../../../hooks/queries/usePoolsQuery'
 import { useGetOverview } from '../../../hooks/queries/useGetOverview'
-import { Link } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import ComingSoonBackground from '../../../assets/images/home/coming-soon.png'
 
 import {
@@ -34,6 +34,7 @@ import CustomizeButton from '../../../contexts/theme/components/Button'
 import Text from '../../../contexts/theme/components/Text/Text'
 import { PoolsListData } from '../../../types/coNFT'
 import AppFooter from '../../../layout/AppFooter'
+import { Helmet } from 'react-helmet'
 
 export const LeftTop = styled.div`
   width: 100%;
@@ -76,6 +77,8 @@ export const ButtonArea = styled.div`
 
 const Header: React.FC = () => {
 
+  const history = useLocation()
+
   const { data: painterData } = useGetOverview(1024)
 
   const { data: hypeteenData } = useGetOverview(3312)
@@ -89,10 +92,37 @@ const Header: React.FC = () => {
   }).toString()
 
   // const token = useLocalStorage('TOKEN')
+  console.log(history)
 
   return (
-    <HeaderContainer>
 
+    <HeaderContainer>
+      <Helmet >
+        <meta property="og:title" content="Forart - ok" />
+        <meta
+          property="og:description"
+          content="Forart - momosama yehhhh"
+        />
+        <meta property="og:url" content={process.env.REACT_APP_SITE_URL + history.pathname} />
+        <meta property="og:image" content="https://v1.forart-exchange.pages.dev/static/media/painter-poster.f74bd84ac8433b606896.jpg" />
+        <meta property="og:site_name" content="Forart" />
+        <meta
+          name="twitter:site"
+          content="@momosama_404"
+        />
+        <meta
+          name="twitter:card"
+          content="summary_large_image"
+        />
+        <meta name="twitter:creator" content="@momosama_404" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta
+          name="description"
+          content="Forart - NFT SaaS For Social"
+        />
+
+      </Helmet>
       <Swiper
         pagination={{ dynamicBullets: true }}
         modules={[Pagination, Autoplay]}
@@ -106,7 +136,6 @@ const Header: React.FC = () => {
 
         <SwiperSlide >
           <Wrapper>
-
             <RightArea>
               <Banner>
                 <img src={PainterBanner}  />
@@ -182,7 +211,6 @@ const Header: React.FC = () => {
 
           </Wrapper>
         </SwiperSlide>
-
         <SwiperSlide>
           <Wrapper>
             <LeftArea>
@@ -258,7 +286,6 @@ const Header: React.FC = () => {
           </Wrapper>
 
         </SwiperSlide>
-
       </Swiper>
     </HeaderContainer>
 

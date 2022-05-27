@@ -3,7 +3,7 @@ import { styled, Tab, Tabs } from '@mui/material'
 import { useMediaQuery } from 'react-responsive'
 import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
 import { useArtistKitsQuery } from '../../../../../hooks/queries/useArtistKitsQuery'
-import ArtistBanner from '../../../../../assets/images/artistDetail/painter-poster.jpg'
+import ArtistBanner from '../../../../../assets/images/home/social-banner.webp'
 import { KitProperties } from '../../index'
 
 interface StyledTabsProps {
