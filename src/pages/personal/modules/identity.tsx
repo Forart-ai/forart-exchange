@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useMemo } from 'react'
 import DefaultPageWrapper from '../../../components/default-page-wrapper'
 import { Box, styled } from '@mui/material'
 import Avatar from '../../../assets/images/artistDetail/hyteen.jpg'
@@ -7,41 +7,33 @@ import IdentityPrice from '../components/identity-price'
 import IdentityGrade from '../components/identity-grade'
 import { useOwnedNFTsQuery } from '../../../hooks/queries/useOwnedNFTsQuery'
 import { PublicKey } from '@solana/web3.js'
-import {  NFTInfo, Owner, Messages, PriceContainer, Grid } from '../modules/css/modules.style'
-import SolanaIcon from '../../../assets/images/wallets/solanaLogoMark.svg'
-import { shortenAddress } from '../../../utils'
-import moment from 'moment'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
-import { Link } from 'react-router-dom'
+import Text from '../../../contexts/theme/components/Text/Text'
+import { MetadataResult } from '../../../utils/metaplex/metadata'
+import { AttributesItem, AttributesItemForWalletNft, AttributesListItem } from '../../../components/attributes-item'
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react'
+
+// Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/navigation'
+
+// import required modules
+import { Navigation } from 'swiper'
+import ReactECharts from 'echarts-for-react'
+import { EChartsOption } from 'echarts'
 
 const Wrapper = styled('div')`
-  width: 100%;
-  display: grid;
-  justify-content: space-between;
-  grid-template-columns: repeat(auto-fill, 260px);
-  grid-template-rows: repeat(auto-fill, auto);
-  grid-gap: 16px;
-  padding: 30px 20px;
-  margin: 20px 0;
-
-  ${({ theme }) => theme.breakpoints.down('sm')} {
-    grid-template-columns: repeat(2, 180px);
-    justify-content: center;
-  }
-
-
-  ${({ theme }) => theme.breakpoints.between('sm','md')} {
-    grid-template-columns: repeat(2, 260px);
-
-    justify-content: center;
-  }
+  width: 100%; 
+  height: 840px;
   
 `
 
 const RainbowText = styled('div')`
   text-align: left;
   span {
-    font-size: 54px;
+    font-size: 40px;
     background-image: -webkit-linear-gradient( right, ${({ theme }) => theme.palette.secondary.light}, ${({ theme }) => theme.palette.secondary.main}, ${({ theme }) => theme.palette.primary.light});
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -56,36 +48,47 @@ const RainbowText = styled('div')`
 `
 
 const LeftContainer = styled('div')`
-  height: 100%;
-  width: 40%;
-
-  ${({ theme }) => theme.breakpoints.down('sm')} {
+  width: 480px;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  
+  img {
     width: 100%;
   }
 `
 
-const RightContainer = styled('div')`
-  height: 100%;
-  width: 55%;
+const TopTitle = styled('div')`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+`
 
-  ${({ theme }) => theme.breakpoints.down('sm')} {
-    width: 100%;
-  }
+const PriceAccordion = styled('div')`
+  grid-area: 3 / 6 / 4 / 12;
+ 
+`
+
+const GradeAccordion = styled('div')`
+  grid-area:  4 / 6 / 5 / 12;
 `
 
 const ImageContainer = styled('div')`
   border-radius: 10px;
   width: 100%;
-  height: 250px;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
   
   img {
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
+    object-fit: contain;
   }
   .info {
     padding: 5px 10px;
@@ -93,103 +96,92 @@ const ImageContainer = styled('div')`
   }
 `
 
-const HistoryContainer = styled('div')`
+const IdentityContainer = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
   width: 100%;
-  max-height: 600px;
+  height: 100%;
+  background-color: ${({ theme }) => theme.palette.background.paper};
+  border-radius: 20px;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+   
+  @media screen and (max-width: 1100px) {
+  }
+  
 `
 
-const NFTItemsContainer = styled('div')`
-  width: 100%;
-  //border-top-left-radius: 20px;
-  //border-top-right-radius: 20px;
-  border-radius: 10px;
-  position: relative;
-  background-color: #28005A;
-  font-family: Arial;
+const InfoContainer = styled('div')`
   display: flex;
   flex-direction: column;
-
-  .nft-container {
-    height: 220px;
-    width: 220px;
-    cursor: pointer;
-    margin: 0 auto;
-
-    .spin {
-      position: absolute;
-      top: 50%;
-    }
-
-    img {
-      margin-top: 15px;
-      object-fit: contain;
-      width: 95%;
-      height: 95%;
-      border-radius: 20px;
-    }
-  }
+  justify-content: flex-start;
+  height: 100%;
+  width: 50%;
+  
 `
 
-const Info = styled('div')`
-  width: 100%;
-  margin-top: 10px;
+const NFTItem:React.FC<{item?: MetadataResult }> = ({ item }) => {
 
-  .label {
-    font-family: Aldrich-Regular;
-    color: #ffffff;
-    font-size: 20px;
-  }
-`
+  const option: EChartsOption = useMemo(() => {
+    return ({
+      xAxis: {
+        type: 'category',
+        data: [],
+      },
+      yAxis: {
+        type: 'value',
 
-const NFTItem:React.FC<{item?: any }> = ({ item }) => {
+      },
+
+    })
+  }, [])
+
+  useEffect(() => {
+    console.log(item)
+  }, [item])
 
   const { account } = useSolanaWeb3()
 
   const toDetailUrl = '/nft-detail?mint=' +item?.mint
 
   return (
-    <Link to={toDetailUrl}>
-      <NFTItemsContainer>
-        {
-          (item.data && account) ? (
-            <>
-              <ImageContainer>
-                <img src={item.data.image} />
-              </ImageContainer>
-              <NFTInfo>
-                <Owner>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent:'space-between', alignItems:'start', marginLeft:'10px' }}>
-                    <div className={'label'}>{item.data.collection.family}</div>
-                    <div className={'username'}>{item.data.name}</div>
-                  </Box>
-                  <img className={'solana-icon'} src={SolanaIcon} />
-                </Owner>
+    <IdentityContainer>
+      <LeftContainer>
+        <ImageContainer >
+          <img src={item?.data?.image} />
+        </ImageContainer>
+        <ReactECharts option={option} />
+      </LeftContainer>
 
-                <Messages >
-                  <Grid>
-                    <div className={'label'}>Owned By</div>
-                    <div className={'account'}>{shortenAddress(account?.toBase58())}</div>
-                  </Grid>
-                  {/*<Grid>*/}
-                  {/*  <div className={'label'}>Time</div>*/}
-                  {/*  <div className={'account'} />*/}
-                  {/*</Grid>*/}
-                </Messages>
+      <InfoContainer>
+        <TopTitle>
+          <Text fontFamily={'KronaOne-Regular'} fontSize={42} color={'white'}>{item?.data?.name}</Text>
+          <RainbowText > <span>{item?.data?.collection.name}</span> </RainbowText>
+        </TopTitle>
 
-              </NFTInfo>
+        <Box sx={{ margin: 1.4 }}>
+          <CustomizedAccordions  expanded={true} title={'Price'}>
+            <IdentityPrice />
+          </CustomizedAccordions>
+        </Box>
 
-              {/*<PriceContainer>*/}
-              {/*  <div className={'text'}>Price</div>*/}
-              {/*  <div className={'value'}>- SOL</div>*/}
-              {/*</PriceContainer>*/}
-            </>
-          ) :
-            (
-              <></>
-            )
-        }
-      </NFTItemsContainer>
-    </Link>
+        <Box sx={{ margin: 1.4 }}>
+          <CustomizedAccordions expanded={true} title={'Grade'}>
+            <IdentityGrade />
+          </CustomizedAccordions>
+        </Box>
+
+        <Box sx={{ margin: 1.4 }}>
+          <CustomizedAccordions expanded={true} title={'Attributes'}>
+            <AttributesItemForWalletNft item={item?.data?.attributes } />
+          </CustomizedAccordions>
+        </Box>
+
+      </InfoContainer>
+
+    </IdentityContainer>
 
   )
 }
@@ -198,15 +190,22 @@ const Identity:React.FC = () => {
 
   const holds = useOwnedNFTsQuery(new PublicKey('7Gdgp25ghYQyNf6m5nVaxQbCMf2igDVHGStEz7B7vXUM'))
   const { data, isLoading } = holds
-
   console.log(data)
+
   return (
     <Wrapper >
-      {
-        data?.map((nft: any, index: number) => (
-          <NFTItem item={nft} key={index} />
-        ))
-      }
+      <Swiper navigation={true} modules={[Navigation]}>
+
+        {
+          data?.map((nft: any, index: number) => (
+            <SwiperSlide  key={index} >
+              <NFTItem item={nft} />
+            </SwiperSlide>
+          ))
+        }
+
+      </Swiper>
+
     </Wrapper>
   )
 }

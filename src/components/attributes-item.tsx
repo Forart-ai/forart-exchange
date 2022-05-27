@@ -22,10 +22,10 @@ const Wrapper = styled('div')`
 
 const BoxContainer = styled('div')`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 23%));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 145px));
   justify-content: space-between;
-  grid-template-rows: repeat(3, auto);
-  grid-gap: 15px;
+  grid-template-rows: repeat(3, 80px);
+  grid-gap: 10px;
   width: 100%;
   
   ${({ theme }) => theme.breakpoints.down('sm')} {
@@ -34,26 +34,24 @@ const BoxContainer = styled('div')`
 `
 
 const ItemBox = styled('div')`
-  height: 100px;
-  max-width: 210px;
+  height: 100%;
   width: 100%;
   border-radius: 10px;
   background: linear-gradient(60.95deg, #8246F5 2.09%, #5000B4 97.91%);
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
-  font-family: Arial;
+  align-items: center;
+  font-family: Kanit-Regular;
 
 
   .type {
     color: ${({ theme }) => theme.palette.primary.light};
-    font-size: 18px;
+    font-size: 16px;
     //background: #341222;
   }
 
   .value {
-    text-align: center;
     color: #fff;
     font-size: 20px;
   }

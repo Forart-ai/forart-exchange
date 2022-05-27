@@ -41,7 +41,9 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   '& .MuiAccordionSummary-content': {
     marginLeft: theme.spacing(1),
   },
-}))
+
+}
+))
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(1),

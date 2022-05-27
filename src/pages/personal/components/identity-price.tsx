@@ -36,11 +36,11 @@ const IdentityPrice:React.FC = () => {
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width:'100%' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <img src={SolanaIcon} />
-          <span>23.31 SOL</span>
+          <span>---- SOL</span>
         </Box>
 
         <Box>
-          <RainbowButton>Buy Now</RainbowButton>
+          <RainbowButton disabled={true}>Buy Now</RainbowButton>
         </Box>
       </Box>
     </Wrapper>
