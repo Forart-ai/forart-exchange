@@ -1,18 +1,8 @@
 import React, { useEffect, useState } from 'react'
-// @ts-ignore
-import { Empty, TabPaneProps } from 'antd'
-import { useWeb3React } from '@web3-react/core'
-import { shortenAddress } from '../../utils'
-import NFTListItem from '../../components/NFTListItem'
-import { NftListItem } from '../../types/NFTDetail'
 import { useMintResultQuery } from '../../hooks/queries/useMintResultQuery'
-import { useSolanaWeb3 } from '../../contexts/solana-web3'
-import { MintedNFTItem } from '../../types/coNFT'
-import MintListItem from './components/mintListItem'
-import { Box, Skeleton, styled, Tab, Tabs, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Drawer, Skeleton, styled, Tab, Tabs, useMediaQuery, useTheme } from '@mui/material'
 import Background from '../../assets/images/home/default-user-background.webp'
 import AvatarIcon from '../../assets/images/coPools/rocket.png'
-import { ArtDetail } from '../coNft/artistdetail/modules/artistIntroduction'
 import UserCoNftList from './modules/userCoNftList'
 import CharacterCustomize from './modules/characterCustomize'
 import UserOwnedNfts from './modules/userOwnedNfts'
@@ -23,6 +13,10 @@ import UserProfileSetting from './components/user-profile-setting'
 import { useUserCredit } from '../../hooks/queries/useUserCredit'
 import { useGetUserInfo } from '../../hooks/queries/useGetUserInfo'
 import Image from '../../contexts/theme/components/Image'
+import { StyledTab, StyledTabs, TabPanel } from './components/styledTabs'
+import { FollowersList, FollowsList } from './modules/followersList'
+import { useLocationQuery } from '../../hooks/useLocationQuery'
+import { useUserFollowingCounts } from '../../hooks/queries/useUserFollow'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -205,103 +199,33 @@ const TabsWrapper = styled('div')`
   margin-top: 80px;
 `
 
-interface StyledTabsProps {
-  children?: React.ReactNode;
-  value: number;
-  onChange: (event: React.SyntheticEvent, newValue: number) => void;
-  variant?: 'scrollable' | 'standard';
-  centered?: boolean
-}
-
-const StyledTabs = styled((props: StyledTabsProps) => (
-  <Tabs
-    scrollButtons="auto"
-    aria-label="scrollable auto tabs example"
-    {...props}
-    TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-  />
-))(({ theme }) => ({
-
-  '& .MuiTabs-indicator': {
-    display: 'flex',
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
-  },
-  '& .MuiTabs-indicatorSpan': {
-    // maxWidth: 40,
-    width: '100%',
-    backgroundColor: theme.palette.primary.main,
-
-  },
-}))
-
-interface StyledTabProps {
-  label: string;
-}
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-
-        <div  >
-          {children}
-        </div>
-
-      )}
-    </div>
-  )
-}
-
-const StyledTab = styled((props: StyledTabProps) => (
-  <Tab disableRipple {...props} />
-))(({ theme }) => ({
-  fontFamily: 'arialBold',
-  textTransform: 'none',
-  fontSize: '20px',
-  padding: 0,
-  minWidth: '120px',
-  margin: 0,
-
-  [theme.breakpoints.down('sm')] : {
-    fontSize:'14px',
-    margin:'0 10px',
-  },
-
-  marginRight: theme.spacing(1),
-  color:theme.palette.secondary.main,
-
-  '&.Mui-selected': {
-    color:theme.palette.primary.main,
-  },
-}))
-
 const TabsContainer: React.FC = () => {
-  const { account: SolAccount } = useSolanaWeb3()
+
+  const walletAccount = useLocationQuery('userWalletAccount')
+
+  const [openFollowersDrawer, setOpenFollowersDrawer] = useState<boolean>(false)
+  const [openFollowingDrawer, setOpenFollowingDrawer] = useState<boolean>(false)
+
+  const { data: followingCount } = useUserFollowingCounts(walletAccount)
 
   const theme = useTheme()
 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
-  const { data: mintedNft } = useMintResultQuery({ wallet: SolAccount?.toBase58(), nft:'' } )
+  const { data: mintedNft } = useMintResultQuery({ wallet: walletAccount, nft:'' } )
 
   const [value, setValue] = React.useState(1)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue)
+    if (newValue !== 3 && newValue !== 4) {
+      setValue(newValue)
+    }
+    if (newValue === 3) {
+      setOpenFollowingDrawer(true)
+    }
+    if (newValue === 4) {
+      setOpenFollowersDrawer(true)
+    }
   }
 
   return (
@@ -319,6 +243,8 @@ const TabsContainer: React.FC = () => {
           <StyledTab label="DePainter" />
           <StyledTab  label="CO-NFT"  />
           <StyledTab label="NFTs" />
+          <StyledTab label={followingCount ? `Following(${followingCount[0]}) ` : 'Following()'} />
+          <StyledTab label={followingCount ? `Followers(${followingCount[1]}) ` : 'Followers()'} />
           {/*<StyledTab label="Post" />*/}
         </StyledTabs>
 
@@ -343,15 +269,58 @@ const TabsContainer: React.FC = () => {
           </TabsArea>
 
         </TabPanel>
+
         <TabPanel index={2} value={value}>
           <TabsArea>
             <Box sx={{ maxWidth:'1500px', width:'80%' }}>
               <UserOwnedNfts />
             </Box>
+            <Drawer
+              anchor={'left'}
+              open={openFollowersDrawer}
+              onClose={() => setOpenFollowersDrawer(false)}
+            >
+              <>ddd</>
+            </Drawer>
           </TabsArea>
 
         </TabPanel>
+
+        <TabPanel index={3} value={value} />
+        <TabPanel index={4} value={value} />
       </Box>
+
+      <Drawer
+        anchor={'left'}
+        open={openFollowingDrawer}
+        onClose={() => setOpenFollowingDrawer(false)}
+        sx={{
+          '& .MuiDrawer-paper' : {
+            backgroundColor:'#0a0213',
+            borderBottomRightRadius:'16px',
+            borderTopRightRadius:'16px',
+
+          }
+        }}
+      >
+        <FollowsList />
+      </Drawer>
+
+      <Drawer
+        anchor={'left'}
+        open={openFollowersDrawer}
+        onClose={() => setOpenFollowersDrawer(false)}
+        sx={{
+          '& .MuiDrawer-paper' : {
+            backgroundColor:'#0a0213',
+            borderBottomRightRadius:'16px',
+            borderTopRightRadius:'16px',
+
+          }
+        }}
+      >
+        <FollowersList />
+      </Drawer>
 
     </TabsWrapper>
   )
@@ -364,10 +333,6 @@ const PersonalCenterPage: React.FC = () => {
 
   const { data: credit } = useUserCredit()
   const { data: userInfo } = useGetUserInfo()
-
-  useEffect(() => {
-    console.log(userInfo)
-  }, [userInfo])
 
   return (
     <Wrapper>

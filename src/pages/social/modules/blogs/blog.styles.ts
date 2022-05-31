@@ -18,6 +18,7 @@ export const BlogsContainer = styled('div')`
 export const UserInfoRow = styled('div')`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   font-family: Kanit-Regular;
   margin-bottom: 20px;

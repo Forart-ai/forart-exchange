@@ -49,7 +49,6 @@ const AttrReviewDialog: React.FC<{
 
       mintNFT(body, attr, minting)
         .catch(err => {
-          console.error(err)
           openModal(<MintMessageDialog message={err.toString()} />)
         })
     },[mintNFT, body, attr, minting]

@@ -110,6 +110,7 @@ const SelectBtn: React.FC<{ checked?: boolean }> = ({ checked }) => {
         position:'absolute',
         top: '0px',
         left: '0px',
+        zIndex: 3
       }}
     >
       <Checkbox checked={checked} />

@@ -66,7 +66,6 @@ const Operator = styled('div')`
 export const NavLinkText = styled('div')`
   text-align: center;
   transition: all 0.38s;
-  font-family: Kanit-Regular;
   font-size: 16px;
   letter-spacing: 1px;
   margin: 0 10px;
@@ -93,8 +92,27 @@ export const NavLinkText = styled('div')`
 export const DisableNav = styled('div')`
   cursor: not-allowed ;
   user-select: none;
+  text-align: center;
+  transition: all 0.38s;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin: 0 10px;
+  min-width: 120px;
+  position: relative;
   color: #999999;
-  padding: 0 20px;
+`
+
+const MobileDisableNav = styled('div')`
+  cursor: not-allowed ;
+  user-select: none;
+  text-align: left;
+  transition: all 0.38s;
+  font-size: 16px;
+  letter-spacing: 1px;
+  min-width: 120px;
+  position: relative;
+  color: #999999;
+   padding: 10px;
 `
 
 const RouterContainer = styled('div')`
@@ -102,6 +120,7 @@ const RouterContainer = styled('div')`
   display: flex;
   justify-content: space-between;
   width: fit-content;  
+  font-family: Kanit-Regular;
 `
 
 const DrawerHeader = styled('div')`
@@ -169,7 +188,7 @@ const DrawerList:React.FC = () => {
       openModal(<WalletSelectionModal />)
     }
     else {
-      history.push('/account')
+      history.push(`/account?userWalletAccount=${account.toBase58()}`)
       return
     }
   }
@@ -192,20 +211,26 @@ const DrawerList:React.FC = () => {
       <List sx={{ padding:'30px 20px', width: '100%' }}>
         {
           routes.filter(route => !route.hidden).map((route: Route, index) => {
-            return (
-              <Link to={route.path} key={index}>
-                <SidebarListContainer>
-                  {
-                    pathname === route.path || route.match?.test(pathname) ? (
-                      <SelectedMobileNavItem> { route.title }</SelectedMobileNavItem>
-                    ) : (
-                      <MobileNavItem> {route.title} </MobileNavItem>
-                    )
-                  }
-                </SidebarListContainer>
-              </Link>
+            return !route.disable ? (
+              (
+                <Link to={route.path} key={index}>
+                  <SidebarListContainer>
+                    {
+                      pathname === route.path || route.match?.test(pathname) ? (
+                        <SelectedMobileNavItem> { route.title }</SelectedMobileNavItem>
+                      ) : (
+                        <MobileNavItem> {route.title} </MobileNavItem>
+                      )
+                    }
+                  </SidebarListContainer>
+                </Link>
 
-            )}
+              )
+            ) :
+              (
+                <MobileDisableNav> { route.title} </MobileDisableNav>
+              )
+          }
           )
         }
 
@@ -237,7 +262,7 @@ const AppHeader:React.FC  = () => {
       openModal(<WalletSelectionModal />)
     }
     else {
-      history.push('/account')
+      history.push(`/account?userWalletAccount=${account.toBase58()}`)
       return
     }
   }
@@ -273,7 +298,7 @@ const AppHeader:React.FC  = () => {
                 {
                   routes.filter(route => !route.hidden).map((route: Route, index) => {
                     return route.disable ? (
-                      <DisableNav style= {{ color: 'white' }} key={index}>
+                      <DisableNav style= {{ color: '#999999' }} key={index}>
                         {route.title}
                       </DisableNav>
                     ) :
@@ -315,7 +340,12 @@ const AppHeader:React.FC  = () => {
                   anchor={'left'}
                   open={state['left']}
                   onClose={toggleDrawer('left', false)}
-                  sx={{ '& .MuiDrawer-paper': { backgroundColor: 'rgb(22,5,41)', backgroundImage:'none' } }}
+                  sx={{
+                    '& .MuiDrawer-paper':
+                      { backgroundColor:'#070007',
+                        borderBottomRightRadius:'16px',
+                        borderTopRightRadius:'16px', }
+                  }}
                 >
                   <DrawerList />
                 </Drawer>

@@ -1,6 +1,7 @@
 import { Service } from './service'
 import { useSolanaWeb3 } from '../contexts/solana-web3'
 import {
+  FollowUserParams,
   ReplyPostRequest,
   ShowCoNftParams,
   StarPostRequestParam,
@@ -91,6 +92,23 @@ export const SOCIAL_API = {
   getPostReplyList(param:UserPostReplyListQueryParams) {
     return Service.post('post/reply/page', param)
 
+  },
+  followUser(param:FollowUserParams) {
+    return Service.post('follow', param)
+  },
+
+}
+
+export const PERSONAL_API = {
+
+  getUserFollowers(wallet: string) {
+    return Service.get(`personal/followers/${wallet}`)
+  },
+  getUserFollows(wallet: string) {
+    return Service.get(`personal/follows/${wallet}`)
+  },
+  getUserFollowersAndFollowCount(wallet: string) {
+    return Service.get(`personal/follow/count/${wallet}`)
   }
 }
 

@@ -8,8 +8,6 @@ import { Comment_Outline, Heart_Filled, Heart_Outline } from '../../../../contex
 import { useSolanaWeb3 } from '../../../../contexts/solana-web3'
 import { SOCIAL_API } from '../../../../apis/auth'
 import Text from '../../../../contexts/theme/components/Text/Text'
-import Cookies from 'js-cookie'
-import jwt_decode from 'jwt-decode'
 import useDebounce from '../../../../hooks/useDebounce'
 import { useRefreshController } from '../../../../contexts/refresh-controller'
 import WalletSelectionModal from '../../../../components/wallet/WalletSelectionModal'
@@ -19,10 +17,10 @@ import { useHistory, useLocation } from 'react-router-dom'
 import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField } from './blog.styles'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import { Helmet } from 'react-helmet'
+import CustomizeButton from '../../../../contexts/theme/components/Button'
 
 const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   const { account } = useSolanaWeb3()
-  const token = Cookies.get('USER_TOKEN')
   const [userInfo, setUserInfo] = useState<any>(undefined)
   const [heartStatus, setHeartStatus] = useState<'up' | 'down'>('down')
   const [heartNum, setHeartNum] = useState<number>(item.starCount ?? 0)
@@ -70,10 +68,6 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
 
   },[account, item, heartStatus])
 
-  useEffect(() => {
-    console.log(item)
-  }, [item])
-
   // useEffect(() => {
   //
   //   if (token) {
@@ -86,11 +80,20 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
     if (key.key === 'Enter'){
       console.log('value', replyRequest)
       SOCIAL_API.ReplyPost(replyRequest).then(() => {
-        enqueueSnackbar('User created', 'Success',{ variant: 'success' })
+        enqueueSnackbar('Comment successfully', 'Success',{ variant: 'success' })
         forceRefresh()
       })
     }
   }
+
+  const followUser = useCallback(blogUserId => {
+    if (!account) { return}
+    SOCIAL_API.followUser({ follow: blogUserId, follower: account?.toBase58() }).then(res => {
+      enqueueSnackbar('Follow successfully', 'Success',{ variant: 'success' })
+      console.log(res)})
+  },
+  [account],
+  )
 
   return (
 
@@ -98,8 +101,13 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
 
       <Flex width={'100%'} flexDirection={'column'}    >
         <UserInfoRow>
-          <StyledAvatar src={`${item?.avatar}?a=${item.updateTime}`} variant={'square'} />
-          <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
+          <Flex alignItems={'center'}>
+            <StyledAvatar src={`${item?.avatar}?a=${item.updateTime}`} variant={'square'} />
+            <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
+          </Flex>
+          <>
+            <CustomizeButton onClick={() => followUser(item.wallet)} disableElevation size={'small'} sx={{ borderRadius:'20px' }} color={'secondary'} variant={'contained'}>Follow</CustomizeButton>
+          </>
         </UserInfoRow>
 
         <CoNftCard nftDetail={item?.detail} />

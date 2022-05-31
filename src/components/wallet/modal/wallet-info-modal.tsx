@@ -7,6 +7,7 @@ import { DEFAULT_CLUSTER } from '../../../contexts/solana-connection-config'
 import { useModal } from '../../../contexts/modal'
 import { disconnect } from 'cluster'
 import { useHistory } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 const Wrapper = styled('div')`
   display: flex;
@@ -29,6 +30,7 @@ const WalletInfoModal:React.FC<{ account?: string; disconnect: VoidFunction }> =
   const disconnectWallet = () => {
     disconnect()
     closeModal()
+    Cookies.remove('USER_TOKEN')
     history.push('/')
   }
 

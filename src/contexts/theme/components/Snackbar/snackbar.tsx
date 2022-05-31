@@ -80,7 +80,7 @@ const ScreenReaderOnlyText = styled('div')``
 const CloseIcon = styled('div')``
 
 const Snackbar = React.forwardRef<any, Props>((props, ref) => {
-  const { id, message, subMessage, variant, } = props
+  const { id, message, subMessage, variant } = props
 
   const { closeSnackbar } = useSnackbar()
   const handleCloseSnackbar = () => closeSnackbar(id)

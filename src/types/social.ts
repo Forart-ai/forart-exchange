@@ -17,6 +17,11 @@ export interface UserPostListQueryParams{
   createDay?: number
 }
 
+export interface FollowUserParams {
+  follower: string,
+  follow: string
+}
+
 export interface UserPostReplyListQueryParams{
   size: number
   current: number

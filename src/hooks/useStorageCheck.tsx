@@ -140,8 +140,8 @@ const MintItem: React.FC<{ minting: Minting }> = ({ minting }) => {
           <Dialog title={'Congratulations!'} closeable>
             <Message>Mint successfully!</Message>
             <Box sx={{ width:'100%', display:'flex', justifyContent:'space-around', marginTop:'30px' }}>
-              <CustomizeButton style={{ margin:'10px' }} variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
-              <CustomizeButton style={{ margin:'10px' }}
+              <CustomizeButton sx={{ margin:'10px' }} variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
+              <CustomizeButton sx={{ margin:'10px' }}
                 variant={'contained'}
                 color={'secondary'}
                 onClick={() => {

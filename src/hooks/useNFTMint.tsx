@@ -41,8 +41,9 @@ const MintSuccessDialog = () => {
     <Dialog title={'Congratulations!'} closeable>
       <Message>Mint successfully</Message>
       <Box sx={{ width:'100%', display:'flex', justifyContent:'center', marginTop:'30px' }}>
-        <CustomizeButton variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
+        <CustomizeButton sx={{ margin:'10px' }} variant={'contained'} onClick={() => closeModal()}> Mint Again</CustomizeButton>
         <CustomizeButton
+          sx={{ margin:'10px' }}
           variant={'contained'}
           color={'secondary'}
           onClick={() => {
@@ -193,7 +194,6 @@ const useNFTMint = () => {
           await adapter.signAllTransactions(transactions)
         )
       } catch (e: any) {
-        console.error(e)
         setLoading(false)
         setMessage(`Failed to mint: ${e.toString()}`)
       }

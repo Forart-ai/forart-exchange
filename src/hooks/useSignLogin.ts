@@ -1,12 +1,8 @@
 import { useSolanaWeb3 } from '../contexts/solana-web3'
 import { useCallback, useEffect } from 'react'
-import nacl from 'tweetnacl'
 import { AUTH_API } from '../apis/auth'
-import useLocalStorage from './useLocalStorage'
-import useEagerConnect from './useEagerConnect'
 import Cookies from 'js-cookie'
 import jwt_decode from 'jwt-decode'
-import wallet from '../components/wallet'
 
 export const randomString = (len: number) => {
   const p = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -15,7 +11,6 @@ export const randomString = (len: number) => {
 
 export function useSignLogin() {
   const { adapter, account } = useSolanaWeb3()
-  const { eagerConnected } = useEagerConnect()
 
   useEffect( () => {
     (async () => {
@@ -26,6 +21,8 @@ export function useSignLogin() {
         const message = new TextEncoder().encode(`hello world: ${a}`)
 
         const decodeMessage = new TextDecoder().decode(message)
+
+        console.log('account change', account)
 
         if (!adapter || !account ) {
           return
