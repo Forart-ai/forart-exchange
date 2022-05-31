@@ -11,6 +11,7 @@ export const useGetUserInfo = (): UseQueryResult<UserInfoParam> => {
   return useQuery(
     ['USER_ACCOUNT_INFO', account?.toBase58(), quietRefreshFlag],
     async () => {
+      if (!account){return }
       return await AUTH_API.getUserInfo(account?.toBase58()).then((res: any)=> ({
         ...res ,
         avataruri:`${res.avataruri}?a=${new Date().getTime()}`,

@@ -113,10 +113,6 @@ const SocialHomepage: React.FC = () => {
     createDay: undefined
   })
 
-  useEffect(() => {
-    console.log( pagingData)
-  }, [pagingData])
-
   const handleNextPage = useCallback(() => {
     if (!hasNextPage) return
 
