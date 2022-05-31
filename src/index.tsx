@@ -3,7 +3,7 @@ import App from './App'
 import { getLibrary } from './web3/connectors'
 import reportWebVitals from './reportWebVitals'
 import { DAppProvider } from '@usedapp/core'
-import { render } from 'react-snapshot'
+import ReactDOM from 'react-dom'
 
 // @ts-ignore
 import { BrowserRouter as Router } from 'react-router-dom'
@@ -25,7 +25,7 @@ const { store } = configureStore()
 
 const queryClient = new QueryClient()
 
-render(
+ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={ForartTheme}>
       <SnackbarProvider autoHideDuration={3000}>
