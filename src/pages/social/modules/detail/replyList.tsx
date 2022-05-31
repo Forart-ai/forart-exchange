@@ -52,30 +52,7 @@ const ReplyList: React.FC= () => {
   return (
 
     <>
-      <Helmet >
-        <meta property="og:title" content="Forart - social co-nft2.1" />
-        <meta
-          property="og:description"
-          content="Forart - monica yehhhh"
-        />
-        <meta property="og:url" content="https://v1.forart-exchange.pages.dev/social/post?id=CMN8qqLutGUnss4xhyYbA7YoLrGbVLrcHQ1JwzwfKKgM_1653637957950" />
-        <meta property="og:image" content="https://hypeteen.s3.us-west-2.amazonaws.com/preview/01e6bc78207318b50cbe1823c7f9918b.png" />
-        <meta property="og:site_name" content="Forart" />
-        <meta
-          name="twitter:site"
-          content="@momosama_404"
-        />
-        <meta
-          name="twitter:card"
-          content="summary_large_image"
-        />
-        <meta name="twitter:creator" content="@momosama_404" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta
-          name="description"
-          content="Forart - NFT SaaS For Social"
-        />
+      <Helmet title={'hello buddy'} >
 
         <body>
           {

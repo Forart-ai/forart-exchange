@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
-import ReactDOM from 'react-dom'
 import App from './App'
 import { getLibrary } from './web3/connectors'
 import reportWebVitals from './reportWebVitals'
 import { DAppProvider } from '@usedapp/core'
+import { render } from 'react-snapshot'
+
 // @ts-ignore
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Web3ReactProvider } from '@web3-react/core'
@@ -24,7 +25,7 @@ const { store } = configureStore()
 
 const queryClient = new QueryClient()
 
-ReactDOM.render(
+render(
   <Provider store={store}>
     <ThemeProvider theme={ForartTheme}>
       <SnackbarProvider autoHideDuration={3000}>
