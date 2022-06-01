@@ -1,20 +1,22 @@
 import { styled } from '@mui/system'
-import { Box, IconButton, Popover, SvgIcon, TextareaAutosize, useMediaQuery, useTheme } from '@mui/material'
+import {
+  IconButton,
+  Popover,
+  TextareaAutosize,
+} from '@mui/material'
 import { useSolanaWeb3 } from '../../../../contexts/solana-web3'
 import React, { useCallback, useEffect, useState } from 'react'
 import { SOCIAL_API } from '../../../../apis/auth'
 import CustomizeButton from '../../../../contexts/theme/components/Button'
 import Blogs from '../blogs/blogs'
 import { useMintResultQuery } from '../../../../hooks/queries/useMintResultQuery'
-import RainbowButton from '../../../../contexts/theme/components/RainbowButton'
 import { PostListItem, ShowCoNftParams } from '../../../../types/social'
 import { usePostQuery } from '../../../../hooks/queries/usePostQuery'
 import { useRefreshController } from '../../../../contexts/refresh-controller'
 import Background from '../../../../assets/images/social/social-banner.png'
 import UserCoNftList from '../UserCoNftList'
 import Flex from '../../../../contexts/theme/components/Box/Flex'
-import Picker, { SKIN_TONE_MEDIUM_DARK } from 'emoji-picker-react'
-import { DeleteOutline } from '@mui/icons-material'
+import Picker from 'emoji-picker-react'
 import { Clown_Emoji } from '../../../../contexts/svgIcons'
 
 export const SocialPageWrapper = styled('div')`
@@ -82,9 +84,10 @@ const StyledTextarea = styled(TextareaAutosize)`
 `
 
 const SocialHomepage: React.FC = () => {
-
+  const [postMessage, setPostMessage] = useState<string>('')
   const { account } = useSolanaWeb3()
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
@@ -122,6 +125,16 @@ const SocialHomepage: React.FC = () => {
     })
   }, [fetchNextPage, hasNextPage])
 
+  useEffect(() => {
+    console.log(postMessage)
+
+  }, [postMessage])
+
+  const onEmojiClick = useCallback(
+    (event, emojiObject) => {
+      setPostMessage((prev: any) => prev.concat(emojiObject?.emoji))
+    }, [])
+
   return (
     <>
       <Header>
@@ -129,29 +142,29 @@ const SocialHomepage: React.FC = () => {
       </Header>
       <PostArea>
         <Flex width={'100%'} alignItems={'center'}>
-          <StyledTextarea minRows={3}  onChange={() => {}} placeholder={'Something to say?'}  />
-          <IconButton  size="small" onMouseEnter={e => setAnchorEl(e.currentTarget)} onMouseLeave={() => setAnchorEl(null)}>
+          <StyledTextarea minRows={3} value={postMessage}  onChange={e => {setPostMessage(e.target.value)}} placeholder={'Something to say?'}  />
+
+          <IconButton  aria-describedby={id} size="small" onClick={event => setAnchorEl(event.currentTarget)} >
             <Clown_Emoji />
           </IconButton>
 
           <Popover
             id={id}
             open={open}
-            anchorEl={anchorEl}
             onClose={() => setAnchorEl(null)}
-            sx={{ pointerEvents: 'none', }}
+            anchorEl={anchorEl}
             anchorOrigin={{
               vertical: 'bottom',
               horizontal: 'left',
             }}
           >
+
             <Picker
-              onEmojiClick={v => {console.log(v)}}
+              onEmojiClick={onEmojiClick}
               disableAutoFocus={true}
-              skinTone={SKIN_TONE_MEDIUM_DARK}
-              groupNames={{ smileys_people: 'PEOPLE' }}
               native
             />
+
           </Popover>
         </Flex>
 

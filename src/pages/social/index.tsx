@@ -23,7 +23,7 @@ const PageWrapper = styled('div')(({ theme }) => ({
 
 }))
 
-const RankingContent = styled('div')`
+const RankingContent = styled('div')` 
   position: absolute;
   right: 0;
   width: 500px;
