@@ -19,6 +19,7 @@ import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import { Helmet } from 'react-helmet'
 import CustomizeButton from '../../../../contexts/theme/components/Button'
 import { Link } from 'react-router-dom'
+import BlogsOperationMenu from '../../../personal/modules/blogsOperationMenu'
 
 const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   const { account } = useSolanaWeb3()
@@ -113,7 +114,8 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
             <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
           </Flex>
           <>
-            <CustomizeButton onClick={() => followUser(item.wallet)} disableElevation size={'small'} sx={{ borderRadius:'20px' }} color={'secondary'} variant={'contained'}>Follow</CustomizeButton>
+            {/*<CustomizeButton onClick={() => followUser(item.wallet)} disableElevation size={'small'} sx={{ borderRadius:'20px' }} color={'secondary'} variant={'contained'}>Follow</CustomizeButton>*/}
+            <BlogsOperationMenu />
           </>
         </UserInfoRow>
 

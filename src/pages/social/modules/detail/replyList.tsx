@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
-import { ReplyListItem, ReplyPostRequest, UserPostReplyListQueryParams } from '../../../../types/social'
 import Flex from '../../../../contexts/theme/components/Box/Flex'
 import Text from '../../../../contexts/theme/components/Text/Text'
 import moment from 'moment'
 import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField } from '../blogs/blog.styles'
-import DefaultPageWrapper from '../../../../components/default-page-wrapper'
 import { usePostReplyQuery } from '../../../../hooks/queries/usePostReplyQuery'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import { styled } from '@mui/material'
 import { usePostDetailQuery } from '../../../../hooks/queries/usePostDetailQuery'
 import Blogs from '../blogs/blogs'
-import { MainMessageArea, SocialPageWrapper } from '../home'
-import { Helmet } from 'react-helmet'
 import { useHistory, useLocation } from 'react-router-dom'
 
 const ReplyContainer = styled('div')`

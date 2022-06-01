@@ -243,9 +243,9 @@ const TabsContainer: React.FC = () => {
           <StyledTab label="DePainter" />
           <StyledTab  label="CO-NFT"  />
           <StyledTab label="NFTs" />
-          {/*<StyledTab label="Post" />*/}
-          {/*<StyledTab label={followingCount ? `Following(${followingCount[0]}) ` : 'Following()'} />*/}
-          {/*<StyledTab label={followingCount ? `Followers(${followingCount[1]}) ` : 'Followers()'} />*/}
+          <StyledTab label="Post" />
+          <StyledTab label={followingCount ? `Following(${followingCount[0]}) ` : 'Following()'} />
+          <StyledTab label={followingCount ? `Followers(${followingCount[1]}) ` : 'Followers()'} />
 
         </StyledTabs>
 
@@ -281,16 +281,16 @@ const TabsContainer: React.FC = () => {
 
         </TabPanel>
 
-        {/*<TabPanel index={3} value={value}>*/}
-        {/*  <TabsArea >*/}
-        {/*    <Box sx={{ maxWidth:'1500px', width:'80%' }}>*/}
-        {/*      <UserPost />*/}
-        {/*    </Box>*/}
-        {/*  </TabsArea>*/}
-        {/*</TabPanel>*/}
+        <TabPanel index={3} value={value}>
+          <TabsArea >
+            <Box sx={{ maxWidth:'1500px', width:'80%' }}>
+              <UserPost />
+            </Box>
+          </TabsArea>
+        </TabPanel>
 
-        {/*<TabPanel index={4} value={value} />*/}
-        {/*<TabPanel index={5} value={value} />*/}
+        <TabPanel index={4} value={value} />
+        <TabPanel index={5} value={value} />
       </Box>
 
       <Drawer
