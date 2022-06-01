@@ -62,17 +62,15 @@ const UserCoNftList:React.FC<{selectedValue?:ShowCoNftParams, onSelect:(_: ShowC
   }, [list])
   return (
     <Swiper
-      slidesPerView={isMobile ? 2 : 5}
-      spaceBetween={10}
+      slidesPerView={isMobile ? 2 : 4}
+      spaceBetween={1}
       navigation={true}
       modules={[Navigation]}
     >
       {
         coNftList?.map((item,index) => (
-          <SwiperSlide key={index} style={{ display:'flex', justifyContent:'center' }} >
-            <Box sx={{ width:'60%', border:'1px red solid' }}>
-              <NFTItem src={item} onSelect={onSelect} checked={selectedValue?.nft === item.nft} />
-            </Box>
+          <SwiperSlide key={index} style={{ display:'flex', justifyContent:'center', alignItems:'center' }} >
+            <NFTItem src={item} onSelect={onSelect} checked={selectedValue?.nft === item.nft} />
 
           </SwiperSlide>
 

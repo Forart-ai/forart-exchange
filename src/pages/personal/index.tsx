@@ -237,7 +237,6 @@ const TabsContainer: React.FC = () => {
           centered={isMobile ? false : true}
           value={value}
           onChange={handleChange}
-          aria-label="styled tabs example"
 
         >
           {/*<StyledTab label="Avatar" />*/}
@@ -282,16 +281,16 @@ const TabsContainer: React.FC = () => {
 
         </TabPanel>
 
-        <TabPanel index={3} value={value}>
-          <TabsArea >
-            <Box sx={{ maxWidth:'1500px', width:'80%' }}>
-              <UserPost />
-            </Box>
-          </TabsArea>
-        </TabPanel>
+        {/*<TabPanel index={3} value={value}>*/}
+        {/*  <TabsArea >*/}
+        {/*    <Box sx={{ maxWidth:'1500px', width:'80%' }}>*/}
+        {/*      <UserPost />*/}
+        {/*    </Box>*/}
+        {/*  </TabsArea>*/}
+        {/*</TabPanel>*/}
 
-        <TabPanel index={4} value={value} />
-        <TabPanel index={5} value={value} />
+        {/*<TabPanel index={4} value={value} />*/}
+        {/*<TabPanel index={5} value={value} />*/}
       </Box>
 
       <Drawer

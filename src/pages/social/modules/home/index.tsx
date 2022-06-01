@@ -1,23 +1,21 @@
 import { styled } from '@mui/system'
-import { Box, TextareaAutosize, useMediaQuery, useTheme } from '@mui/material'
+import { Box, IconButton, Popover, SvgIcon, TextareaAutosize, useMediaQuery, useTheme } from '@mui/material'
 import { useSolanaWeb3 } from '../../../../contexts/solana-web3'
 import React, { useCallback, useEffect, useState } from 'react'
 import { SOCIAL_API } from '../../../../apis/auth'
-import DefaultPageWrapper from '../../../../components/default-page-wrapper'
 import CustomizeButton from '../../../../contexts/theme/components/Button'
 import Blogs from '../blogs/blogs'
 import { useMintResultQuery } from '../../../../hooks/queries/useMintResultQuery'
 import RainbowButton from '../../../../contexts/theme/components/RainbowButton'
 import { PostListItem, ShowCoNftParams } from '../../../../types/social'
-import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import { usePostQuery } from '../../../../hooks/queries/usePostQuery'
 import { useRefreshController } from '../../../../contexts/refresh-controller'
 import Background from '../../../../assets/images/social/social-banner.png'
 import UserCoNftList from '../UserCoNftList'
-import InfiniteScroll from 'react-infinite-scroll-component'
-import CONFT_API from '../../../../apis/co-nft'
-import { useInfiniteQuery } from 'react-query'
 import Flex from '../../../../contexts/theme/components/Box/Flex'
+import Picker, { SKIN_TONE_MEDIUM_DARK } from 'emoji-picker-react'
+import { DeleteOutline } from '@mui/icons-material'
+import { Clown_Emoji } from '../../../../contexts/svgIcons'
 
 export const SocialPageWrapper = styled('div')`
   width: 100%;
@@ -84,7 +82,11 @@ const StyledTextarea = styled(TextareaAutosize)`
 `
 
 const SocialHomepage: React.FC = () => {
+
   const { account } = useSolanaWeb3()
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
+  const open = Boolean(anchorEl)
+  const id = open ? 'simple-popover' : undefined
 
   const [selectedNFt, setSelectedNFt] = useState<ShowCoNftParams | undefined>()
   const { data: mintedNft } = useMintResultQuery({ wallet: account?.toBase58(), nft:'' } )
@@ -126,7 +128,32 @@ const SocialHomepage: React.FC = () => {
         <img src={Background} />
       </Header>
       <PostArea>
-        <StyledTextarea minRows={3}  onChange={() => {}} placeholder={'Something to say?'}  />
+        <Flex width={'100%'} alignItems={'center'}>
+          <StyledTextarea minRows={3}  onChange={() => {}} placeholder={'Something to say?'}  />
+          <IconButton  size="small" onMouseEnter={e => setAnchorEl(e.currentTarget)} onMouseLeave={() => setAnchorEl(null)}>
+            <Clown_Emoji />
+          </IconButton>
+
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={() => setAnchorEl(null)}
+            sx={{ pointerEvents: 'none', }}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+          >
+            <Picker
+              onEmojiClick={v => {console.log(v)}}
+              disableAutoFocus={true}
+              skinTone={SKIN_TONE_MEDIUM_DARK}
+              groupNames={{ smileys_people: 'PEOPLE' }}
+              native
+            />
+          </Popover>
+        </Flex>
 
         {/*<RainbowButton onClick={() => setPostNft(!postNft)}> {!postNft? 'Post CO-NFT' : 'Post blog'} </RainbowButton>*/}
 
