@@ -63,12 +63,13 @@ const routes: Route[] = [
     hidden: true
   },
   {
-    path: '/social',
+    path: '/socialllllllllllllllee',
     match: /^\/social/,
     title: 'Social',
     exact: false,
     icon: ChatIcon,
     component: NftChatroom,
+    disable: true
 
   },
   {
