@@ -133,7 +133,7 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
         (document.getElementById(`${name}`) as any).src = v.target.result
         //check porn
         isPornImage(document.getElementById(`${name}`) as HTMLImageElement).then(res => {
-          if (res > 20) {
+          if (res > 60) {
             enqueueSnackbar('Sorry, the picture is not so healthy', { variant: 'warning' })
             return
           }

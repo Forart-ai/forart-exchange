@@ -2,10 +2,10 @@ import React, { useMemo } from 'react'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 import { useMintResultQuery } from '../../../hooks/queries/useMintResultQuery'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination } from 'swiper'
+import { Navigation, Pagination } from 'swiper'
 import { MintedNFTItem } from '../../../types/coNFT'
 import Wrapper from '../../../contexts/theme/components/Image/Wrapper'
-import { Checkbox, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Checkbox, useMediaQuery, useTheme } from '@mui/material'
 import Image from '../../../contexts/theme/components/Image'
 import Flex from '../../../contexts/theme/components/Box/Flex'
 import { styled } from '@mui/system'
@@ -64,13 +64,16 @@ const UserCoNftList:React.FC<{selectedValue?:ShowCoNftParams, onSelect:(_: ShowC
     <Swiper
       slidesPerView={isMobile ? 2 : 5}
       spaceBetween={10}
-      pagination={{ clickable: true }}
-      modules={[Pagination]}
+      navigation={true}
+      modules={[Navigation]}
     >
       {
         coNftList?.map((item,index) => (
           <SwiperSlide key={index} style={{ display:'flex', justifyContent:'center' }} >
-            <NFTItem src={item} onSelect={onSelect} checked={selectedValue?.nft === item.nft} />
+            <Box sx={{ width:'60%', border:'1px red solid' }}>
+              <NFTItem src={item} onSelect={onSelect} checked={selectedValue?.nft === item.nft} />
+            </Box>
+
           </SwiperSlide>
 
         ))

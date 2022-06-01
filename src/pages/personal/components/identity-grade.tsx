@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Box, styled } from '@mui/material'
 import CustomizedProgressBars from '../../../contexts/theme/components/Progress'
+import { Attribute, MetadataResult } from '../../../utils/metaplex/metadata'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -41,19 +42,26 @@ const ProgressContainer = styled('div')`
   
 `
 
-const IdentityGrade:React.FC = () => {
+const IdentityGrade:React.FC<{attr?: Attribute[]}> = ({ attr }) => {
+
+  const level = useMemo(() => {
+    return  attr?.filter(v => v.trait_type === 'Level')[0]
+  }, [attr])
+
+  console.log(level)
+
   return (
     <Wrapper>
       <ProgressContainer>
         <Box sx={{ display:'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div className={'label'}> Experience</div>
-          <div className={'value'}> ---/3600</div>
+          <div className={'value'}> ---/---</div>
         </Box>
         <Box >
           <CustomizedProgressBars value={0} />
         </Box>
       </ProgressContainer>
-      <div className={'level'}>Level.-</div>
+      <div className={'level'}>Level.{level?.value}</div>
     </Wrapper>
   )
 }

@@ -18,10 +18,10 @@ import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField }
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import { Helmet } from 'react-helmet'
 import CustomizeButton from '../../../../contexts/theme/components/Button'
+import { Link } from 'react-router-dom'
 
 const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   const { account } = useSolanaWeb3()
-  const [userInfo, setUserInfo] = useState<any>(undefined)
   const [heartStatus, setHeartStatus] = useState<'up' | 'down'>('down')
   const [heartNum, setHeartNum] = useState<number>(item.starCount ?? 0)
   const enqueueSnackbar = useEnqueueSnackbar()
@@ -33,6 +33,19 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   const { openModal } = useModal()
 
   const [value, setValue] = useDebounce('',100)
+
+  const redirectToPostDetail = useCallback(
+    () => {
+      if (history.location.pathname.includes('/social')) {
+        history.replace(`post?id=${item.id}`)
+        return
+      }
+      else
+        history.replace(`/social/post?id=${item.id}`)
+      return
+    },
+    [history],
+  )
 
   const replyRequest: ReplyPostRequest = {
     wallet: account?.toBase58(),
@@ -68,14 +81,6 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
 
   },[account, item, heartStatus])
 
-  // useEffect(() => {
-  //
-  //   if (token) {
-  //     setUserInfo(jwt_decode(token))
-  //   }
-  //
-  // }, [token,account])
-
   const onKeyPress = (key: any) => {
     if (key.key === 'Enter'){
       console.log('value', replyRequest)
@@ -102,7 +107,9 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
       <Flex width={'100%'} flexDirection={'column'}    >
         <UserInfoRow>
           <Flex alignItems={'center'}>
-            <StyledAvatar src={`${item?.avatar}?a=${item.updateTime}`} variant={'square'} />
+            <Link to={`/account?userWalletAccount=${item.wallet}`}>
+              <StyledAvatar src={`${item?.avatar}?a=${item.updateTime}`} variant={'square'} />
+            </Link>
             <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
           </Flex>
           <>
@@ -127,7 +134,7 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
             </IconButton>
             <Text fontSize={'16px'} color={'#999999'}> {heartNum} </Text>
 
-            <IconButton color="secondary" onClick={()=>history.push(`post?id=${item.id}`)}   style={{ marginLeft:'10px' }}>
+            <IconButton color="secondary" onClick={redirectToPostDetail}   style={{ marginLeft:'10px' }}>
               <SvgIcon style={{ cursor:'pointer' }}  >
                 <path fill="currentColor" d={Comment_Outline} /> :
               </SvgIcon>

@@ -17,6 +17,7 @@ import { StyledTab, StyledTabs, TabPanel } from './components/styledTabs'
 import { FollowersList, FollowsList } from './modules/followersList'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { useUserFollowingCounts } from '../../hooks/queries/useUserFollow'
+import UserPost from './modules/userPost'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -217,13 +218,13 @@ const TabsContainer: React.FC = () => {
   const [value, setValue] = React.useState(1)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    if (newValue !== 3 && newValue !== 4) {
+    if (newValue !== 4 && newValue !== 5) {
       setValue(newValue)
     }
-    if (newValue === 3) {
+    if (newValue === 4) {
       setOpenFollowingDrawer(true)
     }
-    if (newValue === 4) {
+    if (newValue === 5) {
       setOpenFollowersDrawer(true)
     }
   }
@@ -243,9 +244,10 @@ const TabsContainer: React.FC = () => {
           <StyledTab label="DePainter" />
           <StyledTab  label="CO-NFT"  />
           <StyledTab label="NFTs" />
-          <StyledTab label={followingCount ? `Following(${followingCount[0]}) ` : 'Following()'} />
-          <StyledTab label={followingCount ? `Followers(${followingCount[1]}) ` : 'Followers()'} />
           {/*<StyledTab label="Post" />*/}
+          {/*<StyledTab label={followingCount ? `Following(${followingCount[0]}) ` : 'Following()'} />*/}
+          {/*<StyledTab label={followingCount ? `Followers(${followingCount[1]}) ` : 'Followers()'} />*/}
+
         </StyledTabs>
 
       </Box>
@@ -275,19 +277,21 @@ const TabsContainer: React.FC = () => {
             <Box sx={{ maxWidth:'1500px', width:'80%' }}>
               <UserOwnedNfts />
             </Box>
-            <Drawer
-              anchor={'left'}
-              open={openFollowersDrawer}
-              onClose={() => setOpenFollowersDrawer(false)}
-            >
-              <>ddd</>
-            </Drawer>
+
           </TabsArea>
 
         </TabPanel>
 
-        <TabPanel index={3} value={value} />
+        <TabPanel index={3} value={value}>
+          <TabsArea >
+            <Box sx={{ maxWidth:'1500px', width:'80%' }}>
+              <UserPost />
+            </Box>
+          </TabsArea>
+        </TabPanel>
+
         <TabPanel index={4} value={value} />
+        <TabPanel index={5} value={value} />
       </Box>
 
       <Drawer

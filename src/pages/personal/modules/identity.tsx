@@ -100,7 +100,7 @@ const ImageContainer = styled('div')`
 const IdentityContainer = styled('div')`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   padding: 30px;
   width: 100%;
   height: 100%;
@@ -167,7 +167,7 @@ const NFTItem:React.FC<{item?: MetadataResult }> = ({ item }) => {
 
         <Box sx={{ margin: '10px 0' }}>
           <CustomizedAccordions expanded={true} title={'Grade'}>
-            <IdentityGrade />
+            <IdentityGrade attr={item?.data?.attributes} />
           </CustomizedAccordions>
         </Box>
 

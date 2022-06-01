@@ -59,7 +59,7 @@ const CoNftContainer = styled('div')`
 `
 
 const PostArea = styled('div')`
-  height: 270px;
+  height: 340px;
   border: 1px ${({ theme }) => theme.palette.primary.main} solid;
   border-radius: 10px;
   display: flex;
@@ -76,8 +76,7 @@ const StyledTextarea = styled(TextareaAutosize)`
   border: none;
   border-radius: 10px;
   color: white;
-  padding: 10px;
-  
+  padding: 5px;
   &:focus {
     //border: ;
     outline: 1px ${({ theme }) => theme.palette.secondary.main} solid;
@@ -87,7 +86,6 @@ const StyledTextarea = styled(TextareaAutosize)`
 const SocialHomepage: React.FC = () => {
   const { account } = useSolanaWeb3()
 
-  const [postNft, setPostNft] = useState<boolean>(true)
   const [selectedNFt, setSelectedNFt] = useState<ShowCoNftParams | undefined>()
   const { data: mintedNft } = useMintResultQuery({ wallet: account?.toBase58(), nft:'' } )
   const [loading, setLoading] = useState(false)
@@ -128,15 +126,13 @@ const SocialHomepage: React.FC = () => {
         <img src={Background} />
       </Header>
       <PostArea>
-        <RainbowButton onClick={() => setPostNft(!postNft)}> {!postNft? 'Post CO-NFT' : 'Post blog'} </RainbowButton>
-        {
-          postNft  ?
-            <CoNftContainer>
-              <UserCoNftList list={mintedNft} selectedValue={selectedNFt} onSelect={v => setSelectedNFt(v)} />
-            </CoNftContainer>
-            :
-            <StyledTextarea minRows={5}  onChange={() => {}} placeholder={'Something to say?'}  />
-        }
+        <StyledTextarea minRows={3}  onChange={() => {}} placeholder={'Something to say?'}  />
+
+        {/*<RainbowButton onClick={() => setPostNft(!postNft)}> {!postNft? 'Post CO-NFT' : 'Post blog'} </RainbowButton>*/}
+
+        <CoNftContainer>
+          <UserCoNftList list={mintedNft} selectedValue={selectedNFt} onSelect={v => setSelectedNFt(v)} />
+        </CoNftContainer>
         <CustomizeButton disabled={loading} variant={'contained'} onClick={handleNftPost}> Post </CustomizeButton>
       </PostArea>
 

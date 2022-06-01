@@ -52,31 +52,27 @@ const ReplyList: React.FC= () => {
   return (
 
     <>
-      <Helmet title={'hello buddy'} >
-
-        <body>
-          {
-            replyList?.map((item, index) => (
-              <ReplyContainer key={index}>
-                <Flex height={'100%'} width={'100%'} justifyContent={'space-between'} flexDirection={'column'} >
-                  <UserInfoRow>
-                    <StyledAvatar src={item?.avatar} variant={'square'} />
-
-                    <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
-
-                  </UserInfoRow>
-
-                  <Text color={'secondary.light'} fontSize={18}> {item?.wysiwyg} </Text>
-
-                </Flex>
-                <DateText>{ moment(item.createAt).format('MMMM'+' DD,'+ ' YYYY' )}</DateText>
-
-              </ReplyContainer>
-            ))
-          }
-        </body>
-      </Helmet>
       {postDetail && <Blogs item={postDetail} />}
+
+      {
+        replyList?.map((item, index) => (
+          <ReplyContainer key={index}>
+            <Flex height={'100%'} width={'100%'} justifyContent={'space-between'} flexDirection={'column'} >
+              <UserInfoRow>
+                <StyledAvatar src={item?.avatar} variant={'square'} />
+
+                <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
+
+              </UserInfoRow>
+
+              <Text color={'secondary.light'} fontSize={18}> {item?.wysiwyg} </Text>
+
+            </Flex>
+            <DateText>{ moment(item.createAt).format('MMMM'+' DD,'+ ' YYYY' )}</DateText>
+
+          </ReplyContainer>
+        ))
+      }
 
     </>
 
