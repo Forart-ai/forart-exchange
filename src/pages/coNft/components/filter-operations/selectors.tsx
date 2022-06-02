@@ -30,7 +30,7 @@ const SelectContentType:React.FC<{value: string, onChange: (event: any, child?: 
   return (
     <StyledSelector onChange={onChange}  value={value}>
       <MenuItem value={'co-nft'}>CO-NFT</MenuItem>
-      <MenuItem value={'user-nft'}>User NFTT</MenuItem>
+      <MenuItem value={'user-nft'}>User NFT</MenuItem>
     </StyledSelector>
   )
 }

@@ -51,7 +51,7 @@ const GallerySwiper:React.FC = () => {
         <Text color={'grey[400]'}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad fugit inventore minus nesciunt numquam provident repellat, sint vitae voluptates?</Text>
       </TopBox>
 
-      <CoNftRanking />
+      {/*<CoNftRanking />*/}
       <FtaRanking />
     </Wrapper>
   )

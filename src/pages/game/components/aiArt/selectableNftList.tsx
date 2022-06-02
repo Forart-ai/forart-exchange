@@ -68,18 +68,20 @@ const SelectableNFTList: React.FC<{selectedValue:string, onSelect:(_: string) =>
       slidesPerView={5}
       spaceBetween={1}
       breakpoints={
-        { '@0.00': {
-          slidesPerView: 1,
-        },
-        '@0.75': {
-          slidesPerView: 2,
-        },
-        '@1.00': {
-          slidesPerView: 3,
-        },
-        '@1.50': {
-          slidesPerView: 5,
-        }, }
+        {
+          320: {
+            slidesPerView: 3,
+            spaceBetween: 10
+          },
+          768: {
+            slidesPerView: 4,
+            spaceBetween: 20
+          },
+          1280: {
+            slidesPerView: 5,
+            spaceBetween: 30
+          }
+        }
       }
       pagination={{
         el: '.swiper-pagination',

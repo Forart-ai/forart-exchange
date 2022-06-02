@@ -5,6 +5,7 @@ import Button, { ButtonProps } from '@mui/material/Button'
 const StyledButton = styled(Button)({
   textTransform: 'none',
   fontSize: 16,
+  fontFamily: 'Kanit-Regular'
 })
 
 const CustomizeButton:React.FC<ButtonProps> = (props:ButtonProps) => {

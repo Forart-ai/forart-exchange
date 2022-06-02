@@ -74,7 +74,7 @@ export const SOCIAL_API = {
   getPostById(id?: string) {
     return Service.get(`post/${id}`)
   },
-  postNft(param:ShowCoNftParams) {
+  postNft(param: ShowCoNftParams) {
     return Service.post('/post/nft', param)
   },
   getUserPostList(param: UserPostListQueryParams) {

@@ -10,7 +10,7 @@ import { RankingBox, TableHeader, RankList, Number, MoreContainer } from '../ran
 const mockData = [
   {
     avatar:'https://forart-account.s3.us-west-2.amazonaws.com/4zhqncVayPZmk47u7WASHRy1UVn6ijdTqbAxgk1MVU6s/avatar.png',
-    username: 'momosama',
+    username: 'momosamaq',
     fta: 2344
   },
   {

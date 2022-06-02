@@ -1,4 +1,5 @@
 import { styled } from '@mui/system'
+import { SvgIcon } from '@mui/material'
 
 const getStyleByRank = ({ theme, $rank }: any) => {
   switch ($rank) {
@@ -15,6 +16,22 @@ const getStyleByRank = ({ theme, $rank }: any) => {
   }
 }
 
+const getShowMoreStatus = ({ showmore }: any) => {
+  switch (showmore) {
+  case 'false':
+    return {  transition: 'all .2s linear' }
+  case 'true':
+    return {
+      transform: 'rotate(180deg)',
+      transition: 'all .2s linear'
+    }
+
+  default:
+    return ''
+
+  }
+}
+
 export const RankingBox = styled('div')`
   display: flex;
   flex-direction: column;
@@ -22,6 +39,7 @@ export const RankingBox = styled('div')`
   border: 1px ${({ theme }) => theme.palette.secondary.light} solid;
   margin-top: 30px;
   border-radius: 10px;
+  transition: height 2s linear
 `
 
 export const TableHeader = styled('div')`
@@ -66,5 +84,12 @@ export const MoreContainer = styled('div')`
   flex-direction: column;
   align-items: center;
   border-top: 1px ${({ theme }) => theme.palette.secondary.main} solid;
+  height: 42px;
+  cursor: pointer;
 
+`
+
+export const ShowMoreIcon = styled(SvgIcon)<{showmore: string}>`
+
+  ${getShowMoreStatus}
 `

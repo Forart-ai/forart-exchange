@@ -1,7 +1,8 @@
 export interface ShowCoNftParams {
   wallet?: string
   nft: string | number
-  previewUrl:string
+  previewUrl: string
+  chainNftName?: string
 }
 
 export interface Order {

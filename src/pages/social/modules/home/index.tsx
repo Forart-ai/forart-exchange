@@ -1,7 +1,7 @@
 import { styled } from '@mui/system'
 import {
-  IconButton,
-  Popover,
+  IconButton, MenuItem,
+  Popover, SvgIcon, Switch,
   TextareaAutosize,
 } from '@mui/material'
 import { useSolanaWeb3 } from '../../../../contexts/solana-web3'
@@ -17,7 +17,13 @@ import Background from '../../../../assets/images/social/social-banner.png'
 import UserCoNftList from '../UserCoNftList'
 import Flex from '../../../../contexts/theme/components/Box/Flex'
 import Picker from 'emoji-picker-react'
-import { Clown_Emoji } from '../../../../contexts/svgIcons'
+import { Clown_Emoji, PaperPlain_Filled } from '../../../../contexts/svgIcons'
+import StyledSelector from '../../../../contexts/theme/components/Selector'
+import UserOwnedNfts from '../../../personal/modules/userOwnedNfts'
+import { MetadataResult } from '../../../../utils/metaplex/metadata'
+import UserOwnedNftList from '../userOwnedNftList'
+import { SendRounded } from '@mui/icons-material'
+import Text from '../../../../contexts/theme/components/Text/Text'
 
 export const SocialPageWrapper = styled('div')`
   width: 100%;
@@ -56,16 +62,16 @@ const Header = styled('div')`
 
 const CoNftContainer = styled('div')`
   width: 100%;
+  height: 280px;
 `
 
 const PostArea = styled('div')`
-  height: 340px;
   border: 1px ${({ theme }) => theme.palette.primary.main} solid;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
   padding: 10px 20px;
   margin-bottom: 30px;
 `
@@ -74,24 +80,27 @@ const StyledTextarea = styled(TextareaAutosize)`
   width: 100%;
   background-color: ${({ theme }) => theme.palette.secondary.dark};
   border: none;
-  border-radius: 10px;
+  border-radius: 6px;
   color: white;
   padding: 5px;
+  
   &:focus {
-    //border: ;
     outline: 1px ${({ theme }) => theme.palette.secondary.main} solid;
   }
 `
 
 const SocialHomepage: React.FC = () => {
   const [postMessage, setPostMessage] = useState<string>('')
+  const [nftType, setNftType] = useState<string | undefined>('co-nft')
   const { account } = useSolanaWeb3()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
-  const [selectedNFt, setSelectedNFt] = useState<ShowCoNftParams | undefined>()
+  const [selectedNFt, setSelectedNFt] = useState<ShowCoNftParams |  undefined>()
+  const [selectedOwnedNFt, setSelectedOwnedNFt] = useState<MetadataResult |  undefined>()
+
   const { data: mintedNft } = useMintResultQuery({ wallet: account?.toBase58(), nft:'' } )
   const [loading, setLoading] = useState(false)
 
@@ -142,8 +151,7 @@ const SocialHomepage: React.FC = () => {
       </Header>
       <PostArea>
         <Flex width={'100%'} alignItems={'center'}>
-          <StyledTextarea minRows={3} value={postMessage}  onChange={e => {setPostMessage(e.target.value)}} placeholder={'Something to say?'}  />
-
+          <StyledTextarea minRows={3}  value={postMessage}  onChange={e => {setPostMessage(e.target.value)}} placeholder={'Something to say?'}  />
           <IconButton  aria-describedby={id} size="small" onClick={event => setAnchorEl(event.currentTarget)} >
             <Clown_Emoji />
           </IconButton>
@@ -168,12 +176,44 @@ const SocialHomepage: React.FC = () => {
           </Popover>
         </Flex>
 
+        <StyledSelector
+          value={nftType}
+          onChange={(v: any) => {setNftType(v.target.value)}}
+          sx={{ margin: '10px 0',  }}
+        >
+          <MenuItem value={'co-nft'}>CO-NFT</MenuItem>
+          <MenuItem value={'owned-nft'}>Wallet NFT</MenuItem>
+          <MenuItem value={'aiart'}>AiArt</MenuItem>
+        </StyledSelector>
+
         {/*<RainbowButton onClick={() => setPostNft(!postNft)}> {!postNft? 'Post CO-NFT' : 'Post blog'} </RainbowButton>*/}
 
         <CoNftContainer>
-          <UserCoNftList list={mintedNft} selectedValue={selectedNFt} onSelect={v => setSelectedNFt(v)} />
+          {
+            nftType === 'co-nft' &&  <UserCoNftList list={mintedNft} selectedValue={selectedNFt} onSelect={v => setSelectedNFt(v)} />
+          }
+          {
+            nftType === 'owned-nft' &&  <UserOwnedNftList selectedValue={selectedOwnedNFt} onSelect={v => setSelectedOwnedNFt(v)} />
+
+          }
         </CoNftContainer>
-        <CustomizeButton disabled={loading} variant={'contained'} onClick={handleNftPost}> Post </CustomizeButton>
+
+        <Flex justifyContent={'space-between'} width={'100%'} alignItems={'center'}>
+          <Flex alignItems={'center'}>
+            <Text fontSize={16} fontFamily={'Kanit-Regular'}>View on Magic Eden</Text>
+            <Switch defaultChecked color="primary" />
+          </Flex>
+
+          <CustomizeButton
+            disabled={loading}
+            variant={'contained'}
+            onClick={handleNftPost}
+            endIcon={<SvgIcon > <PaperPlain_Filled /> </SvgIcon>}
+          >
+            Post
+          </CustomizeButton>
+        </Flex>
+
       </PostArea>
 
       {
