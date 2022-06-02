@@ -28,7 +28,6 @@ import { SyncLoader } from 'react-spinners'
 const Wrapper = styled('div')`
   width: 100%; 
   height: auto;
-  
 `
 
 const RainbowText = styled('div')`
@@ -105,9 +104,10 @@ const IdentityContainer = styled('div')`
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.palette.background.paper};
-  border-radius: 20px;
+  border-radius: 10px;
   margin-top: 30px;
-
+  
+  
   ${({ theme }) => theme.breakpoints.down('md')} {
 
     flex-direction: column;

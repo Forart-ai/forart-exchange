@@ -4,15 +4,14 @@ import wallet from '../../components/wallet'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { useRefreshController } from '../../contexts/refresh-controller'
 
-export const useGetUserInfo = (): UseQueryResult<UserInfoParam> => {
-  const { account } = useSolanaWeb3()
+export const useGetUserInfo = (walletAccount?: string): UseQueryResult<UserInfoParam> => {
   const { quietRefreshFlag } = useRefreshController()
 
   return useQuery(
-    ['USER_ACCOUNT_INFO', account?.toBase58(), quietRefreshFlag],
+    ['USER_ACCOUNT_INFO', walletAccount, quietRefreshFlag],
     async () => {
-      if (!account){return }
-      return await AUTH_API.getUserInfo(account?.toBase58()).then((res: any)=> ({
+      if (!walletAccount){return }
+      return await AUTH_API.getUserInfo(walletAccount).then((res: any)=> ({
         ...res ,
         avataruri:`${res.avataruri}?a=${new Date().getTime()}`,
         banneruri:`${res.banneruri}?a=${new Date().getTime()}`

@@ -18,16 +18,18 @@ import { FollowersList, FollowsList } from './modules/followersList'
 import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { useUserFollowingCounts } from '../../hooks/queries/useUserFollow'
 import UserPost from './modules/userPost'
+import DefaultPageWrapper from '../../components/default-page-wrapper'
+import Flex from '../../contexts/theme/components/Box/Flex'
 
 const Wrapper = styled('div')`
   width: 100%;
   min-height: 100vh;
   text-align: center;
-font-family: Kanit-Regular;
+  font-family: Kanit-Regular;
 
 `
 const BackgroundImage = styled('div')`
-  height: 420px;
+  height: 320px;
   width: 100%;
   text-align: center;
   display: flex;
@@ -59,33 +61,35 @@ const PersonalCenterContainer = styled('div')`
 `
 
 const UserInfoContainer = styled('div')`
-  width: 75%;
-  height: 160px;
   display: flex;
-  justify-content: space-between;
-  position: absolute;
-  bottom: 0;
-
+  flex-direction: column;
+  position: relative;
+  top: -140px;
+  width: 80%;
+  max-width: 1800px;
 `
 
 const DataColumn = styled('div')`
-  max-width: 200px;
-  width: 20%;
+  width: 100%;
+  display: flex;
+  gap: 32px;
+`
+
+const DataItem = styled('div')`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 27%;
-
-
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 30px;
+  
   span {
     color: #ffffff;
-    font-family: Aldrich-Regular;
-    font-size: 40px;
+    font-size: 20px;
   }
+  
   .label {
     color: #999999;
+    font-family: Kanit-Light;
     font-size: 16px;
   }
 `
@@ -104,14 +108,14 @@ const CoverMask = styled('div')`
   opacity: 0;
   position: absolute;
   top: 0;
-  border-radius: 50%;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   
   img {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
 
   }
   
@@ -124,64 +128,57 @@ const CoverMask = styled('div')`
 `
 
 const UserAvatar = styled('div')`
-  position: absolute;
-  top: 80%;
-  width: 128px;
-  height: 128px;
+  width: 180px;
+  height: 180px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.palette.background.paper};
+  border-radius: 10px;
+  padding: 10px;
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-  
-  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+
   :hover {
     opacity: .8;
     cursor: pointer;
   }
-  
+
 `
 
 const UserInfo = styled('div')`
-  display: flex;
   width: 100%;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+  display: flex;
   flex-direction: column;
-  margin-top: 70px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 30px;
 
   .amount {
     color: ${({ theme }) => theme.palette.primary.main};
     font-size: 18px;
     margin-top: 20px;
     font-family: Aldrich-Regular;
+  
   }
   
     .username {
       font-size: 30px;
       color: ${({ theme }) => theme.palette.text.primary};
-      font-weight: bolder;
-      display: flex;
-      align-items: center;
-      position: relative;
-
-      img {
-        margin-left: 10px;
-        width: 20px;
-        cursor: pointer;
-        position: absolute;
-        right: -30px;
-      
-      }
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: 1.2px;
     }
 
-    .address {
-      font-size: 18px;
-      color: ${({ theme }) => theme.palette.grey[400]};
-    }
+    
 
     ${({ theme }) => theme.breakpoints.down('sm')} {
       .username {
@@ -194,10 +191,17 @@ const UserInfo = styled('div')`
     }
 `
 
+const UserSlogan = styled('div')`
+  max-width: 900px;
+  font-size: 18px;
+  color: ${({ theme }) => theme.palette.grey[400]};
+  text-align: left;
+  font-family: Kanit-Light;
+`
+
 const TabsWrapper = styled('div')`
-  width: 100vw;
-  position: relative;
-  margin-top: 80px;
+  width: 80%;
+  max-width: 1800px;
 `
 
 const TabsContainer: React.FC = () => {
@@ -230,11 +234,10 @@ const TabsContainer: React.FC = () => {
   }
 
   return (
-    <TabsWrapper >
-      <Box sx={{ borderBottom: '1px #5000B4 solid', width:'auto' }}>
+    <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
+      <TabsWrapper >
         <StyledTabs
           variant={isMobile ? 'scrollable' : 'standard'}
-          centered={isMobile ? false : true}
           value={value}
           onChange={handleChange}
 
@@ -249,141 +252,121 @@ const TabsContainer: React.FC = () => {
 
         </StyledTabs>
 
-      </Box>
-
-      <Box>
-        {/*<TabPanel index={0} value={value}>*/}
-        {/*  <CharacterCustomize artistId={'3312'} />*/}
-        {/*</TabPanel>*/}
-        <TabPanel index={0} value={value}>
-          <TabsArea>
-            <Box sx={{ maxWidth:'1500px', width:'80%' }}>
+        <Box>
+          {/*<TabPanel index={0} value={value}>*/}
+          {/*  <CharacterCustomize artistId={'3312'} />*/}
+          {/*</TabPanel>*/}
+          <TabPanel index={0} value={value}>
+            <TabsArea>
               <Identity />
-            </Box>
-          </TabsArea>
-        </TabPanel>
-        <TabPanel index={1} value={value}>
-          <TabsArea>
-            <Box sx={{ maxWidth:'1500px', width:'80%' }}>
+            </TabsArea>
+          </TabPanel>
+          <TabPanel index={1} value={value}>
+            <TabsArea>
               <UserCoNftList list={mintedNft} />
-            </Box>
-          </TabsArea>
+            </TabsArea>
 
-        </TabPanel>
+          </TabPanel>
 
-        <TabPanel index={2} value={value}>
-          <TabsArea>
-            <Box sx={{ maxWidth:'1500px', width:'80%' }}>
+          <TabPanel index={2} value={value}>
+            <TabsArea>
               <UserOwnedNfts />
-            </Box>
 
-          </TabsArea>
+            </TabsArea>
 
-        </TabPanel>
+          </TabPanel>
 
-        <TabPanel index={3} value={value}>
-          <TabsArea >
-            <Box sx={{ maxWidth:'1500px', width:'80%' }}>
+          <TabPanel index={3} value={value}>
+            <TabsArea >
               <UserPost />
-            </Box>
-          </TabsArea>
-        </TabPanel>
+            </TabsArea>
+          </TabPanel>
 
-        <TabPanel index={4} value={value} />
-        <TabPanel index={5} value={value} />
-      </Box>
+          <TabPanel index={4} value={value} />
+          <TabPanel index={5} value={value} />
+        </Box>
 
-      <Drawer
-        anchor={'left'}
-        open={openFollowingDrawer}
-        onClose={() => setOpenFollowingDrawer(false)}
-        sx={{
-          '& .MuiDrawer-paper' : {
-            backgroundColor:'#0a0213',
-            borderBottomRightRadius:'16px',
-            borderTopRightRadius:'16px',
+        <Drawer
+          anchor={'left'}
+          open={openFollowingDrawer}
+          onClose={() => setOpenFollowingDrawer(false)}
+          sx={{
+            '& .MuiDrawer-paper' : {
+              backgroundColor:'#0a0213',
+              borderBottomRightRadius:'16px',
+              borderTopRightRadius:'16px',
 
-          }
-        }}
-      >
-        <FollowsList />
-      </Drawer>
+            }
+          }}
+        >
+          <FollowsList />
+        </Drawer>
 
-      <Drawer
-        anchor={'left'}
-        open={openFollowersDrawer}
-        onClose={() => setOpenFollowersDrawer(false)}
-        sx={{
-          '& .MuiDrawer-paper' : {
-            backgroundColor:'#0a0213',
-            borderBottomRightRadius:'16px',
-            borderTopRightRadius:'16px',
+        <Drawer
+          anchor={'left'}
+          open={openFollowersDrawer}
+          onClose={() => setOpenFollowersDrawer(false)}
+          sx={{
+            '& .MuiDrawer-paper' : {
+              backgroundColor:'#0a0213',
+              borderBottomRightRadius:'16px',
+              borderTopRightRadius:'16px',
 
-          }
-        }}
-      >
-        <FollowersList />
-      </Drawer>
+            }
+          }}
+        >
+          <FollowersList />
+        </Drawer>
 
-    </TabsWrapper>
+      </TabsWrapper>
+    </Flex>
   )
 }
 
 const PersonalCenterPage: React.FC = () => {
 
+  const walletAccount = useLocationQuery('userWalletAccount')
+
   const { openModal } = useModal()
-  const [loading, setLoading] = useState<boolean>(true)
 
   const { data: credit } = useUserCredit()
-  const { data: userInfo } = useGetUserInfo()
+  const { data: userInfo } = useGetUserInfo(walletAccount)
+  const { data: followingCount } = useUserFollowingCounts(walletAccount)
 
   return (
     <Wrapper>
       <PersonalCenterContainer>
         <BackgroundImage>
-          {/*<UserInfoContainer>*/}
-          {/*  <DataColumn>*/}
-          {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
-          {/*    <div className={'label'}>Intergal</div>*/}
-          {/*  </DataColumn>*/}
-
-          {/*  <DataColumn>*/}
-          {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
-          {/*    <div className={'label'}>Post</div>*/}
-          {/*  </DataColumn>*/}
-
-          {/*{*/}
-          {/*  loading ?*/}
-          {/*    <Skeleton sx={{ backgroundColor: '#0e1833' }} animation={'wave'} variant={'rectangular'} width={'100%'} height={'100%'} />*/}
-          {/*    :*/}
-          {/*    <img src={userInfo?.banneruri} />*/}
-          {/*}*/}
-
           <Image width={'100%'} height={'100%'} src={userInfo?.banneruri ? `${userInfo?.banneruri}?a=${userInfo?.updateTime}` : Background} variant={'rectangular'} />
+        </BackgroundImage>
 
+        <UserInfoContainer>
           <UserAvatar  onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)}>
             <CoverMask > <img src={SettingIcon} /> </CoverMask>
             <img src={userInfo?.avataruri ? `${userInfo?.avataruri}?a=${userInfo?.updateTime}` : AvatarIcon} />
           </UserAvatar>
+          <UserInfo>
+            <div className="username">{userInfo?.username}</div>
+            <UserSlogan>{ userInfo?.slogan }</UserSlogan>
+            {/*<div className="amount">$FTA: {credit?.retain ?? '0'}</div>*/}
+            <DataColumn>
+              <DataItem>
+                <span> {credit?.retain ?? '0'} </span>
+                <div className={'label'}>FTA Amount</div>
+              </DataItem>
 
-        </BackgroundImage>
+              <DataItem>
+                <span> {followingCount ? followingCount[0] : '0'} </span>
+                <div className={'label'}>Following</div>
+              </DataItem>
 
-        <UserInfo>
-          <div className="username">{userInfo?.username}</div>
-          <div className="address">{ userInfo?.slogan }</div>
-          <div className="amount">$FTA: {credit?.retain ?? '0'}</div>
-        </UserInfo>
-
-        {/*  <DataColumn>*/}
-        {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
-        {/*    <div className={'label'}>Followers</div>*/}
-        {/*  </DataColumn>*/}
-
-        {/*  <DataColumn>*/}
-        {/*    <span>{intd.replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, '$1,') }</span>*/}
-        {/*    <div className={'label'}>Following</div>*/}
-        {/*  </DataColumn>*/}
-        {/*</UserInfoContainer>*/}
+              <DataItem>
+                <span> {followingCount ? followingCount[1] : '0'} </span>
+                <div className={'label'}>Followers</div>
+              </DataItem>
+            </DataColumn>
+          </UserInfo>
+        </UserInfoContainer>
 
       </PersonalCenterContainer>
       <TabsContainer />

@@ -27,8 +27,8 @@ export  const StyledTabs = styled((props: StyledTabsProps) => (
     maxWidth: 40,
     width: '100%',
     backgroundColor: theme.palette.primary.main,
-
   },
+
 }))
 
 export interface StyledTabProps {
