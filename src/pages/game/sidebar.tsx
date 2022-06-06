@@ -52,22 +52,16 @@ const getStyleByPath = ({  $path }: any) => {
   }
 }
 
-export const StyledMenuList = styled('div')`
-  height: 50px;
-  margin-bottom: 20px;
-  width: 100%;
-  position: fixed;
-
-`
-
-export const StyledMenuItem = styled('div')<{$path?: string}>`
+export const StyledMenuItem = styled('div')<{$path?: string, open: boolean }>`
   height: 100%;
   width: 100%;
   border-radius: 28px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding-left: 20px;
+  justify-content: ${props => props.open ? 'flex-start' : 'center'};
+  gap: 10px;
+
+  padding: 0 5px;
   opacity: .34;
   position: relative;
   overflow: hidden;
@@ -77,21 +71,21 @@ export const StyledMenuItem = styled('div')<{$path?: string}>`
   
 `
 
-export const SelectedMenuItem = styled('div')<{$path?: string}>`
+export const SelectedMenuItem = styled('div')<{$path?: string, open: boolean}>`
   height: 100%;
   width: 100%;
   border-radius: 28px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding-left: 20px;
+  justify-content: ${props => props.open ? 'flex-start' : 'center'};
+  padding: 0 5px;
+  gap: 10px;
   transition: all 3s;
   animation-name: rubberBand;
   animation-duration: 1s;
   animation-fill-mode: both;
   position: relative;
   overflow: hidden;
-
 
   @keyframes rubberBand {
     from {
@@ -148,7 +142,6 @@ const StyledSvgIcon = styled('div')`
   align-items: center;
   justify-content: center;
   font-size: 40px;
-  margin-right: 10px;
   color: white;
   background: rgba(0, 0, 0, 0.2);
   min-width: 42px;
@@ -156,11 +149,14 @@ const StyledSvgIcon = styled('div')`
   border-radius: 50%;
 `
 
-const BlurredIcon = styled('div')`
+const BlurredIcon = styled('div')<{open: boolean}>`
   position: absolute;
   opacity: .6;
   right: -10px;
   top: 4px;
+  
+  display: ${props => props.open ? '' : 'none'};
+  
 `
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -192,6 +188,15 @@ const DrawerHeader = styled('div') `
   ...theme.mixins.toolbar,
   
   `
+
+export const StyledMenuList = styled('div')<{open: boolean}>`
+  height: 50px;
+  margin-bottom: 20px;
+  width: 100%;
+  padding:0 10px;
+  
+
+`
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -270,32 +275,32 @@ export const GamePageSidebar: React.FC = () => {
           gameRoutes.map((route, index) => {
             return (
               <Link to={`/game/${route.path}`}  key={index}>
-                <StyledMenuList >
+                <StyledMenuList open={open} >
                   {
                     pathname === `/game/${route.path}` ? (
-                      <SelectedMenuItem $path={route.title.toString()}>
+                      <SelectedMenuItem $path={route.title.toString()} open={open}>
                         <StyledSvgIcon>
                           { route.icon && <route.icon height={20} width={20} /> }
                         </StyledSvgIcon>
 
-                        <Text fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>
+                        <Text display={open ? '' : 'none'} fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>
                           { route.title }
                         </Text>
-                        <BlurredIcon >
+                        <BlurredIcon open={open}  >
                           { route.icon && <route.icon height={64} width={64} /> }
                         </BlurredIcon>
                       </SelectedMenuItem>
                     ) :
-                      <StyledMenuItem $path={route.title} >
+                      <StyledMenuItem $path={route.title} open={open} >
                         <StyledSvgIcon>
                           { route.icon && <route.icon height={20} width={20} /> }
                         </StyledSvgIcon>
 
-                        <Text fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>
+                        <Text display={open ? '' : 'none'} fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>
                           { route.title }
                         </Text>
 
-                        <BlurredIcon >
+                        <BlurredIcon open={open} >
                           { route.icon && <route.icon height={64} width={64} /> }
                         </BlurredIcon>
                       </StyledMenuItem>

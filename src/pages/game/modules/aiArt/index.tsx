@@ -32,18 +32,16 @@ import CustomizedSlider from '../../../../contexts/theme/components/Slider'
 
 const Wrapper = styled('div')`
   width: 100%;
-  margin-bottom: 300px;
 
 `
 
 const PageWrapper = styled('div')`
-  max-width: 1820px;
+  max-width: calc(100vw - 240px);
   width: 95%;
   min-height: 100vh; 
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  
 
 `
 

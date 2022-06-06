@@ -30,5 +30,7 @@ export function aiGeneratorImage(object: string, accessories: string, behavior: 
 export function textToImage(input_text: string) {
   return aiDriverRequest.post('genImage', {
     input_text,
-  })
+  },{
+    responseType: 'arraybuffer'
+  }).then(res => 'data:image/png;base64,' + Buffer.from(res.data, 'binary').toString('base64'))
 }
