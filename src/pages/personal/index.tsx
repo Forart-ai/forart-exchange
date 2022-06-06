@@ -330,14 +330,14 @@ const PersonalCenterPage: React.FC = () => {
   const { openModal } = useModal()
 
   const { data: credit } = useUserCredit()
-  const { data: userInfo } = useGetUserInfo(walletAccount)
+  const { data: userInfo, isLoading } = useGetUserInfo(walletAccount)
   const { data: followingCount } = useUserFollowingCounts(walletAccount)
 
   return (
     <Wrapper>
       <PersonalCenterContainer>
         <BackgroundImage>
-          <Image width={'100%'} height={'100%'} src={userInfo?.banneruri ? `${userInfo?.banneruri}?a=${userInfo?.updateTime}` : Background} variant={'rectangular'} />
+          <Image width={'100%'} height={'100%'} src={ `${userInfo?.banneruri}?a=${userInfo?.updateTime}`} variant={'rectangular'} />
         </BackgroundImage>
 
         <UserInfoContainer>

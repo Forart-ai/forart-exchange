@@ -3,11 +3,12 @@ import { ReactComponent as MarketplaceIcon } from '../../assets/images/siderIcon
 import AiArt from './modules/aiArt'
 import { Route } from 'src/routes'
 import { AiartSvg, GallerySvg } from '../../assets/svgs/game'
+import TextToImage from './modules/text-to-image'
 
 export const gameRoutes: Route[] = [
   {
     path: 'aiArt',
-    title: 'Aiart',
+    title: 'Soul Card',
     icon: GallerySvg,
     component: AiArt,
     disable: false,
@@ -15,10 +16,10 @@ export const gameRoutes: Route[] = [
     hidden:true
   },
   {
-    path: '2',
-    title: 'Transformation',
+    path: 'magic-wand',
+    title: 'Magic Wand',
     icon: AiartSvg,
-    component: AiArt,
+    component: TextToImage,
     disable: false,
     parent: 'game',
     hidden:true

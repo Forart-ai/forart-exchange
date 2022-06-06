@@ -1,44 +1,62 @@
 import React from 'react'
 import routes from '../../routes'
-import { MenuItem, MenuList, Paper, styled, SvgIcon, Typography } from '@mui/material'
+import {
+  Box,
+  CssBaseline,
+  CSSObject,
+  Divider,
+  IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText,
+  MenuItem,
+  MenuList,
+  Paper,
+  styled,
+  SvgIcon, Theme,
+  Toolbar,
+  Typography,
+  useTheme
+} from '@mui/material'
 import { Link, useLocation } from 'react-router-dom'
 import { gameRoutes } from './routes'
 import { Sticky, StickyContainer } from 'react-sticky'
 import { Arrow_Down, Robot_Outline } from '../../contexts/svgIcons'
 import Text from '../../contexts/theme/components/Text/Text'
+import {
+  ChevronLeftRounded,
+  ChevronRightRounded,
+  IndeterminateCheckBox, MailLockOutlined,
+  MenuBook,
+  MenuBookOutlined
+} from '@mui/icons-material'
+import MuiDrawer from '@mui/material/Drawer'
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
+
+const drawerWidth = 240
 
 const getStyleByPath = ({  $path }: any) => {
   switch ($path) {
-  case 'Aiart':
+  case 'Soul Card':
     return {
       background:'linear-gradient(98deg, #5000B4 2.09%, #8246F5 97.91%)',
     }
 
-  case 'Transformation':
+  case 'Magic Wand':
     return {
       background:'linear-gradient(98deg, #EB1482  2.09%, #CD19B9 97.91%)',
     }
 
   default:{
     return {
-      background: 'red',
+      background: 'darkblue',
     }
   }
   }
 }
 
-export const MenuContainer = styled('div')`
-   min-height: 100vh;
-   width: 300px;
-   border-right: 1px ${({ theme }) => theme.palette.secondary.light} solid;
-   left: 0;
-  height: 100%;
-`
-
 export const StyledMenuList = styled('div')`
   height: 50px;
   margin-bottom: 20px;
   width: 100%;
+  position: fixed;
 
 `
 
@@ -133,7 +151,7 @@ const StyledSvgIcon = styled('div')`
   margin-right: 10px;
   color: white;
   background: rgba(0, 0, 0, 0.2);
-  width: 42px;
+  min-width: 42px;
   height: 42px;
   border-radius: 50%;
 `
@@ -145,66 +163,153 @@ const BlurredIcon = styled('div')`
   top: 4px;
 `
 
+const openedMixin = (theme: Theme): CSSObject => ({
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+})
+
+const closedMixin = (theme: Theme): CSSObject => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+})
+
+const DrawerHeader = styled('div') `
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  
+  `
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })(
+  ({ theme, open }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+
+    '& .MuiPaper-root': {
+      top:'60px',
+      backgroundColor: theme.palette.background.default,
+      borderRight: `1px ${ theme.palette.secondary.main} solid`,
+
+    },
+    ...(open && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme),
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme),
+    }),
+  }),
+)
+
 export const GamePageSidebar: React.FC = () => {
 
   const { pathname }  = useLocation()
+  const theme = useTheme()
+  const [open, setOpen] = React.useState(false)
+
+  const handleDrawerOpen = () => {
+    setOpen(true)
+  }
+
+  const handleDrawerClose = () => {
+    setOpen(false)
+  }
   return (
-    <StickyContainer >
-      <MenuContainer className={'sidebar'}>
+    <Drawer  variant="permanent" open={open}>
+      <DrawerHeader>
+        <IconButton onClick={open ? handleDrawerClose : handleDrawerOpen}>
+          {open ? <ChevronLeftRounded /> : <ChevronRightRounded />}
+        </IconButton>
+      </DrawerHeader>
+      <Divider />
+      {/*<List>*/}
+      {/*  {*/}
+      {/*    gameRoutes.map((route, index) => (*/}
+      {/*      <ListItem key={index} disablePadding sx={{ display: 'block' }}>*/}
+      {/*        <ListItemButton*/}
+      {/*          sx={{*/}
+      {/*            minHeight: 48,*/}
+      {/*            justifyContent: open ? 'initial' : 'center',*/}
+      {/*            px: 2.5,*/}
+      {/*          }}*/}
+      {/*        >*/}
+      {/*          <ListItemIcon*/}
+      {/*            sx={{*/}
+      {/*              minWidth: 0,*/}
+      {/*              mr: open ? 3 : 'auto',*/}
+      {/*              justifyContent: 'center',*/}
+      {/*            }}*/}
+      {/*          >*/}
+      {/*            {index % 2 === 0 ? <IndeterminateCheckBox /> : <MailLockOutlined />}*/}
+      {/*          </ListItemIcon>*/}
+      {/*          <ListItemText primary={route.path} sx={{ opacity: open ? 1 : 0 }} />*/}
+      {/*        </ListItemButton>*/}
+      {/*      </ListItem>*/}
+      {/*    ))*/}
+      {/*  }*/}
+      {/*</List>*/}
 
-        <MenuPaper sx={{ width: 230 }}>
-          <Sticky>
-            {
-              ({ style, isSticky=true }) => (
-                <div style={{ ...style, marginTop: isSticky ? '60px' : 0  }}>
+      <div>
+        {
+          gameRoutes.map((route, index) => {
+            return (
+              <Link to={`/game/${route.path}`}  key={index}>
+                <StyledMenuList >
                   {
-                    gameRoutes.map((route, index) => {
-                      return (
-                        <Link to={`/game/${route.path}`}  key={index}>
-                          <StyledMenuList >
-                            {
-                              pathname === `/game/${route.path}` ? (
-                                <SelectedMenuItem $path={route.title.toString()}>
-                                  <StyledSvgIcon>
-                                    { route.icon && <route.icon height={20} width={20} /> }
-                                  </StyledSvgIcon>
+                    pathname === `/game/${route.path}` ? (
+                      <SelectedMenuItem $path={route.title.toString()}>
+                        <StyledSvgIcon>
+                          { route.icon && <route.icon height={20} width={20} /> }
+                        </StyledSvgIcon>
 
-                                  <Text fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>
-                                    { route.title }
-                                  </Text>
-                                  <BlurredIcon >
-                                    { route.icon && <route.icon height={64} width={64} /> }
-                                  </BlurredIcon>
-                                </SelectedMenuItem>
-                              ) :
-                                <StyledMenuItem $path={route.title} >
-                                  <StyledSvgIcon>
-                                    { route.icon && <route.icon height={20} width={20} /> }
-                                  </StyledSvgIcon>
+                        <Text fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>
+                          { route.title }
+                        </Text>
+                        <BlurredIcon >
+                          { route.icon && <route.icon height={64} width={64} /> }
+                        </BlurredIcon>
+                      </SelectedMenuItem>
+                    ) :
+                      <StyledMenuItem $path={route.title} >
+                        <StyledSvgIcon>
+                          { route.icon && <route.icon height={20} width={20} /> }
+                        </StyledSvgIcon>
 
-                                  <Text fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>
-                                    { route.title }
-                                  </Text>
+                        <Text fontSize={16} color={'white'} fontFamily={'Kanit-Regular'}>
+                          { route.title }
+                        </Text>
 
-                                  <BlurredIcon >
-                                    { route.icon && <route.icon height={64} width={64} /> }
-                                  </BlurredIcon>
-                                </StyledMenuItem>
-                            }
-                          </StyledMenuList >
-                        </Link>
-                      )
-                    })
+                        <BlurredIcon >
+                          { route.icon && <route.icon height={64} width={64} /> }
+                        </BlurredIcon>
+                      </StyledMenuItem>
                   }
-                </div>
-              )
-            }
+                </StyledMenuList >
+              </Link>
+            )
+          })
+        }
+      </div>
 
-          </Sticky>
-        </MenuPaper>
+      <Divider />
 
-      </MenuContainer>
-    </StickyContainer>
+    </Drawer>
   )
 }
 

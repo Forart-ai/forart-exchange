@@ -33,6 +33,7 @@ const Text = styled('div')<TextProps> `
 Text.defaultProps = {
   color: 'primary.main',
   fontSize: '16px',
+  fontFamily:'Kanit-Regular'
 }
 
 export default Text

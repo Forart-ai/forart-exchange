@@ -95,6 +95,5 @@ export const NFTItemFromWallet: React.FC<{ src: MetadataResult , checked?: boole
       <SelectBtn />
       <Text color={'primary.main'} fontSize={18} fontFamily={'Kanit-Regular'}>{src.data?.name}</Text>
     </NftContent>
-
   )
 }

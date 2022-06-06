@@ -6,7 +6,7 @@ const aiDriverRequest = axios.create({
   // baseURL: 'https://43.131.247.213:8892/',
 
   baseURL: 'https://api.forart.ai/ai/',
-  timeout: 30000
+  timeout: 60000000000
 })
 
 // aiDriverRequest.interceptors.request.use(config => {

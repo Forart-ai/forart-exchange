@@ -50,7 +50,7 @@ const ForartTheme = createTheme({
       disabled: 'rgba(255, 255, 255, 0.5)',
     },
     background: {
-      default: 'rgb(34,30,57)',
+      default: 'rgb(10,5,35)',
       paper: 'rgb(40,0,90)'
     },
     grey: {

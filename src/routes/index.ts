@@ -86,13 +86,12 @@ const routes: Route[] = [
     hidden: true
   },
   {
-    path: '/gameeeeeeeeeeeeeeeee',
+    path: '/game',
     title:'Game',
     match: /^\/game/,
     exact: false,
     component: Game,
     icon: MarketplaceIcon,
-    disable: true
   },
 ]
 

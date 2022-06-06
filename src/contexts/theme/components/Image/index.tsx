@@ -16,44 +16,29 @@ const StyledImage = styled('img')<{ $borderRadius: number }>`
 `
 
 const Image: React.FC<ImageProps> = ({ src, alt, width, height,variant,...props }) => {
-  const imgRef = useRef<HTMLDivElement>(null)
-  const [isLoaded, setIsLoaded] = useState(false)
+
+  const imgEl = React.useRef<HTMLImageElement>(null)
+  const [loaded, setLoaded] = React.useState(false)
+
+  const onImageLoaded = () => setLoaded(true)
+
+  React.useEffect(() => {
+    const imgElCurrent = imgEl.current
+    console.log(loaded, imgElCurrent)
+
+    if (imgElCurrent) {
+      imgElCurrent.addEventListener('load', onImageLoaded)
+      return () => imgElCurrent.removeEventListener('load', onImageLoaded)
+    }
+  }, [imgEl])
 
   useEffect(() => {
-    let observer: IntersectionObserver
-    const isSupported = typeof window === 'object' && window.IntersectionObserver
-
-    if (imgRef.current && isSupported) {
-      observer = new window.IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          const { isIntersecting } = entry
-          if (isIntersecting) {
-            // setTimeout(()=>setIsLoaded(true), 2000)
-            setIsLoaded(true)
-            if (typeof observer?.disconnect === 'function') {
-              observer.disconnect()
-            }
-          }
-        })
-      }, observerOptions)
-      observer.observe(imgRef.current)
-    }
-
-    return () => {
-      if (typeof observer?.disconnect === 'function') {
-        observer.disconnect()
-      }
-    }
-  }, [src])
+  }, [loaded])
 
   return (
-    <Wrapper ref={imgRef} height={height} width={width} {...props}>
-      {
-        isLoaded ?
-          <StyledImage src={src} alt={alt} $borderRadius={props?.borderRadius ?? 0}  />
-          :
-          <Skeleton sx={{ backgroundColor: '#0e1833' }} animation={'wave'} variant={variant} width={'100%'} height={'100%'}  />
-      }
+    <Wrapper  height={height} width={width} {...props}>
+      <StyledImage ref={imgEl} src={src} alt={alt} $borderRadius={props?.borderRadius ?? 0}    style={loaded ? { display: 'inline-block' } : { display: 'none' }} />
+      <Skeleton sx={{ backgroundColor: '#453e4d' }} animation={'wave'} variant={variant} width={'100%'} height={'100%'} style={!loaded ? { display: 'block' } : { display: 'none' }}  />
     </Wrapper>
   )
 }

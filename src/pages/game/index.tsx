@@ -5,12 +5,14 @@ import { gameRoutes } from './routes'
 import { styled } from '@mui/material'
 
 const GamePageWrapper = styled('div')`
- min-height: 100vh;
+  min-height: 100vh;
   display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
 `
 
 const MainContainer = styled('div')`
-  width: calc(100vw - 240px);
+  width: 100%;
 `
 
 const Game: React.FC = () => {
