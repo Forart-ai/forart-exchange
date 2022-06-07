@@ -17,7 +17,7 @@ export const useUserFollowerList = (account?: string): UseQueryResult<FollowersL
   )
 }
 
-export const useUserFollowsList = (account?: string): UseQueryResult<FollowersListItem[]> => {
+export const useUserFollowsList = (account?: string ): UseQueryResult<FollowersListItem[]> => {
   return useQuery(
     ['USER_FOLLOWS_LIST', account],
     async () => {

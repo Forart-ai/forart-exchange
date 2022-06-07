@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
+import { Route, Routes, useNavigate, useLocation, Link,Outlet } from 'react-router-dom'
 import { socialRoutes } from './routes'
 import { styled } from '@mui/system'
 import SocialHomepage, { MainMessageArea, SocialPageWrapper } from './modules/home'
 import GallerySwiper from './modules/ranking/gallerySwiper'
 import { StickyContainer, Sticky } from 'react-sticky'
+import ReplyList from './modules/detail/replyList'
 
 const PageWrapper = styled('div')(({ theme }) => ({
   maxWidth: '90rem',
@@ -35,10 +36,10 @@ const RankingContent = styled('div')`
 
 const NftChatroom: React.FC = () => {
   const { pathname } = useLocation()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (pathname === '/social') history.push('/social/home')
+    if (pathname === '/social') navigate('/social/home')
   }, [pathname])
 
   return (
@@ -48,17 +49,11 @@ const NftChatroom: React.FC = () => {
 
         <SocialPageWrapper>
           <MainMessageArea>
-            <Switch>
-              {
-                socialRoutes.map(({ path, component }) => (
-                  <Route
-                    path={`/social/${path}`}
-                    component={component}
-                    key={path}
-                  />
-                ))
-              }
-            </Switch>
+            <nav>
+              <Link to={'home'}  />
+              <Link to={'post'}  />
+            </nav>
+            <Outlet />
           </MainMessageArea>
           <RankingContent>
             <Sticky >

@@ -15,7 +15,7 @@ import {  styled } from '@mui/material'
 import { useModal } from '../contexts/modal'
 import { SyncLoader } from 'react-spinners'
 import CustomizeButton from '../contexts/theme/components/Button'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const BoxContainer = styled('div')`
   min-height: 100px;
@@ -111,11 +111,11 @@ const MessageBox:React.FC<{ content : typeof MODAL_CONTENT[keyof typeof MODAL_CO
 }
 
 const MetaDataContainer:React.FC<{metadata: MetadataResult}> = ({ metadata }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const {  closeModal } = useModal()
 
   const toNftDetail = (mint?:string) => {
-    history.push(`/nft-detail?mint=${mint}`)
+    navigate(`/nft-detail?mint=${mint}`)
     closeModal()
   }
 

@@ -3,7 +3,7 @@ import { useModal } from '../contexts/modal'
 import { useSolanaWeb3 } from '../contexts/solana-web3'
 import styled from 'styled-components'
 import CONFT_API from '../apis/co-nft'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { NFTAttributesData } from '../types/coNFT'
 import { Box } from '@mui/material'
 import { Keypair, LAMPORTS_PER_SOL, Transaction } from '@solana/web3.js'
@@ -35,7 +35,7 @@ type ExtractPromise<A> = A extends Promise<infer T> ? T : never
 
 const MintSuccessDialog = () => {
   const { closeModal } = useModal()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   return (
     <Dialog title={'Congratulations!'} closeable>
@@ -47,7 +47,7 @@ const MintSuccessDialog = () => {
           variant={'contained'}
           color={'secondary'}
           onClick={() => {
-            history.push('/account')
+            navigate('/account')
             closeModal()
           }}
         > Personal space

@@ -13,7 +13,7 @@ import { useRefreshController } from '../../../../contexts/refresh-controller'
 import WalletSelectionModal from '../../../../components/wallet/WalletSelectionModal'
 import { useModal } from '../../../../contexts/modal'
 import { useEnqueueSnackbar } from '../../../../contexts/theme/components/Snackbar'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField } from './blog.styles'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import { Helmet } from 'react-helmet'
@@ -26,7 +26,8 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   const [heartStatus, setHeartStatus] = useState<'up' | 'down'>('down')
   const [heartNum, setHeartNum] = useState<number>(item.starCount ?? 0)
   const enqueueSnackbar = useEnqueueSnackbar()
-  const history = useHistory()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const postId = useLocationQuery('id')
 
@@ -36,16 +37,17 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   const [value, setValue] = useDebounce('',100)
 
   const redirectToPostDetail = useCallback(
+
     () => {
-      if (history.location.pathname.includes('/social')) {
-        history.replace(`post?id=${item.id}`)
+      if (location.pathname.includes('/social')) {
+        navigate(`/social/post?id=${item.id}`,{ replace: true, })
         return
       }
       else
-        history.replace(`/social/post?id=${item.id}`)
+        navigate(`/social/post?id=${item.id}`,{ replace: true })
       return
     },
-    [history],
+    [navigate],
   )
 
   const replyRequest: ReplyPostRequest = {
@@ -84,7 +86,6 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
 
   const onKeyPress = (key: any) => {
     if (key.key === 'Enter'){
-      console.log('value', replyRequest)
       SOCIAL_API.ReplyPost(replyRequest).then(() => {
         enqueueSnackbar('Comment successfully', 'Success',{ variant: 'success' })
         forceRefresh()
@@ -96,7 +97,7 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
     if (!account) { return}
     SOCIAL_API.followUser({ follow: blogUserId, follower: account?.toBase58() }).then(res => {
       enqueueSnackbar('Follow successfully', 'Success',{ variant: 'success' })
-      console.log(res)})
+    })
   },
   [account],
   )
@@ -115,7 +116,7 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
           </Flex>
           <>
             {/*<CustomizeButton onClick={() => followUser(item.wallet)} disableElevation size={'small'} sx={{ borderRadius:'20px' }} color={'secondary'} variant={'contained'}>Follow</CustomizeButton>*/}
-            <BlogsOperationMenu />
+            <BlogsOperationMenu item={item} />
           </>
         </UserInfoRow>
 

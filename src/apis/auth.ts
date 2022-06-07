@@ -96,6 +96,9 @@ export const SOCIAL_API = {
   followUser(param:FollowUserParams) {
     return Service.post('follow', param)
   },
+  deletePost(postId: string) {
+    return Service.delete(`post/remove/${postId}`)
+  },
 
 }
 

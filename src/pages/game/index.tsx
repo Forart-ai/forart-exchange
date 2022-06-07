@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, Switch, useHistory } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import { GamePageSidebar } from './sidebar'
 import { gameRoutes } from './routes'
 import { styled } from '@mui/material'
@@ -17,27 +17,27 @@ const MainContainer = styled('div')`
 
 const Game: React.FC = () => {
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    history.push('/game/aiArt')
-  }, [history])
+    navigate('/game/aiArt')
+  }, [navigate])
 
   return (
     <GamePageWrapper>
       <GamePageSidebar />
       <MainContainer>
-        <Switch>
+        <Routes>
           {
             gameRoutes.map(({ path, component }) => (
               <Route
                 path={`/game/${path}`}
-                component={component}
+                element={component}
                 key={path}
               />
             ))
           }
-        </Switch>
+        </Routes>
       </MainContainer>
     </GamePageWrapper>
   )

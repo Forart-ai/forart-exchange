@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { PoolsListData } from '../../../../types/coNFT'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useModal } from '../../../../contexts/modal'
 import DonateDialog from '../../components/modals/donation/donate-dialog'
 import {
@@ -15,7 +15,7 @@ import {
 const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data, status }) => {
 
   const [loading, setLoading] = useState<string>('false')
-  const history = useHistory()
+  const navigate = useNavigate()
 
   useMemo(() => {
     if (data?.status === 'closing') {
@@ -39,7 +39,7 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
 
   return (
     // <Link to={data?.artistId ? toArtistDetailUrl : ''} >
-    <PoolsCardContainer onClick={() => history.push(toArtistDetailUrl)}>
+    <PoolsCardContainer onClick={() => navigate(toArtistDetailUrl)}>
       <ImageContent>
         <img src={data?.image} />
       </ImageContent>

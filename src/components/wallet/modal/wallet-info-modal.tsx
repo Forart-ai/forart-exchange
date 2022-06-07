@@ -6,7 +6,7 @@ import { shortenAddress } from '../../../utils'
 import { DEFAULT_CLUSTER } from '../../../contexts/solana-connection-config'
 import { useModal } from '../../../contexts/modal'
 import { disconnect } from 'cluster'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 const Wrapper = styled('div')`
@@ -24,14 +24,14 @@ const Message = styled('div')`
 
 const WalletInfoModal:React.FC<{ account?: string; disconnect: VoidFunction }> = ({ account, disconnect }) => {
 
-  const history = useHistory()
+  const navigate = useNavigate()
   const { closeModal } = useModal()
 
   const disconnectWallet = () => {
     disconnect()
     closeModal()
     Cookies.remove('USER_TOKEN')
-    history.push('/')
+    navigate('/')
   }
 
   return (

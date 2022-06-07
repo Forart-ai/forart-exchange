@@ -62,7 +62,7 @@ const CoNftCard:React.FC<{nftDetail: MintedNFTItem}> = ({ nftDetail }) => {
         <ImageWrapper>
           <img src={nftDetail?.previewUrl} />
         </ImageWrapper>
-        <Flex flexDirection={'column'} width={isMobile ? '100%' : 'calc(100% - 250px)'}  >
+        <Flex flexDirection={'column'} justifyContent={'flex-start'} alignItems={'flex-start'} width={isMobile ? '100%' : 'calc(100% - 250px)'}  >
           <Text color={'secondary.light'} fontSize={'20px'} fontFamily={'Aldrich-Regular'}>{nftDetail?.chainNftName}</Text>
           <Text color={'secondary.light'} letterSpacing={'.4px'} fontFamily={'Kanit-Regular'} fontSize={'14px'} mb={'5px'} >Owned by: &nbsp;{shortenAddress(nftDetail?.wallet)}</Text>
           <AttributesItemCard item={attr} />

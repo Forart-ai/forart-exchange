@@ -8,7 +8,6 @@ import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import { styled } from '@mui/material'
 import { usePostDetailQuery } from '../../../../hooks/queries/usePostDetailQuery'
 import Blogs from '../blogs/blogs'
-import { useHistory, useLocation } from 'react-router-dom'
 
 const ReplyContainer = styled('div')`
   min-height: 200px;
@@ -31,7 +30,6 @@ const ReplyList: React.FC= () => {
   const current = parseInt(useLocationQuery('page') ?? '1')
   const postId = useLocationQuery('id')
   const { data: postDetail } = usePostDetailQuery(postId)
-  const history = useHistory()
 
   const { data: replyList } = usePostReplyQuery({
     size,
@@ -42,8 +40,6 @@ const ReplyList: React.FC= () => {
     wallet: '',
     createDay: undefined
   })
-
-  console.log(`${process.env.REACT_APP_SITE_URL + history.location.pathname + history.location.search}`)
 
   return (
 

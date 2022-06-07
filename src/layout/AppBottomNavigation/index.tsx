@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
 import { BottomNavigation, BottomNavigationAction, Paper, styled } from '@mui/material'
 import routes, { Route } from '../../routes'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { NavLinkText } from '../AppHeader'
 
 const AppBottomNavigation: React.FC = () => {
 
   const [value, setValue] = React.useState('/')
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    history.push(value)
+    navigate(value)
     // console.log(value)
   },[value])
 

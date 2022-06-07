@@ -24,7 +24,6 @@ const Image: React.FC<ImageProps> = ({ src, alt, width, height,variant,...props 
 
   React.useEffect(() => {
     const imgElCurrent = imgEl.current
-    console.log(loaded, imgElCurrent)
 
     if (imgElCurrent) {
       imgElCurrent.addEventListener('load', onImageLoaded)

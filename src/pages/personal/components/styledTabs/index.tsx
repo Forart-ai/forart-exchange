@@ -1,10 +1,10 @@
 import React from 'react'
-import { styled, Tab, Tabs } from '@mui/material'
+import { styled, Tab, TabProps, Tabs } from '@mui/material'
 
 interface StyledTabsProps {
   children?: React.ReactNode;
-  value: number;
-  onChange: (event: React.SyntheticEvent, newValue: number) => void;
+  value:  string | null;
+  onChange: (event: React.SyntheticEvent, newValue: string) => void;
   variant?: 'scrollable' | 'standard';
   centered?: boolean
 }
@@ -33,12 +33,14 @@ export  const StyledTabs = styled((props: StyledTabsProps) => (
 
 export interface StyledTabProps {
   label: string;
+  value: string;
+  component?: any
 }
 
 export interface TabPanelProps {
   children?: React.ReactNode;
-  index: number;
-  value: number;
+  index:  string;
+  value:  string | null;
 }
 
 export function TabPanel(props: TabPanelProps) {
@@ -63,7 +65,7 @@ export function TabPanel(props: TabPanelProps) {
   )
 }
 
-export const StyledTab = styled((props: StyledTabProps) => (
+export const StyledTab = styled((props: TabProps) => (
   <Tab disableRipple {...props} />
 ))(({ theme }) => ({
   fontFamily: 'arialBold',

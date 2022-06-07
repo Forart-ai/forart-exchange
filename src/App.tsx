@@ -2,8 +2,7 @@ import React, { useEffect } from 'react'
 import './App.css'
 import './app.scss'
 import AppHeader from './layout/AppHeader'
-// @ts-ignore
-import { Route, useLocation } from 'react-router-dom'
+import { Route, useLocation, Routes, Link } from 'react-router-dom'
 import routes from './routes'
 import '../src/font/font.css'
 import { useMediaQuery } from 'react-responsive'
@@ -11,10 +10,18 @@ import { Box, styled } from '@mui/material'
 import useEagerConnect from './hooks/useEagerConnect'
 import AppFooter from './layout/AppFooter'
 import Flex from './contexts/theme/components/Box/Flex'
-import { zIndex } from 'styled-system'
 import useSignLogin from './hooks/useSignLogin'
-import Cookies from 'js-cookie'
 import { StickyContainer,Sticky } from 'react-sticky'
+import CoNftPage from './pages/coNft/homepage'
+import CONFTDetail from './pages/nftDetail/coNftDetail'
+import WalletNftDetail from './pages/nftDetail/walletNftDetail'
+import ArtistDetail from './pages/coNft/artistdetail'
+import NftChatroom from './pages/social'
+import AIGen from './pages/AIGen'
+import PersonalCenterPage from './pages/personal'
+import Game from './pages/game'
+import SocialHomepage from './pages/social/modules/home'
+import ReplyList from './pages/social/modules/detail/replyList'
 
 export const BlueGlow = styled('div')`
   position: fixed;
@@ -72,17 +79,29 @@ const App: React.FC = () => {
             <Flex flexDirection={'column'} minHeight={'100vh'}>
 
               <Box   sx={{  width:'100vw', backgroundColor:'rgb(10,5,35)' }}>
-                {
-                  routes.map(({ exact = true, path, component }) => (
-                    <Route
-                      path={path}
-                      exact={exact}
-                      component={component}
-                      key={path}
-                    />
+                <Routes>
+                  {/*{*/}
+                  {/*  routes.map(({  path, component }) => (*/}
+                  {/*    <Route*/}
+                  {/*      path={path}*/}
+                  {/*      element={component}*/}
+                  {/*      key={path}*/}
+                  {/*    />*/}
 
-                  ))
-                }
+                  {/*  ))*/}
+                  {/*}*/}
+                  <Route path="/" element={<CoNftPage />} />
+                  <Route path="co-nft-detail" element={<CONFTDetail />} />
+                  <Route path="nft-detail" element={<WalletNftDetail />} />
+                  <Route path="co-nft/artistDetail" element={<ArtistDetail />} />
+                  <Route path="social" element={<NftChatroom />}  >
+                    <Route path="home" element={<SocialHomepage />} />
+                    <Route path="post" element={<ReplyList />} />
+                  </Route>
+                  <Route path="Text-to-NFT" element={<AIGen />} />
+                  <Route path="account/:wallet"  element={<PersonalCenterPage />}  />
+                  <Route path="game" element={<Game />} />
+                </Routes>
               </Box>
 
             </Flex>

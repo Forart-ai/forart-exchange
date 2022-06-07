@@ -6,16 +6,11 @@ import { Alert, AlertTitle, Box, Snackbar, styled } from '@mui/material'
 import CONFT_API from '../apis/co-nft'
 import { useQuery, UseQueryResult } from 'react-query'
 import CustomizeButton from '../contexts/theme/components/Button'
-import MintMessageDialog from '../pages/coNft/components/modals/create/mint-message'
-import useNFTMint from './useNFTMint'
-import { sleep } from '../utils'
-import useCandyMachine from './programs/useCandyMachine'
 import { useConnectionConfig } from '../contexts/solana-connection-config'
 import { NFTPreview } from '../components/nft-mint/selectedList'
 import { NFTAttributesData } from '../types/coNFT'
 import { Keypair } from '@solana/web3.js'
-import { useRefreshController } from '../contexts/refresh-controller'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import AttrReviewDialog from '../pages/coNft/components/modals/create/attr-review'
 
 export interface Minting {
@@ -95,7 +90,7 @@ const PreviewArea = styled('div')`
 const MintItem: React.FC<{ minting: Minting }> = ({ minting }) => {
   const { account } = useSolanaWeb3()
   const { connection } = useConnectionConfig()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { openModal, closeModal } = useModal()
 
   const [body, setBody] = useState<NFTAttributesData>()
@@ -145,7 +140,7 @@ const MintItem: React.FC<{ minting: Minting }> = ({ minting }) => {
                 variant={'contained'}
                 color={'secondary'}
                 onClick={() => {
-                  history.push('/account')
+                  navigate('/account')
                   closeModal()
                 }}
               >

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import ForartLogo from '../../assets/logo.png'
 import UserIcon from '../../assets/images/header/avatar.png'
-import { useHistory, Link, useLocation } from 'react-router-dom'
+import { useNavigate, Link, useLocation } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import Wallet from '../../components/wallet'
 import routes, { Route } from '../../routes'
@@ -181,14 +181,14 @@ const DrawerList:React.FC = () => {
   const { pathname }  = useLocation()
   const { openModal } = useModal()
   const { account } = useSolanaWeb3()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const handleRedirect = () => {
     if (!account) {
       openModal(<WalletSelectionModal />)
     }
     else {
-      history.push(`/account?userWalletAccount=${account.toBase58()}`)
+      navigate(`/account?userWalletAccount=${account.toBase58()}`)
       return
     }
   }
@@ -247,7 +247,7 @@ const DrawerList:React.FC = () => {
 const AppHeader:React.FC  = () => {
   type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
@@ -262,7 +262,9 @@ const AppHeader:React.FC  = () => {
       openModal(<WalletSelectionModal />)
     }
     else {
-      history.push(`/account?userWalletAccount=${account.toBase58()}`)
+      navigate(`/account/${account.toBase58()}?tab=conft`, )
+      // navigate('/account' )
+
       return
     }
   }

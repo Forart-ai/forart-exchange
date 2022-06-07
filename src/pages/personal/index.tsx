@@ -20,6 +20,8 @@ import { useUserFollowingCounts } from '../../hooks/queries/useUserFollow'
 import UserPost from './modules/userPost'
 import DefaultPageWrapper from '../../components/default-page-wrapper'
 import Flex from '../../contexts/theme/components/Box/Flex'
+import { useSolanaWeb3 } from '../../contexts/solana-web3'
+import { useLocation, Link, useNavigate, useSearchParams, useParams } from 'react-router-dom'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -112,6 +114,7 @@ const CoverMask = styled('div')`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   
   img {
     width: 24px;
@@ -146,10 +149,6 @@ const UserAvatar = styled('div')`
   }
 
 
-  :hover {
-    opacity: .8;
-    cursor: pointer;
-  }
 
 `
 
@@ -205,32 +204,36 @@ const TabsWrapper = styled('div')`
 `
 
 const TabsContainer: React.FC = () => {
+  const theme = useTheme()
+  const navigate = useNavigate()
+  const { wallet } = useParams()
+  console.log(wallet)
 
-  const walletAccount = useLocationQuery('userWalletAccount')
+  // const wallet = useLocationQuery('wallet')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [value, setValue] = React.useState<string>('co-nft')
+
+  console.log(searchParams.get('tab'))
 
   const [openFollowersDrawer, setOpenFollowersDrawer] = useState<boolean>(false)
   const [openFollowingDrawer, setOpenFollowingDrawer] = useState<boolean>(false)
 
-  const { data: followingCount } = useUserFollowingCounts(walletAccount)
-
-  const theme = useTheme()
-
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
-  const { data: mintedNft } = useMintResultQuery({ wallet: walletAccount, nft:'' } )
+  const { data: followingCount } = useUserFollowingCounts(wallet)
+  const { data: mintedNft } = useMintResultQuery({ wallet: wallet, nft:'' } )
 
-  const [value, setValue] = React.useState(1)
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    if (newValue !== 4 && newValue !== 5) {
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    if (newValue !== 'follower' && newValue !== 'following') {
       setValue(newValue)
     }
-    if (newValue === 4) {
+    if (newValue === 'following') {
       setOpenFollowingDrawer(true)
     }
-    if (newValue === 5) {
+    if (newValue === 'follower') {
       setOpenFollowersDrawer(true)
     }
+
   }
 
   return (
@@ -243,12 +246,12 @@ const TabsContainer: React.FC = () => {
 
         >
           {/*<StyledTab label="Avatar" />*/}
-          <StyledTab label="DePainter" />
-          <StyledTab  label="CO-NFT"  />
-          <StyledTab label="NFTs" />
-          <StyledTab label="Post" />
-          <StyledTab label={followingCount ? `Following(${followingCount[0]}) ` : 'Following()'} />
-          <StyledTab label={followingCount ? `Followers(${followingCount[1]}) ` : 'Followers()'} />
+          <StyledTab  value={'dePainter'} label="DePainter" />
+          <StyledTab value={'co-nft'}  label="CO-NFT"  />
+          <StyledTab  value={'user-nft'} label="NFTs" />
+          <StyledTab  value={'post'} label="Post" />
+          <StyledTab  value={'following'} label={followingCount ? `Following(${followingCount[0]}) ` : 'Following()'} />
+          <StyledTab  value={'follower'} label={followingCount ? `Followers(${followingCount[1]}) ` : 'Followers()'} />
 
         </StyledTabs>
 
@@ -256,19 +259,19 @@ const TabsContainer: React.FC = () => {
           {/*<TabPanel index={0} value={value}>*/}
           {/*  <CharacterCustomize artistId={'3312'} />*/}
           {/*</TabPanel>*/}
-          <TabPanel index={0} value={value}>
+          <TabPanel index={'dePainter'} value={value}>
             <TabsArea>
               <Identity />
             </TabsArea>
           </TabPanel>
-          <TabPanel index={1} value={value}>
+          <TabPanel index={'co-nft'} value={value}>
             <TabsArea>
               <UserCoNftList list={mintedNft} />
             </TabsArea>
 
           </TabPanel>
 
-          <TabPanel index={2} value={value}>
+          <TabPanel index={'user-nft'} value={value}>
             <TabsArea>
               <UserOwnedNfts />
 
@@ -276,14 +279,14 @@ const TabsContainer: React.FC = () => {
 
           </TabPanel>
 
-          <TabPanel index={3} value={value}>
+          <TabPanel index={'post'} value={value}>
             <TabsArea >
               <UserPost />
             </TabsArea>
           </TabPanel>
 
-          <TabPanel index={4} value={value} />
-          <TabPanel index={5} value={value} />
+          <TabPanel index={'following'} value={value} />
+          <TabPanel index={'follower'} value={value} />
         </Box>
 
         <Drawer
@@ -325,13 +328,14 @@ const TabsContainer: React.FC = () => {
 
 const PersonalCenterPage: React.FC = () => {
 
-  const walletAccount = useLocationQuery('userWalletAccount')
+  const { wallet } = useParams()
 
+  const { account } = useSolanaWeb3()
   const { openModal } = useModal()
 
   const { data: credit } = useUserCredit()
-  const { data: userInfo, isLoading } = useGetUserInfo(walletAccount)
-  const { data: followingCount } = useUserFollowingCounts(walletAccount)
+  const { data: userInfo, isLoading } = useGetUserInfo(wallet)
+  const { data: followingCount } = useUserFollowingCounts(wallet)
 
   return (
     <Wrapper>
@@ -341,8 +345,10 @@ const PersonalCenterPage: React.FC = () => {
         </BackgroundImage>
 
         <UserInfoContainer>
-          <UserAvatar  onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)}>
-            <CoverMask > <img src={SettingIcon} /> </CoverMask>
+          <UserAvatar>
+            {
+              wallet === account?.toBase58() && <CoverMask onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)} > <img src={SettingIcon} /> </CoverMask>
+            }
             <img src={userInfo?.avataruri ? `${userInfo?.avataruri}?a=${userInfo?.updateTime}` : AvatarIcon} />
           </UserAvatar>
           <UserInfo>

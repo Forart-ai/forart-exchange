@@ -54,7 +54,7 @@ const getStyleByPath = ({  $path }: any) => {
 
 export const StyledMenuItem = styled('div')<{$path?: string, open: boolean }>`
   height: 100%;
-  width: 100%;
+  width: ${props => props.open ? '100%' : '50px'};
   border-radius: 28px;
   display: flex;
   align-items: center;
@@ -65,7 +65,9 @@ export const StyledMenuItem = styled('div')<{$path?: string, open: boolean }>`
   opacity: .34;
   position: relative;
   overflow: hidden;
-  
+  transition: all .45s;
+
+
   ${getStyleByPath}
 
   
@@ -73,14 +75,14 @@ export const StyledMenuItem = styled('div')<{$path?: string, open: boolean }>`
 
 export const SelectedMenuItem = styled('div')<{$path?: string, open: boolean}>`
   height: 100%;
-  width: 100%;
+  width: ${props => props.open ? '100%' : '50px'};
   border-radius: 28px;
   display: flex;
   align-items: center;
   justify-content: ${props => props.open ? 'flex-start' : 'center'};
   padding: 0 5px;
   gap: 10px;
-  transition: all 3s;
+  transition: all .45s;
   animation-name: rubberBand;
   animation-duration: 1s;
   animation-fill-mode: both;

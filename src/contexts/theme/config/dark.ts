@@ -27,21 +27,27 @@ const ForartTheme = createTheme({
     },
     success: {
       main: '#50dcb5',
-      light: '#da6060',
-      dark: '#880a0a',
+      light: '#a1ead2',
+      dark: '#00a363',
       contrastText: '#fff',
     },
     error: {
-      main: '#d32f2f',
-      light: '#da6060',
-      dark: '#880a0a',
+      main: '#ec1483',
+      light: '#f186b8',
+      dark: '#870057',
       contrastText: '#fff',
     },
     warning: {
-      main: '#ff6a00',
-      light: '#ffb500',
-      dark: '#880a0a',
+      main: '#fb9526',
+      light: '#ffd75d',
+      dark: '#f97722',
       contrastText: '#fff',
+    },
+    info:{
+      main: '#8145f5',
+      light: '#b897f8',
+      dark: '#5410eb',
+      contrastText: ''
     },
 
     text:{

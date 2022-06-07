@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { usePoolsQuery } from '../../../hooks/queries/usePoolsQuery'
 import { useGetOverview } from '../../../hooks/queries/useGetOverview'
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import ComingSoonBackground from '../../../assets/images/home/coming-soon.png'
 
 import {

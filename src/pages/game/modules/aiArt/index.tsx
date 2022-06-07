@@ -11,7 +11,7 @@ import ResultEx from '../../../../assets/images/aiGenerator/resultEx.png'
 import GenerateBackground from '../../../../assets/images/game/generate-background.png'
 import { aiGeneratorStyle } from '../../../../apis/ai'
 import { base64ToIPfsUri } from '../../../../utils'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import { useNFTsQuery } from '../../../../hooks/queries/useNFTsQuery'
 import DefaultPageWrapper from '../../../../components/default-page-wrapper'
@@ -247,7 +247,7 @@ const SelectedNFT: React.FC< {content: string} >= ({ content }) => {
 
 const NewNFTContainer:React.FC<{ aiNftUri: string, generating: boolean }> = ({ aiNftUri,generating }) =>{
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   // const toCreateNFT = useCallback(async () => {
   //   history.push(`/NFTCreate?img=${aiNftUri}`)

@@ -198,7 +198,7 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
   }, [formValues])
 
   return (
-    <Dialog title={'User Profile'} closeable={true} >
+    <Dialog title={'User Profile'} closeable={true} variant={'info'} >
       <Wrapper >
         <form onSubmit={handleSubmit}>
           <Item>

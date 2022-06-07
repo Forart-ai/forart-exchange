@@ -19,6 +19,12 @@ const getStyleByVariant = ({ theme, $variant }: any) => {
       background: theme.palette.success.main,
       color: theme.palette.success.main,
     }
+
+  case 'error':
+    return {
+      background: theme.palette.error.main,
+      color: theme.palette.error.main,
+    }
   default:
     return ''
   }

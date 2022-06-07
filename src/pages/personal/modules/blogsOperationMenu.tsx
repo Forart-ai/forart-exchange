@@ -13,10 +13,16 @@ import {
 } from '@mui/material'
 import Button from '@mui/material/Button'
 import { Ban_Outline, Dots_Horizontal, Flag_Checkered } from '../../../contexts/svgIcons'
-import { ContentCopy, Flag } from '@mui/icons-material'
+import { ContentCopy, DeleteOutline, Flag } from '@mui/icons-material'
+import { useSolanaWeb3 } from '../../../contexts/solana-web3'
+import { PostListItem } from '../../../types/social'
+import { useModal } from '../../../contexts/modal'
+import DeletePostWarningModal from '../../social/components/modals/deletePostWarningModal'
 
-const BlogsOperationMenu:React.FC = () => {
+const BlogsOperationMenu:React.FC<{item: PostListItem}> = ({ item }) => {
   const [open, setOpen] = React.useState<boolean>(false)
+  const { account } = useSolanaWeb3()
+  const { openModal } = useModal()
 
   const anchorRef = React.useRef<HTMLButtonElement>(null)
 
@@ -78,6 +84,7 @@ const BlogsOperationMenu:React.FC = () => {
                   id="composition-menu"
                   aria-labelledby="composition-button"
                   onKeyDown={handleListKeyDown}
+                  sx={{ '& .MuiTypography-root':{ textAlign:'left' } }}
                 >
                   <MenuItem onClick={handleClose}>
                     <ListItemIcon >
@@ -93,8 +100,21 @@ const BlogsOperationMenu:React.FC = () => {
                         <Ban_Outline />
                       </SvgIcon>
                     </ListItemIcon>
-                    <ListItemText>Block this post</ListItemText>
+                    <ListItemText>Block post</ListItemText>
                   </MenuItem>
+
+                  {
+                    item.wallet === account?.toBase58() && (
+                      <MenuItem onClick={() => openModal(<DeletePostWarningModal postId={item.id} />)}>
+                        <ListItemIcon >
+                          <SvgIcon fontSize={'small'}>
+                            <DeleteOutline />
+                          </SvgIcon>
+                        </ListItemIcon>
+                        <ListItemText>Delete post</ListItemText>
+                      </MenuItem>
+                    )
+                  }
                 </MenuList>
               </ClickAwayListener>
             </Paper>
