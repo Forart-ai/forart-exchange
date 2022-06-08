@@ -1,7 +1,7 @@
 import { Service } from './service'
 import { useSolanaWeb3 } from '../contexts/solana-web3'
 import {
-  FollowUserParams,
+  FollowUserParams, RankQueryRequest,
   ReplyPostRequest,
   ShowCoNftParams,
   StarPostRequestParam,
@@ -112,6 +112,12 @@ export const PERSONAL_API = {
   },
   getUserFollowersAndFollowCount(wallet: string) {
     return Service.get(`personal/follow/count/${wallet}`)
+  }
+}
+
+export const RANK_API = {
+  getFtaCreditRank(param: RankQueryRequest) {
+    return Service.post('credits/rank', param)
   }
 }
 

@@ -19,8 +19,8 @@ const useUserQuery = (): UseQueryResult<any> => {
         return
       }
       const [getQualification ,byWallet] = await Promise.all([
-        CONFT_API.core.user.getUserQualification(series, account?.toBase58()),
-        CONFT_API.core.user.getUserByWallet(account?.toBase58())
+        // CONFT_API.core.user.getUserQualification(series, account?.toBase58()),
+        // CONFT_API.core.user.getUserByWallet(account?.toBase58())
       ])
       return { getQualification, byWallet }
     },

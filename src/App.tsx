@@ -22,6 +22,10 @@ import PersonalCenterPage from './pages/personal'
 import Game from './pages/game'
 import SocialHomepage from './pages/social/modules/home'
 import ReplyList from './pages/social/modules/detail/replyList'
+import AiArt from './pages/game/modules/aiArt'
+import { AiartSvg } from './assets/svgs/game'
+import TextToImage from './pages/game/modules/text-to-image'
+import { useChainEffect } from './web3/hooks'
 
 export const BlueGlow = styled('div')`
   position: fixed;
@@ -52,7 +56,6 @@ export const PurpleGlow = styled('div')`
 const App: React.FC = () => {
   // useChainEffect()
   useEagerConnect()
-
   useSignLogin()
 
   const location = useLocation()
@@ -100,7 +103,10 @@ const App: React.FC = () => {
                   </Route>
                   <Route path="Text-to-NFT" element={<AIGen />} />
                   <Route path="account/:wallet"  element={<PersonalCenterPage />}  />
-                  <Route path="game" element={<Game />} />
+                  <Route path="game" element={<Game />} >
+                    <Route path="aiArt" element={<AiArt />} />
+                    <Route path="magic-wand" element={<TextToImage />} />
+                  </Route>
                 </Routes>
               </Box>
 

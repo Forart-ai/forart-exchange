@@ -24,6 +24,9 @@ import { Navigation } from 'swiper'
 import ReactECharts from 'echarts-for-react'
 import { EChartsOption } from 'echarts'
 import { SyncLoader } from 'react-spinners'
+import Flex from '../../../contexts/theme/components/Box/Flex'
+import CustomizeButton from '../../../contexts/theme/components/Button'
+import { Lock } from '@mui/icons-material'
 
 const Wrapper = styled('div')`
   width: 100%; 
@@ -49,11 +52,11 @@ const RainbowText = styled('div')`
 
 const LeftContainer = styled('div')`
   width: 40%;
-  margin: 20px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-
+  gap: 16px;
+  
   ${({ theme }) => theme.breakpoints.down('md')} {
     width: 100%;
   }
@@ -66,19 +69,13 @@ const TopTitle = styled('div')`
   flex-direction: column;
 `
 
-const PriceAccordion = styled('div')`
-  grid-area: 3 / 6 / 4 / 12;
- 
-`
-
-const GradeAccordion = styled('div')`
-  grid-area:  4 / 6 / 5 / 12;
-`
-
 const ImageContainer = styled('div')`
   border-radius: 10px;
   width: 100%;
   height: 100%;
+  max-width: 560px;
+  max-width: 560px;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,7 +95,7 @@ const ImageContainer = styled('div')`
 
 const IdentityContainer = styled('div')`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: flex-start;
   padding: 30px;
   width: 100%;
@@ -106,8 +103,10 @@ const IdentityContainer = styled('div')`
   background-color: ${({ theme }) => theme.palette.background.paper};
   border-radius: 10px;
   margin-top: 30px;
-  
-  
+  max-width: 1220px;
+
+
+
   ${({ theme }) => theme.breakpoints.down('md')} {
 
     flex-direction: column;
@@ -120,11 +119,38 @@ const InfoContainer = styled('div')`
   flex-direction: column;
   justify-content: flex-start;
   height: 100%;
-  width: 50%;
+  width: 52%;
 
   ${({ theme }) => theme.breakpoints.down('md')} {
-
     width: 100%;
+  }
+`
+
+const Ribbon = styled('div')`
+  position: absolute;
+  top: 30px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width:  100%;
+  max-width: 1220px;
+  overflow: hidden;
+  
+  .ribbon {
+    right: -64px;
+    position: absolute;
+    top: 32px;
+    height: 60px;
+    width: 250px;
+    transform: rotate(45deg);
+    background-color: ${({ theme }) => theme.palette.primary.main};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: KronaOne-Regular;
+    font-size: 24px;
+    color: rgb(40,0,90);
+    font-weight: bold;
   }
 `
 
@@ -145,12 +171,17 @@ const NFTItem:React.FC<{item?: MetadataResult }> = ({ item }) => {
   }, [])
 
   return (
+
     <IdentityContainer>
+      <Ribbon >
+        <div className={'ribbon'} >Bounded</div>
+      </Ribbon>
       <LeftContainer>
         <ImageContainer >
           <img src={item?.data?.image} />
         </ImageContainer>
-        <ReactECharts option={option} />
+        <CustomizeButton startIcon={<Lock />} color={'secondary'} variant={'contained'}>Bind DePainter!</CustomizeButton>
+        {/*<ReactECharts option={option} />*/}
       </LeftContainer>
 
       <InfoContainer>
@@ -178,7 +209,6 @@ const NFTItem:React.FC<{item?: MetadataResult }> = ({ item }) => {
         </Box>
 
       </InfoContainer>
-
     </IdentityContainer>
 
   )
@@ -206,7 +236,9 @@ const Identity:React.FC = () => {
                 {
                   data?.map((nft: any, index: number) => (
                     <SwiperSlide  key={index} >
-                      <NFTItem item={nft} />
+                      <Flex width={'100%'} justifyContent={'center'} >
+                        <NFTItem item={nft} />
+                      </Flex>
                     </SwiperSlide>
                   ))
                 }

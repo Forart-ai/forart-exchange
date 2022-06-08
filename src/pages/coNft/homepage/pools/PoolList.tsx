@@ -35,7 +35,17 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'status': 'living',
     'artistId': '1024',
     artistName: 'Forart.ai'
+  }
 
+  const mexico = {
+    'image': PainterAvatar,
+    'name': 'mexico',
+    'describe': 'mexico',
+    'nfts': 0,
+    'minters': 0,
+    'status': 'living',
+    'artistId': '1025',
+    artistName: 'mexico'
   }
 
   useMemo(() => {
@@ -56,6 +66,10 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
         <PoolsListItem
           data={identity}
           status={identity.status}
+        />
+        <PoolsListItem
+          data={mexico}
+          status={mexico.status}
         />
         {
           poolsList?.map((pool: PoolsListData, index: number) => (

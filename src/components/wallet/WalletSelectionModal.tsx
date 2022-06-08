@@ -5,102 +5,7 @@ import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { useWeb3React } from '@web3-react/core'
 import SolanaLogo from '../../assets/images/wallets/solanaLogoMark.svg'
 import Dialog from '../../contexts/theme/components/Dialog/Dialog'
-import { styled } from '@mui/material'
-
-const Wrapper = styled('div')`
-  position: relative;
-`
-
-const Title = styled('div')`
-  display: flex;
-  justify-content: center;
-  font-family: inter-extraBold;
-  color: #f2f2f2;
-  margin-bottom: 40px;
-`
-
-const TopArea = styled('div')`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-`
-
-const TextRow = styled('div')`
-  display: flex;
-  color: #f2f2f2;
-  font-size: .85em;
-  align-items: center;
-  
-  
-  .step-number {
-    width: 35px;
-    height: 35px;
-    padding: 5px;
-    border-radius: 50%;
-    background: ${({ theme }) => theme.palette.secondary.main};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 20px;
-  }
-`
-
-const ChosenArea = styled('div')`
-  //display: grid;
-  //grid-template-columns: 100px 100px 100px;
-  //justify-content: space-around;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  
-
-  .col-3 {
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #f2f2f2;
-    font-size: .8em;
-    cursor: pointer;
-
-
-    .Celo, .Avalanche {
-      pointer-events: none;
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
-
-    img {
-      width: 70px;
-    }
-  }
-
-  .row {
-    display: flex;
-    align-items: center;
-    color: white;
-    font-family: Aldrich-Regular;
-    justify-content: flex-start;
-    width: 100%;
-    padding: 7px 10px;
-    
-    :hover {
-      background-color: rgb(20, 0, 44);
-      border-radius: 20px;
-      cursor: pointer;
-    }
-
-    img {
-      width: 40px;
-      margin-right: 20px;
-      border-radius: 50%;
-
-    }
-  }
-`
+import { Wrapper, TopArea, ChosenArea } from './index.style'
 
 const WalletList: React.FC<{network: string, wallet: WalletType, onSelect:(_:WalletType) => void}> = ({ network, wallet, onSelect }) => {
   const { chainType, name, connector, adapter } = wallet
@@ -115,13 +20,6 @@ const WalletList: React.FC<{network: string, wallet: WalletType, onSelect:(_:Wal
   }, [connector, network])
 
   return (
-  // <div className="col-3" key={wallet.name} onClick={ connectToWallet }  >
-  //   <img src={wallet.icon} />
-  //   <span>{wallet.name}</span>
-  // </div>
-
-  //---------------------------------------------------
-
     <div className="row" key={wallet.name} onClick={ connectToWallet }  >
       <img  src={wallet.icon} />
       <span>{wallet.name}</span>

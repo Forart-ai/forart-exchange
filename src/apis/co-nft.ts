@@ -29,18 +29,7 @@ const CONFT_API = {
       }
     },
     user: {
-      getUserQualification(series: string | number, wallet? :string) {
-        return (series && wallet) ? Service.post('/nft/promotion/create/qualification/', { series, wallet }) : undefined
-      },
-      getUserByWallet(wallet?: string) {
-        return wallet ? Service.get(`/nft/promotion/discord/bind/${ wallet }`) : undefined
-      },
-      bindingUser(oauthToken: string, wallet: string) {
-        return Service.post('/nft/promotion/discord/bind', { oauthToken, wallet })
-      },
-      saveNFT(series: number | string, components: number[], wallet:string) {
-        return Service.post('/nft/promotion/create', { series, components, wallet })
-      },
+
       getStaredNft(series?: number | string, wallet?: string) {
         return Service.post('nft/stared', { series, wallet })
       },
@@ -53,8 +42,8 @@ const CONFT_API = {
       getUserCredit(wallet?: string) {
         return Service.get(`credits/${wallet}`)
       }
-
     },
+
     nft:{
       getNftRank(series: number | string, page: number, order: 'asc' | 'desc' | undefined , filter?: string | number, orderBy?: string) {
         return Service.post('nft/rank', { series, page, order, filter, orderBy })
@@ -74,15 +63,7 @@ const CONFT_API = {
       getNFTDetailById(id?: string) {
         return Service.get(`/nft/detail/${ id }`)
       },
-      /**
-       * {
-       *     "nft": "1024-80855c00f206e9d62a60c5f5bdb1562c",
-       *     "mintKey": "2NbrR5xXXxiBEoDk7rgcBebL47Bhoankw6EmudoT49Wh",
-       *     "createTime": "2022-04-26T09:58:43.133+0000",
-       *     "remain": 119
-       * }
-       * @param data
-       */
+
       nftCreate(data: LockNFTRequest): Promise<{ nft: string, mintKey: string, createTime: string, remain: number }> {
         return Service.post('nft/create', data, { timeout: 5000 })
       },

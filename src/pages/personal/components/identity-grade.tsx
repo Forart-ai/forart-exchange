@@ -10,7 +10,7 @@ const Wrapper = styled('div')`
   align-items: center;
   
   .level {
-    font-size: 30px;
+    font-size: 26px;
     font-family: Aldrich-Regular;
     color: ${({ theme }) => theme.palette.primary.light};
   }
@@ -28,9 +28,10 @@ const ProgressContainer = styled('div')`
   flex-direction: column;
   justify-content: space-between;
   width: 64%;
-  font-size: 14px;
+  font-size: 16px;
+  
   .label {
-    font-size: 14px;
+    font-size: 16px;
     color: ${({ theme }) => theme.palette.secondary.main};
   }
   
@@ -47,8 +48,6 @@ const IdentityGrade:React.FC<{attr?: Attribute[]}> = ({ attr }) => {
   const level = useMemo(() => {
     return  attr?.filter(v => v.trait_type === 'Level')[0]
   }, [attr])
-
-  console.log(level)
 
   return (
     <Wrapper>

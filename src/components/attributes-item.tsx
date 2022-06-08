@@ -17,38 +17,42 @@ const Wrapper = styled('div')`
 
 const BoxContainer = styled('div')`
   display: grid;
-  grid-template-columns: repeat(auto-fill, 140px);
+  grid-template-columns: repeat(auto-fill, 110px);
   justify-content: space-between;
-  grid-template-rows: repeat(auto-fill,   80px);
   grid-gap: 10px;
   width: 100%;
-  
+
+
   ${({ theme }) => theme.breakpoints.down('md')} {
-    grid-template-columns: repeat(auto-fill, 110px);
+    grid-template-columns: repeat(4, 110px);
+
   }
 `
 
 const ItemBox = styled('div')`
-  height: 80px;
+  height: 60px;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
   background: linear-gradient(60.95deg, #8246F5 2.09%, #5000B4 97.91%);
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
-  font-family: Kanit-Regular;
+  align-items: flex-start;
+  padding-left: 4px;
 
 
   .type {
     color: ${({ theme }) => theme.palette.primary.light};
     font-size: 16px;
-    //background: #341222;
+    font-family: Kanit-Light;
+
   }
 
   .value {
     color: #fff;
-    font-size: 20px;
+    font-size: 16px;
+    font-family: Kanit-Regular;
+
   }
 
   ${({ theme }) => theme.breakpoints.down('sm')} {

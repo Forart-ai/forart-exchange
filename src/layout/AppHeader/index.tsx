@@ -262,7 +262,7 @@ const AppHeader:React.FC  = () => {
       openModal(<WalletSelectionModal />)
     }
     else {
-      navigate(`/account/${account.toBase58()}?tab=conft`, )
+      navigate(`/account/${account.toBase58()}?tab=co-nft`, )
       // navigate('/account' )
 
       return

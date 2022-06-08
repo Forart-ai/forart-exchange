@@ -15,7 +15,6 @@ import { SelectableKitList } from '../../../../../components/nft-mint/mintKit'
 import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
 import { ArtistKit, useArtistKitsQuery } from '../../../../../hooks/queries/useArtistKitsQuery'
 import { NFTAttributesData } from '../../../../../types/coNFT'
-import useUserQuery from '../../../../../hooks/queries/useUserQuery'
 import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
 import useNFTMint from '../../../../../hooks/useNFTMint'
 
@@ -27,8 +26,6 @@ const HypeteenCreate:React.FC = () => {
   const { data: artistKit } = useArtistKitsQuery(artistId?.toString())
 
   const [body, setBody] = useState<ArtistKit>()
-
-  const { data: userData } = useUserQuery()
 
   useEffect(()=> {
     setBody(artistKit?.Body[0])
@@ -107,32 +104,7 @@ const HypeteenCreate:React.FC = () => {
         </KitContent>
       </TopContainer>
 
-      <MintButton >
-
-        { account  && (
-          <p >
-            Accesses left: {userData?.getQualification | 0}
-
-          </p>
-        )}
-
-        {/*{*/}
-        {/*  !account ? (*/}
-        {/*    <Button variant={'contained'} size={'large'}  onClick={ openWallet }>*/}
-        {/*      Connect Wallet*/}
-        {/*    </Button>*/}
-        {/*  ) : (*/}
-        {/*    (userData?.getQualification !== 0) ? (*/}
-        {/*      <Button variant={'contained'} size={'large'}  onClick={handleCreate}> Create </Button>*/}
-
-        {/*    ) : (*/}
-        {/*      <Button variant={'contained'} size={'large'} onClick={ openCheckWhiteListModal }>*/}
-        {/*        Get Qualification*/}
-        {/*      </Button>*/}
-        {/*    )*/}
-        {/*  )*/}
-        {/*}*/}
-      </MintButton>
+      <MintButton  />
     </>
   )
 }

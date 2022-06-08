@@ -6,7 +6,7 @@ import { NFTAttributesData } from '../../../../../types/coNFT'
 import Button from '@mui/material/Button'
 import { useModal } from '../../../../../contexts/modal'
 import AttrReviewDialog from '../../../components/modals/create/attr-review'
-import { Box, styled } from '@mui/material'
+import { Box, styled, SvgIcon } from '@mui/material'
 import { MoonLoader, SyncLoader } from 'react-spinners'
 import CustomizeButton from '../../../../../contexts/theme/components/Button'
 import useStorageCheck from '../../../../../hooks/useStorageCheck'
@@ -14,6 +14,12 @@ import { Keypair } from '@solana/web3.js'
 import { ArtistKit, useArtistKitsQuery } from '../../../../../hooks/queries/useArtistKitsQuery'
 import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
 import Countdown, { CountdownRendererFn } from 'react-countdown'
+import MetamaskSvgIcon from '../../../../../images/wallet/metamask.svg'
+import EthereumWalletSelectionModal from '../../../../../components/wallet/EthereumWalletSelectionModal'
+import { useWeb3React } from '@web3-react/core'
+import { shortenAddress } from '../../../../../utils'
+import Flex from '../../../../../contexts/theme/components/Box/Flex'
+import { useNavigate } from 'react-router-dom'
 
 const Operation = styled('div')`
   width: 100%;
@@ -34,12 +40,13 @@ const IdentifyCreate: React.FC = () => {
   const artistId = useLocationQuery('artistId')
   const { data, isFetching, error } = useWhiteListQuery()
   const { data: artistKit } = useArtistKitsQuery(artistId)
+  const { account } = useSolanaWeb3()
+  const { account: ethAccount } = useWeb3React()
+  const navigate = useNavigate()
 
   const { openModal } = useModal()
 
   useStorageCheck()
-
-  const { account } = useSolanaWeb3()
 
   const [body, setBody] = useState<ArtistKit>()
   const [attr, setAttr] = useState<ArtistKit[]>()
@@ -70,14 +77,27 @@ const IdentifyCreate: React.FC = () => {
   }, [artistKit])
 
   useEffect(()=> {
-    if (artistKit) {
+    if ( !artistKit) {
+      return
+    }
+    if (artistKit.Body) {
       setBody(artistKit.Body[0])
     }
+
   }, [artistKit])
 
   if (!artistId) {
     return <></>
   }
+
+  const toDepainter = useCallback(
+    () => {
+      if (!account) return
+      navigate(`/account/${account.toBase58()}?tab=dePainter`, )
+
+    },
+    [account, ethAccount],
+  )
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -90,53 +110,92 @@ const IdentifyCreate: React.FC = () => {
           setAttr(attributes)
         }}
       />
-      <Operation>
-        {
-          account ? (
-            <div className={'message'}>
-              Mint chances: &nbsp;
-              {
-                error
-                  ? <>{(error as any).message}</>
-                  : (
-                    !isFetching ? data : <SyncLoader color={'#8246F5'} size={8} />
-                  )
-              }
-            </div>
-          ) : (
-            <div className={'message'}>wallet unconnected</div>
-          )
-        }
 
-        <Box display={'grid'} gridTemplateColumns={'repeat(2, max-content)'} gap={'16px'}>
-          <CustomizeButton
-            size={'large'}
-            variant={'contained'}
-            color={'secondary'}
-            onClick={randomGenerate}
-          >
-            Generate randomly
-          </CustomizeButton>
-          {
-            data !== '0' ? (
+      {
+        artistId === '1024' &&
+          <Operation>
+            {
+              account ? (
+                <div className={'message'}>
+                  Mint chances: &nbsp;
+                  {
+                    error
+                      ? <>{(error as any).message}</>
+                      : (
+                        !isFetching ? data : <SyncLoader color={'#8246F5'} size={8} />
+                      )
+                  }
+                </div>
+              ) : (
+                <div className={'message'}>wallet unconnected</div>
+              )
+            }
+
+            <Box display={'grid'} gridTemplateColumns={'repeat(2, max-content)'} gap={'16px'}>
               <CustomizeButton
-                disabled={!data}
                 size={'large'}
                 variant={'contained'}
                 color={'secondary'}
-                onClick={handleCreate}
+                onClick={randomGenerate}
               >
-                Mint now!
+                Generate randomly
               </CustomizeButton>
-            ) : (
-              <CustomizeButton disabled={true} size={'large'} variant={'contained'} color={'secondary'}>
-                Run out of tickets
-              </CustomizeButton>
-            )
-          }
-        </Box>
+              {
+                data !== '0' ? (
+                  <CustomizeButton
+                    disabled={!data}
+                    size={'large'}
+                    variant={'contained'}
+                    color={'secondary'}
+                    onClick={handleCreate}
+                  >
+                    Mint now!
+                  </CustomizeButton>
+                ) : (
+                  <CustomizeButton disabled={true} size={'large'} variant={'contained'} color={'secondary'}>
+                    Run out of tickets
+                  </CustomizeButton>
+                )
+              }
+            </Box>
 
-      </Operation>
+          </Operation>
+      }
+
+      {
+        artistId === '1025' &&
+        <Operation>
+
+          <Box display={'grid'} gridTemplateColumns={'repeat(2, max-content)'} gap={'16px'}>
+            {/*<CustomizeButton*/}
+            {/*  size={'large'}*/}
+            {/*  variant={'contained'}*/}
+            {/*  color={'secondary'}*/}
+            {/*  onClick={randomGenerate}*/}
+            {/*>*/}
+            {/*  Generate randomly*/}
+            {/*</CustomizeButton>*/}
+
+            {
+              ethAccount ?
+                (
+                  <Flex gap={1.6}>
+                    <CustomizeButton variant={'contained'} color={'primary'} onClick={toDepainter}>Bind DePainter</CustomizeButton>
+                    <CustomizeButton color={'warning'}>disconnect {shortenAddress(ethAccount,4)} ?</CustomizeButton>
+                  </Flex>
+                )
+                :
+                (
+                  <CustomizeButton variant={'contained'} onClick={() => openModal(<EthereumWalletSelectionModal />)}>
+                    Connect to Metamask<img width={24} height={24} style={{ marginLeft:'10px' }} src={MetamaskSvgIcon} />
+                  </CustomizeButton>
+                )
+            }
+
+          </Box>
+
+        </Operation>
+      }
     </Box>
 
   )

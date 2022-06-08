@@ -15,6 +15,7 @@ export type DialogProps = {
     bottomMessage?: string | TypographyProps
     closeable?: boolean
     variant?: DialogVariantProps | 'info'
+    showVariantFace?: boolean
 }
 
 export type DialogVariantProps = 'success' | 'warning' | 'info' | 'error'

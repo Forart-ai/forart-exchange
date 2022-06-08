@@ -7,6 +7,7 @@ import MuiAccordionSummary, {
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import Typography from '@mui/material/Typography'
 import DownIcon from '../../../../assets/images/siderIcon/down.svg'
+import Text from '../Text/Text'
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -33,8 +34,8 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
           ? theme.palette.secondary.dark
           : theme.palette.secondary.dark,
   flexDirection: 'row',
-  borderTopLeftRadius: '10px',
-  borderTopRightRadius: '10px',
+  borderRadius:'10px',
+  marginBottom:'10px',
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(180deg)',
   },
@@ -47,10 +48,8 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(1),
-  borderBottomLeftRadius: '10px',
-  borderBottomRightRadius: '10px',
+  borderRadius:'10px',
   backgroundColor: '#14002D',
-  marginBottom: '15px',
 
 }))
 
@@ -62,18 +61,16 @@ const CustomizedAccordions:React.FC<AccordionProps> = (props:AccordionProps) => 
   }
 
   return (
-    <div>
-      <Accordion expanded={expanded} onChange={() => handleChange(!expanded)} >
-        <AccordionSummary  expandIcon={<img src={DownIcon} />} aria-controls="panel1d-content" id="panel1d-header">
-          <Typography>{props.title}</Typography>
-        </AccordionSummary>
-        <AccordionDetails sx={{  border:'none'  }}>
-          {
-            props.children
-          }
-        </AccordionDetails>
-      </Accordion>
-    </div>
+    <Accordion expanded={expanded} onChange={() => handleChange(!expanded)} >
+      <AccordionSummary  expandIcon={<img src={DownIcon} />} aria-controls="panel1d-content" id="panel1d-header">
+        <Text color={'white'} fontSize={18} letterSpacing={'1.3px'}> {props.title}</Text>
+      </AccordionSummary>
+      <AccordionDetails sx={{  border:'none'  }}>
+        {
+          props.children
+        }
+      </AccordionDetails>
+    </Accordion>
   )
 }
 

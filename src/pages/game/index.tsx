@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Link, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { GamePageSidebar } from './sidebar'
 import { gameRoutes } from './routes'
 import { styled } from '@mui/material'
@@ -16,28 +16,33 @@ const MainContainer = styled('div')`
 `
 
 const Game: React.FC = () => {
-
+  const { pathname } = useLocation()
   const navigate = useNavigate()
 
   useEffect(() => {
-    navigate('/game/aiArt')
-  }, [navigate])
+    if (pathname === '/game') navigate('/game/aiArt')
+  }, [pathname])
 
   return (
     <GamePageWrapper>
       <GamePageSidebar />
       <MainContainer>
-        <Routes>
-          {
-            gameRoutes.map(({ path, component }) => (
-              <Route
-                path={`/game/${path}`}
-                element={component}
-                key={path}
-              />
-            ))
-          }
-        </Routes>
+        {/*<Routes>*/}
+        {/*  {*/}
+        {/*    gameRoutes.map(({ path, component }) => (*/}
+        {/*      <Route*/}
+        {/*        path={`/game/${path}`}*/}
+        {/*        element={component}*/}
+        {/*        key={path}*/}
+        {/*      />*/}
+        {/*    ))*/}
+        {/*  }*/}
+        {/*</Routes>*/}
+        <nav>
+          <Link to={'aiArt'}  />
+          <Link to={'magic-wand'}  />
+        </nav>
+        <Outlet />
       </MainContainer>
     </GamePageWrapper>
   )

@@ -4,10 +4,8 @@ import { Box, Drawer, Skeleton, styled, Tab, Tabs, useMediaQuery, useTheme } fro
 import Background from '../../assets/images/home/default-user-background.webp'
 import AvatarIcon from '../../assets/images/coPools/rocket.png'
 import UserCoNftList from './modules/userCoNftList'
-import CharacterCustomize from './modules/characterCustomize'
 import UserOwnedNfts from './modules/userOwnedNfts'
 import Identity from './modules/identity'
-import SettingIcon from '../../assets/images/siderIcon/setting.svg'
 import { useModal } from '../../contexts/modal'
 import UserProfileSetting from './components/user-profile-setting'
 import { useUserCredit } from '../../hooks/queries/useUserCredit'
@@ -15,13 +13,12 @@ import { useGetUserInfo } from '../../hooks/queries/useGetUserInfo'
 import Image from '../../contexts/theme/components/Image'
 import { StyledTab, StyledTabs, TabPanel } from './components/styledTabs'
 import { FollowersList, FollowsList } from './modules/followersList'
-import { useLocationQuery } from '../../hooks/useLocationQuery'
 import { useUserFollowingCounts } from '../../hooks/queries/useUserFollow'
 import UserPost from './modules/userPost'
-import DefaultPageWrapper from '../../components/default-page-wrapper'
 import Flex from '../../contexts/theme/components/Box/Flex'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
-import { useLocation, Link, useNavigate, useSearchParams, useParams } from 'react-router-dom'
+import {  useSearchParams, useParams } from 'react-router-dom'
+import SettingsIcon from '@mui/icons-material/Settings'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -38,18 +35,19 @@ const BackgroundImage = styled('div')`
   justify-content: center;
   align-items: center;
   position: relative;
-  
+  background-color: rgb(37, 14, 72);
+
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  
+
   ${({ theme }) => theme.breakpoints.down('sm')} {
     height: 300px;
   }
 
-  
+
 `
 
 const PersonalCenterContainer = styled('div')`
@@ -141,6 +139,7 @@ const UserAvatar = styled('div')`
   border-radius: 10px;
   padding: 10px;
 
+
   img {
     width: 100%;
     height: 100%;
@@ -205,15 +204,18 @@ const TabsWrapper = styled('div')`
 
 const TabsContainer: React.FC = () => {
   const theme = useTheme()
-  const navigate = useNavigate()
   const { wallet } = useParams()
-  console.log(wallet)
 
-  // const wallet = useLocationQuery('wallet')
   const [searchParams, setSearchParams] = useSearchParams()
-  const [value, setValue] = React.useState<string>('co-nft')
+  let queryTab = searchParams.get('tab')
+  queryTab = queryTab ? queryTab : 'co-nft'
 
-  console.log(searchParams.get('tab'))
+  useEffect(() => {
+    if (!queryTab) {
+      searchParams.set('tab', 'co-nft')
+      setSearchParams(searchParams)
+    }
+  }, [searchParams, setSearchParams, queryTab])
 
   const [openFollowersDrawer, setOpenFollowersDrawer] = useState<boolean>(false)
   const [openFollowingDrawer, setOpenFollowingDrawer] = useState<boolean>(false)
@@ -223,9 +225,38 @@ const TabsContainer: React.FC = () => {
   const { data: followingCount } = useUserFollowingCounts(wallet)
   const { data: mintedNft } = useMintResultQuery({ wallet: wallet, nft:'' } )
 
+  const tabOptions = [
+    {
+      label: 'DePainter',
+      route: 'dePainter'
+    },
+    {
+      label: 'CO-NFT',
+      route: 'co-nft'
+    },
+    {
+      label: 'Owned NFT',
+      route: 'user-nft'
+    },
+    {
+      label: 'Post',
+      route: 'post'
+    },
+    {
+      label: 'Follower ',
+      route: 'follower'
+    },
+    {
+      label: 'Following ',
+      route: 'following'
+    }
+  ]
+
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+
     if (newValue !== 'follower' && newValue !== 'following') {
-      setValue(newValue)
+      searchParams.set('tab', newValue)
+      setSearchParams(searchParams)
     }
     if (newValue === 'following') {
       setOpenFollowingDrawer(true)
@@ -237,41 +268,40 @@ const TabsContainer: React.FC = () => {
   }
 
   return (
+
     <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
       <TabsWrapper >
         <StyledTabs
           variant={isMobile ? 'scrollable' : 'standard'}
-          value={value}
+          value={queryTab}
           onChange={handleChange}
-
         >
-          {/*<StyledTab label="Avatar" />*/}
-          <StyledTab  value={'dePainter'} label="DePainter" />
-          <StyledTab value={'co-nft'}  label="CO-NFT"  />
-          <StyledTab  value={'user-nft'} label="NFTs" />
-          <StyledTab  value={'post'} label="Post" />
-          <StyledTab  value={'following'} label={followingCount ? `Following(${followingCount[0]}) ` : 'Following()'} />
-          <StyledTab  value={'follower'} label={followingCount ? `Followers(${followingCount[1]}) ` : 'Followers()'} />
-
+          {
+            tabOptions.map((tab,index) => (
+              <StyledTab
+                key={index}
+                label={tab.label}
+                value={tab.route}
+              />
+            ))
+          }
         </StyledTabs>
 
         <Box>
-          {/*<TabPanel index={0} value={value}>*/}
-          {/*  <CharacterCustomize artistId={'3312'} />*/}
-          {/*</TabPanel>*/}
-          <TabPanel index={'dePainter'} value={value}>
+
+          <TabPanel index={'dePainter'} value={queryTab}>
             <TabsArea>
               <Identity />
             </TabsArea>
           </TabPanel>
-          <TabPanel index={'co-nft'} value={value}>
+          <TabPanel index={'co-nft'} value={queryTab}>
             <TabsArea>
               <UserCoNftList list={mintedNft} />
             </TabsArea>
 
           </TabPanel>
 
-          <TabPanel index={'user-nft'} value={value}>
+          <TabPanel index={'user-nft'} value={queryTab}>
             <TabsArea>
               <UserOwnedNfts />
 
@@ -279,14 +309,15 @@ const TabsContainer: React.FC = () => {
 
           </TabPanel>
 
-          <TabPanel index={'post'} value={value}>
+          <TabPanel index={'post'} value={queryTab}>
             <TabsArea >
               <UserPost />
             </TabsArea>
           </TabPanel>
 
-          <TabPanel index={'following'} value={value} />
-          <TabPanel index={'follower'} value={value} />
+          <TabPanel index={'follower'} value={queryTab} />
+          <TabPanel index={'following'} value={queryTab} />
+
         </Box>
 
         <Drawer
@@ -341,20 +372,31 @@ const PersonalCenterPage: React.FC = () => {
     <Wrapper>
       <PersonalCenterContainer>
         <BackgroundImage>
-          <Image width={'100%'} height={'100%'} src={ `${userInfo?.banneruri}?a=${userInfo?.updateTime}`} variant={'rectangular'} />
+          {
+            userInfo?.banneruri &&
+            <Image width={'100%'}
+              height={'100%'}
+              src={`${userInfo?.banneruri}?a=${userInfo?.updateTime}`}
+              variant={'rectangular'}
+            />
+          }
         </BackgroundImage>
 
         <UserInfoContainer>
           <UserAvatar>
             {
-              wallet === account?.toBase58() && <CoverMask onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)} > <img src={SettingIcon} /> </CoverMask>
+              wallet === account?.toBase58() &&
+              <CoverMask onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)}>
+                <SettingsIcon fontSize={'large'} sx={{ color:'#ffffff' }} />
+              </CoverMask>
             }
-            <img src={userInfo?.avataruri ? `${userInfo?.avataruri}?a=${userInfo?.updateTime}` : AvatarIcon} />
+            {
+              userInfo?.avataruri && <Image  width={'100%'} height={'100%'} src={`${userInfo?.avataruri}?a=${userInfo?.updateTime}` } />
+            }
           </UserAvatar>
           <UserInfo>
             <div className="username">{userInfo?.username}</div>
             <UserSlogan>{ userInfo?.slogan }</UserSlogan>
-            {/*<div className="amount">$FTA: {credit?.retain ?? '0'}</div>*/}
             <DataColumn>
               <DataItem>
                 <span> {credit?.retain ?? '0'} </span>

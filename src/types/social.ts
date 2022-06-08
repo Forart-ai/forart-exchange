@@ -78,3 +78,13 @@ export interface ReplyListItem {
   updateTime: string
 }
 
+export interface RankQueryRequest {
+  size: number,
+  current: number,
+  orders?: [
+    {
+      field: string,
+      order: string
+    }
+  ]
+}

@@ -38,27 +38,17 @@ font-family: Kanit-Regular;
 `
 
 type CurrentAccountProps = {
-  account: string | null | undefined
   solanaAccount: undefined | PublicKey
 }
 
-const CurrentAccount: React.FC<CurrentAccountProps> = ({ account, solanaAccount }) => {
+const CurrentAccount: React.FC<CurrentAccountProps> = ({  solanaAccount }) => {
 
   const { openModal } = useModal()
   const {  disconnect } = useSolanaWeb3()
 
   return (
     <StyledWallet onClick={() => openModal(<WalletInfoModal account={solanaAccount?.toBase58().toString()} disconnect={disconnect} />)}>
-      {
-        account &&
-          (
-            <>
 
-              {`${account.substr(0,5)}...${account.substr(-4,4)}`}
-
-            </>
-          )
-      }
       {
         solanaAccount &&
           (
@@ -87,12 +77,11 @@ export const ConnectToWallet = () => {
 
 const Wallet: React.FC = () => {
   const { account: solanaAccount } = useSolanaWeb3()
-  const { account } = useWeb3React()
 
   return (
     <>
-      { (!account && !solanaAccount ) && <ConnectToWallet /> }
-      { (!!account || !!solanaAccount) && <CurrentAccount account={account} solanaAccount={ solanaAccount } /> }
+      { (!solanaAccount ) && <ConnectToWallet /> }
+      { ( !!solanaAccount) && <CurrentAccount solanaAccount={ solanaAccount } /> }
     </>
   )
 }

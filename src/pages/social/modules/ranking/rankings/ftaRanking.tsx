@@ -6,6 +6,7 @@ import { styled } from '@mui/system'
 import { IconButton, SvgIcon } from '@mui/material'
 import { Arrow_Down, Caret_Down, Heart_Filled } from '../../../../../contexts/svgIcons'
 import { RankingBox, TableHeader, RankList, Number, MoreContainer, ShowMoreIcon } from '../ranking.style'
+import { useRankQuery } from '../../../../../hooks/queries/useRankQuery'
 
 const mockData = [
   {
@@ -73,7 +74,11 @@ const mockData = [
 
 const FtaRanking:React.FC = () => {
 
+  const [size, ] = useState(20)
+  const [current, setCurrent] = useState(1)
   const [showMore, setShowMore] = useState<boolean>(false)
+
+  const { data: rankList } = useRankQuery({ size: size, current: current })
 
   return (
     <RankingBox>

@@ -63,7 +63,6 @@ const ItemBox = styled('div')`
     color: #fff;
     font-size: 14px;
     font-family: Kanit-Regular;
-
   }
 
 

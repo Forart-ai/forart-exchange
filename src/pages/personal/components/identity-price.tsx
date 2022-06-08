@@ -11,12 +11,12 @@ const Wrapper = styled('div')`
   align-items: center;
   
   img {
-    width: 40px;
+    width: 30px;
   }
   
   span {
     margin-left: 10px;
-    font-size: 40px;
+    font-size: 28px;
     font-family: Aldrich-Regular;
     color: ${({ theme }) => theme.palette.primary.light};
   }
