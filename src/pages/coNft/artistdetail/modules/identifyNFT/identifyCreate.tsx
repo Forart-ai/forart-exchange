@@ -41,8 +41,17 @@ const IdentifyCreate: React.FC = () => {
   const { data, isFetching, error } = useWhiteListQuery()
   const { data: artistKit } = useArtistKitsQuery(artistId)
   const { account } = useSolanaWeb3()
-  const { account: ethAccount } = useWeb3React()
+  const { account: ethAccount, deactivate } = useWeb3React()
   const navigate = useNavigate()
+
+  async function disconnect() {
+    try {
+      deactivate()
+      localStorage.setItem('isWalletConnected', 'false')
+    } catch (ex) {
+      console.log(ex)
+    }
+  }
 
   const { openModal } = useModal()
 
@@ -181,7 +190,7 @@ const IdentifyCreate: React.FC = () => {
                 (
                   <Flex gap={1.6}>
                     <CustomizeButton variant={'contained'} color={'primary'} onClick={toDepainter}>Bind DePainter</CustomizeButton>
-                    <CustomizeButton color={'warning'}>disconnect {shortenAddress(ethAccount,4)} ?</CustomizeButton>
+                    <CustomizeButton color={'warning'} onClick={disconnect}>disconnect {shortenAddress(ethAccount,4)} ?</CustomizeButton>
                   </Flex>
                 )
                 :

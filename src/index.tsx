@@ -33,15 +33,13 @@ ReactDOM.render(
           <QueryClientProvider client={queryClient}>
             <RefreshControllerProvider>
               <Router>
-                <DAppProvider config={{}}>
-                  <SolanaConnectionConfigProvider>
-                    <SolanaWeb3Provider>
-                      <ModalProvider>
-                        <App />
-                      </ModalProvider>
-                    </SolanaWeb3Provider>
-                  </SolanaConnectionConfigProvider>
-                </DAppProvider>
+                <SolanaConnectionConfigProvider>
+                  <SolanaWeb3Provider>
+                    <ModalProvider>
+                      <App />
+                    </ModalProvider>
+                  </SolanaWeb3Provider>
+                </SolanaConnectionConfigProvider>
               </Router>
             </RefreshControllerProvider>
 

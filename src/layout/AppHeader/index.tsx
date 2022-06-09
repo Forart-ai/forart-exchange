@@ -13,6 +13,8 @@ import DrawerIcon from '../../assets/images/siderIcon/drawer.svg'
 import Button from '@mui/material/Button'
 import Sticky from 'react-sticky-el'
 import { RouterArrow_Filled } from './svgs'
+import { useWeb3React } from '@web3-react/core'
+import { injected } from '../../web3/connectors'
 
 const AppHeaderContent = styled('div')`
   width: 100%;
@@ -248,13 +250,9 @@ const AppHeader:React.FC  = () => {
   type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
   const navigate = useNavigate()
-
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
-
   const { pathname }  = useLocation()
-
   const { account } = useSolanaWeb3()
-
   const { openModal } = useModal()
 
   const handleRedirect = () => {
@@ -263,8 +261,6 @@ const AppHeader:React.FC  = () => {
     }
     else {
       navigate(`/account/${account.toBase58()}?tab=co-nft`, )
-      // navigate('/account' )
-
       return
     }
   }

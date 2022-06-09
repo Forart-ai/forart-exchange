@@ -26,6 +26,8 @@ import AiArt from './pages/game/modules/aiArt'
 import { AiartSvg } from './assets/svgs/game'
 import TextToImage from './pages/game/modules/text-to-image'
 import { useChainEffect } from './web3/hooks'
+import { injected } from './web3/connectors'
+import { useWeb3React } from '@web3-react/core'
 
 export const BlueGlow = styled('div')`
   position: fixed;
@@ -54,13 +56,27 @@ export const PurpleGlow = styled('div')`
 `
 
 const App: React.FC = () => {
+  const { activate, deactivate } = useWeb3React()
+
   // useChainEffect()
   useEagerConnect()
   useSignLogin()
 
-  const location = useLocation()
+  useEffect(() => {
+    const connectWalletOnPageLoad = async () => {
+      if (localStorage?.getItem('isWalletConnected') === 'true') {
+        try {
+          await activate(injected)
+          localStorage.setItem('isWalletConnected', 'true')
+        } catch (ex) {
+          console.log(ex)
+        }
+      }
+    }
+    connectWalletOnPageLoad()
+  }, [])
 
-  const isMobile = useMediaQuery({ query: '(max-width: 576px)' })
+  const location = useLocation()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -83,16 +99,7 @@ const App: React.FC = () => {
 
               <Box   sx={{  width:'100vw', backgroundColor:'rgb(10,5,35)' }}>
                 <Routes>
-                  {/*{*/}
-                  {/*  routes.map(({  path, component }) => (*/}
-                  {/*    <Route*/}
-                  {/*      path={path}*/}
-                  {/*      element={component}*/}
-                  {/*      key={path}*/}
-                  {/*    />*/}
 
-                  {/*  ))*/}
-                  {/*}*/}
                   <Route path="/" element={<CoNftPage />} />
                   <Route path="co-nft-detail" element={<CONFTDetail />} />
                   <Route path="nft-detail" element={<WalletNftDetail />} />

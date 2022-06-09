@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import { networkConf, supportWallets, WalletType } from '../../web3/connectors'
+import { injected, networkConf, supportWallets, WalletType } from '../../web3/connectors'
 import { useModal } from '../../contexts/modal'
 import { useWeb3React } from '@web3-react/core'
 import Dialog from '../../contexts/theme/components/Dialog/Dialog'
@@ -35,12 +35,16 @@ const EthereumWalletSelectionModal:React.FC = () => {
   const { activate, account } = useWeb3React()
 
   const onClick = useCallback( (wallet: WalletType) => {
-
-    if (wallet.chainType === 'eth' && wallet.connector) {
-      activate(wallet.connector).then(() => {
-        closeModal()
-      })
-      return
+    try {
+      if (wallet.chainType === 'eth' && wallet.connector) {
+        activate(wallet.connector).then(() => {
+          localStorage.setItem('isWalletConnected', 'true')
+          closeModal()
+        })
+      }
+    }
+    catch (ex) {
+      console.log(ex)
     }
 
   }, [ activate])
