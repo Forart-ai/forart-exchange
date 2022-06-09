@@ -28,6 +28,3 @@ export const AiartSvg = (props:SvgProps) => {
   )
 }
 
-export const AiartBanner = (props:SvgProps) => {
-
-}

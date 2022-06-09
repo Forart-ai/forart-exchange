@@ -20,6 +20,10 @@ import { useWeb3React } from '@web3-react/core'
 import { shortenAddress } from '../../../../../utils'
 import Flex from '../../../../../contexts/theme/components/Box/Flex'
 import { useNavigate } from 'react-router-dom'
+import BindDePainterStepper  from '../../../components/modals/bindDePainterStepper'
+import NFTWithCheckbox from '../../../../../contexts/theme/components/NFT-With-Checkbox'
+import Text from '../../../../../contexts/theme/components/Text/Text'
+import Image from '../../../../../contexts/theme/components/Image'
 
 const Operation = styled('div')`
   width: 100%;
@@ -41,17 +45,8 @@ const IdentifyCreate: React.FC = () => {
   const { data, isFetching, error } = useWhiteListQuery()
   const { data: artistKit } = useArtistKitsQuery(artistId)
   const { account } = useSolanaWeb3()
-  const { account: ethAccount, deactivate } = useWeb3React()
+  const { account: ethAccount } = useWeb3React()
   const navigate = useNavigate()
-
-  async function disconnect() {
-    try {
-      deactivate()
-      localStorage.setItem('isWalletConnected', 'false')
-    } catch (ex) {
-      console.log(ex)
-    }
-  }
 
   const { openModal } = useModal()
 
@@ -176,30 +171,32 @@ const IdentifyCreate: React.FC = () => {
         <Operation>
 
           <Box display={'grid'} gridTemplateColumns={'repeat(2, max-content)'} gap={'16px'}>
-            {/*<CustomizeButton*/}
-            {/*  size={'large'}*/}
-            {/*  variant={'contained'}*/}
-            {/*  color={'secondary'}*/}
-            {/*  onClick={randomGenerate}*/}
-            {/*>*/}
-            {/*  Generate randomly*/}
-            {/*</CustomizeButton>*/}
+            <CustomizeButton
+              size={'large'}
+              variant={'contained'}
+              color={'secondary'}
+              onClick={randomGenerate}
+            >
+              Generate randomly
+            </CustomizeButton>
 
-            {
-              ethAccount ?
-                (
-                  <Flex gap={1.6}>
-                    <CustomizeButton variant={'contained'} color={'primary'} onClick={toDepainter}>Bind DePainter</CustomizeButton>
-                    <CustomizeButton color={'warning'} onClick={disconnect}>disconnect {shortenAddress(ethAccount,4)} ?</CustomizeButton>
-                  </Flex>
-                )
-                :
-                (
-                  <CustomizeButton variant={'contained'} onClick={() => openModal(<EthereumWalletSelectionModal />)}>
-                    Connect to Metamask<img width={24} height={24} style={{ marginLeft:'10px' }} src={MetamaskSvgIcon} />
-                  </CustomizeButton>
-                )
-            }
+            <CustomizeButton variant={'contained'} onClick={() => openModal(<BindDePainterStepper />)}> Start creating!</CustomizeButton>
+
+            {/*{*/}
+            {/*  ethAccount ?*/}
+            {/*    (*/}
+            {/*      <Flex gap={1.6}>*/}
+            {/*        <CustomizeButton variant={'contained'} color={'primary'} onClick={toDepainter}>Bind DePainter</CustomizeButton>*/}
+            {/*        <CustomizeButton color={'warning'} onClick={disconnect}>disconnect {shortenAddress(ethAccount,4)} ?</CustomizeButton>*/}
+            {/*      </Flex>*/}
+            {/*    )*/}
+            {/*    :*/}
+            {/*    (*/}
+            {/*      <CustomizeButton variant={'contained'} onClick={() => openModal(<EthereumWalletSelectionModal />)}>*/}
+            {/*        Connect to Metamask<img width={24} height={24} style={{ marginLeft:'10px' }} src={MetamaskSvgIcon} />*/}
+            {/*      </CustomizeButton>*/}
+            {/*    )*/}
+            {/*}*/}
 
           </Box>
 

@@ -145,9 +145,7 @@ const ModalProvider: React.FC = ({ children }) => {
   const [visible, setVisible] = useState(false)
   const [content, setContent] = useState<JSX.Element | string>()
 
-  const [callbackByEvent, setCallbackByEvent] = useState<Map<ModalEvents, { id: number; callback: () => void }[]>>(
-    new Map()
-  )
+  const [callbackByEvent, setCallbackByEvent] = useState<Map<ModalEvents, { id: number; callback: () => void }[]>>(new Map())
 
   const [config, setConfig] = useState<ModalConfig>({
     closeable: true

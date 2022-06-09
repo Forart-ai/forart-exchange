@@ -75,7 +75,7 @@ export const NFTItemFromWallet: React.FC<{ src: MetadataResult , checked?: boole
   checked,
   onSelect
 }) => {
-
+  console.log(src)
   const SelectBtn: React.FC = () => {
     return (
       <div style={{

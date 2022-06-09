@@ -58,51 +58,51 @@ const WalletSelectionModal:React.FC = () => {
 
   }, [connect, activate, network])
 
-  useEffect(():any => {
-    const { ethereum } = window as any
-
-    if (ethereum && network.name === 'Avalanche' && account) {
-      ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: networkConf[43114].chainId }]
-      }).catch((e: any) => {
-        if (e.code === 4902) {
-          ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [
-              {
-                ...networkConf[43114]
-              }
-            ],
-          })
-        }
-      })
-    }
-    else if (ethereum && network.name === 'Celo' && account) {
-      ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: networkConf[44787].chainId }]
-      }).catch((e: any) => {
-        if (e.code === 4902) {
-          ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [
-              {
-                ...networkConf[44787]
-              }
-            ],
-          })
-        }
-      })
-    }
-
-  },[network, account])
+  // useEffect(():any => {
+  //   const { ethereum } = window as any
+  //
+  //   if (ethereum && network.name === 'Avalanche' && account) {
+  //     ethereum.request({
+  //       method: 'wallet_switchEthereumChain',
+  //       params: [{ chainId: networkConf[43114].chainId }]
+  //     }).catch((e: any) => {
+  //       if (e.code === 4902) {
+  //         ethereum.request({
+  //           method: 'wallet_addEthereumChain',
+  //           params: [
+  //             {
+  //               ...networkConf[43114]
+  //             }
+  //           ],
+  //         })
+  //       }
+  //     })
+  //   }
+  //   else if (ethereum && network.name === 'Celo' && account) {
+  //     ethereum.request({
+  //       method: 'wallet_switchEthereumChain',
+  //       params: [{ chainId: networkConf[44787].chainId }]
+  //     }).catch((e: any) => {
+  //       if (e.code === 4902) {
+  //         ethereum.request({
+  //           method: 'wallet_addEthereumChain',
+  //           params: [
+  //             {
+  //               ...networkConf[44787]
+  //             }
+  //           ],
+  //         })
+  //       }
+  //     })
+  //   }
+  //
+  // },[network, account])
 
   useEffect(() => {
-    if (account || solAccount) {
+    if ( solAccount) {
       closeModal()
     }
-  },[account, solAccount])
+  },[ solAccount])
 
   return (
 
