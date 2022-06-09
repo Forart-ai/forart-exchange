@@ -37,9 +37,9 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     artistName: 'Forart.ai'
   }
 
-  const mexico = {
+  const spaceTronauts = {
     'image': PainterAvatar,
-    'name': 'mexico',
+    'name': 'SPACETRONAUTS',
     'describe': 'mexico',
     'nfts': 0,
     'minters': 0,
@@ -68,8 +68,8 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
           status={identity.status}
         />
         <PoolsListItem
-          data={mexico}
-          status={mexico.status}
+          data={spaceTronauts}
+          status={spaceTronauts.status}
         />
         {
           poolsList?.map((pool: PoolsListData, index: number) => (

@@ -10,6 +10,8 @@ import CustomizeButton from '../../../../../contexts/theme/components/Button'
 import { useNavigate } from 'react-router-dom'
 import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
 import { useModal } from '../../../../../contexts/modal'
+import { Skeleton } from '@mui/material'
+import { fill } from '@tensorflow/tfjs'
 
 const NFTItem:React.FC<{item?: MetadataResult, selected?: MetadataResult, onSelect:(_?:any) => void }> = ({
   item,
@@ -63,19 +65,30 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void}> = ({ onBound }) =
   )
 
   return (
-    <Flex flexDirection={'column'} justifyContent={'center'} alignItems={'center'} gap={'12px'}>
-      {
-        isLoading ? <Text>....</Text> :
-          (
-            <Flex  width={'100%'} justifyContent={'center'}>
+    <Flex flexDirection={'column'} justifyContent={'center'} alignItems={'center'} >
+      <Flex  width={'100%'} justifyContent={'center'} gap={'12px'}>
+        {
+          isLoading &&
+            <>
               {
-                data?.map((nft: any, index: number) => (
-                  <NFTItem selected={selectedValue} onSelect={v => setSelectedValue(v)}  key={index} item={nft}  />
+                new Array(3).fill({}).map((item,index) => (
+                  <Skeleton key={index} width={'180px'} height={'220px'} animation={'wave'} />
                 ))
               }
-            </Flex>
-          )
-      }
+            </>
+
+        }
+        {
+          !isLoading &&
+          <>
+            {
+              data?.map((nft: any, index: number) => (
+                <NFTItem selected={selectedValue} onSelect={v => setSelectedValue(v)}  key={index} item={nft}  />
+              ))
+            }
+          </>
+        }
+      </Flex>
 
       <Flex width={'100%'} alignItems={'flex-end'} justifyContent={'flex-end'}>
         {
