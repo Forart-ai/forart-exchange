@@ -4,9 +4,10 @@ import { useLocationQuery } from '../../../hooks/useLocationQuery'
 import Blogs from '../../social/modules/blogs/blogs'
 import Flex from '../../../contexts/theme/components/Box/Flex'
 import { Box } from '@mui/material'
+import { useParams } from 'react-router-dom'
 
 const UserPost:React.FC = () => {
-  const walletAccount = useLocationQuery('userWalletAccount')
+  const { wallet } = useParams()
 
   const [loading, setLoading] = useState(false)
   const [size, ] = useState(20)
@@ -15,7 +16,7 @@ const UserPost:React.FC = () => {
   const { data: pagingData, fetchNextPage, hasNextPage, isLoading } = usePostQuery({
     size,
     orders: [{ field:'', order:'' }],
-    wallet: walletAccount,
+    wallet: wallet,
     createDay: undefined
   })
 

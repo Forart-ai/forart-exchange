@@ -5,7 +5,6 @@ import { styled } from '@mui/system'
 import SocialHomepage, { MainMessageArea, SocialPageWrapper } from './modules/home'
 import GallerySwiper from './modules/ranking/gallerySwiper'
 import { StickyContainer, Sticky } from 'react-sticky'
-import ReplyList from './modules/detail/replyList'
 
 const PageWrapper = styled('div')(({ theme }) => ({
   maxWidth: '90rem',
