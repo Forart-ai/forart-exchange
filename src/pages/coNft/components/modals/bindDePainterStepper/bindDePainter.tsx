@@ -11,7 +11,8 @@ import { useNavigate } from 'react-router-dom'
 import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
 import { useModal } from '../../../../../contexts/modal'
 import { Skeleton } from '@mui/material'
-import { fill } from '@tensorflow/tfjs'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation } from 'swiper'
 
 const NFTItem:React.FC<{item?: MetadataResult, selected?: MetadataResult, onSelect:(_?:any) => void }> = ({
   item,
@@ -80,13 +81,18 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void}> = ({ onBound }) =
         }
         {
           !isLoading &&
-          <>
+          <Swiper slidesPerView={3}>
             {
               data?.map((nft: any, index: number) => (
-                <NFTItem selected={selectedValue} onSelect={v => setSelectedValue(v)}  key={index} item={nft}  />
+                <SwiperSlide key={index} >
+                  <Flex width={'100%'}>
+                    <NFTItem selected={selectedValue} onSelect={v => setSelectedValue(v)}  key={index} item={nft}  />
+                  </Flex>
+                </SwiperSlide>
               ))
             }
-          </>
+
+          </Swiper>
         }
       </Flex>
 

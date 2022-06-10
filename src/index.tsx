@@ -29,52 +29,26 @@ const queryClient = new QueryClient()
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={ForartTheme}>
-      <HelmetProvider>
-        <SnackbarProvider autoHideDuration={3000}>
-          <Web3ReactProvider getLibrary={getLibrary}>
-            <QueryClientProvider client={queryClient}>
-              <RefreshControllerProvider>
-                <Router>
-                  <SolanaConnectionConfigProvider>
-                    <SolanaWeb3Provider>
-                      <ModalProvider>
-                        <Helmet >
-                          <meta property="og:title" content="Forart - homeww page" />
-                          <meta
-                            property="og:description"
-                            content="Forart - momosama homeww"
-                          />
-                          <meta property="og:url" content="https://v1.forart-exchange.pages.dev" />
-                          <meta property="og:image" content={HomepageBanner} />
-                          <meta property="og:site_name" content="Forart" />
-                          <meta
-                            name="twitter:site"
-                            content="@momosama_404"
-                          />
-                          <meta
-                            name="twitter:card"
-                            content="summary_large_image"
-                          />
-                          <meta name="twitter:creator" content="@momosama_404" />
-                          <meta name="viewport" content="width=device-width, initial-scale=1" />
-                          <meta name="theme-color" content="#000000" />
-                          <meta
-                            name="description"
-                            content="Forart - NFT SaaS For Social"
-                          />
-                        </Helmet>
-                        <App />
-                      </ModalProvider>
-                    </SolanaWeb3Provider>
-                  </SolanaConnectionConfigProvider>
-                </Router>
-              </RefreshControllerProvider>
+      <SnackbarProvider autoHideDuration={3000}>
+        <Web3ReactProvider getLibrary={getLibrary}>
+          <QueryClientProvider client={queryClient}>
+            <RefreshControllerProvider>
+              <Router>
+                <SolanaConnectionConfigProvider>
+                  <SolanaWeb3Provider>
+                    <ModalProvider>
 
-            </QueryClientProvider>
+                      <App />
+                    </ModalProvider>
+                  </SolanaWeb3Provider>
+                </SolanaConnectionConfigProvider>
+              </Router>
+            </RefreshControllerProvider>
 
-          </Web3ReactProvider>
-        </SnackbarProvider>
-      </HelmetProvider>
+          </QueryClientProvider>
+
+        </Web3ReactProvider>
+      </SnackbarProvider>
 
     </ThemeProvider>
   </Provider>

@@ -74,9 +74,9 @@ export function useSignLogin() {
   useEffect(() => {
     loginRef.current = buildLoginMethod(adapter, account)
 
-    // if (adapter && account) {
-    //   loginRef.current()
-    // }
+    if (adapter && account) {
+      loginRef.current()
+    }
   }, [adapter, account])
 }
 

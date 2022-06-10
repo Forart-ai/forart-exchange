@@ -46,35 +46,8 @@ const ReplyList: React.FC= () => {
 
     <>
 
-      {postDetail &&
-        <>
-          <Helmet >
-            <meta property="og:title" content="Forart - post page" />
-            <meta
-              property="og:description"
-              content="Forart - momosama post"
-            />
-            <meta property="og:url" content="https://v1.forart-exchange.pages.dev/social/post" />
-            <meta property="og:image" content={postDetail?.avatar} />
-            <meta property="og:site_name" content="Forart" />
-            <meta
-              name="twitter:site"
-              content="@momosama_404"
-            />
-            <meta
-              name="twitter:card"
-              content="summary_large_image"
-            />
-            <meta name="twitter:creator" content="@momosama_404" />
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <meta name="theme-color" content="#000000" />
-            <meta
-              name="description"
-              content="Forart - NFT SaaS For Social"
-            />
-          </Helmet>
-          <Blogs item={postDetail} />
-        </>}
+      {  postDetail && <Blogs item={postDetail} /> }
+      monica991123
 
       {
         replyList?.map((item, index) => (

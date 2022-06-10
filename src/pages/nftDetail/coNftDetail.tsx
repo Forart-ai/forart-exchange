@@ -242,26 +242,7 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
 
   return (
     <Wrapper>
-      <Helmet>
-        <meta property="og:title" content="Forart - homeodk" />
-        <meta
-          property="og:description"
-          content="Forart - momosama yehhhh"
-        />
-        <meta property="og:url" content="https://v1.forart-exchange.pages.dev/co-nft-detail?id=1024-b2986cca4a8c790c47534cc2cebd0cd7" />
-        <meta property="og:image" content={nftDetail?.previewUrl} />
-        <meta property="og:site_name" content="Forart" />
-        <meta
-          name="twitter:site"
-          content="@momosama_404"
-        />
-        <meta
-          name="twitter:card"
-          content="summary_large_image"
-        />
-        <meta name="twitter:creator" content="@momosama_404" />
-        <title>hello s</title>
-      </Helmet>
+
       <Canvas id={'canvas'}>
         <NFTInfo >
           <LeftArea >
