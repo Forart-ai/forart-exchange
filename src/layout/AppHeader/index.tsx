@@ -190,7 +190,7 @@ const DrawerList:React.FC = () => {
       openModal(<WalletSelectionModal />)
     }
     else {
-      navigate(`/account?userWalletAccount=${account.toBase58()}`)
+      navigate(`/account/${account.toBase58()}?tab=co-nft`, )
       return
     }
   }

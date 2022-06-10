@@ -30,10 +30,7 @@ const Wrapper = styled('div')`
 const BackgroundImage = styled('div')`
   height: 320px;
   width: 100%;
-  text-align: center;
   display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
   background-color: rgb(37, 14, 72);
 
@@ -43,11 +40,14 @@ const BackgroundImage = styled('div')`
     object-fit: cover;
   }
 
-  ${({ theme }) => theme.breakpoints.down('sm')} {
-    height: 300px;
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    height: 220px;
   }
 
-
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    height: 140px;
+  }
+  
 `
 
 const PersonalCenterContainer = styled('div')`
@@ -63,10 +63,10 @@ const PersonalCenterContainer = styled('div')`
 const UserInfoContainer = styled('div')`
   display: flex;
   flex-direction: column;
-  position: relative;
-  top: -140px;
   width: 80%;
   max-width: 1800px;
+  margin-top: -40px;
+  margin-bottom: 20px;
 `
 
 const DataColumn = styled('div')`
@@ -129,8 +129,8 @@ const CoverMask = styled('div')`
 `
 
 const UserAvatar = styled('div')`
-  width: 180px;
-  height: 180px;
+  max-width: 180px;
+  max-height: 180px;
   position: relative;
   display: flex;
   justify-content: center;
@@ -139,12 +139,16 @@ const UserAvatar = styled('div')`
   border-radius: 10px;
   padding: 10px;
 
-
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
+  }
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    max-width: 120px;
+    max-height: 120px;
   }
 
 
@@ -195,6 +199,10 @@ const UserSlogan = styled('div')`
   color: ${({ theme }) => theme.palette.grey[400]};
   text-align: left;
   font-family: Kanit-Light;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+      font-size: 14px;
+  }
 `
 
 const TabsWrapper = styled('div')`
@@ -374,11 +382,13 @@ const PersonalCenterPage: React.FC = () => {
         <BackgroundImage>
           {
             userInfo?.banneruri &&
-            <Image width={'100%'}
-              height={'100%'}
-              src={`${userInfo?.banneruri}?a=${userInfo?.updateTime}`}
-              variant={'rectangular'}
-            />
+              <Image
+                className={'background-image'}
+                width={'100%'}
+                height={'100%'}
+                src={`${userInfo?.banneruri}?a=${userInfo?.updateTime}`}
+                variant={'rectangular'}
+              />
           }
         </BackgroundImage>
 
