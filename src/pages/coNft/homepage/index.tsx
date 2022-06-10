@@ -117,7 +117,7 @@ const Header: React.FC = () => {
             <LeftArea>
               <LeftTop>
                 <MainTitle>
-                  <div className="title1"> DePainter  </div>
+                  <div className="title1"> DePainter1  </div>
 
                   <div className={'title2'}> <span> The Unique Admin Ticket</span> To  Forart.ai</div>
                 </MainTitle>
@@ -287,31 +287,6 @@ const CoNftPage: React.FC = () => {
 
   return (
     <>
-      <Helmet >
-        <meta property="og:title" content="Forart - home page" />
-        <meta
-          property="og:description"
-          content="Forart - momosama home"
-        />
-        <meta property="og:url" content="https://v1.forart-exchange.pages.dev" />
-        <meta property="og:image" content={HomepageBanner} />
-        <meta property="og:site_name" content="Forart" />
-        <meta
-          name="twitter:site"
-          content="@momosama_404"
-        />
-        <meta
-          name="twitter:card"
-          content="summary_large_image"
-        />
-        <meta name="twitter:creator" content="@momosama_404" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta
-          name="description"
-          content="Forart - NFT SaaS For Social"
-        />
-      </Helmet>
 
       <Background>
         <Header  />
