@@ -88,3 +88,11 @@ export interface RankQueryRequest {
     }
   ]
 }
+
+export interface RankListItem {
+  createTime: string
+  retain: number
+  updateTime: string
+  wallet: string
+  rank: number
+}

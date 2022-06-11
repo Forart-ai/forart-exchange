@@ -1,9 +1,9 @@
-import { TOKEN_PROGRAM_ID } from '../../utils/metaplex/constant'
+import { TOKEN_PROGRAM_ID } from '../../../utils/metaplex/constant'
 import { useQuery, UseQueryResult } from 'react-query'
-import { loadMetadata, MetadataResult } from '../../utils/metaplex/metadata'
-import {   useSolanaWeb3 } from '../../contexts/solana-web3'
-import { useRefreshController } from '../../contexts/refresh-controller'
-import { useConnectionConfig } from '../../contexts/solana-connection-config'
+import { loadMetadata, MetadataResult } from '../../../utils/metaplex/metadata'
+import {   useSolanaWeb3 } from '../../../contexts/solana-web3'
+import { useRefreshController } from '../../../contexts/refresh-controller'
+import { useConnectionConfig } from '../../../contexts/solana-connection-config'
 import { ParsedAccountData, PublicKey, TokenAmount } from '@solana/web3.js'
 
 const belongsToCollection = (data: MetadataResult, creator?: PublicKey) => {

@@ -37,6 +37,14 @@ export const AUTH_API = {
     return Service.post('account/edit', param)
   },
 
+  bindDePainter(param: {wallet: string, mintKey: string}) {
+    return Service.post('account/bind', param)
+  },
+
+  getUserBoundDePainter(wallet: string) {
+    return Service.get(`account/bind/${wallet}`)
+  },
+
   uploadAvatarImage(param: UploadImageParam) {
     const data = new FormData()
     data.append('file', param.file)

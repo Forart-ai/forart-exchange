@@ -1,4 +1,4 @@
-import { useOwnedNFTsQuery } from '../../../hooks/queries/useOwnedNFTsQuery'
+import { useOwnedNFTsQuery } from '../../../hooks/queries/account/useOwnedNFTsQuery'
 import React, { useEffect } from 'react'
 import { styled } from '@mui/material'
 import MintListItem from '../components/mintListItem'

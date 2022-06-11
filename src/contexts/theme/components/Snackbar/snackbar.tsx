@@ -1,7 +1,7 @@
 import { SnackbarKey, useSnackbar } from 'notistack'
 import { styled } from '@mui/material'
 import React from 'react'
-import { HeartBrokenOutlined } from '@mui/icons-material'
+import { CheckCircleRounded, ErrorRounded, HeartBrokenOutlined } from '@mui/icons-material'
 import { variant } from 'styled-system'
 import Text from '../Text/Text'
 
@@ -36,6 +36,12 @@ const getMessageStyleByVariant = ({ theme, $variant }: any) => {
     return {
       background: theme.palette.background.paper,
       color: theme.palette.success.main,
+    }
+
+  case 'error':
+    return {
+      background: theme.palette.background.paper,
+      color: theme.palette.error.main,
     }
   default:
     return ''
@@ -75,6 +81,12 @@ const MessageContainer = styled('div')<{$variant: Props['variant']}>`
   min-width: 200px;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
+  font-size: 16px;
+  
+  span {
+    padding: 0 10px;
+    font-family: Kanit-Regular;
+  }
   ${getMessageStyleByVariant}
 
 `
@@ -95,13 +107,13 @@ const Snackbar = React.forwardRef<any, Props>((props, ref) => {
     <SnackbarContent ref={ref}>
       <Container>
         <LeftIcon $variant={variant}>
-          {
-            variant === 'success' && <HeartBrokenOutlined sx={{ color: '#ffffff' }} />
-          }
+          { variant === 'success' && <CheckCircleRounded sx={{ color: '#ffffff' }} /> }
+          { variant === 'error' && <ErrorRounded sx={{ color: '#ffffff' }} /> }
+
         </LeftIcon>
 
         <MessageContainer $variant={variant}>
-          <Text padding={'0 10px'} fontFamily={'Kanit-Regular'}  fontSize={'16px'}>{message}</Text>
+          <span>{message}</span>
           {
             subMessage &&  <Text padding={'0 10px'} color={'#999999'} fontFamily={'Kanit-Light'}  fontSize={'14px'}>{subMessage}</Text>
           }

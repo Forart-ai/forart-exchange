@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useSolanaWeb3 } from '../../../../contexts/solana-web3'
 import { useModal } from '../../../../contexts/modal'
 import WalletSelectionModal from '../../../../components/wallet/WalletSelectionModal'
-import useUserQuery from '../../../../hooks/queries/useUserQuery'
+import useUserQuery from '../../../../hooks/queries/account/useUserQuery'
 import { useCheckWhiteListModal } from '../../../../hooks/modals/useCheckWhiteListModal'
 import useDiscordAccessToken from '../../../../hooks/useDiscordAccessToken'
 

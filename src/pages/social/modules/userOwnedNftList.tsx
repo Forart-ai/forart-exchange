@@ -6,7 +6,7 @@ import { MintedNFTItem } from '../../../types/coNFT'
 import { Skeleton, useMediaQuery, useTheme } from '@mui/material'
 import { ShowCoNftParams } from '../../../types/social'
 import { NFTItem, NFTItemFromWallet } from './nftItem'
-import { useOwnedNFTsQuery } from '../../../hooks/queries/useOwnedNFTsQuery'
+import { useOwnedNFTsQuery } from '../../../hooks/queries/account/useOwnedNFTsQuery'
 import { MetadataResult } from '../../../utils/metaplex/metadata'
 import Flex from '../../../contexts/theme/components/Box/Flex'
 

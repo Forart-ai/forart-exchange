@@ -8,12 +8,12 @@ import UserOwnedNfts from './modules/userOwnedNfts'
 import Identity from './modules/identity'
 import { useModal } from '../../contexts/modal'
 import UserProfileSetting from './components/user-profile-setting'
-import { useUserCredit } from '../../hooks/queries/useUserCredit'
+import { useUserCredit } from '../../hooks/queries/account/useUserCredit'
 import { useGetUserInfo } from '../../hooks/queries/useGetUserInfo'
 import Image from '../../contexts/theme/components/Image'
 import { StyledTab, StyledTabs, TabPanel } from './components/styledTabs'
 import { FollowersList, FollowsList } from './modules/followersList'
-import { useUserFollowingCounts } from '../../hooks/queries/useUserFollow'
+import { useUserFollowingCounts } from '../../hooks/queries/account/useUserFollow'
 import UserPost from './modules/userPost'
 import Flex from '../../contexts/theme/components/Box/Flex'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
@@ -113,6 +113,7 @@ const CoverMask = styled('div')`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  z-index: 2;
   
   img {
     width: 24px;
@@ -124,7 +125,7 @@ const CoverMask = styled('div')`
     transition: all .5s;
     width: 100%;
     height: 100%;
-    opacity: .8;
+    opacity: .4;
   }
 `
 

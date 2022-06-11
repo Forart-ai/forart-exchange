@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Text from '../../../../../contexts/theme/components/Text/Text'
 import Flex from '../../../../../contexts/theme/components/Box/Flex'
 import Image from '../../../../../contexts/theme/components/Image'
@@ -80,6 +80,10 @@ const FtaRanking:React.FC = () => {
 
   const { data: rankList } = useRankQuery({ size: size, current: current })
 
+  useEffect(() => {
+    console.log(rankList)
+  }, [rankList])
+
   return (
     <RankingBox>
       <>
@@ -95,16 +99,16 @@ const FtaRanking:React.FC = () => {
 
         </TableHeader>
         {
-          mockData.filter(v => v.rank <= 3).map((item,index) => (
+          rankList?.slice(0,3).map((item, index) => (
             <RankList key={index}>
               <Flex alignItems={'center'} >
-                <Number $rank={item.rank.toString()}> {item.rank} </Number>
+                <Number $rank={(index + 1).toString()}> {index + 1} </Number>
                 <Flex alignItems={'center'} ml={'34px'}>
-                  <Image width={'36px'} height={'36px'} src={item.avatar} />
-                  <Text fontFamily={'Kanit-Regular'} ml={10} fontSize={18} color={'secondary.main'}> {item.username} </Text>
+                  {/*<Image width={'36px'} height={'36px'} src={item.avatar} />*/}
+                  {/*<Text fontFamily={'Kanit-Regular'} ml={10} fontSize={18} color={'secondary.main'}> {item.username} </Text>*/}
                 </Flex>
               </Flex>
-              <Text fontSize={22} fontFamily={'Aldrich-Regular'}>${item.fta}</Text>
+              <Text fontSize={22} fontFamily={'Aldrich-Regular'}>${item.retain}</Text>
             </RankList>
 
           ))
@@ -113,16 +117,16 @@ const FtaRanking:React.FC = () => {
           showMore && (
             <>
               {
-                mockData.filter(v=> v.rank > 3).map((item,index) => (
+                rankList?.filter(v=> v.rank > 3).map((item,index) => (
                   <RankList key={index}>
                     <Flex alignItems={'center'} >
                       <Number $rank={item.rank.toString()}> {item.rank} </Number>
                       <Flex alignItems={'center'} ml={'34px'}>
-                        <Image width={'36px'} height={'36px'} src={item.avatar} />
-                        <Text fontFamily={'Kanit-Regular'} ml={10} fontSize={18} color={'secondary.main'}> {item.username} </Text>
+                        {/*<Image width={'36px'} height={'36px'} src={item.avatar} />*/}
+                        {/*<Text fontFamily={'Kanit-Regular'} ml={10} fontSize={18} color={'secondary.main'}> {item.username} </Text>*/}
                       </Flex>
                     </Flex>
-                    <Text fontSize={22} fontFamily={'Aldrich-Regular'}>${item.fta}</Text>
+                    <Text fontSize={22} fontFamily={'Aldrich-Regular'}>${item.retain}</Text>
                   </RankList>
 
                 ))

@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from 'react-query'
-import { useSolanaWeb3 } from '../../contexts/solana-web3'
-import { PERSONAL_API } from '../../apis/auth'
-import { FollowersListItem } from '../../types/personal'
+import { useSolanaWeb3 } from '../../../contexts/solana-web3'
+import { PERSONAL_API } from '../../../apis/auth'
+import { FollowersListItem } from '../../../types/personal'
 
 export const useUserFollowerList = (account?: string): UseQueryResult<FollowersListItem[]> => {
   return useQuery(

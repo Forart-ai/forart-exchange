@@ -1,9 +1,9 @@
 import { useQuery, UseQueryResult } from 'react-query'
-import { useSolanaWeb3 } from '../../contexts/solana-web3'
-import { useRefreshController } from '../../contexts/refresh-controller'
-import useDiscordAccessToken from '../useDiscordAccessToken'
-import CONFT_API from '../../apis/co-nft'
-import { useLocationQuery } from '../useLocationQuery'
+import { useSolanaWeb3 } from '../../../contexts/solana-web3'
+import { useRefreshController } from '../../../contexts/refresh-controller'
+import useDiscordAccessToken from '../../useDiscordAccessToken'
+import CONFT_API from '../../../apis/co-nft'
+import { useLocationQuery } from '../../useLocationQuery'
 
 const useUserQuery = (): UseQueryResult<any> => {
   // const { account } = useSolanaWeb3()

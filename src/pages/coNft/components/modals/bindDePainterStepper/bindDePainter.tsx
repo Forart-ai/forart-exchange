@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import NFTWithCheckbox from '../../../../../contexts/theme/components/NFT-With-Checkbox'
 import Image from '../../../../../contexts/theme/components/Image'
-import { useOwnedNFTsQuery } from '../../../../../hooks/queries/useOwnedNFTsQuery'
+import { useOwnedNFTsQuery } from '../../../../../hooks/queries/account/useOwnedNFTsQuery'
 import { PublicKey } from '@solana/web3.js'
 import Text from '../../../../../contexts/theme/components/Text/Text'
 import Flex from '../../../../../contexts/theme/components/Box/Flex'

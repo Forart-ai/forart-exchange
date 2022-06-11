@@ -4,7 +4,7 @@ import { styled } from '@mui/system'
 import Text from '../../../contexts/theme/components/Text/Text'
 import CustomizeButton from '../../../contexts/theme/components/Button'
 import { useLocationQuery } from '../../../hooks/useLocationQuery'
-import { useUserFollowerList, useUserFollowsList } from '../../../hooks/queries/useUserFollow'
+import { useUserFollowerList, useUserFollowsList } from '../../../hooks/queries/account/useUserFollow'
 import { useParams } from 'react-router-dom'
 
 const Wrapper = styled('div')`

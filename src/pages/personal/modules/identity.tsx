@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import DefaultPageWrapper from '../../../components/default-page-wrapper'
 import { Box, styled } from '@mui/material'
 import Avatar from '../../../assets/images/artistDetail/hyteen.jpg'
 import CustomizedAccordions from '../../../contexts/theme/components/Accordition'
 import IdentityPrice from '../components/identity-price'
 import IdentityGrade from '../components/identity-grade'
-import { useOwnedNFTsQuery } from '../../../hooks/queries/useOwnedNFTsQuery'
+import { useOwnedNFTsQuery } from '../../../hooks/queries/account/useOwnedNFTsQuery'
 import { PublicKey } from '@solana/web3.js'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 import Text from '../../../contexts/theme/components/Text/Text'
@@ -27,6 +27,9 @@ import { SyncLoader } from 'react-spinners'
 import Flex from '../../../contexts/theme/components/Box/Flex'
 import CustomizeButton from '../../../contexts/theme/components/Button'
 import { Lock } from '@mui/icons-material'
+import useBindDePainter from '../../../hooks/account/bindDepainter'
+import { useUserBoundedDepainter } from '../../../hooks/queries/account/useUserBoundedDepainter'
+import { useRefreshController } from '../../../contexts/refresh-controller'
 
 const Wrapper = styled('div')`
   width: 100%; 
@@ -156,6 +159,23 @@ const Ribbon = styled('div')`
 
 const NFTItem:React.FC<{item?: MetadataResult }> = ({ item }) => {
 
+  const [bind, setBind] = useState<boolean>(false)
+  const { forceRefresh } = useRefreshController()
+
+  const { bindDePainter, loading } = useBindDePainter()
+
+  const { data: userBoundDePainter } = useUserBoundedDepainter()
+
+  useEffect(() => {
+    if (!item || !userBoundDePainter) return
+    if ( item.mint.toBase58() === userBoundDePainter.mintKey) {
+      setBind(true)
+    }
+    if ( item.mint.toBase58() !== userBoundDePainter.mintKey) {
+      setBind(false)
+    }
+  }, [userBoundDePainter, forceRefresh])
+
   const option: EChartsOption = useMemo(() => {
     return ({
       xAxis: {
@@ -172,44 +192,73 @@ const NFTItem:React.FC<{item?: MetadataResult }> = ({ item }) => {
 
   return (
 
-    <IdentityContainer>
-      <Ribbon >
-        <div className={'ribbon'} >Bounded</div>
-      </Ribbon>
-      <LeftContainer>
-        <ImageContainer >
-          <img src={item?.data?.image} />
-        </ImageContainer>
-        <CustomizeButton startIcon={<Lock />} color={'secondary'} variant={'contained'}>Bind DePainter!</CustomizeButton>
-        {/*<ReactECharts option={option} />*/}
-      </LeftContainer>
+    <>
+      <IdentityContainer>
+        {
+          bind &&
+            <Ribbon >
+              <div className={'ribbon'} >Bounded</div>
+            </Ribbon>
 
-      <InfoContainer>
-        <TopTitle>
-          <Text  fontFamily={'KronaOne-Regular'} fontSize={'20px'} color={'white'}>{item?.data?.name}</Text>
-          <RainbowText > <span>{item?.data?.collection.name}</span> </RainbowText>
-        </TopTitle>
+        }
 
-        <Box sx={{ margin: '10px 0',  }}>
-          <CustomizedAccordions  expanded={true} title={'Price'}>
-            <IdentityPrice />
-          </CustomizedAccordions>
-        </Box>
+        <LeftContainer>
+          <ImageContainer >
+            <img src={item?.data?.image} />
+          </ImageContainer>
 
-        <Box sx={{ margin: '10px 0' }}>
-          <CustomizedAccordions expanded={true} title={'Grade'}>
-            <IdentityGrade attr={item?.data?.attributes} />
-          </CustomizedAccordions>
-        </Box>
+          {
+            bind ? (
+              <CustomizeButton
+                startIcon={<Lock />}
+                color={'primary'}
+                variant={'contained'}
+                disabled
+              >
+                Already bound
+              </CustomizeButton>
+            ): (
+              <CustomizeButton
+                startIcon={<Lock />}
+                color={'secondary'}
+                variant={'contained'}
+                onClick={() => bindDePainter(item?.mint.toBase58())}
+                disabled={loading}
+              >
+                Bind DePainter {loading && <SyncLoader size={6} color={'#ffffff'} />}
+              </CustomizeButton>
+            )
+          }
+          {/*<ReactECharts option={option} />*/}
+        </LeftContainer>
 
-        <Box sx={{ margin: '10px 0' }}>
-          <CustomizedAccordions expanded={true} title={'Attributes'}>
-            <AttributesItemForWalletNft item={item?.data?.attributes } />
-          </CustomizedAccordions>
-        </Box>
+        <InfoContainer>
+          <TopTitle>
+            <Text  fontFamily={'KronaOne-Regular'} fontSize={'20px'} color={'white'}>{item?.data?.name}</Text>
+            <RainbowText > <span>{item?.data?.collection.name}</span> </RainbowText>
+          </TopTitle>
 
-      </InfoContainer>
-    </IdentityContainer>
+          <Box sx={{ margin: '10px 0',  }}>
+            <CustomizedAccordions  expanded={true} title={'Price'}>
+              <IdentityPrice />
+            </CustomizedAccordions>
+          </Box>
+
+          <Box sx={{ margin: '10px 0' }}>
+            <CustomizedAccordions expanded={true} title={'Grade'}>
+              <IdentityGrade attr={item?.data?.attributes} />
+            </CustomizedAccordions>
+          </Box>
+
+          <Box sx={{ margin: '10px 0' }}>
+            <CustomizedAccordions expanded={true} title={'Attributes'}>
+              <AttributesItemForWalletNft item={item?.data?.attributes } />
+            </CustomizedAccordions>
+          </Box>
+
+        </InfoContainer>
+      </IdentityContainer>
+    </>
 
   )
 }
@@ -218,10 +267,6 @@ const Identity:React.FC = () => {
 
   const holds = useOwnedNFTsQuery(new PublicKey('7Gdgp25ghYQyNf6m5nVaxQbCMf2igDVHGStEz7B7vXUM'))
   const { data, isLoading } = holds
-
-  useEffect(() => {
-    console.log(isLoading)
-  }, [isLoading])
 
   return (
     <Wrapper >

@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from 'react-query'
-import { useSolanaWeb3 } from '../../contexts/solana-web3'
-import CONFT_API from '../../apis/co-nft'
+import { useSolanaWeb3 } from '../../../contexts/solana-web3'
+import CONFT_API from '../../../apis/co-nft'
 
 export const useUserCredit = (): UseQueryResult<any> => {
   const { account } = useSolanaWeb3()
