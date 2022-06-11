@@ -17,10 +17,20 @@ const BindDePainterStepper:React.FC = () => {
   const theme = useTheme()
   const [activeStep, setActiveStep] = React.useState(0)
   const [allowNextStep, setAllowNextStep] = useState<boolean | undefined>(false)
+  const [forceNext, setForceNext] = useState<boolean | undefined>()
 
   useEffect(() => {
     console.log('allow?', allowNextStep)
   }, [allowNextStep])
+
+  const handleNext = () => {
+    setActiveStep(prevActiveStep => prevActiveStep + 1)
+    console.log('next')
+  }
+
+  const handleBack = () => {
+    setActiveStep(prevActiveStep => prevActiveStep - 1)
+  }
 
   const steps = [
     {
@@ -29,7 +39,12 @@ const BindDePainterStepper:React.FC = () => {
     },
     {
       label: '2. Bind a dePainter',
-      description: (<BindDePainter onBound={v => setAllowNextStep(v)} />)
+      description: (
+        <BindDePainter
+          forceNext={v =>  handleNext() }
+          onBound={v => setAllowNextStep(v)}
+        />
+      )
     },
     {
       label: '3. Everything is ready',
@@ -38,20 +53,6 @@ const BindDePainterStepper:React.FC = () => {
   ]
 
   const maxSteps = steps.length
-
-  useEffect(() => {
-    return () => {
-
-    }
-  }, [])
-
-  const handleNext = () => {
-    setActiveStep(prevActiveStep => prevActiveStep + 1)
-  }
-
-  const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1)
-  }
 
   return (
     <Dialog variant={'info'} title={'Something to do first'} closeable>
@@ -69,7 +70,7 @@ const BindDePainterStepper:React.FC = () => {
         >
           <Text color={'#ffffff'} fontSize={16}>{steps[activeStep].label}</Text>
         </Paper>
-        <Box sx={{ height: 320, maxWidth: 600, width: '100%', p: 1 }}>
+        <Box sx={{ height: 360, maxWidth: 600, width: '100%', p: 1 }}>
           {steps[activeStep].description}
         </Box>
         <MobileStepper

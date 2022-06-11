@@ -20,7 +20,7 @@ const WalletNftDetail:React.FC = () => {
 
   const mint = useLocationQuery('mint')
 
-  const nft = useNFTQuery(new PublicKey(mint!))
+  const nft = useNFTQuery(mint)
 
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 

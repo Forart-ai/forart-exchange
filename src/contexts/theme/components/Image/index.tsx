@@ -5,13 +5,13 @@ import observerOptions from './options'
 import Wrapper from './Wrapper'
 import styled from 'styled-components'
 
-const StyledImage = styled('img')<{ $borderRadius: number }>`
+const StyledImage = styled('img')<{ borderRadius: number }>`
   height: 100%;
   left: 0;
   position: relative;
   top: 0;
   width: 100%;
-  border-radius: ${({ $borderRadius }) => $borderRadius}px; 
+  border-radius: ${({ borderRadius }) => borderRadius}px; 
   object-fit: cover;
 `
 
@@ -36,7 +36,7 @@ const Image: React.FC<ImageProps> = ({ src, alt, width, height,variant,...props 
 
   return (
     <Wrapper  height={height} width={width} {...props}>
-      <StyledImage ref={imgEl} src={src} alt={alt} $borderRadius={props?.borderRadius ?? 0}    style={loaded ? { display: 'inline-block' } : { display: 'none' }} />
+      <StyledImage ref={imgEl} src={src} alt={alt} borderRadius={props?.borderRadius ?? 0}    style={loaded ? { display: 'inline-block' } : { display: 'none' }} />
       <Skeleton sx={{ backgroundColor: '#453e4d' }} animation={'wave'} variant={variant} width={'100%'} height={'100%'} style={!loaded ? { display: 'block' } : { display: 'none' }}  />
     </Wrapper>
   )

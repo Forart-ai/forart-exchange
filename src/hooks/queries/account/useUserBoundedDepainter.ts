@@ -12,7 +12,10 @@ export const useUserBoundedDepainter = (): UseQueryResult<any> => {
     async () => {
       if (!account) return
       return await AUTH_API.getUserBoundDePainter(account.toBase58()).then(res => res)
-    },{ refetchOnWindowFocus:false,
-      refetchInterval:false }
+    },{
+      refetchOnWindowFocus:false,
+      refetchInterval:false,
+      keepPreviousData: true
+    }
   )
 }
