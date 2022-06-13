@@ -53,12 +53,12 @@ const ReplyList: React.FC= () => {
         replyList?.map((item, index) => (
           <ReplyContainer key={index}>
             <Flex height={'100%'} width={'100%'} justifyContent={'space-between'} flexDirection={'column'} >
-              <UserInfoRow>
+              <Flex alignItems={'center'} justifyContent={'flex-start'} width={'100%'} mb={'20px'} fontFamily={'Kanit-Regular'}>
                 <StyledAvatar src={item?.avatar} variant={'square'} />
 
                 <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
 
-              </UserInfoRow>
+              </Flex>
 
               <Text color={'secondary.light'} fontSize={18}> {item?.wysiwyg} </Text>
 

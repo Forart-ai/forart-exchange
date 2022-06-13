@@ -32,7 +32,6 @@ import CustomizedSlider from '../../../../contexts/theme/components/Slider'
 
 const Wrapper = styled('div')`
   width: 100%;
-
 `
 
 const PageWrapper = styled('div')`
