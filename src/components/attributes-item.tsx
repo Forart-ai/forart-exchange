@@ -18,15 +18,15 @@ const Wrapper = styled('div')`
 const BoxContainer = styled('div')`
   display: grid;
   grid-template-columns: repeat(auto-fill, 110px);
-  justify-content: space-between;
+  justify-content: space-around;
   grid-gap: 10px;
   width: 100%;
 
 
-  ${({ theme }) => theme.breakpoints.down('md')} {
-    grid-template-columns: repeat(4, 110px);
-
-  }
+  // ${({ theme }) => theme.breakpoints.down('md')} {
+  //   grid-template-columns: repeat(4, 110px);
+  //
+  // }
 `
 
 const ItemBox = styled('div')`

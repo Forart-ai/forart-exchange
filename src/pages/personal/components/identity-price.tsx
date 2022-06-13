@@ -22,10 +22,15 @@ const Wrapper = styled('div')`
   }
 
 
-  ${({ theme }) => theme.breakpoints.down('sm')} {
+ 
+  
+  ${({ theme }) => theme.breakpoints.down('md')} {
+    img {
+      width: 24px;
+    }
     span {
       margin-left: 10px;
-      font-size: 24px;
+      font-size: 18px;
     }
   }
 `
