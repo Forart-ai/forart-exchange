@@ -16,7 +16,7 @@ import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
 import { ArtistKit, useArtistKitsQuery } from '../../../../../hooks/queries/useArtistKitsQuery'
 import { NFTAttributesData } from '../../../../../types/coNFT'
 import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
-import useNFTMint from '../../../../../hooks/useNFTMint'
+import useNFTMint from '../../../../../hooks/co-nft/useNFTMint'
 
 const HypeteenCreate:React.FC = () => {
   const { account } = useSolanaWeb3()
@@ -32,10 +32,6 @@ const HypeteenCreate:React.FC = () => {
   }, [artistKit])
 
   const [attr, setAttr] = useState<ArtistKit[]>([])
-
-  useEffect(() => {
-    console.log(body, attr)
-  },[attr,body])
 
   return (
     <>

@@ -132,6 +132,8 @@ const CoverMask = styled('div')`
 const UserAvatar = styled('div')`
   max-width: 180px;
   max-height: 180px;
+  width: 180px;
+  height: 180px;
   position: relative;
   display: flex;
   justify-content: center;

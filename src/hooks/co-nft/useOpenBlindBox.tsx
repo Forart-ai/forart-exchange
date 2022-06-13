@@ -1,20 +1,20 @@
 import { useCallback, useEffect, useState } from 'react'
 import React from 'react'
-import useCandyMachine from './programs/useCandyMachine'
-import { mint as mintFromCandyMachine } from './programs/useCandyMachine/helpers/mint'
-import useSettle from './programs/useSettle'
+import useCandyMachine from '../programs/useCandyMachine'
+import { mint as mintFromCandyMachine } from '../programs/useCandyMachine/helpers/mint'
+import useSettle from '../programs/useSettle'
 import { Keypair, PublicKey } from '@solana/web3.js'
-import { HypeteenCandyMachineAddress } from './programs/useCandyMachine/helpers/constant'
-import { useSolanaWeb3 } from '../contexts/solana-web3'
-import { useConnectionConfig } from '../contexts/solana-connection-config'
-import useAnchorProvider from './useAnchorProvider'
-import { loadMetadata, MetadataResult } from '../utils/metaplex/metadata'
-import CONFT_API from '../apis/co-nft'
-import Dialog from '../contexts/theme/components/Dialog/Dialog'
+import { HypeteenCandyMachineAddress } from '../programs/useCandyMachine/helpers/constant'
+import { useSolanaWeb3 } from '../../contexts/solana-web3'
+import { useConnectionConfig } from '../../contexts/solana-connection-config'
+import useAnchorProvider from '../useAnchorProvider'
+import { loadMetadata, MetadataResult } from '../../utils/metaplex/metadata'
+import CONFT_API from '../../apis/co-nft'
+import Dialog from '../../contexts/theme/components/Dialog/Dialog'
 import {  styled } from '@mui/material'
-import { useModal } from '../contexts/modal'
+import { useModal } from '../../contexts/modal'
 import { SyncLoader } from 'react-spinners'
-import CustomizeButton from '../contexts/theme/components/Button'
+import CustomizeButton from '../../contexts/theme/components/Button'
 import { Link, useNavigate } from 'react-router-dom'
 
 const BoxContainer = styled('div')`
@@ -34,10 +34,10 @@ const Message = styled('div')`
   flex-direction: column;
   
   .row {
-    margin: 20px 0;
+    margin: 20px 0; 
   }
  
-
+ 
   strong {
     color: ${({ theme }) => theme.palette.primary.main};
     font-size: 24px;

@@ -29,7 +29,7 @@ const FinalReconfirmation:React.FC = () => {
         nft ?
           <>
             <Text color={'#ffffff'}>Bound {nft.data?.data?.name}</Text>
-            <Image src={nft.data?.data?.image} width={'164px'} height={'164px'} />
+            <Image src={nft.data?.data?.image} width={'164px'} height={'164px'} variant={'rectangular'} borderRadius={6} />
           </>
           :
           <SyncLoader color={'white'} size={10} />

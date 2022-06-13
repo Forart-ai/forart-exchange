@@ -50,6 +50,7 @@ export type LockNFTRequest = {
   series: number,
   components: any,
   wallet: string,
+  walletAvx?: string,
   mintKey: string,
   mintPrivateKey: string,
 }

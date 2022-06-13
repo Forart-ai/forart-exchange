@@ -39,8 +39,6 @@ const useBindDePainter = () => {
 
       const signature = Buffer.from(signed).toString('base64')
 
-      // console.log(Buffer.from(signed).toString('base64'))
-
       AUTH_API.userSignLogin({ wallet:solAccount.toBase58(), walletInBase64:solAccount.toBuffer().toString('base64'), toSign: decodeMessage , signed:signature }).then((res:any) => {
         const decoded:any = jwt_decode(res)
         const expDate = new Date(decoded.exp * 1000)

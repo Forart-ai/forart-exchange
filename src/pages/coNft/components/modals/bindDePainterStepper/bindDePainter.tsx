@@ -10,12 +10,13 @@ import CustomizeButton from '../../../../../contexts/theme/components/Button'
 import { useNavigate } from 'react-router-dom'
 import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
 import { useModal } from '../../../../../contexts/modal'
-import { Skeleton } from '@mui/material'
+import { Skeleton, SvgIcon } from '@mui/material'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper'
 import { useUserBoundedDepainter } from '../../../../../hooks/queries/account/useUserBoundedDepainter'
 import useBindDePainter from '../../../../../hooks/account/bindDepainter'
 import { useRefreshController } from '../../../../../contexts/refresh-controller'
+import { Empty_Outline } from '../../../../../contexts/svgIcons'
 
 const NFTItem:React.FC<{item?: MetadataResult, selected?: MetadataResult | any, onSelect:(_?:any) => void }> = ({
   item,
@@ -24,15 +25,15 @@ const NFTItem:React.FC<{item?: MetadataResult, selected?: MetadataResult | any, 
 }) => {
 
   return (
-    <Flex width={'100%'} gap={'10px'}>
+    <Flex width={'100%'} gap={'10px'} justifyContent={'center'}>
       <NFTWithCheckbox
-        width={'180px'}
+        width={'160px'}
         height={'220px'}
         src={item}
         checked={(selected?.mintKey === item?.mint.toBase58()) || selected?.data === item?.data}
         onSelect={onSelect}
       >
-        <Image borderRadius={6} width={'100%'} height={'80%'} src={item?.data?.image} />
+        <Image borderRadius={6} width={'140px'} height={'180px'} src={item?.data?.image} />
         <Text >{item?.data?.name}</Text>
       </NFTWithCheckbox>
     </Flex>
@@ -111,7 +112,7 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
 
           }
           {
-            !isLoading &&
+            (!isLoading && holds.data?.length !== 0) &&
 
             <>
               {
@@ -129,18 +130,29 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
         </Flex>
       </Swiper>
 
-      <Flex width={'100%'} alignItems={'flex-end'} justifyContent={'flex-end'}>
-        {
-          solAccount && <CustomizeButton size={'small'} onClick={toPersonalCenter}>Personal center</CustomizeButton>
-        }
-      </Flex>
-      <CustomizeButton
-        onClick={() => beforeBindDePainter()}
-        size={'small'}
-        variant={'contained'}
-      >
-        Confirm
-      </CustomizeButton>
+      {
+        holds.data?.length !== 0 ? (
+          <>
+            <Flex width={'100%'} alignItems={'flex-end'} justifyContent={'flex-end'}>
+              {
+                solAccount && <CustomizeButton size={'small'} onClick={toPersonalCenter}>Personal center</CustomizeButton>
+              }
+            </Flex>
+            <CustomizeButton
+              onClick={() => beforeBindDePainter()}
+              size={'small'}
+              variant={'contained'}
+            >
+              Confirm
+            </CustomizeButton>
+          </>
+        ) : (
+          <>
+            <SvgIcon color={'primary'} fontSize={'large'}><Empty_Outline /></SvgIcon>
+            <Text>No depainter found in your wallet</Text>
+          </>
+        )
+      }
 
     </Flex>
   )

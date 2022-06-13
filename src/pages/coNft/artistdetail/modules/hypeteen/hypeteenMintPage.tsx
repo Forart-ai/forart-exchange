@@ -9,7 +9,7 @@ import SmallBox1 from '../../../../../assets/images/artistDetail/mint/Rectangle-
 import SmallBox2 from '../../../../../assets/images/artistDetail/mint/Rectangle.png'
 import SmallBoxBlur1 from '../../../../../assets/images/artistDetail/mint/blur1.png'
 import SmallBoxBlur2 from '../../../../../assets/images/artistDetail/mint/blur2.png'
-import useOpenBlindBox from '../../../../../hooks/useOpenBlindBox'
+import useOpenBlindBox from '../../../../../hooks/co-nft/useOpenBlindBox'
 import { useGetOverview } from '../../../../../hooks/queries/useGetOverview'
 import Dialog from '../../../../../contexts/theme/components/Dialog/Dialog'
 import { useModal } from '../../../../../contexts/modal'

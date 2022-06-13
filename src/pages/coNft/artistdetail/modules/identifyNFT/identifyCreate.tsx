@@ -24,12 +24,20 @@ import BindDePainterStepper  from '../../../components/modals/bindDePainterStepp
 import NFTWithCheckbox from '../../../../../contexts/theme/components/NFT-With-Checkbox'
 import Text from '../../../../../contexts/theme/components/Text/Text'
 import Image from '../../../../../contexts/theme/components/Image'
+import useNFTCreate from '../../../../../hooks/co-nft/useNFTCreate'
+
+const Wrapper = styled('div')`
+    width: 100%;
+  margin: 0 auto;
+`
 
 const Operation = styled('div')`
   width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   flex-direction: column;
 
   .message {
@@ -41,6 +49,8 @@ const Operation = styled('div')`
 `
 
 const IdentifyCreate: React.FC = () => {
+  const { createNFT } = useNFTCreate()
+
   const artistId = useLocationQuery('artistId')
   const { data, isFetching, error } = useWhiteListQuery()
   const { data: artistKit } = useArtistKitsQuery(artistId)
@@ -58,6 +68,13 @@ const IdentifyCreate: React.FC = () => {
   const handleCreate = useCallback(
     () => openModal(<AttrReviewDialog body={body} attr={attr} />),
     [body, attr, account]
+  )
+
+  const beforeCreateNft = useCallback(
+    () => {
+      if (!body || !attr) return
+      createNFT(body, attr)
+    }, [body,account,attr]
   )
 
   const randomGenerate = useCallback(() => {
@@ -104,7 +121,19 @@ const IdentifyCreate: React.FC = () => {
   )
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Wrapper>
+
+      <Operation>
+        <CustomizeButton
+          size={'large'}
+          variant={'contained'}
+          color={'secondary'}
+          onClick={randomGenerate}
+        >
+          Generate randomly
+        </CustomizeButton>
+      </Operation>
+
       <CharacterCustomize
         artistId={artistId}
         body={body}
@@ -171,38 +200,16 @@ const IdentifyCreate: React.FC = () => {
         <Operation>
 
           <Box display={'grid'} gridTemplateColumns={'repeat(2, max-content)'} gap={'16px'}>
-            <CustomizeButton
-              size={'large'}
-              variant={'contained'}
-              color={'secondary'}
-              onClick={randomGenerate}
-            >
-              Generate randomly
-            </CustomizeButton>
 
             <CustomizeButton variant={'contained'} onClick={() => openModal(<BindDePainterStepper />)}> Start creating!</CustomizeButton>
 
-            {/*{*/}
-            {/*  ethAccount ?*/}
-            {/*    (*/}
-            {/*      <Flex gap={1.6}>*/}
-            {/*        <CustomizeButton variant={'contained'} color={'primary'} onClick={toDepainter}>Bind DePainter</CustomizeButton>*/}
-            {/*        <CustomizeButton color={'warning'} onClick={disconnect}>disconnect {shortenAddress(ethAccount,4)} ?</CustomizeButton>*/}
-            {/*      </Flex>*/}
-            {/*    )*/}
-            {/*    :*/}
-            {/*    (*/}
-            {/*      <CustomizeButton variant={'contained'} onClick={() => openModal(<EthereumWalletSelectionModal />)}>*/}
-            {/*        Connect to Metamask<img width={24} height={24} style={{ marginLeft:'10px' }} src={MetamaskSvgIcon} />*/}
-            {/*      </CustomizeButton>*/}
-            {/*    )*/}
-            {/*}*/}
+            <CustomizeButton variant={'contained'} onClick={beforeCreateNft}>Test create</CustomizeButton>
 
           </Box>
 
         </Operation>
       }
-    </Box>
+    </Wrapper>
 
   )
 
