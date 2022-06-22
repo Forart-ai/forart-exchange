@@ -15,6 +15,7 @@ export interface PoolsListData {
   minters: number | string,
   status: string,
   artistName: string,
+  type: string
 }
 
 export interface MintedNFTItem {

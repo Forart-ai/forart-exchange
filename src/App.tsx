@@ -25,6 +25,7 @@ import TextToImage from './pages/game/modules/text-to-image'
 import { useChainEffect } from './web3/hooks'
 import { injected } from './web3/connectors'
 import { useWeb3React } from '@web3-react/core'
+import Goblin from './pages/coNft/artistdetail/modules/goblin'
 
 export const BlueGlow = styled('div')`
   position: fixed;
@@ -99,6 +100,7 @@ const App: React.FC = () => {
 
                   <Route path="/" element={<CoNftPage />} />
                   <Route path="co-nft-detail" element={<CONFTDetail />} />
+                  <Route path="ai-general/goblin" element={<Goblin />} />
                   <Route path="nft-detail" element={<WalletNftDetail />} />
                   <Route path="co-nft/artistDetail" element={<ArtistDetail />} />
                   <Route path="social" element={<NftChatroom />}  >

@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useStyledNFTsQuery } from '../../../../hooks/queries/useStyledNFTsQuery'
 
 import BannerImage from '../../../../assets/images/game/aiart-banner.webp'
-import Merge from '../../../../assets/images/aiGenerator/merge.png'
 import Add from '../../../../assets/images/aiGenerator/add.png'
 import RightArrow from '../../../../assets/images/aiGenerator/arrow-right.png'
 import StyleEx from '../../../../assets/images/aiGenerator/styleEx.png'

@@ -1,29 +1,18 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useWhiteListQuery } from '../../../../../hooks/programs/useWhiteList'
 import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
 import CharacterCustomize from '../../../../personal/modules/characterCustomize'
-import { NFTAttributesData } from '../../../../../types/coNFT'
-import Button from '@mui/material/Button'
 import { useModal } from '../../../../../contexts/modal'
 import AttrReviewDialog from '../../../components/modals/create/attr-review'
-import { Box, styled, SvgIcon } from '@mui/material'
-import { MoonLoader, SyncLoader } from 'react-spinners'
+import { Box, styled } from '@mui/material'
+import {  SyncLoader } from 'react-spinners'
 import CustomizeButton from '../../../../../contexts/theme/components/Button'
 import useStorageCheck from '../../../../../hooks/useStorageCheck'
-import { Keypair } from '@solana/web3.js'
 import { ArtistKit, useArtistKitsQuery } from '../../../../../hooks/queries/useArtistKitsQuery'
 import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
-import Countdown, { CountdownRendererFn } from 'react-countdown'
-import MetamaskSvgIcon from '../../../../../images/wallet/metamask.svg'
-import EthereumWalletSelectionModal from '../../../../../components/wallet/EthereumWalletSelectionModal'
 import { useWeb3React } from '@web3-react/core'
-import { shortenAddress } from '../../../../../utils'
-import Flex from '../../../../../contexts/theme/components/Box/Flex'
 import { useNavigate } from 'react-router-dom'
 import BindDePainterStepper  from '../../../components/modals/bindDePainterStepper'
-import NFTWithCheckbox from '../../../../../contexts/theme/components/NFT-With-Checkbox'
-import Text from '../../../../../contexts/theme/components/Text/Text'
-import Image from '../../../../../contexts/theme/components/Image'
 import useNFTCreate from '../../../../../hooks/co-nft/useNFTCreate'
 
 const Wrapper = styled('div')`
@@ -56,7 +45,6 @@ const IdentifyCreate: React.FC = () => {
   const { data: artistKit } = useArtistKitsQuery(artistId)
   const { account } = useSolanaWeb3()
   const { account: ethAccount } = useWeb3React()
-  const navigate = useNavigate()
 
   const { openModal } = useModal()
 
@@ -80,12 +68,12 @@ const IdentifyCreate: React.FC = () => {
   const randomGenerate = useCallback(() => {
     if (!artistKit) return
 
-    const availableBodies = artistKit.Body
+    const availableBodies = artistKit.Body || artistKit.Helmets
     setBody(availableBodies[Math.floor(Math.random() * availableBodies.length)])
 
     setAttr(
       Object.entries(artistKit)
-        .filter(([key]) => key!=='Body')
+        .filter(([key]) =>( key!=='Body') &&  key!=='Helmets')
         .reduce<ArtistKit[]>((res, next) => {
           const kits = next[1] as any[]
 
@@ -103,6 +91,12 @@ const IdentifyCreate: React.FC = () => {
     }
     if (artistKit.Body) {
       setBody(artistKit.Body[0])
+      return
+    }
+
+    if (artistKit.Helmets) {
+      setBody(artistKit.Helmets[0])
+      return
     }
 
   }, [artistKit])
@@ -110,15 +104,6 @@ const IdentifyCreate: React.FC = () => {
   if (!artistId) {
     return <></>
   }
-
-  const toDepainter = useCallback(
-    () => {
-      if (!account) return
-      navigate(`/account/${account.toBase58()}?tab=dePainter`, )
-
-    },
-    [account, ethAccount],
-  )
 
   return (
     <Wrapper>
@@ -169,7 +154,7 @@ const IdentifyCreate: React.FC = () => {
                 size={'large'}
                 variant={'contained'}
                 color={'secondary'}
-                onClick={randomGenerate}
+                // onClick={randomGenerate}
               >
                 Generate randomly
               </CustomizeButton>

@@ -6,6 +6,9 @@ import PoolsListItem from './PoolsListItem'
 import { PoolListContainer, PoolsContainer } from './poolList.styles'
 import RainbowText from '../../../../contexts/theme/components/RainbowText'
 import PainterAvatar from '../../../../assets/images/coPools/painter.webp'
+import GoblinAvatar from '../../../../assets/images/goblin/goblin-avatar.webp'
+
+import { Box } from '@mui/material'
 
 const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList }) => {
 
@@ -23,7 +26,8 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'minters': overviewData?.creator,
     'status': 'living',
     'artistId': '3312',
-    artistName: 'Monica'
+    artistName: 'Monica',
+    'type': 'co-nft'
   }
 
   const identity = {
@@ -34,7 +38,8 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'minters': painterData?.minter,
     'status': 'living',
     'artistId': '1024',
-    artistName: 'Forart.ai'
+    artistName: 'Forart.ai',
+    'type': 'co-nft',
   }
 
   const spaceTronauts = {
@@ -45,7 +50,20 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'minters': 0,
     'status': 'living',
     'artistId': '1025',
-    artistName: 'mexico'
+    artistName: 'mexico',
+    'type': 'co-nft',
+  }
+
+  const goblin = {
+    'image': GoblinAvatar,
+    'name': 'Goblin',
+    'describe': 'GoblinG oblinGob linGob linGo blin GoblinG oblinGoblin GoblinGoblin.',
+    'nfts': 0,
+    'minters': 0,
+    'status': 'living',
+    'artistId': '1',
+    artistName: 'Goblin',
+    'type': 'ai-general'
   }
 
   useMemo(() => {
@@ -57,6 +75,16 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
 
   return (
     <PoolsContainer>
+      <Box sx={{ marginBottom:'30px' }}>
+        <RainbowText>AI-Generate Lived Pools</RainbowText>
+        <PoolListContainer>
+          <PoolsListItem
+            data={goblin}
+            status={goblin.status}
+          />
+        </PoolListContainer>
+      </Box>
+
       <RainbowText>CO-NFT Lived Pools</RainbowText>
       <PoolListContainer>
         <PoolsListItem

@@ -77,8 +77,6 @@ export const ButtonArea = styled.div`
 
 const Header: React.FC = () => {
 
-  const history = useLocation()
-
   const { data: painterData } = useGetOverview(1024)
 
   const { data: hypeteenData } = useGetOverview(3312)
@@ -280,7 +278,8 @@ const CoNftPage: React.FC = () => {
       'minters': '0',
       'status': 'Coming soon',
       'artistId': '0',
-      artistName: '----'
+      artistName: '----',
+      type:'-'
     },
 
   ]

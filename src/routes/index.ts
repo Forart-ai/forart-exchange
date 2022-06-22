@@ -4,6 +4,7 @@ import PersonalCenterPage from '../pages/personal'
 import CoNftPage from '../pages/coNft/homepage'
 import ArtistDetail from '../pages/coNft/artistdetail'
 import Game from '../pages/game/index'
+import Goblin from '../pages/coNft/artistdetail/modules/goblin'
 
 import { ReactComponent as GanIcon } from '../assets/images/siderIcon/f-idea.svg'
 import { ReactComponent as GeneratorIcon } from '../assets/images/siderIcon/generator.svg'
@@ -61,6 +62,12 @@ const routes: Route[] = [
     title: 'Artist Detail',
     component: ArtistDetail,
     hidden: true
+  },
+  {
+    path: '/ai-general/goblin',
+    title:'AI-General',
+    component: Goblin,
+    icon: MarketplaceIcon,
   },
   {
     path: '/social',

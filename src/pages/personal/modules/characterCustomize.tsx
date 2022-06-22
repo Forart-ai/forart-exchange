@@ -39,6 +39,8 @@ export const TopContainer = styled('div') `
 const CharacterCustomize: React.FC<{ artistId: string, selected: (body?: ArtistKit, attr?: ArtistKit[]) => void, body?: ArtistKit, attr?: ArtistKit[] }> = ({ artistId, selected, body, attr }) => {
   const { data: artistKit } = useArtistKitsQuery(artistId)
 
+  console.log(body,attr)
+
   return (
     <Wrapper >
       <TopContainer>
@@ -65,12 +67,12 @@ const CharacterCustomize: React.FC<{ artistId: string, selected: (body?: ArtistK
                   <SelectableKitList
                     selectedValue={body}
                     onSelect={v => selected(v)}
-                    list={artistKit.Body}
+                    list={artistKit.Body || artistKit.Helmets}
                   />
                 </AttrContent>
 
                 {
-                  Object.keys(artistKit).filter(item => (item !== 'Body') && (item !== 'Hat')).map((type,index) => (
+                  Object.keys(artistKit).filter(item => (item !== 'Body') && (item !== 'Hat') && (item !== 'Helmets')).map((type,index) => (
                     <AttrContent key={index}>
                       <AttrType> {type} </AttrType>
                       <SelectableKitList

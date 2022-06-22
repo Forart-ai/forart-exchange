@@ -109,7 +109,7 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
       <Flex width={'100%'} flexDirection={'column'}    >
         <UserInfoRow>
           <Flex alignItems={'center'}>
-            <Link to={`/account?userWalletAccount=${item.wallet}`}>
+            <Link to={`/account/${item.wallet}?tab=co-nft`}>
               <StyledAvatar src={`${item?.avatar}?a=${item.updateTime}`} variant={'square'} />
             </Link>
             <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>

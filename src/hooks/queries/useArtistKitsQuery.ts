@@ -13,7 +13,7 @@ export type ArtistKit = {
   stock: number
 }
 
-export type ArtistKitKey = 'Body' | string
+export type ArtistKitKey = 'Body' | 'Helmets' | string
 
 export type ArtistKits = Record<ArtistKitKey, ArtistKit[]>
 

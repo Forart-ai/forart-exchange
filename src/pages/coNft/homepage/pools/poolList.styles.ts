@@ -29,11 +29,12 @@ export const PoolsCardContainer = styled('div')`
   flex-direction: column;
   align-items: center;
   border-radius: 20px;
-  background-color: ${({ theme }) => theme.palette.background.default};
   position: relative;
   margin-top: 26px;
   border: 1px #999999 solid;
   cursor: pointer;
+  background-color: rgba(255, 255, 255, .05);
+
 `
 
 export const ImageContent = styled('div')`

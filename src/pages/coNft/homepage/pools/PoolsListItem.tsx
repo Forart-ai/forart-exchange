@@ -26,19 +26,19 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
   const toArtistDetailUrl = useMemo(() => {
     if (!data?.artistId) return ''
 
-    return '/co-nft/artistDetail?' + new URLSearchParams({
-      artistId: data.artistId ?? ''
-    }).toString()
+    if (data.type === 'co-nft') {
+      return 'co-nft/artistDetail?' + new URLSearchParams({
+        artistId: data.artistId ?? ''
+      }).toString()
+    }
+
+    else  return 'ai-general/goblin'
+
   }, [data])
 
   const { openModal } = useModal()
 
-  const openDonateModal = useCallback(() => {
-    openModal(<DonateDialog />)
-  },[])
-
   return (
-    // <Link to={data?.artistId ? toArtistDetailUrl : ''} >
     <PoolsCardContainer onClick={() => navigate(toArtistDetailUrl)}>
       <ImageContent>
         <img src={data?.image} />
@@ -47,10 +47,6 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
       <InfoContent>
         <PoolTitle>
           <div className="pool-name"> {data?.name }</div>
-          {/*<div className="likes-value">*/}
-          {/*  <img src={HeartFilled} style={{ marginRight: '10px' }} />*/}
-          {/*  345*/}
-          {/*</div>*/}
         </PoolTitle>
 
         <PoolInfo>
