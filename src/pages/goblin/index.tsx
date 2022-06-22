@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react'
 import { styled,  } from '@mui/material'
-import HypeteenIcon from '../../../../../assets/images/artistDetail/hypeteenIcon.png'
-import Background from '../../../../../assets/images/coPools/hypeteen-background.png'
-import GoblinAvatar from '../../../../../assets/images/goblin/goblin-avatar.webp'
+import HypeteenIcon from '../../assets/images/artistDetail/hypeteenIcon.png'
+import Background from '../../assets/images/coPools/hypeteen-background.png'
+import GoblinAvatar from '../../assets/images/goblin/goblin-avatar.webp'
+import CustomizeButton from '../../contexts/theme/components/Button'
+import { useFreeMint } from '../../hooks/programs/useFreeMint'
 
 const Wrapper = styled('div')`
   min-height: 100vh;
@@ -86,6 +88,8 @@ const MainArea = styled('div')`
 
 const Goblin:React.FC = () => {
 
+  const { getFreeMintToken } = useFreeMint()
+
   return (
     <Wrapper>
       <BackgroundImage>
@@ -100,6 +104,8 @@ const Goblin:React.FC = () => {
           </MainArea>
 
         </MainContainer>
+        <CustomizeButton variant={'contained'} onClick={getFreeMintToken}>FREE MINT</CustomizeButton>
+
       </BackgroundImage>
     </Wrapper>
 

@@ -25,7 +25,7 @@ import TextToImage from './pages/game/modules/text-to-image'
 import { useChainEffect } from './web3/hooks'
 import { injected } from './web3/connectors'
 import { useWeb3React } from '@web3-react/core'
-import Goblin from './pages/coNft/artistdetail/modules/goblin'
+import Goblin from './pages/goblin'
 
 export const BlueGlow = styled('div')`
   position: fixed;
