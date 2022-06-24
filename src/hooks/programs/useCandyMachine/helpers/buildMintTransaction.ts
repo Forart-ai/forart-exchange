@@ -1,26 +1,27 @@
-import { Program } from '@project-serum/anchor'
+import { AnchorProvider, Program } from '@project-serum/anchor'
 import {
   Keypair,
   PublicKey,
-  Signer,
   SystemProgram,
-  SYSVAR_CLOCK_PUBKEY, SYSVAR_INSTRUCTIONS_PUBKEY, SYSVAR_RECENT_BLOCKHASHES_PUBKEY,
-  SYSVAR_RENT_PUBKEY, SYSVAR_SLOT_HASHES_PUBKEY,
+  SYSVAR_CLOCK_PUBKEY,
+  SYSVAR_INSTRUCTIONS_PUBKEY,
+  SYSVAR_RENT_PUBKEY,
+  SYSVAR_SLOT_HASHES_PUBKEY,
   Transaction
 } from '@solana/web3.js'
 import { getAtaForMint, getCandyMachineCreator, getMasterEdition, getMetadata, getTokenWallet } from './accounts'
-import {  TOKEN_METADATA_PROGRAM_ID } from './constant'
+import { TOKEN_METADATA_PROGRAM_ID } from './constant'
+
 // @ts-ignore
-import { createApproveInstruction, createRevokeInstruction, MintLayout, createMintToInstruction, createInitializeMintInstruction, TOKEN_PROGRAM_ID, getAssociatedTokenAddress } from '@solana/spl-token'
+import { createApproveInstruction, createInitializeMintInstruction, createMintToInstruction, createRevokeInstruction, MintLayout, TOKEN_PROGRAM_ID } from '@solana/spl-token'
+
 import { createAssociatedTokenAccountInstruction } from './instructions'
-import { sendTransaction } from './transactions'
-import { getBalanceLargestTokenAccount } from '../../../../utils'
 
 export type MintResult = string
 
 export async function buildMintTransaction(program: Program, mint: Keypair, candyMachineAddress: PublicKey): Promise<Transaction[]> {
-  const minterPublicKey = program.provider.wallet.publicKey
-  const toPublicKey = program.provider.wallet.publicKey
+  const minterPublicKey = (program.provider as AnchorProvider).wallet.publicKey
+  const toPublicKey = (program.provider as AnchorProvider).wallet.publicKey
 
   const userTokenAccountAddress = await getTokenWallet(toPublicKey, mint.publicKey)
 
@@ -35,7 +36,7 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
       fromPubkey: minterPublicKey,
       newAccountPubkey: mint.publicKey,
       space: MintLayout.span,
-      lamports: await program.provider.connection.getMinimumBalanceForRentExemption(MintLayout.span),
+      lamports: await (program.provider as AnchorProvider).connection.getMinimumBalanceForRentExemption(MintLayout.span),
       programId: TOKEN_PROGRAM_ID
     }),
 
@@ -82,7 +83,7 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
       })
 
       signers.push(whitelistBurnAuthority)
-      const exists = await program.provider.connection.getAccountInfo(whitelistToken)
+      const exists = await (program.provider as AnchorProvider).connection.getAccountInfo(whitelistToken)
       if (exists) {
         instructions.push(
           createApproveInstruction(
@@ -159,8 +160,8 @@ export async function buildMintTransaction(program: Program, mint: Keypair, cand
     }),
   )
 
-  const feePayer = program.provider.wallet.publicKey
-  const recentBlockhash = (await program.provider.connection.getLatestBlockhash()).blockhash
+  const feePayer = (program.provider as AnchorProvider).wallet.publicKey
+  const recentBlockhash = (await (program.provider as AnchorProvider).connection.getLatestBlockhash()).blockhash
 
   const transaction = new Transaction({ feePayer, recentBlockhash })
   transaction.add(...instructions)

@@ -58,7 +58,7 @@ const App: React.FC = () => {
 
   // useChainEffect()
   useEagerConnect()
-  useSignLogin()
+  // useSignLogin()
 
   useEffect(() => {
     const connectWalletOnPageLoad = async () => {

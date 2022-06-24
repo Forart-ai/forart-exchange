@@ -14,7 +14,7 @@ import {
   getMetadata,
   getTokenWallet,
 } from './accounts'
-import { Program } from '@project-serum/anchor'
+import { AnchorProvider, Program } from '@project-serum/anchor'
 // @ts-ignore
 import { createApproveInstruction, createInitializeMintInstruction, createMintToInstruction, createRevokeInstruction, MintLayout, TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import { createAssociatedTokenAccountInstruction } from './instructions'
@@ -22,8 +22,8 @@ import { sendTransaction } from './transactions'
 import { TOKEN_METADATA_PROGRAM_ID } from './constant'
 
 export async function mint(program: Program, mint: Keypair, candyMachineAddress: PublicKey): Promise<string> {
-  const minterPublicKey = program.provider.wallet.publicKey
-  const toPublicKey = program.provider.wallet.publicKey
+  const minterPublicKey = (program.provider as AnchorProvider).wallet.publicKey
+  const toPublicKey = minterPublicKey
 
   const userTokenAccountAddress = await getTokenWallet(toPublicKey, mint.publicKey)
 
@@ -37,7 +37,7 @@ export async function mint(program: Program, mint: Keypair, candyMachineAddress:
       fromPubkey: minterPublicKey,
       newAccountPubkey: mint.publicKey,
       space: MintLayout.span,
-      lamports: await program.provider.connection.getMinimumBalanceForRentExemption(MintLayout.span),
+      lamports: await (program.provider as AnchorProvider).connection.getMinimumBalanceForRentExemption(MintLayout.span),
       programId: TOKEN_PROGRAM_ID,
     }),
 
@@ -82,7 +82,7 @@ export async function mint(program: Program, mint: Keypair, candyMachineAddress:
         isSigner: true,
       })
       signers.push(whitelistBurnAuthority)
-      const exists = await program.provider.connection.getAccountInfo(whitelistToken)
+      const exists = await (program.provider as AnchorProvider).connection.getAccountInfo(whitelistToken)
       if (exists) {
         instructions.push(
           createApproveInstruction(
@@ -157,7 +157,7 @@ export async function mint(program: Program, mint: Keypair, candyMachineAddress:
   )
 
   return (
-    await sendTransaction(program.provider, [...instructions, ...cleanupInstructions], signers)
+    await sendTransaction(program.provider as AnchorProvider, [...instructions, ...cleanupInstructions], signers)
   )
 }
 

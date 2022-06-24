@@ -1,17 +1,15 @@
 import useAnchorProvider from '../../useAnchorProvider'
 import { useCallback, useMemo } from 'react'
-import {  PublicKey, Signer, SystemProgram, Transaction, TransactionInstruction } from '@solana/web3.js'
+import { PublicKey, Signer, SystemProgram, Transaction, TransactionInstruction } from '@solana/web3.js'
 import { programs } from '@metaplex/js'
 
 // @ts-ignore
 import { createAssociatedTokenAccountInstruction, getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from '@solana/spl-token'
-import { Program } from '@project-serum/anchor'
+import { AnchorProvider, Program } from '@project-serum/anchor'
 import { ForartMintIDL } from './constant/idl'
 import { COLLECTION_ADDRESS, MINT_PROGRAM_ID, TICKET_MINT } from './constant'
 
-import { Provider } from '@project-serum/common/dist/lib/provider'
-
-const getOrCreateAssociatedTokenAccount = async (provider: Provider, mint: PublicKey, owner: PublicKey): Promise<{
+const getOrCreateAssociatedTokenAccount = async (provider: AnchorProvider, mint: PublicKey, owner: PublicKey): Promise<{
   pubkey: PublicKey
   instruction?: TransactionInstruction
 }> => {
@@ -40,12 +38,12 @@ const useSettle = () => {
     async (nftMint: PublicKey): Promise<{ transaction: Transaction, signers: Signer[] }> => {
 
       const collection = COLLECTION_ADDRESS
-      const nftOwner = program.provider.wallet.publicKey
+      const nftOwner = (program.provider as AnchorProvider).wallet.publicKey
       const ticketMint = TICKET_MINT
 
       const transaction = new Transaction({
-        feePayer: program.provider.wallet.publicKey,
-        recentBlockhash: (await program.provider.connection.getLatestBlockhash()).blockhash
+        feePayer: (program.provider as AnchorProvider).wallet.publicKey,
+        recentBlockhash: (await (program.provider as AnchorProvider).connection.getLatestBlockhash()).blockhash
       })
       const signers: Signer[] = []
 
@@ -55,7 +53,7 @@ const useSettle = () => {
       )
 
       const collectionInfo = await program.account.collection.fetchNullable(collection)
-      const assetMetadata = await programs.metadata.Metadata.findByMint(program.provider.connection, nftMint)
+      const assetMetadata = await programs.metadata.Metadata.findByMint((program.provider as AnchorProvider).connection, nftMint)
 
       if (!collectionInfo) throw new Error('Failed to fetch collection info')
       if (!assetMetadata?.data?.data?.name) throw new Error('Failed to fetch asset metadata')

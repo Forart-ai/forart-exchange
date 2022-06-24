@@ -1,9 +1,9 @@
 import useAnchorProvider from '../../useAnchorProvider'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Program } from '@project-serum/anchor'
 import { FreeMint, FreeMintIDL } from './constant/idl'
 import { FREE_MINT_POOL_ADDRESS, FREE_MINT_PROGRAM_ID, FREE_MINT_TOKEN_ADDRESS } from './constant'
-import { PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } from '@solana/web3.js'
+import { Keypair, PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } from '@solana/web3.js'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 // @ts-ignore
 import { ASSOCIATED_TOKEN_PROGRAM_ID, getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from '@solana/spl-token'

@@ -16,6 +16,7 @@ import { useModal } from '../../contexts/modal'
 import { SyncLoader } from 'react-spinners'
 import CustomizeButton from '../../contexts/theme/components/Button'
 import { Link, useNavigate } from 'react-router-dom'
+import { AnchorProvider } from '@project-serum/anchor'
 
 const BoxContainer = styled('div')`
   min-height: 100px;
@@ -181,7 +182,7 @@ const useOpenBlindBox = () => {
 
       const { transaction: settleTransaction, signers: settleSigners } = await buildSettleTransaction(mint.publicKey)
 
-      await provider.send(settleTransaction, settleSigners)
+      await (provider as AnchorProvider).sendAndConfirm(settleTransaction, settleSigners)
         .then(() => {
           openModal(<MetaDataContainer metadata={metaData} />)
         })

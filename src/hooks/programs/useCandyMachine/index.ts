@@ -4,12 +4,14 @@ import { Program } from '@project-serum/anchor'
 import { CANDY_MACHINE_PROGRAM_ID, CANDY_MACHINE_PROGRAM_IDL, PainterCandyMachineAddress } from './helpers/constant'
 import { Keypair, PublicKey } from '@solana/web3.js'
 import { buildMintTransaction } from './helpers/buildMintTransaction'
+import { mintV2 } from './mintNFT'
+import { CandyMachineIdl } from './idl'
 
 const useCandyMachine = () => {
   const { provider } = useAnchorProvider()
 
   const program = useMemo(() => {
-    return new Program(CANDY_MACHINE_PROGRAM_IDL, CANDY_MACHINE_PROGRAM_ID, provider)
+    return new Program<any>(CandyMachineIdl, CANDY_MACHINE_PROGRAM_ID, provider)
   }, [provider])
 
   const builtMintTransaction = useCallback((mintKeypair: Keypair, candyMachineAddress: PublicKey) => {
@@ -20,8 +22,17 @@ const useCandyMachine = () => {
     return buildMintTransaction(program, mintKeypair, candyMachineAddress)
   }, [program])
 
+  const sendMintTransaction = useCallback((mintKeypair: Keypair, candyMachineAddress: PublicKey) => {
+    if (!program) {
+      return Promise.reject('Program not ready')
+    }
+    return mintV2(program, mintKeypair, candyMachineAddress)
+  },
+  [program],
+  )
+
   return {
-    program, builtMintTransaction
+    program, builtMintTransaction, sendMintTransaction
   }
 }
 

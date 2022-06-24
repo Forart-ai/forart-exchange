@@ -5,6 +5,7 @@ import Background from '../../assets/images/coPools/hypeteen-background.png'
 import GoblinAvatar from '../../assets/images/goblin/goblin-avatar.webp'
 import CustomizeButton from '../../contexts/theme/components/Button'
 import { useFreeMint } from '../../hooks/programs/useFreeMint'
+import { useGoblinMint } from '../../hooks/ai-generarl/useGoblinMint'
 
 const Wrapper = styled('div')`
   min-height: 100vh;
@@ -89,6 +90,7 @@ const MainArea = styled('div')`
 const Goblin:React.FC = () => {
 
   const { getFreeMintToken } = useFreeMint()
+  const { mintGoblin } = useGoblinMint()
 
   return (
     <Wrapper>
@@ -104,9 +106,11 @@ const Goblin:React.FC = () => {
           </MainArea>
 
         </MainContainer>
-        <CustomizeButton variant={'contained'} onClick={getFreeMintToken}>FREE MINT</CustomizeButton>
 
       </BackgroundImage>
+
+      <CustomizeButton variant={'contained'} onClick={getFreeMintToken}>FREE MINT</CustomizeButton>
+      <CustomizeButton variant={'contained'} onClick={mintGoblin}>MINT GOBLIN</CustomizeButton>
     </Wrapper>
 
   )

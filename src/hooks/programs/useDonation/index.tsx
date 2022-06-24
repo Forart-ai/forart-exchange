@@ -1,6 +1,6 @@
 import useAnchorProvider from '../../useAnchorProvider'
 import React, { useCallback, useMemo } from 'react'
-import { BN, Program } from '@project-serum/anchor'
+import { AnchorProvider, BN, Program } from '@project-serum/anchor'
 import { DONATE_PROGRAM_ID, DonationIDL, POOL_ADDRESS, USDC_TOKEN_ADDRESS, USDC_TOKEN_DECIMALS } from './constants'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 import { LAMPORTS_PER_SOL, ParsedAccountData, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
@@ -38,7 +38,7 @@ const useDonation = () => {
       program.programId
     )
 
-    const userATA = (await program.provider.connection.getTokenAccountsByOwner(account,{ mint: USDC_TOKEN_ADDRESS })).value[0]?.pubkey
+    const userATA = (await (program.provider as AnchorProvider).connection.getTokenAccountsByOwner(account,{ mint: USDC_TOKEN_ADDRESS })).value[0]?.pubkey
 
     if (!userATA) {
       throw new Error('insufficient USDC balance')
@@ -99,7 +99,7 @@ const useDonation = () => {
       },
     }))
 
-    await program.provider.send(tx)
+    await (program.provider as AnchorProvider).sendAndConfirm(tx)
 
     await CONFT_API.core.user.userSeriesVote(3312, account.toBase58(), +userDonated + +donateAmount)
   }, [program, connection])
@@ -124,7 +124,7 @@ const useDonation = () => {
   const userAta = useQuery(['USER_ATA',program?.programId, account], async () => {
     if (!program || !account) return
 
-    return await program.provider.connection.getTokenAccountsByOwner(account, { mint: USDC_TOKEN_ADDRESS })
+    return await (program.provider as AnchorProvider).connection.getTokenAccountsByOwner(account, { mint: USDC_TOKEN_ADDRESS })
       .then(account => account.value[0]?.pubkey).catch(() => undefined)
   })
 

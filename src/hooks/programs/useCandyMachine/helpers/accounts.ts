@@ -1,4 +1,4 @@
-import { PublicKey } from '@solana/web3.js'
+import { Keypair, PublicKey } from '@solana/web3.js'
 import * as anchor from '@project-serum/anchor'
 import { TOKEN_PROGRAM_ID } from '../../../../utils/ids'
 import {
@@ -6,6 +6,8 @@ import {
   SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
   TOKEN_METADATA_PROGRAM_ID
 } from './constant'
+import * as fs from 'fs'
+import { base58 } from 'ethers/lib/utils'
 
 export const getTokenWallet = async function (wallet: PublicKey, mint: PublicKey) {
   return (
@@ -53,15 +55,6 @@ export const getMasterEdition = async (mint: PublicKey): Promise<PublicKey> => {
   )[0]
 }
 
-export const getCollectionPDA = async (
-  candyMachineAddress: anchor.web3.PublicKey,
-): Promise<[anchor.web3.PublicKey, number]> => {
-  return await anchor.web3.PublicKey.findProgramAddress(
-    [Buffer.from('collection'), candyMachineAddress.toBuffer()],
-    CANDY_MACHINE_PROGRAM_ID,
-  )
-}
-
 export const getCollectionAuthorityRecordPDA = async (
   mint: anchor.web3.PublicKey,
   newAuthority: anchor.web3.PublicKey,
@@ -77,3 +70,13 @@ export const getCollectionAuthorityRecordPDA = async (
     TOKEN_METADATA_PROGRAM_ID,
   )
 }
+
+export const getCollectionPDA = async (
+  candyMachineAddress: anchor.web3.PublicKey,
+): Promise<[anchor.web3.PublicKey, number]> => {
+  return await anchor.web3.PublicKey.findProgramAddress(
+    [Buffer.from('collection'), candyMachineAddress.toBuffer()],
+    CANDY_MACHINE_PROGRAM_ID,
+  )
+}
+

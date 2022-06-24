@@ -1,7 +1,237 @@
 {
-  "version": "2.0.0",
-  "name": "nft_candy_machine_v2",
+  "version": "4.0.0",
+  "name": "candy_machine",
   "instructions": [
+    {
+      "name": "initializeCandyMachine",
+      "accounts": [
+        {
+          "name": "candyMachine",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "wallet",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "data",
+          "type": {
+            "defined": "CandyMachineData"
+          }
+        }
+      ]
+    },
+    {
+      "name": "updateCandyMachine",
+      "accounts": [
+        {
+          "name": "candyMachine",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "wallet",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "data",
+          "type": {
+            "defined": "CandyMachineData"
+          }
+        }
+      ]
+    },
+    {
+      "name": "updateAuthority",
+      "accounts": [
+        {
+          "name": "candyMachine",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "wallet",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "newAuthority",
+          "type": {
+            "option": "publicKey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "addConfigLines",
+      "accounts": [
+        {
+          "name": "candyMachine",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "index",
+          "type": "u32"
+        },
+        {
+          "name": "configLines",
+          "type": {
+            "vec": {
+              "defined": "ConfigLine"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "setCollection",
+      "accounts": [
+        {
+          "name": "candyMachine",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "collectionPda",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "payer",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "edition",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "collectionAuthorityRecord",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMetadataProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "removeCollection",
+      "accounts": [
+        {
+          "name": "candyMachine",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "collectionPda",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "collectionAuthorityRecord",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMetadataProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
     {
       "name": "mintNft",
       "accounts": [
@@ -94,77 +324,15 @@
       ]
     },
     {
-      "name": "updateCandyMachine",
+      "name": "setCollectionDuringMint",
       "accounts": [
         {
           "name": "candyMachine",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "wallet",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "data",
-          "type": {
-            "defined": "CandyMachineData"
-          }
-        }
-      ]
-    },
-    {
-      "name": "addConfigLines",
-      "accounts": [
-        {
-          "name": "candyMachine",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": true
-        }
-      ],
-      "args": [
-        {
-          "name": "index",
-          "type": "u32"
-        },
-        {
-          "name": "configLines",
-          "type": {
-            "vec": {
-              "defined": "ConfigLine"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "initializeCandyMachine",
-      "accounts": [
-        {
-          "name": "candyMachine",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "wallet",
           "isMut": false,
           "isSigner": false
         },
         {
-          "name": "authority",
+          "name": "metadata",
           "isMut": false,
           "isSigner": false
         },
@@ -174,52 +342,47 @@
           "isSigner": true
         },
         {
-          "name": "systemProgram",
+          "name": "collectionPda",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMetadataProgram",
           "isMut": false,
           "isSigner": false
         },
         {
-          "name": "rent",
+          "name": "instructions",
           "isMut": false,
           "isSigner": false
-        }
-      ],
-      "args": [
+        },
         {
-          "name": "data",
-          "type": {
-            "defined": "CandyMachineData"
-          }
-        }
-      ]
-    },
-    {
-      "name": "updateAuthority",
-      "accounts": [
+          "name": "collectionMint",
+          "isMut": false,
+          "isSigner": false
+        },
         {
-          "name": "candyMachine",
-          "isMut": true,
+          "name": "collectionMetadata",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "collectionMasterEdition",
+          "isMut": false,
           "isSigner": false
         },
         {
           "name": "authority",
           "isMut": false,
-          "isSigner": true
+          "isSigner": false
         },
         {
-          "name": "wallet",
+          "name": "collectionAuthorityRecord",
           "isMut": false,
           "isSigner": false
         }
       ],
-      "args": [
-        {
-          "name": "newAuthority",
-          "type": {
-            "option": "publicKey"
-          }
-        }
-      ]
+      "args": []
     },
     {
       "name": "withdrawFunds",
@@ -270,37 +433,25 @@
           }
         ]
       }
-    }
-  ],
-  "types": [
+    },
     {
-      "name": "WhitelistMintSettings",
+      "name": "CollectionPDA",
       "type": {
         "kind": "struct",
         "fields": [
-          {
-            "name": "mode",
-            "type": {
-              "defined": "WhitelistMintMode"
-            }
-          },
           {
             "name": "mint",
             "type": "publicKey"
           },
           {
-            "name": "presale",
-            "type": "bool"
-          },
-          {
-            "name": "discountPrice",
-            "type": {
-              "option": "u64"
-            }
+            "name": "candyMachine",
+            "type": "publicKey"
           }
         ]
       }
-    },
+    }
+  ],
+  "types": [
     {
       "name": "CandyMachineData",
       "type": {
@@ -388,17 +539,17 @@
       }
     },
     {
-      "name": "GatekeeperConfig",
+      "name": "ConfigLine",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "gatekeeperNetwork",
-            "type": "publicKey"
+            "name": "name",
+            "type": "string"
           },
           {
-            "name": "expireOnUse",
-            "type": "bool"
+            "name": "uri",
+            "type": "string"
           }
         ]
       }
@@ -417,6 +568,26 @@
           {
             "name": "number",
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Creator",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "address",
+            "type": "publicKey"
+          },
+          {
+            "name": "verified",
+            "type": "bool"
+          },
+          {
+            "name": "share",
+            "type": "u8"
           }
         ]
       }
@@ -447,51 +618,158 @@
       }
     },
     {
-      "name": "ConfigLine",
+      "name": "WhitelistMintSettings",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "name",
-            "type": "string"
+            "name": "mode",
+            "type": {
+              "defined": "WhitelistMintMode"
+            }
           },
           {
-            "name": "uri",
-            "type": "string"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Creator",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "address",
+            "name": "mint",
             "type": "publicKey"
           },
           {
-            "name": "verified",
+            "name": "presale",
             "type": "bool"
           },
           {
-            "name": "share",
-            "type": "u8"
+            "name": "discountPrice",
+            "type": {
+              "option": "u64"
+            }
           }
         ]
       }
     },
     {
-      "name": "WhitelistMintMode",
+      "name": "GatekeeperConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "gatekeeperNetwork",
+            "type": "publicKey"
+          },
+          {
+            "name": "expireOnUse",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CandyError",
       "type": {
         "kind": "enum",
         "variants": [
           {
-            "name": "BurnEveryTime"
+            "name": "IncorrectOwner"
           },
           {
-            "name": "NeverBurn"
+            "name": "Uninitialized"
+          },
+          {
+            "name": "MintMismatch"
+          },
+          {
+            "name": "IndexGreaterThanLength"
+          },
+          {
+            "name": "NumericalOverflowError"
+          },
+          {
+            "name": "TooManyCreators"
+          },
+          {
+            "name": "UuidMustBeExactly6Length"
+          },
+          {
+            "name": "NotEnoughTokens"
+          },
+          {
+            "name": "NotEnoughSOL"
+          },
+          {
+            "name": "TokenTransferFailed"
+          },
+          {
+            "name": "CandyMachineEmpty"
+          },
+          {
+            "name": "CandyMachineNotLive"
+          },
+          {
+            "name": "HiddenSettingsConfigsDoNotHaveConfigLines"
+          },
+          {
+            "name": "CannotChangeNumberOfLines"
+          },
+          {
+            "name": "DerivedKeyInvalid"
+          },
+          {
+            "name": "PublicKeyMismatch"
+          },
+          {
+            "name": "NoWhitelistToken"
+          },
+          {
+            "name": "TokenBurnFailed"
+          },
+          {
+            "name": "GatewayAppMissing"
+          },
+          {
+            "name": "GatewayTokenMissing"
+          },
+          {
+            "name": "GatewayTokenExpireTimeInvalid"
+          },
+          {
+            "name": "NetworkExpireFeatureMissing"
+          },
+          {
+            "name": "CannotFindUsableConfigLine"
+          },
+          {
+            "name": "InvalidString"
+          },
+          {
+            "name": "SuspiciousTransaction"
+          },
+          {
+            "name": "CannotSwitchToHiddenSettings"
+          },
+          {
+            "name": "IncorrectSlotHashesPubkey"
+          },
+          {
+            "name": "IncorrectCollectionAuthority"
+          },
+          {
+            "name": "MismatchedCollectionPDA"
+          },
+          {
+            "name": "MismatchedCollectionMint"
+          },
+          {
+            "name": "SlotHashesEmpty"
+          },
+          {
+            "name": "MetadataAccountMustBeEmpty"
+          },
+          {
+            "name": "MissingSetCollectionDuringMint"
+          },
+          {
+            "name": "NoChangingCollectionDuringMint"
+          },
+          {
+            "name": "CandyCollectionRequiresRetainAuthority"
           }
         ]
       }
@@ -509,138 +787,20 @@
           }
         ]
       }
-    }
-  ],
-  "errors": [
-    {
-      "code": 6000,
-      "name": "IncorrectOwner",
-      "msg": "Account does not have correct owner!"
     },
     {
-      "code": 6001,
-      "name": "Uninitialized",
-      "msg": "Account is not initialized!"
-    },
-    {
-      "code": 6002,
-      "name": "MintMismatch",
-      "msg": "Mint Mismatch!"
-    },
-    {
-      "code": 6003,
-      "name": "IndexGreaterThanLength",
-      "msg": "Index greater than length!"
-    },
-    {
-      "code": 6004,
-      "name": "NumericalOverflowError",
-      "msg": "Numerical overflow error!"
-    },
-    {
-      "code": 6005,
-      "name": "TooManyCreators",
-      "msg": "Can only provide up to 4 creators to candy machine (because candy machine is one)!"
-    },
-    {
-      "code": 6006,
-      "name": "UuidMustBeExactly6Length",
-      "msg": "Uuid must be exactly of 6 length"
-    },
-    {
-      "code": 6007,
-      "name": "NotEnoughTokens",
-      "msg": "Not enough tokens to pay for this minting"
-    },
-    {
-      "code": 6008,
-      "name": "NotEnoughSOL",
-      "msg": "Not enough SOL to pay for this minting"
-    },
-    {
-      "code": 6009,
-      "name": "TokenTransferFailed",
-      "msg": "Token transfer failed"
-    },
-    {
-      "code": 6010,
-      "name": "CandyMachineEmpty",
-      "msg": "Candy machine is empty!"
-    },
-    {
-      "code": 6011,
-      "name": "CandyMachineNotLive",
-      "msg": "Candy machine is not live!"
-    },
-    {
-      "code": 6012,
-      "name": "HiddenSettingsConfigsDoNotHaveConfigLines",
-      "msg": "Configs that are using hidden uris do not have config lines, they have a single hash representing hashed order"
-    },
-    {
-      "code": 6013,
-      "name": "CannotChangeNumberOfLines",
-      "msg": "Cannot change number of lines unless is a hidden config"
-    },
-    {
-      "code": 6014,
-      "name": "DerivedKeyInvalid",
-      "msg": "Derived key invalid"
-    },
-    {
-      "code": 6015,
-      "name": "PublicKeyMismatch",
-      "msg": "Public key mismatch"
-    },
-    {
-      "code": 6016,
-      "name": "NoWhitelistToken",
-      "msg": "No whitelist token present"
-    },
-    {
-      "code": 6017,
-      "name": "TokenBurnFailed",
-      "msg": "Token burn failed"
-    },
-    {
-      "code": 6018,
-      "name": "GatewayAppMissing",
-      "msg": "Missing gateway app when required"
-    },
-    {
-      "code": 6019,
-      "name": "GatewayTokenMissing",
-      "msg": "Missing gateway token when required"
-    },
-    {
-      "code": 6020,
-      "name": "GatewayTokenExpireTimeInvalid",
-      "msg": "Invalid gateway token expire time"
-    },
-    {
-      "code": 6021,
-      "name": "NetworkExpireFeatureMissing",
-      "msg": "Missing gateway network expire feature when required"
-    },
-    {
-      "code": 6022,
-      "name": "CannotFindUsableConfigLine",
-      "msg": "Unable to find an unused config line near your random number index"
-    },
-    {
-      "code": 6023,
-      "name": "InvalidString",
-      "msg": "Invalid string"
-    },
-    {
-      "code": 6024,
-      "name": "SuspiciousTransaction",
-      "msg": "Suspicious transaction detected"
-    },
-    {
-      "code": 6025,
-      "name": "CannotSwitchToHiddenSettings",
-      "msg": "Cannot Switch to Hidden Settings after items available is greater than 0"
+      "name": "WhitelistMintMode",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "BurnEveryTime"
+          },
+          {
+            "name": "NeverBurn"
+          }
+        ]
+      }
     }
   ]
 }
