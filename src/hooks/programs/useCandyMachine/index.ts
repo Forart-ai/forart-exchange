@@ -15,17 +15,10 @@ const useCandyMachine = () => {
   }, [provider])
 
   const builtMintTransaction = useCallback((mintKeypair: Keypair, candyMachineAddress: PublicKey) => {
-    if (!program) {
-      return Promise.reject('Program not ready')
-    }
-
     return buildMintTransaction(program, mintKeypair, candyMachineAddress)
   }, [program])
 
   const sendMintTransaction = useCallback((mintKeypair: Keypair, candyMachineAddress: PublicKey) => {
-    if (!program) {
-      return Promise.reject('Program not ready')
-    }
     return mintV2(program, mintKeypair, candyMachineAddress)
   },
   [program],

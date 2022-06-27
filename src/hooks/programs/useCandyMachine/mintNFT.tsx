@@ -15,16 +15,15 @@ import {
   Keypair,
   PACKET_DATA_SIZE,
   PublicKey,
+  Signer,
   SystemProgram,
   SYSVAR_CLOCK_PUBKEY,
   SYSVAR_INSTRUCTIONS_PUBKEY,
   SYSVAR_RENT_PUBKEY,
   SYSVAR_SLOT_HASHES_PUBKEY,
   Transaction,
-  TransactionInstruction,
 } from '@solana/web3.js'
 import { CANDY_MACHINE_COLLECTION_MINT, TOKEN_METADATA_PROGRAM_ID } from './helpers/constant'
-import { sendTransaction } from './helpers/transactions'
 
 // @ts-ignore
 const { createAssociatedTokenAccountInstruction, createApproveInstruction, createInitializeMintInstruction, createMintToInstruction, createRevokeInstruction } = SplToken
@@ -54,8 +53,8 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
       userPublicKey,
     ),
     createAssociatedTokenAccountInstruction(
-      userTokenAccountAddress,
       userPublicKey,
+      userTokenAccountAddress,
       userPublicKey,
       mintKeypair.publicKey,
     ),
@@ -63,7 +62,6 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
       mintKeypair.publicKey,
       userTokenAccountAddress,
       userPublicKey,
-      [],
       1,
     ),
   ]
@@ -94,14 +92,13 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
         isSigner: true,
       })
       signers.push(whitelistBurnAuthority)
-      const exists = await (program.provider as AnchorProvider).connection.getAccountInfo(whitelistToken,)
+      const exists = await (program.provider as AnchorProvider).connection.getAccountInfo(whitelistToken)
       if (exists) {
         instructions.push(
           createApproveInstruction(
             whitelistToken,
             whitelistBurnAuthority.publicKey,
             userPublicKey,
-            [],
             1,
           ),
         )
@@ -109,7 +106,6 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
           createRevokeInstruction(
             whitelistToken,
             userPublicKey,
-            [],
           ),
         )
       }
@@ -141,7 +137,6 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
         tokenAccount,
         transferAuthority.publicKey,
         userPublicKey,
-        [],
         candyMachine.data.price.toNumber(),
       ),
     )
@@ -150,7 +145,6 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
       createRevokeInstruction(
         tokenAccount,
         userPublicKey,
-        [],
       ),
     )
   }
@@ -159,8 +153,9 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
 
   const [candyMachineCreator, creatorBump] = await getCandyMachineCreator(candyMachineAddress)
   instructions.push(
-    await program.instruction.mintNft(creatorBump, {
-      accounts: {
+    await program.methods
+      .mintNft(creatorBump)
+      .accounts({
         candyMachine: candyMachineAddress,
         candyMachineCreator,
         payer: userPublicKey,
@@ -177,10 +172,9 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
         clock: SYSVAR_CLOCK_PUBKEY,
         recentBlockhashes: SYSVAR_SLOT_HASHES_PUBKEY,
         instructionSysvarAccount: SYSVAR_INSTRUCTIONS_PUBKEY,
-      },
-      remainingAccounts:
-        remainingAccounts.length > 0 ? remainingAccounts : undefined,
-    }),
+      })
+      .remainingAccounts(remainingAccounts.length > 0 ? remainingAccounts : [])
+      .instruction()
   )
 
   const collectionPDA = (await getCollectionPDA(candyMachineAddress))[0]
@@ -202,24 +196,26 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
       const collectionMasterEdition = await getMasterEdition(collectionMint)
 
       instructions.push(
-        await program.instruction.setCollectionDuringMint({
-          accounts: {
+        await program.methods
+          .setCollectionDuringMint()
+          .accounts({
             candyMachine: candyMachineAddress,
             metadata: metadataAddress,
             payer: userPublicKey,
             collectionPda: collectionPDA,
             tokenMetadataProgram: TOKEN_METADATA_PROGRAM_ID,
             instructions: SYSVAR_INSTRUCTIONS_PUBKEY,
-            collectionMint: collectionMint,
+            collectionMint,
             collectionMetadata,
             collectionMasterEdition,
             authority: candyMachine.authority,
             collectionAuthorityRecord,
-          },
-        }),
+          })
+          .instruction(),
       )
     }
   }
+
   const data = candyMachine.data
   const txnEstimate = 892
     + (collectionPDAAccount && data.retainAuthority ? 182 : 0)
@@ -231,42 +227,27 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
 
   const INIT_INSTRUCTIONS_LENGTH = 4
   const INIT_SIGNERS_LENGTH = 1
-  let initInstructions: TransactionInstruction[] = []
-  let initSigners: Keypair[] = []
+
+  const txWithSigners: { tx: Transaction; signers?: Signer[] }[] = []
 
   if (txnEstimate > PACKET_DATA_SIZE) {
-    initInstructions = instructions.splice(0, INIT_INSTRUCTIONS_LENGTH)
-    initSigners = signers.splice(0, INIT_SIGNERS_LENGTH)
+    txWithSigners.push({
+      tx: new Transaction().add(...instructions.splice(0, INIT_INSTRUCTIONS_LENGTH)),
+      signers: signers.splice(0, INIT_SIGNERS_LENGTH)
+    })
   }
 
-  if (initInstructions.length > 0) {
-    const transaction = new Transaction({
-      recentBlockhash: (await (program.provider as AnchorProvider).connection.getLatestBlockhash()).blockhash,
-      feePayer: (program.provider as AnchorProvider).wallet.publicKey
-    }).add(...initInstructions)
-    transaction.sign(...initSigners)
+  txWithSigners.push({
+    tx: new Transaction().add(...instructions),
+    signers: signers
+  })
 
-    await (program.provider as AnchorProvider).sendAndConfirm(transaction)
-    // await sendTransaction(
-    //   program.provider,
-    //   initInstructions,
-    //   initSigners,
-    // )
-  }
+  txWithSigners.push({
+    tx: new Transaction().add(...cleanupInstructions),
+    signers: []
+  })
 
-  const signature = await sendTransaction(
-    program.provider as AnchorProvider,
-    instructions,
-    signers,
-  )
+  const signatures = await (program.provider as AnchorProvider).sendAll(txWithSigners)
 
-  if (cleanupInstructions.length > 0) {
-    await sendTransaction(
-      program.provider as AnchorProvider,
-      cleanupInstructions,
-      [],
-    )
-  }
-
-  return signature
+  return signatures[signatures.length - 2]
 }
