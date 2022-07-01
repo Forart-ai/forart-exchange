@@ -6,7 +6,7 @@ import PoolsListItem from './PoolsListItem'
 import { PoolListContainer, PoolsContainer } from './poolList.styles'
 import RainbowText from '../../../../contexts/theme/components/RainbowText'
 import PainterAvatar from '../../../../assets/images/coPools/painter.webp'
-import GoblinAvatar from '../../../../assets/images/goblin/goblin-avatar.webp'
+import GoblinAvatar from '../../../../assets/images/goblin/goblin-avatar.jpg'
 
 import { Box } from '@mui/material'
 
