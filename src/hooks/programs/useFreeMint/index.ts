@@ -100,6 +100,13 @@ const useFreeMint = () => {
     const pocketAccount = await program.account.pocket.fetchNullable(pocket)
     let remainTokenCount = pocketAccount == null ? poolAccount.ticketPerKey : poolAccount.ticketPerKey.sub(pocketAccount.ticketCount).toNumber()
 
+    console.log('poolAccount.claimedTicketCount',poolAccount.claimedTicketCount.toString())
+    console.log('poolAccount.ticketPerKey',poolAccount.ticketPerKey.toString())
+    console.log('pocketAccount.ticketCount',pocketAccount?.ticketCount.toString())
+    console.log('poolAccount.totalTicketCount',poolAccount.totalTicketCount.toString())
+
+    console.log('pocketAccount',pocketAccount?.ticketCount)
+
     remainTokenCount =
       remainTokenCount < poolAccount.totalTicketCount.sub(poolAccount.claimedTicketCount).toNumber() ?
         remainTokenCount : poolAccount.totalTicketCount.sub(poolAccount.claimedTicketCount).toNumber()
