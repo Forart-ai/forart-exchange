@@ -237,7 +237,7 @@ const HypeteenMintPage:React.FC = () => {
           <CustomizedProgressBars style={{ height:'30px' }}  value={(100 / ( 2000 / hypeteenData?.minted)) ?? '0'}  />
           <p>{hypeteenData?.minted} / 2000</p>
         </div>
-        <CustomizeButton disabled={buttonDisabled} onClick={ () => handleMint() } color={'secondary'} variant={'contained'}>Mint</CustomizeButton>
+        <CustomizeButton  onClick={ () => handleMint() } color={'secondary'} variant={'contained'}>Mint</CustomizeButton>
 
       </Operation>
 

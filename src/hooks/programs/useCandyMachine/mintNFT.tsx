@@ -187,6 +187,7 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
         mint: PublicKey;
       }*/
     const collectionMint = CANDY_MACHINE_COLLECTION_MINT
+    console.log(collectionMint)
     const collectionAuthorityRecord = (
       await getCollectionAuthorityRecordPDA(collectionMint, collectionPDA)
     )[0]
