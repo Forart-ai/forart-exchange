@@ -21,14 +21,66 @@ import {
   SYSVAR_INSTRUCTIONS_PUBKEY,
   SYSVAR_RENT_PUBKEY,
   SYSVAR_SLOT_HASHES_PUBKEY,
-  Transaction,
+  Transaction, TransactionInstruction,
 } from '@solana/web3.js'
 import { CANDY_MACHINE_COLLECTION_MINT, TOKEN_METADATA_PROGRAM_ID } from './helpers/constant'
 
 // @ts-ignore
 const { createAssociatedTokenAccountInstruction, createApproveInstruction, createInitializeMintInstruction, createMintToInstruction, createRevokeInstruction } = SplToken
 
-export async function mintV2(program: Program, mintKeypair: Keypair, candyMachineAddress: PublicKey,): Promise<string> {
+type transactionWithSigners =
+  {
+    tx: Transaction,
+    signers?: Signer[]
+  }
+
+export async function buildCleanupTransactionForCandyMachine(program: Program, candyMachineAddress: PublicKey) {
+  const userPublicKey = (program.provider as AnchorProvider).wallet.publicKey
+  const ixs: TransactionInstruction[] = []
+
+  const candyMachine: any =  await program.account.candyMachine.fetch(candyMachineAddress)
+
+  if (candyMachine.data.whitelistMintSettings) {
+    const whitelistMint = new PublicKey(
+      candyMachine.data.whitelistMintSettings.mint,
+    )
+
+    const whitelistToken = (await getAtaForMint(whitelistMint, userPublicKey))[0]
+
+    if (candyMachine.data.whitelistMintSettings.mode.burnEveryTime) {
+      const exists = await (program.provider as AnchorProvider).connection.getAccountInfo(whitelistToken)
+      if (exists) {
+        ixs.push(
+          createRevokeInstruction(
+            whitelistToken,
+            userPublicKey,
+          ),
+        )
+      }
+    }
+  }
+
+  if (candyMachine.tokenMint) {
+    const tokenAccount = await getTokenWallet(
+      userPublicKey,
+      candyMachine.tokenMint,
+    )
+
+    ixs.push(
+      createRevokeInstruction(
+        tokenAccount,
+        userPublicKey,
+      ),
+    )
+  }
+
+  return {
+    tx: new Transaction().add(...ixs),
+    signers: []
+  }
+}
+
+export async function mintV2(program: Program, mintKeypair: Keypair, candyMachineAddress: PublicKey, cleanup = true): Promise<transactionWithSigners[]> {
   const userPublicKey = (program.provider as AnchorProvider).wallet.publicKey
   const userTokenAccountAddress = await getTokenWallet(userPublicKey, mintKeypair.publicKey)
 
@@ -187,7 +239,6 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
         mint: PublicKey;
       }*/
     const collectionMint = CANDY_MACHINE_COLLECTION_MINT
-    console.log(collectionMint)
     const collectionAuthorityRecord = (
       await getCollectionAuthorityRecordPDA(collectionMint, collectionPDA)
     )[0]
@@ -229,26 +280,45 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
   const INIT_INSTRUCTIONS_LENGTH = 4
   const INIT_SIGNERS_LENGTH = 1
 
-  const txWithSigners: { tx: Transaction; signers?: Signer[] }[] = []
+  const txWithSigners: transactionWithSigners[]  = []
+
+  const recentBlockhash = (await program.provider.connection.getLatestBlockhash()).blockhash
+  const feePayer = (program.provider as AnchorProvider).wallet.publicKey
 
   if (txnEstimate > PACKET_DATA_SIZE) {
     txWithSigners.push({
-      tx: new Transaction().add(...instructions.splice(0, INIT_INSTRUCTIONS_LENGTH)),
+      tx: new Transaction({ recentBlockhash, feePayer }).add(...instructions.splice(0, INIT_INSTRUCTIONS_LENGTH)),
       signers: signers.splice(0, INIT_SIGNERS_LENGTH)
     })
   }
 
   txWithSigners.push({
-    tx: new Transaction().add(...instructions),
+    tx: new Transaction({ recentBlockhash, feePayer }).add(...instructions),
     signers: signers
   })
 
-  txWithSigners.push({
-    tx: new Transaction().add(...cleanupInstructions),
-    signers: []
-  })
+  if (cleanup) {
+    txWithSigners.push({
+      tx: new Transaction({ recentBlockhash, feePayer }).add(...cleanupInstructions),
+      signers: []
+    })
+  }
 
-  const signatures = await (program.provider as AnchorProvider).sendAll(txWithSigners)
+  return txWithSigners
+}
 
-  return signatures[signatures.length - 2]
+export async function multipleMintV2(program: Program, mintKeypair: Keypair[], candyMachineAddress: PublicKey) {
+  const txs = (
+    await Promise.all(
+      (mintKeypair.map(keypair => (
+        mintV2(program, keypair, candyMachineAddress, false)
+      ))),
+    )
+  ).flat()
+
+  txs.push(
+    await buildCleanupTransactionForCandyMachine(program, candyMachineAddress)
+  )
+
+  return txs
 }

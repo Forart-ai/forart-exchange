@@ -4,7 +4,7 @@ import { Program } from '@project-serum/anchor'
 import { CANDY_MACHINE_PROGRAM_ID, CANDY_MACHINE_PROGRAM_IDL, PainterCandyMachineAddress } from './helpers/constant'
 import { Keypair, PublicKey } from '@solana/web3.js'
 import { buildMintTransaction } from './helpers/buildMintTransaction'
-import { mintV2 } from './mintNFT'
+import { mintV2, multipleMintV2 } from './mintNFT'
 import { CandyMachineIdl } from './idl'
 
 const useCandyMachine = () => {
@@ -20,12 +20,14 @@ const useCandyMachine = () => {
 
   const sendMintTransaction = useCallback((mintKeypair: Keypair, candyMachineAddress: PublicKey) => {
     return mintV2(program, mintKeypair, candyMachineAddress)
-  },
-  [program],
-  )
+  }, [program])
+
+  const builtMultipleMintTransactionV2 = useCallback((mintKeypair: Keypair[], candyMachineAddress: PublicKey) => {
+    return multipleMintV2(program, mintKeypair, candyMachineAddress)
+  }, [program])
 
   return {
-    program, builtMintTransaction, sendMintTransaction
+    program, builtMintTransaction, sendMintTransaction, builtMultipleMintTransactionV2
   }
 }
 

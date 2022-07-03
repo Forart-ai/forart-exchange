@@ -31,7 +31,6 @@ const WalletInfoModal:React.FC<{ account?: string; disconnect: VoidFunction }> =
     disconnect()
     closeModal()
     Cookies.remove('USER_TOKEN')
-    navigate('/')
   }
 
   return (

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import { styled,  } from '@mui/material'
+import { styled, Tooltip, } from '@mui/material'
 import HypeteenIcon from '../../assets/images/artistDetail/hypeteenIcon.png'
 import Background from '../../assets/images/goblin/Goblin_Background.png'
 import GoblinAvatar from '../../assets/images/goblin/goblin-avatar.jpg'
@@ -19,6 +19,10 @@ import { useOwnedNFTsQuery } from '../../hooks/queries/account/useOwnedNFTsQuery
 import { PublicKey } from '@solana/web3.js'
 import { useWhiteListQuery } from '../../hooks/programs/useWhiteList'
 import { useGoblinWhiteList } from '../../hooks/programs/useFreeMint/useGoblinWhiteList'
+import { shortenAddress } from '../../utils'
+import { useModal } from '../../contexts/modal'
+import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
+import { BeatLoader, BounceLoader, DotLoader, MoonLoader, RotateLoader, SyncLoader } from 'react-spinners'
 
 const Wrapper = styled('div')`
   min-height: 100vh;
@@ -142,6 +146,12 @@ const Content = styled('div')`
     font-weight: bolder;
     letter-spacing: 1.2px;
   }
+  
+  .connect {
+    cursor: pointer;
+    font-size: 18px;
+    color: ${({ theme }) => theme.palette.primary.light};
+  }
 `
 
 const SwiperContainer = styled('div')`
@@ -164,33 +174,57 @@ const SwiperContainer = styled('div')`
 
 const Goblin:React.FC = () => {
 
-  const { account } = useSolanaWeb3()
+  const { account, disconnect } = useSolanaWeb3()
   const { getFreeMintToken, userRemainTokenCount } = useFreeMint()
   const { mintGoblin } = useGoblinMint()
+  const { openModal } = useModal()
 
   const { data, isFetching, error } = useGoblinWhiteList()
 
   useEffect(() => {
+    console.log(userRemainTokenCount?.data?.toString())
   }, [data, userRemainTokenCount])
 
-  const handleGoblinMint = useCallback(
-    () => {
-      if (!data) return
+  const  handleGoblinMint = useCallback(  (mintCount: number) => {
+    console.log('handle mint')
 
-      if (parseInt(data) >= 1) {
-        console.log('mint')
-        mintGoblin()
-        return
-      }
+    mintGoblin(mintCount).then(r => {
+      console.log(r)
+      return
+    }).catch(er => {
+      console.log(er)
+      return
+    })
+  },[account, data])
+
+  const handleGetWhitelistAndMint = useCallback(
+    (mintCount:number) => {
       getFreeMintToken()
         .then(res => {
+          console.log('give token')
+          handleGoblinMint(mintCount)
           console.log(res)
         })
         .catch(err => {
           console.log(err)
         })
     },
-    [account],
+    [account, data],
+  )
+
+  const mintPreCheck = useCallback(
+    (mintCount: number) => {
+      console.log('pre-check')
+
+      if (data && parseInt(data) >= 1){
+        console.log('mint')
+        handleGoblinMint(mintCount)
+        return
+      }
+
+      handleGetWhitelistAndMint(mintCount)
+    },
+    [account, data],
   )
 
   return (
@@ -236,17 +270,44 @@ const Goblin:React.FC = () => {
             </Flex>
 
             <Flex flexDirection={'column'}>
-              <p>You can mint {userRemainTokenCount?.data} Goblinai(s)</p>
-              <p>total whitelist in your : {data}</p>
-              <CustomizeButton variant={'contained'} onClick={handleGoblinMint}>MINT GOBLIN</CustomizeButton>
+
+              <Flex>Connected wallet: &nbsp;
+
+                {
+                  account ?
+                    (
+                      <Tooltip placement={'top'} title={'Click to disconnect'}>
+                        <div className={'connect'} onClick={disconnect}> {shortenAddress(account?.toBase58())}</div>
+                      </Tooltip>
+                    ) :
+                    (
+                      <div className={'connect'} onClick={() => openModal(<WalletSelectionModal />)}>Click to connect</div>
+                    )
+                }
+              </Flex>
+
+              <p>You have {data ? data : <BeatLoader size={6} color={'white'} />} Whitelist token</p>
+              <p>Remain whitelist token you can get:
+                {
+                  userRemainTokenCount.data && <>{ userRemainTokenCount?.data?.toString()}</>
+                }
+
+                {
+                  !!userRemainTokenCount.data && <BeatLoader size={6} color={'white'} />
+                }
+              </p>
+
+              <Flex gap={'20px'}>
+                <CustomizeButton disabled={data ? parseInt(data) < 1 : false} variant={'contained'} onClick={() => mintPreCheck(1)}>MINT 1 GOBLIN</CustomizeButton>
+                <CustomizeButton disabled={data ? parseInt(data) < 2 : false} variant={'contained'} onClick={() => mintPreCheck(2)}>MINT 2 GOBLIN</CustomizeButton>
+              </Flex>
+
             </Flex>
 
           </Content>
 
         </MessageContainer>
       </Container>
-      {/*<CustomizeButton variant={'contained'} onClick={getFreeMintToken}>FREE MINT</CustomizeButton>*/}
-      {/*<CustomizeButton variant={'contained'} onClick={mintGoblin}>MINT GOBLIN</CustomizeButton>*/}
 
     </Wrapper>
 

@@ -58,6 +58,11 @@ const App: React.FC = () => {
 
   // useChainEffect()
   useEagerConnect()
+
+  /**
+   * fixme
+   */
+
   // useSignLogin()
 
   useEffect(() => {
