@@ -23,6 +23,7 @@ import { shortenAddress } from '../../utils'
 import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 import { BeatLoader, BounceLoader, DotLoader, MoonLoader, RotateLoader, SyncLoader } from 'react-spinners'
+import { MintStatusModal } from './infoModals'
 
 const Wrapper = styled('div')`
   min-height: 100vh;
@@ -205,7 +206,7 @@ const Goblin:React.FC = () => {
           console.log(res)
         })
         .catch(err => {
-          console.log(err)
+          openModal(<MintStatusModal err={err.toString()} />)
         })
     },
     [account, data],
