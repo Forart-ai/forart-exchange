@@ -182,7 +182,6 @@ const Goblin:React.FC = () => {
   const { data, isFetching, error } = useGoblinWhiteList()
 
   useEffect(() => {
-    console.log(userRemainTokenCount?.data?.toString())
   }, [data, userRemainTokenCount])
 
   const  handleGoblinMint = useCallback(  (mintCount: number) => {
@@ -292,14 +291,11 @@ const Goblin:React.FC = () => {
                   userRemainTokenCount.data && <>{ userRemainTokenCount?.data?.toString()}</>
                 }
 
-                {
-                  !!userRemainTokenCount.data && <BeatLoader size={6} color={'white'} />
-                }
               </p>
 
               <Flex gap={'20px'}>
-                <CustomizeButton disabled={data ? parseInt(data) < 1 : false} variant={'contained'} onClick={() => mintPreCheck(1)}>MINT 1 GOBLIN</CustomizeButton>
-                <CustomizeButton disabled={data ? parseInt(data) < 2 : false} variant={'contained'} onClick={() => mintPreCheck(2)}>MINT 2 GOBLIN</CustomizeButton>
+                <CustomizeButton disabled={(data &&userRemainTokenCount?.data) ?( parseInt(data) + parseInt(userRemainTokenCount?.data?.toString())) < 1 : false}  variant={'contained'} onClick={() => mintPreCheck(1)}>MINT 1 GOBLIN</CustomizeButton>
+                <CustomizeButton disabled={(data &&userRemainTokenCount?.data) ?( parseInt(data) + parseInt(userRemainTokenCount?.data?.toString())) < 2 : false} variant={'contained'} onClick={() => mintPreCheck(2)}>MINT 2 GOBLIN</CustomizeButton>
               </Flex>
 
             </Flex>

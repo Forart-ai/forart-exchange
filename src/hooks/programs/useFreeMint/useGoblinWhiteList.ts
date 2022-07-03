@@ -21,7 +21,7 @@ const useGoblinWhiteList = () => {
 
     const tokenAccount = await connection.getParsedAccountInfo(ata)
 
-    if (tokenAccount.value === null) return undefined
+    if (tokenAccount.value === null) return '0'
 
     return (tokenAccount.value.data as ParsedAccountData).parsed.info.tokenAmount.uiAmountString
   }, { refetchOnWindowFocus: true })
