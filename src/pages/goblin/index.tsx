@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { styled, Tooltip, } from '@mui/material'
 import Background from '../../assets/images/goblin/Goblin_Background.png'
 import GoblinAvatar from '../../assets/images/goblin/goblin-avatar.jpg'
 import CustomizeButton from '../../contexts/theme/components/Button'
-import { useFreeMint } from '../../hooks/programs/useFreeMint'
 import { useGoblinMint } from '../../hooks/ai-generarl/useGoblinMint'
 import './numeric.css'
 import Swipe1 from '../../assets/images/goblin/swipe1.jpg'
@@ -14,15 +13,11 @@ import 'swiper/css/pagination'
 import { Pagination } from 'swiper'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import Flex from '../../contexts/theme/components/Box/Flex'
-
-import { useGoblinWhiteList } from '../../hooks/programs/useFreeMint/useGoblinWhiteList'
 import { shortenAddress } from '../../utils'
 import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 import { BeatLoader } from 'react-spinners'
-import { MintStatusModal } from './infoModals'
 import { NumericStepper } from '@anatoliygatt/numeric-stepper'
-import { useRefreshController } from '../../contexts/refresh-controller'
 
 const Wrapper = styled('div')`
   min-height: 100vh;
@@ -35,7 +30,7 @@ const Wrapper = styled('div')`
 const BackgroundImage = styled('div')`
   height: 470px;
   width: 100%;
-     background: url(${Background}) no-repeat center;
+  background: url(${Background}) no-repeat center;
   //background-color: #18182a;
   position: relative;
   background-size: cover;
@@ -121,7 +116,7 @@ const MessageContainer = styled('div')`
   width: 50%;
   height: 500px;
   border: 1px #999999 solid;
-  background: rgba(255,255,255, .1);
+  background: rgba(255, 255, 255, .1);
   border-radius: 1rem;
   padding: 1rem;
 
@@ -139,14 +134,14 @@ const Content = styled('div')`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
+
   .highlight {
     font-size: 24px;
     color: ${({ theme }) => theme.palette.primary.light};
     font-weight: bolder;
     letter-spacing: 1.2px;
   }
-  
+
   .connect {
     cursor: pointer;
     font-size: 18px;
@@ -156,7 +151,7 @@ const Content = styled('div')`
 
 const SwiperContainer = styled('div')`
   width: 40%;
- 
+
   max-width: 500px;
   max-height: 500px;
 
@@ -166,60 +161,32 @@ const SwiperContainer = styled('div')`
     object-fit: cover;
     border-radius: 10px;
   }
-  
+
   img {
     width: 100%;
   }
 `
 
-const Message = styled('div')<{color?: string | 'white'}>`
+const Message = styled('div')<{ color?: string | 'white' }>`
   font-size: 16px;
   color: ${({ color }) => color};
 `
 
-const Goblin:React.FC = () => {
+const Goblin: React.FC = () => {
 
   const { account, disconnect } = useSolanaWeb3()
-  const { getFreeMintToken, userRemainTokenCount, loading: freeMintLoading, message: freeMintMessage } = useFreeMint()
-  const { mintGoblin, loading, message } = useGoblinMint()
+  const { mintGoblin, loading, message, mintingChance } = useGoblinMint()
   const { openModal } = useModal()
   const [count, setCount] = useState<number>(1)
-
-  const { data, isFetching, error } = useGoblinWhiteList()
-
-  const  handleGoblinMint = useCallback(  (mintCount: number) => {
-    console.log('handle mint')
-
-    mintGoblin(mintCount).then(r => {
-      console.log(r)
-      return
-    }).catch(er => {
-      console.log(er)
-      return
-    })
-  },[account, data])
-
-  const handleGetWhitelist = useCallback(
-    () => {
-      getFreeMintToken()
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          openModal(<MintStatusModal msg={err.toString()} variant={'warning'} />)
-        })
-    },
-    [account, data],
-  )
 
   return (
     <Wrapper>
       <BackgroundImage>
-        <MainContainer >
+        <MainContainer>
 
           <MainArea>
             <img src={GoblinAvatar} />
-            <span> Goblinai.sol</span>
+            <span>Goblinai.sol</span>
             <div className="info-message">
               AAAAAAAUUUUUGGGHHHHH gobblins goblinns GOBLINNNNNNNNns wekm ta goblintown yoo sniksnakr DEJEN RATS oooooh
             </div>
@@ -230,7 +197,7 @@ const Goblin:React.FC = () => {
       </BackgroundImage>
 
       <Container>
-        <SwiperContainer >
+        <SwiperContainer>
           <Swiper
             pagination={{ dynamicBullets: true, }}
             modules={[Pagination]}
@@ -242,20 +209,22 @@ const Goblin:React.FC = () => {
           </Swiper>
         </SwiperContainer>
 
-        <MessageContainer >
+        <MessageContainer>
           <Content>
             <Flex flexDirection={'column'}>
-              <p>Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing.</p>
+              <p>Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves
+                travel and art, and is good at socializing.
+              </p>
 
-              <p>Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing.</p>
+              <p>Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves
+                travel and art, and is good at socializing.
+              </p>
 
               <div className={'highlight'}>Mint Your free Goblinai.</div>
             </Flex>
 
             <Flex flexDirection={'column'}>
-
               <Flex>Connected wallet: &nbsp;
-
                 {
                   account ?
                     (
@@ -264,59 +233,40 @@ const Goblin:React.FC = () => {
                       </Tooltip>
                     ) :
                     (
-                      <div className={'connect'} onClick={() => openModal(<WalletSelectionModal />)}>Click to connect</div>
+                      <div className={'connect'} onClick={() => openModal(<WalletSelectionModal />)}>Click to
+                        connect
+                      </div>
                     )
                 }
               </Flex>
 
-              <p>You have {data ? data : <BeatLoader size={6} color={'white'} />} Whitelist token</p>
-              <p>Remain whitelist token you can get:
-                {
-                  userRemainTokenCount.data && <>{ userRemainTokenCount?.data?.toString()}</>
-                }
-
-              </p>
+              <div>You can mint {mintingChance.data}</div>
 
               {
-                (data && parseInt(data) >=1 ) ? (
-                  <>
-                    <NumericStepper
-                      minimumValue={1}
-                      maximumValue={parseInt(data)}
-                      initialValue={count}
-                      thumbShadowAnimationOnTrackHoverEnabled={false}
-                      onChange={value => {setCount(value)}}
-                    />
-                    <Flex gap={'20px'}>
-                      <CustomizeButton
-                        variant={'contained'}
-                        size={'small'}
-                        onClick={() => handleGoblinMint(count)}
-                        disabled={loading}
-                      >
-                        MINT {count} GOBLIN
-                      </CustomizeButton>
-                      <Message color={message.color}>{message.msg} { loading && <BeatLoader size={6} color={'white'} /> }</Message>
-
-                    </Flex>
-                  </>
-                ) :
-                  (
-                    <Flex gap={'20px'} alignItems={'center'}>
-                      <CustomizeButton
-                        size={'small'}
-                        variant={'contained'}
-                        color={'info'}
-                        onClick={handleGetWhitelist}
-                        disabled={freeMintLoading || userRemainTokenCount?.data?.toString() === '0'}
-                      >
-                        GET WHITE LIST
-                      </CustomizeButton>
-                      <Message color={freeMintMessage.color}>{freeMintMessage.msg} { freeMintLoading && <BeatLoader size={6} color={'white'} /> }</Message>
-
-                    </Flex>
-                  )
+                !!mintingChance?.data && (
+                  <NumericStepper
+                    minimumValue={1}
+                    maximumValue={mintingChance.data}
+                    initialValue={count}
+                    thumbShadowAnimationOnTrackHoverEnabled={false}
+                    onChange={value => setCount(value)}
+                  />
+                )
               }
+
+              <Flex gap={'20px'}>
+                <CustomizeButton
+                  variant={'contained'}
+                  size={'small'}
+                  onClick={() => mintGoblin(count)}
+                  disabled={loading}
+                >
+                  MINT {count} GOBLIN
+                </CustomizeButton>
+                <Message color={message.color}>{message.msg} {loading &&
+                  <BeatLoader size={6} color={'white'} />}
+                </Message>
+              </Flex>
 
             </Flex>
 

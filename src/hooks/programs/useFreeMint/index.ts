@@ -1,34 +1,59 @@
 import useAnchorProvider from '../../useAnchorProvider'
-import { useCallback, useMemo, useState } from 'react'
-import { AnchorProvider, Program } from '@project-serum/anchor'
+import { useCallback, useMemo } from 'react'
+import { BN, Program } from '@project-serum/anchor'
 import { FreeMint, FreeMintIDL } from './constant/idl'
 import { FREE_MINT_POOL_ADDRESS, FREE_MINT_PROGRAM_ID, FREE_MINT_TOKEN_ADDRESS } from './constant'
-import { Keypair, PublicKey, Signer, SystemProgram, SYSVAR_RENT_PUBKEY, Transaction } from '@solana/web3.js'
+import { PublicKey, Signer, SystemProgram, SYSVAR_RENT_PUBKEY, Transaction } from '@solana/web3.js'
 import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 // @ts-ignore
 import { ASSOCIATED_TOKEN_PROGRAM_ID, getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import { useQuery } from 'react-query'
-import { BigNumber } from 'ethers'
-import { MessageType } from '../../ai-generarl/useGoblinMint'
 import { useRefreshController } from '../../../contexts/refresh-controller'
+import _ from 'lodash'
 
 const useFreeMint = () => {
   const { provider } = useAnchorProvider()
   const { account } = useSolanaWeb3()
-  const [loading, setLoading] = useState<boolean>(false)
-  const [message, setMessage] = useState<MessageType>({ color: '', msg: '' })
-  const { forceRefresh } = useRefreshController()
+  const { slowRefreshFlag } = useRefreshController()
 
   const program = useMemo(() => {
     return new Program<FreeMint>(FreeMintIDL, FREE_MINT_PROGRAM_ID, provider)
-  },[provider])
+  }, [provider])
 
-  const getFreeMintToken = useCallback(
+  const userRemainTokenCount = useQuery(
+    ['USER_REMAIN_TOKEN_COUNT', program.programId, account, slowRefreshFlag],
     async () => {
-
       if (!account) return
-      setLoading(true)
-      setMessage({ msg:'Building transactions...', color:'white' })
+
+      const poolAccount = await program.account.pool.fetch(FREE_MINT_POOL_ADDRESS)
+
+      const [pocket] = await PublicKey.findProgramAddress(
+        [Buffer.from('pocket'), FREE_MINT_POOL_ADDRESS.toBuffer(), account.toBuffer()],
+        program.programId
+      )
+
+      const pocketAccount = await program.account.pocket.fetchNullable(pocket)
+
+      const max = poolAccount.ticketPerKey
+
+      const claimed = (pocketAccount?.ticketCount) ?? new BN(0)
+
+      return max.sub(claimed).toNumber()
+    })
+
+  const buildRequestTransaction = useCallback(
+    async (amount: number): Promise<{ tx: Transaction, signers: Signer[] }> => {
+      if (!account || userRemainTokenCount.data === undefined) {
+        throw new Error('Env not ready')
+      }
+
+      if (!amount || amount < 0) {
+        throw new Error('Amount to request must gather than 0')
+      }
+
+      if (amount > userRemainTokenCount.data) {
+        throw new Error(`Can only request ${userRemainTokenCount} whitelist token but requesting ${amount}`)
+      }
 
       const [mintAuthority,] = await PublicKey.findProgramAddress(
         [Buffer.from('mint_authority'), FREE_MINT_TOKEN_ADDRESS.toBuffer()],
@@ -39,6 +64,7 @@ const useFreeMint = () => {
         [Buffer.from('pocket'), FREE_MINT_POOL_ADDRESS.toBuffer(), account.toBuffer()],
         program.programId
       )
+
       const token = await getAssociatedTokenAddress(FREE_MINT_TOKEN_ADDRESS, account)
 
       const instruction = await program.methods
@@ -57,67 +83,15 @@ const useFreeMint = () => {
         })
         .instruction()
 
-      setMessage({ msg:'Please confirm the transaction', color:'white' } )
-
-      // const tx: { tx: Transaction; signers?: Signer[] }[] = []
-
-      // tx.push({
-      //   tx:
-      // })
-
-      // tx.push({
-      //   tx: new Transaction().add(instruction2)
-      // })
-
-      const signatures = await (program.provider as AnchorProvider).sendAndConfirm(
-        new Transaction().add(instruction, instruction)
-      )
-        .then(() => {
-          setMessage({ msg:'Whitelist token has given, you can mint your Goblin now', color:'#50dcb5' })
-          forceRefresh()
-          setLoading(false)
-
-        }).catch(er => {
-          setMessage({ msg:er.toString(), color:'#fb9526' })
-          setLoading(false)
-        })
-
-      return signatures
-
+      return {
+        tx: new Transaction().add(..._.fill(_.range(amount), instruction)),
+        signers: []
+      }
     },
-    [provider],
+    [account, program, userRemainTokenCount],
   )
 
-  const userRemainTokenCount = useQuery(['USER_REMAIN_TOKEN_COUNT', program.programId, account, forceRefresh], async () => {
-    if (!program || !account) return
-    const poolAccount = await program.account.pool.fetch(FREE_MINT_POOL_ADDRESS)
-
-    const [pocket] = await PublicKey.findProgramAddress(
-      [Buffer.from('pocket'), FREE_MINT_POOL_ADDRESS.toBuffer(), account.toBuffer()],
-      program.programId
-    )
-
-    const pocketAccount = await program.account.pocket.fetchNullable(pocket)
-    let remainTokenCount = pocketAccount == null ? poolAccount.ticketPerKey : poolAccount.ticketPerKey.sub(pocketAccount.ticketCount).toNumber()
-
-    // console.log('poolAccount.claimedTicketCount', poolAccount.claimedTicketCount.toString())
-    // console.log('poolAccount.ticketPerKey', poolAccount.ticketPerKey.toString())
-    // console.log('pocketAccount.ticketCount', pocketAccount?.ticketCount.toString())
-    // console.log('poolAccount.totalTicketCount', poolAccount.totalTicketCount.toString())
-    //
-    // console.log('pocketAccount',pocketAccount?.ticketCount)
-    // console.log(remainTokenCount)
-
-    remainTokenCount =
-      remainTokenCount < poolAccount.totalTicketCount.sub(poolAccount.claimedTicketCount).toNumber() ?
-        remainTokenCount : poolAccount.totalTicketCount.sub(poolAccount.claimedTicketCount).toNumber()
-
-    return remainTokenCount
-
-  })
-
-  return { getFreeMintToken, userRemainTokenCount, loading, message }
-
+  return { buildRequestTransaction, userRemainTokenCount }
 }
 
 export { useFreeMint }
