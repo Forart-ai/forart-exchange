@@ -1,0 +1,28 @@
+[data-testid='numeric-stepper'] {
+    width: 100px !important;
+    height: 34px !important;
+    margin-bottom: 10px !important;
+    padding: 0 10px;
+}
+
+[data-testid='numeric-stepper-thumb'] {
+    width: 28px !important;
+    height: 28px !important;
+
+    .textFitted {
+        font-size: 16px !important;
+
+    }
+}
+
+[data-testid='numeric-stepper-increment-button' ] {
+    width: 18px !important;
+    height: 18px !important;
+}
+
+[data-testid='numeric-stepper-decrement-button' ] {
+    width: 18px !important;
+    height: 18px !important;
+}
+
+

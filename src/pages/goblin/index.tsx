@@ -4,7 +4,7 @@ import Background from '../../assets/images/goblin/Goblin_Background.png'
 import GoblinAvatar from '../../assets/images/goblin/goblin-avatar.jpg'
 import CustomizeButton from '../../contexts/theme/components/Button'
 import { useGoblinMint } from '../../hooks/ai-generarl/useGoblinMint'
-import './numeric.css'
+import './numeric.scss'
 import Swipe1 from '../../assets/images/goblin/swipe1.jpg'
 import Swipe2 from '../../assets/images/goblin/swipe2.jpg'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -110,6 +110,12 @@ const Container = styled('div')`
   justify-content: center;
   align-items: center;
   gap: 50px;
+  margin-top: 30px;
+  
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    flex-direction: column;
+    padding: 20px;
+  }
 `
 
 const MessageContainer = styled('div')`
@@ -119,6 +125,11 @@ const MessageContainer = styled('div')`
   background: rgba(255, 255, 255, .1);
   border-radius: 1rem;
   padding: 1rem;
+
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    width: 100%;
+    height: auto;
+  }
 
 `
 
@@ -133,8 +144,9 @@ const Content = styled('div')`
   font-family: Kanit-Regular;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-
+  justify-content: center;
+  gap: 100px;
+  
   .highlight {
     font-size: 24px;
     color: ${({ theme }) => theme.palette.primary.light};
@@ -165,6 +177,10 @@ const SwiperContainer = styled('div')`
   img {
     width: 100%;
   }
+
+  ${({ theme }) => theme.breakpoints.down('lg')} {
+    width: 100%;
+  }
 `
 
 const Message = styled('div')<{ color?: string | 'white' }>`
@@ -188,7 +204,8 @@ const Goblin: React.FC = () => {
             <img src={GoblinAvatar} />
             <span>Goblinai.sol</span>
             <div className="info-message">
-              AAAAAAAUUUUUGGGHHHHH gobblins goblinns GOBLINNNNNNNNns wekm ta goblintown yoo sniksnakr DEJEN RATS oooooh
+              We&apos;ve been devoting ourselves to the AI-generated image technology. And we are a big fan of AI-generated NFT artwork.
+              Until the dope NFT collection Goblintown born.
             </div>
           </MainArea>
 
@@ -212,12 +229,12 @@ const Goblin: React.FC = () => {
         <MessageContainer>
           <Content>
             <Flex flexDirection={'column'}>
-              <p>Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves
-                travel and art, and is good at socializing.
+              <p> We&apos;ve been devoting ourselves to the AI-generated image technology. And we are a big fan of AI-generated NFT artwork.
+                Until the dope NFT collection Goblintown born.
               </p>
 
-              <p>Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves
-                travel and art, and is good at socializing.
+              <p>The crazy idea came out. Which will be more innovative and fantastic...
+                Don&apos;t blink or you&apos;ll miss it...
               </p>
 
               <div className={'highlight'}>Mint Your free Goblinai.</div>
@@ -233,14 +250,14 @@ const Goblin: React.FC = () => {
                       </Tooltip>
                     ) :
                     (
-                      <div className={'connect'} onClick={() => openModal(<WalletSelectionModal />)}>Click to
-                        connect
+                      <div className={'connect'} onClick={() => openModal(<WalletSelectionModal />)}>
+                        Click to connect
                       </div>
                     )
                 }
               </Flex>
 
-              <div>You can mint {mintingChance.data}</div>
+              {account && <div>You can mint {mintingChance.data} Goblins</div> }
 
               {
                 !!mintingChance?.data && (
@@ -259,12 +276,14 @@ const Goblin: React.FC = () => {
                   variant={'contained'}
                   size={'small'}
                   onClick={() => mintGoblin(count)}
-                  disabled={loading}
+                  disabled={loading || !account}
                 >
                   MINT {count} GOBLIN
                 </CustomizeButton>
-                <Message color={message.color}>{message.msg} {loading &&
-                  <BeatLoader size={6} color={'white'} />}
+                <Message color={message.color}>{message.msg}
+                  {
+                    loading && <BeatLoader size={6} color={'white'} />
+                  }
                 </Message>
               </Flex>
 
