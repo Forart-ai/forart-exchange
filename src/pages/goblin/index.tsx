@@ -1,12 +1,11 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { styled, Tooltip, } from '@mui/material'
-import HypeteenIcon from '../../assets/images/artistDetail/hypeteenIcon.png'
 import Background from '../../assets/images/goblin/Goblin_Background.png'
 import GoblinAvatar from '../../assets/images/goblin/goblin-avatar.jpg'
 import CustomizeButton from '../../contexts/theme/components/Button'
 import { useFreeMint } from '../../hooks/programs/useFreeMint'
 import { useGoblinMint } from '../../hooks/ai-generarl/useGoblinMint'
-
+import './numeric.css'
 import Swipe1 from '../../assets/images/goblin/swipe1.jpg'
 import Swipe2 from '../../assets/images/goblin/swipe2.jpg'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -15,15 +14,15 @@ import 'swiper/css/pagination'
 import { Pagination } from 'swiper'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import Flex from '../../contexts/theme/components/Box/Flex'
-import { useOwnedNFTsQuery } from '../../hooks/queries/account/useOwnedNFTsQuery'
-import { PublicKey } from '@solana/web3.js'
-import { useWhiteListQuery } from '../../hooks/programs/useWhiteList'
+
 import { useGoblinWhiteList } from '../../hooks/programs/useFreeMint/useGoblinWhiteList'
 import { shortenAddress } from '../../utils'
 import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
-import { BeatLoader, BounceLoader, DotLoader, MoonLoader, RotateLoader, SyncLoader } from 'react-spinners'
+import { BeatLoader } from 'react-spinners'
 import { MintStatusModal } from './infoModals'
+import { NumericStepper } from '@anatoliygatt/numeric-stepper'
+import { useRefreshController } from '../../contexts/refresh-controller'
 
 const Wrapper = styled('div')`
   min-height: 100vh;
@@ -124,7 +123,7 @@ const MessageContainer = styled('div')`
   border: 1px #999999 solid;
   background: rgba(255,255,255, .1);
   border-radius: 1rem;
-  padding: 2rem;
+  padding: 1rem;
 
 `
 
@@ -135,7 +134,7 @@ const Content = styled('div')`
   background: linear-gradient(60.1deg, #8246F5 0.7%, #5000B4 99.3%);
   font-size: 16px;
   color: #ffffff;
-  padding: 2rem 1rem;
+  padding: 1.1rem 1rem;
   font-family: Kanit-Regular;
   display: flex;
   flex-direction: column;
@@ -173,17 +172,20 @@ const SwiperContainer = styled('div')`
   }
 `
 
+const Message = styled('div')<{color?: string | 'white'}>`
+  font-size: 16px;
+  color: ${({ color }) => color};
+`
+
 const Goblin:React.FC = () => {
 
   const { account, disconnect } = useSolanaWeb3()
-  const { getFreeMintToken, userRemainTokenCount } = useFreeMint()
-  const { mintGoblin } = useGoblinMint()
+  const { getFreeMintToken, userRemainTokenCount, loading: freeMintLoading, message: freeMintMessage } = useFreeMint()
+  const { mintGoblin, loading, message } = useGoblinMint()
   const { openModal } = useModal()
+  const [count, setCount] = useState<number>(1)
 
   const { data, isFetching, error } = useGoblinWhiteList()
-
-  useEffect(() => {
-  }, [data, userRemainTokenCount])
 
   const  handleGoblinMint = useCallback(  (mintCount: number) => {
     console.log('handle mint')
@@ -197,32 +199,15 @@ const Goblin:React.FC = () => {
     })
   },[account, data])
 
-  const handleGetWhitelistAndMint = useCallback(
-    (mintCount:number) => {
+  const handleGetWhitelist = useCallback(
+    () => {
       getFreeMintToken()
         .then(res => {
-          console.log('give token')
-          handleGoblinMint(mintCount)
           console.log(res)
         })
         .catch(err => {
-          openModal(<MintStatusModal err={err.toString()} />)
+          openModal(<MintStatusModal msg={err.toString()} variant={'warning'} />)
         })
-    },
-    [account, data],
-  )
-
-  const mintPreCheck = useCallback(
-    (mintCount: number) => {
-      console.log('pre-check')
-
-      if (data && parseInt(data) >= 1){
-        console.log('mint')
-        handleGoblinMint(mintCount)
-        return
-      }
-
-      handleGetWhitelistAndMint(mintCount)
     },
     [account, data],
   )
@@ -262,8 +247,6 @@ const Goblin:React.FC = () => {
             <Flex flexDirection={'column'}>
               <p>Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing.</p>
 
-              <br />
-
               <p>Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing.</p>
 
               <div className={'highlight'}>Mint Your free Goblinai.</div>
@@ -294,10 +277,46 @@ const Goblin:React.FC = () => {
 
               </p>
 
-              <Flex gap={'20px'}>
-                <CustomizeButton disabled={(data &&userRemainTokenCount?.data) ?( parseInt(data) + parseInt(userRemainTokenCount?.data?.toString())) < 1 : false}  variant={'contained'} onClick={() => mintPreCheck(1)}>MINT 1 GOBLIN</CustomizeButton>
-                <CustomizeButton disabled={(data &&userRemainTokenCount?.data) ?( parseInt(data) + parseInt(userRemainTokenCount?.data?.toString())) < 2 : false} variant={'contained'} onClick={() => mintPreCheck(2)}>MINT 2 GOBLIN</CustomizeButton>
-              </Flex>
+              {
+                (data && parseInt(data) >=1 ) ? (
+                  <>
+                    <NumericStepper
+                      minimumValue={1}
+                      maximumValue={parseInt(data)}
+                      initialValue={count}
+                      thumbShadowAnimationOnTrackHoverEnabled={false}
+                      onChange={value => {setCount(value)}}
+                    />
+                    <Flex gap={'20px'}>
+                      <CustomizeButton
+                        variant={'contained'}
+                        size={'small'}
+                        onClick={() => handleGoblinMint(count)}
+                        disabled={loading}
+                      >
+                        MINT {count} GOBLIN
+                      </CustomizeButton>
+                      <Message color={message.color}>{message.msg} { loading && <BeatLoader size={6} color={'white'} /> }</Message>
+
+                    </Flex>
+                  </>
+                ) :
+                  (
+                    <Flex gap={'20px'} alignItems={'center'}>
+                      <CustomizeButton
+                        size={'small'}
+                        variant={'contained'}
+                        color={'info'}
+                        onClick={handleGetWhitelist}
+                        disabled={freeMintLoading || userRemainTokenCount?.data?.toString() === '0'}
+                      >
+                        GET WHITE LIST
+                      </CustomizeButton>
+                      <Message color={freeMintMessage.color}>{freeMintMessage.msg} { freeMintLoading && <BeatLoader size={6} color={'white'} /> }</Message>
+
+                    </Flex>
+                  )
+              }
 
             </Flex>
 

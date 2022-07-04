@@ -44,7 +44,7 @@ const ForartTheme = createTheme({
       contrastText: '#fff',
     },
     info:{
-      main: '#8145f5',
+      main: '#5000B4',
       light: '#b897f8',
       dark: '#5410eb',
       contrastText: ''

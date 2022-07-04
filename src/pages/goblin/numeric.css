@@ -1,0 +1,22 @@
+[data-testid='numeric-stepper'] {
+    width: 110px !important;
+    height: 45px !important;
+    margin-bottom: 10px !important;
+}
+
+[data-testid='numeric-stepper-thumb'] {
+    width: 36px !important;
+    height: 36px !important;
+}
+
+[data-testid='numeric-stepper-increment-button' ] {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+[data-testid='numeric-stepper-decrement-button' ] {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+

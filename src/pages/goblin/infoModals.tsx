@@ -1,5 +1,5 @@
 import React from 'react'
-import Dialog from '../../contexts/theme/components/Dialog/Dialog'
+import Dialog, { DialogVariantProps } from '../../contexts/theme/components/Dialog/Dialog'
 import { styled } from '@mui/system'
 
 const Wrapper = styled('div')`
@@ -10,11 +10,11 @@ const Wrapper = styled('div')`
   font-size: 18px;
 `
 
-export const MintStatusModal:React.FC<{err: string}> = ({ err }) => {
+export const MintStatusModal:React.FC<{msg: string, variant?:DialogVariantProps }> = ({ msg, variant }) => {
   return (
-    <Dialog title={'Something is going wrong'} variant={'warning'} closeable={true}>
+    <Dialog title={'Message'} variant={variant} closeable={true}>
       <Wrapper>
-        <div>{err}</div>
+        <div>{msg}</div>
       </Wrapper>
     </Dialog>
   )

@@ -64,8 +64,8 @@ const routes: Route[] = [
     hidden: true
   },
   {
-    path: '/ai-general/goblin',
-    title:'AI-General',
+    path: '/goblintownai',
+    title:'Goblintownai',
     component: Goblin,
     icon: MarketplaceIcon,
   },

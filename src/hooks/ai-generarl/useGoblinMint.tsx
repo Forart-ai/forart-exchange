@@ -10,13 +10,20 @@ import { transactions } from '@metaplex/js'
 import { AnchorProvider, Program } from '@project-serum/anchor'
 import { CandyMachineIdl } from '../programs/useCandyMachine/idl'
 import _ from 'lodash'
+import { useModal } from '../../contexts/modal'
+import { string } from '@tensorflow/tfjs'
+
+export type MessageType= {
+  msg: string,
+  color?: string
+}
 
 const useGoblinMint = () => {
   const { provider } = useAnchorProvider()
   const { account, adapter } = useSolanaWeb3()
-  const { connection } = useConnectionConfig()
   const { builtMultipleMintTransactionV2 } = useCandyMachine()
   const [loading, setLoading] = useState<boolean>(false)
+  const [message, setMessage] = useState<MessageType>({ color: '', msg: '' })
 
   const program = useMemo(() => {
     return new Program<any>(CandyMachineIdl, CANDY_MACHINE_PROGRAM_ID, provider)
@@ -24,6 +31,7 @@ const useGoblinMint = () => {
 
   const mintGoblin = useCallback(
     async (mintCounts: number) => {
+      setLoading(true)
 
       /* pre-check */
       if (!account || !adapter) {
@@ -31,18 +39,26 @@ const useGoblinMint = () => {
         throw new Error(' Wallet unconnected ')
       }
 
-      const mintKeypairs:Keypair[] = _.range(mintCounts).map((o, i) => Keypair.generate())
+      setMessage({ msg:'Building transactions...', color:'white' })
 
-      console.log(mintKeypairs)
+      const mintKeypairs:Keypair[] = _.range(mintCounts).map((o, i) => Keypair.generate())
 
       const txWithSigners = await builtMultipleMintTransactionV2(mintKeypairs, GoblinCandyMachineAddress)
 
-      console.log(txWithSigners)
+      setMessage({ msg:'Please confirm the transaction', color:'white' } )
 
       const signatures = await (program.provider as AnchorProvider).sendAll(txWithSigners)
+        .then(() => {
+          setMessage({ msg:'Mint successfully! Check your Goblin in your wallet', color:'#50dcb5' })
+        })
+        .catch(er=> {
+          setMessage({ msg:er.toString(), color:'#fb9526' })
+          setLoading(false)
+        })
 
       console.log(signatures)
-      // return signatures[signatures.length - 2]
+
+      setLoading(false)
 
       return txWithSigners
 
@@ -50,7 +66,7 @@ const useGoblinMint = () => {
     [adapter,account,provider],
   )
 
-  return {  mintGoblin }
+  return {  mintGoblin, loading, message }
 
 }
 

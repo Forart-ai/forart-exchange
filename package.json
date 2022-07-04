@@ -9,6 +9,7 @@
     "test": "craco test"
   },
   "dependencies": {
+    "@anatoliygatt/numeric-stepper": "^1.0.2",
     "@emotion/styled": "^11.8.1",
     "@ethersproject/providers": "^5.5.0",
     "@ethersproject/units": "^5.5.0",
@@ -61,6 +62,7 @@
     "emoji-picker-react": "^3.5.1",
     "ethers": "^5.5.1",
     "eventemitter3": "^4.0.7",
+    "framer-motion": "^6.3.16",
     "html2canvas": "^1.4.1",
     "https-browserify": "^1.0.0",
     "js-cookie": "^3.0.1",

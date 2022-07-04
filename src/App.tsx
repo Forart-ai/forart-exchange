@@ -105,7 +105,7 @@ const App: React.FC = () => {
 
                   <Route path="/" element={<CoNftPage />} />
                   <Route path="co-nft-detail" element={<CONFTDetail />} />
-                  <Route path="ai-general/goblin" element={<Goblin />} />
+                  <Route path="goblintownai" element={<Goblin />} />
                   <Route path="nft-detail" element={<WalletNftDetail />} />
                   <Route path="co-nft/artistDetail" element={<ArtistDetail />} />
                   <Route path="social" element={<NftChatroom />}  >

@@ -32,7 +32,7 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
       }).toString()
     }
 
-    else  return 'ai-general/goblin'
+    else  return 'goblintownai'
 
   }, [data])
 

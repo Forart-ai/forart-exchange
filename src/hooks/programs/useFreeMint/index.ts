@@ -9,10 +9,15 @@ import { useSolanaWeb3 } from '../../../contexts/solana-web3'
 import { ASSOCIATED_TOKEN_PROGRAM_ID, getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import { useQuery } from 'react-query'
 import { BigNumber } from 'ethers'
+import { MessageType } from '../../ai-generarl/useGoblinMint'
+import { useRefreshController } from '../../../contexts/refresh-controller'
 
 const useFreeMint = () => {
   const { provider } = useAnchorProvider()
   const { account } = useSolanaWeb3()
+  const [loading, setLoading] = useState<boolean>(false)
+  const [message, setMessage] = useState<MessageType>({ color: '', msg: '' })
+  const { forceRefresh } = useRefreshController()
 
   const program = useMemo(() => {
     return new Program<FreeMint>(FreeMintIDL, FREE_MINT_PROGRAM_ID, provider)
@@ -22,6 +27,8 @@ const useFreeMint = () => {
     async () => {
 
       if (!account) return
+      setLoading(true)
+      setMessage({ msg:'Building transactions...', color:'white' })
 
       const [mintAuthority,] = await PublicKey.findProgramAddress(
         [Buffer.from('mint_authority'), FREE_MINT_TOKEN_ADDRESS.toBuffer()],
@@ -34,8 +41,9 @@ const useFreeMint = () => {
       )
       const token = await getAssociatedTokenAddress(FREE_MINT_TOKEN_ADDRESS, account)
 
-      const instruction = await program.instruction.request(  {
-        accounts: {
+      const instruction = await program.methods
+        .request()
+        .accounts({
           pool: FREE_MINT_POOL_ADDRESS,
           mint: FREE_MINT_TOKEN_ADDRESS,
           mintAuthority,
@@ -46,8 +54,10 @@ const useFreeMint = () => {
           tokenProgram: TOKEN_PROGRAM_ID,
           associatedTokenProgram: ASSOCIATED_TOKEN_PROGRAM_ID,
           rent: SYSVAR_RENT_PUBKEY,
-        }
-      })
+        })
+        .instruction()
+
+      setMessage({ msg:'Please confirm the transaction', color:'white' } )
 
       // const tx: { tx: Transaction; signers?: Signer[] }[] = []
 
@@ -62,18 +72,23 @@ const useFreeMint = () => {
       const signatures = await (program.provider as AnchorProvider).sendAndConfirm(
         new Transaction().add(instruction, instruction)
       )
+        .then(() => {
+          setMessage({ msg:'Whitelist token has given, you can mint your Goblin now', color:'#50dcb5' })
+          forceRefresh()
+          setLoading(false)
 
-      return signatures[signatures.length - 2]
+        }).catch(er => {
+          setMessage({ msg:er.toString(), color:'#fb9526' })
+          setLoading(false)
+        })
 
-      // txWithSigners.push({
-      //   tx: new Transaction().add(...instructions),
-      //   signers: signers
-      // })
+      return signatures
+
     },
     [provider],
   )
 
-  const userRemainTokenCount = useQuery(['USER_REMAIN_TOKEN_COUNT', program.programId, account], async () => {
+  const userRemainTokenCount = useQuery(['USER_REMAIN_TOKEN_COUNT', program.programId, account, forceRefresh], async () => {
     if (!program || !account) return
     const poolAccount = await program.account.pool.fetch(FREE_MINT_POOL_ADDRESS)
 
@@ -101,7 +116,7 @@ const useFreeMint = () => {
 
   })
 
-  return { getFreeMintToken, userRemainTokenCount }
+  return { getFreeMintToken, userRemainTokenCount, loading, message }
 
 }
 
