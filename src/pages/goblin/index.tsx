@@ -5,12 +5,16 @@ import GoblinAvatar from '../../assets/images/goblin/goblin-avatar.jpg'
 import CustomizeButton from '../../contexts/theme/components/Button'
 import { useGoblinMint } from '../../hooks/ai-generarl/useGoblinMint'
 import './numeric.scss'
-import Swipe1 from '../../assets/images/goblin/swipe1.jpg'
-import Swipe2 from '../../assets/images/goblin/swipe2.jpg'
+import Swipe1 from '../../assets/images/goblin/1.jpg'
+import Swipe2 from '../../assets/images/goblin/2.jpg'
+import Swipe3 from '../../assets/images/goblin/3.jpg'
+import Swipe4 from '../../assets/images/goblin/4.jpg'
+import Swipe5 from '../../assets/images/goblin/5.jpg'
+
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/pagination'
-import { Pagination } from 'swiper'
+import { Autoplay, Pagination } from 'swiper'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import Flex from '../../contexts/theme/components/Box/Flex'
 import { shortenAddress } from '../../utils'
@@ -140,18 +144,18 @@ const Content = styled('div')`
   background: linear-gradient(60.1deg, #8246F5 0.7%, #5000B4 99.3%);
   font-size: 16px;
   color: #ffffff;
-  padding: 1.1rem 1rem;
+  padding: 1.4rem 1rem;
   font-family: Kanit-Regular;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 100px;
+  gap: 50px;
   
   .highlight {
-    font-size: 24px;
+    font-size: 20px;
     color: ${({ theme }) => theme.palette.primary.light};
     font-weight: bolder;
-    letter-spacing: 1.2px;
+    letter-spacing: 1px;
   }
 
   .connect {
@@ -202,10 +206,9 @@ const Goblin: React.FC = () => {
 
           <MainArea>
             <img src={GoblinAvatar} />
-            <span>Goblinai.sol</span>
+            <span>GoblinTownAI Official</span>
             <div className="info-message">
-              We&apos;ve been devoting ourselves to the AI-generated image technology. And we are a big fan of AI-generated NFT artwork.
-              Until the dope NFT collection Goblintown born.
+              The amazing 9999 goblintownai collection integrated of technology and NFT. The art created by technology
             </div>
           </MainArea>
 
@@ -217,12 +220,20 @@ const Goblin: React.FC = () => {
         <SwiperContainer>
           <Swiper
             pagination={{ dynamicBullets: true, }}
-            modules={[Pagination]}
+            modules={[Pagination, Autoplay]}
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+            }}
+            draggable={true}
+            loop={true}
             className="mySwiper"
           >
             <SwiperSlide><img src={Swipe1} /></SwiperSlide>
             <SwiperSlide><img src={Swipe2} /></SwiperSlide>
-
+            <SwiperSlide><img src={Swipe3} /></SwiperSlide>
+            <SwiperSlide><img src={Swipe4} /></SwiperSlide>
+            <SwiperSlide><img src={Swipe5} /></SwiperSlide>
           </Swiper>
         </SwiperContainer>
 
@@ -237,7 +248,10 @@ const Goblin: React.FC = () => {
                 Don&apos;t blink or you&apos;ll miss it...
               </p>
 
-              <div className={'highlight'}>Mint Your free Goblinai.</div>
+              <div className={'highlight'}>
+                <div>We are reserving 500 GoblinTownAI.</div>
+                <div>2 free + gas mint per wallet.</div>
+              </div>
             </Flex>
 
             <Flex flexDirection={'column'}>
@@ -271,15 +285,20 @@ const Goblin: React.FC = () => {
                 )
               }
 
-              <Flex gap={'20px'}>
-                <CustomizeButton
-                  variant={'contained'}
-                  size={'small'}
-                  onClick={() => mintGoblin(count)}
-                  disabled={loading || !account}
-                >
-                  MINT {count} GOBLIN
-                </CustomizeButton>
+              <Flex gap={'10px'} flexDirection={'column'}>
+                {
+                  mintingChance.data && (
+                    <CustomizeButton
+                      variant={'contained'}
+                      size={'small'}
+                      onClick={() => mintGoblin(count)}
+                      disabled={loading || !account || mintingChance.data < 1}
+                      sx={{ maxWidth:'200px' }}
+                    >
+                      MINT {count} GOBLIN
+                    </CustomizeButton>
+                  )
+                }
                 <Message color={message.color}>{message.msg}
                   {
                     loading && <BeatLoader size={6} color={'white'} />

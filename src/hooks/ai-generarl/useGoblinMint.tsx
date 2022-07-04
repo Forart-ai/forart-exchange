@@ -10,6 +10,7 @@ import _ from 'lodash'
 import { useQuery } from 'react-query'
 import { useGoblinWhiteListBalanceQuery } from '../programs/useFreeMint/useGoblinWhiteListBalanceQuery'
 import { useFreeMint } from '../programs/useFreeMint'
+import { useRefreshController } from '../../contexts/refresh-controller'
 
 export type MessageType= {
   msg: string,
@@ -24,13 +25,16 @@ const useGoblinMint = () => {
   const [message, setMessage] = useState<MessageType>({ color: '', msg: '' })
   const { data: goblinWhitelistBalance } = useGoblinWhiteListBalanceQuery()
   const { buildRequestTransaction, userRemainTokenCount: { data: userRemainTokenCount } } = useFreeMint()
+  const { forceRefresh } = useRefreshController()
 
   const mintingChance = useQuery<number | undefined>(
-    ['MINT_CHANCE', goblinWhitelistBalance, userRemainTokenCount],
+    ['MINT_CHANCE', goblinWhitelistBalance, userRemainTokenCount, forceRefresh],
     async () => {
       if (goblinWhitelistBalance === undefined || userRemainTokenCount === undefined) return undefined
 
       return goblinWhitelistBalance + userRemainTokenCount
+    },{
+      refetchInterval:false
     }
   )
 
@@ -90,6 +94,7 @@ const useGoblinMint = () => {
           setLoading(false)
         })
         .finally(() => {
+          forceRefresh()
           setLoading(false)
         })
     },
