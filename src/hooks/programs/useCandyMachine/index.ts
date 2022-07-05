@@ -6,6 +6,7 @@ import { Keypair, PublicKey } from '@solana/web3.js'
 import { buildMintTransaction } from './helpers/buildMintTransaction'
 import { mintV2, multipleMintV2 } from './mintNFT'
 import { CandyMachineIdl } from './idl'
+import { useQuery, UseQueryResult } from 'react-query'
 
 const useCandyMachine = () => {
   const { provider } = useAnchorProvider()
@@ -26,8 +27,20 @@ const useCandyMachine = () => {
     return multipleMintV2(program, mintKeypair, candyMachineAddress, true)
   }, [program])
 
+  const candyMachineMintAmount = (candyMachineAddress: PublicKey): UseQueryResult<any> => {
+    return useQuery(['MINT_AMOUNT'], async () => {
+      if (!program) return
+      const candyMachine: any =  await program.account.candyMachine.fetch(candyMachineAddress as PublicKey)
+
+      return candyMachine.itemsRedeemed.toString()
+    },{
+      refetchOnWindowFocus: false,
+      keepPreviousData: true
+    })
+  }
+
   return {
-    program, builtMintTransaction, sendMintTransaction, builtMultipleMintTransactionV2: builtMultipleMintV2Transactions
+    program, builtMintTransaction, sendMintTransaction, builtMultipleMintTransactionV2: builtMultipleMintV2Transactions, candyMachineMintAmount
   }
 }
 

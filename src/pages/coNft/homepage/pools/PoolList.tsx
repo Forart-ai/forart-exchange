@@ -9,12 +9,16 @@ import PainterAvatar from '../../../../assets/images/coPools/painter.webp'
 import GoblinAvatar from '../../../../assets/images/goblin/goblin-avatar.jpg'
 
 import { Box } from '@mui/material'
+import useCandyMachine from '../../../../hooks/programs/useCandyMachine'
+import { GoblinCandyMachineAddress } from '../../../../hooks/programs/useCandyMachine/helpers/constant'
 
 const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList }) => {
 
   const { data: overviewData } = useGetOverview(3312)
 
   const { data: painterData } = useGetOverview(1024)
+
+  const { candyMachineMintAmount } = useCandyMachine()
 
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
@@ -58,7 +62,7 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'image': GoblinAvatar,
     'name': 'GoblinTownAI',
     'describe': 'GoblinG oblinGob linGob linGo blin GoblinG oblinGoblin GoblinGoblin.',
-    'nfts': '-',
+    'nfts': candyMachineMintAmount(GoblinCandyMachineAddress).data,
     'minters': '-',
     'status': 'living',
     'artistId': '1',

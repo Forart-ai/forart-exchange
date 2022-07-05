@@ -25,6 +25,8 @@ import { NumericStepper } from '@anatoliygatt/numeric-stepper'
 import { useFreeMint } from '../../hooks/programs/useFreeMint'
 import Countdown, { CountdownRendererFn } from 'react-countdown'
 import { useCurrentSlotTime } from '../../web3/utils'
+import useCandyMachine from '../../hooks/programs/useCandyMachine'
+import { GoblinCandyMachineAddress } from '../../hooks/programs/useCandyMachine/helpers/constant'
 
 const Wrapper = styled('div')`
   min-height: 100vh;
@@ -226,6 +228,7 @@ const Goblin: React.FC = () => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
   const currentSlotTime = useCurrentSlotTime()
   const [countdown, setCountdown] = useState<number | undefined>(startTime.data)
+  const { candyMachineMintAmount } = useCandyMachine()
 
   useEffect(() => {
     if (!currentSlotTime || !startTime.data) return
@@ -236,9 +239,7 @@ const Goblin: React.FC = () => {
     }
 
     //if countdown ends
-    console.log(currentSlotTime, startTime.data)
     if (currentSlotTime > startTime.data ) {
-      console.log('end')
       setButtonDisabled(false)
       setCountdown(undefined)
     }
@@ -317,7 +318,7 @@ const Goblin: React.FC = () => {
                 }
               </Flex>
 
-              {account && <div>You can mint {mintingChance.data} Goblins</div> }
+              <div>Free Mint: {candyMachineMintAmount(GoblinCandyMachineAddress).data}/2222</div>
 
               {
                 !!mintingChance?.data && (
@@ -349,7 +350,6 @@ const Goblin: React.FC = () => {
                   {
                     loading && <BeatLoader size={6} color={'white'} />
                   }
-
                 </Message>
               </Flex>
               {countdown &&  <Countdown renderer={renderer} onComplete={() => setButtonDisabled(!buttonDisabled)} date={countdown} />}
