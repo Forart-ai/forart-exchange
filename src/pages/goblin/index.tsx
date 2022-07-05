@@ -341,6 +341,7 @@ const Goblin: React.FC = () => {
                               size={'large'}
                               onClick={() => mintGoblin(count)}
                               disabled={loading || !account || mintingChance.data < 1 || buttonDisabled }
+                              sx={{ fontSize:'22px' }}
                             >
                               MINT {count ? count : <BeatLoader size={6} color={'white'} />} GOBLIN
                             </CustomizeButton>
@@ -353,6 +354,7 @@ const Goblin: React.FC = () => {
                       variant={'contained'}
                       size={'large'}
                       onClick={() => openModal(<WalletSelectionModal />)}
+                      sx={{ fontSize:'22px' }}
                     >
                       Connect to wallet
                     </CustomizeButton>
