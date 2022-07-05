@@ -334,7 +334,7 @@ const Goblin: React.FC = () => {
 
               <Flex gap={'10px'} flexDirection={'column'}>
                 {
-                  mintingChance.data && (
+                  !!mintingChance.data && (
                     <CustomizeButton
                       variant={'contained'}
                       size={'small'}
