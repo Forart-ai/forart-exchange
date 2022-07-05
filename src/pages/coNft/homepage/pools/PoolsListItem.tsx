@@ -75,7 +75,7 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
         <Operation>
           {
             data?.status === 'closed' ? (
-              <StyledButton sx={{ width:'100%' }} disabled={true} variant={'contained'}>
+              <StyledButton  sx={{ width:'100%' }} disabled={true} variant={'contained'}>
                 Create
               </StyledButton>
             ) :

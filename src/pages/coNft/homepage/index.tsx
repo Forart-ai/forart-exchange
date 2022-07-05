@@ -276,7 +276,7 @@ const CoNftPage: React.FC = () => {
       'describe': 'HypeTeen is the first CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen.',
       'nfts': '0',
       'minters': '0',
-      'status': 'Coming soon',
+      'status': 'closed',
       'artistId': '0',
       artistName: '----',
       type:'-'
@@ -287,7 +287,7 @@ const CoNftPage: React.FC = () => {
       'describe': 'HypeTeen is the first CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen.',
       'nfts': '0',
       'minters': '0',
-      'status': 'Coming soon',
+      'status': 'closed',
       'artistId': '0',
       artistName: '----',
       type:'-'
