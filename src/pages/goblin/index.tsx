@@ -27,6 +27,9 @@ import Countdown, { CountdownRendererFn } from 'react-countdown'
 import { useCurrentSlotTime } from '../../web3/utils'
 import useCandyMachine from '../../hooks/programs/useCandyMachine'
 import { GoblinCandyMachineAddress } from '../../hooks/programs/useCandyMachine/helpers/constant'
+import { useQuery } from 'react-query'
+
+const FREE_MINT_LIMIT = 2222
 
 const Wrapper = styled('div')`
   min-height: 100vh;
@@ -218,6 +221,48 @@ const renderer: CountdownRendererFn = ({ hours, minutes, seconds, completed }) =
   }
 }
 
+const useMintLimit = () => {
+  const currentSlotTime = useCurrentSlotTime()
+
+  return useQuery(
+    ['MINT_LIMIT', currentSlotTime],
+    () => {
+      const current = currentSlotTime || Date.now() / 1000
+
+      // Tue Jul 05 2022 21:00:00 GMT+0800
+      const t1 = 1657026000
+
+      // Thu Jul 07 2022 00:00:00 GMT+0800
+      const t2 = 1657123200
+
+      if (current < t1) {
+        return FREE_MINT_LIMIT
+      }
+
+      if (current < t2) {
+        return 3333
+      }
+
+      return 9999
+    }
+  ).data
+}
+
+const useMintedAmount = () => {
+  const { program } = useCandyMachine()
+
+  return useQuery(
+    ['MINTED_AMOUNT'],
+    async () => {
+      const candyMachine: any = await program.account.candyMachine.fetch(GoblinCandyMachineAddress)
+
+      const itemsRedeemed = candyMachine.itemsRedeemed.toNumber()
+
+      return Math.min(itemsRedeemed - 500, FREE_MINT_LIMIT)
+    }
+  ).data
+}
+
 const Goblin: React.FC = () => {
 
   const { account, disconnect } = useSolanaWeb3()
@@ -229,6 +274,7 @@ const Goblin: React.FC = () => {
   const currentSlotTime = useCurrentSlotTime()
   const [countdown, setCountdown] = useState<number | undefined>(startTime.data)
   const { candyMachineMintAmount } = useCandyMachine()
+  const mintedAmount = useMintedAmount()
 
   useEffect(() => {
     if (!currentSlotTime || !startTime.data) return
@@ -331,7 +377,7 @@ const Goblin: React.FC = () => {
               }
 
               <Flex gap={'10px'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} marginTop={'10px'}>
-                <div>Free Mint: {candyMachineMintAmount(GoblinCandyMachineAddress).data - 500}/2222</div>
+                <div>Free Mint: {mintedAmount ?? '-'} / {FREE_MINT_LIMIT}</div>
                 {
                   account ? (
                     <>
@@ -342,7 +388,7 @@ const Goblin: React.FC = () => {
                               variant={'contained'}
                               size={'large'}
                               onClick={() => mintGoblin(count)}
-                              disabled={loading || !account || mintingChance.data < 1 || buttonDisabled }
+                              disabled={loading || !account || mintingChance.data < 1 || buttonDisabled || (!!mintedAmount && mintedAmount >= FREE_MINT_LIMIT) }
                               sx={{ fontSize:'22px' }}
                             >
                               MINT {count ? count : <BeatLoader size={6} color={'white'} />} GOBLIN
