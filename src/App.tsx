@@ -59,25 +59,21 @@ const App: React.FC = () => {
   // useChainEffect()
   useEagerConnect()
 
-  /**
-   * fixme
-   */
+  useSignLogin()
 
-  // useSignLogin()
-
-  useEffect(() => {
-    const connectWalletOnPageLoad = async () => {
-      if (localStorage?.getItem('isWalletConnected') === 'true') {
-        try {
-          await activate(injected)
-          localStorage.setItem('isWalletConnected', 'true')
-        } catch (ex) {
-          console.log(ex)
-        }
-      }
-    }
-    connectWalletOnPageLoad()
-  }, [])
+  // useEffect(() => {
+  //   const connectWalletOnPageLoad = async () => {
+  //     if (localStorage?.getItem('isWalletConnected') === 'true') {
+  //       try {
+  //         await activate(injected)
+  //         localStorage.setItem('isWalletConnected', 'true')
+  //       } catch (ex) {
+  //         console.log(ex)
+  //       }
+  //     }
+  //   }
+  //   connectWalletOnPageLoad()
+  // }, [])
 
   const location = useLocation()
 

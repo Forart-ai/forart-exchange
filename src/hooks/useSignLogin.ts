@@ -35,7 +35,7 @@ export function useSignLogin() {
       // adapter?: BaseMessageSignerWalletAdapter, account?: PublicKey
       const a = randomString(66)
 
-      const message = new TextEncoder().encode(`hello world: ${a}`)
+      const message = new TextEncoder().encode(`Welcome to Forart: ${a}`)
 
       const decodeMessage = new TextDecoder().decode(message)
 
