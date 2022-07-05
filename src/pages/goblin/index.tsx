@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled, Tooltip, } from '@mui/material'
 import Background from '../../assets/images/goblin/Goblin_Background.png'
 import GoblinAvatar from '../../assets/images/goblin/goblin-avatar.jpg'
@@ -255,7 +255,7 @@ const Goblin: React.FC = () => {
             <img src={GoblinAvatar} />
             <span>GoblinTownAI Official</span>
             <div className="info-message">
-              The amazing 9999 goblintownai collection integrated of technology and NFT. The art created by AI technology
+              The amazing 9999 GoblinTownAI collection integrated of technology and NFT. The art created by AI technology
             </div>
           </MainArea>
 

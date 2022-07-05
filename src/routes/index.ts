@@ -1,4 +1,3 @@
-
 import AIGen from '../pages/AIGen'
 import PersonalCenterPage from '../pages/personal'
 import CoNftPage from '../pages/coNft/homepage'
@@ -7,7 +6,6 @@ import Game from '../pages/game/index'
 import Goblin from '../pages/goblin'
 
 import { ReactComponent as GanIcon } from '../assets/images/siderIcon/f-idea.svg'
-import { ReactComponent as GeneratorIcon } from '../assets/images/siderIcon/generator.svg'
 import { ReactComponent as MarketplaceIcon } from '../assets/images/siderIcon/marketplace.svg'
 import { ReactComponent as GamesIcon } from '../assets/images/siderIcon/games.svg'
 import { ReactComponent as ChatIcon } from '../assets/images/siderIcon/chat.svg'
@@ -15,8 +13,6 @@ import { ReactComponent as ChatIcon } from '../assets/images/siderIcon/chat.svg'
 import NftChatroom from '../pages/social'
 import CONFTDetail from '../pages/nftDetail/coNftDetail'
 import WalletNftDetail from '../pages/nftDetail/walletNftDetail'
-import AiArt from '../pages/game/modules/aiArt'
-import SocialHomepage from '../pages/social/modules/home'
 
 export type Route = {
   path: string
@@ -64,8 +60,8 @@ const routes: Route[] = [
     hidden: true
   },
   {
-    path: '/goblintownai',
-    title:'Goblintownai',
+    path: '/ai-general/goblintownai',
+    title:'GoblinTownAi',
     component: Goblin,
     icon: MarketplaceIcon,
     hidden: true

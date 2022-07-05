@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 import './App.css'
 import './app.scss'
 import AppHeader from './layout/AppHeader'
-import { Route, useLocation, Routes, Link } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import '../src/font/font.css'
 import { Box, styled } from '@mui/material'
 import useEagerConnect from './hooks/useEagerConnect'
 import Flex from './contexts/theme/components/Box/Flex'
 import useSignLogin from './hooks/useSignLogin'
-import { StickyContainer,Sticky } from 'react-sticky'
+import { Sticky, StickyContainer } from 'react-sticky'
 import CoNftPage from './pages/coNft/homepage'
 import CONFTDetail from './pages/nftDetail/coNftDetail'
 import WalletNftDetail from './pages/nftDetail/walletNftDetail'
@@ -20,10 +20,7 @@ import Game from './pages/game'
 import SocialHomepage from './pages/social/modules/home'
 import ReplyList from './pages/social/modules/detail/replyList'
 import AiArt from './pages/game/modules/aiArt'
-import { AiartSvg } from './assets/svgs/game'
 import TextToImage from './pages/game/modules/text-to-image'
-import { useChainEffect } from './web3/hooks'
-import { injected } from './web3/connectors'
 import { useWeb3React } from '@web3-react/core'
 import Goblin from './pages/goblin'
 
@@ -101,7 +98,7 @@ const App: React.FC = () => {
 
                   <Route path="/" element={<CoNftPage />} />
                   <Route path="co-nft-detail" element={<CONFTDetail />} />
-                  <Route path="goblintownai" element={<Goblin />} />
+                  <Route path="/ai-general/goblintownai" element={<Goblin />} />
                   <Route path="nft-detail" element={<WalletNftDetail />} />
                   <Route path="co-nft/artistDetail" element={<ArtistDetail />} />
                   <Route path="social" element={<NftChatroom />}  >
