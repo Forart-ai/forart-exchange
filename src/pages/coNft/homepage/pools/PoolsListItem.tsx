@@ -39,7 +39,7 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
   const { openModal } = useModal()
 
   return (
-    <PoolsCardContainer onClick={() => navigate(toArtistDetailUrl)}>
+    <PoolsCardContainer >
       <ImageContent>
         <img src={data?.image} />
       </ImageContent>
