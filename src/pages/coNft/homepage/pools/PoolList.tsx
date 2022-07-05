@@ -62,7 +62,7 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'image': GoblinAvatar,
     'name': 'GoblinTownAI',
     'describe': 'GoblinG oblinGob linGob linGo blin GoblinG oblinGoblin GoblinGoblin.',
-    'nfts': candyMachineMintAmount(GoblinCandyMachineAddress).data,
+    'nfts': candyMachineMintAmount(GoblinCandyMachineAddress).data - 500,
     'minters': '-',
     'status': 'living',
     'artistId': '1',
@@ -99,10 +99,10 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
           data={identity}
           status={identity.status}
         />
-        <PoolsListItem
-          data={spaceTronauts}
-          status={spaceTronauts.status}
-        />
+        {/*<PoolsListItem*/}
+        {/*  data={spaceTronauts}*/}
+        {/*  status={spaceTronauts.status}*/}
+        {/*/>*/}
         {
           poolsList?.map((pool: PoolsListData, index: number) => (
             <PoolsListItem

@@ -318,7 +318,7 @@ const Goblin: React.FC = () => {
                 }
               </Flex>
 
-              <div>Free Mint: {candyMachineMintAmount(GoblinCandyMachineAddress).data - 480}/2222</div>
+              <div>Free Mint: {candyMachineMintAmount(GoblinCandyMachineAddress).data - 500}/2222</div>
 
               {
                 !!mintingChance?.data && (
