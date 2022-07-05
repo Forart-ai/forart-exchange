@@ -1,15 +1,17 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { PoolsListData } from '../../../../types/coNFT'
 import { Link, useNavigate } from 'react-router-dom'
 import { useModal } from '../../../../contexts/modal'
-import DonateDialog from '../../components/modals/donation/donate-dialog'
 import {
   ImageContent,
-  PoolsCardContainer,
   InfoContent,
-  PoolTitle,
+  LeftArea,
+  Operation,
   PoolInfo,
-  LeftArea, RightArea, Operation,StyledButton
+  PoolsCardContainer,
+  PoolTitle,
+  RightArea,
+  StyledButton
 } from './poolList.styles'
 
 const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data, status }) => {
@@ -32,8 +34,7 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
       }).toString()
     }
 
-    else  return 'goblintownai'
-
+    else return '/ai-general/goblintownai'
   }, [data])
 
   const { openModal } = useModal()
