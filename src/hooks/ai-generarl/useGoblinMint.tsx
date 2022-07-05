@@ -31,10 +31,10 @@ const useGoblinMint = () => {
     ['GOBLIN_MINT_CHANCE', goblinWhitelistBalance, userRemainTokenCount, forceRefresh],
     async () => {
       if (goblinWhitelistBalance === undefined || userRemainTokenCount === undefined) return undefined
-
       return goblinWhitelistBalance + userRemainTokenCount
     },{
-      refetchInterval: false
+      refetchInterval: false,
+      keepPreviousData: true
     }
   )
 

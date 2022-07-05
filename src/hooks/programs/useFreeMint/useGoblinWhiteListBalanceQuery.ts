@@ -27,7 +27,9 @@ const useGoblinWhiteListBalanceQuery = () => {
 
       return (tokenAccount.value.data as ParsedAccountData).parsed.info.tokenAmount.uiAmount
     },
-    { refetchOnWindowFocus: true }
+    { refetchOnWindowFocus: false,
+      refetchInterval:false,
+      keepPreviousData: true }
   )
 }
 
