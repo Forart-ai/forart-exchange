@@ -10,6 +10,7 @@ import { ASSOCIATED_TOKEN_PROGRAM_ID, getAssociatedTokenAddress, TOKEN_PROGRAM_I
 import { useQuery } from 'react-query'
 import { useRefreshController } from '../../../contexts/refresh-controller'
 import _ from 'lodash'
+import { useConnectionConfig } from '../../../contexts/solana-connection-config'
 
 const useFreeMint = () => {
   const { provider } = useAnchorProvider()
@@ -39,6 +40,15 @@ const useFreeMint = () => {
       const claimed = (pocketAccount?.ticketCount) ?? new BN(0)
 
       return max.sub(claimed).toNumber()
+    })
+
+  const startTime = useQuery(['GOBLIN_START_TIME', program.programId, account],
+    async () => {
+      if (!account) return
+      const poolAccount = await program.account.pool.fetch(FREE_MINT_POOL_ADDRESS)
+      const time = poolAccount.startTime
+
+      return parseInt(time.toString())
     })
 
   const buildRequestTransaction = useCallback(
@@ -91,7 +101,7 @@ const useFreeMint = () => {
     [account, program, userRemainTokenCount],
   )
 
-  return { buildRequestTransaction, userRemainTokenCount }
+  return { buildRequestTransaction, userRemainTokenCount, startTime }
 }
 
 export { useFreeMint }

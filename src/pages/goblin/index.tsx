@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { styled, Tooltip, } from '@mui/material'
 import Background from '../../assets/images/goblin/Goblin_Background.png'
 import GoblinAvatar from '../../assets/images/goblin/goblin-avatar.jpg'
@@ -22,6 +22,9 @@ import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 import { BeatLoader } from 'react-spinners'
 import { NumericStepper } from '@anatoliygatt/numeric-stepper'
+import { useFreeMint } from '../../hooks/programs/useFreeMint'
+import Countdown, { CountdownRendererFn } from 'react-countdown'
+import { useCurrentSlotTime } from '../../web3/utils'
 
 const Wrapper = styled('div')`
   min-height: 100vh;
@@ -192,12 +195,55 @@ const Message = styled('div')<{ color?: string | 'white' }>`
   color: ${({ color }) => color};
 `
 
+const StyledCountdown = styled('div')`
+  color: ${({ theme }) => theme.palette.secondary.light};
+  font-size: 22px;
+  font-family: Aldrich-Regular;
+  margin-top: 30px;
+`
+
+const renderer: CountdownRendererFn = ({ hours, minutes, seconds, completed }) => {
+  if (completed) {
+    // Render a complete state
+    return <StyledCountdown  />
+  } else {
+    // Render a countdown
+    return (
+      <StyledCountdown>
+        {hours}:{minutes}:{seconds}
+      </StyledCountdown>
+    )
+  }
+}
+
 const Goblin: React.FC = () => {
 
   const { account, disconnect } = useSolanaWeb3()
   const { mintGoblin, loading, message, mintingChance } = useGoblinMint()
+  const { startTime } = useFreeMint()
   const { openModal } = useModal()
-  const [count, setCount] = useState<number>(1)
+  const [count, setCount] = useState<number | undefined>(mintingChance.data)
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
+  const currentSlotTime = useCurrentSlotTime()
+  const [countdown, setCountdown] = useState<number | undefined>(startTime.data)
+
+  useEffect(() => {
+    if (!currentSlotTime || !startTime.data) return
+
+    if (currentSlotTime  < startTime.data  ) {
+      setButtonDisabled(true)
+      setCountdown(startTime.data * 1000)
+    }
+
+    //if countdown ends
+    console.log(currentSlotTime, startTime.data)
+    if (currentSlotTime > startTime.data ) {
+      console.log('end')
+      setButtonDisabled(false)
+      setCountdown(undefined)
+    }
+  }, [countdown, startTime, currentSlotTime, buttonDisabled]
+  )
 
   return (
     <Wrapper>
@@ -278,7 +324,7 @@ const Goblin: React.FC = () => {
                   <NumericStepper
                     minimumValue={1}
                     maximumValue={mintingChance.data}
-                    initialValue={count}
+                    initialValue={mintingChance.data}
                     thumbShadowAnimationOnTrackHoverEnabled={false}
                     onChange={value => setCount(value)}
                   />
@@ -292,10 +338,10 @@ const Goblin: React.FC = () => {
                       variant={'contained'}
                       size={'small'}
                       onClick={() => mintGoblin(count)}
-                      disabled={loading || !account || mintingChance.data < 1}
+                      disabled={loading || !account || mintingChance.data < 1 || buttonDisabled }
                       sx={{ maxWidth:'200px' }}
                     >
-                      MINT {count} GOBLIN
+                      MINT {count ? count : <BeatLoader size={6} color={'white'} />} GOBLIN
                     </CustomizeButton>
                   )
                 }
@@ -303,8 +349,10 @@ const Goblin: React.FC = () => {
                   {
                     loading && <BeatLoader size={6} color={'white'} />
                   }
+
                 </Message>
               </Flex>
+              {countdown &&  <Countdown renderer={renderer} onComplete={() => setButtonDisabled(!buttonDisabled)} date={countdown} />}
 
             </Flex>
 

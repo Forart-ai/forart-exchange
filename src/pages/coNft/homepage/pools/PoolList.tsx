@@ -56,13 +56,13 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
 
   const goblin = {
     'image': GoblinAvatar,
-    'name': 'Goblin',
+    'name': 'GoblinTownAI',
     'describe': 'GoblinG oblinGob linGob linGo blin GoblinG oblinGoblin GoblinGoblin.',
-    'nfts': 0,
-    'minters': 0,
+    'nfts': '-',
+    'minters': '-',
     'status': 'living',
     'artistId': '1',
-    artistName: 'Goblin',
+    artistName: 'GoblinTownAI',
     'type': 'ai-general'
   }
 

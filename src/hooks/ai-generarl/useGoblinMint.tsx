@@ -28,13 +28,13 @@ const useGoblinMint = () => {
   const { forceRefresh } = useRefreshController()
 
   const mintingChance = useQuery<number | undefined>(
-    ['MINT_CHANCE', goblinWhitelistBalance, userRemainTokenCount, forceRefresh],
+    ['GOBLIN_MINT_CHANCE', goblinWhitelistBalance, userRemainTokenCount, forceRefresh],
     async () => {
       if (goblinWhitelistBalance === undefined || userRemainTokenCount === undefined) return undefined
 
       return goblinWhitelistBalance + userRemainTokenCount
     },{
-      refetchInterval:false
+      refetchInterval: false
     }
   )
 
@@ -43,7 +43,8 @@ const useGoblinMint = () => {
   }, [provider])
 
   const mintGoblin = useCallback(
-    async (amountToMint: number) => {
+    async (amountToMint: number | undefined) => {
+      if (!amountToMint) return
       setLoading(true)
       setMessage({ msg: '' })
 

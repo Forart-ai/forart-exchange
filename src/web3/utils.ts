@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js'
 import Web3 from 'web3'
+import { useEffect, useState } from 'react'
+import { useConnectionConfig } from '../contexts/solana-connection-config'
 
 export const web3Utils = new Web3().utils
 
@@ -18,3 +20,38 @@ export function weiToBigNumber(value: BigNumber, decimalPlaces = 18): BigNumber 
   return new BigNumber(web3Utils.fromWei(value.toString())).dp(decimalPlaces, BigNumber.ROUND_DOWN)
 }
 
+export const useCurrentSlotTime = () => {
+  const [time, setTime] = useState<number>()
+  const { connection } = useConnectionConfig()
+
+  useEffect(() => {
+    const getTimeFromBlockChain = () => {
+      connection.getSlot('confirmed')
+        .then(slot => {
+          return connection.getBlockTime(slot)
+        })
+        .then(time => {
+          if (time) setTime(time)
+          else getTimeFromBlockChain()
+        })
+    }
+    getTimeFromBlockChain()
+  }, [])
+
+  // fetch every sec
+
+  useEffect(() => {
+
+    const id = setInterval(() => {
+      setTime(prev => (prev ? prev + 1 : undefined))
+    },1000)
+
+    return () => {
+      clearInterval(id)
+    }
+
+  }, [])
+
+  return time
+
+}

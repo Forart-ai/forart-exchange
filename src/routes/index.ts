@@ -68,6 +68,7 @@ const routes: Route[] = [
     title:'Goblintownai',
     component: Goblin,
     icon: MarketplaceIcon,
+    hidden: true
   },
   {
     path: '/social',
@@ -76,15 +77,16 @@ const routes: Route[] = [
     exact: false,
     icon: ChatIcon,
     component: NftChatroom,
-
+    disable: true
   },
   {
     path: '/Text-to-NFT',
     title: 'Text-to-NFT',
     icon: GanIcon,
     component: AIGen,
-    disable: false,
+    disable: true,
     hidden: true
+
   },
   {
     path:'/account',
@@ -99,6 +101,7 @@ const routes: Route[] = [
     exact: false,
     component: Game,
     icon: MarketplaceIcon,
+    disable: true
   },
 ]
 
