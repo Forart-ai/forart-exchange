@@ -311,14 +311,10 @@ const Goblin: React.FC = () => {
                       </Tooltip>
                     ) :
                     (
-                      <div className={'connect'} onClick={() => openModal(<WalletSelectionModal />)}>
-                        Click to connect
-                      </div>
+                      <div className={'connect'} onClick={() => openModal(<WalletSelectionModal />)} />
                     )
                 }
               </Flex>
-
-              <div>Free Mint: {candyMachineMintAmount(GoblinCandyMachineAddress).data - 500}/2222</div>
 
               {
                 !!mintingChance?.data && (
@@ -332,29 +328,30 @@ const Goblin: React.FC = () => {
                 )
               }
 
-              <Flex gap={'10px'} flexDirection={'column'} alignItems={'center'} marginTop={'10px'}>
+              <Flex gap={'10px'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} marginTop={'10px'}>
+                <div>Free Mint: {candyMachineMintAmount(GoblinCandyMachineAddress).data - 500}/2222</div>
                 {
                   account ? (
                     <>
                       {
                         !!mintingChance.data && (
-                          <CustomizeButton
-                            variant={'contained'}
-                            size={'small'}
-                            onClick={() => mintGoblin(count)}
-                            disabled={loading || !account || mintingChance.data < 1 || buttonDisabled }
-                            sx={{ maxWidth:'200px' }}
-                          >
-                            MINT {count ? count : <BeatLoader size={6} color={'white'} />} GOBLIN
-                          </CustomizeButton>
+                          <>
+                            <CustomizeButton
+                              variant={'contained'}
+                              size={'large'}
+                              onClick={() => mintGoblin(count)}
+                              disabled={loading || !account || mintingChance.data < 1 || buttonDisabled }
+                            >
+                              MINT {count ? count : <BeatLoader size={6} color={'white'} />} GOBLIN
+                            </CustomizeButton>
+                          </>
                         )
                       }
                     </>
                   ):
                     <CustomizeButton
                       variant={'contained'}
-                      size={'small'}
-                      sx={{ maxWidth:'200px' }}
+                      size={'large'}
                       onClick={() => openModal(<WalletSelectionModal />)}
                     >
                       Connect to wallet
