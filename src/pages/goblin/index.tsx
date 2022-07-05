@@ -255,7 +255,7 @@ const Goblin: React.FC = () => {
             <img src={GoblinAvatar} />
             <span>GoblinTownAI Official</span>
             <div className="info-message">
-              The amazing 9999 goblintownai collection integrated of technology and NFT. The art created by technology
+              The amazing 9999 goblintownai collection integrated of technology and NFT. The art created by AI technology
             </div>
           </MainArea>
 
