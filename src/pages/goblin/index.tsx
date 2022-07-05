@@ -332,19 +332,33 @@ const Goblin: React.FC = () => {
                 )
               }
 
-              <Flex gap={'10px'} flexDirection={'column'}>
+              <Flex gap={'10px'} flexDirection={'column'} alignItems={'center'} marginTop={'10px'}>
                 {
-                  !!mintingChance.data && (
+                  account ? (
+                    <>
+                      {
+                        !!mintingChance.data && (
+                          <CustomizeButton
+                            variant={'contained'}
+                            size={'small'}
+                            onClick={() => mintGoblin(count)}
+                            disabled={loading || !account || mintingChance.data < 1 || buttonDisabled }
+                            sx={{ maxWidth:'200px' }}
+                          >
+                            MINT {count ? count : <BeatLoader size={6} color={'white'} />} GOBLIN
+                          </CustomizeButton>
+                        )
+                      }
+                    </>
+                  ):
                     <CustomizeButton
                       variant={'contained'}
                       size={'small'}
-                      onClick={() => mintGoblin(count)}
-                      disabled={loading || !account || mintingChance.data < 1 || buttonDisabled }
                       sx={{ maxWidth:'200px' }}
+                      onClick={() => openModal(<WalletSelectionModal />)}
                     >
-                      MINT {count ? count : <BeatLoader size={6} color={'white'} />} GOBLIN
+                      Connect to wallet
                     </CustomizeButton>
-                  )
                 }
                 <Message color={message.color}>{message.msg}
                   {
