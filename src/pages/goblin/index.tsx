@@ -129,7 +129,6 @@ const Container = styled('div')`
 
 const MessageContainer = styled('div')`
   width: 50%;
-  height: 500px;
   border: 1px #999999 solid;
   background: rgba(255, 255, 255, .1);
   border-radius: 1rem;
@@ -149,12 +148,13 @@ const Content = styled('div')`
   background: linear-gradient(60.1deg, #8246F5 0.7%, #5000B4 99.3%);
   font-size: 16px;
   color: #ffffff;
-  padding: 1.4rem 1rem;
+  padding: 2rem 1rem;
   font-family: Kanit-Regular;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 50px;
+  gap: 20px;
+  min-height: 500px;
   
   .highlight {
     font-size: 20px;
@@ -287,13 +287,15 @@ const Goblin: React.FC = () => {
         <MessageContainer>
           <Content>
             <Flex flexDirection={'column'}>
-              <p> We&apos;ve been devoting ourselves to the AI-generated image technology. And we are a big fan of AI-generated NFT artwork.
-                Until the dope NFT collection Goblintown born.
+              <p> We&apos;ve been devoting ourselves to the AI-generated image technology.
+              </p>
+              <p>And we are a big fan of AI-generated NFT artwork.
+
               </p>
 
-              <p>The crazy idea came out. Which will be more innovative and fantastic...
-                Don&apos;t blink or you&apos;ll miss it...
-              </p>
+              <p>Let&apos;s see what&apos;d happen while the dope NFT collection integrated with AI technology...</p>
+
+              <p> Don&apos;t blink or you&apos;ll miss it...</p>
 
               <div className={'highlight'}>
                 <div>We are reserving 500 GoblinTownAI.</div>
