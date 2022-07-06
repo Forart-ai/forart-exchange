@@ -9,8 +9,7 @@ import PainterAvatar from '../../../../assets/images/coPools/painter.webp'
 import GoblinAvatar from '../../../../assets/images/goblin/goblin-avatar.jpg'
 
 import { Box } from '@mui/material'
-import useCandyMachine from '../../../../hooks/programs/useCandyMachine'
-import { GoblinCandyMachineAddress } from '../../../../hooks/programs/useCandyMachine/helpers/constant'
+import { useMintedAmount } from '../../../goblin'
 
 const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList }) => {
 
@@ -18,9 +17,9 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
 
   const { data: painterData } = useGetOverview(1024)
 
-  const { candyMachineMintAmount } = useCandyMachine()
-
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
+
+  const mintedAmount = useMintedAmount()
 
   const hypeteen = {
     'image': 'https://forart.mypinata.cloud/ipfs/QmSFo7w1m87FnSbcgWAsydWzsjKiExZCrt7ynxMJLQP2d4',
@@ -58,17 +57,17 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'type': 'co-nft',
   }
 
-  const goblin = {
+  const goblin = React.useMemo(() => ({
     'image': GoblinAvatar,
     'name': 'GoblinTownAI',
     'describe': 'GoblinG oblinGob linGob linGo blin GoblinG oblinGoblin GoblinGoblin.',
-    'nfts': candyMachineMintAmount(GoblinCandyMachineAddress).data - 500,
+    'nfts': mintedAmount,
     'minters': '-',
     'status': 'living',
     'artistId': '1',
     artistName: 'GoblinTownAI',
     'type': 'ai-general'
-  }
+  }), [mintedAmount])
 
   useMemo(() => {
     if (isMobile) {
