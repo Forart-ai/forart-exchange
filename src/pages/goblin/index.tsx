@@ -218,7 +218,7 @@ const renderer: CountdownRendererFn = ({ hours, minutes, seconds, completed }) =
   }
 }
 
-const useMintLimit = () => {
+export const useMintLimit = () => {
   const currentSlotTime = useCurrentSlotTime()
 
   return useQuery(
@@ -236,17 +236,20 @@ const useMintLimit = () => {
   ).data
 }
 
-const useMintedAmount = () => {
+export const useMintedAmount = () => {
   const { program } = useCandyMachine()
+  const mintLimit = useMintLimit()
 
   return useQuery(
-    ['MINTED_AMOUNT'],
+    ['MINTED_AMOUNT', mintLimit],
     async () => {
+      if (!mintLimit) return undefined
+
       const candyMachine: any = await program.account.candyMachine.fetch(GoblinCandyMachineAddress)
 
       const itemsRedeemed = candyMachine.itemsRedeemed.toNumber()
 
-      return itemsRedeemed - 500
+      return Math.min(itemsRedeemed - 500, mintLimit)
     },
     { keepPreviousData: true }
   ).data
@@ -329,7 +332,7 @@ const Goblin: React.FC = () => {
 
               <div className={'highlight'}>
                 <div>We are reserving 500 GoblinTownAI.</div>
-                <div>2 free + gas mint per wallet.</div>
+                <div>gas mint per wallet.</div>
               </div>
             </Flex>
 
@@ -366,7 +369,7 @@ const Goblin: React.FC = () => {
                       variant={'contained'}
                       size={'large'}
                       onClick={() => mintGoblin(count)}
-                      disabled={loading || !account || buttonDisabled}
+                      disabled={loading || !account || buttonDisabled || (mintingChance === 0)}
                       sx={{ fontSize:'22px' }}
                     >
                       MINT {count ? count : ''} GOBLIN
