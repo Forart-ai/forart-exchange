@@ -1,10 +1,11 @@
 import { useSolanaWeb3 } from '../contexts/solana-web3'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AUTH_API } from '../apis/auth'
 import Cookies from 'js-cookie'
 import jwt_decode from 'jwt-decode'
 import { BaseMessageSignerWalletAdapter } from '@solana/wallet-adapter-base'
 import { PublicKey } from '@solana/web3.js'
+import { useLocation } from 'react-router-dom'
 
 export const randomString = (len: number) => {
   const p = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -12,6 +13,7 @@ export const randomString = (len: number) => {
 }
 
 export function useSignLogin() {
+  const { pathname } = useLocation()
   const { adapter, account } = useSolanaWeb3()
   const [retry, setRetry] = useState<boolean>(false)
   const [decoded, setDecoded] = useState()
@@ -74,10 +76,10 @@ export function useSignLogin() {
   useEffect(() => {
     loginRef.current = buildLoginMethod(adapter, account)
 
-    if (adapter && account) {
+    if (adapter && account && !['/ai-general/goblintownai', '/'].includes(pathname)) {
       loginRef.current()
     }
-  }, [adapter, account])
+  }, [adapter, account, pathname])
 }
 
 export default useSignLogin
