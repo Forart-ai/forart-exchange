@@ -362,7 +362,7 @@ const Goblin: React.FC = () => {
               }
 
               <Flex gap={'10px'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} marginTop={'10px'}>
-                <div>Free Mint: {mintedAmount || '-'} / {mintLimit}</div>
+                <div>Mint: {mintedAmount || '-'} / {mintLimit}</div>
                 {
                   account ? (
                     <CustomizeButton
