@@ -30,6 +30,7 @@ import { GoblinCandyMachineAddress } from '../../hooks/programs/useCandyMachine/
 
 // Wed Jul 06 2022 14:00:00 GMT+0800
 const PUBLIC_MINT_START_TIME = 1657087200
+const PUBLIC_MINT_END_TIME = 1657123200
 
 const Wrapper = styled('div')`
   min-height: 100vh;
@@ -212,7 +213,9 @@ const renderer: CountdownRendererFn = ({ hours, minutes, seconds, completed }) =
     // Render a countdown
     return (
       <StyledCountdown>
-        {hours}:{minutes}:{seconds}
+
+        Still {hours}:{minutes}:{seconds} until the end of whitelist mint.
+
       </StyledCountdown>
     )
   }
@@ -263,18 +266,18 @@ const Goblin: React.FC = () => {
   const [count, setCount] = useState<number | undefined>(mintingChance)
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
   const currentSlotTime = useCurrentSlotTime()
-  const [countdown, setCountdown] = useState<number | undefined>(PUBLIC_MINT_START_TIME * 1000)
+  const [countdown, setCountdown] = useState<number | undefined>(PUBLIC_MINT_END_TIME * 1000)
   const mintLimit = useMintLimit()
   const mintedAmount = useMintedAmount()
 
   useEffect(() => {
     if (!currentSlotTime) return
 
-    if (currentSlotTime < PUBLIC_MINT_START_TIME) {
-      setButtonDisabled(true)
-      setCountdown(PUBLIC_MINT_START_TIME * 1000)
-    } else {
+    if (currentSlotTime < PUBLIC_MINT_END_TIME) {
       setButtonDisabled(false)
+      setCountdown(PUBLIC_MINT_END_TIME * 1000)
+    } else {
+      setButtonDisabled(true)
       setCountdown(undefined)
     }
   }, [countdown, currentSlotTime, buttonDisabled])
