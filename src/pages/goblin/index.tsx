@@ -267,11 +267,10 @@ const Goblin: React.FC = () => {
   useEffect(() => {
     if (!currentSlotTime) return
 
+    setButtonDisabled(false)
     if (currentSlotTime < PUBLIC_MINT_START_TIME) {
-      setButtonDisabled(true)
       setCountdown(PUBLIC_MINT_START_TIME * 1000)
     } else {
-      setButtonDisabled(false)
       setCountdown(undefined)
     }
   }, [countdown, currentSlotTime, buttonDisabled])
