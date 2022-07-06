@@ -22,12 +22,14 @@ import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 import { BeatLoader } from 'react-spinners'
 import { NumericStepper } from '@anatoliygatt/numeric-stepper'
-import { useFreeMint } from '../../hooks/programs/useFreeMint'
 import Countdown, { CountdownRendererFn } from 'react-countdown'
 import { useCurrentSlotTime } from '../../web3/utils'
 import useCandyMachine from '../../hooks/programs/useCandyMachine'
 import { useQuery } from 'react-query'
 import { GoblinCandyMachineAddress } from '../../hooks/programs/useCandyMachine/helpers/constant'
+
+// Wed Jul 06 2022 14:00:00 GMT+0800
+const PUBLIC_MINT_START_TIME = 1657087200
 
 const Wrapper = styled('div')`
   min-height: 100vh;
@@ -224,10 +226,7 @@ const useMintLimit = () => {
     () => {
       const current = currentSlotTime || Date.now() / 1000
 
-      // Wed Jul 06 2022 14:00:00 GMT+0800 (中国标准时间)
-      const t1 = 1657087200
-
-      if (current < t1) {
+      if (current < PUBLIC_MINT_START_TIME) {
         return 2222
       }
 
@@ -257,29 +256,25 @@ const Goblin: React.FC = () => {
 
   const { account, disconnect } = useSolanaWeb3()
   const { mintGoblin, loading, message, mintingChance } = useGoblinMint()
-  const { startTime } = useFreeMint()
   const { openModal } = useModal()
   const [count, setCount] = useState<number | undefined>(mintingChance)
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
   const currentSlotTime = useCurrentSlotTime()
-  const [countdown, setCountdown] = useState<number | undefined>(startTime.data)
+  const [countdown, setCountdown] = useState<number | undefined>(PUBLIC_MINT_START_TIME * 1000)
   const mintLimit = useMintLimit()
   const mintedAmount = useMintedAmount()
 
   useEffect(() => {
-    if (!currentSlotTime || !startTime.data) return
+    if (!currentSlotTime) return
 
-    if (currentSlotTime < startTime.data) {
+    if (currentSlotTime < PUBLIC_MINT_START_TIME) {
       setButtonDisabled(true)
-      setCountdown(startTime.data * 1000)
-    }
-
-    // if countdown ends
-    if (currentSlotTime > startTime.data) {
+      setCountdown(PUBLIC_MINT_START_TIME * 1000)
+    } else {
       setButtonDisabled(false)
       setCountdown(undefined)
     }
-  }, [countdown, startTime, currentSlotTime, buttonDisabled])
+  }, [countdown, currentSlotTime, buttonDisabled])
 
   return (
     <Wrapper>
@@ -393,7 +388,15 @@ const Goblin: React.FC = () => {
                   }
                 </Message>
               </Flex>
-              {countdown &&  <Countdown renderer={renderer} onComplete={() => setButtonDisabled(!buttonDisabled)} date={countdown} />}
+              {countdown && (
+                <Flex justifyContent={'flex-end'}>
+                  <Countdown
+                    renderer={renderer}
+                    onComplete={() => setButtonDisabled(!buttonDisabled)}
+                    date={countdown}
+                  />
+                </Flex>
+              )}
 
             </Flex>
 

@@ -32,16 +32,16 @@ export function useSignLogin() {
     }
   }, [])
 
-  const buildLoginMethod = (adapter?: BaseMessageSignerWalletAdapter, account?: PublicKey): () => void => {
+  const buildLoginMethod = (pathname: string, adapter?: BaseMessageSignerWalletAdapter, account?: PublicKey): () => void => {
     return async () => {
+      if (['/ai-general/goblintownai', '/'].includes(pathname)) return
+
       // adapter?: BaseMessageSignerWalletAdapter, account?: PublicKey
       const a = randomString(66)
 
       const message = new TextEncoder().encode(`Welcome to Forart: ${a}`)
 
       const decodeMessage = new TextDecoder().decode(message)
-
-      console.log('account change', account)
 
       if (!adapter || !account) {
         return
@@ -74,9 +74,9 @@ export function useSignLogin() {
   }
 
   useEffect(() => {
-    loginRef.current = buildLoginMethod(adapter, account)
+    loginRef.current = buildLoginMethod(pathname, adapter, account)
 
-    if (adapter && account && !['/ai-general/goblintownai', '/'].includes(pathname)) {
+    if (adapter && account) {
       loginRef.current()
     }
   }, [adapter, account, pathname])

@@ -147,7 +147,7 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
       })
       signers.push(whitelistBurnAuthority)
 
-      const exists = await (program.provider as AnchorProvider).connection.getParsedAccountInfo(whitelistTokenAccount)
+      const exists = await (program.provider as AnchorProvider).connection.getAccountInfo(whitelistTokenAccount)
       if (approveAlways || exists) {
         instructions.push(
           createApproveInstruction(
@@ -313,9 +313,9 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
 export async function multipleMintV2(program: Program, mintKeypair: Keypair[], candyMachineAddress: PublicKey, approveAlways?: boolean) {
   const txs = (
     await Promise.all(
-      (mintKeypair.map(keypair => (
+      mintKeypair.map(keypair => (
         mintV2(program, keypair, candyMachineAddress, false, approveAlways)
-      ))),
+      ))
     )
   ).flat()
 
