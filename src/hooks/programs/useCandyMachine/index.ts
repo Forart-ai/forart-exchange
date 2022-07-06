@@ -23,8 +23,8 @@ const useCandyMachine = () => {
     return mintV2(program, mintKeypair, candyMachineAddress)
   }, [program])
 
-  const builtMultipleMintV2Transactions = useCallback((mintKeypair: Keypair[], candyMachineAddress: PublicKey) => {
-    return multipleMintV2(program, mintKeypair, candyMachineAddress, true)
+  const builtMultipleMintV2Transactions = useCallback((mintKeypair: Keypair[], candyMachineAddress: PublicKey, alwaysApprove: boolean) => {
+    return multipleMintV2(program, mintKeypair, candyMachineAddress, alwaysApprove)
   }, [program])
 
   const candyMachineMintAmount = (candyMachineAddress: PublicKey): UseQueryResult<any> => {
@@ -33,7 +33,7 @@ const useCandyMachine = () => {
       const candyMachine: any =  await program.account.candyMachine.fetch(candyMachineAddress as PublicKey)
 
       return candyMachine.itemsRedeemed.toString()
-    },{
+    }, {
       refetchOnWindowFocus: false,
       keepPreviousData: true
     })

@@ -11,7 +11,7 @@ export interface PoolsListData {
   image: string ,
   name: string,
   describe: string,
-  nfts: number |string,
+  nfts?: number | string,
   minters: number | string,
   status: string,
   artistName: string,

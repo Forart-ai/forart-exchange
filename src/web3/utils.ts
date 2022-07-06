@@ -38,10 +38,7 @@ export const useCurrentSlotTime = () => {
     getTimeFromBlockChain()
   }, [])
 
-  // fetch every sec
-
   useEffect(() => {
-
     const id = setInterval(() => {
       setTime(prev => (prev ? prev + 1 : undefined))
     },1000)
