@@ -33,7 +33,7 @@ const useCandyMachine = () => {
       const candyMachine: any =  await program.account.candyMachine.fetch(candyMachineAddress as PublicKey)
 
       return candyMachine.itemsRedeemed.toString()
-    },{
+    }, {
       refetchOnWindowFocus: false,
       keepPreviousData: true
     })

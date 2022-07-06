@@ -26,6 +26,7 @@ import { useFreeMint } from '../../hooks/programs/useFreeMint'
 import Countdown, { CountdownRendererFn } from 'react-countdown'
 import { useCurrentSlotTime } from '../../web3/utils'
 import useCandyMachine from '../../hooks/programs/useCandyMachine'
+import { useQuery } from 'react-query'
 import { GoblinCandyMachineAddress } from '../../hooks/programs/useCandyMachine/helpers/constant'
 
 const Wrapper = styled('div')`
@@ -40,11 +41,9 @@ const BackgroundImage = styled('div')`
   height: 470px;
   width: 100%;
   background: url(${Background}) no-repeat center;
-  //background-color: #18182a;
   position: relative;
   background-size: cover;
   text-align: center;
-
 `
 
 const MainContainer = styled('div')`
@@ -138,7 +137,6 @@ const MessageContainer = styled('div')`
     width: 100%;
     height: auto;
   }
-
 `
 
 const Content = styled('div')`
@@ -218,33 +216,70 @@ const renderer: CountdownRendererFn = ({ hours, minutes, seconds, completed }) =
   }
 }
 
+const useMintLimit = () => {
+  const currentSlotTime = useCurrentSlotTime()
+
+  return useQuery(
+    ['MINT_LIMIT', currentSlotTime],
+    () => {
+      const current = currentSlotTime || Date.now() / 1000
+
+      // Wed Jul 06 2022 14:00:00 GMT+0800 (中国标准时间)
+      const t1 = 1657087200
+
+      if (current < t1) {
+        return 2222
+      }
+
+      return 9999
+    },
+    { keepPreviousData: true }
+  ).data
+}
+
+const useMintedAmount = () => {
+  const { program } = useCandyMachine()
+
+  return useQuery(
+    ['MINTED_AMOUNT'],
+    async () => {
+      const candyMachine: any = await program.account.candyMachine.fetch(GoblinCandyMachineAddress)
+
+      const itemsRedeemed = candyMachine.itemsRedeemed.toNumber()
+
+      return itemsRedeemed - 500
+    },
+    { keepPreviousData: true }
+  ).data
+}
+
 const Goblin: React.FC = () => {
 
   const { account, disconnect } = useSolanaWeb3()
   const { mintGoblin, loading, message, mintingChance } = useGoblinMint()
   const { startTime } = useFreeMint()
   const { openModal } = useModal()
-  const [count, setCount] = useState<number | undefined>(mintingChance.data)
+  const [count, setCount] = useState<number | undefined>(mintingChance)
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
   const currentSlotTime = useCurrentSlotTime()
   const [countdown, setCountdown] = useState<number | undefined>(startTime.data)
-  const { candyMachineMintAmount } = useCandyMachine()
+  const mintLimit = useMintLimit()
+  const mintedAmount = useMintedAmount()
 
   useEffect(() => {
     if (!currentSlotTime || !startTime.data) return
 
-    if (currentSlotTime  < startTime.data  ) {
+    if (currentSlotTime < startTime.data) {
       setButtonDisabled(true)
       setCountdown(startTime.data * 1000)
     }
 
-    //if countdown ends
-    if (currentSlotTime > startTime.data ) {
+    // if countdown ends
+    if (currentSlotTime > startTime.data) {
       setButtonDisabled(false)
       setCountdown(undefined)
     }
-  }, [countdown, startTime, currentSlotTime, buttonDisabled]
-  )
+  }, [countdown, startTime, currentSlotTime, buttonDisabled])
 
   return (
     <Wrapper>
@@ -306,24 +341,22 @@ const Goblin: React.FC = () => {
             <Flex flexDirection={'column'}>
               <Flex>Connected wallet: &nbsp;
                 {
-                  account ?
-                    (
-                      <Tooltip placement={'top'} title={'Click to disconnect'}>
-                        <div className={'connect'} onClick={disconnect}> {shortenAddress(account?.toBase58())}</div>
-                      </Tooltip>
-                    ) :
-                    (
-                      <div className={'connect'} onClick={() => openModal(<WalletSelectionModal />)} />
-                    )
+                  account ? (
+                    <Tooltip placement={'top'} title={'Click to disconnect'}>
+                      <div className={'connect'} onClick={disconnect}> {shortenAddress(account?.toBase58())}</div>
+                    </Tooltip>
+                  ) : (
+                    <div className={'connect'} onClick={() => openModal(<WalletSelectionModal />)} />
+                  )
                 }
               </Flex>
 
               {
-                !!mintingChance?.data && (
+                !!mintingChance && (
                   <NumericStepper
                     minimumValue={1}
-                    maximumValue={mintingChance.data}
-                    initialValue={mintingChance.data}
+                    maximumValue={mintingChance}
+                    initialValue={mintingChance}
                     thumbShadowAnimationOnTrackHoverEnabled={false}
                     onChange={value => setCount(value)}
                   />
@@ -331,27 +364,19 @@ const Goblin: React.FC = () => {
               }
 
               <Flex gap={'10px'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} marginTop={'10px'}>
-                <div>Free Mint: {candyMachineMintAmount(GoblinCandyMachineAddress).data - 500}/2222</div>
+                <div>Free Mint: {mintedAmount || '-'} / {mintLimit}</div>
                 {
                   account ? (
-                    <>
-                      {
-                        !!mintingChance.data && (
-                          <>
-                            <CustomizeButton
-                              variant={'contained'}
-                              size={'large'}
-                              onClick={() => mintGoblin(count)}
-                              disabled={loading || !account || mintingChance.data < 1 || buttonDisabled }
-                              sx={{ fontSize:'22px' }}
-                            >
-                              MINT {count ? count : <BeatLoader size={6} color={'white'} />} GOBLIN
-                            </CustomizeButton>
-                          </>
-                        )
-                      }
-                    </>
-                  ):
+                    <CustomizeButton
+                      variant={'contained'}
+                      size={'large'}
+                      onClick={() => mintGoblin(count)}
+                      disabled={loading || !account || buttonDisabled}
+                      sx={{ fontSize:'22px' }}
+                    >
+                      MINT {count ? count : ''} GOBLIN
+                    </CustomizeButton>
+                  ) : (
                     <CustomizeButton
                       variant={'contained'}
                       size={'large'}
@@ -360,6 +385,7 @@ const Goblin: React.FC = () => {
                     >
                       Connect to wallet
                     </CustomizeButton>
+                  )
                 }
                 <Message color={message.color}>{message.msg}
                   {
@@ -377,7 +403,6 @@ const Goblin: React.FC = () => {
       </Container>
 
     </Wrapper>
-
   )
 }
 
