@@ -4,7 +4,6 @@ import { getLibrary } from './web3/connectors'
 import reportWebVitals from './reportWebVitals'
 import { DAppProvider } from '@usedapp/core'
 import ReactDOM from 'react-dom'
-
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Web3ReactProvider } from '@web3-react/core'
 import { QueryClient, QueryClientProvider } from 'react-query'
@@ -18,9 +17,6 @@ import ForartTheme from './contexts/theme/config/dark'
 import { ThemeProvider } from '@mui/material'
 import { useSignLogin } from './hooks/useSignLogin'
 import { SnackbarProvider } from 'notistack'
-import { Snackbar } from './contexts/theme/components/Snackbar/snackbar'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
-import HomepageBanner from './assets/images/coPools/homepage-banner.webp'
 
 const { store } = configureStore()
 

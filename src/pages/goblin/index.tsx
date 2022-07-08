@@ -29,8 +29,8 @@ import { useQuery } from 'react-query'
 import { GoblinCandyMachineAddress } from '../../hooks/programs/useCandyMachine/helpers/constant'
 
 // Wed Jul 06 2022 14:00:00 GMT+0800
-const PUBLIC_MINT_START_TIME = 1657087200
-const PUBLIC_MINT_END_TIME = 1657123200
+const PUBLIC_MINT_START_TIME = 1657260000
+const PUBLIC_MINT_END_TIME = 1657346400
 
 const Wrapper = styled('div')`
   min-height: 100vh;
@@ -214,7 +214,7 @@ const renderer: CountdownRendererFn = ({ hours, minutes, seconds, completed }) =
     return (
       <StyledCountdown>
 
-        Still {hours}:{minutes}:{seconds} until the end of whitelist mint.
+        Still {hours}:{minutes}:{seconds} until the whitelist mint start.
 
       </StyledCountdown>
     )
@@ -230,7 +230,7 @@ export const useMintLimit = () => {
       const current = currentSlotTime || Date.now() / 1000
 
       if (current < PUBLIC_MINT_START_TIME) {
-        return 2222
+        return 9999
       }
 
       return 9999
@@ -266,18 +266,19 @@ const Goblin: React.FC = () => {
   const [count, setCount] = useState<number | undefined>(mintingChance)
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
   const currentSlotTime = useCurrentSlotTime()
-  const [countdown, setCountdown] = useState<number | undefined>(PUBLIC_MINT_END_TIME * 1000)
+  const [countdown, setCountdown] = useState<number | undefined>(PUBLIC_MINT_START_TIME * 1000)
   const mintLimit = useMintLimit()
   const mintedAmount = useMintedAmount()
 
   useEffect(() => {
     if (!currentSlotTime) return
 
-    if (currentSlotTime < PUBLIC_MINT_END_TIME) {
-      setButtonDisabled(false)
-      setCountdown(PUBLIC_MINT_END_TIME * 1000)
-    } else {
+    // before start
+    if (currentSlotTime < PUBLIC_MINT_START_TIME) {
       setButtonDisabled(true)
+      setCountdown(PUBLIC_MINT_START_TIME * 1000)
+    } else {
+      setButtonDisabled(false)
       setCountdown(undefined)
     }
   }, [countdown, currentSlotTime, buttonDisabled])
@@ -398,7 +399,7 @@ const Goblin: React.FC = () => {
                 <Flex justifyContent={'flex-end'}>
                   <Countdown
                     renderer={renderer}
-                    onComplete={() => setButtonDisabled(!buttonDisabled)}
+                    onComplete={() => setButtonDisabled(false)}
                     date={countdown}
                   />
                 </Flex>
