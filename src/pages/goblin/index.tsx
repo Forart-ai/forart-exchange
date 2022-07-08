@@ -27,6 +27,8 @@ import { useCurrentSlotTime } from '../../web3/utils'
 import useCandyMachine from '../../hooks/programs/useCandyMachine'
 import { useQuery } from 'react-query'
 import { GoblinCandyMachineAddress } from '../../hooks/programs/useCandyMachine/helpers/constant'
+import MELogo from '../../assets/images/goblin/me.svg'
+import OpenseaLogo from '../../assets/images/goblin/opensea.svg'
 
 // Wed Jul 06 2022 14:00:00 GMT+0800
 const PUBLIC_MINT_START_TIME = 1657260000
@@ -193,6 +195,21 @@ const SwiperContainer = styled('div')`
   }
 `
 
+const MarketLogo = styled('div')`
+  width: 100%;
+  display: flex;
+  gap: 30px;
+  
+  img {
+    max-width: 160px;
+    object-fit: contain;
+    padding: 4px 6px;
+    background-color: rgba(18,12 ,24, .7);
+    border-radius: .4rem;
+    cursor: pointer;
+  }
+`
+
 const Message = styled('div')<{ color?: string | 'white' }>`
   font-size: 16px;
   color: ${({ color }) => color};
@@ -339,7 +356,16 @@ const Goblin: React.FC = () => {
                 <div>gas mint per wallet.</div>
               </div>
             </Flex>
+            <MarketLogo >
+              <a href={'https://opensea.io/collection/goblintownai-official'} target="_blank" rel="noreferrer">
+                <img src={OpenseaLogo} />
+              </a>
 
+              <a href={'https://magiceden.io/marketplace/goblintown_ai'} target="_blank" rel="noreferrer">
+                <img src={MELogo} />
+              </a>
+
+            </MarketLogo>
             <Flex flexDirection={'column'}>
               <Flex>Connected wallet: &nbsp;
                 {
@@ -395,15 +421,19 @@ const Goblin: React.FC = () => {
                   }
                 </Message>
               </Flex>
-              {countdown && (
-                <Flex justifyContent={'flex-end'}>
-                  <Countdown
-                    renderer={renderer}
-                    onComplete={() => setButtonDisabled(false)}
-                    date={countdown}
-                  />
-                </Flex>
-              )}
+
+              {
+                countdown &&
+                (
+                  <Flex justifyContent={'flex-end'}>
+                    <Countdown
+                      renderer={renderer}
+                      onComplete={() => setButtonDisabled(false)}
+                      date={countdown}
+                    />
+                  </Flex>
+                )
+              }
 
             </Flex>
 
