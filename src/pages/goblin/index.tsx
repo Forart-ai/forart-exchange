@@ -231,7 +231,7 @@ const renderer: CountdownRendererFn = ({ hours, minutes, seconds, completed }) =
     return (
       <StyledCountdown>
 
-        Still {hours}:{minutes}:{seconds} until the whitelist mint start.
+        Still {hours}:{minutes}:{seconds} before the whitelist mint end.
 
       </StyledCountdown>
     )
@@ -283,19 +283,19 @@ const Goblin: React.FC = () => {
   const [count, setCount] = useState<number | undefined>(mintingChance)
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
   const currentSlotTime = useCurrentSlotTime()
-  const [countdown, setCountdown] = useState<number | undefined>(PUBLIC_MINT_START_TIME * 1000)
+  const [countdown, setCountdown] = useState<number | undefined>(PUBLIC_MINT_END_TIME * 1000)
   const mintLimit = useMintLimit()
   const mintedAmount = useMintedAmount()
 
   useEffect(() => {
     if (!currentSlotTime) return
 
-    // before start
-    if (currentSlotTime < PUBLIC_MINT_START_TIME) {
-      setButtonDisabled(true)
-      setCountdown(PUBLIC_MINT_START_TIME * 1000)
-    } else {
+    // before end
+    if (currentSlotTime < PUBLIC_MINT_END_TIME) {
       setButtonDisabled(false)
+      setCountdown(PUBLIC_MINT_END_TIME * 1000)
+    } else {
+      setButtonDisabled(true)
       setCountdown(undefined)
     }
   }, [countdown, currentSlotTime, buttonDisabled])
@@ -428,7 +428,7 @@ const Goblin: React.FC = () => {
                   <Flex justifyContent={'flex-end'}>
                     <Countdown
                       renderer={renderer}
-                      onComplete={() => setButtonDisabled(false)}
+                      onComplete={() => setButtonDisabled(true)}
                       date={countdown}
                     />
                   </Flex>
