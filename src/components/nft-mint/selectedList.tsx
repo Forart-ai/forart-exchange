@@ -92,11 +92,11 @@ const PreviewImages = styled.div`
     z-index: 2;
   }
 
-  .Body, .Scrabs {
+  .Body, .Scrab {
     z-index: 3;
   }
   
-  .Clothing , .Head, .Clothes {
+  .Clothing , .Head, .Clothes, .Clothe{
     z-index: 4;
   }
 
@@ -111,7 +111,7 @@ const PreviewImages = styled.div`
     z-index: 4;
   }
 
-  .Pants, .Ear, .Screens{
+  .Pants, .Ear, .Screen{
     z-index: 5;
   }
 
@@ -128,12 +128,11 @@ export const NFTPreview: React.FC<{ body?: NFTAttributesData, attrList?: NFTAttr
         fix: fix the backgrounds!!!!!
    **/
 
-  console.log(body)
   return (
     <Wrapper>
       <PreviewBackground>
         {
-          attrList?.filter(item => item?.bodyType === 'Backgrounds').map((item, index) => (
+          attrList?.filter(item => item?.bodyType === 'Background').map((item, index) => (
             <img  key={index} src={item?.url} onError={undefined}  />
           ))
         }
@@ -145,7 +144,7 @@ export const NFTPreview: React.FC<{ body?: NFTAttributesData, attrList?: NFTAttr
       </PreviewImages>
 
       {
-        attrList?.filter(item => item?.bodyType !=='Backgrounds').map((item, index) => (
+        attrList?.filter(item => item?.bodyType !=='Background').map((item, index) => (
           <PreviewImages key={index}>
             <img className={item?.bodyType.replace(' ', '-')} src={item?.url} onError={undefined} />
           </PreviewImages>

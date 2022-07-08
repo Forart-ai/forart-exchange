@@ -12,13 +12,14 @@ const useNFTCreate = () => {
 
   const createNFT = useCallback(
     async (body: ArtistKit, kit: ArtistKit[]) => {
-      console.log(body, kit)
 
       if (!solAccount || !ethAccount) return
 
       const components = kit.filter(o => !!o).map(o => o.id).concat(body.id)
 
       const mintKeypair = Keypair.generate()
+
+      console.log(components)
 
       await CONFT_API.core.nft.nftCreate({
         series: 1025,

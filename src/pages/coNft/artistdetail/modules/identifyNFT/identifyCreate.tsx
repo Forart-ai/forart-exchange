@@ -61,19 +61,21 @@ const IdentifyCreate: React.FC = () => {
   const beforeCreateNft = useCallback(
     () => {
       if (!body || !attr) return
-      createNFT(body, attr)
+      createNFT(body, attr).then(r => {
+        console.log(r)}
+      )
     }, [body,account,attr]
   )
 
   const randomGenerate = useCallback(() => {
     if (!artistKit) return
 
-    const availableBodies = artistKit.Body || artistKit.Helmets
-    setBody(availableBodies[Math.floor(Math.random() * availableBodies.length)])
+    const availableBodies = artistKit.Body || artistKit.Helmet
+    setBody(availableBodies[Math.floor(Math.random() * availableBodies?.length)])
 
     setAttr(
       Object.entries(artistKit)
-        .filter(([key]) =>( key!=='Body') &&  key!=='Helmets')
+        .filter(([key]) =>( key!=='Body') &&  key!=='Helmet')
         .reduce<ArtistKit[]>((res, next) => {
           const kits = next[1] as any[]
 
@@ -86,7 +88,7 @@ const IdentifyCreate: React.FC = () => {
   }, [artistKit])
 
   useEffect(()=> {
-    if ( !artistKit) {
+    if (!artistKit) {
       return
     }
     if (artistKit.Body) {
@@ -94,8 +96,8 @@ const IdentifyCreate: React.FC = () => {
       return
     }
 
-    if (artistKit.Helmets) {
-      setBody(artistKit.Helmets[0])
+    if (artistKit.Helmet) {
+      setBody(artistKit.Helmet[0])
       return
     }
 

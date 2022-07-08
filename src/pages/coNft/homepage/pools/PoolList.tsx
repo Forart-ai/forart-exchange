@@ -98,10 +98,10 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
           data={identity}
           status={identity.status}
         />
-        {/*<PoolsListItem*/}
-        {/*  data={spaceTronauts}*/}
-        {/*  status={spaceTronauts.status}*/}
-        {/*/>*/}
+        <PoolsListItem
+          data={spaceTronauts}
+          status={spaceTronauts.status}
+        />
         {
           poolsList?.map((pool: PoolsListData, index: number) => (
             <PoolsListItem
