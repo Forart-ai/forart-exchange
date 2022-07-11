@@ -22,9 +22,7 @@ export function useSignLogin() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!Cookies.get('USER_TOKEN')) {
-        loginRef.current()
-      }
+      loginRef.current()
     }, 60000)
 
     return () => {
@@ -34,7 +32,7 @@ export function useSignLogin() {
 
   const buildLoginMethod = (pathname: string, adapter?: BaseMessageSignerWalletAdapter, account?: PublicKey): () => void => {
     return async () => {
-      if (['/ai-general/goblintownai', '/'].includes(pathname)) return
+      if (['/ai-general/goblintownai', '/'].includes(pathname) || Cookies.get('USER_TOKEN')) return
 
       // adapter?: BaseMessageSignerWalletAdapter, account?: PublicKey
       const a = randomString(66)

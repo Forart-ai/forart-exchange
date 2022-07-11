@@ -36,6 +36,7 @@ type ExtractPromise<A> = A extends Promise<infer T> ? T : never
 const MintSuccessDialog = () => {
   const { closeModal } = useModal()
   const navigate = useNavigate()
+  const { account } = useSolanaWeb3()
 
   return (
     <Dialog title={'Congratulations!'} closeable>
@@ -47,7 +48,7 @@ const MintSuccessDialog = () => {
           variant={'contained'}
           color={'secondary'}
           onClick={() => {
-            navigate('/account')
+            navigate(`/account/${account?.toBase58()}?tab=co-nft`)
             closeModal()
           }}
         > Personal space

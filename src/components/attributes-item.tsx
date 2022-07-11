@@ -17,7 +17,7 @@ const Wrapper = styled('div')`
 
 const BoxContainer = styled('div')`
   display: grid;
-  grid-template-columns: repeat(auto-fill, 110px);
+  grid-template-columns: repeat(auto-fill, 135px);
   justify-content: space-around;
   grid-gap: 10px;
   width: 100%;

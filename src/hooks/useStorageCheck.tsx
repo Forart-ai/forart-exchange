@@ -88,7 +88,7 @@ const PreviewArea = styled('div')`
 `
 
 const MintItem: React.FC<{ minting: Minting }> = ({ minting }) => {
-  const { account } = useSolanaWeb3()
+  const { account:walletAccount } = useSolanaWeb3()
   const { connection } = useConnectionConfig()
   const navigate = useNavigate()
   const { openModal, closeModal } = useModal()
@@ -140,7 +140,7 @@ const MintItem: React.FC<{ minting: Minting }> = ({ minting }) => {
                 variant={'contained'}
                 color={'secondary'}
                 onClick={() => {
-                  navigate('/account')
+                  navigate(`account${walletAccount?.toBase58()}`)
                   closeModal()
                 }}
               >

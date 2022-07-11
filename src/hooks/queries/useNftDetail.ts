@@ -6,7 +6,9 @@ export const useNftDetail = (id?: string): UseQueryResult<MintedNFTItem> => {
   return useQuery(
     ['CONFT_DETAIL', id],
     async () => {
+      if (!id) return
       return await CONFT_API.core.nft.getNFTDetailById(id).then(res => res)
+
     }
   )
 }

@@ -28,9 +28,10 @@ const ArtistInfo:React.FC = () => {
 
   return (
     <Wrapper>
-      {
-        artistId === '3312' ? <HypeteenInfo /> :  <IdentityInfo />
-      }
+
+      { artistId === '3312' && <HypeteenInfo /> }
+      { artistId === '1024' && <IdentityInfo /> }
+      { artistId === '1025' && <IdentityInfo /> }
 
     </Wrapper>
   )

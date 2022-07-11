@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { Box, Button, styled, useMediaQuery, useTheme } from '@mui/material'
 import AvatarIcon from '../../../../../assets/images/coPools/painter.webp'
 import LightBulb from '../../../../../assets/images/siderIcon/light-bulb.png'
+import SpaceAvatar from '../../../../../assets/images/coPools/spacetronautsAvatar.png'
 import Gift from '../../../../../assets/images/siderIcon/gift.png'
 import Cube from '../../../../../assets/images/siderIcon/cube.png'
 import Background from '../../../../../assets/images/coPools/painter-background.jpg'
@@ -9,6 +10,7 @@ import { useGetOverview } from '../../../../../hooks/queries/useGetOverview'
 import { useDonation } from '../../../../../hooks/programs/useDonation'
 import { useModal } from '../../../../../contexts/modal'
 import DonateDialog from '../../../components/modals/donation/donate-dialog'
+import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
 
 const Wrapper = styled('div')`
   height: 700px;
@@ -19,10 +21,10 @@ const Wrapper = styled('div')`
  
 `
 
-const BackgroundImage = styled('div')`
+const BackgroundImage = styled('div') <{artistId?: string}>`
   height: 520px;
   width: 100%;
-  background: url(${Background}) no-repeat;
+  background: ${({ artistId }) => artistId === '1024' ? `url(${Background}) no-repeat` :'#15152c'};
   position: relative;
   background-size: cover;
   text-align: center;
@@ -40,6 +42,7 @@ const MainContainer = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   position: relative;
   padding: 20px 40px;
 
@@ -157,30 +160,31 @@ const DataIcon = styled('div')`
 `
 
 const IdentityInfo:React.FC = () => {
+  const artistId = useLocationQuery('artistId')
 
-  const { data: overviewData } = useGetOverview(1024)
+  const { data: overviewData } = useGetOverview(parseInt(artistId as string))
 
-  const { openModal } = useModal()
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.up('md'))
 
-  const openDonateModal = useCallback(() => {
-    openModal(<DonateDialog />)
-  },[])
+  // const { openModal } = useModal()
+  // const openDonateModal = useCallback(() => {
+  //   openModal(<DonateDialog />)
+  // },[])
 
   return (
     <>
-      <BackgroundImage>
+      <BackgroundImage artistId={artistId}>
         <MainContainer >
-          <DonateArea>
-            <Button sx={{ '&.Mui-disabled': { pointerEvents: 'all', cursor:'not-allowed' } }} disabled={true} variant={'contained'} color={'secondary'} onClick={openDonateModal}> Donate </Button>
-          </DonateArea>
+
           <MainArea>
-            <img src={AvatarIcon} />
-            <span> DePainter </span>
+            {artistId === '1024' &&   <img src={AvatarIcon} />}
+            {artistId === '1025' &&   <img src={SpaceAvatar} />}
+            <span>
+              {artistId === '1024' &&  <>DePainter</>}
+              {artistId === '1025' &&  <>Spacetronauts</>}
+            </span>
             <div className="info-message">
               Forart.ai are searching for a limited number of 10000 innovative and creative painters to jointly explore its future.
-
             </div>
           </MainArea>
 

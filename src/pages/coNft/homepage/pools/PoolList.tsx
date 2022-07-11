@@ -7,6 +7,7 @@ import { PoolListContainer, PoolsContainer } from './poolList.styles'
 import RainbowText from '../../../../contexts/theme/components/RainbowText'
 import PainterAvatar from '../../../../assets/images/coPools/painter.webp'
 import GoblinAvatar from '../../../../assets/images/goblin/goblin-avatar.jpg'
+import SpacetronautsAvatar from '../../../../assets/images/coPools/spacetronautsAvatar.png'
 
 import { Box } from '@mui/material'
 import { useMintedAmount } from '../../../goblin'
@@ -46,7 +47,7 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
   }
 
   const spaceTronauts = {
-    'image': PainterAvatar,
+    'image': SpacetronautsAvatar,
     'name': 'SPACETRONAUTS',
     'describe': 'mexico',
     'nfts': 0,
@@ -98,10 +99,10 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
           data={identity}
           status={identity.status}
         />
-        {/*<PoolsListItem*/}
-        {/*  data={spaceTronauts}*/}
-        {/*  status={spaceTronauts.status}*/}
-        {/*/>*/}
+        <PoolsListItem
+          data={spaceTronauts}
+          status={spaceTronauts.status}
+        />
         {
           poolsList?.map((pool: PoolsListData, index: number) => (
             <PoolsListItem

@@ -61,6 +61,7 @@ const ImageContainer = styled('div')`
   .button {
     display: flex;
     justify-content: space-around;
+    gap: 20px;
   }
   
   .nft-name {
