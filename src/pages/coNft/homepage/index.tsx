@@ -22,7 +22,7 @@ import DefaultPageWrapper from '../../../components/default-page-wrapper'
 import PoolList from './pools/PoolList'
 import HomepageBanner from '../../../assets/images/coPools/homepage-banner.webp'
 import PainterBanner from '../../../assets/images/home/painter-banner.webp'
-
+import SpaceBanner from '../../../assets/images/coPools/spacetronauts/thespaceproject-avatar.webp'
 import {  Swiper , SwiperSlide } from 'swiper/react'
 import  { Pagination, Autoplay } from 'swiper'
 
@@ -43,6 +43,21 @@ export const LeftTop = styled.div`
   flex-direction: column;
  
   
+`
+
+export const SpaceBannerContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+    border-radius: 10px;
+  }
 `
 
 export const Banner = styled.div` 
@@ -81,12 +96,18 @@ const Header: React.FC = () => {
 
   const { data: hypeteenData } = useGetOverview(3312)
 
+  const { data: spaceData } = useGetOverview(1025)
+
   const toArtistDetailUrl = '/co-nft/artistDetail?' + new URLSearchParams({
     artistId: '3312'
   }).toString()
 
   const toPainterDetailUrl = '/co-nft/artistDetail?' + new URLSearchParams({
     artistId: '1024'
+  }).toString()
+
+  const toSpaceDetailUrl = '/co-nft/artistDetail?' + new URLSearchParams({
+    artistId: '1025'
   }).toString()
 
   return (
@@ -103,6 +124,81 @@ const Header: React.FC = () => {
         draggable={true}
         loop={true}
       >
+        <SwiperSlide >
+          <Wrapper>
+            <RightArea>
+              <SpaceBannerContainer>
+                <img src={SpaceBanner}  />
+              </SpaceBannerContainer>
+            </RightArea>
+
+            <LeftArea>
+              <LeftTop>
+                <MainTitle>
+                  <div className="title3"> SPACETRONAUT </div>
+                </MainTitle>
+
+                <DescriptionText>
+                  If you want to explore space through the eyes of Spacetronauts and better understand the galaxy,
+                  The Space Project is the experience for you. Mint a unique original Spacetronaut from the pen of Spacefull thoughts and join us on this adventure on our Spaceship.
+                </DescriptionText>
+
+                <ButtonArea>
+                  <Link to={toSpaceDetailUrl}>
+                    <CustomizeButton sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Create SPACETRONAUT</CustomizeButton>
+                  </Link>
+
+                  {/*<RainbowButton>*/}
+                  {/*  <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >*/}
+                  {/*    Instruction*/}
+                  {/*  </a>*/}
+                  {/*</RainbowButton>*/}
+                </ButtonArea>
+
+              </LeftTop>
+
+              <LeftBottom>
+                <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center',  }}>
+                  {
+                    spaceData ? (
+                      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent:'center' }}>
+                        <StyledCountUp
+                          end={spaceData?.minted ? spaceData?.minted : '---'}
+                          duration={2}
+                          separator=","
+
+                        />
+                        <div className={'total-data'}> /10000</div>
+                      </div>
+                    ) :
+                      <StyledCountUp end={0} />
+                  }
+                  <div className={'label'}>Total create</div>
+                </Box>
+
+                <Box sx={{ display:'flex', flexDirection:'column', alignItems:'center' }}>
+                  {
+                    spaceData ? (
+                      <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <StyledCountUp
+                          end={spaceData?.minter ? spaceData?.minter : '---'}
+                          duration={2}
+                          separator=","
+
+                        />
+                        <div className={'total-data'}> </div>
+                      </div>
+                    ) :
+                      <StyledCountUp end={0} />
+                  }
+                  <div className={'label'}>Creators</div>
+                </Box>
+              </LeftBottom>
+
+            </LeftArea>
+
+          </Wrapper>
+        </SwiperSlide>
 
         <SwiperSlide >
           <Wrapper>
@@ -181,6 +277,7 @@ const Header: React.FC = () => {
 
           </Wrapper>
         </SwiperSlide>
+
         <SwiperSlide>
           <Wrapper>
             <LeftArea>

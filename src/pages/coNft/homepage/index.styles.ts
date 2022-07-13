@@ -124,6 +124,10 @@ export const MainTitle = styled('div')(({ theme }) => ({
     color: theme.palette.primary.main
   },
 
+  '& .title3': {
+    color: 'rgb(255,172,0)'
+  },
+
   '& .title2': {
     color: theme.palette.secondary.main,
 

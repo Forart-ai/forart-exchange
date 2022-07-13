@@ -187,7 +187,8 @@ const IdentityInfo:React.FC = () => {
               {artistId === '1025' &&  <>Spacetronauts</>}
             </span>
             <div className="info-message">
-              Forart.ai are searching for a limited number of 10000 innovative and creative painters to jointly explore its future.
+              {artistId === '1024' &&  <> Forart.ai are searching for a limited number of 10000 innovative and creative painters to jointly explore its future.</>}
+              {artistId === '1025' &&  <> If you want to explore space through the eyes of Spacetronauts and better understand the galaxy, The Space Project is the experience for you. Mint a unique original Spacetronaut from the pen of Spacefullthoughts and join us on this adventure on our Spaceship.</>}
             </div>
           </MainArea>
 
