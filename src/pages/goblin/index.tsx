@@ -399,7 +399,7 @@ const Goblin: React.FC = () => {
                       variant={'contained'}
                       size={'large'}
                       onClick={() => mintGoblin(count)}
-                      disabled={loading || !account || buttonDisabled || (mintingChance === 0)}
+                      disabled
                       sx={{ fontSize:'22px' }}
                     >
                       MINT {count ? count : ''} GOBLIN
