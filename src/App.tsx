@@ -23,6 +23,7 @@ import AiArt from './pages/game/modules/aiArt'
 import TextToImage from './pages/game/modules/text-to-image'
 import { useWeb3React } from '@web3-react/core'
 import Goblin from './pages/goblin'
+import { injected } from './web3/connectors'
 
 export const BlueGlow = styled('div')`
   position: fixed;
@@ -56,21 +57,21 @@ const App: React.FC = () => {
   // useChainEffect()
   useEagerConnect()
 
-  useSignLogin()
+  // useSignLogin()
 
-  // useEffect(() => {
-  //   const connectWalletOnPageLoad = async () => {
-  //     if (localStorage?.getItem('isWalletConnected') === 'true') {
-  //       try {
-  //         await activate(injected)
-  //         localStorage.setItem('isWalletConnected', 'true')
-  //       } catch (ex) {
-  //         console.log(ex)
-  //       }
-  //     }
-  //   }
-  //   connectWalletOnPageLoad()
-  // }, [])
+  useEffect(() => {
+    const connectWalletOnPageLoad = async () => {
+      if (localStorage?.getItem('isWalletConnected') === 'true') {
+        try {
+          await activate(injected)
+          localStorage.setItem('isWalletConnected', 'true')
+        } catch (ex) {
+          console.log(ex)
+        }
+      }
+    }
+    connectWalletOnPageLoad()
+  }, [])
 
   const location = useLocation()
 

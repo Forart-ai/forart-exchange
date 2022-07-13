@@ -13,7 +13,7 @@ import CustomizeButton from '../../../../../contexts/theme/components/Button'
 import WalletSelectionModal from '../../../../../components/wallet/WalletSelectionModal'
 
 const BindEthAndSolanaWallet:React.FC<{onBound: (_?: boolean) => void}> = ({ onBound }) => {
-  const { account: solAccount, disconnect } = useSolanaWeb3()
+  const { account: solAccount, disconnect,  } = useSolanaWeb3()
   const { account: ethAccount,deactivate,activate,connector, } = useWeb3React()
   const { openModal, updateModal } = useModal()
 
@@ -71,8 +71,8 @@ const BindEthAndSolanaWallet:React.FC<{onBound: (_?: boolean) => void}> = ({ onB
   },[ethAccount])
 
   return (
-    <Stack spacing={2} alignItems={'flex-start'} justifyContent={'flex-start'}>
-      <Flex width={'100%'} justifyContent={'space-between'} alignItems={'center'}>
+    <Stack spacing={1} alignItems={'flex-start'} justifyContent={'flex-start'}>
+      <Flex width={'100%'} justifyContent={'flex-start'} alignItems={'center'} gap={'10px'}>
         <Flex gap={1}  alignItems={'center'}>
           <SvgIcon><MetamaskSvg /></SvgIcon>
           {
@@ -87,7 +87,7 @@ const BindEthAndSolanaWallet:React.FC<{onBound: (_?: boolean) => void}> = ({ onB
         <Checkbox  disabled checked={!!ethAccount} />
       </Flex>
 
-      <Flex width={'100%'} justifyContent={'space-between'} alignItems={'center'}>
+      <Flex width={'100%'} justifyContent={'flex-start'} alignItems={'center'} gap={'10px'}>
         <Flex gap={1}  alignItems={'center'}>
           <SvgIcon><PhantomSvg /></SvgIcon>
           {
@@ -96,7 +96,7 @@ const BindEthAndSolanaWallet:React.FC<{onBound: (_?: boolean) => void}> = ({ onB
                 <Text style={{ cursor:'pointer' }} onClick={disconnect}> {shortenAddress(solAccount.toBase58(),6)} </Text>
               </Tooltip>
               :
-              <CustomizeButton  color={'primary'} onClick={() => updateModal(<WalletSelectionModal />)}>Connect to Phantom</CustomizeButton>
+              <CustomizeButton  color={'primary'} onClick={() => openModal(<WalletSelectionModal />)}>Connect to Phantom</CustomizeButton>
           }
         </Flex>
         <Checkbox  disabled checked={!!solAccount} />

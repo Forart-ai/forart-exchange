@@ -4,7 +4,7 @@ import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
 import CharacterCustomize from '../../../../personal/modules/characterCustomize'
 import { useModal } from '../../../../../contexts/modal'
 import AttrReviewDialog from '../../../components/modals/create/attr-review'
-import { Box, styled } from '@mui/material'
+import { Box, Step, StepContent, StepContext, StepLabel, Stepper, styled } from '@mui/material'
 import {  SyncLoader } from 'react-spinners'
 import CustomizeButton from '../../../../../contexts/theme/components/Button'
 import useStorageCheck from '../../../../../hooks/useStorageCheck'
@@ -14,6 +14,9 @@ import { useWeb3React } from '@web3-react/core'
 import { useNavigate } from 'react-router-dom'
 import BindDePainterStepper  from '../../../components/modals/bindDePainterStepper'
 import useNFTCreate from '../../../../../hooks/co-nft/useNFTCreate'
+import BindEthAndSolanaWallet from '../../../components/modals/bindDePainterStepper/bindEthAndSolanaWallet'
+import BindDePainter from '../../../components/modals/bindDePainterStepper/bindDePainter'
+import Flex from '../../../../../contexts/theme/components/Box/Flex'
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -52,6 +55,7 @@ const IdentifyCreate: React.FC = () => {
 
   const [body, setBody] = useState<ArtistKit>()
   const [attr, setAttr] = useState<ArtistKit[]>()
+  const [activeStep, setActiveStep] = useState<number>(0)
 
   const handleCreate = useCallback(
     () => openModal(<AttrReviewDialog body={body} attr={attr} />),
@@ -186,11 +190,35 @@ const IdentifyCreate: React.FC = () => {
         artistId === '1025' &&
         <Operation>
 
-          <Box display={'grid'} gridTemplateColumns={'repeat(2, max-content)'} gap={'16px'}>
+          {/*<Box display={'grid'} gridTemplateColumns={'repeat(2, max-content)'} gap={'16px'}>*/}
 
-            <CustomizeButton variant={'contained'} onClick={() => openModal(<BindDePainterStepper />)}> Start creating!</CustomizeButton>
+          {/*  <CustomizeButton variant={'contained'} onClick={() => openModal(<BindDePainterStepper />)}> Start creating!</CustomizeButton>*/}
 
-            <CustomizeButton variant={'contained'} onClick={beforeCreateNft}>Test create</CustomizeButton>
+          {/*  <CustomizeButton variant={'contained'} onClick={beforeCreateNft}>Test create</CustomizeButton>*/}
+
+          {/*</Box>*/}
+          <Box sx={{ width: '100%' }}>
+            <Stepper activeStep={activeStep} alternativeLabel>
+
+              <Step>
+                <StepLabel>Connect wallet</StepLabel>
+                <Flex justifyContent={'center'}>
+                  <BindEthAndSolanaWallet onBound={v => {v ? setActiveStep(1) : setActiveStep(0)}} />
+                </Flex>
+              </Step>
+
+              <Step>
+                <StepLabel>Bind DePainter</StepLabel>
+                <Flex justifyContent={'center'}>
+                  <CustomizeButton variant={'contained'} color={'secondary'} onClick={() => openModal(<BindDePainter onBound={() => true} forceNext={() => true} />)}>Bind</CustomizeButton>
+                </Flex>
+              </Step>
+
+              <Step>
+                <StepLabel>All ready!</StepLabel>
+              </Step>
+
+            </Stepper>
 
           </Box>
 

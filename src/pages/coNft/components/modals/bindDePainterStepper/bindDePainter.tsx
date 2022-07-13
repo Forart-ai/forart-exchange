@@ -12,11 +12,29 @@ import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
 import { useModal } from '../../../../../contexts/modal'
 import { Skeleton, SvgIcon } from '@mui/material'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation } from 'swiper'
+
+// Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/pagination'
+
+// import required modules
+import { Pagination } from 'swiper'
+
 import { useUserBoundedDepainter } from '../../../../../hooks/queries/account/useUserBoundedDepainter'
 import useBindDePainter from '../../../../../hooks/account/bindDepainter'
 import { useRefreshController } from '../../../../../contexts/refresh-controller'
 import { Empty_Outline } from '../../../../../contexts/svgIcons'
+import Dialog from '../../../../../contexts/theme/components/Dialog/Dialog'
+import { styled } from '@mui/system'
+
+const Wrapper = styled('div')`
+  max-width: 800px;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 const NFTItem:React.FC<{item?: MetadataResult, selected?: MetadataResult | any, onSelect:(_?:any) => void }> = ({
   item,
@@ -96,65 +114,76 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
   }
 
   return (
-    <Flex height={'100%'}  flexDirection={'column'} justifyContent={'center'} alignItems={'center'} >
+    <Dialog variant={'info'} closeable title={'Bind a DePainter'}>
+      <Wrapper>
 
-      <Swiper slidesPerView={3}>
-        <Flex  width={'100%'} justifyContent={'center'} gap={'8px'}>
+        <Flex height={'100%'} width={'100%'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} >
+          <Flex  width={'100%'} justifyContent={'center'} gap={'8px'}>
+            {
+              isLoading &&
+              <>
+                {
+                  new Array(3).fill({}).map((item,index) => (
+                    <Skeleton key={index} width={'180px'} height={'220px'} animation={'wave'} />
+                  ))
+                }
+              </>
+
+            }
+            {
+              (!isLoading && holds.data?.length !== 0) &&
+              <Swiper
+                slidesPerView={4}
+                pagination={{
+                  clickable: true,
+                }}
+                modules={[Pagination]}
+                className="mySwiper"
+              >
+
+                {
+                  data?.map((nft: any, index: number) => (
+
+                    <SwiperSlide key={index}>
+                      <Flex height={'100%'} >
+                        <NFTItem selected={selectedValue} onSelect={v => setSelectedValue(v)}  key={index} item={nft}  />
+                      </Flex>
+                    </SwiperSlide>
+
+                  ))
+                }
+
+              </Swiper>
+
+            }
+          </Flex>
+
           {
-            isLoading &&
-            <>
-              {
-                new Array(3).fill({}).map((item,index) => (
-                  <Skeleton key={index} width={'180px'} height={'220px'} animation={'wave'} />
-                ))
-              }
-            </>
-
-          }
-          {
-            (!isLoading && holds.data?.length !== 0) &&
-
-            <>
-              {
-                data?.map((nft: any, index: number) => (
-                  <SwiperSlide key={index} style={{ padding:'5px 0', width:'180px' }}   >
-                    <Flex height={'100%'}>
-                      <NFTItem selected={selectedValue} onSelect={v => setSelectedValue(v)}  key={index} item={nft}  />
-                    </Flex>
-                  </SwiperSlide>
-                ))
-              }
-            </>
-
+            holds.data?.length !== 0 ? (
+              <>
+                <Flex width={'100%'} alignItems={'flex-end'} justifyContent={'flex-end'}>
+                  {
+                    solAccount && <CustomizeButton size={'small'} onClick={toPersonalCenter}>Personal center</CustomizeButton>
+                  }
+                </Flex>
+                <CustomizeButton
+                  onClick={() => beforeBindDePainter()}
+                  size={'small'}
+                  variant={'contained'}
+                >
+                  Confirm
+                </CustomizeButton>
+              </>
+            ) : (
+              <>
+                <SvgIcon color={'primary'} fontSize={'large'}><Empty_Outline /></SvgIcon>
+                <Text>No depainter found in your wallet</Text>
+              </>
+            )
           }
         </Flex>
-      </Swiper>
-
-      {
-        holds.data?.length !== 0 ? (
-          <>
-            <Flex width={'100%'} alignItems={'flex-end'} justifyContent={'flex-end'}>
-              {
-                solAccount && <CustomizeButton size={'small'} onClick={toPersonalCenter}>Personal center</CustomizeButton>
-              }
-            </Flex>
-            <CustomizeButton
-              onClick={() => beforeBindDePainter()}
-              size={'small'}
-              variant={'contained'}
-            >
-              Confirm
-            </CustomizeButton>
-          </>
-        ) : (
-          <>
-            <SvgIcon color={'primary'} fontSize={'large'}><Empty_Outline /></SvgIcon>
-            <Text>No depainter found in your wallet</Text>
-          </>
-        )
-      }
-
-    </Flex>
+      </Wrapper>
+    </Dialog>
   )
 }
 

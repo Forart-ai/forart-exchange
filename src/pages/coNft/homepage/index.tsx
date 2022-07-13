@@ -115,7 +115,7 @@ const Header: React.FC = () => {
             <LeftArea>
               <LeftTop>
                 <MainTitle>
-                  <div className="title1"> DePainter1  </div>
+                  <div className="title1"> DePainter </div>
 
                   <div className={'title2'}> <span> The Unique Admin Ticket</span> To  Forart.ai</div>
                 </MainTitle>
