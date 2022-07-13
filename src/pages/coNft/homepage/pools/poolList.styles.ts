@@ -142,6 +142,7 @@ export const LeftArea = styled('div')(({ theme }) => ({
     flexDirection: 'column',
     color: theme.palette.text.secondary,
     fontSize: '12px',
+    whiteSpace:'nowrap',
 
     span: {
       color: theme.palette.text.primary,

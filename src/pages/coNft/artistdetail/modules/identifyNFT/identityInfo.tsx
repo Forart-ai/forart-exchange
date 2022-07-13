@@ -2,7 +2,9 @@ import React, { useCallback } from 'react'
 import { Box, Button, styled, useMediaQuery, useTheme } from '@mui/material'
 import AvatarIcon from '../../../../../assets/images/coPools/painter.webp'
 import LightBulb from '../../../../../assets/images/siderIcon/light-bulb.png'
-import SpaceAvatar from '../../../../../assets/images/coPools/spacetronautsAvatar.png'
+import SpaceAvatar from '../../../../../assets/images/coPools/spacetronauts/thespaceproject-avatar.webp'
+import SpaceCover from '../../../../../assets/images/coPools/spacetronauts/thespaceproject-cover1.webp'
+
 import Gift from '../../../../../assets/images/siderIcon/gift.png'
 import Cube from '../../../../../assets/images/siderIcon/cube.png'
 import Background from '../../../../../assets/images/coPools/painter-background.jpg'
@@ -24,8 +26,9 @@ const Wrapper = styled('div')`
 const BackgroundImage = styled('div') <{artistId?: string}>`
   height: 520px;
   width: 100%;
-  background: ${({ artistId }) => artistId === '1024' ? `url(${Background}) no-repeat` :'#15152c'};
+  background: ${({ artistId }) => artistId === '1024' ? `url(${Background}) no-repeat` : `url(${SpaceCover}) #15152c no-repeat` };
   position: relative;
+  background-position: center;
   background-size: cover;
   text-align: center;
 
