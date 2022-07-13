@@ -30,10 +30,15 @@ import { styled } from '@mui/system'
 const Wrapper = styled('div')`
   max-width: 800px;
   width: 100%;
-  height: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  .mySwiper {
+    .swiper-wrapper {
+      padding: 40px 0;
+    }
+  }
 `
 
 const NFTItem:React.FC<{item?: MetadataResult, selected?: MetadataResult | any, onSelect:(_?:any) => void }> = ({
@@ -133,9 +138,23 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
             {
               (!isLoading && holds.data?.length !== 0) &&
               <Swiper
-                slidesPerView={4}
+
                 pagination={{
                   clickable: true,
+                }}
+                breakpoints={{
+                  640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                  },
+                  1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 50,
+                  },
                 }}
                 modules={[Pagination]}
                 className="mySwiper"

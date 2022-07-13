@@ -4,7 +4,7 @@ import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
 import CharacterCustomize from '../../../../personal/modules/characterCustomize'
 import { useModal } from '../../../../../contexts/modal'
 import AttrReviewDialog from '../../../components/modals/create/attr-review'
-import { Box, Step, StepContent, StepContext, StepLabel, Stepper, styled } from '@mui/material'
+import { Box, Step, StepContent, StepContext, StepLabel, Stepper, styled, useMediaQuery, useTheme } from '@mui/material'
 import {  SyncLoader } from 'react-spinners'
 import CustomizeButton from '../../../../../contexts/theme/components/Button'
 import useStorageCheck from '../../../../../hooks/useStorageCheck'
@@ -31,6 +31,7 @@ const Operation = styled('div')`
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
+  margin-bottom: 20px;
 
   .message {
     font-family: KronaOne-Regular;
@@ -40,9 +41,18 @@ const Operation = styled('div')`
   }
 `
 
+const StepperContainer = styled('div')`
+  width: 100%;
+  border: 1px ${({ theme }) => theme.palette.primary.main} solid;
+  padding: 20px 10px;
+  border-radius: .6rem;
+  background: rgb(14, 8, 45, .8);
+`
+
 const IdentifyCreate: React.FC = () => {
   const { createNFT } = useNFTCreate()
-
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('md'))
   const artistId = useLocationQuery('artistId')
   const { data, isFetching, error } = useWhiteListQuery()
   const { data: artistKit } = useArtistKitsQuery(artistId)
@@ -113,7 +123,15 @@ const IdentifyCreate: React.FC = () => {
 
   return (
     <Wrapper>
-
+      <CharacterCustomize
+        artistId={artistId}
+        body={body}
+        attr={attr}
+        selected={(body, attributes) => {
+          setBody(body)
+          setAttr(attributes)
+        }}
+      />
       <Operation>
         <CustomizeButton
           size={'large'}
@@ -124,16 +142,6 @@ const IdentifyCreate: React.FC = () => {
           Generate randomly
         </CustomizeButton>
       </Operation>
-
-      <CharacterCustomize
-        artistId={artistId}
-        body={body}
-        attr={attr}
-        selected={(body, attributes) => {
-          setBody(body)
-          setAttr(attributes)
-        }}
-      />
 
       {
         artistId === '1024' &&
@@ -156,14 +164,6 @@ const IdentifyCreate: React.FC = () => {
             }
 
             <Box display={'grid'} gridTemplateColumns={'repeat(2, max-content)'} gap={'16px'}>
-              <CustomizeButton
-                size={'large'}
-                variant={'contained'}
-                color={'secondary'}
-                // onClick={randomGenerate}
-              >
-                Generate randomly
-              </CustomizeButton>
               {
                 data !== '0' ? (
                   <CustomizeButton
@@ -197,21 +197,34 @@ const IdentifyCreate: React.FC = () => {
           {/*  <CustomizeButton variant={'contained'} onClick={beforeCreateNft}>Test create</CustomizeButton>*/}
 
           {/*</Box>*/}
-          <Box sx={{ width: '100%' }}>
-            <Stepper activeStep={activeStep} alternativeLabel>
-
+          <StepperContainer>
+            <Stepper activeStep={activeStep} alternativeLabel={mobile ? false : true} orientation={mobile ? 'vertical' : 'horizontal'}>
               <Step>
                 <StepLabel>Connect wallet</StepLabel>
-                <Flex justifyContent={'center'}>
-                  <BindEthAndSolanaWallet onBound={v => {v ? setActiveStep(1) : setActiveStep(0)}} />
-                </Flex>
+                {
+                  mobile ?
+                    <StepContent>
+                      <BindEthAndSolanaWallet onBound={v => {v ? setActiveStep(1) : setActiveStep(0)}} />
+                    </StepContent>
+                    :
+                    <Flex justifyContent={'center'}>
+                      <BindEthAndSolanaWallet onBound={v => {v ? setActiveStep(1) : setActiveStep(0)}} />
+                    </Flex>
+                }
               </Step>
 
               <Step>
                 <StepLabel>Bind DePainter</StepLabel>
-                <Flex justifyContent={'center'}>
-                  <CustomizeButton variant={'contained'} color={'secondary'} onClick={() => openModal(<BindDePainter onBound={() => true} forceNext={() => true} />)}>Bind</CustomizeButton>
-                </Flex>
+                {
+                  mobile ?
+                    <StepContent>
+                      <CustomizeButton disabled={activeStep !== 1} variant={'contained'} color={'secondary'} onClick={() => openModal(<BindDePainter onBound={() => true} forceNext={() => true} />)}>Bind</CustomizeButton>
+                    </StepContent>
+                    :
+                    <Flex justifyContent={'center'}>
+                      <CustomizeButton disabled={activeStep !== 1} variant={'contained'} color={'secondary'} onClick={() => openModal(<BindDePainter onBound={() => true} forceNext={() => true} />)}>Bind</CustomizeButton>
+                    </Flex>
+                }
               </Step>
 
               <Step>
@@ -220,7 +233,7 @@ const IdentifyCreate: React.FC = () => {
 
             </Stepper>
 
-          </Box>
+          </StepperContainer>
 
         </Operation>
       }
