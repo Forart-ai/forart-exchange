@@ -129,7 +129,7 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
       <Wrapper>
 
         <Flex height={'100%'} width={'100%'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} >
-          <Flex  width={'100%'} justifyContent={'center'} gap={'8px'}>
+          <Flex width={'100%'}>
             {
               isLoading &&
               <>
