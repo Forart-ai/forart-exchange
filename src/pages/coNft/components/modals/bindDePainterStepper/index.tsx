@@ -1,19 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import Dialog from '../../../../../contexts/theme/components/Dialog/Dialog'
-import { styled } from '@mui/system'
 import {
-  Box,
-  Checkbox,
-  MobileStepper,
-  Paper,
   Step, StepContent,
   StepLabel,
   Stepper,
-  SvgIcon,
-  Tooltip, useMediaQuery,
+  useMediaQuery,
   useTheme
 } from '@mui/material'
-import Text from '../../../../../contexts/theme/components/Text/Text'
 import CustomizeButton from '../../../../../contexts/theme/components/Button'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'
 import BindDePainter from './bindDePainter'
@@ -31,6 +23,7 @@ import { useWeb3React } from '@web3-react/core'
 import { NFTPreview } from '../../../../../components/nft-mint/selectedList'
 import useNFTCreate from '../../../../../hooks/co-nft/useNFTCreate'
 import { useCreditCreation } from '../../../../../hooks/queries/useCreditCreation'
+import { styled } from '@mui/system'
 
 const StepperContainer = styled('div')`
   width: 100%;
@@ -47,6 +40,14 @@ const PreviewContainer = styled('div')`
   object-fit: contain;
   box-sizing: border-box;
   position: relative;
+`
+
+const Text = styled('div')`
+  color: white;
+  
+  b {
+    color: ${({ theme }) => theme.palette.primary.main};
+  }
 `
 
 const BindDePainterStepper:React.FC<{ body?: ArtistKit, attr?: ArtistKit[]}> = ({ body, attr }) => {
@@ -76,11 +77,15 @@ const BindDePainterStepper:React.FC<{ body?: ArtistKit, attr?: ArtistKit[]}> = (
     }, [body,solAccount, ethAccount ,attr]
   )
 
+  const handleBack = () => {
+    setActiveStep(prevActiveStep => prevActiveStep - 1)
+  }
+
   return (
     <StepperContainer>
       <Stepper activeStep={activeStep} alternativeLabel={mobile ? false : true} orientation={mobile ? 'vertical' : 'horizontal'}>
-        <Step>
-          <StepLabel>Connect wallet</StepLabel>
+        <Step >
+          <StepLabel >Connect wallet</StepLabel>
           {
             mobile ?
               <StepContent>
@@ -94,18 +99,30 @@ const BindDePainterStepper:React.FC<{ body?: ArtistKit, attr?: ArtistKit[]}> = (
         </Step>
 
         <Step>
-          <StepLabel>Bind DePainter</StepLabel>
+          <StepLabel>Bind DePainter { mobile &&  <CustomizeButton onClick={handleBack}>Prev step</CustomizeButton> }</StepLabel>
           {
             mobile ?
               <StepContent>
-                <CustomizeButton disabled={activeStep !== 1}
-                  variant={'contained'}
-                  color={'secondary'}
-                  onClick={() => openModal(<BindDePainter
-                    onBound={() => true}
-                    forceNext={() => true} />
-                  )}
-                >Bind
+                {
+                  solAccount && (
+                    <>
+                      {
+                        nft ?
+                          <>
+                            <Image src={nft.data?.data?.image} width={'164px'} height={'164px'} variant={'rectangular'} borderRadius={6} />
+                            <Text>Bound {nft.data?.data?.name}</Text>
+
+                          </>
+                          :
+                          <SyncLoader color={'white'} size={6} />
+                      }
+                    </>
+                  )
+                }
+                <CustomizeButton disabled={!solAccount} variant={'contained'} color={'secondary'} onClick={() => openModal(<BindDePainter onBound={() => true} forceNext={() => true} />)}>
+                  {
+                    userBoundDePainter?.mintKey ? 'Change Bind' : ' Bind Now'
+                  }
                 </CustomizeButton>
               </StepContent>
               :
@@ -116,8 +133,9 @@ const BindDePainterStepper:React.FC<{ body?: ArtistKit, attr?: ArtistKit[]}> = (
                       {
                         nft ?
                           <>
-                            <Text color={'#ffffff'}>Bound {nft.data?.data?.name}</Text>
                             <Image src={nft.data?.data?.image} width={'164px'} height={'164px'} variant={'rectangular'} borderRadius={6} />
+                            <Text >Bound {nft.data?.data?.name}</Text>
+
                           </>
                           :
                           <SyncLoader color={'white'} size={6} />
@@ -136,13 +154,13 @@ const BindDePainterStepper:React.FC<{ body?: ArtistKit, attr?: ArtistKit[]}> = (
         </Step>
 
         <Step>
-          <StepLabel>All ready!</StepLabel>
+          <StepLabel>All ready!  { mobile &&  <CustomizeButton onClick={handleBack}>Prev step</CustomizeButton> }</StepLabel>
           <Flex flexDirection={'column'} alignItems={'center'} justifyContent={'center'} gap={'14px'}>
+
             <PreviewContainer>
               <NFTPreview body={body} attrList={attr} />
             </PreviewContainer>
-
-            <Text color={'#ffffff'}>{userCredit!== 0 ? `Have ${userCredit} create chances` : 'No chances left'}</Text>
+            <Text >{ userCredit == 0 ? <>Have <b> {userCredit} </b> create chances</> : 'No chances left'}</Text>
             <CustomizeButton disabled={!solAccount || !ethAccount || !userBoundDePainter?.mintKey } variant={'contained'} onClick={beforeCreateNft}> Create Now!</CustomizeButton>
           </Flex>
         </Step>
