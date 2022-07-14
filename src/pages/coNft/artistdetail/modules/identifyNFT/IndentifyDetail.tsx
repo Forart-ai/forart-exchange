@@ -5,6 +5,7 @@ import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
 import { useArtistKitsQuery } from '../../../../../hooks/queries/useArtistKitsQuery'
 import ArtistBanner from '../../../../../assets/images/home/social-banner.webp'
 import { KitProperties } from '../../index'
+import SpaceBanner from '../../../../../assets/images/coPools/spacetronauts/thespaceproject-banner2.webp'
 
 interface StyledTabsProps {
     children?: React.ReactNode;
@@ -191,7 +192,7 @@ const ComponentsItem:React.FC<{list?:KitProperties[]}> = ({ list }) => {
 }
 
 const IdentifyDetail: React.FC = () => {
-
+  const artistId = useLocationQuery('artistId')
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
   const [value, setValue] = React.useState(0)
@@ -208,8 +209,166 @@ const IdentifyDetail: React.FC = () => {
     <>
       <ArtistDetailTab id="a">
         {
-          !isMobile ? (
+          artistId === '1024' && (
             <>
+              {
+                !isMobile ? (
+                  <>
+                    <TabContainer>
+                      <TabItem>
+                        <StyledTabs
+                          value={value}
+                          onChange={handleChange}
+                          aria-label="styled tabs example"
+                        >
+                          <StyledTab label="About" {...a11yProps(0)} />
+                          <StyledTab label="Equity & Attributes" {...a11yProps(1)}  />
+                          <StyledTab label="Marketplace & Roadmap" {...a11yProps(2)}  />
+
+                        </StyledTabs>
+                      </TabItem>
+                    </TabContainer>
+
+                    <TabInfo>
+                      <TabPanel index={0} value={value}>
+
+                        <section className="item"  id="about">
+                          <h1 > Archive </h1>
+                          <Banner>
+                            <img className="banner" src={ArtistBanner} />
+                          </Banner>
+
+                        </section>
+
+                        <section className="item" >
+                          <h1 > Birth of DePainter </h1>
+                          <p >
+                            Forart.ai is a brand new AI technology-driven C2E world, which is full of imagination and adventure. <br />
+                            We&apos;re searching for a limited number of 10000 innovative and creative DePainters to jointly explore its future. <br />
+                          </p>
+                        </section>
+                      </TabPanel>
+
+                      <TabPanel index={1} value={value} >
+                        <section className="item" >
+                          <h1 > Creator & Holder Equity </h1>
+                          <p >
+                            1. Participate in the next Co-NFT creation and further exploration on Forart.ai platform. <br />
+                            2. Get the whitelist of Forart.ai IDO. <br />
+                            3. Acquire platform Co-NFT revenue sharing. <br />
+                            4. Level up to get a higher yield rate. <br />
+                            5. Trading and staking. <br />
+
+                          </p>
+                        </section>
+                        <ComponentsContainer  />
+                      </TabPanel>
+
+                      <TabPanel index={2} value={value}>
+                        <section className="item" >
+                          <h1 className="title">Marketplace</h1>
+                          <p >
+                            · Solanart <br />
+                            · Slope <br />
+                            · Magic Eden <br />
+                          </p>
+                        </section>
+
+                        <section className="item" >
+                          <h1 className="title">Roadmap</h1>
+                          <p>
+                            April - May: <br />
+                            1 Recruit more DePainters <br />
+                            2 Expand more CO-NFT Series<br />
+                            3 Unlock new functions of Forart.ai<br /><br />
+
+                            June :<br />
+                            1 Level up to get a higher yield rate.<br />
+                            2 Listing on NFT Marketplaces<br />
+                            3 NFT Staking V1<br /><br />
+
+                            July+<br />
+                            1 Get the whitelist of Forart.ai IDO.<br />
+                            2 Acquire Co-NFT revenue sharing.<br />
+                            3 Unlock new Gaming Modules<br /><br />
+                          </p>
+                        </section>
+                      </TabPanel>
+                    </TabInfo>
+
+                  </>
+                ) :
+                  (
+                    <TabInfo >
+                      <section className="item"  id="about">
+                        <h1 > Archive </h1>
+                        <Banner>
+                          <img className="banner" src={ArtistBanner} />
+                        </Banner>
+                        <p className="content">
+                          Name: HypeTeen <br />
+                          Gender: Encrypting <br />
+                          Date of birth: NFT first year <br />
+                          Hobbies: Travel, Adventure, Food, Art, Social <br />
+                          Personality: Wisdom, creativity, confidence, willing to share <br />
+                          Occupation: Ambassador of virtual and real culture <br />
+                        </p>
+                      </section>
+
+                      <section className="item" >
+                        <h1 > Birth of HypeTeen </h1>
+                        <p >
+                          HypeTeen is the First CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing. Born in the first year of NFT, she/he has her/his own NFT attributes, likes to explore the unknown, and is obsessed with trendy things in the future. At the peak of her/his appearance, she/he likes fans to call: super handsome! <br /><br />
+                          In 2022, she/he will take her/his fans on her/his first journey of exploration - travel around the world, learn about the customs of various countries, spread the world&apos;s culture, and share the cultural essence and consensus with fans in Forart Club. <br /> <br />
+
+                        </p>
+                      </section>
+
+                      <section className="item" >
+                        <h1 > Creator & Holder Equity </h1>
+                        <p >
+                          <b> Benefits for HypeTeen NFT creators:</b> <br />
+                          1. Each NFT you create will get 50 $FTA<br />
+
+                          2. Acquire 10% of the sales revenue and royalty <br />
+
+                          3. Acquire Forart $FTA airdrop<br /> <br />
+
+                        </p>
+                      </section>
+
+                      <ComponentsContainer  />
+
+                      <section className="item" >
+                        <h1 className="title">Marketplace</h1>
+                        <p >
+                          · Solanart <br />
+                          · Slope <br />
+                          · Magic Eden <br />
+                        </p>
+                      </section>
+
+                      <section className="item" >
+                        <h1 className="title">Roadmap</h1>
+                        <p>
+                          1. Create CO-NFTs by Users <br />
+                          2. Generate Special CO-NFTs and creator winners when the 1000th NFT is created  <br />
+                          3. Vote the next country that HypeTeen will travel to  <br />
+                          4. Launch on solanart, Slope and Magic Eden when the 2000th NFT is created  <br />
+                        </p>
+                      </section>
+                    </TabInfo>
+                  )
+              }
+
+            </>
+          )
+        }
+
+        {
+          artistId === '1025' && (
+            <>
+
               <TabContainer>
                 <TabItem>
                   <StyledTabs
@@ -231,19 +390,15 @@ const IdentifyDetail: React.FC = () => {
                   <section className="item"  id="about">
                     <h1 > Archive </h1>
                     <Banner>
-                      <img className="banner" src={ArtistBanner} />
+                      <img className="banner" src={SpaceBanner} />
                     </Banner>
-                    <p className="content">
-                      {/*Forart.ai is a brand new AI technology-driven C2E world, which is full of imagination and adventure. <br />*/}
-                      {/*We&apos;re searching for a limited number of 10000 innovative and creative painters to jointly explore its future. <br />*/}
-                    </p>
+
                   </section>
 
                   <section className="item" >
-                    <h1 > Birth of DePainter </h1>
+                    <h1 > Birth of SPACETRONAUT </h1>
                     <p >
-                      Forart.ai is a brand new AI technology-driven C2E world, which is full of imagination and adventure. <br />
-                      We&apos;re searching for a limited number of 10000 innovative and creative DePainters to jointly explore its future. <br />
+                      If you want to explore space through the eyes of Spacetronauts and better understand the galaxy, The Space Project is the experience for you. Mint a unique original Spacetronaut from the pen of Spacefull thoughts and join us on this adventure on our Spaceship.
                     </p>
                   </section>
                 </TabPanel>
@@ -252,41 +407,19 @@ const IdentifyDetail: React.FC = () => {
                   <section className="item" >
                     <h1 > Creator & Holder Equity </h1>
                     <p >
-                      1. Participate in the next Co-NFT creation and further exploration on Forart.ai platform. <br />
-                      2. Get the whitelist of Forart.ai IDO. <br />
-                      3. Acquire platform Co-NFT revenue sharing. <br />
-                      4. Level up to get a higher yield rate. <br />
-                      5. Trading and staking. <br />
+                      Benefits for Spacetronauts NFT creators: <br />
+                      1. Acquire 10% of the sales revenue and royalty
 
                     </p>
                   </section>
-                  <ComponentsContainer >
-
-                    {/*{*/}
-                    {/*  artistKit && (*/}
-                    {/*    <>*/}
-                    {/*      {*/}
-                    {/*        Object.keys(artistKit).map((type,index) => (*/}
-                    {/*          <div key={index}>*/}
-                    {/*            <h1> {type} </h1>*/}
-                    {/*            <ComponentsItem key={index} list={artistKit[type]} />*/}
-                    {/*          </div>*/}
-                    {/*        ))*/}
-                    {/*      }*/}
-                    {/*    </>*/}
-                    {/*  )*/}
-                    {/*}*/}
-
-                  </ComponentsContainer>
+                  <ComponentsContainer  />
                 </TabPanel>
 
                 <TabPanel index={2} value={value}>
                   <section className="item" >
                     <h1 className="title">Marketplace</h1>
                     <p >
-                      · Solanart <br />
-                      · Slope <br />
-                      · Magic Eden <br />
+                      · Kalao <br />
                     </p>
                   </section>
 
@@ -311,89 +444,10 @@ const IdentifyDetail: React.FC = () => {
                   </section>
                 </TabPanel>
               </TabInfo>
-
             </>
-          ) :
-            (
-              <TabInfo >
-                <section className="item"  id="about">
-                  <h1 > Archive </h1>
-                  <Banner>
-                    <img className="banner" src={ArtistBanner} />
-                  </Banner>
-                  <p className="content">
-                    Name: HypeTeen <br />
-                    Gender: Encrypting <br />
-                    Date of birth: NFT first year <br />
-                    Hobbies: Travel, Adventure, Food, Art, Social <br />
-                    Personality: Wisdom, creativity, confidence, willing to share <br />
-                    Occupation: Ambassador of virtual and real culture <br />
-                  </p>
-                </section>
 
-                <section className="item" >
-                  <h1 > Birth of HypeTeen </h1>
-                  <p >
-                    HypeTeen is the First CO-NFT on Forart created by well-known NFT designer Monica. Hypeteen is a good-looking and interesting teen. She/He likes food from all over the world, loves travel and art, and is good at socializing. Born in the first year of NFT, she/he has her/his own NFT attributes, likes to explore the unknown, and is obsessed with trendy things in the future. At the peak of her/his appearance, she/he likes fans to call: super handsome! <br /><br />
-                    In 2022, she/he will take her/his fans on her/his first journey of exploration - travel around the world, learn about the customs of various countries, spread the world&apos;s culture, and share the cultural essence and consensus with fans in Forart Club. <br /> <br />
-
-                  </p>
-                </section>
-
-                <section className="item" >
-                  <h1 > Creator & Holder Equity </h1>
-                  <p >
-                    <b> Benefits for HypeTeen NFT creators:</b> <br />
-                    1. Each NFT you create will get 50 $FTA<br />
-
-                    2. Acquire 10% of the sales revenue and royalty <br />
-
-                    3. Acquire Forart $FTA airdrop<br /> <br />
-
-                  </p>
-                </section>
-
-                <ComponentsContainer >
-
-                  {/*{*/}
-                  {/*  artistKit && (*/}
-                  {/*    <>*/}
-                  {/*      {*/}
-                  {/*        Object.keys(artistKit).map((type,index) => (*/}
-                  {/*          <div key={index}>*/}
-                  {/*            <h1> {type} </h1>*/}
-                  {/*            <ComponentsItem key={index} list={artistKit[type]} />*/}
-                  {/*          </div>*/}
-                  {/*        ))*/}
-                  {/*      }*/}
-                  {/*    </>*/}
-                  {/*  )*/}
-                  {/*}*/}
-
-                </ComponentsContainer>
-
-                <section className="item" >
-                  <h1 className="title">Marketplace</h1>
-                  <p >
-                    · Solanart <br />
-                    · Slope <br />
-                    · Magic Eden <br />
-                  </p>
-                </section>
-
-                <section className="item" >
-                  <h1 className="title">Roadmap</h1>
-                  <p>
-                    1. Create CO-NFTs by Users <br />
-                    2. Generate Special CO-NFTs and creator winners when the 1000th NFT is created  <br />
-                    3. Vote the next country that HypeTeen will travel to  <br />
-                    4. Launch on solanart, Slope and Magic Eden when the 2000th NFT is created  <br />
-                  </p>
-                </section>
-              </TabInfo>
-            )
+          )
         }
-
       </ArtistDetailTab>
     </>
   )

@@ -12,11 +12,11 @@ import { ArtistKit, useArtistKitsQuery } from '../../../../../hooks/queries/useA
 import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
 import { useWeb3React } from '@web3-react/core'
 import { useNavigate } from 'react-router-dom'
-import BindDePainterStepper  from '../../../components/modals/bindDePainterStepper'
 import useNFTCreate from '../../../../../hooks/co-nft/useNFTCreate'
 import BindEthAndSolanaWallet from '../../../components/modals/bindDePainterStepper/bindEthAndSolanaWallet'
 import BindDePainter from '../../../components/modals/bindDePainterStepper/bindDePainter'
 import Flex from '../../../../../contexts/theme/components/Box/Flex'
+import BindDePainterStepper from '../../../components/modals/bindDePainterStepper'
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -41,18 +41,8 @@ const Operation = styled('div')`
   }
 `
 
-const StepperContainer = styled('div')`
-  width: 100%;
-  border: 1px ${({ theme }) => theme.palette.primary.main} solid;
-  padding: 20px 10px;
-  border-radius: .6rem;
-  background: rgb(14, 8, 45, .8);
-`
-
 const IdentifyCreate: React.FC = () => {
-  const { createNFT } = useNFTCreate()
-  const theme = useTheme()
-  const mobile = useMediaQuery(theme.breakpoints.down('md'))
+
   const artistId = useLocationQuery('artistId')
   const { data, isFetching, error } = useWhiteListQuery()
   const { data: artistKit } = useArtistKitsQuery(artistId)
@@ -65,20 +55,10 @@ const IdentifyCreate: React.FC = () => {
 
   const [body, setBody] = useState<ArtistKit>()
   const [attr, setAttr] = useState<ArtistKit[]>()
-  const [activeStep, setActiveStep] = useState<number>(0)
 
   const handleCreate = useCallback(
     () => openModal(<AttrReviewDialog body={body} attr={attr} />),
     [body, attr, account]
-  )
-
-  const beforeCreateNft = useCallback(
-    () => {
-      if (!body || !attr) return
-      createNFT(body, attr).then(r => {
-        console.log(r)}
-      )
-    }, [body,account,attr]
   )
 
   const randomGenerate = useCallback(() => {
@@ -89,7 +69,7 @@ const IdentifyCreate: React.FC = () => {
 
     setAttr(
       Object.entries(artistKit)
-        .filter(([key]) =>( key!=='Body') &&  key!=='Helmet')
+        .filter(([key]) =>( key!=='Body') &&  (key!=='Helmet') && (key!=='Scrab'))
         .reduce<ArtistKit[]>((res, next) => {
           const kits = next[1] as any[]
 
@@ -197,43 +177,8 @@ const IdentifyCreate: React.FC = () => {
           {/*  <CustomizeButton variant={'contained'} onClick={beforeCreateNft}>Test create</CustomizeButton>*/}
 
           {/*</Box>*/}
-          <StepperContainer>
-            <Stepper activeStep={activeStep} alternativeLabel={mobile ? false : true} orientation={mobile ? 'vertical' : 'horizontal'}>
-              <Step>
-                <StepLabel>Connect wallet</StepLabel>
-                {
-                  mobile ?
-                    <StepContent>
-                      <BindEthAndSolanaWallet onBound={v => {v ? setActiveStep(1) : setActiveStep(0)}} />
-                    </StepContent>
-                    :
-                    <Flex justifyContent={'center'}>
-                      <BindEthAndSolanaWallet onBound={v => {v ? setActiveStep(1) : setActiveStep(0)}} />
-                    </Flex>
-                }
-              </Step>
 
-              <Step>
-                <StepLabel>Bind DePainter</StepLabel>
-                {
-                  mobile ?
-                    <StepContent>
-                      <CustomizeButton disabled={activeStep !== 1} variant={'contained'} color={'secondary'} onClick={() => openModal(<BindDePainter onBound={() => true} forceNext={() => true} />)}>Bind</CustomizeButton>
-                    </StepContent>
-                    :
-                    <Flex justifyContent={'center'}>
-                      <CustomizeButton disabled={activeStep !== 1} variant={'contained'} color={'secondary'} onClick={() => openModal(<BindDePainter onBound={() => true} forceNext={() => true} />)}>Bind</CustomizeButton>
-                    </Flex>
-                }
-              </Step>
-
-              <Step>
-                <StepLabel>All ready!</StepLabel>
-              </Step>
-
-            </Stepper>
-
-          </StepperContainer>
+          <BindDePainterStepper body={body} attr={attr} />
 
         </Operation>
       }

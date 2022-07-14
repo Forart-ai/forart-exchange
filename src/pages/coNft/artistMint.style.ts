@@ -60,6 +60,7 @@ export const SelectedBody = styled('div')`
   border-radius: 20px;
   position: relative;
   z-index: 1;
+  overflow: hidden;
   
   img {
     width: 100%;

@@ -94,7 +94,7 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
   const toPersonalCenter = useCallback(
     () => {
       if (solAccount) {
-        navigate(`/account/${solAccount.toBase58()}?tab=co-nft`)
+        navigate(`/account/${solAccount.toBase58()}?tab=dePainter`)
         closeModal()
         return
       }
@@ -106,13 +106,19 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
   const beforeBindDePainter = () => {
     if (selectedValue.mintKey) {
       console.log('bind already',selectedValue.mintKey)
-      bindDePainter(selectedValue.mintKey).then(() => forceNext(true))
+      bindDePainter(selectedValue.mintKey)
+        .then(() => forceNext(true))
+        .catch(er => {
+          console.log(er)})
       return
     }
 
     if (selectedValue.mint) {
       console.log(selectedValue)
-      bindDePainter(selectedValue.mint.toBase58()).then(() => forceNext(true))
+      bindDePainter(selectedValue.mint.toBase58())
+        .then(() => forceNext(true))
+        .catch(er => {
+          console.log(er)})
       return
     }
 

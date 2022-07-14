@@ -62,7 +62,7 @@ const DonateArea = styled('div')`
 `
 
 const MainArea = styled('div')`
-  max-width: 570px;
+  max-width: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -199,7 +199,10 @@ const IdentityInfo:React.FC = () => {
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
                 <div className={'value'}>{overviewData?.minted ?? '0'}</div>
-                <div className={'name'}>Minted</div>
+                <div className={'name'}>
+                  {artistId === '1024' && 'Minted' }
+                  {artistId === '1025' && 'Created' }
+                </div>
               </Box>
             </DataItem>
 
@@ -209,7 +212,10 @@ const IdentityInfo:React.FC = () => {
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
                 <div className={'value'}>{overviewData?.minter ?? '0'}</div>
-                <div className={'name'}>Minters</div>
+                <div className={'name'}>
+                  {artistId === '1024' && 'Minters' }
+                  {artistId === '1025' && 'Creators' }
+                </div>
               </Box>
             </DataItem>
           </DataArea>

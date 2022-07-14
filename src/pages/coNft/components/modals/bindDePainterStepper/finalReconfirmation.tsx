@@ -18,10 +18,6 @@ const FinalReconfirmation:React.FC = () => {
 
   const nft = useNFTQuery(userBoundDePainter?.mintKey)
 
-  useEffect(() => {
-    console.log(nft)
-  }, [nft])
-
   return (
     <Flex flexDirection={'column'}>
       <BindEthAndSolanaWallet onBound={() => true} />

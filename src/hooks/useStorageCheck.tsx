@@ -78,6 +78,7 @@ const Row = styled('div')`
     width: 80%;
     display: flex;
     justify-content: space-around;
+margin-top: 14px;
   }
 `
 

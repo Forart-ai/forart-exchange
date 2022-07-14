@@ -6,11 +6,20 @@ import { injected, networkConf } from '../../../../../web3/connectors'
 import Stack from '@mui/material/Stack'
 import Flex from '../../../../../contexts/theme/components/Box/Flex'
 import { Checkbox, SvgIcon, Tooltip } from '@mui/material'
-import { MetamaskSvg, PhantomSvg } from '../../../../../assets/svgs/wallets'
+import { AvalancheSvg, MetamaskSvg, PhantomSvg } from '../../../../../assets/svgs/wallets'
 import Text from '../../../../../contexts/theme/components/Text/Text'
 import { shortenAddress } from '../../../../../utils'
 import CustomizeButton from '../../../../../contexts/theme/components/Button'
 import WalletSelectionModal from '../../../../../components/wallet/WalletSelectionModal'
+import AvalancheImage from '../../../../../assets/images/wallets/avalanche.png'
+import SolanaImage from '../../../../../assets/images/wallets/solanaLogoMark.svg'
+import { styled } from '@mui/system'
+
+const WalletIcon = styled('img') `
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+`
 
 const BindEthAndSolanaWallet:React.FC<{onBound: (_?: boolean) => void}> = ({ onBound }) => {
   const { account: solAccount, disconnect,  } = useSolanaWeb3()
@@ -74,14 +83,14 @@ const BindEthAndSolanaWallet:React.FC<{onBound: (_?: boolean) => void}> = ({ onB
     <Stack spacing={1} alignItems={'flex-start'} justifyContent={'flex-start'}>
       <Flex width={'100%'} justifyContent={'flex-start'} alignItems={'center'} gap={'10px'}>
         <Flex gap={1}  alignItems={'center'}>
-          <SvgIcon><MetamaskSvg /></SvgIcon>
+          <WalletIcon src={AvalancheImage} />
           {
             ethAccount ?
               <Tooltip title={'click to disconnect'} placement={'right'}>
                 <Text style={{ cursor:'pointer' }} onClick={disconnectEthWallet}> {shortenAddress(ethAccount,6)} </Text>
               </Tooltip>
               :
-              <CustomizeButton  color={'primary'} onClick={connect}>Connect to Metamask</CustomizeButton>
+              <CustomizeButton  color={'primary'} onClick={connect}>Connect to Avalanche</CustomizeButton>
           }
         </Flex>
         <Checkbox  disabled checked={!!ethAccount} />
@@ -89,14 +98,14 @@ const BindEthAndSolanaWallet:React.FC<{onBound: (_?: boolean) => void}> = ({ onB
 
       <Flex width={'100%'} justifyContent={'flex-start'} alignItems={'center'} gap={'10px'}>
         <Flex gap={1}  alignItems={'center'}>
-          <SvgIcon><PhantomSvg /></SvgIcon>
+          <WalletIcon src={SolanaImage} />
           {
             solAccount ?
               <Tooltip title={'click to disconnect'} placement={'right'}>
                 <Text style={{ cursor:'pointer' }} onClick={disconnect}> {shortenAddress(solAccount.toBase58(),6)} </Text>
               </Tooltip>
               :
-              <CustomizeButton  color={'primary'} onClick={() => openModal(<WalletSelectionModal />)}>Connect to Phantom</CustomizeButton>
+              <CustomizeButton  color={'primary'} onClick={() => openModal(<WalletSelectionModal />)}>Connect to Solana</CustomizeButton>
           }
         </Flex>
         <Checkbox  disabled checked={!!solAccount} />

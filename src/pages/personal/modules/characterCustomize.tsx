@@ -70,7 +70,7 @@ const CharacterCustomize: React.FC<{ artistId: string, selected: (body?: ArtistK
                 </AttrContent>
 
                 {
-                  Object.keys(artistKit).filter(item => (item !== 'Body') && (item !== 'Hat') && (item !== 'Helmet')).map((type,index) => (
+                  Object.keys(artistKit).filter(item => (item !== 'Body') && (item !== 'Hat') && (item !== 'Helmet') && (item !== 'Scrab')).map((type,index) => (
                     <AttrContent key={index}>
                       <AttrType> {type} </AttrType>
                       <SelectableKitList

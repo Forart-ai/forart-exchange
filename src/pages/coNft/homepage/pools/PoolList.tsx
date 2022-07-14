@@ -7,7 +7,7 @@ import { PoolListContainer, PoolsContainer } from './poolList.styles'
 import RainbowText from '../../../../contexts/theme/components/RainbowText'
 import PainterAvatar from '../../../../assets/images/coPools/painter.webp'
 import GoblinAvatar from '../../../../assets/images/goblin/goblin-avatar.jpg'
-import SpacetronautsAvatar from '../../../../assets/images/coPools/spacetronauts/thespaceproject-avatar.webp'
+import SpacetronautsAvatar from '../../../../assets/images/coPools/spacetronauts/thespaceproject-avatar2.webp'
 
 import { Box } from '@mui/material'
 import { useMintedAmount } from '../../../goblin'

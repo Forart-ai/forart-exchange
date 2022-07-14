@@ -53,14 +53,14 @@ const MysteryHat = styled.div`
 
 const PreviewBackground = styled.div`
   position: absolute;
-  padding: 20px;
+  //padding: 10px;
   width:100%;
   height: 100%;
 
   img {
     width:100%;
     height: 100%;
-    border-radius: 20px;
+    border-radius: .4rem;
   }
 `
 
@@ -123,10 +123,6 @@ const PreviewImages = styled.div`
 `
 
 export const NFTPreview: React.FC<{ body?: NFTAttributesData, attrList?: NFTAttributesData[] }> = ({ body, attrList }) => {
-
-  /**
-        fix: fix the backgrounds!!!!!
-   **/
 
   return (
     <Wrapper>

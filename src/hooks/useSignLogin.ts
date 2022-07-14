@@ -35,9 +35,13 @@ export function useSignLogin() {
       if (['/ai-general/goblintownai', '/'].includes(pathname) || Cookies.get('USER_TOKEN')) return
 
       // adapter?: BaseMessageSignerWalletAdapter, account?: PublicKey
-      const a = randomString(66)
+      const a = randomString(10)
 
-      const message = new TextEncoder().encode(`Welcome to Forart: ${a}`)
+      const message = new TextEncoder().encode(`
+        Welcome to Forart <br/> 
+        This request will not trigger a blockchain transaction or cost any fees.
+        Your authentication status will reset after 2 hours.: ${a}
+`)
 
       const decodeMessage = new TextDecoder().decode(message)
 

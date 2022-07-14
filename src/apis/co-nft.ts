@@ -41,7 +41,10 @@ const CONFT_API = {
       },
       getUserCredit(wallet?: string) {
         return Service.get(`credits/${wallet}`)
-      }
+      },
+      getUserCreateCredit(series: number) {
+        return Service.post('/nft/credit/creation', { series })
+      },
     },
 
     nft:{

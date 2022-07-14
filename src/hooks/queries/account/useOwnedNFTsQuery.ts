@@ -51,10 +51,10 @@ export const useOwnedNFTsQuery = (creator?: PublicKey): UseQueryResult<MetadataR
 export const useNFTQuery = (mintStr?: string): UseQueryResult<MetadataResult | undefined> => {
   const { connection } = useConnectionConfig()
   const { account } = useSolanaWeb3()
-  const { quietRefreshFlag } = useRefreshController()
+  const { intermediateRefreshFlag } = useRefreshController()
 
   return useQuery(
-    ['NFT_DETAIL', account, mintStr, quietRefreshFlag],
+    ['NFT_DETAIL', account, mintStr, intermediateRefreshFlag],
     async (): Promise<any | undefined> => {
       if (!account || !connection || !mintStr) {
         return undefined
