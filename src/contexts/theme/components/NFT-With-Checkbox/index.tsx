@@ -3,6 +3,7 @@ import { styled } from '@mui/system'
 import { WrapperProps } from '../Image/types'
 import { Checkbox } from '@mui/material'
 import { ShowCoNftParams } from '../../../../types/social'
+import { height, HeightProps, maxHeight, MaxHeightProps, maxWidth, MaxWidthProps } from 'styled-system'
 
 export type NFTWithCheckboxProps = WrapperProps & {
   content?: string | JSX.Element
@@ -23,7 +24,7 @@ const getSelectStatus = ({ theme, checked }: any) => {
   }
 }
 
-const NftContent = styled('div')<{ width: number|string; height: number|string, checked?: boolean }>`
+const NftContent = styled('div')<MaxHeightProps & MaxWidthProps & {checked?: boolean}>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,8 +33,10 @@ const NftContent = styled('div')<{ width: number|string; height: number|string, 
   gap: 10px;
   width: 100%;
   height: 100%;
-  max-height: ${({ height }) => height};
-  max-width: ${({ width }) => width};
+  ${maxHeight};
+  ${maxWidth};
+
+
   background-color: rgba(255, 255, 255, .1);
   border-radius: 10px;
   padding: 10px;
@@ -59,7 +62,7 @@ const NFTWithCheckboxProps:React.FC<NFTWithCheckboxProps> = ({
 }) => {
 
   return (
-    <NftContent checked={checked} width={width} height={height} onClick={() => onSelect(src)} >
+    <NftContent checked={checked} maxWidth={width} maxHeight={height} onClick={() => onSelect(src)} >
       <Checkbox checked={checked}  sx={{ position: 'absolute', top:'6px', right: '6px', zIndex: 1 }} />
       {children}
     </NftContent>

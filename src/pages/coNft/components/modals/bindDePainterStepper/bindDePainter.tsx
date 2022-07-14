@@ -10,7 +10,7 @@ import CustomizeButton from '../../../../../contexts/theme/components/Button'
 import { useNavigate } from 'react-router-dom'
 import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
 import { useModal } from '../../../../../contexts/modal'
-import { Skeleton, SvgIcon } from '@mui/material'
+import { Box, Skeleton, SvgIcon } from '@mui/material'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 // Import Swiper styles
@@ -30,15 +30,16 @@ import { styled } from '@mui/system'
 const Wrapper = styled('div')`
   max-width: 800px;
   width: 100%;
+  height: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  .mySwiper {
-    .swiper-wrapper {
-      padding: 40px 0;
-    }
-  }
+`
+
+const BoxContainer = styled('div')`
+  width: 100%;
+  height: 100%;
+  margin: 20px;
 `
 
 const NFTItem:React.FC<{item?: MetadataResult, selected?: MetadataResult | any, onSelect:(_?:any) => void }> = ({
@@ -129,7 +130,7 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
       <Wrapper>
 
         <Flex height={'100%'} width={'100%'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} >
-          <Flex width={'100%'}>
+          <Flex width={'100%'} >
             {
               isLoading &&
               <>
@@ -163,16 +164,16 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
                   },
                 }}
                 modules={[Pagination]}
-                className="mySwiper"
               >
 
                 {
                   data?.map((nft: any, index: number) => (
 
                     <SwiperSlide key={index}>
-                      <Flex height={'100%'} >
+                      <BoxContainer >
                         <NFTItem selected={selectedValue} onSelect={v => setSelectedValue(v)}  key={index} item={nft}  />
-                      </Flex>
+                      </BoxContainer>
+
                     </SwiperSlide>
 
                   ))
