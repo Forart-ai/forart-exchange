@@ -35,7 +35,7 @@ const NftContent = styled('div')<MaxHeightProps & MaxWidthProps & {checked?: boo
   height: 100%;
   ${maxHeight};
   ${maxWidth};
-
+  margin: 10px;
 
   background-color: rgba(255, 255, 255, .1);
   border-radius: 10px;

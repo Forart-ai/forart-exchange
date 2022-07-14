@@ -34,14 +34,15 @@ const Wrapper = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  
 `
 
 const BoxContainer = styled('div')`
   width: 100%;
   height: 100%;
-  margin: 20px;
+  border: 1px red solid;
 `
-
 const NFTItem:React.FC<{item?: MetadataResult, selected?: MetadataResult | any, onSelect:(_?:any) => void }> = ({
   item,
   selected,
@@ -51,13 +52,13 @@ const NFTItem:React.FC<{item?: MetadataResult, selected?: MetadataResult | any, 
   return (
     <Flex width={'100%'} gap={'10px'} justifyContent={'center'}>
       <NFTWithCheckbox
-        width={'160px'}
-        height={'220px'}
+        width={'170px'}
+        height={'230px'}
         src={item}
         checked={(selected?.mintKey === item?.mint.toBase58()) || selected?.data === item?.data}
         onSelect={onSelect}
       >
-        <Image borderRadius={6} width={'140px'} height={'180px'} src={item?.data?.image} />
+        <Image borderRadius={6} width={'150px'} height={'190px'} src={item?.data?.image} />
         <Text >{item?.data?.name}</Text>
       </NFTWithCheckbox>
     </Flex>
@@ -130,7 +131,7 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
       <Wrapper>
 
         <Flex height={'100%'} width={'100%'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} >
-          <Flex width={'100%'} >
+          <Flex width={'100%'} alignItems={'center'} gap={'8px'} >
             {
               isLoading &&
               <>
@@ -145,7 +146,6 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
             {
               (!isLoading && holds.data?.length !== 0) &&
               <Swiper
-
                 pagination={{
                   clickable: true,
                 }}
@@ -168,12 +168,8 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
 
                 {
                   data?.map((nft: any, index: number) => (
-
                     <SwiperSlide key={index}>
-                      <BoxContainer >
-                        <NFTItem selected={selectedValue} onSelect={v => setSelectedValue(v)}  key={index} item={nft}  />
-                      </BoxContainer>
-
+                      <NFTItem selected={selectedValue} onSelect={v => setSelectedValue(v)}  key={index} item={nft}  />
                     </SwiperSlide>
 
                   ))
