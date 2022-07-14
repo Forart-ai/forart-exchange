@@ -26,12 +26,12 @@ const Wrapper = styled('div')`
 const Operation = styled('div')`
   width: 100%;
   max-width: 1350px;
-  margin: 0 auto;
+  margin: 0 auto 20px auto;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
-  margin-bottom: 20px;
+  gap: 10px;
 
   .message {
     font-family: KronaOne-Regular;
@@ -112,16 +112,6 @@ const IdentifyCreate: React.FC = () => {
           setAttr(attributes)
         }}
       />
-      <Operation>
-        <CustomizeButton
-          size={'large'}
-          variant={'contained'}
-          color={'secondary'}
-          onClick={randomGenerate}
-        >
-          Generate randomly
-        </CustomizeButton>
-      </Operation>
 
       {
         artistId === '1024' &&
@@ -144,17 +134,26 @@ const IdentifyCreate: React.FC = () => {
             }
 
             <Box display={'grid'} gridTemplateColumns={'repeat(2, max-content)'} gap={'16px'}>
+              <CustomizeButton
+                size={'large'}
+                variant={'contained'}
+                color={'secondary'}
+                onClick={randomGenerate}
+              >
+                Generate randomly
+              </CustomizeButton>
               {
                 data !== '0' ? (
                   <CustomizeButton
                     disabled={!data}
                     size={'large'}
                     variant={'contained'}
-                    color={'secondary'}
+                    color={'primary'}
                     onClick={handleCreate}
                   >
                     Mint now!
                   </CustomizeButton>
+
                 ) : (
                   <CustomizeButton disabled={true} size={'large'} variant={'contained'} color={'secondary'}>
                     Run out of tickets
@@ -168,8 +167,16 @@ const IdentifyCreate: React.FC = () => {
 
       {
         artistId === '1025' &&
-        <Operation>
 
+        <Operation>
+          <CustomizeButton
+            size={'large'}
+            variant={'contained'}
+            color={'secondary'}
+            onClick={randomGenerate}
+          >
+            Generate randomly
+          </CustomizeButton>
           {/*<Box display={'grid'} gridTemplateColumns={'repeat(2, max-content)'} gap={'16px'}>*/}
 
           {/*  <CustomizeButton variant={'contained'} onClick={() => openModal(<BindDePainterStepper />)}> Start creating!</CustomizeButton>*/}
