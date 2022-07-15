@@ -64,7 +64,7 @@ const BindDePainterStepper:React.FC<{ body?: ArtistKit, attr?: ArtistKit[]}> = (
   const { data: userCredit } = useCreditCreation(1025)
 
   useEffect(() => {
-    if (solAccount && ethAccount && nft) {
+    if (solAccount && ethAccount && userBoundDePainter && nft) {
       setActiveStep(2)
     }
 
@@ -107,7 +107,7 @@ const BindDePainterStepper:React.FC<{ body?: ArtistKit, attr?: ArtistKit[]}> = (
                   solAccount && (
                     <>
                       {
-                        nft ?
+                        userBoundDePainter && nft ?
                           <>
                             <Image src={nft.data?.data?.image} width={'164px'} height={'164px'} variant={'rectangular'} borderRadius={6} />
                             <Text>Bound {nft.data?.data?.name}</Text>
@@ -131,14 +131,13 @@ const BindDePainterStepper:React.FC<{ body?: ArtistKit, attr?: ArtistKit[]}> = (
                   solAccount && (
                     <>
                       {
-                        nft ?
+                        (userBoundDePainter && nft) &&
                           <>
                             <Image src={nft.data?.data?.image} width={'164px'} height={'164px'} variant={'rectangular'} borderRadius={6} />
                             <Text >Bound {nft.data?.data?.name}</Text>
 
                           </>
-                          :
-                          <SyncLoader color={'white'} size={6} />
+
                       }
                     </>
                   )
@@ -160,7 +159,10 @@ const BindDePainterStepper:React.FC<{ body?: ArtistKit, attr?: ArtistKit[]}> = (
             <PreviewContainer>
               <NFTPreview body={body} attrList={attr} />
             </PreviewContainer>
-            <Text >{ userCredit !== 0 ? <>Have <b> {userCredit} </b> create chances</> : 'No chances left'}</Text>
+            <Text >{ userCredit !== 0 && userBoundDePainter  ?
+              <>Have <b> {userCredit} </b> create chances</> :
+              'No chances left'}
+            </Text>
             <CustomizeButton disabled={!solAccount || !ethAccount || !userBoundDePainter?.mintKey } variant={'contained'} onClick={beforeCreateNft}> Create Now!</CustomizeButton>
           </Flex>
         </Step>
