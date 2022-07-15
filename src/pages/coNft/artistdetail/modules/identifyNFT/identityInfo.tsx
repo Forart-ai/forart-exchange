@@ -198,7 +198,10 @@ const IdentityInfo:React.FC = () => {
                 <img src={LightBulb} />
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
-                <div className={'value'}>{overviewData?.minted ?? '0'}</div>
+                <div className={'value'}>
+                  {artistId === '1024' &&    <>{overviewData?.minted ?? '0'}</> }
+                  {artistId === '1025' &&   <>{overviewData?.created ?? '0'}</> }
+                </div>
                 <div className={'name'}>
                   {artistId === '1024' && 'Minted' }
                   {artistId === '1025' && 'Created' }
@@ -211,7 +214,10 @@ const IdentityInfo:React.FC = () => {
                 <img src={Cube} />
               </DataIcon>
               <Box sx={{ display: 'flex', flexDirection:'column', alignItems:'center' }}>
-                <div className={'value'}>{overviewData?.minter ?? '0'}</div>
+                <div className={'value'}>
+                  {artistId === '1024' &&   <>{overviewData?.minter ?? '0'}</> }
+                  {artistId === '1025' &&   <>{overviewData?.creator ?? '0'}</> }
+                </div>
                 <div className={'name'}>
                   {artistId === '1024' && 'Minters' }
                   {artistId === '1025' && 'Creators' }

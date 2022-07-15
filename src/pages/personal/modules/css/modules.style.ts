@@ -66,8 +66,10 @@ export const Owner = styled('div')`
   
   .username {
     font-family: arialBold;
-    font-size: 18px;
+    font-size: 16px;
     color: #ffffff ;
+    white-space: nowrap;
+
   }
   
   .solana-icon {
@@ -80,6 +82,7 @@ export const Owner = styled('div')`
     }
     .username {
       font-size: 14px;
+      white-space: nowrap;
     }
   }
 `

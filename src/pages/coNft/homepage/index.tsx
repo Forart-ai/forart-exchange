@@ -163,12 +163,12 @@ const Header: React.FC = () => {
                     spaceData ? (
                       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent:'center' }}>
                         <StyledCountUp
-                          end={spaceData?.minted ? spaceData?.minted : '---'}
+                          end={spaceData?.created ? spaceData?.created : '---'}
                           duration={2}
                           separator=","
 
                         />
-                        <div className={'total-data'}> /10000</div>
+                        <div className={'total-data'}> /3000</div>
                       </div>
                     ) :
                       <StyledCountUp end={0} />
@@ -181,7 +181,7 @@ const Header: React.FC = () => {
                     spaceData ? (
                       <div style={{ display: 'flex', alignItems: 'baseline' }}>
                         <StyledCountUp
-                          end={spaceData?.minter ? spaceData?.minter : '---'}
+                          end={spaceData?.creator ? spaceData?.creator : '---'}
                           duration={2}
                           separator=","
 

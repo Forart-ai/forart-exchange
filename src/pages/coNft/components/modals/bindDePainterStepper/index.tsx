@@ -160,7 +160,7 @@ const BindDePainterStepper:React.FC<{ body?: ArtistKit, attr?: ArtistKit[]}> = (
             <PreviewContainer>
               <NFTPreview body={body} attrList={attr} />
             </PreviewContainer>
-            <Text >{ userCredit == 0 ? <>Have <b> {userCredit} </b> create chances</> : 'No chances left'}</Text>
+            <Text >{ userCredit !== 0 ? <>Have <b> {userCredit} </b> create chances</> : 'No chances left'}</Text>
             <CustomizeButton disabled={!solAccount || !ethAccount || !userBoundDePainter?.mintKey } variant={'contained'} onClick={beforeCreateNft}> Create Now!</CustomizeButton>
           </Flex>
         </Step>

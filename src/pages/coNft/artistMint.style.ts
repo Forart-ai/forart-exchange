@@ -180,18 +180,6 @@ export const MintButton = styled('div')`
   }
 `
 
-export const AIContainer = styled('div')`
-  display: flex;
-  flex-direction: column;
-  
-  .title{
-    font-size: 2.5em;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-  }
-`
-
 export const StyledSwitch = styled('div')`
   margin-left: 20px;
   .ant-switch {

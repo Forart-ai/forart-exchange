@@ -18,6 +18,8 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
 
   const { data: painterData } = useGetOverview(1024)
 
+  const { data: spaceData } = useGetOverview(1025)
+
   const isMobile = useMediaQuery({ query: '(max-width: 1080px)' })
 
   const mintedAmount = useMintedAmount()
@@ -50,8 +52,8 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'image': SpacetronautsAvatar,
     'name': 'SPACETRONAUTS',
     'describe': 'Yigit Akdag',
-    'nfts': 0,
-    'minters': 0,
+    'nfts': spaceData?.created,
+    'minters': spaceData?.creator,
     'status': 'living',
     'artistId': '1025',
     artistName: 'Yigit Akdag',

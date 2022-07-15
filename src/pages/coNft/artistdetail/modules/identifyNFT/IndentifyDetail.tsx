@@ -426,20 +426,16 @@ const IdentifyDetail: React.FC = () => {
                   <section className="item" >
                     <h1 className="title">Roadmap</h1>
                     <p>
-                      April - May: <br />
-                      1 Recruit more DePainters <br />
-                      2 Expand more CO-NFT Series<br />
-                      3 Unlock new functions of Forart.ai<br /><br />
-
-                      June :<br />
-                      1 Level up to get a higher yield rate.<br />
-                      2 Listing on NFT Marketplaces<br />
-                      3 NFT Staking V1<br /><br />
-
-                      July+<br />
-                      1 Get the whitelist of Forart.ai IDO.<br />
-                      2 Acquire Co-NFT revenue sharing.<br />
-                      3 Unlock new Gaming Modules<br /><br />
+                      -Phase 1 <br />
+                      Create co-nfts and start the journey. When we hit the 2000 mark, 5 lucky creators will be gifted exclusive NFTs <br /> <br />
+                      -Phase 2 <br />
+                      Continue on creating, when 3000 Spacetronauts created, 10 lucky creators will get exclusive NFTs <br /> <br />
+                      -Phase 3 <br />
+                      When all NFTs created, The Spaceship will took off for minting. Mint your Spacetronaut and join the expedition. <br /> <br />
+                      -Phase 4 <br />
+                      The universe is vast and endless, this journey will go on and The Spacetronauts will keep on exploring. When all of The Spacetronauts find their new home one lucky minter will be gifted with a  $AVAX prize <br /> <br />
+                      -Phase 5 <br />
+                      The Spaceship will land on Kalao. Even if you miss the initial minting on Forart.ai, you still have a chance to join The Space Project.
                     </p>
                   </section>
                 </TabPanel>

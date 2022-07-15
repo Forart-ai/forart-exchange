@@ -12,6 +12,7 @@ import { NFTAttributesData } from '../types/coNFT'
 import { Keypair } from '@solana/web3.js'
 import { useNavigate } from 'react-router-dom'
 import AttrReviewDialog from '../pages/coNft/components/modals/create/attr-review'
+import { useLocationQuery } from './useLocationQuery'
 
 export interface Minting {
   id: string
@@ -100,7 +101,7 @@ const MintItem: React.FC<{ minting: Minting }> = ({ minting }) => {
   const [notExisted, setNotExisted] = useState<boolean>(false)
 
   useEffect(() => {
-    if (minting) {
+    if (minting ) {
       CONFT_API.core.nft.findComponentsById(minting.components.map(o => o.toString()))
         .then((res: any) => {
           const index = res.map((o: { bodyType: any }) => o.bodyType).indexOf('Body')
@@ -221,13 +222,15 @@ const useMinting = (): UseQueryResult<Minting[]> => {
 }
 
 const useStorageCheck = () => {
+  const artistId = useLocationQuery('artistId')
+
   const { openModal } = useModal()
   const { data, isLoading } = useMinting()
 
   const [shown, setShown] = useState(false)
 
   useEffect(() => {
-    if (shown) return
+    if (shown || artistId !== '1024') return
 
     if (!isLoading) {
       setShown(true)

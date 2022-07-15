@@ -29,20 +29,31 @@ import { styled } from '@mui/system'
 
 const Wrapper = styled('div')`
   max-width: 800px;
+  max-height: 900px;
+  overflow: auto;
   width: 100%;
-  height: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  
 `
 
-const BoxContainer = styled('div')`
+const NFTListContainer = styled('div')`
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: repeat(4, auto);
+  grid-gap: 5px;
   width: 100%;
   height: 100%;
-  border: 1px red solid;
+
+  @media screen and (max-width: 900px) {
+    display: flex;
+    flex-flow:row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    list-style: none;
+  }
 `
+
 const NFTItem:React.FC<{item?: MetadataResult, selected?: MetadataResult | any, onSelect:(_?:any) => void }> = ({
   item,
   selected,
@@ -131,7 +142,7 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
       <Wrapper>
 
         <Flex height={'100%'} width={'100%'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} >
-          <Flex width={'100%'} alignItems={'center'} gap={'8px'} >
+          <Flex height={'100%'} width={'100%'} alignItems={'center'} gap={'8px'} >
             {
               isLoading &&
               <>
@@ -145,37 +156,42 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
             }
             {
               (!isLoading && holds.data?.length !== 0) &&
-              <Swiper
-                pagination={{
-                  clickable: true,
-                }}
-                breakpoints={{
-                  640: {
-                    slidesPerView: 2,
-                    spaceBetween: 20,
-                  },
-                  768: {
-                    slidesPerView: 3,
-                    spaceBetween: 40,
-                  },
-                  1024: {
-                    slidesPerView: 4,
-                    spaceBetween: 50,
-                  },
-                }}
-                modules={[Pagination]}
-              >
+              // <Swiper
+              //   pagination={{
+              //     clickable: true,
+              //   }}
+              //   breakpoints={{
+              //     640: {
+              //       slidesPerView: 2,
+              //       spaceBetween: 20,
+              //     },
+              //     768: {
+              //       slidesPerView: 3,
+              //       spaceBetween: 40,
+              //     },
+              //     1024: {
+              //       slidesPerView: 4,
+              //       spaceBetween: 50,
+              //     },
+              //   }}
+              //   modules={[Pagination]}
+              // >
 
-                {
-                  data?.map((nft: any, index: number) => (
-                    <SwiperSlide key={index}>
-                      <NFTItem selected={selectedValue} onSelect={v => setSelectedValue(v)}  key={index} item={nft}  />
-                    </SwiperSlide>
+              (
+                <NFTListContainer>
+                  {
+                    data?.map((nft: any, index: number) => (
+                      // <SwiperSlide key={index}>
+                      //   <NFTItem selected={selectedValue} onSelect={v => setSelectedValue(v)}  key={index} item={nft}  />
+                      // </SwiperSlide>
+                      <NFTItem key={index} selected={selectedValue} onSelect={v => setSelectedValue(v)}  item={nft}  />
 
-                  ))
-                }
+                    ))
+                  }
+                </NFTListContainer>
+              )
 
-              </Swiper>
+              // </Swiper>
 
             }
           </Flex>
