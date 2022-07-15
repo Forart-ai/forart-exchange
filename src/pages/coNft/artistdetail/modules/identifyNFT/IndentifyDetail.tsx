@@ -435,7 +435,7 @@ const IdentifyDetail: React.FC = () => {
                       -Phase 4 <br />
                       The universe is vast and endless, this journey will go on and The Spacetronauts will keep on exploring. When all of The Spacetronauts find their new home one lucky minter will be gifted with a  $AVAX prize <br /> <br />
                       -Phase 5 <br />
-                      The Spaceship will land on Kalao. Even if you miss the initial minting on Forart.ai, you still have a chance to join The Space Project.
+                      The Spaceship will launch on Kalao. Even if you miss the initial minting, you still have a chance to join The Space Project.
                     </p>
                   </section>
                 </TabPanel>

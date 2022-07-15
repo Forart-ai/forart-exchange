@@ -46,7 +46,7 @@ const NftContent = styled('div')<MinHeightProps & MinWidthProps & MaxHeightProps
   ${maxWidth};
   ${minHeight};
   ${minWidth};
-  margin: 10px;
+  //margin: 10px;
 
   background-color: rgba(255, 255, 255, .1);
   border-radius: 10px;

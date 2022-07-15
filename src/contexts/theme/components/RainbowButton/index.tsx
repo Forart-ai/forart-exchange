@@ -45,17 +45,17 @@ const RainbowButton = styled(Button)<ButtonProps>`
   font-family: Arial;
   background-clip: padding-box, border-box;
   background-origin: padding-box, border-box;
-  background-image: linear-gradient(90deg, #50DCB4, #8246F5, #C86EFF);
+  background-image: linear-gradient(90deg, rgba(157, 157, 161, 0.87), rgba(157, 157, 161, 0.87), rgba(157, 157, 161, 0.87));
   border-radius: 40px;
   padding: 8px 25px;
 
-  :hover {
-    background-image: linear-gradient(90deg, #3ccea4, #6c30de, #b247f3);
-  }
+  //:hover {
+  //  background-image: linear-gradient(90deg, #3ccea4, #6c30de, #b247f3);
+  //}
 `
 
 const CustomizedButtons = (props: ButtonProps) => {
-  
+
   return (
     <RainbowButton onClick={props.onClick} variant="contained">{props.children}</RainbowButton>
   )

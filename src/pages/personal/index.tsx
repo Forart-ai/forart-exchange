@@ -249,18 +249,18 @@ const TabsContainer: React.FC = () => {
       label: 'Owned NFT',
       route: 'user-nft'
     },
-    {
-      label: 'Post',
-      route: 'post'
-    },
-    {
-      label: 'Follower ',
-      route: 'follower'
-    },
-    {
-      label: 'Following ',
-      route: 'following'
-    }
+    // {
+    //   label: 'Post',
+    //   route: 'post'
+    // },
+    // {
+    //   label: 'Follower ',
+    //   route: 'follower'
+    // },
+    // {
+    //   label: 'Following ',
+    //   route: 'following'
+    // }
   ]
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {

@@ -29,8 +29,9 @@ import { styled } from '@mui/system'
 
 const Wrapper = styled('div')`
   max-width: 800px;
-  max-height: 900px;
-  overflow: auto;
+  //max-height: 70vh;
+  height: min(70vh, 700px);
+  overflow: hidden;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -39,11 +40,12 @@ const Wrapper = styled('div')`
 
 const NFTListContainer = styled('div')`
   display: grid;
-  justify-content: space-between;
-  grid-template-columns: repeat(4, auto);
-  grid-gap: 5px;
+  justify-content: center;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 16px;
   width: 100%;
   height: 100%;
+  overflow: auto;
 
   @media screen and (max-width: 900px) {
     display: flex;
@@ -61,7 +63,7 @@ const NFTItem:React.FC<{item?: MetadataResult, selected?: MetadataResult | any, 
 }) => {
 
   return (
-    <Flex width={'100%'} gap={'10px'} justifyContent={'center'}>
+    <Flex width={'100%'} justifyContent={'center'}>
       <NFTWithCheckbox
         width={'170px'}
         height={'230px'}
@@ -142,59 +144,28 @@ const BindDePainter:React.FC<{onBound: (_?: boolean) => void, forceNext: (_?: bo
       <Wrapper>
 
         <Flex height={'100%'} width={'100%'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} >
-          <Flex height={'100%'} width={'100%'} alignItems={'center'} gap={'8px'} >
-            {
-              isLoading &&
-              <>
+          {
+            isLoading && (
+              <Flex height={'100%'} width={'100%'} alignItems={'center'} gap={'8px'}>
                 {
                   new Array(3).fill({}).map((item,index) => (
                     <Skeleton key={index} width={'180px'} height={'220px'} animation={'wave'} />
                   ))
                 }
-              </>
-
-            }
-            {
-              (!isLoading && holds.data?.length !== 0) &&
-              // <Swiper
-              //   pagination={{
-              //     clickable: true,
-              //   }}
-              //   breakpoints={{
-              //     640: {
-              //       slidesPerView: 2,
-              //       spaceBetween: 20,
-              //     },
-              //     768: {
-              //       slidesPerView: 3,
-              //       spaceBetween: 40,
-              //     },
-              //     1024: {
-              //       slidesPerView: 4,
-              //       spaceBetween: 50,
-              //     },
-              //   }}
-              //   modules={[Pagination]}
-              // >
-
-              (
-                <NFTListContainer>
-                  {
-                    data?.map((nft: any, index: number) => (
-                      // <SwiperSlide key={index}>
-                      //   <NFTItem selected={selectedValue} onSelect={v => setSelectedValue(v)}  key={index} item={nft}  />
-                      // </SwiperSlide>
-                      <NFTItem key={index} selected={selectedValue} onSelect={v => setSelectedValue(v)}  item={nft}  />
-
-                    ))
-                  }
-                </NFTListContainer>
-              )
-
-              // </Swiper>
-
-            }
-          </Flex>
+              </Flex>
+            )
+          }
+          {
+            (!isLoading && holds.data?.length !== 0) && (
+              <NFTListContainer>
+                {
+                  data?.map((nft: any, index: number) => (
+                    <NFTItem key={index} selected={selectedValue} onSelect={v => setSelectedValue(v)}  item={nft}  />
+                  ))
+                }
+              </NFTListContainer>
+            )
+          }
 
           {
             holds.data?.length !== 0 ? (
