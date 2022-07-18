@@ -4,18 +4,13 @@ import { useSolanaWeb3 } from '../../../../../contexts/solana-web3'
 import CharacterCustomize from '../../../../personal/modules/characterCustomize'
 import { useModal } from '../../../../../contexts/modal'
 import AttrReviewDialog from '../../../components/modals/create/attr-review'
-import { Box, Step, StepContent, StepContext, StepLabel, Stepper, styled, useMediaQuery, useTheme } from '@mui/material'
-import {  SyncLoader } from 'react-spinners'
+import { Box, styled } from '@mui/material'
+import { SyncLoader } from 'react-spinners'
 import CustomizeButton from '../../../../../contexts/theme/components/Button'
 import useStorageCheck from '../../../../../hooks/useStorageCheck'
 import { ArtistKit, useArtistKitsQuery } from '../../../../../hooks/queries/useArtistKitsQuery'
 import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
 import { useWeb3React } from '@web3-react/core'
-import { useNavigate } from 'react-router-dom'
-import useNFTCreate from '../../../../../hooks/co-nft/useNFTCreate'
-import BindEthAndSolanaWallet from '../../../components/modals/bindDePainterStepper/bindEthAndSolanaWallet'
-import BindDePainter from '../../../components/modals/bindDePainterStepper/bindDePainter'
-import Flex from '../../../../../contexts/theme/components/Box/Flex'
 import BindDePainterStepper from '../../../components/modals/bindDePainterStepper'
 
 const Wrapper = styled('div')`
@@ -145,7 +140,7 @@ const IdentifyCreate: React.FC = () => {
               {
                 data !== '0' ? (
                   <CustomizeButton
-                    disabled={!data}
+                    disabled={true}
                     size={'large'}
                     variant={'contained'}
                     color={'primary'}
