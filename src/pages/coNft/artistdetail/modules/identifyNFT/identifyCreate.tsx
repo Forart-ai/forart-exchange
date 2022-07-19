@@ -140,7 +140,6 @@ const IdentifyCreate: React.FC = () => {
               {
                 data !== '0' ? (
                   <CustomizeButton
-                    disabled={true}
                     size={'large'}
                     variant={'contained'}
                     color={'primary'}
