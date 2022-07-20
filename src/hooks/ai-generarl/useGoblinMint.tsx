@@ -2,7 +2,11 @@ import useAnchorProvider from '../useAnchorProvider'
 import { Keypair } from '@solana/web3.js'
 import { useCallback, useMemo, useState } from 'react'
 import useCandyMachine from '../programs/useCandyMachine'
-import { CANDY_MACHINE_PROGRAM_ID, GoblinCandyMachineAddress } from '../programs/useCandyMachine/helpers/constant'
+import {
+  CANDY_MACHINE_PROGRAM_ID,
+  GOBLIN_COLLECTION_MINT,
+  GoblinCandyMachineAddress
+} from '../programs/useCandyMachine/helpers/constant'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import { AnchorProvider, Program } from '@project-serum/anchor'
 import { CandyMachineIdl } from '../programs/useCandyMachine/idl'
@@ -52,7 +56,7 @@ const useGoblinMint = () => {
         ...await builtMultipleMintTransactionV2(
           _.range(amountToMint).map(() => Keypair.generate()),
           GoblinCandyMachineAddress,
-          false
+          GOBLIN_COLLECTION_MINT
         )
       )
 

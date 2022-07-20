@@ -124,7 +124,7 @@ const Container = styled('div')`
   align-items: center;
   gap: 50px;
   margin-top: 30px;
-  
+
   ${({ theme }) => theme.breakpoints.down('lg')} {
     flex-direction: column;
     padding: 20px;
@@ -158,7 +158,7 @@ const Content = styled('div')`
   justify-content: center;
   gap: 20px;
   min-height: 500px;
-  
+
   .highlight {
     font-size: 20px;
     color: ${({ theme }) => theme.palette.primary.light};
@@ -199,12 +199,12 @@ const MarketLogo = styled('div')`
   width: 100%;
   display: flex;
   gap: 30px;
-  
+
   img {
     max-width: 160px;
     object-fit: contain;
     padding: 4px 6px;
-    background-color: rgba(18,12 ,24, .7);
+    background-color: rgba(18, 12, 24, .7);
     border-radius: .4rem;
     cursor: pointer;
   }
@@ -225,7 +225,7 @@ const StyledCountdown = styled('div')`
 const renderer: CountdownRendererFn = ({ hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a complete state
-    return <StyledCountdown  />
+    return <StyledCountdown />
   } else {
     // Render a countdown
     return (
@@ -280,7 +280,7 @@ const Goblin: React.FC = () => {
   const { account, disconnect } = useSolanaWeb3()
   const { mintGoblin, loading, message, mintingChance } = useGoblinMint()
   const { openModal } = useModal()
-  const [count, setCount] = useState<number | undefined>(mintingChance)
+  const [count, setCount] = useState<number | undefined>()
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(false)
   const currentSlotTime = useCurrentSlotTime()
   const [countdown, setCountdown] = useState<number | undefined>(PUBLIC_MINT_END_TIME * 1000)
@@ -309,7 +309,8 @@ const Goblin: React.FC = () => {
             <img src={GoblinAvatar} />
             <span>GoblinTownAI Official</span>
             <div className="info-message">
-              The amazing 9999 GoblinTownAI collection integrated of technology and NFT. The art created by AI technology
+              The amazing 9999 GoblinTownAI collection integrated of technology and NFT. The art created by AI
+              technology
             </div>
           </MainArea>
 
@@ -356,7 +357,7 @@ const Goblin: React.FC = () => {
                 <div>gas mint per wallet.</div>
               </div>
             </Flex>
-            <MarketLogo >
+            <MarketLogo>
               <a href={'https://opensea.io/collection/goblintownai-official'} target="_blank" rel="noreferrer">
                 <img src={OpenseaLogo} />
               </a>
@@ -366,32 +367,40 @@ const Goblin: React.FC = () => {
               </a>
 
             </MarketLogo>
-            <Flex flexDirection={'column'}>
-              <Flex>Connected wallet: &nbsp;
-                {
-                  account ? (
-                    <Tooltip placement={'top'} title={'Click to disconnect'}>
-                      <div className={'connect'} onClick={disconnect}> {shortenAddress(account?.toBase58())}</div>
-                    </Tooltip>
-                  ) : (
-                    <div className={'connect'} onClick={() => openModal(<WalletSelectionModal />)} />
-                  )
-                }
-              </Flex>
+            <Flex flexDirection={'column'} gap={'8px'}>
+              {account && (
+                <Flex alignItems={'center'}>
+                  <span>
+                    Connected wallet: &nbsp;
+                  </span>
+                  <Tooltip placement={'top'} title={'Click to disconnect'}>
+                    <div className={'connect'} onClick={disconnect}> {shortenAddress(account?.toBase58())}</div>
+                  </Tooltip>
+                </Flex>
+              )}
 
-              {
-                !!mintingChance && (
-                  <NumericStepper
-                    minimumValue={1}
-                    maximumValue={mintingChance}
-                    initialValue={mintingChance}
-                    thumbShadowAnimationOnTrackHoverEnabled={false}
-                    onChange={value => setCount(value)}
-                  />
-                )
-              }
+              {!!mintingChance && (
+                <Flex flexDirection={'column'}>
+                  Mint change left: {mintingChance}
+                </Flex>
+              )}
 
-              <Flex gap={'10px'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} marginTop={'10px'}>
+              {!!mintingChance && (
+                <NumericStepper
+                  minimumValue={1}
+                  maximumValue={mintingChance}
+                  initialValue={1}
+                  thumbShadowAnimationOnTrackHoverEnabled={false}
+                  onChange={value => setCount(value)}
+                />
+              )}
+
+              <Flex gap={'10px'}
+                flexDirection={'column'}
+                justifyContent={'center'}
+                alignItems={'center'}
+                marginTop={'10px'}
+              >
                 <div>Mint: {mintedAmount || '-'} / {mintLimit}</div>
                 {
                   account ? (
@@ -399,8 +408,8 @@ const Goblin: React.FC = () => {
                       variant={'contained'}
                       size={'large'}
                       onClick={() => mintGoblin(count)}
-                      disabled
-                      sx={{ fontSize:'22px' }}
+                      sx={{ fontSize: '22px' }}
+                      disabled={!mintingChance}
                     >
                       MINT {count ? count : ''} GOBLIN
                     </CustomizeButton>
@@ -409,7 +418,7 @@ const Goblin: React.FC = () => {
                       variant={'contained'}
                       size={'large'}
                       onClick={() => openModal(<WalletSelectionModal />)}
-                      sx={{ fontSize:'22px' }}
+                      sx={{ fontSize: '22px' }}
                     >
                       Connect to wallet
                     </CustomizeButton>
