@@ -13,7 +13,6 @@ import * as SplToken from '@solana/spl-token'
 import { MintLayout, TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import {
   Keypair,
-  PACKET_DATA_SIZE,
   PublicKey,
   Signer,
   SystemProgram,
@@ -24,65 +23,17 @@ import {
   Transaction,
   TransactionInstruction,
 } from '@solana/web3.js'
-import { CANDY_MACHINE_COLLECTION_MINT, TOKEN_METADATA_PROGRAM_ID } from './helpers/constant'
+import { TOKEN_METADATA_PROGRAM_ID } from './helpers/constant'
 
 // @ts-ignore
-const { createAssociatedTokenAccountInstruction, createApproveInstruction, createInitializeMintInstruction, createMintToInstruction, createRevokeInstruction } = SplToken
+const { createAssociatedTokenAccountInstruction, createInitializeMintInstruction, createMintToInstruction, createRevokeInstruction } = SplToken
 
 type TransactionWithSigners = {
   tx: Transaction,
   signers?: Signer[]
 }
 
-export async function buildCleanupTransactionForCandyMachine(program: Program, candyMachineAddress: PublicKey): Promise<TransactionWithSigners | undefined> {
-  const userPublicKey = (program.provider as AnchorProvider).wallet.publicKey
-  const ixs: TransactionInstruction[] = []
-
-  const candyMachine: any =  await program.account.candyMachine.fetch(candyMachineAddress)
-
-  if (candyMachine.data.whitelistMintSettings) {
-    const whitelistMint = new PublicKey(
-      candyMachine.data.whitelistMintSettings.mint,
-    )
-
-    const whitelistToken = (await getAtaForMint(whitelistMint, userPublicKey))[0]
-
-    if (candyMachine.data.whitelistMintSettings.mode.burnEveryTime) {
-      const exists = await (program.provider as AnchorProvider).connection.getAccountInfo(whitelistToken)
-      if (exists) {
-        ixs.push(
-          createRevokeInstruction(
-            whitelistToken,
-            userPublicKey,
-          ),
-        )
-      }
-    }
-  }
-
-  if (!ixs.length) return undefined
-
-  if (candyMachine.tokenMint) {
-    const tokenAccount = await getTokenWallet(
-      userPublicKey,
-      candyMachine.tokenMint,
-    )
-
-    ixs.push(
-      createRevokeInstruction(
-        tokenAccount,
-        userPublicKey,
-      ),
-    )
-  }
-
-  return {
-    tx: new Transaction().add(...ixs),
-    signers: []
-  }
-}
-
-export async function mintV2(program: Program, mintKeypair: Keypair, candyMachineAddress: PublicKey, cleanup = true, approveAlways = false): Promise<TransactionWithSigners[]> {
+export async function mintV2(program: Program, mintKeypair: Keypair, candyMachineAddress: PublicKey, collectionMint?: PublicKey): Promise<TransactionWithSigners> {
   const userPublicKey = (program.provider as AnchorProvider).wallet.publicKey
   const userTokenAccountAddress = await getTokenWallet(userPublicKey, mintKeypair.publicKey)
 
@@ -90,7 +41,6 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
 
   const remainingAccounts = []
   const signers = [mintKeypair]
-  const cleanupInstructions = []
   const instructions = [
     SystemProgram.createAccount({
       fromPubkey: userPublicKey,
@@ -133,7 +83,6 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
     })
 
     if (candyMachine.data.whitelistMintSettings.mode.burnEveryTime) {
-      const whitelistBurnAuthority = Keypair.generate()
 
       remainingAccounts.push({
         pubkey: whitelistMint,
@@ -141,36 +90,15 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
         isSigner: false,
       })
       remainingAccounts.push({
-        pubkey: whitelistBurnAuthority.publicKey,
+        pubkey: userPublicKey,
         isWritable: false,
         isSigner: true,
       })
-      signers.push(whitelistBurnAuthority)
-
-      const exists = await (program.provider as AnchorProvider).connection.getAccountInfo(whitelistTokenAccount)
-      if (approveAlways || exists) {
-        instructions.push(
-          createApproveInstruction(
-            whitelistTokenAccount,
-            whitelistBurnAuthority.publicKey,
-            userPublicKey,
-            1,
-          ),
-        )
-        cleanupInstructions.push(
-          createRevokeInstruction(
-            whitelistTokenAccount,
-            userPublicKey,
-          ),
-        )
-      }
     }
   }
 
   let tokenAccount
   if (candyMachine.tokenMint) {
-    const transferAuthority = Keypair.generate()
-
     tokenAccount = await getTokenWallet(
       userPublicKey,
       candyMachine.tokenMint,
@@ -182,26 +110,10 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
       isSigner: false,
     })
     remainingAccounts.push({
-      pubkey: transferAuthority.publicKey,
+      pubkey: userPublicKey,
       isWritable: false,
       isSigner: true,
     })
-
-    instructions.push(
-      createApproveInstruction(
-        tokenAccount,
-        transferAuthority.publicKey,
-        userPublicKey,
-        candyMachine.data.price.toNumber(),
-      ),
-    )
-    signers.push(transferAuthority)
-    cleanupInstructions.push(
-      createRevokeInstruction(
-        tokenAccount,
-        userPublicKey,
-      ),
-    )
   }
   const metadataAddress = await getMetadata(mintKeypair.publicKey)
   const masterEdition = await getMasterEdition(mintKeypair.publicKey)
@@ -236,12 +148,7 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
   const collectionPDAAccount =
     await (program.provider as AnchorProvider).connection.getAccountInfo(collectionPDA)
 
-  if (collectionPDAAccount && candyMachine.data.retainAuthority) {
-    /* const collectionPdaData =
-      (await program.account.collectionPda.fetch(collectionPDA)) as {
-        mint: PublicKey;
-      }*/
-    const collectionMint = CANDY_MACHINE_COLLECTION_MINT
+  if (collectionPDAAccount && candyMachine.data.retainAuthority && collectionMint) {
     const collectionAuthorityRecord = (
       await getCollectionAuthorityRecordPDA(collectionMint, collectionPDA)
     )[0]
@@ -271,61 +178,21 @@ export async function mintV2(program: Program, mintKeypair: Keypair, candyMachin
     }
   }
 
-  const data = candyMachine.data
-  const txnEstimate = 892
-    + (collectionPDAAccount && data.retainAuthority ? 182 : 0)
-    + (candyMachine.tokenMint ? 177 : 0)
-    + (data.whitelistMintSettings ? 33 : 0)
-    + (data.whitelistMintSettings?.mode?.burnEveryTime ? 145 : 0)
-    + (data.gatekeeper ? 33 : 0)
-    + (data.gatekeeper?.expireOnUse ? 66 : 0)
-
-  const INIT_INSTRUCTIONS_LENGTH = 4
-  const INIT_SIGNERS_LENGTH = 1
-
-  const txWithSigners: TransactionWithSigners[]  = []
-
   const recentBlockhash = (await program.provider.connection.getLatestBlockhash()).blockhash
   const feePayer = (program.provider as AnchorProvider).wallet.publicKey
 
-  if (txnEstimate > PACKET_DATA_SIZE) {
-    txWithSigners.push({
-      tx: new Transaction({ recentBlockhash, feePayer }).add(...instructions.splice(0, INIT_INSTRUCTIONS_LENGTH)),
-      signers: signers.splice(0, INIT_SIGNERS_LENGTH)
-    })
-  }
-
-  txWithSigners.push({
+  return {
     tx: new Transaction({ recentBlockhash, feePayer }).add(...instructions),
     signers: signers
-  })
-
-  if (cleanup) {
-    txWithSigners.push({
-      tx: new Transaction({ recentBlockhash, feePayer }).add(...cleanupInstructions),
-      signers: []
-    })
   }
-
-  return txWithSigners
 }
 
-export async function multipleMintV2(program: Program, mintKeypair: Keypair[], candyMachineAddress: PublicKey, approveAlways?: boolean) {
-  const txs = (
+export async function multipleMintV2(program: Program, mintKeypair: Keypair[], candyMachineAddress: PublicKey, collectionMint?: PublicKey) {
+  return (
     await Promise.all(
       mintKeypair.map(keypair => (
-        mintV2(program, keypair, candyMachineAddress, false, approveAlways)
+        mintV2(program, keypair, candyMachineAddress, collectionMint)
       ))
     )
-  ).flat()
-
-  const cleanupTx = await buildCleanupTransactionForCandyMachine(program, candyMachineAddress)
-
-  if (cleanupTx) {
-    txs.push(
-      cleanupTx
-    )
-  }
-
-  return txs
+  )
 }
