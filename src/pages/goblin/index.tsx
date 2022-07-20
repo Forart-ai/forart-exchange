@@ -21,7 +21,6 @@ import { shortenAddress } from '../../utils'
 import { useModal } from '../../contexts/modal'
 import WalletSelectionModal from '../../components/wallet/WalletSelectionModal'
 import { BeatLoader } from 'react-spinners'
-import { NumericStepper } from '@anatoliygatt/numeric-stepper'
 import Countdown, { CountdownRendererFn } from 'react-countdown'
 import { useCurrentSlotTime } from '../../web3/utils'
 import useCandyMachine from '../../hooks/programs/useCandyMachine'
@@ -385,16 +384,6 @@ const Goblin: React.FC = () => {
                 </Flex>
               )}
 
-              {!!mintingChance && (
-                <NumericStepper
-                  minimumValue={1}
-                  maximumValue={mintingChance}
-                  initialValue={1}
-                  thumbShadowAnimationOnTrackHoverEnabled={false}
-                  onChange={value => setCount(value)}
-                />
-              )}
-
               <Flex gap={'10px'}
                 flexDirection={'column'}
                 justifyContent={'center'}
@@ -411,7 +400,7 @@ const Goblin: React.FC = () => {
                       sx={{ fontSize: '22px' }}
                       disabled={!mintingChance}
                     >
-                      MINT {count ? count : ''} GOBLIN
+                      MINT 1 GOBLIN
                     </CustomizeButton>
                   ) : (
                     <CustomizeButton
