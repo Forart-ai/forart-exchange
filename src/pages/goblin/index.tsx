@@ -397,7 +397,7 @@ const Goblin: React.FC = () => {
                       size={'large'}
                       onClick={() => mintGoblin(count)}
                       sx={{ fontSize: '22px' }}
-                      disabled={!mintingChance}
+                      disabled={!mintingChance || loading}
                     >
                       MINT 1 GOBLIN
                     </CustomizeButton>

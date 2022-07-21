@@ -7,6 +7,8 @@ import { buildMintTransaction } from './helpers/buildMintTransaction'
 import { mintV2, multipleMintV2 } from './mintNFT'
 import { CandyMachineIdl } from './idl'
 import { useQuery, UseQueryResult } from 'react-query'
+// @ts-ignore
+import { getAssociatedTokenAddress, getAccount } from '@solana/spl-token'
 
 const useCandyMachine = () => {
   const { provider } = useAnchorProvider()
@@ -39,8 +41,36 @@ const useCandyMachine = () => {
     })
   }
 
+  const getWhitelistBalanceOfCandyMachine = useCallback(
+    async (candyMachineAddress: PublicKey, user: PublicKey): Promise<number> => {
+      try {
+        const candyMachine = await program.account.candyMachine.fetchNullable(candyMachineAddress)
+
+        if (!candyMachine) return 0
+
+        const whitelistMint = new PublicKey(
+          candyMachine.data.whitelistMintSettings.mint,
+        )
+
+        const ata = await getAssociatedTokenAddress(whitelistMint, user)
+        const tokenAccount = await getAccount(program.provider.connection, ata)
+
+        return Number(tokenAccount.amount)
+      } catch (e) {
+        console.error(e)
+        return 0
+      }
+    },
+    [program]
+  )
+
   return {
-    program, builtMintTransaction, sendMintTransaction, builtMultipleMintTransactionV2, candyMachineMintAmount
+    program,
+    builtMintTransaction,
+    sendMintTransaction,
+    builtMultipleMintTransactionV2,
+    candyMachineMintAmount,
+    getWhitelistBalanceOfCandyMachine
   }
 }
 

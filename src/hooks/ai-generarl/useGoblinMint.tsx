@@ -24,7 +24,7 @@ export type MessageType= {
 const useGoblinMint = () => {
   const { provider } = useAnchorProvider()
   const { account } = useSolanaWeb3()
-  const { builtMultipleMintTransactionV2 } = useCandyMachine()
+  const { builtMultipleMintTransactionV2, getWhitelistBalanceOfCandyMachine } = useCandyMachine()
   const [loading, setLoading] = useState<boolean>(false)
   const [message, setMessage] = useState<MessageType>({ color: '', msg: '' })
   const { data: mintingChance } = useGoblinWhiteListBalanceQuery()
@@ -46,6 +46,14 @@ const useGoblinMint = () => {
       if (!account) {
         setLoading(false)
         setMessage({ msg: 'Please connect to a wallet first.', color: 'red' })
+        return
+      }
+
+      const balance = await getWhitelistBalanceOfCandyMachine(GoblinCandyMachineAddress, account)
+
+      if (balance < amountToMint) {
+        setLoading(false)
+        setMessage({ msg: 'Insufficient whitelist balance!', color: 'red' })
         return
       }
 
@@ -75,7 +83,7 @@ const useGoblinMint = () => {
           setLoading(false)
         })
     },
-    [account, provider, mintingChance, userRemainTokenCount, currentSlotTime],
+    [account, provider, mintingChance, userRemainTokenCount, currentSlotTime, getWhitelistBalanceOfCandyMachine],
   )
 
   return { mintGoblin, mintingChance, loading, message }
