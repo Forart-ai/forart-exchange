@@ -13,19 +13,20 @@ const useWhiteListQuery = () => {
 
   const { quietRefreshFlag } = useRefreshController()
 
-  return useQuery<string | undefined>(['USER_MINT_CHANCE', account?.toBase58(), quietRefreshFlag], async () => {
-    if (!account) {
-      return undefined
-    }
+  return useQuery<number>(
+    ['USER_MINT_CHANCE', account?.toBase58(), quietRefreshFlag],
+    async () => {
+      if (!account) return 0
 
-    const ata = await getAssociatedTokenAddress(WHITELIST_TOKEN_ADDRESS, account)
+      const ata = await getAssociatedTokenAddress(WHITELIST_TOKEN_ADDRESS, account)
 
-    const tokenAccount = await connection.getParsedAccountInfo(ata)
+      const tokenAccount = await connection.getParsedAccountInfo(ata)
 
-    if (tokenAccount.value === null) return undefined
+      if (tokenAccount.value === null) return 0
 
-    return (tokenAccount.value.data as ParsedAccountData).parsed.info.tokenAmount.uiAmountString
-  }, { refetchOnWindowFocus: true })
+      return (tokenAccount.value.data as ParsedAccountData).parsed.info.tokenAmount.uiAmount
+    }, { refetchOnWindowFocus: true }
+  )
 }
 
 export { useWhiteListQuery }

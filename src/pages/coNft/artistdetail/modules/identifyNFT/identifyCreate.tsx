@@ -39,7 +39,8 @@ const Operation = styled('div')`
 const IdentifyCreate: React.FC = () => {
 
   const artistId = useLocationQuery('artistId')
-  const { data, isFetching, error } = useWhiteListQuery()
+  const { data: whitelistBalance, isLoading: whitelistBalanceLoading, error } = useWhiteListQuery()
+
   const { data: artistKit } = useArtistKitsQuery(artistId)
   const { account } = useSolanaWeb3()
   const { account: ethAccount } = useWeb3React()
@@ -117,9 +118,11 @@ const IdentifyCreate: React.FC = () => {
                   Mint chances: &nbsp;
                   {
                     error
-                      ? <>{(error as any).message}</>
+                      ? <>{(error as any).message || error}</>
                       : (
-                        !isFetching ? data : <SyncLoader color={'#8246F5'} size={8} />
+                        whitelistBalanceLoading
+                          ? <SyncLoader color={'#8246F5'} size={8} />
+                          : whitelistBalance
                       )
                   }
                 </div>
@@ -138,7 +141,7 @@ const IdentifyCreate: React.FC = () => {
                 Generate randomly
               </CustomizeButton>
               {
-                data !== '0' ? (
+                whitelistBalance && whitelistBalance > 0 ? (
                   <CustomizeButton
                     size={'large'}
                     variant={'contained'}
