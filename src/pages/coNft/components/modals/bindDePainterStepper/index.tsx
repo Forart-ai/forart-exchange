@@ -24,6 +24,7 @@ import { NFTPreview } from '../../../../../components/nft-mint/selectedList'
 import useNFTCreate from '../../../../../hooks/co-nft/useNFTCreate'
 import { useCreditCreation } from '../../../../../hooks/queries/useCreditCreation'
 import { styled } from '@mui/system'
+import { useGetOverview } from '../../../../../hooks/queries/useGetOverview'
 
 const StepperContainer = styled('div')`
   width: 100%;
@@ -60,6 +61,7 @@ const BindDePainterStepper:React.FC<{ body?: ArtistKit, attr?: ArtistKit[]}> = (
   const { account: solAccount } = useSolanaWeb3()
   const { account: ethAccount } = useWeb3React()
   const { createNFT } = useNFTCreate()
+  const { data: spaceData } = useGetOverview(1025)
 
   const { data: userCredit } = useCreditCreation(1025)
 
@@ -165,7 +167,7 @@ const BindDePainterStepper:React.FC<{ body?: ArtistKit, attr?: ArtistKit[]}> = (
                 'No chances left'
             }
             </Text>
-            <CustomizeButton disabled={!solAccount || !ethAccount || !userBoundDePainter?.mintKey } variant={'contained'} onClick={beforeCreateNft}> Create Now!</CustomizeButton>
+            <CustomizeButton disabled={!solAccount || !ethAccount || !userBoundDePainter?.mintKey || spaceData?.created >= 3000} variant={'contained'} onClick={beforeCreateNft}> Create Now!</CustomizeButton>
           </Flex>
         </Step>
 

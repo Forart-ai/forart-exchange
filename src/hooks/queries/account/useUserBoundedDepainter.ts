@@ -5,7 +5,6 @@ import { useRefreshController } from '../../../contexts/refresh-controller'
 
 export const useUserBoundedDepainter = (): UseQueryResult<any> => {
   const { account } = useSolanaWeb3()
-  const  forceRefresh  = useRefreshController()
   const { quietRefreshFlag } = useRefreshController()
 
   return useQuery(
