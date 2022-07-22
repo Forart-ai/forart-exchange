@@ -12,6 +12,8 @@ import { ArtistKit, useArtistKitsQuery } from '../../../../../hooks/queries/useA
 import { useLocationQuery } from '../../../../../hooks/useLocationQuery'
 import { useWeb3React } from '@web3-react/core'
 import BindDePainterStepper from '../../../components/modals/bindDePainterStepper'
+import Text from '../../../../../contexts/theme/components/Text/Text'
+import { useNavigate } from 'react-router-dom'
 
 const Wrapper = styled('div')`
     width: 100%;
@@ -36,6 +38,18 @@ const Operation = styled('div')`
   }
 `
 
+const Link = styled('div')`
+  display: flex;
+  color: ${({ theme }) => theme.palette.primary.main};
+  font-size: 16px;
+  
+  .router {
+    margin-left: 20px;
+    text-decoration: underline ${({ theme }) => theme.palette.primary.main};
+    cursor: pointer;
+  }
+`
+
 const IdentifyCreate: React.FC = () => {
 
   const artistId = useLocationQuery('artistId')
@@ -44,6 +58,7 @@ const IdentifyCreate: React.FC = () => {
   const { data: artistKit } = useArtistKitsQuery(artistId)
   const { account } = useSolanaWeb3()
   const { account: ethAccount } = useWeb3React()
+  const navigate = useNavigate()
 
   const { openModal } = useModal()
 
@@ -181,6 +196,7 @@ const IdentifyCreate: React.FC = () => {
           {/*  <CustomizeButton variant={'contained'} onClick={beforeCreateNft}>Test create</CustomizeButton>*/}
 
           {/*</Box>*/}
+          <Link>Wanna get a dePainter? <div onClick={() => navigate('?artistId=1024')} className={'router'}> Click here</div>  </Link>
 
           <BindDePainterStepper body={body} attr={attr} />
 
