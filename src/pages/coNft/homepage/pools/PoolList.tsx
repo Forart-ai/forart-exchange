@@ -7,7 +7,8 @@ import { PoolListContainer, PoolsContainer } from './poolList.styles'
 import RainbowText from '../../../../contexts/theme/components/RainbowText'
 import PainterAvatar from '../../../../assets/images/coPools/painter.webp'
 import GoblinAvatar from '../../../../assets/images/goblin/goblin-avatar.jpg'
-import SpacetronautsAvatar from '../../../../assets/images/coPools/spacetronauts/thespaceproject-avatar2.webp'
+import SpacetronautsAvatar from '../../../../assets/images/coPools/spacetronauts/thespaceproject-avatar.webp'
+import SpacetronautsCover from '../../../../assets/images/coPools/spacetronauts/thespaceproject-cover1.webp'
 
 import { Box } from '@mui/material'
 import { useMintedAmount } from '../../../goblin'
@@ -33,7 +34,9 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'status': 'living',
     'artistId': '3312',
     artistName: 'Monica',
-    'type': 'co-nft'
+    'type': 'co-nft',
+    avatar:undefined
+
   }
 
   const identity = {
@@ -46,10 +49,12 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'artistId': '1024',
     artistName: 'Forart.ai',
     'type': 'co-nft',
+    avatar:undefined
+
   }
 
   const spaceTronauts = {
-    'image': SpacetronautsAvatar,
+    'image': SpacetronautsCover,
     'name': 'SPACETRONAUTS',
     'describe': 'Yigit Akdag',
     'nfts': spaceData?.created,
@@ -58,6 +63,7 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'artistId': '1025',
     artistName: 'Yigit Akdag',
     'type': 'co-nft',
+    avatar:SpacetronautsAvatar
   }
 
   const goblin = React.useMemo(() => ({
@@ -69,7 +75,9 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'status': 'living',
     'artistId': '1',
     artistName: 'GoblinTownAI',
-    'type': 'ai-general'
+    'type': 'ai-general',
+    avatar:undefined
+
   }), [mintedAmount])
 
   useMemo(() => {
@@ -105,15 +113,7 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
           data={identity}
           status={identity.status}
         />
-        {
-          poolsList?.map((pool: PoolsListData, index: number) => (
-            <PoolsListItem
-              data={pool}
-              key={index}
-              status={pool.status}
-            />
-          ))
-        }
+
       </PoolListContainer>
     </PoolsContainer>
   )

@@ -4,7 +4,6 @@ import { usePoolsQuery } from '../../../hooks/queries/usePoolsQuery'
 import { useGetOverview } from '../../../hooks/queries/useGetOverview'
 import { Link, useLocation } from 'react-router-dom'
 import ComingSoonBackground from '../../../assets/images/home/coming-soon.png'
-
 import {
   DescriptionText,
   HeaderContainer,
@@ -15,7 +14,8 @@ import {
   StyledCountUp,
   RightArea,
   Wrapper,
-  Background
+  Background,
+  PoolsWrapper
 } from './index.styles'
 import { Box, Button } from '@mui/material'
 import DefaultPageWrapper from '../../../components/default-page-wrapper'
@@ -41,8 +41,6 @@ export const LeftTop = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
- 
-  
 `
 
 export const SpaceBannerContainer = styled.div`
@@ -72,7 +70,10 @@ export const Banner = styled.div`
     height: 90%;
     object-fit: contain;
     border-radius: 10px;
+    position: relative;
   } 
+  
+
   
 `
 
@@ -225,12 +226,6 @@ const Header: React.FC = () => {
                   <Link to={toPainterDetailUrl}>
                     <CustomizeButton sx={{ padding: '15px 25px', borderRadius:'10px', marginRight:'30px' }} variant={'contained'} color={'secondary'} >Create DePainter</CustomizeButton>
                   </Link>
-
-                  {/*<RainbowButton>*/}
-                  {/*  <a href="https://youtu.be/GrknLnLrwjU" target="_blank" rel="noopener noreferrer" >*/}
-                  {/*    Instruction*/}
-                  {/*  </a>*/}
-                  {/*</RainbowButton>*/}
                 </ButtonArea>
 
               </LeftTop>
@@ -398,9 +393,9 @@ const CoNftPage: React.FC = () => {
       <Background>
         <Header  />
       </Background>
-      <DefaultPageWrapper>
+      <PoolsWrapper>
         <PoolList poolsList={mockComingSoon} />
-      </DefaultPageWrapper>
+      </PoolsWrapper>
       <AppFooter />
 
     </>

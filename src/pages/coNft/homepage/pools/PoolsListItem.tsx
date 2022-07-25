@@ -3,6 +3,7 @@ import { PoolsListData } from '../../../../types/coNFT'
 import { Link, useNavigate } from 'react-router-dom'
 import { useModal } from '../../../../contexts/modal'
 import {
+  DataContent,
   ImageContent,
   InfoContent,
   LeftArea,
@@ -41,55 +42,62 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
 
   return (
     <PoolsCardContainer >
-      <ImageContent>
-        <img src={data?.image} />
+      <ImageContent cover={data?.image}>
+        <div className={'background'}  />
+        <img src={data?.avatar} />
+        <div className={'title'}>
+          <span>{data?.name }</span>
+        </div>
       </ImageContent>
 
       <InfoContent>
-        <PoolTitle>
-          <div className="pool-name"> {data?.name }</div>
-        </PoolTitle>
+        <DataContent>
+          <div className="pool-name"> NFTs: {data?.nfts ?? '0'}</div>
+        </DataContent>
 
-        <PoolInfo>
-          <LeftArea>
-            <div className={'avatar'} >
-              <img src={data?.image} />
-            </div>
-            <div className={'owner'} >
-              <div> Owned by </div>
-              <span> {data?.artistName} </span>
-            </div>
-          </LeftArea>
-          <RightArea >
-            <div className={'data'}>
-              <div>{data?.nfts ?? '0'}</div>
-              <span>NFTs</span>
-            </div>
+        <DataContent>
+          <div className="pool-name"> NFTs: {data?.nfts ?? '0'}</div>
+        </DataContent>
 
-            <div className={'data'}>
-              <div>{data?.minters ?? '0'}</div>
-              <span>Creators</span>
-            </div>
-          </RightArea>
-        </PoolInfo>
+        {/*<PoolInfo>*/}
+        {/*  <LeftArea>*/}
+        {/*    <div className={'avatar'} >*/}
+        {/*      <img src={data?.image} />*/}
+        {/*    </div>*/}
+        {/*    <div className={'owner'} >*/}
+        {/*      <div> Owned by </div>*/}
+        {/*      <span> {data?.artistName} </span>*/}
+        {/*    </div>*/}
+        {/*  </LeftArea>*/}
+        {/*  <RightArea >*/}
+        {/*    <div className={'data'}>*/}
+        {/*      <div>{data?.nfts ?? '0'}</div>*/}
+        {/*      <span>NFTs</span>*/}
+        {/*    </div>*/}
 
-        <Operation>
-          {
-            data?.status === 'closed' ? (
-              <StyledButton  sx={{ width:'100%' }} disabled={true} variant={'contained'}>
-                Create
-              </StyledButton>
-            ) :
-              <Link to={toArtistDetailUrl} style={{ width:'100%' }}>
-                <StyledButton sx={{ width:'100%' }} variant={'contained'}>
-                  Create
-                </StyledButton>
-              </Link>
-          }
-        </Operation>
+        {/*    <div className={'data'}>*/}
+        {/*      <div>{data?.minters ?? '0'}</div>*/}
+        {/*      <span>Creators</span>*/}
+        {/*    </div>*/}
+        {/*  </RightArea>*/}
+        {/*</PoolInfo>*/}
+
+        {/*<Operation>*/}
+        {/*  {*/}
+        {/*    data?.status === 'closed' ? (*/}
+        {/*      <StyledButton  sx={{ width:'100%' }} disabled={true} variant={'contained'}>*/}
+        {/*        Create*/}
+        {/*      </StyledButton>*/}
+        {/*    ) :*/}
+        {/*      <Link to={toArtistDetailUrl} style={{ width:'100%' }}>*/}
+        {/*        <StyledButton sx={{ width:'100%' }} variant={'contained'}>*/}
+        {/*          Create*/}
+        {/*        </StyledButton>*/}
+        {/*      </Link>*/}
+        {/*  }*/}
+        {/*</Operation>*/}
       </InfoContent>
     </PoolsCardContainer>
-    // </Link>
   )
 }
 

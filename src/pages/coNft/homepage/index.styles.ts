@@ -32,6 +32,14 @@ export const Wrapper = styled('div')`
   }
   
 `
+export const PoolsWrapper = styled('div')`
+  max-width: 1280px;
+  width: 80%;
+  display: flex;
+  flexDirection: column;
+  alignItems:center;
+  margin: 0 auto;
+`
 
 export const LeftArea = styled('div')(({ theme }) => ({
   height: '100%',

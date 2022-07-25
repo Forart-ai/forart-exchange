@@ -1,4 +1,5 @@
-import { Button, styled } from '@mui/material'
+import { Button } from '@mui/material'
+import { styled } from '@mui/system'
 
 export const PoolsContainer = styled('div')`
   width: 100%;
@@ -8,7 +9,7 @@ export const PoolsContainer = styled('div')`
 export const PoolListContainer = styled('div')`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, minmax(300px, 320px));
+  grid-template-columns: repeat(3,minmax(0,1fr)); 
   justify-content: space-between;
   gap: 20px;
   overflow-x: auto;
@@ -21,94 +22,104 @@ export const PoolListContainer = styled('div')`
 `
 
 export const PoolsCardContainer = styled('div')`
-  
-  width: 100%;
-  height: 480px;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  align-items: center;
-  border-radius: 20px;
+  border-radius: 1rem;
   position: relative;
   margin-top: 26px;
   border: 1px #999999 solid;
   cursor: pointer;
   background-color: rgba(255, 255, 255, .05);
+  transition: all .4s;
+
+
+  &:hover {
+    background-color: rgb(12, 9, 33);
+    transition: all .4s;
+
+  }
 
 `
 
-export const ImageContent = styled('div')`
+export const ImageContent = styled('div')<{cover: any}>`
   width: 100%;
-  height: 320px;
+  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
   object-fit: contain;
+  position: relative;
 
 
-  img {
-    width: 90%;
-    height: 90%;
-    border-radius: 20px;
+  .background {
+    width: 100%;
+    height: 100%;
+    background: url(${({ cover }) =>  cover}) no-repeat center  ;
+    background-size: cover;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
     object-fit: cover;
-  }
+    opacity: .8;
+    position: relative;
+    
   
-  ${({ theme }) => theme.breakpoints.down('sm')} {
 
   }
+  img {
+    height: 100%;
+    object-fit: contain;
+    opacity: 1;
+    position: absolute;
+    right: 0;
+    bottom: 40px;
+  }
 
-  
+
+  .title {
+    position: absolute;
+    height: 50px;
+    width: 100%;
+    bottom: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 100%);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+
+    span {
+      padding: 5px;
+      color: white;
+      font-size: 26px;
+      font-family: arialBold;
+      opacity: 1;
+      z-index: 9;
+    }
+  }
+
+
 `
 export const InfoContent = styled('div')`
   width: 100%;
-  height: 45%;
+  padding: 18px 10px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 10px 20px;
-  z-index: 1;
-
-  ${({ theme }) => theme.breakpoints.down('md')} {
-  }
-  
 `
 
-export const DataContent = styled('div')(({ theme }) => ({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'space-between',
-  margin:' 10px 0',
+export const DataContent = styled('div')`
+  width: fit-content;
+  font-family: Kanit-Regular;
+  border: 1px #3750a8 solid;
+  color: #ffffff;
+  font-size: 16px;
+  background: linear-gradient(276.64deg,#172a65 1.77%,rgba(15,29,71,0) 130.65%);
+  padding: 4px 8px;
+  border-radius: .4rem;
+  margin: 0 .5rem;
+`
 
-}))
-
-export const PoolTitle = styled('div')(({ theme }) => ({
-
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  color: theme.palette.text.primary,
-  height: '20%',
-
-  '& .pool-name': {
-    fontFamily: 'arialBold',
-    fontSize: '24px',
-
-  },
-
-  '& .likes-value': {
-    fontFamily: 'Aldrich-Regular',
-    fontSize: '20px',
-  },
-
-  [theme.breakpoints.down('sm')]: {
-    '& .pool-name': {
-
-    },
-
-    '& .likes-value': {
-    },
-  },
-}))
+export const PoolTitle = styled('div')`
+  
+`
 
 export const PoolInfo = styled('div')(({ theme }) => ({
   width: '100%',
