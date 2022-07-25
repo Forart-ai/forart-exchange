@@ -19,7 +19,6 @@ export const useGetUserInfo = (walletAccount?: string): UseQueryResult<UserInfoP
       // return await AUTH_API.getUserInfo(account?.toBase58()).then((res:any) => {
       //   console.log(res, res.avataruri)})
     },{
-      refetchOnWindowFocus:false,
       refetchInterval:false
     }
   )

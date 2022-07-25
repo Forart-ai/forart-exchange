@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { Avatar, IconButton, styled, SvgIcon, TextField, Typography } from '@mui/material'
+import React, { useCallback, useState } from 'react'
+import { Avatar, IconButton, SvgIcon } from '@mui/material'
 import CoNftCard from '../CoNftCard/coNftCard'
 import { PostListItem, ReplyPostRequest } from '../../../../types/social'
 import Flex from '../../../../contexts/theme/components/Box/Flex'
 import moment from 'moment'
 import { Comment_Outline, Heart_Filled, Heart_Outline } from '../../../../contexts/svgIcons'
 import { useSolanaWeb3 } from '../../../../contexts/solana-web3'
-import { SOCIAL_API } from '../../../../apis/auth'
+import { AUTH_API, SOCIAL_API, UserInfoParam } from '../../../../apis/auth'
 import Text from '../../../../contexts/theme/components/Text/Text'
 import useDebounce from '../../../../hooks/useDebounce'
 import { useRefreshController } from '../../../../contexts/refresh-controller'
@@ -14,10 +14,8 @@ import WalletSelectionModal from '../../../../components/wallet/WalletSelectionM
 import { useModal } from '../../../../contexts/modal'
 import { useEnqueueSnackbar } from '../../../../contexts/theme/components/Snackbar'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField } from './blog.styles'
+import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField, ProfileCard,Card, CardContent } from './blog.styles'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
-import { Helmet } from 'react-helmet'
-import CustomizeButton from '../../../../contexts/theme/components/Button'
 import { Link } from 'react-router-dom'
 import BlogsOperationMenu from '../../../personal/modules/blogsOperationMenu'
 
@@ -28,6 +26,7 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   const enqueueSnackbar = useEnqueueSnackbar()
   const navigate = useNavigate()
   const location = useLocation()
+  const [userInfo, setUserInfo] = useState<UserInfoParam>()
 
   const postId = useLocationQuery('id')
 
@@ -35,6 +34,18 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   const { openModal } = useModal()
 
   const [value, setValue] = useDebounce('',100)
+
+  const getUserInfo = useCallback(
+    async (userWallet: string) => {
+      if (userWallet !== userInfo?.wallet) {
+        await AUTH_API.getUserInfo(userWallet).then((res:any) => {
+          setUserInfo(res)
+          return
+        })
+      }
+    },
+    [userInfo],
+  )
 
   const redirectToPostDetail = useCallback(
 
@@ -77,7 +88,6 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
       setHeartNum(prev => prev - 1)
       setHeartStatus('down')
       setTimeout( ()=> SOCIAL_API.UndoStarPost({ wallet: account.toBase58(), post: item.id }).then(res => {
-        console.log('down')
         return
       }), 1000)
     }
@@ -110,7 +120,24 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
         <UserInfoRow>
           <Flex alignItems={'center'}>
             <Link to={`/account/${item.wallet}?tab=co-nft`}>
-              <StyledAvatar src={`${item?.avatar}?a=${item.updateTime}`} variant={'square'} />
+              {
+                item.avatar && (
+                  <ProfileCard>
+                    <StyledAvatar onMouseEnter={() => getUserInfo(item.wallet)}>
+                      <img src={`${item.avatar}?a=${item.updateTime}`} alt={'user-avatar'} />
+                      <Card className={'card'}>
+                        <CardContent>
+                          <img  src={`${userInfo?.avataruri}?a=${userInfo?.updateTime}`} alt={'user-avatar'} />
+                          <div className={'content'}>
+                            <span>{userInfo?.username}</span>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </StyledAvatar>
+
+                  </ProfileCard>
+                )
+              }
             </Link>
             <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
           </Flex>

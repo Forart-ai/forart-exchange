@@ -66,10 +66,114 @@ export const UserInfoRow = styled('div')`
   
 `
 
-export const StyledAvatar = styled(Avatar)`
+export const StyledAvatar = styled('div')`
   width: 64px;
   height: 64px;
-  border-radius: 10px;
+  position: relative;
+  
+  img{
+    width: 100%;
+    height: 100%;
+    border-radius: .3rem;
+  }
+
+  &:hover   {
+   .card {
+     left: 78px;
+     visibility:visible;
+     opacity: 1;
+   }
+  }
+
+`
+export const Card = styled('div')`
+   color:#666;
+   position:absolute;
+   font-family:sans-serif;
+   left:0;
+  bottom: -50%;
+   height: 120px;
+   width: 330px;
+   z-index: 1;
+   border-radius:2px;
+  background-color: #11002c;
+  // border: 1px solid ${({ theme }) => theme.palette.primary.main};
+  border-radius: .4rem;
+   cursor: pointer;
+   visibility:hidden;
+   opacity:0;
+   -o-transition:all .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+   -webkit-transition: all .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+   -moz-transition: all .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+   transition: all .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  overflow: hidden;
+
+
+   :before {
+     content:'';
+     width: 0;
+     height: 0;
+     border-top: 5px solid transparent;
+     border-right: 5px solid #11002c;
+     border-bottom: 5px solid transparent;
+     position:absolute;
+     bottom:50px;
+     left: -5px;
+   }
+`
+
+export const CardContent = styled('div')`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+
+  .content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    span {
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
+
+  img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    z-index: 1;
+    border-radius: 50%;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 300px;
+    background: #5000B4;
+    position: absolute;
+    left: -30px;
+    transform: rotate(-30deg); 
+    z-index: 0;
+    
+   
+  }
+  
+`
+
+export const ProfileCard = styled('div')`
+ 
+ 
 `
 
 export const DateText = styled(Typography)`

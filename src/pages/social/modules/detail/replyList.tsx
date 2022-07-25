@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Flex from '../../../../contexts/theme/components/Box/Flex'
 import Text from '../../../../contexts/theme/components/Text/Text'
 import moment from 'moment'
-import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField } from '../blogs/blog.styles'
+import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField, ProfileCard } from '../blogs/blog.styles'
 import { usePostReplyQuery } from '../../../../hooks/queries/usePostReplyQuery'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import { styled } from '@mui/material'
@@ -54,7 +54,12 @@ const ReplyList: React.FC= () => {
           <ReplyContainer key={index}>
             <Flex height={'100%'} width={'100%'} justifyContent={'space-between'} flexDirection={'column'} >
               <Flex alignItems={'center'} justifyContent={'flex-start'} width={'100%'} mb={'20px'} fontFamily={'Kanit-Regular'}>
-                <StyledAvatar src={item?.avatar} variant={'square'} />
+                <StyledAvatar >
+                  <img src={item?.avatar} />
+                  <ProfileCard>
+                    <div>sssdwef</div>
+                  </ProfileCard>
+                </StyledAvatar>
 
                 <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
 

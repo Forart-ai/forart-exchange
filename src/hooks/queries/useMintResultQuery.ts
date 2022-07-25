@@ -6,10 +6,10 @@ import { GetNftRequest } from '../contract/service/exchange/types'
 
 export const useMintResultQuery = (params: GetNftRequest): UseQueryResult<any> => {
   const { account } = useSolanaWeb3()
-  const { slowRefreshFlag } = useRefreshController()
+  const { quietRefreshFlag } = useRefreshController()
 
   return useQuery(
-    ['MintResult', account, slowRefreshFlag, params],
+    ['MintResult', account, quietRefreshFlag, params],
     () => {
       if (!account) {
         return undefined
@@ -17,8 +17,7 @@ export const useMintResultQuery = (params: GetNftRequest): UseQueryResult<any> =
 
       return CONFT_API.core.kits.getNFTQuery(params).then(res => res)
     },
-    { keepPreviousData:false,
-      refetchInterval: false }
+    { refetchInterval: false }
   )
 }
 

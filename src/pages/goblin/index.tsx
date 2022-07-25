@@ -285,18 +285,18 @@ const Goblin: React.FC = () => {
   const mintLimit = useMintLimit()
   const mintedAmount = useMintedAmount()
 
-  useEffect(() => {
-    if (!currentSlotTime) return
-
-    // after end
-    if (currentSlotTime < PUBLIC_MINT_END_TIME) {
-      setButtonDisabled(false)
-      setCountdown(PUBLIC_MINT_END_TIME * 1000)
-    } else {
-      setButtonDisabled(true)
-      setCountdown(undefined)
-    }
-  }, [countdown, currentSlotTime, buttonDisabled])
+  // useEffect(() => {
+  //   if (!currentSlotTime) return
+  //
+  //   // after end
+  //   if (currentSlotTime < PUBLIC_MINT_END_TIME) {
+  //     setButtonDisabled(false)
+  //     setCountdown(PUBLIC_MINT_END_TIME * 1000)
+  //   } else {
+  //     setButtonDisabled(true)
+  //     setCountdown(undefined)
+  //   }
+  // }, [countdown, currentSlotTime, buttonDisabled])
 
   return (
     <Wrapper>
@@ -397,7 +397,7 @@ const Goblin: React.FC = () => {
                       size={'large'}
                       onClick={() => mintGoblin(count)}
                       sx={{ fontSize: '22px' }}
-                      disabled={!mintingChance || loading || buttonDisabled}
+                      disabled={!mintingChance || loading }
                     >
                       MINT 1 GOBLIN
                     </CustomizeButton>
@@ -419,18 +419,18 @@ const Goblin: React.FC = () => {
                 </Message>
               </Flex>
 
-              {
-                countdown &&
-                (
-                  <Flex justifyContent={'flex-end'}>
-                    <Countdown
-                      renderer={renderer}
-                      onComplete={() => setButtonDisabled(true)}
-                      date={countdown}
-                    />
-                  </Flex>
-                )
-              }
+              {/*{*/}
+              {/*  countdown &&*/}
+              {/*  (*/}
+              {/*    <Flex justifyContent={'flex-end'}>*/}
+              {/*      <Countdown*/}
+              {/*        renderer={renderer}*/}
+              {/*        onComplete={() => setButtonDisabled(true)}*/}
+              {/*        date={countdown}*/}
+              {/*      />*/}
+              {/*    </Flex>*/}
+              {/*  )*/}
+              {/*}*/}
 
             </Flex>
 
