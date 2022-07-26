@@ -19,6 +19,8 @@ import Flex from '../../contexts/theme/components/Box/Flex'
 import { useSolanaWeb3 } from '../../contexts/solana-web3'
 import {  useSearchParams, useParams } from 'react-router-dom'
 import SettingsIcon from '@mui/icons-material/Settings'
+import { Edit_Fill, Telegram_Fill, Twitter_FullFill } from '../../assets/svgs/icons'
+import SocialMediaEditModal from './components/socialMediaEditModal'
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -65,7 +67,6 @@ const UserInfoContainer = styled('div')`
   flex-direction: column;
   width: 80%;
   max-width: 1800px;
-  margin-top: -40px;
   margin-bottom: 20px;
 `
 
@@ -141,6 +142,8 @@ const UserAvatar = styled('div')`
   background-color: ${({ theme }) => theme.palette.background.paper};
   border-radius: 10px;
   padding: 10px;
+  margin-top: -40px;
+
 
   img {
     width: 100%;
@@ -211,6 +214,84 @@ const UserSlogan = styled('div')`
 const TabsWrapper = styled('div')`
   width: 80%;
   max-width: 1800px;
+`
+
+const TagsContainer = styled('div')`
+  border: 1px ${({ theme }) => theme.palette.secondary.main} solid;
+  border-radius: .3rem;
+  background-color: rgba(47, 9, 115, 0.58);
+  padding: 2px 6px;
+  margin: 10px 10px 10px 0;
+
+    color: white;
+`
+
+const SocialMedias = styled('div')`
+  display: flex;
+  gap: 10px;
+  height: 40px;
+  align-items: center;
+  margin-top: 20px;
+
+  .divide {
+    height: 28px;
+    width: 3px;
+    border-left: 2px #999999 solid;
+    margin: 0 10px;
+    border-radius: 5px;
+  }
+
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .twitter {
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s;
+    background-color: transparent;
+
+    &:hover {
+      background-color: #00aced;
+    }
+  }
+
+  .telegram {
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s;
+    background-color: transparent;
+
+    &:hover {
+      background-color: rgb(64,167,227);
+    }
+  }
+
+  .edit {
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s;
+    background-color: transparent;
+
+    &:hover {
+      background-color: #3c019b;
+    }
+  }
 `
 
 const TabsContainer: React.FC = () => {
@@ -396,19 +477,33 @@ const PersonalCenterPage: React.FC = () => {
         </BackgroundImage>
 
         <UserInfoContainer>
-          <UserAvatar>
-            {
-              wallet === account?.toBase58() &&
-              <CoverMask onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)}>
-                <SettingsIcon fontSize={'large'} sx={{ color:'#ffffff' }} />
-              </CoverMask>
-            }
-            {
-              userInfo?.avataruri && <Image  width={'100%'} height={'100%'} src={`${userInfo?.avataruri}?a=${userInfo?.updateTime}` } />
-            }
-          </UserAvatar>
+          <Flex width={'100%'} justifyContent={'space-between'}>
+            <UserAvatar>
+              {
+                wallet === account?.toBase58() &&
+                <CoverMask onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)}>
+                  <SettingsIcon fontSize={'large'} sx={{ color:'#ffffff' }} />
+                </CoverMask>
+              }
+              {
+                userInfo?.avataruri && <Image  width={'100%'} height={'100%'} src={`${userInfo?.avataruri}?a=${userInfo?.updateTime}` } />
+              }
+            </UserAvatar>
+            <SocialMedias>
+              <div className={'icon telegram'}><a href={''} target={'_blank'} rel="noreferrer"><Telegram_Fill /></a></div>
+              <div className={'icon twitter'}><a href={''} target={'_blank'} rel="noreferrer"><Twitter_FullFill /></a></div>
+              <div className={'divide'} />
+              <div className={'icon edit'} onClick={() => openModal(<SocialMediaEditModal  />)}><Edit_Fill /></div>
+
+            </SocialMedias>
+          </Flex>
           <UserInfo>
             <div className="username">{userInfo?.username}</div>
+            <Flex>
+              <TagsContainer>OK Bear</TagsContainer>
+              <TagsContainer>Harvest Moon</TagsContainer>
+              <TagsContainer>Spacetronauts</TagsContainer>
+            </Flex>
             <UserSlogan>{ userInfo?.slogan }</UserSlogan>
             <DataColumn>
               <DataItem>

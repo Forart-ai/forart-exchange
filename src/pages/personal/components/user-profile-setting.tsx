@@ -24,7 +24,6 @@ const Wrapper = styled('div')`
 
 const Item = styled('div')`
   margin-bottom: 20px;
-    
 `
 
 const Title = styled('div')`
@@ -83,7 +82,6 @@ const defaultFormValues:UserInfoParam = {
 
 const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) => {
   const { account, adapter } = useSolanaWeb3()
-  // const { data: userInfo } = useGetUserInfo()
   const { closeModal } = useModal()
   const { forceRefresh } = useRefreshController()
   const { enqueueSnackbar } = useSnackbar()
@@ -94,12 +92,19 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
 
   useEffect(() => {
 
+    // setFormValues({
+    //   banneruri: userInfo?.banneruri,
+    //   username: userInfo?.username,
+    //   wallet: account?.toBase58(),
+    //   avataruri: userInfo?.avataruri,
+    //   slogan: userInfo?.slogan
+    // })
     setFormValues({
-      banneruri: userInfo?.banneruri,
-      username: userInfo?.username,
+      banneruri: '',
+      username: '',
       wallet: account?.toBase58(),
-      avataruri: userInfo?.avataruri,
-      slogan: userInfo?.slogan
+      avataruri: '',
+      slogan: ''
     })
 
   }, [userInfo,account])
@@ -198,7 +203,7 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
   }, [formValues])
 
   return (
-    <Dialog title={'User Profile'} closeable={true} variant={'info'} >
+    <Dialog title={'Profile details'} closeable={true} variant={'info'} >
       <Wrapper >
         <form onSubmit={handleSubmit}>
           <Item>

@@ -1,9 +1,10 @@
-import { Button } from '@mui/material'
 import { styled } from '@mui/system'
 
 export const PoolsContainer = styled('div')`
   width: 100%;
   margin: 40px 0 ;
+
+ 
 `
 
 export const PoolListContainer = styled('div')`
@@ -16,7 +17,7 @@ export const PoolListContainer = styled('div')`
   list-style: none;
 
   ${({ theme }) => theme.breakpoints.down('sm')} {
-   zoom: 0.8;
+    grid-template-columns: repeat(1,minmax(0,1fr));
   }
  
 `
@@ -32,13 +33,88 @@ export const PoolsCardContainer = styled('div')`
   border: 1px #999999 solid;
   cursor: pointer;
   background-color: rgba(255, 255, 255, .05);
-  transition: all .4s;
+  -o-transition:all .5s ease-in-out;
+  -webkit-transition: all .5s ease-in-out;
+  -moz-transition: all .5s ease-in-out;
+  transition:all .5s ease-in-out;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .right-arrow-svg {
+    position: relative;
+    -o-transition:all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    transition:all .3s ease-in-out;
+    left: 0;
+  }
 
 
   &:hover {
     background-color: rgb(12, 9, 33);
-    transition: all .4s;
+    
+    .right-arrow-svg {
+      position: relative;
+      left: 5px;
+    }
 
+  }
+
+
+  .ribbon {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+    z-index: 3;
+  }
+  .ribbon::before,
+  .ribbon::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    display: block;
+    border: 5px solid #1f3685;
+  }
+  .ribbon span {
+    position: absolute;
+    display: block;
+    width: 225px;
+    padding: 15px 0;
+    background-color: #3750a8;
+    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+    color: #fff;
+    font: 700 18px/1 'Lato', sans-serif;
+    text-shadow: 0 1px 1px rgba(0,0,0,.2);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* top left*/
+  .ribbon-top-left {
+    top: -10px;
+    left: -10px;
+  }
+  .ribbon-top-left::before,
+  .ribbon-top-left::after {
+    border-top-color: transparent;
+    border-left-color: transparent;
+  }
+  .ribbon-top-left::before {
+    top: 0;
+    right: 0;
+  }
+  .ribbon-top-left::after {
+    bottom: 0;
+    left: 0;
+  }
+  .ribbon-top-left span {
+    right: -25px;
+    top: 30px;
+    transform: rotate(-45deg);
   }
 
 `
@@ -103,6 +179,8 @@ export const InfoContent = styled('div')`
   width: 100%;
   padding: 18px 10px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 `
 
 export const DataContent = styled('div')`
@@ -120,13 +198,6 @@ export const DataContent = styled('div')`
 export const PoolTitle = styled('div')`
   
 `
-
-export const PoolInfo = styled('div')(({ theme }) => ({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'space-between',
-  marginTop: '15px',
-}))
 
 export const LeftArea = styled('div')(({ theme }) => ({
   width: '55%',
@@ -204,28 +275,3 @@ export const RightArea = styled('div')(({ theme }) => ({
 
 }))
 
-export const Operation = styled('div')(({ theme }) => ({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-
-  a :{
-    color : 'white'
-  }
-
-}))
-
-export const StyledButton = styled(Button)(({ theme }) => ({
-  marginTop: theme.spacing(1),
-  backgroundColor: theme.palette.background.default,
-  border: '1px solid',
-  borderColor: theme.palette.secondary.main,
-  borderRadius: '40px',
-  boxShadow: 'none',
-  padding:'5px 27px',
-
-  '&:hover': {
-    backgroundColor: theme.palette.background.paper,
-
-  },
-}))

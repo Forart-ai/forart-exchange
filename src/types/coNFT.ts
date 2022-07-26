@@ -17,6 +17,7 @@ export interface PoolsListData {
   artistName: string,
   type: string,
   avatar?: any
+  chain?:string
 }
 
 export interface MintedNFTItem {

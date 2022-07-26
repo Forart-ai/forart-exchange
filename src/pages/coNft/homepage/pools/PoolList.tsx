@@ -6,7 +6,9 @@ import PoolsListItem from './PoolsListItem'
 import { PoolListContainer, PoolsContainer } from './poolList.styles'
 import RainbowText from '../../../../contexts/theme/components/RainbowText'
 import PainterAvatar from '../../../../assets/images/coPools/painter.webp'
-import GoblinAvatar from '../../../../assets/images/goblin/goblin-avatar.jpg'
+import GoblinCover from '../../../../assets/images/goblin/goblin-cover.webp'
+import GoblinAvatar from '../../../../assets/images/goblin/goblin-avatar.png'
+
 import SpacetronautsAvatar from '../../../../assets/images/coPools/spacetronauts/thespaceproject-avatar.webp'
 import SpacetronautsCover from '../../../../assets/images/coPools/spacetronauts/thespaceproject-cover1.webp'
 
@@ -35,7 +37,8 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'artistId': '3312',
     artistName: 'Monica',
     'type': 'co-nft',
-    avatar:undefined
+    avatar:undefined,
+    chain: 'Solana'
 
   }
 
@@ -49,7 +52,8 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'artistId': '1024',
     artistName: 'Forart.ai',
     'type': 'co-nft',
-    avatar:undefined
+    avatar:undefined,
+    chain: 'Solana',
 
   }
 
@@ -63,11 +67,12 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'artistId': '1025',
     artistName: 'Yigit Akdag',
     'type': 'co-nft',
-    avatar:SpacetronautsAvatar
+    avatar:SpacetronautsAvatar,
+    chain: 'Eth'
   }
 
   const goblin = React.useMemo(() => ({
-    'image': GoblinAvatar,
+    'image': GoblinCover,
     'name': 'GoblinTownAI',
     'describe': 'GoblinG oblinGob linGob linGo blin GoblinG oblinGoblin GoblinGoblin.',
     'nfts': mintedAmount,
@@ -76,7 +81,8 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     'artistId': '1',
     artistName: 'GoblinTownAI',
     'type': 'ai-general',
-    avatar:undefined
+    avatar:GoblinAvatar,
+    chain: 'Solana'
 
   }), [mintedAmount])
 

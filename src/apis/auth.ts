@@ -24,6 +24,11 @@ export type UserInfoParam = {
   updateTime?: string
 }
 
+export type SocialMediaParam = {
+  twitterAddr?: string,
+  telegramAddr? : string
+}
+
 export const AUTH_API = {
   userSignLogin(params: {wallet: string, toSign: string, signed: string, walletInBase64:string}) {
     return Service.post('/login', params)

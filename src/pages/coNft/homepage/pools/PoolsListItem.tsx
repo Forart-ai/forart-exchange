@@ -6,14 +6,10 @@ import {
   DataContent,
   ImageContent,
   InfoContent,
-  LeftArea,
-  Operation,
-  PoolInfo,
   PoolsCardContainer,
-  PoolTitle,
-  RightArea,
-  StyledButton
 } from './poolList.styles'
+import Flex from '../../../../contexts/theme/components/Box/Flex'
+import { RightArrowSvg } from '../../../../assets/svgs/icons'
 
 const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data, status }) => {
 
@@ -41,63 +37,74 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
   const { openModal } = useModal()
 
   return (
-    <PoolsCardContainer >
-      <ImageContent cover={data?.image}>
-        <div className={'background'}  />
-        <img src={data?.avatar} />
-        <div className={'title'}>
-          <span>{data?.name }</span>
-        </div>
-      </ImageContent>
+    <Link to={toArtistDetailUrl}>
+      <PoolsCardContainer >
+        <div className="ribbon ribbon-top-left"><span>{data?.chain}</span></div>
 
-      <InfoContent>
-        <DataContent>
-          <div className="pool-name"> NFTs: {data?.nfts ?? '0'}</div>
-        </DataContent>
+        <ImageContent cover={data?.image}>
+          <div className={'background'}  />
+          <img src={data?.avatar} />
+          <div className={'title'}>
+            <span>{data?.name }</span>
+          </div>
+        </ImageContent>
 
-        <DataContent>
-          <div className="pool-name"> NFTs: {data?.nfts ?? '0'}</div>
-        </DataContent>
+        <InfoContent>
+          <Flex>
+            <DataContent>
+              <div className="pool-name"> NFTs: {data?.nfts ?? '0'}</div>
+            </DataContent>
 
-        {/*<PoolInfo>*/}
-        {/*  <LeftArea>*/}
-        {/*    <div className={'avatar'} >*/}
-        {/*      <img src={data?.image} />*/}
-        {/*    </div>*/}
-        {/*    <div className={'owner'} >*/}
-        {/*      <div> Owned by </div>*/}
-        {/*      <span> {data?.artistName} </span>*/}
-        {/*    </div>*/}
-        {/*  </LeftArea>*/}
-        {/*  <RightArea >*/}
-        {/*    <div className={'data'}>*/}
-        {/*      <div>{data?.nfts ?? '0'}</div>*/}
-        {/*      <span>NFTs</span>*/}
-        {/*    </div>*/}
+            <DataContent>
+              <div className="pool-name"> Creators: {data?.minters ?? '0'}</div>
+            </DataContent>
+          </Flex>
 
-        {/*    <div className={'data'}>*/}
-        {/*      <div>{data?.minters ?? '0'}</div>*/}
-        {/*      <span>Creators</span>*/}
-        {/*    </div>*/}
-        {/*  </RightArea>*/}
-        {/*</PoolInfo>*/}
+          <div className={'right-arrow-svg'}>
 
-        {/*<Operation>*/}
-        {/*  {*/}
-        {/*    data?.status === 'closed' ? (*/}
-        {/*      <StyledButton  sx={{ width:'100%' }} disabled={true} variant={'contained'}>*/}
-        {/*        Create*/}
-        {/*      </StyledButton>*/}
-        {/*    ) :*/}
-        {/*      <Link to={toArtistDetailUrl} style={{ width:'100%' }}>*/}
-        {/*        <StyledButton sx={{ width:'100%' }} variant={'contained'}>*/}
-        {/*          Create*/}
-        {/*        </StyledButton>*/}
-        {/*      </Link>*/}
-        {/*  }*/}
-        {/*</Operation>*/}
-      </InfoContent>
-    </PoolsCardContainer>
+            <RightArrowSvg width={32} height={32} />
+          </div>
+
+          {/*<PoolInfo>*/}
+          {/*  <LeftArea>*/}
+          {/*    <div className={'avatar'} >*/}
+          {/*      <img src={data?.image} />*/}
+          {/*    </div>*/}
+          {/*    <div className={'owner'} >*/}
+          {/*      <div> Owned by </div>*/}
+          {/*      <span> {data?.artistName} </span>*/}
+          {/*    </div>*/}
+          {/*  </LeftArea>*/}
+          {/*  <RightArea >*/}
+          {/*    <div className={'data'}>*/}
+          {/*      <div>{data?.nfts ?? '0'}</div>*/}
+          {/*      <span>NFTs</span>*/}
+          {/*    </div>*/}
+
+          {/*    <div className={'data'}>*/}
+          {/*      <div>{data?.minters ?? '0'}</div>*/}
+          {/*      <span>Creators</span>*/}
+          {/*    </div>*/}
+          {/*  </RightArea>*/}
+          {/*</PoolInfo>*/}
+
+          {/*<Operation>*/}
+          {/*  {*/}
+          {/*    data?.status === 'closed' ? (*/}
+          {/*      <StyledButton  sx={{ width:'100%' }} disabled={true} variant={'contained'}>*/}
+          {/*        Create*/}
+          {/*      </StyledButton>*/}
+          {/*    ) :*/}
+          {/*      <Link to={toArtistDetailUrl} style={{ width:'100%' }}>*/}
+          {/*        <StyledButton sx={{ width:'100%' }} variant={'contained'}>*/}
+          {/*          Create*/}
+          {/*        </StyledButton>*/}
+          {/*      </Link>*/}
+          {/*  }*/}
+          {/*</Operation>*/}
+        </InfoContent>
+      </PoolsCardContainer>
+    </Link>
   )
 }
 
