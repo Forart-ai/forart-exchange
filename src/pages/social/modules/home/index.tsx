@@ -10,7 +10,7 @@ import { SOCIAL_API } from '../../../../apis/auth'
 import CustomizeButton from '../../../../contexts/theme/components/Button'
 import Blogs from '../blogs/blogs'
 import { useMintResultQuery } from '../../../../hooks/queries/useMintResultQuery'
-import { PostListItem, ShowCoNftParams } from '../../../../types/social'
+import {  ShowCoNftParams } from '../../../../types/social'
 import { usePostQuery } from '../../../../hooks/queries/usePostQuery'
 import { useRefreshController } from '../../../../contexts/refresh-controller'
 import Background from '../../../../assets/images/social/social-banner.png'
@@ -19,10 +19,8 @@ import Flex from '../../../../contexts/theme/components/Box/Flex'
 import Picker from 'emoji-picker-react'
 import { Clown_Emoji, PaperPlain_Filled } from '../../../../contexts/svgIcons'
 import StyledSelector from '../../../../contexts/theme/components/Selector'
-import UserOwnedNfts from '../../../personal/modules/userOwnedNfts'
 import { MetadataResult } from '../../../../utils/metaplex/metadata'
 import UserOwnedNftList from '../userOwnedNftList'
-import { SendRounded } from '@mui/icons-material'
 import Text from '../../../../contexts/theme/components/Text/Text'
 
 export const SocialPageWrapper = styled('div')`
@@ -62,7 +60,7 @@ const Header = styled('div')`
 
 const CoNftContainer = styled('div')`
   width: 100%;
-  height: 280px;
+  max-height: 280px;
 `
 
 const PostArea = styled('div')`
@@ -114,8 +112,11 @@ const SocialHomepage: React.FC = () => {
       SOCIAL_API.postNft(selectedNFt).then(() => {
         forceRefresh()
         setLoading(false)
+        return
       })
     }
+    setLoading(false)
+
   }, [selectedNFt])
 
   const { data: pagingData, fetchNextPage, hasNextPage } = usePostQuery({
@@ -185,8 +186,6 @@ const SocialHomepage: React.FC = () => {
           <MenuItem value={'owned-nft'}>Wallet NFT</MenuItem>
           <MenuItem value={'aiart'}>AiArt</MenuItem>
         </StyledSelector>
-
-        {/*<RainbowButton onClick={() => setPostNft(!postNft)}> {!postNft? 'Post CO-NFT' : 'Post blog'} </RainbowButton>*/}
 
         <CoNftContainer>
           {

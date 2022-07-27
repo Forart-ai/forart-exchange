@@ -14,7 +14,7 @@ import WalletSelectionModal from '../../../../components/wallet/WalletSelectionM
 import { useModal } from '../../../../contexts/modal'
 import { useEnqueueSnackbar } from '../../../../contexts/theme/components/Snackbar'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField, ProfileCard,Card, CardContent } from './blog.styles'
+import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField, ProfileCard,Card, CardContent,TagsContainer, FollowButton } from './blog.styles'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import { Link } from 'react-router-dom'
 import BlogsOperationMenu from '../../../personal/modules/blogsOperationMenu'
@@ -32,17 +32,15 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
 
   const { forceRefresh } = useRefreshController()
   const { openModal } = useModal()
-
   const [value, setValue] = useDebounce('',100)
 
   const getUserInfo = useCallback(
     async (userWallet: string) => {
-      if (userWallet !== userInfo?.wallet) {
-        await AUTH_API.getUserInfo(userWallet).then((res:any) => {
-          setUserInfo(res)
-          return
-        })
-      }
+      console.log('search')
+      await AUTH_API.getUserInfo(userWallet).then((res:any) => {
+        setUserInfo(res)
+        return
+      })
     },
     [userInfo],
   )
@@ -129,8 +127,17 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
                         <CardContent>
                           <img  src={`${userInfo?.avataruri}?a=${userInfo?.updateTime}`} alt={'user-avatar'} />
                           <div className={'content'}>
-                            <span>{userInfo?.username}</span>
+                            <Flex justifyContent={'space-between'} width={'100%'}>
+                              <span>{userInfo?.username}</span>
+                              <FollowButton>FOLLOW</FollowButton>
+                            </Flex>
+                            <Flex>
+                              <TagsContainer>OK Bear</TagsContainer>
+                              <TagsContainer>Harvest Moon</TagsContainer>
+                              <TagsContainer>Spacetronauts</TagsContainer>
+                            </Flex>
                           </div>
+
                         </CardContent>
                       </Card>
                     </StyledAvatar>

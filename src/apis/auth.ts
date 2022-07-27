@@ -19,7 +19,7 @@ export type UserInfoParam = {
   username?: string,
   avataruri?: string
   slogan?:string
-  wallet?:string,
+  wallet:string,
   createTime?: string,
   updateTime?: string
 }

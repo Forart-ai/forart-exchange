@@ -88,26 +88,12 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
   const [loading, setLoading] = useState<boolean>(false)
   const { isPornImage }  = useNSFW()
 
-  const [formValues, setFormValues] = useState(defaultFormValues)
-
-  useEffect(() => {
-
-    // setFormValues({
-    //   banneruri: userInfo?.banneruri,
-    //   username: userInfo?.username,
-    //   wallet: account?.toBase58(),
-    //   avataruri: userInfo?.avataruri,
-    //   slogan: userInfo?.slogan
-    // })
-    setFormValues({
-      banneruri: '',
-      username: '',
+  const [formValues, setFormValues] = useState<any>(
+    { banneruri: userInfo?.banneruri,
+      username: userInfo?.username,
       wallet: account?.toBase58(),
-      avataruri: '',
-      slogan: ''
-    })
-
-  }, [userInfo,account])
+      avataruri: userInfo?.avataruri,
+      slogan: userInfo?.slogan })
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target
@@ -157,13 +143,17 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
     e.preventDefault()
     setLoading(true)
 
-    if (typeof formValues.banneruri !=='string') {
+    Object.keys(formValues).forEach((key:string) => {
+      if (formValues[key] === '') { formValues[key] = null }
+    })
+
+    if (formValues.banneruri && typeof formValues.banneruri !=='string') {
       await  AUTH_API.uploadBannerImage({ wallet:account?.toBase58(), file:formValues.banneruri }).then((res:any) => {
         formValues.banneruri = res
       })
     }
 
-    if (typeof formValues.avataruri !== 'string') {
+    if (formValues.avataruri && typeof formValues.avataruri !== 'string') {
       await AUTH_API.uploadAvatarImage({ wallet:account?.toBase58(), file:formValues.avataruri }).then((res:any) => {
         formValues.avataruri = res
       })
@@ -259,7 +249,6 @@ const UserProfileSetting:React.FC<{userInfo?: UserInfoParam}> = ({ userInfo }) =
               variant={'outlined'}
               name={'slogan'}
               defaultValue={userInfo?.slogan}
-              required
             />
           </Item>
 

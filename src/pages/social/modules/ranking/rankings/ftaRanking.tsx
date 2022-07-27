@@ -7,6 +7,7 @@ import { IconButton, SvgIcon } from '@mui/material'
 import { Arrow_Down, Caret_Down, Heart_Filled } from '../../../../../contexts/svgIcons'
 import { RankingBox, TableHeader, RankList, Number, MoreContainer, ShowMoreIcon } from '../ranking.style'
 import { useRankQuery } from '../../../../../hooks/queries/useRankQuery'
+import { shortenAddress } from '../../../../../utils'
 
 const mockData = [
   {
@@ -105,7 +106,7 @@ const FtaRanking:React.FC = () => {
                 <Number $rank={(index + 1).toString()}> {index + 1} </Number>
                 <Flex alignItems={'center'} ml={'34px'}>
                   {/*<Image width={'36px'} height={'36px'} src={item.avatar} />*/}
-                  {/*<Text fontFamily={'Kanit-Regular'} ml={10} fontSize={18} color={'secondary.main'}> {item.username} </Text>*/}
+                  <Text fontFamily={'Kanit-Regular'} ml={10} fontSize={18} color={'secondary.main'}> {shortenAddress(item.wallet)} </Text>
                 </Flex>
               </Flex>
               <Text fontSize={22} fontFamily={'Aldrich-Regular'}>${item.retain}</Text>

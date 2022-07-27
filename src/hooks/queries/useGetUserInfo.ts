@@ -13,8 +13,8 @@ export const useGetUserInfo = (walletAccount?: string): UseQueryResult<UserInfoP
       if (!walletAccount){return }
       return await AUTH_API.getUserInfo(walletAccount).then((res: any)=> ({
         ...res ,
-        avataruri:`${res.avataruri}?a=${new Date().getTime()}`,
-        banneruri:`${res.banneruri}?a=${new Date().getTime()}`
+        avataruri: res.avataruri ? `${res.avataruri}?a=${new Date().getTime()}` : null,
+        banneruri: res.banneruri ? `${res.banneruri}?a=${new Date().getTime()}` : null
       }))
       // return await AUTH_API.getUserInfo(account?.toBase58()).then((res:any) => {
       //   console.log(res, res.avataruri)})

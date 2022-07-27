@@ -47,7 +47,6 @@ const ReplyList: React.FC= () => {
     <>
 
       {  postDetail && <Blogs item={postDetail} /> }
-      monica991123
 
       {
         replyList?.map((item, index) => (
@@ -56,9 +55,7 @@ const ReplyList: React.FC= () => {
               <Flex alignItems={'center'} justifyContent={'flex-start'} width={'100%'} mb={'20px'} fontFamily={'Kanit-Regular'}>
                 <StyledAvatar >
                   <img src={item?.avatar} />
-                  <ProfileCard>
-                    <div>sssdwef</div>
-                  </ProfileCard>
+
                 </StyledAvatar>
 
                 <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>

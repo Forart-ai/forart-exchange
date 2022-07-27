@@ -330,18 +330,18 @@ const TabsContainer: React.FC = () => {
       label: 'Owned NFT',
       route: 'user-nft'
     },
-    // {
-    //   label: 'Post',
-    //   route: 'post'
-    // },
-    // {
-    //   label: 'Follower ',
-    //   route: 'follower'
-    // },
-    // {
-    //   label: 'Following ',
-    //   route: 'following'
-    // }
+    {
+      label: 'Post',
+      route: 'post'
+    },
+    {
+      label: 'Follower ',
+      route: 'follower'
+    },
+    {
+      label: 'Following ',
+      route: 'following'
+    }
   ]
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -458,6 +458,7 @@ const PersonalCenterPage: React.FC = () => {
 
   const { data: credit } = useUserCredit()
   const { data: userInfo, isLoading } = useGetUserInfo(wallet)
+
   const { data: followingCount } = useUserFollowingCounts(wallet)
 
   return (
@@ -494,7 +495,6 @@ const PersonalCenterPage: React.FC = () => {
               <div className={'icon twitter'}><a href={''} target={'_blank'} rel="noreferrer"><Twitter_FullFill /></a></div>
               <div className={'divide'} />
               <div className={'icon edit'} onClick={() => openModal(<SocialMediaEditModal  />)}><Edit_Fill /></div>
-
             </SocialMedias>
           </Flex>
           <UserInfo>
