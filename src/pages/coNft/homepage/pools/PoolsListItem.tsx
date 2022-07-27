@@ -38,7 +38,7 @@ const PoolsListItem: React.FC<{data?: PoolsListData, status?: string}> = ({ data
 
   return (
     <Link to={toArtistDetailUrl}>
-      <PoolsCardContainer >
+      <PoolsCardContainer chain={data?.chain} >
         <div className="ribbon ribbon-top-left"><span>{data?.chain}</span></div>
 
         <ImageContent cover={data?.image}>

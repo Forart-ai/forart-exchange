@@ -68,7 +68,7 @@ const PoolList: React.FC<{ poolsList?: Array<PoolsListData> }> = ({ poolsList })
     artistName: 'Yigit Akdag',
     'type': 'co-nft',
     avatar:SpacetronautsAvatar,
-    chain: 'Eth'
+    chain: 'AVALANCHE'
   }
 
   const goblin = React.useMemo(() => ({

@@ -22,7 +22,7 @@ export const PoolListContainer = styled('div')`
  
 `
 
-export const PoolsCardContainer = styled('div')`
+export const PoolsCardContainer = styled('div')<{chain?: string}>`
   margin-left: 1.25rem;
   margin-right: 1.25rem;
   display: flex;
@@ -84,7 +84,8 @@ export const PoolsCardContainer = styled('div')`
     display: block;
     width: 225px;
     padding: 15px 0;
-    background-color: #3750a8;
+    //background: linear-gradient(45deg, #00FFA3, #03E1FF 27%, #DC1FFF);
+    background: ${({ chain }) => chain === 'AVALANCHE' ? 'rgb(232,65,66)' : 'linear-gradient(45deg, #00FFA3, #03E1FF 27%, #DC1FFF)'};
     box-shadow: 0 5px 10px rgba(0,0,0,.1);
     color: #fff;
     font: 700 18px/1 'Lato', sans-serif;
