@@ -22,6 +22,7 @@ import StyledSelector from '../../../../contexts/theme/components/Selector'
 import { MetadataResult } from '../../../../utils/metaplex/metadata'
 import UserOwnedNftList from '../userOwnedNftList'
 import Text from '../../../../contexts/theme/components/Text/Text'
+import { useEnqueueSnackbar } from '../../../../contexts/theme/components/Snackbar'
 
 export const SocialPageWrapper = styled('div')`
   width: 100%;
@@ -89,9 +90,10 @@ const StyledTextarea = styled(TextareaAutosize)`
 
 const SocialHomepage: React.FC = () => {
   const [postMessage, setPostMessage] = useState<string>('')
-  const [nftType, setNftType] = useState<string | undefined>('co-nft')
+  const [nftType, setNftType] = useState<'co-nft' | 'owned-nft' | undefined>('co-nft')
   const { account } = useSolanaWeb3()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const enqueueSnackbar = useEnqueueSnackbar()
 
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
@@ -108,16 +110,23 @@ const SocialHomepage: React.FC = () => {
 
   const handleNftPost = useCallback(() => {
     setLoading(true)
-    if (selectedNFt) {
+    if (selectedNFt && nftType === 'co-nft') {
       SOCIAL_API.postNft(selectedNFt).then(() => {
+        enqueueSnackbar('Post successfully', 'Success',{ variant: 'success' })
         forceRefresh()
         setLoading(false)
-        return
+
       })
     }
-    setLoading(false)
 
-  }, [selectedNFt])
+    if (selectedOwnedNFt && nftType === 'owned-nft'){
+      enqueueSnackbar(' Not currently supported', 'Please look forward to',{ variant: 'warning' })
+
+    }
+    setLoading(false)
+    return
+
+  }, [selectedNFt, selectedOwnedNFt])
 
   const { data: pagingData, fetchNextPage, hasNextPage } = usePostQuery({
     size,
@@ -134,11 +143,6 @@ const SocialHomepage: React.FC = () => {
       return prev + 1
     })
   }, [fetchNextPage, hasNextPage])
-
-  useEffect(() => {
-    console.log(postMessage)
-
-  }, [postMessage])
 
   const onEmojiClick = useCallback(
     (event, emojiObject) => {
@@ -198,19 +202,25 @@ const SocialHomepage: React.FC = () => {
         </CoNftContainer>
 
         <Flex justifyContent={'space-between'} width={'100%'} alignItems={'center'}>
-          <Flex alignItems={'center'}>
-            <Text fontSize={16} fontFamily={'Kanit-Regular'}>View on Magic Eden</Text>
-            <Switch defaultChecked color="primary" />
-          </Flex>
+          {
+            nftType === 'owned-nft' && (
+              <Flex width={'100%'}  alignItems={'center'}>
+                <Text fontSize={16} fontFamily={'Kanit-Regular'}>View on Magic Eden</Text>
+                <Switch defaultChecked color="primary" />
+              </Flex>
+            )
+          }
 
-          <CustomizeButton
-            disabled={loading}
-            variant={'contained'}
-            onClick={handleNftPost}
-            endIcon={<SvgIcon > <PaperPlain_Filled /> </SvgIcon>}
-          >
-            Post
-          </CustomizeButton>
+          <Flex width={'100%'}  justifyContent={'flex-end'}>
+            <CustomizeButton
+              // disabled={loading}
+              variant={'contained'}
+              onClick={handleNftPost}
+              endIcon={<SvgIcon > <PaperPlain_Filled /> </SvgIcon>}
+            >
+              Post
+            </CustomizeButton>
+          </Flex>
         </Flex>
 
       </PostArea>

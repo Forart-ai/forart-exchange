@@ -50,19 +50,26 @@ export const StyledAvatar = styled('div')`
   width: 64px;
   height: 64px;
   position: relative;
-  
-  img{
+
+  .fake-avatar {
+    width: 100%;
+    height: 100%;
+    background-color: #571acb;
+    border-radius: .3rem;
+  }
+
+  img {
     width: 100%;
     height: 100%;
     border-radius: .3rem;
   }
 
-  &:hover   {
-   .card {
-     left: 78px;
-     visibility:visible;
-     opacity: 1;
-   }
+  &:hover {
+    .card {
+      left: 78px;
+      visibility: visible;
+      opacity: 1;
+    }
   }
 
 `
@@ -73,7 +80,7 @@ export const Card = styled('div')`
   left: 0;
   bottom: -50%;
   height: 120px;
-  width: 400px;
+  width: 450px;
   z-index: 1;
   border-radius: 2px;
   background-color: #11002c;
@@ -126,15 +133,8 @@ export const CardContent = styled('div')`
       font-weight: bold;
     }
   }
+  
 
-
-  img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    z-index: 1;
-    border-radius: 50%;
-  }
 
   &:after {
     content: '';
@@ -146,8 +146,6 @@ export const CardContent = styled('div')`
     left: -30px;
     transform: rotate(-30deg); 
     z-index: 0;
-    
-   
   }
   
 `
@@ -176,8 +174,26 @@ export const FollowButton = styled('div')`
   border-radius: 30px;
 `
 
-export const ProfileCard = styled('div')`
- 
+export const CardAvatar = styled('div')`
+  z-index: 1;
+  margin-right: 20px;
+
+  .fake-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
  
 `
 
@@ -196,4 +212,11 @@ export const CommentTextField = styled(TextField)`
      border: none;
   }
   
+`
+
+export const Identities = styled('div')`
+  .whale {
+    width: 20px;
+    height: 20px;
+  }
 `

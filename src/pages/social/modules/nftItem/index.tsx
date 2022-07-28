@@ -51,8 +51,7 @@ export const NFTItem: React.FC<{ src: ShowCoNftParams , checked?: boolean, onSel
       <div style={{
         position:'absolute',
         top:'6px',
-        right: '6px'
-
+        right: '6px',
       }}
       >
         <Checkbox checked={checked} />
@@ -61,8 +60,8 @@ export const NFTItem: React.FC<{ src: ShowCoNftParams , checked?: boolean, onSel
   }
 
   return (
-    <NftContent $selected={checked?.toString()}>
-      <Image style={{ cursor:'pointer' }} src={src.previewUrl} width={'100%'} height={'86%'} onClick={() => onSelect(src)} borderRadius={10}  />
+    <NftContent $selected={checked?.toString()} onClick={() => onSelect(src)}>
+      <Image style={{ cursor:'pointer' }} src={src.previewUrl} width={'100%'} height={'86%'}  borderRadius={10}  />
       <SelectBtn />
       <Text color={'primary.main'} fontSize={18} fontFamily={'Kanit-Regular'}>{src.chainNftName}</Text>
     </NftContent>

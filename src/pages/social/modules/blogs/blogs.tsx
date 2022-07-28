@@ -4,7 +4,7 @@ import CoNftCard from '../CoNftCard/coNftCard'
 import { PostListItem, ReplyPostRequest } from '../../../../types/social'
 import Flex from '../../../../contexts/theme/components/Box/Flex'
 import moment from 'moment'
-import { Comment_Outline, Heart_Filled, Heart_Outline } from '../../../../contexts/svgIcons'
+import { Comment_Outline, Heart_Filled, Heart_Outline, Whale_Full } from '../../../../contexts/svgIcons'
 import { useSolanaWeb3 } from '../../../../contexts/solana-web3'
 import { AUTH_API, SOCIAL_API, UserInfoParam } from '../../../../apis/auth'
 import Text from '../../../../contexts/theme/components/Text/Text'
@@ -14,10 +14,12 @@ import WalletSelectionModal from '../../../../components/wallet/WalletSelectionM
 import { useModal } from '../../../../contexts/modal'
 import { useEnqueueSnackbar } from '../../../../contexts/theme/components/Snackbar'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField, ProfileCard,Card, CardContent,TagsContainer, FollowButton } from './blog.styles'
+import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField,Identities, CardAvatar,Card, CardContent,TagsContainer, FollowButton } from './blog.styles'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import { Link } from 'react-router-dom'
 import BlogsOperationMenu from '../../../personal/modules/blogsOperationMenu'
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded'
+import { shortenAddress } from '../../../../utils'
 
 const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
   const { account } = useSolanaWeb3()
@@ -118,35 +120,49 @@ const Blogs:React.FC<{item: PostListItem}> = ({ item }) => {
         <UserInfoRow>
           <Flex alignItems={'center'}>
             <Link to={`/account/${item.wallet}?tab=co-nft`}>
-              {
-                item.avatar && (
-                  <ProfileCard>
-                    <StyledAvatar onMouseEnter={() => getUserInfo(item.wallet)}>
-                      <img src={`${item.avatar}?a=${item.updateTime}`} alt={'user-avatar'} />
-                      <Card className={'card'}>
-                        <CardContent>
-                          <img  src={`${userInfo?.avataruri}?a=${userInfo?.updateTime}`} alt={'user-avatar'} />
-                          <div className={'content'}>
-                            <Flex justifyContent={'space-between'} width={'100%'}>
-                              <span>{userInfo?.username}</span>
-                              <FollowButton>FOLLOW</FollowButton>
-                            </Flex>
-                            <Flex>
-                              <TagsContainer>OK Bear</TagsContainer>
-                              <TagsContainer>Harvest Moon</TagsContainer>
-                              <TagsContainer>Spacetronauts</TagsContainer>
-                            </Flex>
-                          </div>
 
-                        </CardContent>
-                      </Card>
-                    </StyledAvatar>
+              <StyledAvatar onMouseEnter={() => getUserInfo(item.wallet)}>
+                {
+                  item?.avatar ?
+                    <img src={`${item.avatar}?a=${item.updateTime}`} alt={'user-avatar'} />
+                    :
+                    <div className={'fake-avatar'}><PersonRoundedIcon sx={{ fontSize:'64px',color:'#ffffff' }}   /></div>
+                }
+                <Card className={'card'}>
+                  <CardContent>
+                    <CardAvatar>
+                      {
+                        userInfo?.avataruri ?
+                          <img src={`${userInfo?.avataruri}?a=${userInfo?.updateTime}`} alt={'user-avatar'} />
+                          :
+                          <div className={'fake-avatar'}><PersonRoundedIcon sx={{ fontSize:'64px',color:'#ffffff' }}   /></div>
+                      }
+                    </CardAvatar>
 
-                  </ProfileCard>
-                )
-              }
+                    <div className={'content'}>
+                      <Flex justifyContent={'space-between'} width={'100%'}>
+                        <span>{userInfo?.username || shortenAddress(item?.wallet)}</span>
+                        <FollowButton>FOLLOW</FollowButton>
+                      </Flex>
+                      <Identities>
+                        <div className={'whale'}><Whale_Full /></div>
+                      </Identities>
+                      <Flex>
+                        <TagsContainer>OK Bear</TagsContainer>
+                        <TagsContainer>Harvest Moon</TagsContainer>
+                        <TagsContainer>Spacetronauts</TagsContainer>
+                      </Flex>
+                    </div>
+
+                  </CardContent>
+                </Card>
+              </StyledAvatar>
+
             </Link>
-            <Text ml={20} color={'primary.light'} fontSize={22}>{item?.username}</Text>
+            <Text ml={20} color={'primary.light'} fontSize={22}>{
+              item?.username === item?.wallet ? <>{shortenAddress(item?.wallet)}</>:<>{item?.username}</>
+            }
+            </Text>
           </Flex>
           <>
             {/*<CustomizeButton onClick={() => followUser(item.wallet)} disableElevation size={'small'} sx={{ borderRadius:'20px' }} color={'secondary'} variant={'contained'}>Follow</CustomizeButton>*/}

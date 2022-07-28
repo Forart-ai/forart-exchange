@@ -14,7 +14,6 @@ const useBindDePainter = () => {
   const enqueueSnackbar = useEnqueueSnackbar()
   const { closeModal } = useModal()
   const [loading, setLoading] = useState<boolean>(false)
-  const { intermediateRefreshFlag } = useRefreshController()
 
   const bindDePainter =  useCallback(
     async (mintKey?: string) => {

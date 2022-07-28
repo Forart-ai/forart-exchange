@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useMintResultQuery } from '../../hooks/queries/useMintResultQuery'
 import { Box, Drawer, Skeleton, styled, Tab, Tabs, useMediaQuery, useTheme } from '@mui/material'
 import Background from '../../assets/images/home/default-user-background.webp'
@@ -82,6 +82,7 @@ const DataItem = styled('div')`
   justify-content: flex-start;
   align-items: flex-start;
   margin-top: 30px;
+  cursor: pointer;
   
   span {
     color: #ffffff;
@@ -227,70 +228,77 @@ const TagsContainer = styled('div')`
 `
 
 const SocialMedias = styled('div')`
-  display: flex;
-  gap: 10px;
-  height: 40px;
-  align-items: center;
-  margin-top: 20px;
-
-  .divide {
-    height: 28px;
-    width: 3px;
-    border-left: 2px #999999 solid;
-    margin: 0 10px;
-    border-radius: 5px;
-  }
-
-  .icon {
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 40px;
+    transform: translate(-50%, -50%);
     height: 40px;
-    padding: 5px;
+margin-top: 40px;
 
-    a {
-      text-decoration: none;
-    }
+  .item {
+    list-style: none;
+
   }
 
-  .twitter {
-    -o-transition: .5s;
-    -ms-transition: .5s;
-    -moz-transition: .5s;
-    -webkit-transition: .5s;
-    transition: .5s;
-    background-color: transparent;
-
-    &:hover {
-      background-color: #00aced;
-    }
+  .item a {
+    width: 32px;
+    height: 32px;
+    background-color: #fff;
+    text-align: center;
+    margin: 0 10px;
+    display: block;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #fff;
+    z-index: 1;
+    
   }
 
-  .telegram {
-    -o-transition: .5s;
-    -ms-transition: .5s;
-    -moz-transition: .5s;
-    -webkit-transition: .5s;
+  .item a .icon {
+    position: relative;
+    color: #262626;
     transition: .5s;
-    background-color: transparent;
-
-    &:hover {
-      background-color: rgb(64,167,227);
-    }
+    z-index: 3;
   }
 
-  .edit {
-    -o-transition: .5s;
-    -ms-transition: .5s;
-    -moz-transition: .5s;
-    -webkit-transition: .5s;
-    transition: .5s;
-    background-color: transparent;
+  .item a:hover .icon {
+    fill: #fff;
+    transform: rotateY(360deg);
+  }
 
-    &:hover {
-      background-color: #3c019b;
-    }
+  .item a:before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: .5s;
+    z-index: 2;
+  }
+
+   .item a:hover:before {
+    top: 0;
+  }
+
+  .item:nth-child(1) a:before{
+    background: rgb(48,163,230);
+  }
+
+  .item:nth-child(2) a:before{
+    background: #55acee;
+  }
+
+  .item:nth-child(4) a:before {
+    background: #8246f5;
+  }
+
+  
+  
+  .divide {
+    width: 2px;
+    height: 24px;
+    background-color: #dddddd;
   }
 `
 
@@ -308,9 +316,6 @@ const TabsContainer: React.FC = () => {
       setSearchParams(searchParams)
     }
   }, [searchParams, setSearchParams, queryTab])
-
-  const [openFollowersDrawer, setOpenFollowersDrawer] = useState<boolean>(false)
-  const [openFollowingDrawer, setOpenFollowingDrawer] = useState<boolean>(false)
 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
@@ -334,14 +339,7 @@ const TabsContainer: React.FC = () => {
       label: 'Post',
       route: 'post'
     },
-    {
-      label: 'Follower ',
-      route: 'follower'
-    },
-    {
-      label: 'Following ',
-      route: 'following'
-    }
+
   ]
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -350,13 +348,6 @@ const TabsContainer: React.FC = () => {
       searchParams.set('tab', newValue)
       setSearchParams(searchParams)
     }
-    if (newValue === 'following') {
-      setOpenFollowingDrawer(true)
-    }
-    if (newValue === 'follower') {
-      setOpenFollowersDrawer(true)
-    }
-
   }
 
   return (
@@ -407,11 +398,118 @@ const TabsContainer: React.FC = () => {
             </TabsArea>
           </TabPanel>
 
-          <TabPanel index={'follower'} value={queryTab} />
-          <TabPanel index={'following'} value={queryTab} />
-
         </Box>
 
+      </TabsWrapper>
+    </Flex>
+  )
+}
+
+const PersonalCenterPage: React.FC = () => {
+
+  const { wallet } = useParams()
+
+  const { account } = useSolanaWeb3()
+  const { openModal } = useModal()
+
+  const { data: credit } = useUserCredit()
+  const { data: userInfo, isLoading } = useGetUserInfo(wallet)
+
+  const { data: followingCount } = useUserFollowingCounts(wallet)
+
+  const [openFollowersDrawer, setOpenFollowersDrawer] = useState<boolean>(false)
+  const [openFollowingDrawer, setOpenFollowingDrawer] = useState<boolean>(false)
+
+  const handleDataClick = useCallback(
+    (drawerType: string) => {
+
+      if (drawerType === 'following') {
+        setOpenFollowingDrawer(true)
+      }
+      if (drawerType === 'follower') {
+        setOpenFollowersDrawer(true)
+      }
+    },
+    [openFollowersDrawer, openFollowingDrawer],
+  )
+
+  return (
+    <Wrapper>
+      <PersonalCenterContainer>
+        <BackgroundImage>
+          {
+            userInfo?.banneruri &&
+              <Image
+                className={'background-image'}
+                width={'100%'}
+                height={'100%'}
+                src={`${userInfo?.banneruri}?a=${userInfo?.updateTime}`}
+                variant={'rectangular'}
+              />
+          }
+        </BackgroundImage>
+
+        <UserInfoContainer>
+          <Flex width={'100%'} justifyContent={'space-between'}>
+            <UserAvatar>
+              {
+                userInfo?.avataruri && <Image  width={'100%'} height={'100%'} src={`${userInfo?.avataruri}?a=${userInfo?.updateTime}` } />
+
+              }
+
+            </UserAvatar>
+            <SocialMedias>
+              <div className={'item'}>
+                <div className={'icon'}><a href={''} target={'_blank'} rel="noreferrer"><Telegram_Fill /></a></div>
+              </div>
+              <div className={'item'}>
+                <div className={'icon'}><a href={''} target={'_blank'} rel="noreferrer"><Twitter_FullFill /></a></div>
+              </div>
+
+              {
+                wallet === account?.toBase58() &&
+                (
+                  <>
+                    <div className={'divide'} />
+
+                    <div className={'item'}>
+                      <div onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)} className={'icon'}><a><Edit_Fill /></a></div>
+                    </div>
+                  </>
+                )
+
+              }
+
+              {/*  <div className={'icon'}> onClick={() => openModal(<SocialMediaEditModal  />)}>*/}
+
+            </SocialMedias>
+          </Flex>
+          <UserInfo>
+            <div className="username">{userInfo?.username}</div>
+            <Flex>
+              <TagsContainer>OK Bear</TagsContainer>
+              <TagsContainer>Harvest Moon</TagsContainer>
+              <TagsContainer>Spacetronauts</TagsContainer>
+            </Flex>
+            <UserSlogan>{ userInfo?.slogan }</UserSlogan>
+            <DataColumn>
+              <DataItem>
+                <span> {credit?.retain ?? '0'} </span>
+                <div className={'label'}>FTA Amount</div>
+              </DataItem>
+
+              <DataItem onClick={() => handleDataClick('following')}>
+                <span> {followingCount ? followingCount[0] : '0'} </span>
+                <div className={'label'}>Following</div>
+              </DataItem>
+
+              <DataItem onClick={() => handleDataClick('follower')}>
+                <span> {followingCount ? followingCount[1] : '0'} </span>
+                <div className={'label'}>Followers</div>
+              </DataItem>
+            </DataColumn>
+          </UserInfo>
+        </UserInfoContainer>
         <Drawer
           anchor={'left'}
           open={openFollowingDrawer}
@@ -443,87 +541,6 @@ const TabsContainer: React.FC = () => {
         >
           <FollowersList />
         </Drawer>
-
-      </TabsWrapper>
-    </Flex>
-  )
-}
-
-const PersonalCenterPage: React.FC = () => {
-
-  const { wallet } = useParams()
-
-  const { account } = useSolanaWeb3()
-  const { openModal } = useModal()
-
-  const { data: credit } = useUserCredit()
-  const { data: userInfo, isLoading } = useGetUserInfo(wallet)
-
-  const { data: followingCount } = useUserFollowingCounts(wallet)
-
-  return (
-    <Wrapper>
-      <PersonalCenterContainer>
-        <BackgroundImage>
-          {
-            userInfo?.banneruri &&
-              <Image
-                className={'background-image'}
-                width={'100%'}
-                height={'100%'}
-                src={`${userInfo?.banneruri}?a=${userInfo?.updateTime}`}
-                variant={'rectangular'}
-              />
-          }
-        </BackgroundImage>
-
-        <UserInfoContainer>
-          <Flex width={'100%'} justifyContent={'space-between'}>
-            <UserAvatar>
-              {
-                wallet === account?.toBase58() &&
-                <CoverMask onClick={() => openModal(<UserProfileSetting userInfo={userInfo} />)}>
-                  <SettingsIcon fontSize={'large'} sx={{ color:'#ffffff' }} />
-                </CoverMask>
-              }
-              {
-                userInfo?.avataruri && <Image  width={'100%'} height={'100%'} src={`${userInfo?.avataruri}?a=${userInfo?.updateTime}` } />
-              }
-            </UserAvatar>
-            <SocialMedias>
-              <div className={'icon telegram'}><a href={''} target={'_blank'} rel="noreferrer"><Telegram_Fill /></a></div>
-              <div className={'icon twitter'}><a href={''} target={'_blank'} rel="noreferrer"><Twitter_FullFill /></a></div>
-              <div className={'divide'} />
-              <div className={'icon edit'} onClick={() => openModal(<SocialMediaEditModal  />)}><Edit_Fill /></div>
-            </SocialMedias>
-          </Flex>
-          <UserInfo>
-            <div className="username">{userInfo?.username}</div>
-            <Flex>
-              <TagsContainer>OK Bear</TagsContainer>
-              <TagsContainer>Harvest Moon</TagsContainer>
-              <TagsContainer>Spacetronauts</TagsContainer>
-            </Flex>
-            <UserSlogan>{ userInfo?.slogan }</UserSlogan>
-            <DataColumn>
-              <DataItem>
-                <span> {credit?.retain ?? '0'} </span>
-                <div className={'label'}>FTA Amount</div>
-              </DataItem>
-
-              <DataItem>
-                <span> {followingCount ? followingCount[0] : '0'} </span>
-                <div className={'label'}>Following</div>
-              </DataItem>
-
-              <DataItem>
-                <span> {followingCount ? followingCount[1] : '0'} </span>
-                <div className={'label'}>Followers</div>
-              </DataItem>
-            </DataColumn>
-          </UserInfo>
-        </UserInfoContainer>
-
       </PersonalCenterContainer>
       <TabsContainer />
     </Wrapper>

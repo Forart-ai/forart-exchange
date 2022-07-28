@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import Flex from '../../../../contexts/theme/components/Box/Flex'
 import Text from '../../../../contexts/theme/components/Text/Text'
 import moment from 'moment'
-import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField, ProfileCard } from '../blogs/blog.styles'
+import { BlogsContainer, StyledAvatar, UserInfoRow, DateText, CommentTextField,  } from '../blogs/blog.styles'
 import { usePostReplyQuery } from '../../../../hooks/queries/usePostReplyQuery'
 import { useLocationQuery } from '../../../../hooks/useLocationQuery'
 import { styled } from '@mui/material'
 import { usePostDetailQuery } from '../../../../hooks/queries/usePostDetailQuery'
 import Blogs from '../blogs/blogs'
 import { Helmet } from 'react-helmet'
+import { useSolanaWeb3 } from '../../../../contexts/solana-web3'
 
 const ReplyContainer = styled('div')`
   min-height: 200px;
@@ -31,14 +32,15 @@ const ReplyList: React.FC= () => {
   const current = parseInt(useLocationQuery('page') ?? '1')
   const postId = useLocationQuery('id')
   const { data: postDetail } = usePostDetailQuery(postId)
+  const { account } = useSolanaWeb3()
 
   const { data: replyList } = usePostReplyQuery({
     size,
     current,
     post: postId!,
-    replyTo: '4zhqncVayPZmk47u7WASHRy1UVn6ijdTqbAxgk1MVU6s',
+    replyTo: postId?.split('_')[0],
     orders: [{ field:'', order:'' }],
-    wallet: '',
+    wallet: account?.toBase58(),
     createDay: undefined
   })
 

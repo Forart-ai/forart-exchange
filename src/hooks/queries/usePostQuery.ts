@@ -15,7 +15,6 @@ export const usePostQuery =  (params: UserPostListQueryParams): UseInfiniteQuery
       getNextPageParam: (lastPage, allPages) => {
         return !!(lastPage as unknown as Array<any>).length
       },
-      refetchOnWindowFocus:false,
       refetchInterval:false,
       keepPreviousData: true
     }

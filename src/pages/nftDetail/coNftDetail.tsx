@@ -33,14 +33,11 @@ const Rainbow = styled('div')`
       margin-left: 10px;
     }
     span {
-      border: 1px #EB1482 solid;
+      border: 1px ${({ theme }) => theme.palette.secondary.light} solid;
       padding: 2px 4px;
       border-radius: 5px;
       font-weight: bold;
-      display: table;
-      background: -webkit-linear-gradient(90deg,#EB1482 50.04%,#CD19B9 50.01%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: ${({ theme }) => theme.palette.secondary.light};
   }
 
   ${({ theme }) => theme.breakpoints.down('sm')} {
@@ -289,7 +286,7 @@ export const CONFTDetail:React.FC<{ nft?: string }> = ({ nft }) => {
                 </div>
               </SeriesTitle>
               <Rainbow>
-                <span>Co-Creator:</span>
+                <span>Co-Creator</span>
                 {
                   !isMobile ?  <div className="wallet">{nftDetail?.wallet}</div> :  <div className="wallet">{shortenAddress(nftDetail?.wallet)}</div>
                 }

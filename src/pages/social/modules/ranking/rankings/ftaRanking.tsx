@@ -88,7 +88,7 @@ const FtaRanking:React.FC = () => {
   return (
     <RankingBox>
       <>
-        <Text p={20} fontSize={26} fontFamily={'Kanit-Regular'}>CO-NFT Quantity</Text>
+        <Text p={20} fontSize={26} fontFamily={'Kanit-Regular'}>FTA value</Text>
         <TableHeader>
           <Flex alignItems={'center'}>
             <Text color={'grey[400]'}>Rank</Text>
@@ -124,7 +124,7 @@ const FtaRanking:React.FC = () => {
                       <Number $rank={item.rank.toString()}> {item.rank} </Number>
                       <Flex alignItems={'center'} ml={'34px'}>
                         {/*<Image width={'36px'} height={'36px'} src={item.avatar} />*/}
-                        {/*<Text fontFamily={'Kanit-Regular'} ml={10} fontSize={18} color={'secondary.main'}> {item.username} </Text>*/}
+                        <Text fontFamily={'Kanit-Regular'} ml={10} fontSize={18} color={'secondary.main'}> {shortenAddress(item.wallet)}  </Text>
                       </Flex>
                     </Flex>
                     <Text fontSize={22} fontFamily={'Aldrich-Regular'}>${item.retain}</Text>

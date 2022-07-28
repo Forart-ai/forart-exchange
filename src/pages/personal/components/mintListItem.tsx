@@ -25,31 +25,7 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
     return url
   }, [data])
 
-  // const [progress, setProgress] = useState(0)
-
   const { account } = useSolanaWeb3()
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setProgress(prev => {
-  //       if (data?.chainStatus === 'MIXING' && prev >= 97) {
-  //         return prev
-  //       }
-  //
-  //       if (data?.chainStatus === 'UPDATING'  && prev >= 98) {
-  //         return prev
-  //       }
-  //
-  //       return prev + 1
-  //
-  //     })
-  //   }, 150)
-  //
-  //   return () => {
-  //     clearInterval(interval)
-  //   }
-  //
-  // },[])
 
   useEffect(() => {
     if (!loading) {
@@ -85,7 +61,6 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
                   <div>  {data?.chainStatus}  </div>
                   {/*<Progress percent={progress} />*/}
                   <ClockLoader size={40} color={'#ffffff'} />
-                  {/*<div> <SyncOutlined  spin={true} /> </div>*/}
                 </div>
 
               </>
@@ -112,13 +87,13 @@ const MintListItem: React.FC<{data? : MintedNFTItem, empty?: boolean}> = ({ data
         </Owner>
 
         <Messages >
-          <Grid>
-            <div className={'label'}>Owner</div>
-            <div className={'account'}>{shortenAddress(account?.toBase58())}</div>
-          </Grid>
+          {/*<Grid>*/}
+          {/*  <div className={'label'}>Owner</div>*/}
+          {/*  <div className={'account'}>{shortenAddress(account?.toBase58())}</div>*/}
+          {/*</Grid>*/}
           <Grid>
             <div className={'label'}>Time</div>
-            <div className={'account'}>{data && moment(data?.updateTime).format('YYYY-MM-DD ') }</div>
+            <div className={'account'}>{data && moment(data?.updateTime).format('ll') }</div>
           </Grid>
         </Messages>
 

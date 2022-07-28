@@ -11,7 +11,7 @@ const Wrapper = styled('div')`
   height: fit-content;
   overflow: hidden;
   width: 100%;
-
+  max-height: 100%;
  
 `
 
@@ -21,6 +21,7 @@ const BoxContainer = styled('div')`
   justify-content: space-around;
   grid-gap: 10px;
   width: 100%;
+  height: 100%;
 
 
   // ${({ theme }) => theme.breakpoints.down('md')} {
@@ -52,6 +53,11 @@ const ItemBox = styled('div')`
     color: #fff;
     font-size: 16px;
     font-family: Kanit-Regular;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    
 
   }
 

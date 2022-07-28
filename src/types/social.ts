@@ -30,7 +30,7 @@ export interface UserPostReplyListQueryParams{
   wallet?: string
   createDay?: number
   post: string,
-  replyTo: string
+  replyTo?: string
 }
 
 export interface StarPostRequestParam {
